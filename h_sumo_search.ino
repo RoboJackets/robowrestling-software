@@ -1,3 +1,4 @@
+
 /*
  * autonomous sumo test 1
  * simple h bridge controlling 2-wheel bot
@@ -11,14 +12,14 @@
 int STBY = 10; //standby
 
 //Motor A
-int PWMA = 3; //Speed control 
-int AIN1 = 9; //Direction
-int AIN2 = 8; //Direction
+int PWMA = 3; //Speed control
+int AIN1 = 8; //Direction
+int AIN2 = 9; //Direction
 
 //Motor B
-int PWMB = 5; //Speed control
-int BIN1 = 11; //Direction
-int BIN2 = 12; //Direction
+int PWMB = 5; //Speed control 
+int BIN1 = 12; //Direction
+int BIN2 = 11; //Direction
 
 #define leftEcho 2  // left Echo Pin
 #define leftTrig 4  // left Trigger Pin
@@ -26,15 +27,38 @@ int BIN2 = 12; //Direction
 #define rightTrig 6 // right Trigger Pin
 
 // POSSIBLY CHANGE THIS FOR ARENA SIZE
-int maximumRange = 20; // Maximum range needed
-int minimumRange = 0; // Minimum range needed
-long duration, leftDistance, rightDistance; // Duration used to calculate distance
+int maximumRange = 150; // Maximum range needed
+int minimumRange = 1; // Minimum range needed
+long leftDistance = 1000;
+long rightDistance = 1000;
+long prevLeft;
+long prevRight;
+long durationLeft, cmLeft, inchesLeft, cmRight, inchesRight, durationRight;
+long lD[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+long rD[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+int iterator = 0;
 
 boolean found = false;  // used for search()
+boolean lost = false;
 
 boolean tagged = false; // used for follow()
 int rightDirMod = 0;
 int leftDirMod = 0;
+
+//------------------------------
+#define baseSpeed 128
+int leftMod = 0;
+int rightMod = 0;
+int leftSpeed = 0;
+int rightSpeed = 0;
+
+int speedModifier;
+int diff;
+int diffMag;
+
+int leftDir = 0;
+int rightDir = 1;
+//-----------------------------
 
 void setup(){
   Serial.begin (9600);
@@ -58,7 +82,6 @@ void setup(){
 
 void loop(){
   search();
-  follow();
 }
 
 void move(int motor, int speed, int direction){
@@ -94,25 +117,67 @@ void stop(){
 }
 
 void calcDistance() {
+  if (iterator == 20) {
+    iterator = 0;
+  }
+  prevLeft = leftDistance;
+  prevRight = rightDistance;
 /* The following trigPin/echoPin cycle is used to determine the
  distance of the nearest object by bouncing soundwaves off of it. */ 
- digitalWrite(leftTrig, LOW); 
- delayMicroseconds(2); 
- digitalWrite(leftTrig, HIGH);
- delayMicroseconds(10); 
- digitalWrite(leftTrig, LOW);
- duration = pulseIn(leftEcho, HIGH);
+// digitalWrite(leftTrig, LOW); 
+// delayMicroseconds(2); 
+// digitalWrite(leftTrig, HIGH);
+// delayMicroseconds(10); 
+// digitalWrite(leftTrig, LOW);
+// duration = pulseIn(leftEcho, HIGH);
  //Calculate the distance (in cm) based on the speed of sound.
- leftDistance = duration/58.2;  
+ delay(10);
+  digitalWrite(leftTrig, LOW);
+  delayMicroseconds(5);
+  digitalWrite(leftTrig, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(leftTrig, LOW);
+  pinMode(leftEcho, INPUT);
+  durationLeft = pulseIn(leftEcho, HIGH);
+ leftDistance = durationLeft/58.2;  
+
+  delay(10);
  
- digitalWrite(rightTrig, LOW); 
- delayMicroseconds(2); 
- digitalWrite(rightTrig, HIGH);
- delayMicroseconds(10); 
- digitalWrite(rightTrig, LOW);
- duration = pulseIn(rightEcho, HIGH);
+// digitalWrite(rightTrig, LOW); 
+// delayMicroseconds(2); 
+// digitalWrite(rightTrig, HIGH);
+// delayMicroseconds(10); 
+// digitalWrite(rightTrig, LOW);
+// duration = pulseIn(rightEcho, HIGH);
+  digitalWrite(rightTrig, LOW);
+  delayMicroseconds(5);
+  digitalWrite(rightTrig, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(rightTrig, LOW);
+  pinMode(rightEcho, INPUT);
+  durationRight = pulseIn(rightEcho, HIGH);
  //Calculate the distance (in cm) based on the speed of sound.
- rightDistance = duration/58.2;  
+ rightDistance = durationRight/58.2;  
+
+// if((leftDistance<minimumRange)||(leftDistance>maximumRange)) {
+//  leftDistance = prevLeft;
+// }
+// if((rightDistance<minimumRange)||(rightDistance>maximumRange)) {
+//  rightDistance = prevRight;
+// }
+
+//button
+//esc code
+ 
+// iterator++;
+// leftDistance = 0;
+// rightDistance = 0;
+// for (int j= 0; j < 20; j++) {
+//  leftDistance += lD[j];
+//  rightDistance += rD[j];
+// }
+// leftDistance = leftDistance/20;
+// rightDistance = rightDistance/20;
 }
 
 /*
@@ -121,17 +186,29 @@ void calcDistance() {
 void search() {
   while(!found) {
     // 0 is forward, 1 is backward
-    move(1, 128, 1); //right motor
-    move(2, 128, 0); //left motor
+    move(1, 128, rightDir); //right motor
+    move(2, 128, leftDir); //left motor
     calcDistance();
-    Serial.println(leftDistance);
+    //Serial.print("left: ");
+    Serial.print(leftDistance);
+    Serial.print(",");
     Serial.println(rightDistance);
     delay(10);
-    if((leftDistance <= maximumRange && leftDistance >= minimumRange) ||
+    if(lost) {
+      if(diff>0){//turn right
+        rightDir = 0;
+        leftDir = 1;
+      } else {//turn left
+        rightDir = 1;
+        leftDir = 0;
+      }
+    }
+    if((leftDistance <= maximumRange && leftDistance >= minimumRange) &&
        (rightDistance <= maximumRange && rightDistance >=minimumRange)) {
         found = true;
-        Serial.println("FOUND");
+        //Serial.println("FOUND");
       stop();  
+      follow();
       //uncomment for looped testing of search function  
       //delay(1000);
       //found = false;
@@ -141,38 +218,37 @@ void search() {
 
 void follow() {
   while(!tagged) {
-    //happens every loop
-    move(1, 128, rightDirMod); //right motor with rightDirMod
-    move(2, 128, leftDirMod); //left motor with leftDirMod
+    calcDistance();
+    diff = leftDistance - rightDistance;
+    diffMag = abs(diff);
 
-    Serial.println(leftDistance);
+    if(!(leftDistance <= maximumRange && leftDistance >= minimumRange) &&
+       !(rightDistance <= maximumRange && rightDistance >=minimumRange)) {
+        found = false;
+        lost = true;
+        search();
+    }
+    
+    if(diff > 0 && diffMag > 2) {
+        leftMod = 50*(diffMag/rightDistance);
+        //Serial.println("R");
+    } else if(diff < 0 && diffMag > 2) {
+        rightMod = 50*(diffMag/leftDistance);
+        //Serial.println("L");
+    } else {
+        leftMod = 50;
+        rightMod = 50;
+        //Serial.println("F");
+    }
+    leftSpeed = baseSpeed + leftMod;
+    rightSpeed = baseSpeed + rightMod;
+    //Serial.print("left: ");
+    Serial.print(leftDistance);
+    Serial.print(",");
     Serial.println(rightDistance);
     
-    //change dir
-    //0 is forward, 1 is backward
-    if((leftDistance - rightDistance) > 10 ) {
-      //if right sensor is closer, slight turn right
-      rightDirMod = 0;
-      leftDirMod = 1;
-    } else if((leftDistance - rightDistance) < -10) {
-      //if left sensor is closer, slight turn left
-      rightDirMod = 1;
-      leftDirMod = 0;
-    } else {
-      rightDirMod = 0;
-      leftDirMod = 0;
-    }
-    calcDistance();
-    if((leftDistance <= 5 && leftDistance >= minimumRange) ||
-         (rightDistance <= 5 && rightDistance >=minimumRange)) {
-          tagged = true;
-          Serial.println("GOTCHA");
-        stop();  
-    }
-    delay(10);
-  } 
-  while(true) {
-    stop();
+    move(1, leftSpeed, 0);
+    move(2, rightSpeed, 0);
   }
 }
 
