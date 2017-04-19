@@ -1,5 +1,10 @@
 #include <Servo.h>
 
+//Start button
+//Used: Cherry (limit) switch (normally closed)
+//Since this is NC, pin is pulled down with switch on high side
+#define button 6
+
 //BLDC ESC parameters
 //Used: VXL-3s Traxxas Single Channel ESCs
 Servo leftMotor, rightMotor;
@@ -66,6 +71,9 @@ int rightDir = 1;
 
 void setup() {
   Serial.begin(9600);
+
+  pinMode(button, INPUT);
+  
   pinMode(LFinput, INPUT);
   pinMode(LFled, OUTPUT);
   pinMode(LBinput, INPUT);
@@ -82,12 +90,30 @@ void setup() {
 
   leftMotor.attach(leftMotPin);
   rightMotor.attach(rightMotPin);
-
+  
+  start();
   readLine();
 }
 
 void loop() {
   search();
+}
+
+//start, wait 5s after release of button
+void start() {
+  while(true) {
+    if(digitalRead(button) == HIGH) { //if pressed
+      //for user, hold button until referee says so
+      //upon release
+      delay(500); //half sec delay to filter bounces
+      while(true) {
+        if(digitalRead(button) == LOW) {
+          delay(5000);
+          return;
+        }
+      }
+    }
+  }
 }
 
 //readLine
