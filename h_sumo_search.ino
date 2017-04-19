@@ -1,146 +1,113 @@
+#include <Servo.h>
 
-/*
- * autonomous sumo test 1
- * simple h bridge controlling 2-wheel bot
- * HC-SR04 used for object detection
- * objective: search and push
-*/
+//BLDC ESC parameters
+//Used: VXL-3s Traxxas Single Channel ESCs
+Servo leftMotor, rightMotor;
+#define leftMotPin  10 
+#define rightMotPin 9
 
-//motor A connected between A01 and A02
-//motor B connected between B01 and B02
+//Line sensor parameters
+//Used: RPR-220
+//LF = left front, LB = left back
+//RF = right front, RB = right back
+#define LFinput A0
+#define LFled   5
+#define LBinput A1
+#define LBled   4
+#define RFinput A2
+#define RFled   3
+#define RBinput A3
+#define RBled   2
 
-int STBY = 10; //standby
+int inputPins[4] = {LFinput, LBinput, RFinput, RBinput};
+int ledPins[4] = {LFled, LBled, RFled, RBled};
 
-//Motor A
-int PWMA = 3; //Speed control
-int AIN1 = 8; //Direction
-int AIN2 = 9; //Direction
+#define lineThreshold 100
+boolean initialize = true;
+long LFbaseVal, LBbaseVal, RFbaseVal, RBbaseVal;
+long bvals[4] = {LFbaseVal, LBbaseVal, RFbaseVal, RBbaseVal};
+long LFval, LBval, RFval, RBval;
+long vals[4] = {LFval, LBval, RFval, RBval};
 
-//Motor B
-int PWMB = 5; //Speed control 
-int BIN1 = 12; //Direction
-int BIN2 = 11; //Direction
+//Ultrasonic range finder parameters
+//Used: HC-SR04
+#define leftEcho 11
+#define leftTrig 12
+#define rightEcho 8
+#define rightTrig 7
 
-//HC-SR04
-#define leftEcho 2  // left Echo Pin
-#define leftTrig 4  // left Trigger Pin
-#define rightEcho 7 // right Echo Pin
-#define rightTrig 6 // right Trigger Pin
-
-// Distance variables and parameters
-#define maximumRange 20 // Maximum range needed
-#define minimumRange 1  // Minimum range needed
+//Distance parameters
+#define maxRange 20
+#define minRange 1
 long leftDistance = 1000;
 long rightDistance = 1000;
 long prevLeft, prevRight;
-long durationLeft, cmLeft, inchesLeft, cmRight, inchesRight, durationRight;
+long durationLeft, durationRight;
 
-//search()
-boolean found = false;  // used for search()
-boolean lost = false;   // true after enemy is found for first time
+//Search parameters
+boolean found = false; //true when enemy located
+boolean lost = false;  //true after enemy located for first time
 
-//follow()
-boolean tagged = false;
-int rightDirMod = 0;
-int leftDirMod = 0;
+//Follow parameters
+boolean tagged = false; //unclear usage
 
-//speed variables and parameters
+//Motor speed parameters
 #define baseSpeed 128
 int leftMod = 0;
 int rightMod = 0;
 int leftSpeed = 0;
 int rightSpeed = 0;
 
-int speedModifier;
+//Motor direction parameters
 int diff;
 int diffMag;
-
 int leftDir = 0;
 int rightDir = 1;
 
-//line sensor pins(temporarily RPR-220)
-#define frontInput  A0
-#define frontLed    13
-#define leftInput   A1
-#define leftLed     17
-#define rightInput  A2
-#define rightLed    18
-
-//line sensor variables and parameters
-#define lineThreshold 100
-boolean initialize = true;
-long frontBaseVal, leftBaseVal, rightBaseVal;
-long frontVal, leftVal, rightVal;
-
-void setup(){
-  Serial.begin (9600);
-  pinMode(STBY, OUTPUT);
-
-  pinMode(PWMA, OUTPUT);
-  pinMode(AIN1, OUTPUT);
-  pinMode(AIN2, OUTPUT);
-
-  pinMode(PWMB, OUTPUT);
-  pinMode(BIN1, OUTPUT);
-  pinMode(BIN2, OUTPUT);
-
+void setup() {
+  Serial.begin(9600);
+  pinMode(LFinput, INPUT);
+  pinMode(LFled, OUTPUT);
+  pinMode(LBinput, INPUT);
+  pinMode(LBled, OUTPUT);
+  pinMode(RFinput, INPUT);
+  pinMode(RFled, OUTPUT);
+  pinMode(RBinput, INPUT);
+  pinMode(RBled, OUTPUT);
+  
   pinMode(leftTrig, OUTPUT);
   pinMode(leftEcho, INPUT);
   pinMode(rightTrig, OUTPUT);
   pinMode(rightEcho, INPUT);
 
-  pinMode(frontInput, INPUT);
-  pinMode(leftInput, INPUT);
-  pinMode(rightInput, INPUT);
-  pinMode(frontLed, OUTPUT);
-  pinMode(leftLed, OUTPUT);
-  pinMode(rightLed, OUTPUT);
-  
+  leftMotor.attach(leftMotPin);
+  rightMotor.attach(rightMotPin);
+
   readLine();
 }
 
-void loop(){
+void loop() {
   search();
 }
 
-//line sensors take calibration reading
-void readLine() {
+//readLine
+void readLine() {   //line sensors take calibration reading
  int ambient = 0;
  int lit = 0;
  int value = 0;
-
- digitalWrite(frontLed, LOW);
- delay(5);                            //To give ADC and LED transition time
- ambient = analogRead(frontInput);
- digitalWrite(frontLed, HIGH);
- delay(5);
- lit = analogRead(frontInput);
- if(initialize) {
-  frontBaseVal = lit - ambient;  
+ //ORDER: LF LB RF RB
+ for(int k = 0; k < 4; k++) {
+  digitalWrite(ledPins[k], LOW);
+  delay(5);   //To give ADC and LED transition time
+  ambient = analogRead(inputPins[k]);
+  digitalWrite(ledPins[k], HIGH);
+  delay(5);
+  lit = analogRead(inputPins[k]);
+  if(initialize) {
+    bvals[k] = lit - ambient;
+  }
+  vals[k] = lit - ambient;
  }
- frontVal = lit - ambient;
- 
- digitalWrite(leftLed, LOW);
- delay(5);                            //To give ADC and LED transition time
- ambient = analogRead(leftInput);
- digitalWrite(leftLed, HIGH);
- delay(5);
- lit = analogRead(leftInput);
- if(initialize) {
-  leftBaseVal = lit - ambient;
- }
- leftVal = lit - ambient;
- 
- digitalWrite(rightLed, LOW);
- delay(5);                            //To give ADC and LED transition time
- ambient = analogRead(rightInput);
- digitalWrite(rightLed, HIGH);
- delay(5);
- lit = analogRead(rightInput);
- if(initialize) {
-  rightBaseVal = lit - ambient;
- }
- rightVal = lit - ambient;
  if(!initialize) {
   checkLine();
  } else {
@@ -149,84 +116,92 @@ void readLine() {
  }
 }
 
+//checkLine
 void checkLine() {
-  if((frontVal - frontBaseVal) >= lineThreshold) {
-    recovery(1);
-    return;
-  }
-  if((leftVal - leftBaseVal) >= lineThreshold) {
-    recovery(2);
-    return;
-  }
-  if((rightVal - rightBaseVal) >= lineThreshold) {
-    recovery(3);
-    return;
+  for(int j = 0; j < 4; j++) {
+    if((vals[j] - bvals[j]) >= lineThreshold) {
+      recovery(j+1);
+      return;
+    }
   }
 }
 
+//recovery
 void recovery(int sensor) {
   // 0 is forward, 1 is backward
   //move(1, 200, rightDir); //right motor
   //move(2, 200, leftDir); //left motor
   switch(sensor) {
     case 1:   //front, burst of back up
-      Serial.println("FRONT TRIGGERED");
+      Serial.println("LF TRIGGERED");
+      //burst backward, reverse right
       move(1, 255, 1);
       move(2, 255, 1);
-      delay(1000);
-      break;  //left, burst forward, back up to right
-    case 2:
-      Serial.println("LEFT TRIGGERED");
-      move(1, 255, 0);
-      move(2, 255, 0);
       delay(500);
-      move(1, 128, 1);
+      move(1, 50, 1);
       move(2, 255, 1);
       delay(500);
       break;
+    case 2:
+      Serial.println("LB TRIGGERED");
+      //burst forward, fwd right
+      move(1, 255, 0);
+      move(2, 255, 0);
+      delay(500);
+      move(1, 50, 0);
+      move(2, 255, 0);
+      delay(500);
+      break;
     case 3:   //right, burst forward, back up to left
-      Serial.println("RIGHT TRIGGERED");
+      Serial.println("RF TRIGGERED");
+      //burst backward, reverse left
       move(1, 255, 1);
       move(2, 255, 1);
       delay(500);
-      move(2, 128, 1);
       move(1, 255, 1);
+      move(2, 50, 1);
+      delay(500);
+      break;
+    case 4:   //
+      Serial.println("RB TRIGGERED");
+      //burst forward, fwd left
+      move(1, 255, 0);
+      move(2, 255, 0);
+      delay(500);
+      move(1, 255, 0);
+      move(2, 50, 0);
       delay(500);
       break;
   }
 }
 
-void move(int motor, int speed, int direction){
-//Move specific motor at speed and direction
-//motor: 0 for B 1 for A
-//speed: 0 is off, and 255 is full speed
-//direction: 0 clockwise, 1 counter-clockwise
- digitalWrite(STBY, HIGH); //disable standby
-
- boolean inPin1 = LOW;
- boolean inPin2 = HIGH;
-
- if(direction == 1){
-   inPin1 = HIGH;
-   inPin2 = LOW;
- }
-
- if(motor == 1){
-   digitalWrite(AIN1, inPin1);
-   digitalWrite(AIN2, inPin2);
-   analogWrite(PWMA, speed);
- }else{
-   digitalWrite(BIN1, inPin1);
-   digitalWrite(BIN2, inPin2);
-   analogWrite(PWMB, speed);
- }
+//move
+void move(int motor, int speed, int direction) {
+  //motor: LEFT 0 RIGHT 1
+  //speed: 0 is off, and 255 is full speed
+  //direction: 0 FWD, 1 REV
+  //^ double check conventions
+  int ppmSpeed;
+  if(direction == 0) {  //FWD
+    ppmSpeed = 1500 + 400*(speed/255); 
+  } else {              //REV
+    ppmSpeed = 1500 - 400*(speed/255);
+  }
+  if(motor == 2) {  //Left,   2
+    leftMotor.writeMicroseconds(ppmSpeed);
+  } else {          //Right , 1
+    rightMotor.writeMicroseconds(ppmSpeed);
+  }
 }
 
-void stop(){
-//enable standby  
-  digitalWrite(STBY, LOW); 
+//stop
+void stop() {
+  leftMotor.writeMicroseconds(1500);
+  rightMotor.writeMicroseconds(1500);
+  delay(250); //this is near the mininum delay required for a quick reverse
 }
 
+//calcDistance
 void calcDistance() {
  prevLeft = leftDistance;
  prevRight = rightDistance;
@@ -256,10 +231,7 @@ void calcDistance() {
 
  readLine();
 }
-
-/*
- * spins until it finds an object, then stops
- */
+//search
 void search() {
   while(!found) {
     // 0 is forward, 1 is backward
@@ -280,8 +252,8 @@ void search() {
         leftDir = 0;
       }
     }
-    if((leftDistance <= maximumRange && leftDistance >= minimumRange) &&
-       (rightDistance <= maximumRange && rightDistance >=minimumRange)) {
+    if((leftDistance <= maxRange && leftDistance >= minRange) &&
+       (rightDistance <= maxRange && rightDistance >=minRange)) {
         found = true;
         //Serial.println("FOUND");
       stop();  
@@ -293,14 +265,15 @@ void search() {
   }
 }
 
+//follow
 void follow() {
   while(!tagged) {
     calcDistance();
     diff = leftDistance - rightDistance;
     diffMag = abs(diff);
 
-    if(!(leftDistance <= maximumRange && leftDistance >= minimumRange) &&
-       !(rightDistance <= maximumRange && rightDistance >=minimumRange)) {
+    if(!(leftDistance <= maxRange && leftDistance >= minRange) &&
+       !(rightDistance <= maxRange && rightDistance >=minRange)) {
         found = false;
         lost = true;
         search();
