@@ -42,11 +42,13 @@ long vals[4] = {LFval, LBval, RFval, RBval};
 #define rightTrig 7
 
 //Distance parameters
+#define maxValid 150
 #define maxRange 20
 #define minRange 1
 long leftDistance = 1000;
 long rightDistance = 1000;
 long prevLeft, prevRight;
+long pValidLeft, pValidRight;
 long durationLeft, durationRight;
 
 //Search parameters
@@ -254,7 +256,18 @@ void calcDistance() {
  pinMode(rightEcho, INPUT);
  durationRight = pulseIn(rightEcho, HIGH);
  rightDistance = durationRight/58.2; 
-
+ 
+// if(!(leftDistance <= maxValid) || !(leftDistance >= minRange)) {
+//  leftDistance = pValidLeft;
+// } else { //valid
+//  pValidLeft = leftDistance;
+// }
+// if(!(rightDistance <= maxValid) || !(rightDistance >=minRange)) {
+//  rightDistance = pValidRight;
+// } else { //valid
+//  pValidRight = rightDistance;
+// }
+  //if sensors suck, consider using this^
  readLine();
 }
 //search
