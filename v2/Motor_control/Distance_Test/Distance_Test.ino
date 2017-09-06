@@ -59,7 +59,7 @@ int BIN1 = 11; //Direction
 int BIN2 = 12; //Direction
 char past;
 int count;
-
+int threshold;
 void setup() {
   Serial.begin(9600);
   pinMode(STBY, OUTPUT);
@@ -73,13 +73,26 @@ void setup() {
   pinMode(BIN2, OUTPUT);
   past = 'f';
   count = 0;
+  threshold = analogRead(backleft) + 200;
 }
 
 void loop() {
   // Get distance from sensor
   unsigned int distance = sensor.getDist();
   unsigned int distance2 = sensor2.getDist();
-  if (((past == 'f' || count >= 30) && (distance > 600 && distance2 > 600)) || (distance <= 300 && distance2 < 300)) {
+  if (backleft > threshold) {
+    move(1, 120, 1); //motor 1, full speed, left
+    move(2, 40, 0); //motor 2, full speed, left
+  } else if (backright > threshold) {
+    move(1, 40, 1); //motor 1, full speed, left
+    move(2, 120, 0); //motor 2, full speed, left
+  } else if (frontleft > threshold) {
+    move(1, 40, 0); //motor 1, full speed, left
+    move(2, 120, 1); //motor 2, full speed, left
+  } else if (frontright > threshold) {
+    move(1, 120, 0); //motor 1, full speed, left
+    move(2, 40, 1); //motor 2, full speed, left
+  } else if (((past == 'f' || count >= 30) && (distance > 600 && distance2 > 600)) || (distance <= 300 && distance2 < 300)) {
     move(1, 128, 1); //motor 1, full speed, left
     move(2, 128, 0); //motor 2, full speed, left
     past == 'f';
