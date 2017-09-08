@@ -35,13 +35,15 @@ fit functions.
 // Analog pin to which the sensor is connected
 const byte sensorPin = A0;
 const byte sensorPin2 = A1;
-const byte backleft = A2;
-const byte backright = A3;
-const byte frontright = A4;
-const byte frontleft = A5;
+const byte backleft = A6;
+const byte backright = A7;
+const byte frontright = A2;
+const byte frontleft = A3;
 
 // Window size of the median filter (odd number, 1 = no filtering)
 const byte mediumFilterWindowSize = 5;
+unsigned int distance;
+unsigned int distance2;
 
 // Create an object instance of the SharpDistSensor class
 SharpDistSensor sensor(sensorPin, mediumFilterWindowSize);
@@ -60,6 +62,7 @@ int BIN2 = 12; //Direction
 char past;
 int count;
 int threshold;
+short iter;
 void setup() {
   Serial.begin(9600);
   pinMode(STBY, OUTPUT);
@@ -73,56 +76,87 @@ void setup() {
   pinMode(BIN2, OUTPUT);
   past = 'f';
   count = 0;
-  threshold = analogRead(backleft) + 200;
+  iter = 0;
+  threshold = analogRead(backleft) - 200;
+  distance = sensor.getDist();
+  distance2 = sensor2.getDist();
 }
 
 void loop() {
   // Get distance from sensor
-  unsigned int distance = sensor.getDist();
-  unsigned int distance2 = sensor2.getDist();
-  if (backleft > threshold) {
+  iter ++;
+  if (iter == 1) {
+    distance = sensor.getDist();
+    distance2 = sensor2.getDist();
+    Serial.print(past);
+    Serial.print(", ");
+    Serial.print(distance);
+    Serial.print(", ");
+    Serial.print(distance2);
+    Serial.print(", ");
+    Serial.print(analogRead(backleft));
+    Serial.print(", ");
+    Serial.print(analogRead(backright));
+    Serial.print(", ");
+    Serial.print(analogRead(frontleft));
+    Serial.print(", ");
+    Serial.println(analogRead(frontright));
+  } else if (iter == 5) {
+    iter = 0;
+  }
+  if (analogRead(backleft) < threshold) {
     move(1, 120, 1); //motor 1, full speed, left
     move(2, 40, 0); //motor 2, full speed, left
-  } else if (backright > threshold) {
+    past = 'f';
+    delay(50);
+  } else if (analogRead(backright) < threshold) {
     move(1, 40, 1); //motor 1, full speed, left
     move(2, 120, 0); //motor 2, full speed, left
-  } else if (frontleft > threshold) {
+    past = 'f';
+    delay(50);
+  } else if (analogRead(frontleft) < threshold) {
     move(1, 40, 0); //motor 1, full speed, left
     move(2, 120, 1); //motor 2, full speed, left
-  } else if (frontright > threshold) {
+    past = 'f';
+    delay(50);
+  } else if (analogRead(frontright) < threshold) {
     move(1, 120, 0); //motor 1, full speed, left
     move(2, 40, 1); //motor 2, full speed, left
-  } else if (((past == 'f' || count >= 30) && (distance > 600 && distance2 > 600)) || (distance <= 300 && distance2 < 300)) {
-    move(1, 128, 1); //motor 1, full speed, left
-    move(2, 128, 0); //motor 2, full speed, left
-    past == 'f';
-    count = 0;
-  } else if (past == 'l') {
-    move(1, 20, 1); //motor 1, full speed, left
-    move(2, 128, 0); //motor 2, full speed, left
-    past = 'l';
-    count++;
-  } else if (past == 'r') {
-    move(1, 128, 1); //motor 1, full speed, left
-    move(2, 20, 0); //motor 2, full speed, left
-    past = 'r';
-    count++;
-  } else if (distance > 600) {
-    move(1, 20, 1); //motor 1, full speed, left
-    move(2, 128, 0); //motor 2, full speed, left
-    past = 'l';
-  } else{
-    move(1, 128, 1); //motor 1, full speed, left
-    move(2, 20, 0); //motor 2, full speed, left
-    past == 'r';
+    past = 'f';
+    delay(50);
+  } else if (iter == 1){
+    if (((past == 'f' || count >= 100) && (distance > 600 && distance2 > 600)) || (distance <= 300 && distance2 <= 300) || (abs(distance - distance2) <= 150)) {
+      move(1, 128, 1); //motor 1, full speed, left
+      move(2, 128, 0); //motor 2, full speed, left
+      past = 'f';
+      count = 0;
+    } else if (past == 'l') {
+      move(1, 20, 1); //motor 1, full speed, left
+      move(2, 128, 0); //motor 2, full speed, left
+      past = 'l';
+      count++;
+    } else if (past == 'r') {
+      move(1, 128, 1); //motor 1, full speed, left
+      move(2, 20, 0); //motor 2, full speed, left
+      past = 'r';
+      count++;
+    } else if (distance > 600) {
+      move(1, 20, 1); //motor 1, full speed, left
+      move(2, 128, 0); //motor 2, full speed, left
+      past = 'l';
+      count = 0;
+    } else{
+      move(1, 128, 1); //motor 1, full speed, left
+      move(2, 20, 0); //motor 2, full speed, left
+      past = 'r';
+      count = 0;
+    }
   }
   
-
+  
   // Print distance to Serial
-  Serial.println(distance/25.4);
-
   // Wait some time
-  delay(30);
+  delay(5);
 }
 
 void move(int motor, int speed, int direction){
@@ -156,4 +190,3 @@ void stop(){
 //enable standby
 digitalWrite(STBY, LOW);
 }
-
