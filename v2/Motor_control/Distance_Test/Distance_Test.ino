@@ -33,35 +33,35 @@ fit functions.
 #include <SharpDistSensor.h>
 
 // Analog pin to which the sensor is connected
-const byte sensorPin = A0;
-const byte sensorPin2 = A1;
-const byte backleft = A6;
-const byte backright = A7;
-const byte frontright = A2;
-const byte frontleft = A3;
+const byte sensorPin = A0; //right motor
+const byte sensorPin2 = A1; //left motor
+const byte backleft = A6; //back-left line sensor
+const byte backright = A7; //back-right line sensor
+const byte frontright = A2; //front-left line sensor
+const byte frontleft = A3; //front-right line sensor
 
 // Window size of the median filter (odd number, 1 = no filtering)
 const byte mediumFilterWindowSize = 5;
-unsigned int distance;
-unsigned int distance2;
+unsigned int distance; //distance from right sensor
+unsigned int distance2; //distance from left sensor
 
 // Create an object instance of the SharpDistSensor class
-SharpDistSensor sensor(sensorPin, mediumFilterWindowSize);
-SharpDistSensor sensor2(sensorPin2, mediumFilterWindowSize);
+SharpDistSensor sensor(sensorPin, mediumFilterWindowSize); //right sensor
+SharpDistSensor sensor2(sensorPin2, mediumFilterWindowSize); //left sensor
 int STBY = 10; //standby
 
-//Motor A
+//Right Motor (? I'm not too sure about this)
 int PWMA = 3; //Speed control
 int AIN1 = 9; //Direction
 int AIN2 = 8; //Direction
 
-//Motor B
+//Left Motor (? also not too sure about this)
 int PWMB = 5; //Speed control
 int BIN1 = 11; //Direction
 int BIN2 = 12; //Direction
-char past;
-int count;
-int threshold;
+char past; //what direction the robot was moving previously
+int count; //counter for how long before the rebot gives up searching in one direction
+int threshold; //threshold for line sensors
 short iter;
 void setup() {
   Serial.begin(9600);
@@ -74,7 +74,9 @@ void setup() {
   pinMode(PWMB, OUTPUT);
   pinMode(BIN1, OUTPUT);
   pinMode(BIN2, OUTPUT);
-  past = 'f';
+
+  //initialising values
+  past = 'f'; //set default move to forward
   count = 0;
   iter = 0;
   threshold = analogRead(backleft) - 200;
@@ -84,8 +86,9 @@ void setup() {
 
 void loop() {
   // Get distance from sensor
-  iter ++;
+  iter++;
   if (iter == 1) {
+    //print out values from sensors and motors to the console
     distance = sensor.getDist();
     distance2 = sensor2.getDist();
     Serial.print(past);
@@ -104,55 +107,66 @@ void loop() {
   } else if (iter == 5) {
     iter = 0;
   }
-  if (analogRead(backleft) < threshold) {
+  if (analogRead(backleft) < threshold) { //first read from line sensors before doing anything else
+    //if line detected by back-left line sensor, turn left a bit
+    move(1, 40, 1); //motor 1, full speed, left
+    move(2, 120, 0); //motor 2, full speed, left
+    past = 'f'; //set default move to forward
+    delay(50); //wait 50ms for the IR sensors to take new reading
+  } else if (analogRead(backright) < threshold) {
+    //if line detected by back-right line sensor, turn right a bit
     move(1, 120, 1); //motor 1, full speed, left
     move(2, 40, 0); //motor 2, full speed, left
     past = 'f';
     delay(50);
-  } else if (analogRead(backright) < threshold) {
-    move(1, 40, 1); //motor 1, full speed, left
-    move(2, 120, 0); //motor 2, full speed, left
-    past = 'f';
-    delay(50);
   } else if (analogRead(frontleft) < threshold) {
+    //if line dectected by front-left sensor, go back and to the left a bit
     move(1, 40, 0); //motor 1, full speed, left
     move(2, 120, 1); //motor 2, full speed, left
     past = 'f';
     delay(50);
   } else if (analogRead(frontright) < threshold) {
+    //if line detected by front-right sensor, go back and to the right a bit
     move(1, 120, 0); //motor 1, full speed, left
     move(2, 40, 1); //motor 2, full speed, left
     past = 'f';
     delay(50);
   } else if (iter == 1){
     if (((past == 'f' || count >= 100) && (distance > 600 && distance2 > 600)) || (distance <= 300 && distance2 <= 300) || (abs(distance - distance2) <= 150)) {
+      //if (robot moved forward in the past OR it's been searching for 100 iterations) AND (there isn't an object within 600mm of either IR sensor))
+      //OR there is an object within 300mm of both sensors 
+      //OR the difference between the two distances measured by the IR sensors is within 150mm of each other
+      //move forward
       move(1, 128, 1); //motor 1, full speed, left
       move(2, 128, 0); //motor 2, full speed, left
-      past = 'f';
-      count = 0;
+      past = 'f'; //set past movement to forward
+      count = 0; //reset abandon search count
     } else if (past == 'l') {
+      //if robot has been moving left in the past, move left more
       move(1, 20, 1); //motor 1, full speed, left
       move(2, 128, 0); //motor 2, full speed, left
-      past = 'l';
-      count++;
+      past = 'l'; //set past movement to left
+      count++; //increment abandon search count
     } else if (past == 'r') {
+      //if robot has been moving right in the past, move right
       move(1, 128, 1); //motor 1, full speed, left
       move(2, 20, 0); //motor 2, full speed, left
-      past = 'r';
-      count++;
+      past = 'r'; //set past movement to right
+      count++; //increment abandon search count
     } else if (distance > 600) {
+      //if there is an object beyond 600mm of the right sensor (i.e. there is something closer in the left sensor), move left
       move(1, 20, 1); //motor 1, full speed, left
       move(2, 128, 0); //motor 2, full speed, left
-      past = 'l';
-      count = 0;
-    } else{
+      past = 'l'; //set past movement to left
+      count = 0; //reset abandon search count because the robot has found an object
+    } else {
+      //else (i.e. there is an object closer in the right sensor), move right
       move(1, 128, 1); //motor 1, full speed, left
       move(2, 20, 0); //motor 2, full speed, left
-      past = 'r';
-      count = 0;
+      past = 'r'; //set past movement to right
+      count = 0; //reset abandon search count
     }
   }
-  
   
   // Print distance to Serial
   // Wait some time
@@ -160,33 +174,33 @@ void loop() {
 }
 
 void move(int motor, int speed, int direction){
-//Move specific motor at speed and direction
-//motor: 0 for B 1 for A
-//speed: 0 is off, and 255 is full speed
-//direction: 0 clockwise, 1 counter-clockwise
-
-digitalWrite(STBY, HIGH); //disable standby
-
-boolean inPin1 = LOW;
-boolean inPin2 = HIGH;
-
-if(direction == 1){
-inPin1 = HIGH;
-inPin2 = LOW;
-}
-
-if(motor == 1){
-digitalWrite(AIN1, inPin1);
-digitalWrite(AIN2, inPin2);
-analogWrite(PWMA, speed);
-}else{
-digitalWrite(BIN1, inPin1);
-digitalWrite(BIN2, inPin2);
-analogWrite(PWMB, speed);
-}
+  //Move specific motor at speed and direction
+  //motor: 1 for right, 2 for left
+  //speed: 0 is off, and 255 is full speed
+  //direction: 0 clockwise, 1 counter-clockwise
+  
+  digitalWrite(STBY, HIGH); //disable standby
+  
+  boolean inPin1 = LOW;
+  boolean inPin2 = HIGH;
+  
+  if(direction == 1){
+    inPin1 = HIGH;
+    inPin2 = LOW;
+  }
+  
+  if(motor == 1){
+    digitalWrite(AIN1, inPin1);
+    digitalWrite(AIN2, inPin2);
+    analogWrite(PWMA, speed);
+  } else {
+    digitalWrite(BIN1, inPin1);
+    digitalWrite(BIN2, inPin2);
+    analogWrite(PWMB, speed);
+  }
 }
 
 void stop(){
-//enable standby
-digitalWrite(STBY, LOW);
+  //enable standby
+  digitalWrite(STBY, LOW);
 }
