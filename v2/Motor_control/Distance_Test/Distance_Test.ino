@@ -39,6 +39,8 @@ const byte backleft = A6; //back-left line sensor
 const byte backright = A7; //back-right line sensor
 const byte frontright = A2; //front-left line sensor
 const byte frontleft = A3; //front-right line sensor
+//A4: left peripheral sensor
+//A5: right peripheral sensor
 
 // Window size of the median filter (odd number, 1 = no filtering)
 const byte mediumFilterWindowSize = 5;
