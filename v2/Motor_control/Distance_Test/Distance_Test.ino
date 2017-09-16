@@ -33,19 +33,21 @@ fit functions.
 #include <SharpDistSensor.h>
 
 // Analog pin to which the sensor is connected
-const byte sensorPin = A0; //right motor
-const byte sensorPin2 = A1; //left motor
+const byte sensorPin = A0; //right IR sensor
+const byte sensorPin2 = A1; //left IR sensor
 const byte backleft = A6; //back-left line sensor
 const byte backright = A7; //back-right line sensor
 const byte frontright = A2; //front-left line sensor
 const byte frontleft = A3; //front-right line sensor
-//A4: left peripheral sensor
-//A5: right peripheral sensor
+const byte sideleft = A4; //A4: left peripheral sensor
+const byte sideright = A5;//A5: right peripheral sensor
 
 // Window size of the median filter (odd number, 1 = no filtering)
 const byte mediumFilterWindowSize = 5;
-unsigned int distance; //distance from right sensor
-unsigned int distance2; //distance from left sensor
+unsigned int rightDist; //distance from right sensor
+unsigned int leftDist; //distance from left sensor
+unsigned int perRightDist; //distance from peripheral right sensor
+unsigned int perLeftDist; //distance from peripheral left sensor
 
 // Create an object instance of the SharpDistSensor class
 SharpDistSensor sensor(sensorPin, mediumFilterWindowSize); //right sensor
@@ -82,8 +84,10 @@ void setup() {
   count = 0;
   iter = 0;
   threshold = analogRead(backleft) - 200;
-  distance = sensor.getDist();
-  distance2 = sensor2.getDist();
+  rightDist = sensor.getDist();
+  leftDist = sensor2.getDist();
+  perRightDist = sideright.getDist();
+  perLeftDist = sideleft.getDist();
 }
 
 void loop() {
@@ -91,13 +95,19 @@ void loop() {
   iter++;
   if (iter == 1) {
     //print out values from sensors and motors to the console
-    distance = sensor.getDist();
-    distance2 = sensor2.getDist();
+    rightDist = sensor.getDist();
+    leftDist = sensor2.getDist();
+    perRightDist = sideright.getDist();
+    perLeftDist = sideleft.getDist();
     Serial.print(past);
     Serial.print(", ");
-    Serial.print(distance);
+    Serial.print(rightDist);
     Serial.print(", ");
-    Serial.print(distance2);
+    Serial.print(leftDist);
+    Serial.print(", ");
+    Serial.print(perRightDist);
+    Serial.print(", ");
+    Serial.print(perLeftDist);
     Serial.print(", ");
     Serial.print(analogRead(backleft));
     Serial.print(", ");
@@ -134,8 +144,10 @@ void loop() {
     past = 'f';
     delay(50);
   } else if (iter == 1){
-    if (((past == 'f' || count >= 100) && (distance > 600 && distance2 > 600)) || (distance <= 300 && distance2 <= 300) || (abs(distance - distance2) <= 150)) {
-      //if (robot moved forward in the past OR it's been searching for 100 iterations) AND (there isn't an object within 600mm of either IR sensor))
+    if (((past == 'f' || count >= 100) && (rightDist > 600 && leftDist > 600 && perRightDist > 600 && perLeftDist > 600)) 
+          || (rightDist <= 300 && leftDist <= 300) 
+          || (abs(rightDist - leftDist) <= 150)) {
+      //if (robot moved forward in the past OR it's been searching for 100 iterations) AND (there isn't an object within 600mm of any IR sensor))
       //OR there is an object within 300mm of both sensors 
       //OR the difference between the two distances measured by the IR sensors is within 150mm of each other
       //move forward
@@ -155,8 +167,8 @@ void loop() {
       move(2, 20, 0); //motor 2, full speed, left
       past = 'r'; //set past movement to right
       count++; //increment abandon search count
-    } else if (distance > 600) {
-      //if there is an object beyond 600mm of the right sensor (i.e. there is something closer in the left sensor), move left
+    } else if (rightDist > 600) {
+      //if there is an object beyond 600mm of the right sensors (i.e. there is something closer in the left sensors), move left
       move(1, 20, 1); //motor 1, full speed, left
       move(2, 128, 0); //motor 2, full speed, left
       past = 'l'; //set past movement to left
