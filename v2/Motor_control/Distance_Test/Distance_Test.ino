@@ -69,11 +69,16 @@ int BIN2 = 12; //Direction
 char past; //what direction the robot was moving previously
 int count; //counter for how long before the rebot gives up searching in one direction
 int threshold; //threshold for line sensors
-int cur; // current time
-int initTime; // time after initialization
+int curIR; // current time
+int prevIR; 
+int curLine; 
+int prevLine; 
 short iter;
 int maxS;
 int minS;
+
+int near = 200;
+int far = 500;
 
 void setup() {
   Serial.begin(9600);
@@ -96,32 +101,38 @@ void setup() {
   leftDist = sensor2.getDist();
   perRightDist = sideright.getDist();
   perLeftDist = sideleft.getDist();
-  initTime = millis();
+  prevLine = millis();
+  prevIR = prevLine;
   setSpeed(128, 20);
 }
 
 void loop() {
-  // Get distance from sensor
-  cur = millis();
-    //print out values from sensors and motors to the console
-    Serial.print(past);
-    Serial.print(", ");
-    Serial.print(rightDist);
-    Serial.print(", ");
-    Serial.print(leftDist);
-    Serial.print(", ");
-    Serial.print(perRightDist);
-    Serial.print(", ");
-    Serial.print(perLeftDist);
-    Serial.print(", ");
-    Serial.print(analogRead(backleft));
-    Serial.print(", ");
-    Serial.print(analogRead(backright));
-    Serial.print(", ");
-    Serial.print(analogRead(frontleft));
-    Serial.print(", ");
-    Serial.println(analogRead(frontright));
-  if ((cur - initTime) % 5 == 0) {
+  curLine = millis();
+  curIR = curLine;
+  
+  //print out values from sensors and motors to the console
+  Serial.print(past);
+  Serial.print(", ");
+  Serial.print(rightDist);
+  Serial.print(", ");
+  Serial.print(leftDist);
+  Serial.print(", ");
+  Serial.print(perRightDist);
+  Serial.print(", ");
+  Serial.print(perLeftDist);
+  Serial.print(", ");
+  Serial.print(analogRead(backleft));
+  Serial.print(", ");
+  Serial.print(analogRead(backright));
+  Serial.print(", ");
+  Serial.print(analogRead(frontleft));
+  Serial.print(", ");
+  Serial.println(analogRead(frontright));
+  Serial.print(", ");
+  Serial.println(curLine - prevLine);
+    
+  if ((curLine - prevLine) >= 5) {
+    prevLine = curLine;
     if (analogRead(backleft) < threshold) { //first read from line sensors before doing anything else
       //if line detected by back-left line sensor, turn left a bit
       move(1, 40, 1); //motor 1, full speed, left
@@ -146,28 +157,30 @@ void loop() {
       move(2, 40, 1); //motor 2, full speed, left
       past = 'f';
       delay(50);
-    } else if ((cur - initTime) % 25 == 0){
+    } else if ((curIR - prevIR) >= 25){
+      prevIR = curIR;
+      // Get distance from sensors
       rightDist = sensor.getDist();
       leftDist = sensor2.getDist();
       perRightDist = sideright.getDist();
       perLeftDist = sideleft.getDist();
-      if (perLeftDist <= 300) {
-        //if there is an object within 300mm of the left peripheral sensor, move left
+      if (perLeftDist <= near) {
+        //if there is an object within nearmm of the left peripheral sensor, move left
         //turn left in place
         leftInPlace();
         past = 'l'; //set past movement to left
         count = 0; //reset abandon search count because the robot has found an object
-      } else if (perRightDist <= 300) {
-        //if there is an object within 300mm of the right peripheral sensor, move right
+      } else if (perRightDist <= near) {
+        //if there is an object within nearmm of the right peripheral sensor, move right
         //turn right in place
         rightInPlace();
         past = 'r'; //set past movement to left
         count = 0; //reset abandon search count because the robot has found an object
-      } else if (((past == 'f' || count >= 100) && (rightDist > 600 && leftDist > 600 && perRightDist > 600 && perLeftDist > 600)) 
-            || (rightDist <= 300 && leftDist <= 300 && perRightDist > 600 && perLeftDist > 600) 
+      } else if (((past == 'f' || count >= 100) && (rightDist > far && leftDist > far && perRightDist > far && perLeftDist > far)) 
+            || (rightDist <= near && leftDist <= near) 
             || (abs(rightDist - leftDist) <= 150)) {
-        //if (robot moved forward in the past OR it's been searching for 100 iterations) AND (there isn't an object within 600mm of any IR sensor))
-        //OR there is an object within 300mm of both sensors 
+        //if (robot moved forward in the past OR it's been searching for 100 iterations) AND (there isn't an object within far of any IR sensor))
+        //OR there is an object within near of both sensors 
         //OR the difference between the two distances measured by the IR sensors is within 150mm of each other
         //move forward
         forward();
@@ -183,13 +196,13 @@ void loop() {
         right();
         past = 'r'; //set past movement to right
         count++; //increment abandon search count
-      } else if (rightDist <= 600 || perRightDist <= 600) {
-        //if there is an object beyond 600mm of the left sensors (i.e. there is something closer in the right sensors), move right
+      } else if (rightDist <= far || perRightDist <= far) {
+        //if there is an object beyond farmm of the left sensors (i.e. there is something closer in the right sensors), move right
         right();
         past = 'r'; //set past movement to right
         count = 0; //reset abandon search count because the robot has found an object
-      } else if (leftDist <= 600 || perLeftDist <= 600) {
-        //if there is an object beyond 600mm of the right sensors (i.e. there is something closer in the left sensors), move left
+      } else if (leftDist <= far || perLeftDist <= far) {
+        //if there is an object beyond farmm of the right sensors (i.e. there is something closer in the left sensors), move left
         left();
         past = 'l'; //set past movement to left
         count = 0; //reset abandon search count because the robot has found an object
