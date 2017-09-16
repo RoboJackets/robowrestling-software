@@ -39,8 +39,8 @@ const byte backleft = A6; //back-left line sensor
 const byte backright = A7; //back-right line sensor
 const byte frontright = A2; //front-left line sensor
 const byte frontleft = A3; //front-right line sensor
-const byte sideleft = A4; //A4: left peripheral sensor
-const byte sideright = A5;//A5: right peripheral sensor
+const byte sensorPin4 = A4; //A4: left peripheral sensor
+const byte sensorPin3 = A5;//A5: right peripheral sensor
 
 // Window size of the median filter (odd number, 1 = no filtering)
 const byte mediumFilterWindowSize = 5;
@@ -52,6 +52,8 @@ unsigned int perLeftDist; //distance from peripheral left sensor
 // Create an object instance of the SharpDistSensor class
 SharpDistSensor sensor(sensorPin, mediumFilterWindowSize); //right sensor
 SharpDistSensor sensor2(sensorPin2, mediumFilterWindowSize); //left sensor
+SharpDistSensor sideright(sensorPin3, mediumFilterWindowSize); //right peripheral sensor
+SharpDistSensor sideleft(sensorPin4, mediumFilterWindowSize); //left peripheral sensor
 int STBY = 10; //standby
 
 //Right Motor (? I'm not too sure about this)
