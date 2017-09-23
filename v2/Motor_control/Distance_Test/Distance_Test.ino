@@ -186,12 +186,12 @@ void loop() {
         forward();
         past = 'f'; //set past movement to forward
         count = 0; //reset abandon search count
-      } else if (past == 'l') {
+      } else if (past == 'l' && (rightDist > far && leftDist > far && perRightDist > far && perLeftDist > far)) {
         //if robot has been moving left in the past, move left more
         left();
         past = 'l'; //set past movement to left
         count++; //increment abandon search count
-      } else if (past == 'r') {
+      } else if (past == 'r' && (rightDist > far && leftDist > far && perRightDist > far && perLeftDist > far)) {
         //if robot has been moving right in the past, move right
         right();
         past = 'r'; //set past movement to right
