@@ -44,10 +44,10 @@ const byte sensorPin3 = A5;//A5: right peripheral sensor
 
 // Window size of the median filter (odd number, 1 = no filtering)
 const byte mediumFilterWindowSize = 5;
-unsigned int rightDist; //distance from right sensor
-unsigned int leftDist; //distance from left sensor
-unsigned int perRightDist; //distance from peripheral right sensor
-unsigned int perLeftDist; //distance from peripheral left sensor
+int rightDist; //distance from right sensor
+int leftDist; //distance from left sensor
+int perRightDist; //distance from peripheral right sensor
+int perLeftDist; //distance from peripheral left sensor
 
 // Create an object instance of the SharpDistSensor class
 SharpDistSensor sensor(sensorPin, mediumFilterWindowSize); //right sensor
@@ -69,20 +69,32 @@ int BIN2 = 12; //Direction
 char past; //what direction the robot was moving previously
 int count; //counter for how long before the rebot gives up searching in one direction
 int threshold; //threshold for line sensors
-int curIR; // current time
 int prevIR; 
-int curLine; 
+int cur;
+int prevFlag; 
 int prevLine; 
 short iter;
-int maxS;
-int minS;
+int state;
 int rangeThresh;
 boolean start;
-boolean lineFlag;
+int lineFlag;
 boolean pivotFlag;
 
+int diff = 150;
 int near = 200;
 int far = 500;
+int degreesMin = 1000;
+int degrees90 = 1000;
+int degrees180 = 2000;
+int maxS = 128;
+int minS = 20;
+int startSpinR = 1000;
+int startTurnL = 2000;
+int startSpinL = 1000;
+int pivotBack = 1000;
+int pivotSpinR = 1000;
+int pivotTurnL = 1000;
+int pivotSpinL = 1000;
 
 void setup() {
   Serial.begin(9600);
@@ -108,16 +120,22 @@ void setup() {
   perLeftDist = sideleft.getDist();
   prevLine = millis();
   prevIR = prevLine;
-  lineFlag = false;
-  pivotFlag = false;
-  setSpeed(128, 20);
+  lineFlag = 0;
+  pivotFlag = true;
+  prevFlag = prevLine;
+  state = 11;
 }
 
 void loop() {
-  curLine = millis();
-  curIR = curLine;
+  cur = millis();
+  movement(state);
   
   //print out values from sensors and motors to the console
+  Serial.print(pivotFlag);
+  Serial.print(", ");
+  Serial.print(state);
+  Serial.print(", ");
+  Serial.print(", ");
   Serial.print(past);
   Serial.print(", ");
   Serial.print(rightDist);
@@ -128,65 +146,52 @@ void loop() {
   Serial.print(", ");
   Serial.print(perLeftDist);
   Serial.print(", ");
-  Serial.print(analogRead(backleft));
-  Serial.print(", ");
-  Serial.print(analogRead(backright));
-  Serial.print(", ");
-  Serial.print(analogRead(frontleft));
-  Serial.print(", ");
-  Serial.println(analogRead(frontright));
-  Serial.print(", ");
-  Serial.println(curLine - prevLine);
-
-  if(start) {
-    startUp();
-  }
+//  Serial.print(analogRead(backleft));
+//  Serial.print(", ");
+//  Serial.print(analogRead(backright));
+//  Serial.print(", ");
+//  Serial.print(analogRead(frontleft));
+//  Serial.print(", ");
+//  Serial.println(analogRead(frontright));
+//  Serial.print(", ");
+  Serial.println(cur - prevLine);
     
-  if ((curLine - prevLine) >= 5) {
-    prevLine = curLine;
-    if (analogRead(backleft) < threshold || analogRead(backright) < threshold) { //first read from line sensors before doing anything else
-      //if line detected by back line sensors, turn left a bit
-      forward();
-      past = 'f'; //set default move to forward
-      delay(50); //wait 50ms for the IR sensors to take new reading
-      lineFlag = true;
-    } else if (analogRead(frontleft) < threshold && past == 'l') {
-      backRight();
-      delay(25);
-      leftInPlace();
-      past = 'f';
-      delay(50);
-      lineFlag = true;
-    } else if (analogRead(frontleft) < threshold && past == 'r' || analogRead(frontleft) < threshold && past == 'f') {
-      backRight();
-      delay(25);
-      rightInPlace();
-      past = 'f';
-      delay(50);
-      lineFlag = true;
-    } else if (analogRead(frontright) < threshold && past == 'l') {
-      backLeft();
-      delay(25);
-      rightInPlace();
-      past = 'f';
-      delay(50);
-      lineFlag = true;
-    } else if (analogRead(frontright) < threshold && past == 'r' || analogRead(frontright) < threshold && past == 'f') {
-      backLeft();
-      delay(25);
-      leftInPlace();
-      past = 'f';
-      delay(50);
-      lineFlag = true;
-    } else if (analogRead(frontright) < threshold && analogRead(frontleft) < threshold) {
-      back();
-      delay(25);
-      rightInPlace();
-      past = 'f';
-      delay(100);
-      lineFlag = true;
-    } else if ((curIR - prevIR) >= 25) {
-      prevIR = curIR;
+  if ((cur - prevLine) >= 5) {
+    prevLine = cur;
+    //if (analogRead(backleft) < threshold || analogRead(backright) < threshold && lineFlag != 1) { //first read from line sensors before doing anything else
+//      //if line detected by back line sensors, turn left a bit
+//      state = 0;
+//      lineFlag = 1;
+//      prevFlag = cur;
+//      pivotFlag = false;
+//    } else if (analogRead(frontleft) < threshold && past == 'l' && lineFlag != 2) {
+//      state = 6;
+//      lineFlag = 2;
+//      prevFlag = cur;
+//      pivotFlag = false;
+//    } else if (analogRead(frontleft) < threshold && past == 'r' || analogRead(frontleft) < threshold && past == 'f' && lineFlag != 3) {
+//      state = 7;
+//      lineFlag = 3;
+//      prevFlag = cur;
+//      pivotFlag = false;
+//    } else if (analogRead(frontright) < threshold && past == 'l' && lineFlag != 4) {
+//      state = 8;
+//      lineFlag = 4;
+//      prevFlag = cur;
+//      pivotFlag = false;
+//    } else if (analogRead(frontright) < threshold && past == 'r' || analogRead(frontright) < threshold && past == 'f' && lineFlag != 5) {
+//      state = 9;
+//      lineFlag = 5;
+//      prevFlag = cur;
+//      pivotFlag = false;
+//    } else if (analogRead(frontright) < threshold && analogRead(frontleft) < threshold && lineFlag != 6) {
+//      state = 10;
+//      lineFlag = 6;
+//      prevFlag = cur;
+//      pivotFlag = false;
+//    } else 
+    if ((cur - prevIR) >= 25) {
+      prevIR = cur;
       // Get distance from sensors
       rightDist = sensor.getDist();
       leftDist = sensor2.getDist();
@@ -201,50 +206,51 @@ void loop() {
         if (perLeftDist <= near) {
           //if there is an object within nearmm of the left peripheral sensor, move left
           //turn left in place
-          leftInPlace();
+          state = 4;
           past = 'l'; //set past movement to left
           count = 0; //reset abandon search count because the robot has found an object
         } else if (perRightDist <= near) {
           //if there is an object within nearmm of the right peripheral sensor, move right
           //turn right in place
-          rightInPlace();
+          state = 5;
           past = 'r'; //set past movement to left
           count = 0; //reset abandon search count because the robot has found an object
-        } else if (perRightDist <= near && perLeftDist <= near) {
+        } else if (rightDist <= near && leftDist <= near) {
           //if there is an object within nearmm of both peripheral sensors, move forward
-          forward();
+          state = 0;
           past = 'f'; //set past movement to left
           count = 0; //reset abandon search count because the robot has found an object
-        } 
-        
-        if (!lineFlag) {
-          if ((abs(rightDist - leftDist) <= 150) 
+        } else if (lineFlag == 0) {
+          if ((abs(rightDist - leftDist) <= diff) 
                 || ((past == 'f' || count >= 100) && (rightDist > far && leftDist > far && perRightDist > far && perLeftDist > far))) {
             //if (robot moved forward in the past OR it's been searching for 100 iterations) AND (there isn't an object within far of any IR sensor))
             //OR there is an object within near of both sensors 
             //OR the difference between the two distances measured by the IR sensors is within 150mm of each other
             //move forward
-            forward();
+            state = 0;
             past = 'f'; //set past movement to forward
             count = 0; //reset abandon search count
-          } else if ((leftDist <= far || perLeftDist <= far) || leftDist - rightDist < -150) {
+          } else if ((perLeftDist <= far && perLeftDist > near) || leftDist - rightDist < -diff) {
             //if there is an object beyond farmm of the right sensors (i.e. there is something closer in the left sensors), move left
-            left();
+            state = 2;
             past = 'l'; //set past movement to left
             count = 0; //reset abandon search count because the robot has found an object
-          } else if ((rightDist <= far || perRightDist <= far) || leftDist - rightDist > 150) {
+            Serial.println(leftDist - rightDist);
+          } else if ((perRightDist <= far && perRightDist > near) || leftDist - rightDist > diff) {
             //if there is an object beyond farmm of the left sensors (i.e. there is something closer in the right sensors), move right
-            right();
+            state = 3;
             past = 'r'; //set past movement to right
             count = 0; //reset abandon search count because the robot has found an object
+            Serial.println('r');
+            Serial.println(leftDist - rightDist);
           } else if (past == 'l') {
             //if robot has been moving left in the past, move left more
-            left();
+            state = 2;
             past = 'l'; //set past movement to left
             count++; //increment abandon search count
           } else if (past == 'r') {
             //if robot has been moving right in the past, move right
-            right();
+            state = 3;
             past = 'r'; //set past movement to right
             count++; //increment abandon search count
           }
@@ -299,61 +305,119 @@ void stop(){
   digitalWrite(STBY, LOW);
 }
 
-void forward() {
-  move(1, maxS, 1); //right, full speed, counter clockwise
-  move(2, maxS, 0); //left, full speed, clockwise
+void movement(int state) {
+  switch (state) {
+    case 0: //forward
+      move(1, maxS, 1); //right, full speed, counter clockwise
+      move(2, maxS, 0); //left, full speed, clockwise
+      break;
+    case 1: //attack
+      move(1, 255, 1); //right, full speed, counter clockwise
+      move(2, 255, 0); //left, full speed, clockwise
+      break;
+    case 2: //left
+      move(1, minS, 1); //right, min speed, counter clockwise
+      move(2, maxS, 0); //left, full speed, clockwise
+      break;
+    case 3: //right
+      move(1, maxS, 1); //right, full speed, counter clockwise
+      move(2, minS, 0); //left, full speed, clockwise
+      break;
+    case 4: //left in place
+      move(1, maxS, 0); //right, full speed, clockwise
+      move(2, maxS, 0); //left, full speed, clockwise
+      break;
+    case 5: //right in place
+      move(1, maxS, 1); //right, full speed, counter clockwise
+      move(2, maxS, 1); //left, full speed, counter clockwise
+      break;
+    case 6: //back right and left
+      if (cur - prevFlag < degreesMin) {
+        move(1, maxS, 0); //right, full speed, counter clockwise
+        move(2, minS, 1); //left, full speed, clockwise
+      } else if (cur - prevFlag < degrees90) {
+        move(1, maxS, 0); //right, full speed, clockwise
+        move(2, maxS, 0); //left, full speed, clockwise
+      } else {
+        lineFlag = 0;
+      }
+      break;
+    case 7: //back right and right
+      if (cur - prevFlag < degreesMin) {
+        move(1, maxS, 0); //right, full speed, counter clockwise
+        move(2, minS, 1); //left, full speed, clockwise
+      } else if (cur - prevFlag < degrees90) {
+        move(1, maxS, 1); //right, full speed, counter clockwise
+        move(2, maxS, 1); //left, full speed, counter clockwise
+      } else {
+        lineFlag = 0;
+      }
+      break;
+    case 8: //back left and right
+      if (cur - prevFlag < degreesMin) {
+        move(1, minS, 0); //right, min speed, counter clockwise
+        move(2, maxS, 1); //left, full speed, clockwise
+      } else if (cur - prevFlag < degrees90) {
+        move(1, maxS, 1); //right, full speed, counter clockwise
+        move(2, maxS, 1); //left, full speed, counter clockwise
+      } else {
+        lineFlag = 0;
+      }
+      break;
+    case 9: //back left and left
+      if (cur - prevFlag < degreesMin) {
+        move(1, minS, 0); //right, min speed, counter clockwise
+        move(2, maxS, 1); //left, full speed, clockwise
+      } else if (cur - prevFlag < degrees90) {
+        move(1, maxS, 0); //right, full speed, clockwise
+        move(2, maxS, 0); //left, full speed, clockwise
+      } else {
+        lineFlag = 0;
+      }
+      break;
+    case 10: //back and spin 180
+      if (cur - prevFlag < degreesMin) {
+        move(1, maxS, 0); //right, full speed, clockwise
+        move(2, maxS, 0); //left, full speed, clockwise
+      } else if (cur - prevFlag < degrees180) {
+        move(1, maxS, 0); //right, full speed, clockwise
+        move(2, maxS, 0); //left, full speed, clockwise
+      } else {
+        lineFlag = 0;
+      }
+      break;
+    case 11: //startup movement: spin right, turn left, spin left
+      if (cur - prevFlag < startSpinR) {
+        move(1, maxS, 1); //right, full speed, counter clockwise
+        move(2, maxS, 1); //left, full speed, counter clockwise
+      } else if (cur - prevFlag < startTurnL) {
+        move(1, minS, 1); //right, min speed, counter clockwise
+        move(2, maxS, 0); //left, full speed, clockwise
+      } else if (cur - prevFlag < startSpinL) {
+        move(1, maxS, 0); //right, full speed, clockwise
+        move(2, maxS, 0); //left, full speed, clockwise
+      } else {
+        past = 'f';
+        pivotFlag = false;
+      }
+      break;
+    case 12: //pivot: 
+      if (cur - prevFlag < pivotBack) {
+        move(1, maxS, 0); //right, full speed, clockwise
+        move(2, maxS, 0); //left, full speed, clockwise
+      } else if (cur - prevFlag < pivotSpinR) {
+        move(1, maxS, 1); //right, full speed, counter clockwise
+        move(2, maxS, 1); //left, full speed, counter clockwise
+      } else if (cur - prevFlag < pivotTurnL) {
+        move(1, minS, 1); //right, min speed, counter clockwise
+        move(2, maxS, 0); //left, full speed, clockwise
+      } else if (cur - prevFlag < pivotSpinL) {
+        move(1, maxS, 0); //right, full speed, clockwise
+        move(2, maxS, 0); //left, full speed, clockwise
+      } else {
+        past = 'f';
+        pivotFlag = false;
+      }
+      break;
+  }
 }
-
-void attack() {
-  move(1, 255, 1); //right, full speed, counter clockwise
-  move(2, 255, 0); //left, full speed, clockwise
-}
-
-void left() {
-  move(1, minS, 1); //right, min speed, counter clockwise
-  move(2, maxS, 0); //left, full speed, clockwise
-}
-
-void right() {
-  move(1, maxS, 1); //right, full speed, counter clockwise
-  move(2, minS, 0); //left, full speed, clockwise
-}
-
-void leftInPlace() {
-  move(1, maxS, 0); //right, full speed, clockwise
-  move(2, maxS, 0); //left, full speed, clockwise
-}
-
-void rightInPlace() {
-  move(1, maxS, 1); //right, full speed, counter clockwise
-  move(2, maxS, 1); //left, full speed, counter clockwise
-}
-
-void backLeft() {
-  move(1, minS, 0); //right, min speed, counter clockwise
-  move(2, maxS, 1); //left, full speed, clockwise
-}
-
-void backRight() {
-  move(1, maxS, 0); //right, full speed, counter clockwise
-  move(2, minS, 1); //left, full speed, clockwise
-}
-
-void back() {
-  move(1, maxS, 0); //right, full speed, counter clockwise
-  move(2, maxS, 1); //left, full speed, clockwise
-}
-
-void setSpeed(int ma, int mi) {
-  maxS = ma;
-  minS = mi;
-}
-
-void startUp() {
-  //startup code here
-}
-
-void pivot() {
-  //pivot code here
-}
-
