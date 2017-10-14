@@ -1,8 +1,7 @@
 /*
-SharpDistSensorBasic.ino
-Source: https://github.com/DrGFreeman/SharpDistSensor
-MIT License
-Copyright (c) 2017 Julien de la Bruere-Terreault <drgfreeman@tuta.io>
+Robojackets Robot Sumo Team Pushiv
+Source: https://github.com/simplyellow/auto-sumo.git
+Copyright (c) 2017 Georgia Tech Robojackets
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
@@ -18,16 +17,6 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-*/
-
-/*
-This example shows how to use the SharpDistSensor library to continuously
-read the sensor and display the analog value and the corrseponding distance
-in mm.
-The library default values corresponding to the Sharp GP2Y0A60SZLF 5V sensor
-are used.
-See the library README for how to use pre-defined sensor models or custom
-fit functions.
 */
 
 #include <SharpDistSensor.h>
