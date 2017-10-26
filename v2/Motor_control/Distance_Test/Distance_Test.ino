@@ -76,10 +76,12 @@ int prevLine;
 short iter;
 int maxS;
 int minS;
-
+int buttonPushCounter;
+int lastButtonState;
+int buttonState;
 int near = 200;
 int far = 500;
-
+int buttonPin = 2;
 void setup() {
   Serial.begin(9600);
   pinMode(STBY, OUTPUT);
@@ -104,6 +106,8 @@ void setup() {
   prevLine = millis();
   prevIR = prevLine;
   setSpeed(128, 20);
+  lastButtonState = digitalRead(buttonPin);
+  buttonPushCounter = 0;
 }
 
 void loop() {
@@ -111,6 +115,7 @@ void loop() {
   curIR = curLine;
   
   //print out values from sensors and motors to the console
+  /*
   Serial.print(past);
   Serial.print(", ");
   Serial.print(rightDist);
@@ -128,9 +133,31 @@ void loop() {
   Serial.print(analogRead(frontleft));
   Serial.print(", ");
   Serial.println(analogRead(frontright));
+  */
+  Serial.print(buttonPushCounter);
   Serial.print(", ");
   Serial.println(curLine - prevLine);
-    
+  buttonState = digitalRead(buttonPin);
+
+  // compare the buttonState to its previous state
+  if (buttonState != lastButtonState) {
+    // if the state has changed, increment the counter
+    if (buttonState == HIGH) {
+      // if the current state is HIGH then the button went from off to on:
+      buttonPushCounter++;
+      Serial.println("on");
+      Serial.print("number of button pushes: ");
+      Serial.println(buttonPushCounter);
+    } else {
+      // if the current state is LOW then the button went from on to off:
+      Serial.println("off");
+    }
+    // Delay a little bit to avoid bouncing
+    delay(50);
+  }
+  // save the current state as the last state, for next time through the loop
+  lastButtonState = buttonState;
+
   if ((curLine - prevLine) >= 5) {
     prevLine = curLine;
     if (analogRead(backleft) < threshold) { //first read from line sensors before doing anything else

@@ -30,6 +30,8 @@ const byte frontright = A2; //front-left line sensor
 const byte frontleft = A3; //front-right line sensor
 const byte sensorPin4 = A4; //A4: left peripheral sensor
 const byte sensorPin3 = A5;//A5: right peripheral sensor
+const byte hallSensorR = 8;
+const byte hallSensorL = 9;
 
 // Window size of the median filter (odd number, 1 = no filtering)
 const byte mediumFilterWindowSize = 5;
@@ -68,6 +70,14 @@ int rangeThresh; // also not sure about this
 int lineFlag; // flag to mark if line has been met
 boolean pivotFlag; // flag to mark if the robot has pivoted
 boolean pastNear; // flag to mark if the opponent was near the robot last
+int speedArrR[5]; //running average for calculating velocity
+int speedArrL[5];
+int expectedVelR; //expected velocity
+int expectedVelL;
+bool prevHallR; //if at previous measurement the hallsensor was on
+bool prevHallL;
+int arrPosR; //pointer to insert values in the speed array
+int arrPosL;
 
 // thresholds for distance sensors
 int near = 200;
@@ -103,6 +113,8 @@ void setup() {
   pinMode(BIN1, OUTPUT);
   pinMode(BIN2, OUTPUT);
 
+  pinMode(hallSensorR, INPUT);
+  pinMode(hallSensorL, INPUT);
   //initialising values
   past = 'f'; //set default move to forward
   searchCount = 0;
@@ -118,11 +130,35 @@ void setup() {
   pivotFlag = true;
   pastNear = false;
   prevFlag = prevLine;
+  speedArrR = {prevLine, prevLine, prevLine, prevLine, prevLine};
+  speedArrL = {prevLine, prevLine, prevLine, prevLine, prevLine};
+  arrPosR = 0;
+  arrPosL = 0.
+  prevHallR = false;
+  prevHallL = false;
   state = 11; // at start, movement state is the startup state
 }
 
 void loop() {
   cur = millis();
+  if (digitalRead(hallSensorR), HIGH) {
+    if {!prevHallR) {
+      prevHallR = true;
+      speedArrR[arrPosR % 5] = cur;
+      arrPosR++;
+    } else {
+      prevHallR = false;
+    }
+  }
+  if (digitalRead(hallSensorL), HIGH) {
+    if {!prevHallL) {
+      prevHallL = true;
+      speedArrL[arrPosL % 5] = cur;
+      arrPosL++;
+    } else {
+      prevHallL = false;
+    }
+  }
   movement(state);
 //  perLeftDist += 350;
 
@@ -434,3 +470,22 @@ void movement(int state) {
       break;
   }
 }
+
+int getVelR() {
+  int sum = 0;
+  for(int i = 0; i < 4; i++) {
+    sum += speedArrR[(i + arrPosR + 1) % 5] - speedArrR[(i + arrPosR) % 5];    
+  }
+  return sum/4;
+}
+
+int getVelL() {
+  int sum = 0;
+  for(int i = 0; i < 4; i++) {
+    sum += speedArrL[(i + arrPosL + 1) % 5] - speedArrL[(i + arrPosL) % 5];    
+  }
+  return sum/4;
+}
+}
+}
+
