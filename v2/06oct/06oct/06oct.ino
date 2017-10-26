@@ -251,14 +251,14 @@ void loop() {
             searchCount = 0; //reset abandon search count
             pastNear = false;
             attackCount = 0;
-          } else if ((leftDist <= far || perLeftDist <= far)) { // || leftDist - rightDist < -dist) {
+          } else if ((leftDist <= far || perLeftDist <= far) || leftDist - rightDist < -dist) {
             // if opponent within far of the left sensors or if difference within some negative threshold, move left
             state = 2;
             past = 'l'; //set past movement to left
             searchCount = 0; //reset abandon search count because the robot has found an object
             pastNear = false;
             attackCount = 0;
-          } else if ((rightDist <= far || perRightDist <= far)) { // || leftDist - rightDist > dist) {
+          } else if ((rightDist <= far || perRightDist <= far) || leftDist - rightDist > dist) {
             //if opponent within far of the right sensors or if difference within some positive threshold, move right
             state = 3;
             past = 'r'; //set past movement to right
