@@ -30,6 +30,8 @@ const byte frontright = A2; //front-left line sensor
 const byte frontleft = A3; //front-right line sensor
 const byte sensorPin4 = A4; //A4: left peripheral sensor
 const byte sensorPin3 = A5;//A5: right peripheral sensor
+const byte hallSensorR = 8;
+const byte hallSensorL = 9;
 
 // Window size of the median filter (odd number, 1 = no filtering)
 const byte mediumFilterWindowSize = 5;
@@ -68,6 +70,16 @@ int rangeThresh; // also not sure about this
 int lineFlag; // flag to mark if line has been met
 boolean pivotFlag; // flag to mark if the robot has pivoted
 boolean pastNear; // flag to mark if the opponent was near the robot last
+int speedArrR[5]; //running average for calculating velocity
+int speedArrL[5];
+int expectedVelR; //expected velocity
+int expectedVelL;
+bool prevHallR; //if at previous measurement the hallsensor was on
+bool prevHallL;
+int arrPosR; //pointer to insert values in the speed array
+int arrPosL;
+bool pastStalled;
+int stalled;
 
 // thresholds for distance sensors
 int near = 200;
@@ -86,6 +98,8 @@ int pivotBack = 500; // time moving back at pivot
 int pivotSpinR = 1000; // time spinning right at pivot
 int pivotTurnL = 1000; // time turning left at pivot
 int pivotSpinL = 1000; // time spinning left at pivot
+int stallThresh = 500; // time stalled
+int hallTimeThresh = 100;
 
 // max and minimum motor speeds
 int maxS = 128;
@@ -103,6 +117,8 @@ void setup() {
   pinMode(BIN1, OUTPUT);
   pinMode(BIN2, OUTPUT);
 
+  pinMode(hallSensorR, INPUT);
+  pinMode(hallSensorL, INPUT);
   //initialising values
   past = 'f'; //set default move to forward
   searchCount = 0;
@@ -118,17 +134,45 @@ void setup() {
   pivotFlag = true;
   pastNear = false;
   prevFlag = prevLine;
+  for (int i = 0; i < 5; i++) {
+    speedArrR[i] = prevLine;
+    speedArrL[i] = prevLine;
+  }
+  arrPosR = 0;
+  arrPosL = 0;
+  prevHallR = false;
+  prevHallL = false;
   state = 11; // at start, movement state is the startup state
+  pastStalled = false;
+  stalled = false;
 }
 
 void loop() {
   cur = millis();
+  if (digitalRead(hallSensorR), HIGH) {
+    if (!prevHallR) {
+      prevHallR = true;
+      speedArrR[arrPosR % 5] = cur;
+      arrPosR++;
+    } else {
+      prevHallR = false;
+    }
+  }
+  if (digitalRead(hallSensorL), HIGH) {
+    if (!prevHallL) {
+      prevHallL = true;
+      speedArrL[arrPosL % 5] = cur;
+      arrPosL++;
+    } else {
+      prevHallL = false;
+    }
+  }
   movement(state);
 //  perLeftDist += 350;
 
   //print out values from sensors and motors to the console
-  Serial.print(past);
-  Serial.print(", ");
+  //Serial.print(past);
+  //Serial.print(", ");
   Serial.print(state);
   Serial.print(", ");
   Serial.print(searchCount);
@@ -195,7 +239,8 @@ void loop() {
       prevFlag = cur;
       pivotFlag = false;
       pastNear = false;
-    } else if ((cur - prevIR) >= 25) {
+    } 
+  if ((cur - prevIR) >= 25) {
       // otherwise, poll all the distance sensors
       prevIR = cur;
       rightDist = sensor.getDist();
@@ -204,6 +249,17 @@ void loop() {
       perLeftDist = sideleft.getDist();
 
       //attack code with sensors
+      if (expectedVelL > getVelL() + hallTimeThresh || expectedVelR > getVelR() + hallTimeThresh) {
+        if (!pastStalled){
+          stalled = cur;
+          pastStalled = true;
+        } else if (cur - stalled > stallThresh) {
+          state = 12;
+          pivotFlag = true;
+        }   
+      } else if (pastStalled) {
+        pastStalled = false;
+      }
 
       if (!pivotFlag) { // first check if the robot hasn't pivoted in the past (if it has, don't do any of the actions below)
         if (past == 'f' && pastNear && attackCount < 100) {
@@ -218,9 +274,12 @@ void loop() {
           attackCount = 0; // clear attack counter
           state = 0;
           pastNear = true;
-        } // hall sensor attack code
-
-        else if (perLeftDist <= near) {
+        } else if ((expectedVelL > getVelL() + hallTimeThresh || expectedVelR > getVelR() + hallTimeThresh) && pastStalled && cur - stalled <= stallThresh) {
+          past = 'f';
+          state = 1;
+          attackCount++; // increment attack counter
+          pastNear = true;
+        } else if (perLeftDist <= near) {
           //if opponent within near of the left peripheral sensor, spin left
           state = 4;
           past = 'l'; // set past movement to left
@@ -242,7 +301,7 @@ void loop() {
           pastNear = true; // opponent was near in the past
           attackCount = 0;
         } else if (lineFlag == 0) {
-          if ((abs(rightDist - leftDist) <= 150)
+          if ((abs(rightDist - leftDist) <= dist)
                 || ((past == 'f' || searchCount >= 100) && (rightDist > far && leftDist > far && perRightDist > far && perLeftDist > far))) {
             //if (robot moved forward in the past OR it's been searching for 100 iterations) AND (there isn't an object within far of any IR sensor))
             //move forward
@@ -434,3 +493,20 @@ void movement(int state) {
       break;
   }
 }
+
+int getVelR() {
+  int sum = 0;
+  for(int i = 0; i < 4; i++) {
+    sum += speedArrR[(i + arrPosR + 1) % 5] - speedArrR[(i + arrPosR) % 5];    
+  }
+  return sum/4;
+}
+
+int getVelL() {
+  int sum = 0;
+  for(int i = 0; i < 4; i++) {
+    sum += speedArrL[(i + arrPosL + 1) % 5] - speedArrL[(i + arrPosL) % 5];    
+  }
+  return sum/4;
+}
+
