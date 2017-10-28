@@ -99,6 +99,7 @@ int pivotSpinR = 1000; // time spinning right at pivot
 int pivotTurnL = 1000; // time turning left at pivot
 int pivotSpinL = 1000; // time spinning left at pivot
 int stallThresh = 500; // time stalled
+int hallTimeThresh = 100;
 
 // max and minimum motor speeds
 int maxS = 128;
@@ -133,10 +134,12 @@ void setup() {
   pivotFlag = true;
   pastNear = false;
   prevFlag = prevLine;
-  speedArrR = {prevLine, prevLine, prevLine, prevLine, prevLine};
-  speedArrL = {prevLine, prevLine, prevLine, prevLine, prevLine};
+  for (int i = 0; i < 5; i++) {
+    speedArrR[i] = prevLine;
+    speedArrL[i] = prevLine;
+  }
   arrPosR = 0;
-  arrPosL = 0.
+  arrPosL = 0;
   prevHallR = false;
   prevHallL = false;
   state = 11; // at start, movement state is the startup state
@@ -147,7 +150,7 @@ void setup() {
 void loop() {
   cur = millis();
   if (digitalRead(hallSensorR), HIGH) {
-    if {!prevHallR) {
+    if (!prevHallR) {
       prevHallR = true;
       speedArrR[arrPosR % 5] = cur;
       arrPosR++;
@@ -156,7 +159,7 @@ void loop() {
     }
   }
   if (digitalRead(hallSensorL), HIGH) {
-    if {!prevHallL) {
+    if (!prevHallL) {
       prevHallL = true;
       speedArrL[arrPosL % 5] = cur;
       arrPosL++;
@@ -168,8 +171,8 @@ void loop() {
 //  perLeftDist += 350;
 
   //print out values from sensors and motors to the console
-  Serial.print(past);
-  Serial.print(", ");
+  //Serial.print(past);
+  //Serial.print(", ");
   Serial.print(state);
   Serial.print(", ");
   Serial.print(searchCount);
@@ -246,7 +249,7 @@ void loop() {
       perLeftDist = sideleft.getDist();
 
       //attack code with sensors
-      if (expectedVelL > gelVelL() + hallTimeThresh || expectedVelR > getVelR() + hallTimeThresh) {
+      if (expectedVelL > getVelL() + hallTimeThresh || expectedVelR > getVelR() + hallTimeThresh) {
         if (!pastStalled){
           stalled = cur;
           pastStalled = true;
@@ -271,7 +274,7 @@ void loop() {
           attackCount = 0; // clear attack counter
           state = 0;
           pastNear = true;
-        } else if ((expectedVelL > gelVelL() + hallTimeThresh || expectedVelR > getVelR() + hallTimeThresh) && pastStalled && cur - stalled <= stallThresh) {
+        } else if ((expectedVelL > getVelL() + hallTimeThresh || expectedVelR > getVelR() + hallTimeThresh) && pastStalled && cur - stalled <= stallThresh) {
           past = 'f';
           state = 1;
           attackCount++; // increment attack counter
@@ -505,7 +508,5 @@ int getVelL() {
     sum += speedArrL[(i + arrPosL + 1) % 5] - speedArrL[(i + arrPosL) % 5];    
   }
   return sum/4;
-}
-}
 }
 
