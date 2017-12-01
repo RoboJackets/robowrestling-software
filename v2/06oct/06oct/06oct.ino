@@ -32,7 +32,7 @@ const byte sensorPin4 = A4; //A4: left peripheral sensor
 const byte sensorPin3 = A5;//A5: right peripheral sensor
 const byte hallSensorR = 8;
 const byte hallSensorL = 9;
-
+const byte startModule = 4;
 // Window size of the median filter (odd number, 1 = no filtering)
 const byte mediumFilterWindowSize = 5;
 int rightDist; //distance from right sensor
@@ -120,6 +120,12 @@ void setup() {
   pinMode(hallSensorR, INPUT);
   pinMode(hallSensorL, INPUT);
   //initialising values
+
+  pinMode(startModule, INPUT);
+  int initial = digitalRead(startModule);
+  while (initial == digitalRead(startModule)) {}
+  delay(5000);
+  
   past = 'f'; //set default move to forward
   searchCount = 0;
   attackCount = 0;
