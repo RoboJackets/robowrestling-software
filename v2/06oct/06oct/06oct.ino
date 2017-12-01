@@ -123,7 +123,8 @@ void setup() {
 
   pinMode(startModule, INPUT);
   int initial = digitalRead(startModule);
-  while (initial == digitalRead(startModule)) {}
+//  while (initial == digitalRead(startModule)) {
+//    Serial.println(digitalRead(startModule));}
   delay(5000);
   
   past = 'f'; //set default move to forward
