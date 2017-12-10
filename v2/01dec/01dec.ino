@@ -20,59 +20,52 @@ SOFTWARE.
 */
 
 #include <SharpDistSensor.h>
-
 #include <Servo.h>  // for ESCs
 
 // Analog pin to which the sensor is connected
-const byte sensorPin = A0; //right IR sensor
-const byte sensorPin2 = A1; //left IR sensor
-const byte backleft = A6; //back-left line sensor
-const byte backright = A7; //back-right line sensor
-const byte frontright = A2; //front-left line sensor
-const byte frontleft = A3; //front-right line sensor
-const byte sensorPin4 = A4; //A4: left peripheral sensor
-const byte sensorPin3 = A5;//A5: right peripheral sensor
-const byte hallSensorR = 8;
-const byte hallSensorL = 9;
-const byte startModule = 4;
+const byte BR = A3;           // back-right line sensor
+const byte BL = A2;           // back-left line sensor
+const byte FR = A1;           // front-right line sensor
+const byte FL = A0;           // front-left line sensor
+
+const byte LLO = A4;          // left-peripheral IR distance sensor
+const byte LMO = A5;          // left-middle IR distance sensor
+const byte RMO = A6;          // right-middle IR distance sensor
+const byte RRO = A7;          // right-peripheral IR distance sensor
+
+const byte L_Hall = 2;        // left Hall sensor
+const byte R_Hall = 3;        // right Hall sensor
+const byte startModule = 4;   // remote start module
+
 // Window size of the median filter (odd number, 1 = no filtering)
 const byte mediumFilterWindowSize = 5;
-int rightDist; //distance from right sensor
-int leftDist; //distance from left sensor
-int perRightDist; //distance from peripheral right sensor
-int perLeftDist; //distance from peripheral left sensor
+
+int rightDist;                //distance from right sensor
+int leftDist;                 //distance from left sensor
+int perRightDist;             //distance from peripheral right sensor
+int perLeftDist;              //distance from peripheral left sensor
 
 // Create an object instance of the SharpDistSensor class
-SharpDistSensor sensor(sensorPin, mediumFilterWindowSize); //right sensor
-SharpDistSensor sensor2(sensorPin2, mediumFilterWindowSize); //left sensor
-SharpDistSensor sideright(sensorPin3, mediumFilterWindowSize); //right peripheral sensor
-SharpDistSensor sideleft(sensorPin4, mediumFilterWindowSize); //left peripheral sensor
-//int STBY = 10; //standby
+SharpDistSensor rightMidIR(RMO, mediumFilterWindowSize);  // RMO
+SharpDistSensor leftMidIR(LMO, mediumFilterWindowSize);   // LMO
+SharpDistSensor rightPerIR(RRO, mediumFilterWindowSize);  // RRO
+SharpDistSensor leftPerIR(LLO, mediumFilterWindowSize);   // LLO
 
-//Right Motor (? I'm not too sure about this)
-Servo L_ESC;
-//int PWMA = 3; //Speed control
-//int AIN1 = 9; //Direction
-//int AIN2 = 8; //Direction
+Servo L_ESC;  //Left motor
+Servo R_ESC;  //Right motor
 
-//Left Motor (? also not too sure about this)
-Servo R_ESC;
-//int PWMB = 5; //Speed control
-//int BIN1 = 11; //Direction
-//int BIN2 = 12; //Direction
-
-char past; //what direction the robot was moving previously
-int searchCount; //counter for how long before the rebot gives up searching in one direction
-int attackCount; // counter for how long robot attacks for
-int threshold; //threshold for line sensors
-int prevIR; // past time IR sensors were polled
-int cur; // current timer
-int prevFlag; // timer for some movement
-int prevLine; // past time line sensors were polled
-int state; // movement state of robot
-int rangeThresh; // also not sure about this
-int lineFlag; // flag to mark if line has been met
-boolean pivotFlag; // flag to mark if the robot has pivoted
+char past;          //what direction the robot was moving previously
+int searchCount;    //counter for how long before the bot gives up searching in one direction
+int attackCount;    // counter for how long robot attacks for
+int threshold;      //threshold for line sensors
+int prevIR;         // past time IR sensors were polled
+int cur;            // current timer
+int prevFlag;       // timer for some movement
+int prevLine;       // past time line sensors were polled
+int state;          // movement state of robot
+int rangeThresh;    // also not sure about this
+int lineFlag;       // flag to mark if line has been met
+boolean pivotFlag;  // flag to mark if the robot has pivoted
 boolean pastNear; // flag to mark if the opponent was near the robot last
 int speedArrR[5]; //running average for calculating velocity
 int speedArrL[5];
@@ -84,6 +77,7 @@ int arrPosR; //pointer to insert values in the speed array
 int arrPosL;
 bool pastStalled;
 int stalled;
+int initial;
 
 // thresholds for distance sensors
 int near = 200;
@@ -111,39 +105,36 @@ int minS = 20;
 
 void setup() {
   Serial.begin(9600);
-//  pinMode(STBY, OUTPUT);
-//
-//  pinMode(PWMA, OUTPUT);
-//  pinMode(AIN1, OUTPUT);
-//  pinMode(AIN2, OUTPUT);
-//
-//  pinMode(PWMB, OUTPUT);
-//  pinMode(BIN1, OUTPUT);
-//  pinMode(BIN2, OUTPUT);
+
   R_ESC.attach(10);
   L_ESC.attach(11);
   R_ESC.writeMicroseconds(1500);
   L_ESC.writeMicroseconds(1500);
 
-  pinMode(hallSensorR, INPUT);
-  pinMode(hallSensorL, INPUT);
-  //initialising values
+  pinMode(L_Hall, INPUT);
+  pinMode(R_Hall, INPUT);
 
   // basic start module: wait 5s after pressing start
+  // IMPLEMENT ON/OFF functionality
+    // for OFF:
+      // either have permanent off until power cycle
+      // or reset timer, variables, and such
   pinMode(startModule, INPUT);
-  int initial = digitalRead(startModule);
+  initial = digitalRead(startModule);
   while (initial == digitalRead(startModule)) {
-    Serial.println(digitalRead(startModule));}
+    //Serial.println(digitalRead(startModule));
+  }
   delay(5000);
+  initial = digitalRead(startModule);
   
   past = 'f'; //set default move to forward
   searchCount = 0;
   attackCount = 0;
-  threshold = analogRead(backleft) - 200; // set start value for line sensors to compare
-  rightDist = sensor.getDist(); // poll right sensor
-  leftDist = sensor2.getDist(); // poll left sensor
-  perRightDist = sideright.getDist(); // poll peripheral right sensor
-  perLeftDist = sideleft.getDist(); // poll peripheral left sensor
+  threshold = analogRead(BL) - 200; // set start value for line sensors to compare
+  rightDist = rightMidIR.getDist(); // poll right sensor
+  leftDist = leftMidIR.getDist(); // poll left sensor
+  perRightDist = rightPerIR.getDist(); // poll peripheral right sensor
+  perLeftDist = leftPerIR.getDist(); // poll peripheral left sensor
   prevLine = millis();
   prevIR = prevLine;
   lineFlag = 0;
@@ -164,8 +155,11 @@ void setup() {
 }
 
 void loop() {
+  if (initial != digitalRead(startModule)) {
+    while(1) {}
+  }
   cur = millis();
-  if (digitalRead(hallSensorR), HIGH) {
+  if (digitalRead(R_Hall), HIGH) {
     if (!prevHallR) {
       prevHallR = true;
       speedArrR[arrPosR % 5] = cur;
@@ -174,7 +168,7 @@ void loop() {
       prevHallR = false;
     }
   }
-  if (digitalRead(hallSensorL), HIGH) {
+  if (digitalRead(L_Hall), HIGH) {
     if (!prevHallL) {
       prevHallL = true;
       speedArrL[arrPosL % 5] = cur;
@@ -184,7 +178,7 @@ void loop() {
     }
   }
   movement(state);
-//  perLeftDist += 350;
+  //  perLeftDist += 350;
 
   //print out values from sensors and motors to the console
   //Serial.print(past);
@@ -213,42 +207,42 @@ void loop() {
 
   if ((cur - prevLine) >= 5) {
     prevLine = cur;
-    if ((analogRead(backleft) < threshold || analogRead(backright) < threshold) && lineFlag != 1) {
+    if ((analogRead(BL) < threshold || analogRead(BR) < threshold) && lineFlag != 1) {
       //if line detected by back line sensors and wasn't detected before, go forward
       state = 0;
       lineFlag = 1; // set line flag state
       prevFlag = cur;
       pivotFlag = false;
       pastNear = false;
-    } else if (analogRead(frontleft) < threshold && past == 'l' && lineFlag != 2) {
+    } else if (analogRead(FL) < threshold && past == 'l' && lineFlag != 2) {
       // if past left and front left hits line and wasn't hit before, turn back right, spin left
       state = 6;
       lineFlag = 2; // set line flag state
       prevFlag = cur;
       pivotFlag = false;
       pastNear = false;
-    } else if (analogRead(frontleft) < threshold && past == 'r' || analogRead(frontleft) < threshold && past == 'f' && lineFlag != 3) {
+    } else if (analogRead(FL) < threshold && past == 'r' || analogRead(FL) < threshold && past == 'f' && lineFlag != 3) {
       // if past right or forward and front left hits line and wasn't hit before, turn back right, spin right
       state = 7;
       lineFlag = 3; // set line flag state
       prevFlag = cur;
       pivotFlag = false;
       pastNear = false;
-    } else if (analogRead(frontright) < threshold && past == 'l' && lineFlag != 4) {
+    } else if (analogRead(FR) < threshold && past == 'l' && lineFlag != 4) {
       // if past left and front right hits line and wasn't hit before, turn back left, spin right
       state = 8;
       lineFlag = 4; // set line flag state
       prevFlag = cur;
       pivotFlag = false;
       pastNear = false;
-    } else if (analogRead(frontright) < threshold && past == 'r' || analogRead(frontright) < threshold && past == 'f' && lineFlag != 5) {
+    } else if (analogRead(FR) < threshold && past == 'r' || analogRead(FR) < threshold && past == 'f' && lineFlag != 5) {
       // if past right or forward and front right hits line and wasn't hit before, turn back left, spin left
       state = 9;
       lineFlag = 5; // set line flag state
       prevFlag = cur;
       pivotFlag = false;
       pastNear = false;
-    } else if (analogRead(frontright) < threshold && analogRead(frontleft) < threshold && lineFlag != 6) {
+    } else if (analogRead(FR) < threshold && analogRead(FL) < threshold && lineFlag != 6) {
       // if both front corners hits line and wasn't hit before, go back and spin 180 degrees
       state = 10;
       lineFlag = 6; // set line flag state
@@ -259,10 +253,10 @@ void loop() {
   if ((cur - prevIR) >= 25) {
       // otherwise, poll all the distance sensors
       prevIR = cur;
-      rightDist = sensor.getDist();
-      leftDist = sensor2.getDist();
-      perRightDist = sideright.getDist();
-      perLeftDist = sideleft.getDist();
+      rightDist = rightMidIR.getDist();
+      leftDist = leftMidIR.getDist();
+      perRightDist = rightPerIR.getDist();
+      perLeftDist = leftPerIR.getDist();
 
       //attack code with sensors
       if (expectedVelL > getVelL() + hallTimeThresh || expectedVelR > getVelR() + hallTimeThresh) {
@@ -387,31 +381,9 @@ void move(int motor, int speed, int direction){
   } else {              // LEFT ESC
     L_ESC.writeMicroseconds(pwm);
   }
-
-//  digitalWrite(STBY, HIGH); //disable standby
-//
-//  boolean inPin1 = LOW;
-//  boolean inPin2 = HIGH;
-//
-//  if(direction == 1){
-//    inPin1 = HIGH;
-//    inPin2 = LOW;
-//  }
-//
-//  if(motor == 1){
-//    digitalWrite(AIN1, inPin1);
-//    digitalWrite(AIN2, inPin2);
-//    analogWrite(PWMA, speed);
-//  } else {
-//    digitalWrite(BIN1, inPin1);
-//    digitalWrite(BIN2, inPin2);
-//    analogWrite(PWMB, speed);
-//  }
 }
 
 void stop(){
-  //enable standby
-  //digitalWrite(STBY, LOW);
   R_ESC.writeMicroseconds(1500);
   L_ESC.writeMicroseconds(1500);
 }
