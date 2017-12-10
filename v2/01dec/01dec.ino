@@ -156,6 +156,7 @@ void setup() {
 
 void loop() {
   if (initial != digitalRead(startModule)) {
+    stop();
     while(1) {}
   }
   cur = millis();
