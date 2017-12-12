@@ -88,10 +88,10 @@ int dist = 150;
 int degreesMin = 20; // turn a little
 int degrees90 = 50; // turn 90 degrees
 int degrees180 = 100; // turn 180 degrees
-int startSpinR = 1000; // time spinning right at start
+int startSpinR = 7000; // time spinning right at start
 int startTurnL = 2000; // time turning left at start
-int startSpinL = 1000; // time spinning left at start
-int startCross = 500; // time crossing the arena
+int startSpinL = 5000; // time spinning left at start
+int startCross = 1000; // time crossing the arena
 int pivotBack = 500; // time moving back at pivot
 int pivotSpinR = 1000; // time spinning right at pivot
 int pivotTurnL = 1000; // time turning left at pivot
@@ -100,8 +100,8 @@ int stallThresh = 500; // time stalled
 int hallTimeThresh = 100;
 
 // max and minimum motor speeds
-int maxS = 128;
-int minS = 20;
+int maxS = 200;
+int minS = 150;
 
 void setup() {
   Serial.begin(9600);
@@ -122,7 +122,7 @@ void setup() {
   pinMode(startModule, INPUT);
   initial = digitalRead(startModule);
   while (initial == digitalRead(startModule)) {
-    //Serial.println(digitalRead(startModule));
+    Serial.println(digitalRead(startModule));
   }
   delay(5000);
   initial = digitalRead(startModule);
@@ -160,24 +160,24 @@ void loop() {
     while(1) {}
   }
   cur = millis();
-  if (digitalRead(R_Hall), HIGH) {
-    if (!prevHallR) {
-      prevHallR = true;
-      speedArrR[arrPosR % 5] = cur;
-      arrPosR++;
-    } else {
-      prevHallR = false;
-    }
-  }
-  if (digitalRead(L_Hall), HIGH) {
-    if (!prevHallL) {
-      prevHallL = true;
-      speedArrL[arrPosL % 5] = cur;
-      arrPosL++;
-    } else {
-      prevHallL = false;
-    }
-  }
+//  if (digitalRead(R_Hall), HIGH) {
+//    if (!prevHallR) {
+//      prevHallR = true;
+//      speedArrR[arrPosR % 5] = cur;
+//      arrPosR++;
+//    } else {
+//      prevHallR = false;
+//    }
+//  }
+//  if (digitalRead(L_Hall), HIGH) {
+//    if (!prevHallL) {
+//      prevHallL = true;
+//      speedArrL[arrPosL % 5] = cur;
+//      arrPosL++;
+//    } else {
+//      prevHallL = false;
+//    }
+//  }
   movement(state);
   //  perLeftDist += 350;
 
@@ -215,6 +215,7 @@ void loop() {
       prevFlag = cur;
       pivotFlag = false;
       pastNear = false;
+      stop();
     } else if (analogRead(FL) < threshold && past == 'l' && lineFlag != 2) {
       // if past left and front left hits line and wasn't hit before, turn back right, spin left
       state = 6;
@@ -229,6 +230,7 @@ void loop() {
       prevFlag = cur;
       pivotFlag = false;
       pastNear = false;
+      stop();
     } else if (analogRead(FR) < threshold && past == 'l' && lineFlag != 4) {
       // if past left and front right hits line and wasn't hit before, turn back left, spin right
       state = 8;
@@ -236,6 +238,7 @@ void loop() {
       prevFlag = cur;
       pivotFlag = false;
       pastNear = false;
+      stop();
     } else if (analogRead(FR) < threshold && past == 'r' || analogRead(FR) < threshold && past == 'f' && lineFlag != 5) {
       // if past right or forward and front right hits line and wasn't hit before, turn back left, spin left
       state = 9;
@@ -243,6 +246,7 @@ void loop() {
       prevFlag = cur;
       pivotFlag = false;
       pastNear = false;
+      stop();
     } else if (analogRead(FR) < threshold && analogRead(FL) < threshold && lineFlag != 6) {
       // if both front corners hits line and wasn't hit before, go back and spin 180 degrees
       state = 10;
@@ -250,6 +254,7 @@ void loop() {
       prevFlag = cur;
       pivotFlag = false;
       pastNear = false;
+      stop();
     } 
   if ((cur - prevIR) >= 25) {
       // otherwise, poll all the distance sensors
@@ -371,12 +376,15 @@ void move(int motor, int speed, int direction){
 
   int pwm = 1500;       // default is ESC stopped
   // "speed" is from 0 to 255
-  if(direction == 1) {  // forward
-    pwm = 1500 + map(speed, 0, 255, 0, 300);
-  } else {              // reverse
-    pwm = 1500 - map(speed, 0, 255, 0, 300);
+  int mapped = map(speed, 0, 255, 0, 150);
+  if (motor == 2) {
+    mapped = -mapped;
   }
-
+  if(direction == 1) {  // forward
+    pwm = 1500 + mapped;
+  } else {              // reverse
+    pwm = 1500 - mapped;
+  }
   if(motor == 1) {      // RIGHT ESC
     R_ESC.writeMicroseconds(pwm);
   } else {              // LEFT ESC
