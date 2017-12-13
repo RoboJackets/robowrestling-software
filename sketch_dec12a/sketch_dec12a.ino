@@ -204,8 +204,9 @@ void stop(){
 void movement(int state) {
   switch (state) {
     case 0: //forward
-      move(2, maxS, 0);
-      move(1, maxS, 1);
+      move(1, 100, 1);
+      move(2, 150, 0);
+      move(1, 150, 1);
       break;
     case 1: //attack
       move(1, 255, 1);
