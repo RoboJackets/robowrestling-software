@@ -67,16 +67,16 @@ int rangeThresh;    // also not sure about this
 int lineFlag;       // flag to mark if line has been met
 boolean pivotFlag;  // flag to mark if the robot has pivoted
 boolean pastNear; // flag to mark if the opponent was near the robot last
-// int speedArrR[5]; //running average for calculating velocity
-// int speedArrL[5];
-// int expectedVelR; //expected velocity
-// int expectedVelL;
-// bool prevHallR; //if at previous measurement the hallsensor was on
-// bool prevHallL;
-// nt arrPosR; //pointer to insert values in the speed array
-// int arrPosL;
-// bool pastStalled;
-// int stalled;
+int speedArrR[5]; //running average for calculating velocity
+int speedArrL[5];
+int expectedVelR; //expected velocity
+int expectedVelL;
+bool prevHallR; //if at previous measurement the hallsensor was on
+bool prevHallL;
+nt arrPosR; //pointer to insert values in the speed array
+int arrPosL;
+bool pastStalled;
+int stalled;
 int initial;
 
 // thresholds for distance sensors
@@ -96,8 +96,8 @@ int pivotBack = 500; // time moving back at pivot
 int pivotSpinR = 1000; // time spinning right at pivot
 int pivotTurnL = 1000; // time turning left at pivot
 int pivotSpinL = 1000; // time spinning left at pivot
-// int stallThresh = 500; // time stalled
-// int hallTimeThresh = 100;
+int stallThresh = 500; // time stalled
+int hallTimeThresh = 100;
 
 // max and minimum motor speeds
 int maxS = 200;
@@ -111,8 +111,8 @@ void setup() {
   R_ESC.writeMicroseconds(1500);
   L_ESC.writeMicroseconds(1500);
 
-  // pinMode(L_Hall, INPUT);
-  // pinMode(R_Hall, INPUT);
+  pinMode(L_Hall, INPUT);
+  pinMode(R_Hall, INPUT);
 
   // basic start module: wait 5s after pressing start
   // IMPLEMENT ON/OFF functionality
@@ -141,17 +141,17 @@ void setup() {
   pivotFlag = true;
   pastNear = false;
   prevFlag = prevLine;
-  // for (int i = 0; i < 5; i++) {
-  //   speedArrR[i] = prevLine;
-  //   speedArrL[i] = prevLine;
-  // }
-  // arrPosR = 0;
-  // arrPosL = 0;
-  // prevHallR = false;
-  // prevHallL = false;
+  for (int i = 0; i < 5; i++) {
+    speedArrR[i] = prevLine;
+    speedArrL[i] = prevLine;
+  }
+  arrPosR = 0;
+  arrPosL = 0;
+  prevHallR = false;
+  prevHallL = false;
   state = 11; // at start, movement state is the startup state
-  // pastStalled = false;
-  // stalled = false;
+  pastStalled = false;
+  stalled = false;
 }
 
 void loop() {
