@@ -33,8 +33,8 @@ const byte LMO = A5;          // left-middle IR distance sensor
 const byte RMO = A6;          // right-middle IR distance sensor
 const byte RRO = A7;          // right-peripheral IR distance sensor
 
-// const byte L_Hall = 2;        // left Hall sensor
-// const byte R_Hall = 3;        // right Hall sensor
+ const byte L_Hall = 2;        // left Hall sensor
+ const byte R_Hall = 3;        // right Hall sensor
 const byte startModule = 4;   // remote start module
 
 // Window size of the median filter (odd number, 1 = no filtering)
@@ -73,7 +73,7 @@ int expectedVelR; //expected velocity
 int expectedVelL;
 bool prevHallR; //if at previous measurement the hallsensor was on
 bool prevHallL;
-nt arrPosR; //pointer to insert values in the speed array
+int arrPosR; //pointer to insert values in the speed array
 int arrPosL;
 bool pastStalled;
 int stalled;
@@ -83,25 +83,29 @@ int initial;
 int near = 200;
 int far = 500;
 int dist = 150;
+int lineThreshold = 250;
 
 // thresholds for movement timers
-int degreesMin = 20; // turn a little
-int degrees90 = 50; // turn 90 degrees
-int degrees180 = 100; // turn 180 degrees
-int startSpinR = 7000; // time spinning right at start
-int startTurnL = 2000; // time turning left at start
-int startSpinL = 5000; // time spinning left at start
-int startCross = 1000; // time crossing the arena
+int degreesMin = 300; // turn a little
+int degrees90 = 900; // turn 90 degrees
+int degrees180 = 900; // turn 180 degrees
+int startSpinR = 273; // time spinning right at start
+int startTurnL = 600; // time turning left at start
+int startSpinL = 300; // time spinning left at start
+int startCross = 100; // time crossing the arena
 int pivotBack = 500; // time moving back at pivot
-int pivotSpinR = 1000; // time spinning right at pivot
-int pivotTurnL = 1000; // time turning left at pivot
-int pivotSpinL = 1000; // time spinning left at pivot
+int pivotSpinR = 700; // time spinning right at pivot
+int pivotTurnL = 2000; // time turning left at pivot
+int pivotSpinL = 700; // time spinning left at pivot
 int stallThresh = 500; // time stalled
 int hallTimeThresh = 100;
 
 // max and minimum motor speeds
-int maxS = 200;
-int minS = 150;
+int maxS = 150;
+int minS = 110;
+
+int maxR = 150;
+int minR = 110;
 
 void setup() {
   Serial.begin(9600);
@@ -130,7 +134,7 @@ void setup() {
   past = 'f'; //set default move to forward
   searchCount = 0;
   attackCount = 0;
-  threshold = analogRead(BL) - 200; // set start value for line sensors to compare
+  threshold = analogRead(BL) - lineThreshold; // set start value for line sensors to compare
   rightDist = rightMidIR.getDist(); // poll right sensor
   leftDist = leftMidIR.getDist(); // poll left sensor
   perRightDist = rightPerIR.getDist(); // poll peripheral right sensor
@@ -194,63 +198,64 @@ void loop() {
   Serial.print(", ");
   Serial.print(perRightDist);
   Serial.print(", ");
-  Serial.println(perLeftDist);
-//  Serial.print(", ");
-//  Serial.print(analogRead(backleft));
-//  Serial.print(", ");
-//  Serial.print(analogRead(backright));
-//  Serial.print(", ");
-//  Serial.print(analogRead(frontleft));
-//  Serial.print(", ");
-//  Serial.println(analogRead(frontright));
+  Serial.print(perLeftDist);
+  Serial.print(", ");
+  Serial.print(analogRead(BL));
+  Serial.print(", ");
+  Serial.print(analogRead(BR));
+  Serial.print(", ");
+  Serial.print(analogRead(FL));
+  Serial.print(", ");
+  Serial.println(analogRead(FR));
 //  Serial.print(", ");
 //  Serial.println(cur - prevLine);
-
   if ((cur - prevLine) >= 5) {
     prevLine = cur;
-    if ((analogRead(BL) < threshold || analogRead(BR) < threshold) && lineFlag != 1) {
-      //if line detected by back line sensors and wasn't detected before, go forward
-      state = 0;
+    if ((analogRead(FL) < threshold  || analogRead(FR) < threshold) && lineFlag != 1) {
+      // if past left and front left hits line and wasn't hit before, turn back right, spin left
+      state = 6;
       lineFlag = 1; // set line flag state
       prevFlag = cur;
       pivotFlag = false;
       pastNear = false;
       stop();
-    } else if (analogRead(FL) < threshold && past == 'l' && lineFlag != 2) {
-      // if past left and front left hits line and wasn't hit before, turn back right, spin left
-      state = 6;
-      lineFlag = 2; // set line flag state
+    
+    } else if ((analogRead(BL) < threshold || analogRead(BR) < threshold) && lineFlag != 1) {
+      //if line detected by back line sensors and wasn't detected before, go forward
+      state = 0;
+      lineFlag = 0; // set line flag state
       prevFlag = cur;
       pivotFlag = false;
       pastNear = false;
-    } else if (analogRead(FL) < threshold && past == 'r' || analogRead(FL) < threshold && past == 'f' && lineFlag != 3) {
+      stop();
+    } else if (analogRead(FL) < threshold && past == 'r' || analogRead(FL) < threshold && past == 'f' && lineFlag != 1) {
       // if past right or forward and front left hits line and wasn't hit before, turn back right, spin right
       state = 7;
-      lineFlag = 3; // set line flag state
+      lineFlag = 1; // set line flag state
       prevFlag = cur;
       pivotFlag = false;
       pastNear = false;
       stop();
-    } else if (analogRead(FR) < threshold && past == 'l' && lineFlag != 4) {
+    } else if (analogRead(FR) < threshold && past == 'l' && lineFlag != 1) {
       // if past left and front right hits line and wasn't hit before, turn back left, spin right
       state = 8;
-      lineFlag = 4; // set line flag state
+      lineFlag = 1; // set line flag state
       prevFlag = cur;
       pivotFlag = false;
       pastNear = false;
       stop();
-    } else if (analogRead(FR) < threshold && past == 'r' || analogRead(FR) < threshold && past == 'f' && lineFlag != 5) {
+    } else if (analogRead(FR) < threshold && past == 'r' || analogRead(FR) < threshold && past == 'f' && lineFlag != 1) {
       // if past right or forward and front right hits line and wasn't hit before, turn back left, spin left
       state = 9;
-      lineFlag = 5; // set line flag state
+      lineFlag = 1; // set line flag state
       prevFlag = cur;
       pivotFlag = false;
       pastNear = false;
       stop();
-    } else if (analogRead(FR) < threshold && analogRead(FL) < threshold && lineFlag != 6) {
+    } else if (analogRead(FR) < threshold && analogRead(FL) < threshold && lineFlag != 1) {
       // if both front corners hits line and wasn't hit before, go back and spin 180 degrees
       state = 10;
-      lineFlag = 6; // set line flag state
+      lineFlag = 1; // set line flag state
       prevFlag = cur;
       pivotFlag = false;
       pastNear = false;
@@ -270,8 +275,8 @@ void loop() {
         //   stalled = cur;
         //   pastStalled = true;
         // } else if (cur - stalled > stallThresh) {
-          state = 12;
-          pivotFlag = true;
+//          state = 12;
+//          pivotFlag = true;
         // }   
       } 
       // else if (pastStalled) {
@@ -379,14 +384,14 @@ void move(int motor, int speed, int direction){
 
   int pwm = 1500;       // default is ESC stopped
   // "speed" is from 0 to 255
-  int mapped = map(speed, 0, 255, 0, 150);
-  if (motor == 2) {
-    mapped = -mapped;
-  }
+//  int mapped = map(speed, 0, 255, 0, 150);
+//  if (motor == 2) {
+//    mapped = -mapped;
+//  }
   if(direction == 1) {  // forward
-    pwm = 1500 + mapped;
+    pwm = 1500 + speed;
   } else {              // reverse
-    pwm = 1500 - mapped;
+    pwm = 1500 - speed;
   }
   if(motor == 1) {      // RIGHT ESC
     R_ESC.writeMicroseconds(pwm);
@@ -403,79 +408,81 @@ void stop(){
 void movement(int state) {
   switch (state) {
     case 0: //forward
-      move(1, maxS, 1);
+      //move(2, 100, 0);
+      move(1, maxR, 1);
       move(2, maxS, 0);
       break;
     case 1: //attack
-      move(1, 255, 1);
-      move(2, 255, 0);
+      move(1, 200, 1);
+      move(2, 200, 0);
       break;
     case 2: //left
-      move(1, minS, 1);
-      move(2, maxS, 0);
-      break;
-    case 3: //right
-      move(1, maxS, 1);
+      move(1, maxR, 1);
       move(2, minS, 0);
       break;
+    case 3: //right
+      move(1, minR, 1);
+      move(2, maxS, 0);
+      break;
     case 4: //left in place
-      move(1, maxS, 0); 
-      move(2, maxS, 0); 
+      move(1, maxR, 1); 
+      move(2, maxS, 1); 
       break;
     case 5: //right in place
-      move(1, maxS, 1); 
-      move(2, maxS, 1);
+      move(1, maxR, 0); 
+      move(2, maxS, 0);
       break;
     case 6: //back right and left
       if (cur - prevFlag < degreesMin) {
-        move(1, maxS, 0); 
-        move(2, minS, 1);
+        move(1, minR, 0); 
+        move(2, maxS, 1);
       } else if (cur - prevFlag < degrees90) {
-        move(1, maxS, 0); 
-        move(2, maxS, 0);
+        move(1, maxR, 1); 
+        move(2, maxS, 1);
       } else {
         lineFlag = 0;
       }
       break;
     case 7: //back right and right
       if (cur - prevFlag < degreesMin) {
-        move(1, maxS, 0);
-        move(2, minS, 1);
-      } else if (cur - prevFlag < degrees90) {
-        move(1, maxS, 1);
+        move(1, minR, 0);
         move(2, maxS, 1);
+      } else if (cur - prevFlag < degrees90) {
+        move(1, maxR, 0);
+        move(2, maxS, 0);
       } else {
         lineFlag = 0;
       }
       break;
     case 8: //back left and right
       if (cur - prevFlag < degreesMin) {
-        move(1, minS, 0);
-        move(2, maxS, 1); 
+        move(1, maxR, 0);
+        move(2, minS, 1); 
       } else if (cur - prevFlag < degrees90) {
-        move(1, maxS, 1); 
-        move(2, maxS, 1);
+        move(1, maxR, 0); 
+        move(2, maxS, 0);
       } else {
         lineFlag = 0;
       }
+
       break;
     case 9: //back left and left
       if (cur - prevFlag < degreesMin) {
-        move(1, minS, 0); 
-        move(2, maxS, 1); 
+        move(1, maxR, 0); 
+        move(2, minS, 1); 
       } else if (cur - prevFlag < degrees90) {
-        move(1, maxS, 0);
-        move(2, maxS, 0);
+        move(1, maxR, 1);
+        move(2, maxS, 1);
       } else {
         lineFlag = 0;
       }
       break;
     case 10: //back and spin 180
       if (cur - prevFlag < degreesMin) {
-        move(1, maxS, 0); 
+        move(1, maxR, 0); 
         move(2, maxS, 0);
       } else if (cur - prevFlag < degrees180) {
-        move(1, maxS, 0);
+        move(1, maxR, 0);
         move(2, maxS, 0);
       } else {
         lineFlag = 0;
@@ -483,14 +490,14 @@ void movement(int state) {
       break;
     case 11: //startup movement: spin right, turn left, spin left, go forward
       if (cur - prevFlag < startSpinR) {
-        move(1, maxS, 1);
-        move(2, maxS, 1);
-      } else if (cur - prevFlag < startTurnL) {
-        move(1, minS, 1);
+        move(1, maxR, 0);
         move(2, maxS, 0);
-      } else if (cur - prevFlag < startSpinL) {
-        move(1, maxS, 0); 
-        move(2, maxS, 0); 
+      } else if (cur - prevFlag < startTurnL + startSpinR) {
+        move(1, maxR, 1);
+        move(2, minS, 0);
+      } else if (cur - prevFlag < startSpinL + startTurnL + startSpinR) {
+        move(1, maxR, 1); 
+        move(2, maxS, 1); 
       } else {
         past = 'f';
         pivotFlag = false;
@@ -498,17 +505,17 @@ void movement(int state) {
       break;
     case 12: //pivot: go back, spin right, turn left, spin left, go forward
       if (cur - prevFlag < pivotBack) {
-        move(1, maxS, 0);
+        move(1, maxR, 0);
         move(2, maxS, 0); 
-      } else if (cur - prevFlag < pivotSpinR) {
-        move(1, maxS, 1);
+      } else if (cur - prevFlag < pivotSpinR + pivotBack) {
+        move(1, maxR, 0);
+        move(2, maxS, 0);
+      } else if (cur - prevFlag < pivotTurnL + pivotSpinR + pivotBack) {
+        move(1, maxR, 1);
+        move(2, minS, 0);
+      } else if (cur - prevFlag < pivotSpinL + pivotTurnL + pivotSpinR + pivotBack) {
+        move(1, maxR, 1);
         move(2, maxS, 1);
-      } else if (cur - prevFlag < pivotTurnL) {
-        move(1, minS, 1);
-        move(2, maxS, 0);
-      } else if (cur - prevFlag < pivotSpinL) {
-        move(1, maxS, 0);
-        move(2, maxS, 0);
       } else {
         past = 'f';
         pivotFlag = false;
