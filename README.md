@@ -1,5 +1,8 @@
 # auto-sumo
 autonomous 3kg sumo
 
-v1 is the first iteration of this bot from Spring 2017.
-v2 will compete in the 2017-2018 season.
+v1: Spring 2017, RoboGames
+v2: Fall 2017, All Japan Robot-Sumo Tournament
+v3: Spring 2018, RoboGames
+
+The latest iteration of this robot has switched from the Arduino platform to the Particle Photon platform.
