@@ -1,4 +1,5 @@
-C:/src/auto-sumo/v3/target//obj/src/newlib_stubs.o: src/newlib_stubs.cpp \
+C:/src/auto-sumo/v3/main/target//obj/src/newlib_stubs.o: \
+ src/newlib_stubs.cpp \
  c:\program\ files\ (x86)\gnu\ tools\ arm\ embedded\5.4\ 2016q3\arm-none-eabi\include\sys\types.h \
  c:\program\ files\ (x86)\gnu\ tools\ arm\ embedded\5.4\ 2016q3\arm-none-eabi\include\_ansi.h \
  c:\program\ files\ (x86)\gnu\ tools\ arm\ embedded\5.4\ 2016q3\arm-none-eabi\include\newlib.h \

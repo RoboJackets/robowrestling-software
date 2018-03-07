@@ -1,4 +1,4 @@
-C:/src/auto-sumo/v3/target//obj/src/user_export.o: src/user_export.c \
+C:/src/auto-sumo/v3/main/target//obj/src/user_export.o: src/user_export.c \
  ../../../modules/shared/stm32f2xx/inc/user_part_export.c \
  ../../../modules/shared/stm32f2xx/inc/module_user_init.h \
  ../../../dynalib/inc/dynalib.h ../../../system/inc/system_user.h \

@@ -1,5 +1,5 @@
 
-C:/src/auto-sumo/v3/target/v3.elf:     file format elf32-littlearm
+C:/src/auto-sumo/v3/main/target/main.elf:     file format elf32-littlearm
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
@@ -27,13 +27,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  11 .debug_ranges 00002398  00000000  00000000  000bc2d3  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_macro  000223af  00000000  00000000  000be66b  2**0
+ 12 .debug_macro  00021ab7  00000000  00000000  000be66b  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_line   0001cd00  00000000  00000000  000e0a1a  2**0
+ 13 .debug_line   0001cd0f  00000000  00000000  000e0122  2**0
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_str    00083e17  00000000  00000000  000fd71a  2**0
+ 14 .debug_str    00083dc0  00000000  00000000  000fce31  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_frame  0000a14c  00000000  00000000  00181534  2**2
+ 15 .debug_frame  0000a14c  00000000  00000000  00180bf4  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
