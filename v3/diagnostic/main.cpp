@@ -18,7 +18,7 @@ Servo LESC;
 Servo RESC;
 
 int FL = A4;
-int FR = D7;		// A5 does not support attachInterrupt, so jump A5 to D7 on the board
+int FR = D7;		// A5 does not support attachInterrupt, so jump A5 to D7 on the board, also cut INT line
 int BL = D5;
 int BR = D6;
 
@@ -34,9 +34,10 @@ boolean BRflag = false;
 
 boolean RSflag = false;
 
-// Accel
 SYSTEM_THREAD(ENABLED);
-SYSTEM_MODE(MANUAL);
+SYSTEM_MODE(MANUAL);	// fully offline
+
+// Accelerometer
 const unsigned long PRINT_SAMPLE_PERIOD = 100;
 LIS3DHI2C accel(Wire, 0, WKP);
 unsigned long lastPrintSample = 0;
@@ -61,13 +62,69 @@ void RSISR() {
     RSflag = digitalRead(RS);
 }
 
+void tof_init() {
+    pinMode(A0, OUTPUT);
+    pinMode(A1, OUTPUT);
+    pinMode(A2, OUTPUT);
+    pinMode(A3, OUTPUT);
+    digitalWrite(A0, LOW);
+    digitalWrite(A1, LOW);
+    digitalWrite(A2, LOW);
+    digitalWrite(A3, LOW);
+    delay(500);    
+    
+    Wire.setSpeed(CLOCK_SPEED_100KHZ);  // need to initialize i2c protocol after driving shdn pins low
+    Wire.begin();
+    
+    delay(10);
+    digitalWrite(A0, HIGH);
+    digitalWrite(A1, HIGH);
+    digitalWrite(A2, HIGH);
+    digitalWrite(A3, HIGH);
+    delay(10);
+    digitalWrite(A1, LOW);
+    digitalWrite(A2, LOW);
+    digitalWrite(A3, LOW);
+    sensor0.init();
+    sensor0.setAddress(0x30);
+    sensor0.setTimeout(1000);
+    delay(10);
+    digitalWrite(A1, HIGH);
+    sensor1.init();
+    sensor1.setAddress(0x31);
+    sensor1.setTimeout(1000);
+    delay(10);
+    digitalWrite(A2, HIGH);
+    sensor2.init();
+    sensor2.setAddress(0x32);
+    sensor2.setTimeout(1000);
+    delay(10);
+    digitalWrite(A3, HIGH);
+    sensor3.init();
+    sensor3.setAddress(0x33);
+    sensor3.setTimeout(1000);
+    delay(10);
+
+    // Start continuous back-to-back mode (take readings as
+    // fast as possible).  To use continuous timed mode
+    // instead, provide a desired inter-measurement period in
+    // ms (e.g. sensor.startContinuous(100)).
+    sensor0.startContinuous(10);
+    sensor1.startContinuous(10);
+    sensor2.startContinuous(10);
+    sensor3.startContinuous(10);
+}
+
+void accel_init() {
+	LIS3DHConfig config;
+	config.setAccelMode(LIS3DH::RATE_100_HZ);
+
+	bool setupSuccess = accel.setup(config);
+	Serial.printlnf("setupSuccess=%d", setupSuccess);
+}
+
 void setup()
 {
-  pinMode(A0, OUTPUT);
-  pinMode(A1, OUTPUT);
-  pinMode(A2, OUTPUT);
-  pinMode(A3, OUTPUT);
-  
   pinMode(FL, INPUT);
   pinMode(FR, INPUT);
   pinMode(BL, INPUT);
@@ -80,50 +137,9 @@ void setup()
   
   Serial.begin(9600);
   
-  //reset all pins
-  digitalWrite(A0, LOW);
-  digitalWrite(A1, LOW);
-  digitalWrite(A2, LOW);
-  digitalWrite(A3, LOW);
-  delay(500);
-  
-  // need to initialize i2c
-  // protocol AFTER driving shdn pins low
-  Wire.begin();
-  
-  delay(10);
-  digitalWrite(A0, HIGH);
-  digitalWrite(A1, HIGH);
-  digitalWrite(A2, HIGH);
-  digitalWrite(A3, HIGH);
-  delay(10);
-  digitalWrite(A1, LOW);
-  digitalWrite(A2, LOW);
-  digitalWrite(A3, LOW);
+  tof_init();
+  accel_init();
 
-  sensor0.init();
-  sensor0.setAddress(0x30);
-  sensor0.setTimeout(1000);
-  delay(10);
-  digitalWrite(A1, HIGH);
-  
-  sensor1.init();
-  sensor1.setAddress(0x31);
-  sensor1.setTimeout(1000);
-  delay(10);
-  digitalWrite(A2, HIGH);
-  
-  sensor2.init();
-  sensor2.setAddress(0x32);
-  sensor2.setTimeout(1000);
-  delay(10);
-  digitalWrite(A3, HIGH);
-  
-  sensor3.init();
-  sensor3.setAddress(0x33);
-  sensor3.setTimeout(1000);
-  delay(10);
-  
   attachInterrupt(FL,FLISR,FALLING);
   attachInterrupt(FR,FRISR,FALLING);
   attachInterrupt(BL,BLISR,FALLING);
@@ -131,22 +147,10 @@ void setup()
   
   attachInterrupt(RS,RSISR,CHANGE);
   
-  Wire.setSpeed(CLOCK_SPEED_100KHZ);  // need to initialize i2c protocol after driving shdn pins low
-  Wire.begin();
-  
   LESC.attach(Lmotor);
   LESC.writeMicroseconds(1500);
   RESC.attach(Rmotor);
   RESC.writeMicroseconds(1500);
-
-  // Start continuous back-to-back mode (take readings as
-  // fast as possible).  To use continuous timed mode
-  // instead, provide a desired inter-measurement period in
-  // ms (e.g. sensor.startContinuous(100)).
-  sensor0.startContinuous(10);
-  sensor1.startContinuous(10);
-  sensor2.startContinuous(10);
-  sensor3.startContinuous(10);
 }
 
 void loop()
@@ -170,37 +174,20 @@ void loop()
   
   Serial.print(" | ");
   Serial.print("front left:");
-  // if (FLflag) {
-  //     Serial.print(FLflag);
-  //     FLflag = false;
-  // } else {
-      Serial.print(FLflag);
-  // }
+  Serial.print(FLflag);
+
   Serial.print(" | ");
   Serial.print("front right:");
-  // if (FRflag) {
-  //     Serial.print(FRflag);
-  //     FRflag = false;
-  // } else {
-      Serial.print(FRflag);
-  // }
+  Serial.print(FRflag);
+
   Serial.print(" | ");
   Serial.print("back left:");
-  // if (BLflag) {
-  //     Serial.print(BLflag);
-  //     BLflag = false;
-  // } else {
-      Serial.print(BLflag);
-  // }
+  Serial.print(BLflag);
+
   Serial.print(" | ");
   Serial.print("back right:");
-  // if (BRflag) {
-  //     Serial.print(BRflag);
-  //     BRflag = false;
-  // } else {
-      Serial.print(BRflag);
-  // }
-  
+  Serial.print(BRflag);
+
   Serial.print(" | ");
   if (millis() - lastPrintSample >= PRINT_SAMPLE_PERIOD) {
 		lastPrintSample = millis();
