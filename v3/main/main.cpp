@@ -28,11 +28,11 @@ void accel_init() {
     digitalWrite(A1, LOW);
     digitalWrite(A2, LOW);
     digitalWrite(A3, LOW);
-    delay(500);    
-    
+    delay(500);
+
     Wire.setSpeed(CLOCK_SPEED_100KHZ);  // need to initialize i2c protocol after driving shdn pins low
     Wire.begin();
-    
+
     delay(10);
     digitalWrite(A0, HIGH);
     digitalWrite(A1, HIGH);
@@ -81,7 +81,7 @@ void setup() {
 void loop() {
 	if (millis() - lastPrintSample >= PRINT_SAMPLE_PERIOD) {
 		lastPrintSample = millis();
-        
+
         uint16_t s1;
         uint16_t s2;
         uint16_t s3;
@@ -106,7 +106,7 @@ void loop() {
     Serial.print(" | ");
     Serial.print("sensor 3:");
     Serial.print(sensor3.readRangeContinuousMillimeters());
-    
+
     if (sensor0.timeoutOccurred() || sensor1.timeoutOccurred() || sensor2.timeoutOccurred() || sensor3.timeoutOccurred()) { Serial.print(" TIMEOUT"); }
-    Serial.println();	
+    Serial.println();
 }

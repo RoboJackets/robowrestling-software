@@ -71,11 +71,11 @@ void tof_init() {
     digitalWrite(A1, LOW);
     digitalWrite(A2, LOW);
     digitalWrite(A3, LOW);
-    delay(500);    
-    
+    delay(500);
+
     Wire.setSpeed(CLOCK_SPEED_100KHZ);  // need to initialize i2c protocol after driving shdn pins low
     Wire.begin();
-    
+
     delay(10);
     digitalWrite(A0, HIGH);
     digitalWrite(A1, HIGH);
@@ -129,14 +129,14 @@ void setup()
   pinMode(FR, INPUT);
   pinMode(BL, INPUT);
   pinMode(BR, INPUT);
-  
+
   pinMode(RS, INPUT);
-  
+
   pinMode(Lmotor, OUTPUT);
   pinMode(Rmotor, OUTPUT);
-  
+
   Serial.begin(9600);
-  
+
   tof_init();
   accel_init();
 
@@ -144,9 +144,9 @@ void setup()
   attachInterrupt(FR,FRISR,FALLING);
   attachInterrupt(BL,BLISR,FALLING);
   attachInterrupt(BR,BRISR,FALLING);
-  
+
   attachInterrupt(RS,RSISR,CHANGE);
-  
+
   LESC.attach(Lmotor);
   LESC.writeMicroseconds(1500);
   RESC.attach(Rmotor);
@@ -158,7 +158,7 @@ void loop()
   Serial.print("remote status:");
   Serial.print(RSflag);
   Serial.print(" | ");
-  
+
   Serial.print("sensor 0:");
   Serial.print(sensor0.readRangeContinuousMillimeters());
   Serial.print(" | ");
@@ -171,7 +171,7 @@ void loop()
   Serial.print("sensor 3:");
   Serial.print(sensor3.readRangeContinuousMillimeters());
   if (sensor0.timeoutOccurred() || sensor1.timeoutOccurred() || sensor2.timeoutOccurred() || sensor3.timeoutOccurred()) { Serial.print(" SENSOR TIMEOUT"); }
-  
+
   Serial.print(" | ");
   Serial.print("front left:");
   Serial.print(FLflag);
@@ -202,7 +202,7 @@ void loop()
 	}
 
   Serial.println();
-  
+
   LESC.writeMicroseconds(1600);
   RESC.writeMicroseconds(1600);
 }
