@@ -27,10 +27,10 @@ int RS = D4;
 int Lmotor = D2;
 int Rmotor = D3;
 
-boolean FLflag = false;
-boolean FRflag = false;
-boolean BLflag = false;
-boolean BRflag = false;
+boolean FLflag = true; // active low
+boolean FRflag = true;
+boolean BLflag = true;
+boolean BRflag = true;
 
 boolean RSflag = false;
 
@@ -203,6 +203,6 @@ void loop()
 
   Serial.println();
 
-  LESC.writeMicroseconds(1600);
-  RESC.writeMicroseconds(1600);
+  //LESC.writeMicroseconds(1600);
+  //RESC.writeMicroseconds(1600);
 }
