@@ -14,16 +14,15 @@ VL53L0X sensor1;
 VL53L0X sensor2;
 VL53L0X sensor3;
 
-Servo LESC;
-Servo RESC;
-
-int FL = A4;
-int FR = D7;		// A5 does not support attachInterrupt, so jump A5 to D7 on the board, also cut INT line
+int FL = D7;    // AUX BOARD SWITCHED FL and FR up
+int FR = A4;    // A5 does not support attachInterrupt, so jump A5 to D7 on the board, also cut INT line
 int BL = D5;
 int BR = D6;
 
 int RS = D4;
 
+Servo LESC;
+Servo RESC;
 int Lmotor = D2;
 int Rmotor = D3;
 
@@ -35,7 +34,7 @@ boolean BRflag = true;
 boolean RSflag = false;
 
 SYSTEM_THREAD(ENABLED);
-SYSTEM_MODE(MANUAL);	// fully offline
+SYSTEM_MODE(MANUAL);  // fully offline
 
 // Accelerometer
 const unsigned long PRINT_SAMPLE_PERIOD = 100;
@@ -116,11 +115,11 @@ void tof_init() {
 }
 
 void accel_init() {
-	LIS3DHConfig config;
-	config.setAccelMode(LIS3DH::RATE_100_HZ);
+  LIS3DHConfig config;
+  config.setAccelMode(LIS3DH::RATE_100_HZ);
 
-	bool setupSuccess = accel.setup(config);
-	Serial.printlnf("setupSuccess=%d", setupSuccess);
+  bool setupSuccess = accel.setup(config);
+  Serial.printlnf("setupSuccess=%d", setupSuccess);
 }
 
 void setup()
@@ -140,17 +139,24 @@ void setup()
   tof_init();
   accel_init();
 
-  attachInterrupt(FL,FLISR,FALLING);
-  attachInterrupt(FR,FRISR,FALLING);
-  attachInterrupt(BL,BLISR,FALLING);
-  attachInterrupt(BR,BRISR,FALLING);
+  attachInterrupt(FL,FLISR,CHANGE);
+  attachInterrupt(FR,FRISR,CHANGE);
+  attachInterrupt(BL,BLISR,CHANGE);
+  attachInterrupt(BR,BRISR,CHANGE);
 
   attachInterrupt(RS,RSISR,CHANGE);
 
   LESC.attach(Lmotor);
-  LESC.writeMicroseconds(1500);
   RESC.attach(Rmotor);
+  LESC.writeMicroseconds(1500);
   RESC.writeMicroseconds(1500);
+
+  while(!RSflag) {  // initial LOW
+    Serial.println("Waiting for Start");
+  }
+  Serial.println("Starting in 5 seconds...");
+  delay(5000);
+  Serial.println("GO!");
 }
 
 void loop()
@@ -190,19 +196,25 @@ void loop()
 
   Serial.print(" | ");
   if (millis() - lastPrintSample >= PRINT_SAMPLE_PERIOD) {
-		lastPrintSample = millis();
+    lastPrintSample = millis();
 
-		LIS3DHSample sample;
-		if (accel.getSample(sample)) {
-			Serial.printlnf("%d,%d,%d", sample.x, sample.y, sample.z);
-		}
-		else {
-			Serial.println("no sample");
-		}
-	}
+    LIS3DHSample sample;
+    if (accel.getSample(sample)) {
+      Serial.printlnf("%d,%d,%d", sample.x, sample.y, sample.z);
+    }
+    else {
+      Serial.println("no sample");
+    }
+  }
 
   Serial.println();
 
-  //LESC.writeMicroseconds(1600);
-  //RESC.writeMicroseconds(1600);
+  if(RSflag == LOW) {
+    LESC.writeMicroseconds(1700);
+    RESC.writeMicroseconds(1700);
+  } else {
+    LESC.writeMicroseconds(1500);
+    RESC.writeMicroseconds(1500);
+  }
+  
 }
