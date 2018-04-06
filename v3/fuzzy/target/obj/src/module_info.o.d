@@ -1,4 +1,4 @@
-C:/src/battlebots-sumo/v3/turning/target//obj/src/module_info.o: \
+C:/src/battlebots-sumo/v3/fuzzy/target//obj/src/module_info.o: \
  src/module_info.c ../../../dynalib/inc/module_info.inc \
  ../../../dynalib/inc/module_info.h ../../../services/inc/static_assert.h \
  c:\program\ files\ (x86)\gnu\ tools\ arm\ embedded\5.4\ 2016q3\lib\gcc\arm-none-eabi\5.4.1\include\stddef.h \

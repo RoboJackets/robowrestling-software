@@ -122,34 +122,47 @@ void accel_init() {
   Serial.printlnf("setupSuccess=%d", setupSuccess);
 }
 
-void setup()
-{
+void others_init() {
+  // Line sensors
   pinMode(FL, INPUT);
   pinMode(FR, INPUT);
   pinMode(BL, INPUT);
   pinMode(BR, INPUT);
-
+  // Remote switch
   pinMode(RS, INPUT);
-
+  // Car ESCs
   pinMode(Lmotor, OUTPUT);
   pinMode(Rmotor, OUTPUT);
-
+  // Serial monitor
   Serial.begin(9600);
+} 
 
-  tof_init();
-  accel_init();
-
+void interrupt_init() {
+  // Line sensors
   attachInterrupt(FL,FLISR,CHANGE);
   attachInterrupt(FR,FRISR,CHANGE);
   attachInterrupt(BL,BLISR,CHANGE);
   attachInterrupt(BR,BRISR,CHANGE);
-
+  // Remote switch
   attachInterrupt(RS,RSISR,CHANGE);
+}
 
-  LESC.attach(Lmotor);
-  RESC.attach(Rmotor);
-  LESC.writeMicroseconds(1500);
-  RESC.writeMicroseconds(1500);
+void ESC_init() {
+  // Necessary for Servo objects
+    LESC.attach(Lmotor);
+    RESC.attach(Rmotor);
+    // Write stop command
+    LESC.writeMicroseconds(1500);
+    RESC.writeMicroseconds(1500);
+}
+
+void setup()
+{
+  others_init();
+  tof_init();
+  accel_init();
+  interrupt_init();
+  ESC_init();
 
   while(!RSflag) {  // initial LOW
     Serial.println("Waiting for Start");
@@ -210,8 +223,8 @@ void loop()
   Serial.println();
 
   if(RSflag == LOW) {
-    LESC.writeMicroseconds(1700);
-    RESC.writeMicroseconds(1700);
+    // LESC.writeMicroseconds(1700);
+    // RESC.writeMicroseconds(1700);
   } else {
     LESC.writeMicroseconds(1500);
     RESC.writeMicroseconds(1500);

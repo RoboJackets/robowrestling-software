@@ -7,7 +7,8 @@
 #if !defined(PARTICLE)
 #  include <Wire.h>
 #endif
-/*
+
+/* This firmware produces a runtime error
 #include <Adafruit_LIS3DH.h>
 
 #include "Particle.h"
@@ -43,10 +44,13 @@ void toggleState()
 }
 
 */
+
 void getAccel();
 int accelPin = D1;
 int curAccel = 0;
+
 LIS3DHSample sample;
+
 Timer timer(100, getAccel);
 const unsigned long PRINT_SAMPLE_PERIOD = 100;
 LIS3DHI2C accel(Wire, 0, WKP);
@@ -63,7 +67,6 @@ void getAccel() {
 
 // Accelerometer
 
-
 void accel_init() {
 	LIS3DHConfig config;
 	config.setAccelMode(LIS3DH::RATE_100_HZ);
@@ -73,22 +76,18 @@ void accel_init() {
 }
 
 
-void runDiagnostic() {
-  
-  
-  if (millis() - lastPrintSample >= PRINT_SAMPLE_PERIOD) {
-		lastPrintSample = millis();
-    Serial.print("Accel values: ");
-		if (accel.getSample(sample)) {
-			Serial.printlnf("%d,%d,%d", sample.x, sample.y, sample.z);
-		}
-		else {
-			Serial.println("no sample");
-		}
-	}
-}
-
-
+// void runDiagnostic() {
+//   if (millis() - lastPrintSample >= PRINT_SAMPLE_PERIOD) {
+// 		lastPrintSample = millis();
+//     Serial.print("Accel values: ");
+// 		if (accel.getSample(sample)) {
+// 			Serial.printlnf("%d,%d,%d", sample.x, sample.y, sample.z);
+// 		}
+// 		else {
+// 			Serial.println("no sample");
+// 		}
+// 	}
+// }
 
 void setup()
 {
@@ -102,6 +101,6 @@ void setup()
 
 void loop()
 {
-  runDiagnostic();
- 
+  //runDiagnostic();
+	Serial.println(curAccel);
 }

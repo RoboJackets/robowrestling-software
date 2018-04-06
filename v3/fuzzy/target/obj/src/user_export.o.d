@@ -1,4 +1,4 @@
-C:/src/battlebots-sumo/v3/line/target//obj/src/user_export.o: \
+C:/src/battlebots-sumo/v3/fuzzy/target//obj/src/user_export.o: \
  src/user_export.c \
  ../../../modules/shared/stm32f2xx/inc/user_part_export.c \
  ../../../modules/shared/stm32f2xx/inc/module_user_init.h \

@@ -399,7 +399,7 @@ void setup()
 
 void loop()
 {
-  if (FLflag || FRflag || BRflag || BLflag) {
+  if (!FLflag || !FRflag || !BRflag || !BLflag) {
     moving = false;
     stop();
   } else {
