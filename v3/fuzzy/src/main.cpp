@@ -484,6 +484,20 @@ void loop(){
 
 	if (sensor0.timeoutOccurred() || sensor1.timeoutOccurred() || sensor2.timeoutOccurred() || sensor3.timeoutOccurred()) { Serial.print(" SENSOR TIMEOUT"); }
 	
+	// pre-processing (changing 8192 to low4)
+	if(LL_distance > 2000) { 
+		LL_distance = low4;
+	}
+	if(LM_distance > 2000) { 
+		LL_distance = low4;
+	}
+	if(RM_distance > 2000) { 
+		LL_distance = low4;
+	}
+	if(RR_distance > 2000) { 
+		LL_distance = low4;
+	}
+
 	// xESC.writeMicroseconds(yyyy);
 	// ***TBD***
   
@@ -522,8 +536,8 @@ void loop(){
   	// obligatory sampling from accelerometer
   	LIS3DHSample sample;
   	if(!accel.getSample(sample)) {
-  		//Serial.println("no sample"); // ********************************
-  		Particle.publish("no sample");
+  		Serial.println("no sample"); // ********************************
+  		// Particle.publish("no sample");
   	}
 
   	if(RSflag == HIGH) {
