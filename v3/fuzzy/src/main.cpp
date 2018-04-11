@@ -22,15 +22,15 @@
 #  include <Wire.h>
 #endif
 
-VL53L0X sensor0;
-VL53L0X sensor1;
-VL53L0X sensor2;
-VL53L0X sensor3;
+VL53L0X sensor0;	// RR
+VL53L0X sensor1;	// RM
+VL53L0X sensor2;	// LM
+VL53L0X sensor3;	// LL
 
-int LL_distance;
-int LM_distance;
-int RM_distance;
-int RR_distance;
+uint16_t LL_distance;
+uint16_t LM_distance;
+uint16_t RM_distance;
+uint16_t RR_distance;
 
 int FL = D7;    // AUX BOARD SWITCHED FL and FR up
 int FR = A4;    // A5 does not support attachInterrupt, so jump A5 to D7 on the board, also cut INT line
@@ -54,6 +54,7 @@ boolean BRflag = true;
 boolean RSflag = false;
 
 Fuzzy* fuzzy = new Fuzzy();
+float output;
 
 SYSTEM_THREAD(ENABLED);
 // Try to print on web console**************************
@@ -163,13 +164,13 @@ void others_init() {
 }
 
 void interrupt_init() {
-	 // Line sensors
-	 attachInterrupt(FL, FLISR, CHANGE);
-   attachInterrupt(FR, FRISR, CHANGE);
-   attachInterrupt(BL, BLISR, CHANGE);
-   attachInterrupt(BR, BRISR, CHANGE);
-   // Remote switch
-   attachInterrupt(RS, RSISR, CHANGE);
+	// Line sensors
+	attachInterrupt(FL, FLISR, CHANGE);
+   	attachInterrupt(FR, FRISR, CHANGE);
+   	attachInterrupt(BL, BLISR, CHANGE);
+   	attachInterrupt(BR, BRISR, CHANGE);
+   	// Remote switch
+   	attachInterrupt(RS, RSISR, CHANGE);
 }
 
 void ESC_init() {
@@ -428,6 +429,11 @@ void fuzzy_init() {
   LLLM->joinWithAND(left_low_low, right_low_med);
   FuzzyRule* fr27 = new FuzzyRule(27, LLLM, drive_small_right);
   fuzzy->addFuzzyRule(fr27);
+
+  FuzzyRuleAntecedent* LLLL = new FuzzyRuleAntecedent();
+  LLLL->joinWithAND(left_low_low, right_low_low);
+  FuzzyRule* fr28 = new FuzzyRule(28, LLLL, drive_center);
+  fuzzy->addFuzzyRule(fr28);
 }
 
 void setup() {
@@ -463,26 +469,26 @@ void setup() {
 
 void loop(){
 	// sensorx.readRangeContinuousMillimeters();
-	LL_distance = sensor0.readRangeContinuousMillimeters();
-	LM_distance = sensor1.readRangeContinuousMillimeters();
-	RM_distance = sensor2.readRangeContinuousMillimeters();
-	RR_distance = sensor3.readRangeContinuousMillimeters();
+	RR_distance = sensor0.readRangeContinuousMillimeters();
+	RM_distance = sensor1.readRangeContinuousMillimeters();
+	LM_distance = sensor2.readRangeContinuousMillimeters();
+	LL_distance = sensor3.readRangeContinuousMillimeters();
 
 	if (sensor0.timeoutOccurred() || sensor1.timeoutOccurred() || sensor2.timeoutOccurred() || sensor3.timeoutOccurred()) { Serial.print(" SENSOR TIMEOUT"); }
 	
 	// pre-processing (changing 8192 to low4)
-	if(LL_distance > 2000) { 
-		LL_distance = low4;
-	}
-	if(LM_distance > 2000) { 
-		LL_distance = low4;
-	}
-	if(RM_distance > 2000) { 
-		LL_distance = low4;
-	}
-	if(RR_distance > 2000) { 
-		LL_distance = low4;
-	}
+	// if(LL_distance > low4) { 
+	// 	LL_distance = low4;
+	// }
+	// if(LM_distance > low4) { 
+	// 	LM_distance = low4;
+	// }
+	// if(RM_distance > low4) { 
+	// 	RM_distance = low4;
+	// }
+	// if(RR_distance > low4) { 
+	// 	RR_distance = low4;
+	// }
 
 	// xESC.writeMicroseconds(yyyy);
 	// ***TBD***
@@ -497,24 +503,38 @@ void loop(){
   	// CURRENT ISSUE: 8192, the max value that the ToF defaults to when it doesn't see
   	// is hard to process in the fuzzy logic since the highest "seen" value is ~1250
   	fuzzy->fuzzify();
-  	float output = fuzzy->defuzzify(1);
+  	output = fuzzy->defuzzify(1);
 
   	Serial.print("OUTPUT: ");
-  	Serial.print(output);
+
+  	if((output >= 0) && (output < 20)) {
+  		Serial.print("Full Left");
+  	} else if((output >= 20) && (output < 40)) {
+  		Serial.print("Small Left");
+	} else if((output >= 40) && (output < 60)) {
+		Serial.print("Center");
+	} else if((output >= 60) && (output < 80)) {
+		Serial.print("Small Right");
+	} else if((output >= 80) && (output < 100)) {
+		Serial.print("Full Right");
+	}
+
+  	// Serial.print("OUTPUT: ");
+  	// Serial.print(output);
   	Serial.print(" | ");
 
   	Serial.print("sensor 0:");
-  	Serial.print(LL_distance);
+  	Serial.print(RR_distance);
   	Serial.print(" | ");
   	Serial.print("sensor 1:");
-  	Serial.print(LM_distance);
-  	Serial.print(" | ");
-  	Serial.print("sensor 2:");
   	Serial.print(RM_distance);
   	Serial.print(" | ");
+  	Serial.print("sensor 2:");
+  	Serial.print(LM_distance);
+  	Serial.print(" | ");
   	Serial.print("sensor 3:");
-  	Serial.println(RR_distance);
-  	delay(100);
+  	Serial.println(LL_distance);
+  	delay(10);
 
   	// FUZZY ***********************************************
 
