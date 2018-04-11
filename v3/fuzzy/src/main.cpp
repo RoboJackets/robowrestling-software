@@ -43,6 +43,8 @@ Servo LESC;
 Servo RESC;
 int Lmotor = D2;
 int Rmotor = D3;
+int L_command = 1500;
+int R_command = 1500;
 
 boolean FLflag = true; // active low
 boolean FRflag = true;
@@ -54,7 +56,6 @@ boolean RSflag = false;
 Fuzzy* fuzzy = new Fuzzy();
 
 SYSTEM_THREAD(ENABLED);
-
 // Try to print on web console**************************
 SYSTEM_MODE(MANUAL);
 
@@ -162,13 +163,13 @@ void others_init() {
 }
 
 void interrupt_init() {
-	// Line sensors
-	attachInterrupt(FL,FLISR,CHANGE);
-  	attachInterrupt(FR,FRISR,CHANGE);
-  	attachInterrupt(BL,BLISR,CHANGE);
-  	attachInterrupt(BR,BRISR,CHANGE);
-  	// Remote switch
-  	attachInterrupt(RS,RSISR,CHANGE);
+	 // Line sensors
+	 attachInterrupt(FL, FLISR, CHANGE);
+   attachInterrupt(FR, FRISR, CHANGE);
+   attachInterrupt(BL, BLISR, CHANGE);
+   attachInterrupt(BR, BRISR, CHANGE);
+   // Remote switch
+   attachInterrupt(RS, RSISR, CHANGE);
 }
 
 void ESC_init() {
@@ -429,10 +430,6 @@ void fuzzy_init() {
   fuzzy->addFuzzyRule(fr27);
 }
 
-int distance = 8192;
-int L_command = 1500;
-int R_command = 1500;
-
 void setup() {
 	tof_init();			// ToF and I2C
 	accel_init();		// accelerometer
@@ -440,39 +437,28 @@ void setup() {
 	interrupt_init();	// interrupts for lines and remote
 	ESC_init();			// Car ESCs
 
-  	// ***Set up web*** ****************************
-  	// register cloud variables
+  // ***Set up web*** ****************************
+  // register cloud variables
 	// Particle.variable("distance", distance);
 	// Particle.variable("Left_ESC", L_command);
 	// Particle.variable("Right_ESC", R_command);
 	// *********************************************
 
-    while(!RSflag) {  // initial LOW
-    	Serial.println("Waiting for Start");
-    	// Particle.publish("Waiting for Start");
-  	}
-  	Serial.println("Starting in 5 seconds...");
-  	// Particle.publish("Starting in 5 seconds...");
-  	delay(5000);
-  	Serial.println("GO!");
-  	// Particle.publish("GO!");
+  while(!RSflag) {  // initial LOW
+    Serial.println("Waiting for Start");
+    // Particle.publish("Waiting for Start");
+  }
+  Serial.println("Starting in 5 seconds...");
+  // Particle.publish("Starting in 5 seconds...");
+  delay(5000);
+  Serial.println("GO!");
+  // Particle.publish("GO!");
 
-
-
-
-
-  	// ***********TIME FUZZY**********************************
-  	unsigned long currentTime = millis();
-
-  	fuzzy_init();		// Fuzzy library************
-
-  	Serial.println(millis() - currentTime);
-
-  	// SHOW HOW MUCH TIME IT TAKES FOR FUZZY TO INITIALIZE
-
-
-
-
+  // ***********TIME FUZZY**********************************
+  unsigned long currentTime = millis();
+  fuzzy_init();		// Fuzzy library************
+  Serial.println(millis() - currentTime);
+  // Measured: 1ms to initialize.
 }
 
 void loop(){
