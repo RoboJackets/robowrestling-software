@@ -55,10 +55,14 @@ boolean RSflag = false;
 
 Fuzzy* fuzzy = new Fuzzy();
 float output;
+String decision;
+unsigned long currentTime;
 
 SYSTEM_THREAD(ENABLED);
 // Try to print on web console**************************
-SYSTEM_MODE(MANUAL);
+// SYSTEM_MODE(MANUAL);
+SYSTEM_MODE(AUTOMATIC);
+
 
 // Accelerometer
 const unsigned long PRINT_SAMPLE_PERIOD = 100;
@@ -180,6 +184,15 @@ void ESC_init() {
   	// Write stop command
   	LESC.writeMicroseconds(1500);
   	RESC.writeMicroseconds(1500);
+}
+
+void robot_init() {
+  while(!RSflag) {    // initial LOW
+    Serial.println("Waiting for Start");
+  }
+  Serial.println("Starting in 5 seconds...");
+  delay(5000);
+  Serial.println("GO!");    
 }
 
 void fuzzy_init() {
@@ -432,7 +445,7 @@ void fuzzy_init() {
 
   FuzzyRuleAntecedent* LLLL = new FuzzyRuleAntecedent();
   LLLL->joinWithAND(left_low_low, right_low_low);
-  FuzzyRule* fr28 = new FuzzyRule(28, LLLL, drive_center);
+  FuzzyRule* fr28 = new FuzzyRule(28, LLLL, drive_center);	// should it be search?
   fuzzy->addFuzzyRule(fr28);
 }
 
@@ -442,29 +455,16 @@ void setup() {
 	others_init();		// line, remote, esc, ***printing***
 	interrupt_init();	// interrupts for lines and remote
 	ESC_init();			// Car ESCs
+	robot_init();
 
-  // ***Set up web*** ****************************
-  // register cloud variables
+  	// ***Set up web*** ****************************
+  	// register cloud variables
 	// Particle.variable("distance", distance);
 	// Particle.variable("Left_ESC", L_command);
 	// Particle.variable("Right_ESC", R_command);
 	// *********************************************
 
-  while(!RSflag) {  // initial LOW
-    Serial.println("Waiting for Start");
-    // Particle.publish("Waiting for Start");
-  }
-  Serial.println("Starting in 5 seconds...");
-  // Particle.publish("Starting in 5 seconds...");
-  delay(5000);
-  Serial.println("GO!");
-  // Particle.publish("GO!");
-
-  // ***********TIME FUZZY**********************************
-  unsigned long currentTime = millis();
-  fuzzy_init();		// Fuzzy library************
-  Serial.println(millis() - currentTime);
-  // Measured: 1ms to initialize.
+ 	fuzzy_init();		// Fuzzy library************
 }
 
 void loop(){
@@ -476,7 +476,7 @@ void loop(){
 
 	if (sensor0.timeoutOccurred() || sensor1.timeoutOccurred() || sensor2.timeoutOccurred() || sensor3.timeoutOccurred()) { Serial.print(" SENSOR TIMEOUT"); }
 	
-	// pre-processing (changing 8192 to low4)
+	// pre-processing (changing 8192 to low4), only returns 0.00 as output
 	// if(LL_distance > low4) { 
 	// 	LL_distance = low4;
 	// }
@@ -490,51 +490,62 @@ void loop(){
 	// 	RR_distance = low4;
 	// }
 
-	// xESC.writeMicroseconds(yyyy);
-	// ***TBD***
-  
   	// FUZZY **************************************************
 
   	fuzzy->setInput(1, LL_distance);
   	fuzzy->setInput(2, LM_distance);
   	fuzzy->setInput(3, RM_distance);
   	fuzzy->setInput(4, RR_distance);
-  
-  	// CURRENT ISSUE: 8192, the max value that the ToF defaults to when it doesn't see
-  	// is hard to process in the fuzzy logic since the highest "seen" value is ~1250
+
   	fuzzy->fuzzify();
   	output = fuzzy->defuzzify(1);
 
-  	Serial.print("OUTPUT: ");
 
   	if((output >= 0) && (output < 20)) {
-  		Serial.print("Full Left");
+  		// Serial.print("Full Left");
+  		// Particle.publish("Full Left");
+  		decision = "Full Left";
   	} else if((output >= 20) && (output < 40)) {
-  		Serial.print("Small Left");
+  		// Serial.print("Small Left");
+  		// Particle.publish("Small Left");
+  		decision = "Small Left";
 	} else if((output >= 40) && (output < 60)) {
-		Serial.print("Center");
+		// Serial.print("Center");
+		// Particle.publish("Center");
+		decision = "Center";
 	} else if((output >= 60) && (output < 80)) {
-		Serial.print("Small Right");
+		// Serial.print("Small Right");
+		// Particle.publish("Small Right");
+		decision = "Small Right";
 	} else if((output >= 80) && (output < 100)) {
-		Serial.print("Full Right");
+		// Serial.print("Full Right");
+		// Particle.publish("Full Right");
+		decision = "Full Right";
 	}
 
+	// For web console debugging
+	// Publish every 1 second (fastest rate)
+	if(millis() - currentTime > 1000) {
+		Particle.publish(decision);
+		currentTime = millis();
+	}
+
+	// For serial debugging
   	// Serial.print("OUTPUT: ");
   	// Serial.print(output);
-  	Serial.print(" | ");
-
-  	Serial.print("sensor 0:");
-  	Serial.print(RR_distance);
-  	Serial.print(" | ");
-  	Serial.print("sensor 1:");
-  	Serial.print(RM_distance);
-  	Serial.print(" | ");
-  	Serial.print("sensor 2:");
-  	Serial.print(LM_distance);
-  	Serial.print(" | ");
-  	Serial.print("sensor 3:");
-  	Serial.println(LL_distance);
-  	delay(10);
+  	// Serial.print(" | ");
+  	// Serial.print("sensor 0:");
+  	// Serial.print(RR_distance);
+  	// Serial.print(" | ");
+  	// Serial.print("sensor 1:");
+  	// Serial.print(RM_distance);
+  	// Serial.print(" | ");
+  	// Serial.print("sensor 2:");
+  	// Serial.print(LM_distance);
+  	// Serial.print(" | ");
+  	// Serial.print("sensor 3:");
+  	// Serial.println(LL_distance);
+  	// delay(1000);
 
   	// FUZZY ***********************************************
 
