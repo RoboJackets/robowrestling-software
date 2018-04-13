@@ -456,6 +456,9 @@ void setup() {
 	interrupt_init();	// interrupts for lines and remote
 	ESC_init();			// Car ESCs
 	fuzzy_init();		// Fuzzy library************
+
+	RGB.control(true); 	// take control of the on-board LED for debugging
+
 	robot_init();
 
   	// ***Set up web*** ****************************
@@ -479,20 +482,6 @@ void loop(){
 	LL_distance = sensor3.readRangeContinuousMillimeters();
 
 	// if (sensor0.timeoutOccurred() || sensor1.timeoutOccurred() || sensor2.timeoutOccurred() || sensor3.timeoutOccurred()) { Serial.print(" SENSOR TIMEOUT"); }
-	
-	// pre-processing (changing 8192 to low4), only returns 0.00 as output
-	// if(LL_distance > low4) { 
-	// 	LL_distance = low4;
-	// }
-	// if(LM_distance > low4) { 
-	// 	LM_distance = low4;
-	// }
-	// if(RM_distance > low4) { 
-	// 	RM_distance = low4;
-	// }
-	// if(RR_distance > low4) { 
-	// 	RR_distance = low4;
-	// }
 
   	// FUZZY **************************************************
 
@@ -506,43 +495,35 @@ void loop(){
 
 
   	if((output >= 0) && (output < 20)) {
-  		// Serial.print("Full Left");
-  		// Particle.publish("Full Left");
   		decision = "Full Left";
-  		L_command = 1525;
+  		L_command = 1550;
   		R_command = 1600;
+  		RGB.color(0, 0, 255);
   	} else if((output >= 20) && (output < 40)) {
-  		// Serial.print("Small Left");
-  		// Particle.publish("Small Left");
   		decision = "Small Left";
    		L_command = 1575;
   		R_command = 1600;
+  		RGB.color(0, 128, 128);
 	} else if((output >= 40) && (output < 60)) {
-		// Serial.print("Center");
-		// Particle.publish("Center");
 		decision = "Center";
-  		L_command = 1500;
-  		R_command = 1500;
+  		L_command = 1550;
+  		R_command = 1550;
+  		RGB.color(0, 255, 0);
 	} else if((output >= 60) && (output < 80)) {
-		// Serial.print("Small Right");
-		// Particle.publish("Small Right");
 		decision = "Small Right";
   		L_command = 1600;
   		R_command = 1575;
+  		RGB.color(128, 128, 0);
 	} else if((output >= 80) && (output < 100)) {
-		// Serial.print("Full Right");
-		// Particle.publish("Full Right");
 		decision = "Full Right";
   		L_command = 1600;
-  		R_command = 1525;
+  		R_command = 1550;
+  		RGB.color(255, 0, 0);
 	}
 
-	// For web console debugging
 	// Publish every 1 second (fastest rate)
 	if(millis() - currentTime > 1000) {
-	// 	Particle.publish(decision);
 		currentTime = millis();
-		Serial.println(decision);
 	}
 
 	// For serial debugging
