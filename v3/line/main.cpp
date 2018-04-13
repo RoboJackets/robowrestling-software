@@ -36,17 +36,17 @@ boolean RSFlag;
 boolean moving;
 
 // max and minimum motor speeds
-int maxS = 75;
-int minS = 70;
+int maxS = 50;
+int minS = 45;
 int maxR = 75;
-int minR = 70;
+int minR = 45;
 
 int state;          // movement state of robot
 
 // thresholds for movement timers
 int degreesMin = 300; // turn a little
 int degrees90 = 900; // turn 90 degrees
-int degrees180 = 900; // turn 180 degrees
+int degrees180 = 1725; // turn 180 degrees
 int startSpinR = 273; // time spinning right at start
 int startTurnL = 600; // time turning left at start
 int startSpinL = 300; // time spinning left at start
@@ -56,11 +56,15 @@ int pivotSpinR = 700; // time spinning right at pivot
 int pivotTurnL = 2000; // time turning left at pivot
 int pivotSpinL = 700; // time spinning left at pivot
 
+int nudge = 750;
+
 // flags set for line sensors
 boolean FLflag = true;
 boolean FRflag = true;
 boolean BLflag = true;
 boolean BRflag = true;
+
+boolean prevFlagSet = false;
 
 // remote start flag
 boolean RSflag = false;
@@ -204,8 +208,8 @@ void runDiagnostic() {
 
   Serial.println();
 
-  LESC.writeMicroseconds(1600);
-  RESC.writeMicroseconds(1600);
+  LESC.writeMicroseconds(1500);
+  RESC.writeMicroseconds(1500);
 }
 
 void move(int motor, int speed, int direction){
@@ -237,7 +241,7 @@ void movement(int state) {
   switch (state) {
     case 0: //forward
       //move(2, 100, 0);
-      move(1, maxR, 1);
+      move(1, maxS, 1);
       move(2, maxS, 1);
       moving = true;
       break;
@@ -315,14 +319,20 @@ void movement(int state) {
       moving = true;
       break;
     case 10: //back and spin 180
-      if (cur - prevFlag < degreesMin) {
+      if (cur - prevFlag < nudge) {
         move(1, maxR, 0);
-        move(2, maxS, 0);
-      } else if (cur - prevFlag < degrees180) {
+        move(2, maxR, 0);
+      }
+      else if (cur - prevFlag < degrees180) {
         move(1, maxR, 0);
-        move(2, maxS, 0);
-      } else {
-        lineFlag = 0;
+        move(2, maxR, 1);
+      }
+      else {
+        FLflag = true;
+        FRflag = true;
+        BLflag = true;
+        BRflag = true;
+        prevFlagSet = false;
       }
       moving = true;
       break;
@@ -404,28 +414,35 @@ void setup()
   delay(5000);
 
   Serial.println("GO!");
+  prevFlag = millis();
   //Particle.publish("GO!");
 }
 
 void loop()
 {
-  if (!FLflag || !FRflag || !BRflag || !BLflag) {
-    moving = false;
-    stop();
-    Serial.println("Stopped");
-  } else {
+  if (!FLflag || !FRflag) {
+    if (!prevFlagSet) {
+      prevFlag = cur;
+      prevFlagSet = true;
+      stop();
+    }
+    movement(10);
+    Serial.println("Dealing with it");
+  } else if (!BRflag || !BLflag) {
+    movement(0);
+  } else if (!prevFlagSet) {
     movement(0);
     Serial.println("Moving");
   }
 
-  if(RSflag == HIGH) {
+  if(RSflag == LOW) {
     moving = false;
     stop();
+    while (1);
   }
 
   cur = millis();
-  prevFlag = cur;
 
-  runDiagnostic();
-  stop();
+  //runDiagnostic();
+  //stop();
 }
