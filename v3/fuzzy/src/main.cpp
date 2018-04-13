@@ -56,12 +56,12 @@ boolean RSflag = false;
 Fuzzy* fuzzy = new Fuzzy();
 float output;
 String decision;
-unsigned long currentTime;
+unsigned long currentTime = 0;
 
 SYSTEM_THREAD(ENABLED);
 // Try to print on web console**************************
-// SYSTEM_MODE(MANUAL);
-SYSTEM_MODE(AUTOMATIC);
+SYSTEM_MODE(MANUAL);
+// SYSTEM_MODE(AUTOMATIC);
 
 
 // Accelerometer
@@ -147,7 +147,7 @@ void accel_init() {
   config.setAccelMode(LIS3DH::RATE_400_HZ);
 
   bool setupSuccess = accel.setup(config);
-  Serial.printlnf("setupSuccess=%d", setupSuccess);
+  // Serial.printlnf("setupSuccess=%d", setupSuccess);
 }
 
 void others_init() {
@@ -164,7 +164,7 @@ void others_init() {
 
   	// ***Remove for competition***
   	// ***Serial monitor***
-  	Serial.begin(9600);	// *** need to modify before comp ***
+  	// Serial.begin(9600);	// *** need to modify before comp ***
 }
 
 void interrupt_init() {
@@ -187,7 +187,7 @@ void ESC_init() {
 }
 
 void robot_init() {
-  while(!RSflag) {    // initial LOW
+  while(RSflag == LOW) {    // initial LOW
     Serial.println("Waiting for Start");
   }
   Serial.println("Starting in 5 seconds...");
@@ -455,6 +455,7 @@ void setup() {
 	others_init();		// line, remote, esc, ***printing***
 	interrupt_init();	// interrupts for lines and remote
 	ESC_init();			// Car ESCs
+	fuzzy_init();		// Fuzzy library************
 	robot_init();
 
   	// ***Set up web*** ****************************
@@ -463,8 +464,11 @@ void setup() {
 	// Particle.variable("Left_ESC", L_command);
 	// Particle.variable("Right_ESC", R_command);
 	// *********************************************
+}
 
- 	fuzzy_init();		// Fuzzy library************
+void stop() {
+  	LESC.writeMicroseconds(1500);
+  	RESC.writeMicroseconds(1500);
 }
 
 void loop(){
@@ -474,7 +478,7 @@ void loop(){
 	LM_distance = sensor2.readRangeContinuousMillimeters();
 	LL_distance = sensor3.readRangeContinuousMillimeters();
 
-	if (sensor0.timeoutOccurred() || sensor1.timeoutOccurred() || sensor2.timeoutOccurred() || sensor3.timeoutOccurred()) { Serial.print(" SENSOR TIMEOUT"); }
+	// if (sensor0.timeoutOccurred() || sensor1.timeoutOccurred() || sensor2.timeoutOccurred() || sensor3.timeoutOccurred()) { Serial.print(" SENSOR TIMEOUT"); }
 	
 	// pre-processing (changing 8192 to low4), only returns 0.00 as output
 	// if(LL_distance > low4) { 
@@ -505,47 +509,57 @@ void loop(){
   		// Serial.print("Full Left");
   		// Particle.publish("Full Left");
   		decision = "Full Left";
+  		L_command = 1525;
+  		R_command = 1600;
   	} else if((output >= 20) && (output < 40)) {
   		// Serial.print("Small Left");
   		// Particle.publish("Small Left");
   		decision = "Small Left";
+   		L_command = 1575;
+  		R_command = 1600;
 	} else if((output >= 40) && (output < 60)) {
 		// Serial.print("Center");
 		// Particle.publish("Center");
 		decision = "Center";
+  		L_command = 1500;
+  		R_command = 1500;
 	} else if((output >= 60) && (output < 80)) {
 		// Serial.print("Small Right");
 		// Particle.publish("Small Right");
 		decision = "Small Right";
+  		L_command = 1600;
+  		R_command = 1575;
 	} else if((output >= 80) && (output < 100)) {
 		// Serial.print("Full Right");
 		// Particle.publish("Full Right");
 		decision = "Full Right";
+  		L_command = 1600;
+  		R_command = 1525;
 	}
 
 	// For web console debugging
 	// Publish every 1 second (fastest rate)
 	if(millis() - currentTime > 1000) {
-		Particle.publish(decision);
+	// 	Particle.publish(decision);
 		currentTime = millis();
+		Serial.println(decision);
 	}
 
 	// For serial debugging
-  	// Serial.print("OUTPUT: ");
-  	// Serial.print(output);
-  	// Serial.print(" | ");
-  	// Serial.print("sensor 0:");
-  	// Serial.print(RR_distance);
-  	// Serial.print(" | ");
-  	// Serial.print("sensor 1:");
-  	// Serial.print(RM_distance);
-  	// Serial.print(" | ");
-  	// Serial.print("sensor 2:");
-  	// Serial.print(LM_distance);
-  	// Serial.print(" | ");
-  	// Serial.print("sensor 3:");
-  	// Serial.println(LL_distance);
-  	// delay(1000);
+
+  	Serial.print(decision);
+  	Serial.print(" | ");
+  	Serial.print("sensor 0:");
+  	Serial.print(RR_distance);
+  	Serial.print(" | ");
+  	Serial.print("sensor 1:");
+  	Serial.print(RM_distance);
+  	Serial.print(" | ");
+  	Serial.print("sensor 2:");
+  	Serial.print(LM_distance);
+  	Serial.print(" | ");
+  	Serial.print("sensor 3:");
+  	Serial.println(LL_distance);
 
   	// FUZZY ***********************************************
 
@@ -556,10 +570,12 @@ void loop(){
   		Serial.println("no sample"); // ********************************
   		// Particle.publish("no sample");
   	}
-
-  	if(RSflag == HIGH) {
-  		L_command = 1500;
-    	R_command = 1500;
+// 
+  	if(RSflag == LOW) {
+  		stop();
+  		Serial.print("STOPPED");
+  		while(true);
+  		// System.reset();
   	}
 
   	LESC.writeMicroseconds(L_command);
