@@ -32,13 +32,14 @@ int cur;            // current timer
 int prevFlag;       // timer since last movement
 int lineFlag;       // flag to mark if line has been met
 boolean pivotFlag;  // flag to mark if the robot has pivoted
+boolean RSFlag;
 boolean moving;
 
 // max and minimum motor speeds
-int maxS = 150;
-int minS = 110;
-int maxR = 150;
-int minR = 110;
+int maxS = 75;
+int minS = 70;
+int maxR = 75;
+int minR = 70;
 
 int state;          // movement state of robot
 
@@ -56,10 +57,10 @@ int pivotTurnL = 2000; // time turning left at pivot
 int pivotSpinL = 700; // time spinning left at pivot
 
 // flags set for line sensors
-boolean FLflag = false;
-boolean FRflag = false;
-boolean BLflag = false;
-boolean BRflag = false;
+boolean FLflag = true;
+boolean FRflag = true;
+boolean BLflag = true;
+boolean BRflag = true;
 
 // remote start flag
 boolean RSflag = false;
@@ -237,7 +238,7 @@ void movement(int state) {
     case 0: //forward
       //move(2, 100, 0);
       move(1, maxR, 1);
-      move(2, maxS, 0);
+      move(2, maxS, 1);
       moving = true;
       break;
     case 1: //attack
@@ -394,7 +395,16 @@ void setup()
 
   moving = true;
 
-  //state = 11;
+  while(!RSflag) {  // initial LOW
+    Serial.println("Waiting for Start");
+    //Particle.publish("Waiting for Start");
+  }
+  Serial.println("Starting in 5 seconds...");
+  //Particle.publish("Starting in 5 seconds...");
+  delay(5000);
+
+  Serial.println("GO!");
+  //Particle.publish("GO!");
 }
 
 void loop()
@@ -402,8 +412,15 @@ void loop()
   if (!FLflag || !FRflag || !BRflag || !BLflag) {
     moving = false;
     stop();
+    Serial.println("Stopped");
   } else {
     movement(0);
+    Serial.println("Moving");
+  }
+
+  if(RSflag == HIGH) {
+    moving = false;
+    stop();
   }
 
   cur = millis();
