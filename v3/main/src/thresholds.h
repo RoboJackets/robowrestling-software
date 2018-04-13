@@ -20,7 +20,7 @@ int med4 = 850;
 int low1 = 860;
 int low2 = 1000;
 int low3 = 1140;
-int low4 = 8192;
+int low4 = 1280;
 
 // Defuzzified Output: Velocities (translated into ESC PPM Values in loop)
 // 		Test 1: Can this library output 1 of 5 states?

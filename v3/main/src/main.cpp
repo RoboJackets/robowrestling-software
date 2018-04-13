@@ -5,45 +5,54 @@
 #include <VL53L0X.h>
 #include <LIS3DH.h>
 
+#include <thresholds.h>
+
 #if !defined(PARTICLE)
 #  include <Wire.h>
 #endif
 
+// Time of Flight sensors
 VL53L0X sensor0;
 VL53L0X sensor1;
 VL53L0X sensor2;
 VL53L0X sensor3;
+int LL_distance;
+int LM_distance;
+int RM_distance;
+int RR_distance;
 
+// Line sensors
 int FL = D7;    // AUX BOARD SWITCHED FL and FR up
 int FR = A4;    // A5 does not support attachInterrupt, so jump A5 to D7 on the board, also cut INT line
 int BL = D5;
 int BR = D6;
-
-int RS = D4;
-
-Servo LESC;
-Servo RESC;
-int Lmotor = D2;
-int Rmotor = D3;
-
-boolean FLflag = true; // active low
+boolean FLflag = true;  // active low
 boolean FRflag = true;
 boolean BLflag = true;
 boolean BRflag = true;
 
+// Remote switch module
+int RS = D4;
 boolean RSflag = false;
 
+// Car ESCs
+Servo LESC;
+Servo RESC;
+int Lmotor = D2;
+int Rmotor = D3;
+int L_command = 1500;
+int R_command = 1500;
+
+// Photon settings
 SYSTEM_THREAD(ENABLED);
-SYSTEM_MODE(MANUAL);  // fully offline
+SYSTEM_MODE(MANUAL);    // fully offline
 
 // Accelerometer
 const unsigned long PRINT_SAMPLE_PERIOD = 100;
-void getAccel();
 int curAccel = 0;
+void getAccel();        // ISR prototype
 LIS3DHSample sample;
-Timer accelTimer(PRINT_SAMPLE_PERIOD, getAccel);
 LIS3DHI2C accel(Wire, 0, WKP);
-int lastPrintSample = 0; // remove for main code**********
 
 void FLISR() {
     FLflag = digitalRead(FL);
@@ -124,8 +133,6 @@ void accel_init() {
 
   bool setupSuccess = accel.setup(config);
   Serial.printlnf("setupSuccess=%d", setupSuccess);
-
-  accelTimer.start();
 }
 
 void others_init() {
@@ -139,8 +146,10 @@ void others_init() {
   // Car ESCs
   pinMode(Lmotor, OUTPUT);
   pinMode(Rmotor, OUTPUT);
-  // Serial monitor
-  Serial.begin(9600);
+
+  // ***Remove for competition***
+  // ***Serial monitor***
+  Serial.begin(9600); // *** need to modify before comp ***
 } 
 
 void interrupt_init() {
@@ -151,6 +160,9 @@ void interrupt_init() {
   attachInterrupt(BR, BRISR, CHANGE);
   // Remote switch
   attachInterrupt(RS, RSISR, CHANGE);
+  // Accel software timer
+  Timer accelTimer(PRINT_SAMPLE_PERIOD, getAccel); 
+  accelTimer.start();  
 }
 
 void ESC_init() {
@@ -162,86 +174,90 @@ void ESC_init() {
     RESC.writeMicroseconds(1500);
 }
 
+void robot_init() {
+  while(!RSflag) {    // initial LOW
+    Serial.println("Waiting for Start");
+  }
+  Serial.println("Starting in 5 seconds...");
+  delay(5000);
+  Serial.println("GO!");    
+}
+
 void getAccel() {
   accel.getSample(sample);
   curAccel = sample.x;
 }
 
-void setup()
-{
-  others_init();
-  tof_init();
-  accel_init();
-  interrupt_init();
-  ESC_init();
+void setup() {
+  tof_init();         // ToF and I2C
+  accel_init();       // accelerometer
+  others_init();      // line, remote, esc, ***printing***
+  interrupt_init();   // interrupts for lines and remote
+  ESC_init();         // Car ESCs
 
-  while(!RSflag) {  // initial LOW
-    Serial.println("Waiting for Start");
-  }
-  Serial.println("Starting in 5 seconds...");
-  delay(5000);
-  Serial.println("GO!");
+  robot_init();       // 5-second countdown after remote switch is activated
 }
 
-void loop()
-{
-  Serial.print("remote status:");
-  Serial.print(RSflag);
-  Serial.print(" | ");
-
-  Serial.print("sensor 0:");
-  Serial.print(sensor0.readRangeContinuousMillimeters());
-  Serial.print(" | ");
-  Serial.print("sensor 1:");
-  Serial.print(sensor1.readRangeContinuousMillimeters());
-  Serial.print(" | ");
-  Serial.print("sensor 2:");
-  Serial.print(sensor2.readRangeContinuousMillimeters());
-  Serial.print(" | ");
-  Serial.print("sensor 3:");
-  Serial.print(sensor3.readRangeContinuousMillimeters());
-  if (sensor0.timeoutOccurred() || sensor1.timeoutOccurred() || sensor2.timeoutOccurred() || sensor3.timeoutOccurred()) { Serial.print(" SENSOR TIMEOUT"); }
-
-  Serial.print(" | ");
-  Serial.print("front left:");
-  Serial.print(FLflag);
-
-  Serial.print(" | ");
-  Serial.print("front right:");
-  Serial.print(FRflag);
-
-  Serial.print(" | ");
-  Serial.print("back left:");
-  Serial.print(BLflag);
-
-  Serial.print(" | ");
-  Serial.print("back right:");
-  Serial.print(BRflag);
-
-  Serial.print(" | ");
-  if (millis() - lastPrintSample >= PRINT_SAMPLE_PERIOD) {
-    lastPrintSample = millis();
-
-    LIS3DHSample sample;
-    if (accel.getSample(sample)) {
-      Serial.printlnf("%d,%d,%d", sample.x, sample.y, sample.z);
-    }
-    else {
-      Serial.println("no sample");
-    }
-  }
-  // printing just x to confirm functionality of software timer
-  Serial.print(" | ");
-  Serial.print(curAccel);
-
-  Serial.println();
-
-  if(RSflag == LOW) {
-    // LESC.writeMicroseconds(1700);
-    // RESC.writeMicroseconds(1700);
-  } else {
+void stop() {
     LESC.writeMicroseconds(1500);
-    RESC.writeMicroseconds(1500);
-  }
-  
+    RESC.writeMicroseconds(1500);    
+}
+
+void loop() {
+    // Handle remote switching
+    if(RSflag == LOW) {
+        stop();
+        while(true);    // must power-cycle to restart operation
+    }
+
+    // Read from Time of Flight sensors
+    LL_distance = sensor0.readRangeContinuousMillimeters();
+    LM_distance = sensor1.readRangeContinuousMillimeters();
+    RM_distance = sensor2.readRangeContinuousMillimeters();
+    RR_distance = sensor3.readRangeContinuousMillimeters();
+    // if (sensor0.timeoutOccurred() || sensor1.timeoutOccurred() || sensor2.timeoutOccurred() || sensor3.timeoutOccurred()) { Serial.print(" SENSOR TIMEOUT"); }
+
+    /* Need to handle
+        Line- states
+            FLflag, FRflag, BLflag, BRflag
+        accel 
+            curAccel
+        ESCs
+            L_command, R_command
+    */
+
+    /* 
+    // States in order of importance
+
+    // LINE STATES
+
+    // STALL STATE
+    if(curAccel > SOME_THRESHOLD) { // and also if moving, last command?
+        stop();
+        backup();
+        // some flag that will skip the search/attack
+    } 
+
+    // SEARCH STATE
+
+    // ATTACK STATE
+
+
+    */
+
+
+    /*
+    States
+        Start-up
+            requires turns
+        Normal:
+            Search - ?
+            Attack - Handled by Fuzzy
+        Incidental:
+            Line - 4
+            Stall - 1, curAccel
+    Output: always a L_command and R_command
+    */
+
+     
 }
