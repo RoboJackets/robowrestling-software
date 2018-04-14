@@ -241,9 +241,7 @@ void movement(int state) {
   switch (state) {
     case 0: //forward
       //move(2, 100, 0);
-      move(1, maxS, 1);
-      move(2, maxS, 1);
-      moving = true;
+
       break;
     case 1: //attack
       move(1, 200, 1);
@@ -319,22 +317,7 @@ void movement(int state) {
       moving = true;
       break;
     case 10: //back and spin 180
-      if (cur - prevFlag < nudge) {
-        move(1, maxR, 0);
-        move(2, maxR, 0);
-      }
-      else if (cur - prevFlag < degrees180) {
-        move(1, maxR, 0);
-        move(2, maxR, 1);
-      }
-      else {
-        FLflag = true;
-        FRflag = true;
-        BLflag = true;
-        BRflag = true;
-        prevFlagSet = false;
-      }
-      moving = true;
+
       break;
     case 11: //startup movement: spin right, turn left, spin left, go forward
       if (cur - prevFlag < startSpinR) {

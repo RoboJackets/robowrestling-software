@@ -22,52 +22,59 @@
 #  include <Wire.h>
 #endif
 
+// Time of Flight sensors
 VL53L0X sensor0;	// RR
 VL53L0X sensor1;	// RM
 VL53L0X sensor2;	// LM
 VL53L0X sensor3;	// LL
-
 uint16_t LL_distance;
 uint16_t LM_distance;
 uint16_t RM_distance;
 uint16_t RR_distance;
 
+// Line sensors
 int FL = D7;    // AUX BOARD SWITCHED FL and FR up
 int FR = A4;    // A5 does not support attachInterrupt, so jump A5 to D7 on the board, also cut INT line
 int BL = D5;
 int BR = D6;
-
-int RS = D4;
-
-Servo LESC;
-Servo RESC;
-int Lmotor = D2;
-int Rmotor = D3;
-int L_command = 1500;
-int R_command = 1500;
-
 boolean FLflag = true; // active low
 boolean FRflag = true;
 boolean BLflag = true;
 boolean BRflag = true;
+int cur;
+int prevFlag;
+// boolean moving;
+boolean prevFlagSet = false;
 
+// Remote switch module
+int RS = D4;
 boolean RSflag = false;
-
-Fuzzy* fuzzy = new Fuzzy();
-float output;
-String decision;
-unsigned long currentTime = 0;
-
-SYSTEM_THREAD(ENABLED);
-// Try to print on web console**************************
-SYSTEM_MODE(MANUAL);
-// SYSTEM_MODE(AUTOMATIC);
-
 
 // Accelerometer
 const unsigned long PRINT_SAMPLE_PERIOD = 100;
+int curAccel = 0;
+void getAccel();        // ISR prototype
+LIS3DHSample sample;
 LIS3DHI2C accel(Wire, 0, WKP);
-unsigned long lastPrintSample = 0;
+
+// Car ESCs
+Servo LESC;
+Servo RESC;
+int Lmotor = D2;
+int Rmotor = D3;
+int L_command = 0;
+int R_command = 0;
+int L_dir = 1;
+int R_dir = 1;
+
+// Fuzzy logic
+Fuzzy* fuzzy = new Fuzzy();
+float output;
+String decision;
+
+// Particle Photon settings
+SYSTEM_THREAD(ENABLED);
+SYSTEM_MODE(MANUAL);
 
 void FLISR() {
     FLflag = digitalRead(FL);
@@ -145,9 +152,7 @@ void tof_init() {
 void accel_init() {
   LIS3DHConfig config;
   config.setAccelMode(LIS3DH::RATE_400_HZ);
-
-  bool setupSuccess = accel.setup(config);
-  // Serial.printlnf("setupSuccess=%d", setupSuccess);
+  accel.setup(config);
 }
 
 void others_init() {
@@ -164,26 +169,34 @@ void others_init() {
 
   	// ***Remove for competition***
   	// ***Serial monitor***
-  	// Serial.begin(9600);	// *** need to modify before comp ***
+  	Serial.begin(9600);	// *** need to modify before comp ***
 }
 
 void interrupt_init() {
 	// Line sensors
-	attachInterrupt(FL, FLISR, CHANGE);
-   	attachInterrupt(FR, FRISR, CHANGE);
-   	attachInterrupt(BL, BLISR, CHANGE);
-   	attachInterrupt(BR, BRISR, CHANGE);
-   	// Remote switch
-   	attachInterrupt(RS, RSISR, CHANGE);
+  	attachInterrupt(FL, FLISR, CHANGE);
+  	attachInterrupt(FR, FRISR, CHANGE);
+  	attachInterrupt(BL, BLISR, CHANGE);
+  	attachInterrupt(BR, BRISR, CHANGE);
+  	// Remote switch
+  	attachInterrupt(RS, RSISR, CHANGE);
+  	// Accel software timer
+  	Timer accelTimer(PRINT_SAMPLE_PERIOD, getAccel); 
+  	accelTimer.start();  
 }
 
 void ESC_init() {
-	// Necessary for Servo objects
+  	// Necessary for Servo objects
   	LESC.attach(Lmotor);
   	RESC.attach(Rmotor);
   	// Write stop command
   	LESC.writeMicroseconds(1500);
   	RESC.writeMicroseconds(1500);
+}
+
+void line_init() {
+	// moving = true;
+	prevFlag = millis();
 }
 
 void robot_init() {
@@ -460,105 +473,173 @@ void setup() {
 	RGB.control(true); 	// take control of the on-board LED for debugging
 
 	robot_init();
-
-  	// ***Set up web*** ****************************
-  	// register cloud variables
-	// Particle.variable("distance", distance);
-	// Particle.variable("Left_ESC", L_command);
-	// Particle.variable("Right_ESC", R_command);
-	// *********************************************
+	line_init();		// initialize line variables
 }
+
+// -----------------------------------------------------------
+// ------------------Runtime functions------------------------
+// -----------------------------------------------------------
 
 void stop() {
   	LESC.writeMicroseconds(1500);
   	RESC.writeMicroseconds(1500);
 }
 
-void loop(){
-	// sensorx.readRangeContinuousMillimeters();
+void getAccel() {
+  accel.getSample(sample);
+  curAccel = sample.x;
+}
+
+void getToF() {
 	RR_distance = sensor0.readRangeContinuousMillimeters();
 	RM_distance = sensor1.readRangeContinuousMillimeters();
 	LM_distance = sensor2.readRangeContinuousMillimeters();
 	LL_distance = sensor3.readRangeContinuousMillimeters();
-
 	// if (sensor0.timeoutOccurred() || sensor1.timeoutOccurred() || sensor2.timeoutOccurred() || sensor3.timeoutOccurred()) { Serial.print(" SENSOR TIMEOUT"); }
+}
 
-  	// FUZZY **************************************************
-
+void doFuzzy() {
   	fuzzy->setInput(1, LL_distance);
   	fuzzy->setInput(2, LM_distance);
   	fuzzy->setInput(3, RM_distance);
   	fuzzy->setInput(4, RR_distance);
-
   	fuzzy->fuzzify();
   	output = fuzzy->defuzzify(1);
 
-
   	if((output >= 0) && (output < 20)) {
   		decision = "Full Left";
-  		L_command = 1550;
-  		R_command = 1600;
   		RGB.color(0, 0, 255);
+
+  		L_command = 50;
+  		R_command = 100;
+  		L_dir = 1;
+  		R_dir = 1;
   	} else if((output >= 20) && (output < 40)) {
   		decision = "Small Left";
-   		L_command = 1575;
-  		R_command = 1600;
   		RGB.color(0, 128, 128);
+
+   		L_command = 75;
+  		R_command = 100;
+  		L_dir = 1;
+  		R_dir = 1;
 	} else if((output >= 40) && (output < 60)) {
 		decision = "Center";
-  		L_command = 1550;
-  		R_command = 1550;
-  		RGB.color(0, 255, 0);
+		RGB.color(0, 255, 0);
+
+  		L_command = 50;
+  		R_command = 50;
+  		L_dir = 1;
+  		R_dir = 1;
 	} else if((output >= 60) && (output < 80)) {
 		decision = "Small Right";
-  		L_command = 1600;
-  		R_command = 1575;
-  		RGB.color(128, 128, 0);
+		RGB.color(128, 128, 0);
+
+  		L_command = 100;
+  		R_command = 75;
+  		L_dir = 1;
+  		R_dir = 1;
 	} else if((output >= 80) && (output < 100)) {
 		decision = "Full Right";
-  		L_command = 1600;
-  		R_command = 1550;
-  		RGB.color(255, 0, 0);
+		RGB.color(255, 0, 0);
+
+  		L_command = 100;
+  		R_command = 50;
+  		L_dir = 1;
+  		R_dir = 1;
 	}
+}
 
-	// Publish every 1 second (fastest rate)
-	if(millis() - currentTime > 1000) {
-		currentTime = millis();
-	}
-
-	// For serial debugging
-
-  	Serial.print(decision);
-  	Serial.print(" | ");
-  	Serial.print("sensor 0:");
-  	Serial.print(RR_distance);
-  	Serial.print(" | ");
-  	Serial.print("sensor 1:");
-  	Serial.print(RM_distance);
-  	Serial.print(" | ");
-  	Serial.print("sensor 2:");
-  	Serial.print(LM_distance);
-  	Serial.print(" | ");
-  	Serial.print("sensor 3:");
-  	Serial.println(LL_distance);
-
-  	// FUZZY ***********************************************
-
-
-  	// obligatory sampling from accelerometer
-  	LIS3DHSample sample;
-  	if(!accel.getSample(sample)) {
-  		Serial.println("no sample"); // ********************************
-  		// Particle.publish("no sample");
-  	}
-// 
+void checkSwitch() {
   	if(RSflag == LOW) {
   		stop();
   		Serial.print("STOPPED");
   		while(true);
-  		// System.reset();
   	}
+}
 
-  	LESC.writeMicroseconds(L_command);
-  	RESC.writeMicroseconds(R_command);
+void move(int motor, int speed, int direction){
+  // usage: x_ESC.writeMicroseconds(pwm)
+  // pwm should between 1100 and 1800
+  // 1100 for maximum reverse, 1800 for maximum forward
+  // 30% throttle is 1500 +/- 300*0.3 = 1500 +/- 90
+
+  int pwm = 1500;       // default is ESC stopped
+
+  if(direction == 1) {  // forward
+    pwm = 1500 + speed;
+  } else {              // reverse
+    pwm = 1500 - speed;
+  }
+  if(motor == 1) {      // RIGHT ESC
+    RESC.writeMicroseconds(pwm);
+  } else {              // LEFT ESC
+    LESC.writeMicroseconds(pwm);
+  }
+}
+
+void movement(int state) {
+	// right now, there are only states 0, 1, and 10***
+	if(state == 0) {			// move forward
+  		L_command = maxS;
+  		R_command = maxS;
+  		L_dir = 1;
+  		R_dir = 1;
+	} else if(state == 10) {
+	    if (cur - prevFlag < nudge) {			// go backwards a 'nudge'
+	  		L_command = maxR;
+	  		R_command = maxR;
+	  		L_dir = 0;
+	  		R_dir = 0;
+	    }
+	    else if (cur - prevFlag < degrees180) {	// turn 180
+	  		L_command = maxR;
+	  		R_command = maxR;
+	  		R_dir = 0;
+	  		L_dir = 1;
+	    }
+	    else {									// reset line flags & detection flag
+	        FLflag = true;						// only when movement is FINISHED
+	        FRflag = true;
+	        BLflag = true;
+	        BRflag = true;
+	        prevFlagSet = false;
+	    }
+	    // moving = true;
+	} else {					// stop
+  		L_command = 0;
+  		R_command = 0;
+  		R_dir = 1;
+  		L_dir = 1;
+	}
+}
+
+void checkLine() {
+  if (!FLflag || !FRflag) {				// if front line triggered
+    if (!prevFlagSet) {					// and if this is the FIRST detection of the line
+      prevFlag = cur;					// reset the turn timer
+      prevFlagSet = true;				// ensures timer is reset only ONCE
+      movement(1);						// stop before you fall off
+    }
+    movement(10);						// begin/continue the turn sequence
+  } else if (!BRflag || !BLflag) {		// if back line triggered, move forward
+    movement(0);
+  } else if (!prevFlagSet) {			
+  	// if a line hasn't been seen, continue fuzzy
+  }
+
+  cur = millis();						// update timer
+}
+
+void loop(){
+	checkLine();
+
+	if (!prevFlagSet) {	// if dealing with line
+		getToF();
+		doFuzzy();
+	}
+
+	checkSwitch();
+
+  	move(1, R_command, R_dir);
+  	move(2, L_command, L_dir);
 }
