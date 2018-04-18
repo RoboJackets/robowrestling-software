@@ -19,13 +19,25 @@ const int low2 = 1000;
 const int low3 = 1140;
 const int low4 = 8192;
 
-// Line sensor thresholds
-const int maxS = 50;			// max fwd
-const int maxR = 75;			// max rev
+// Output: Speeds
+	// For turns, the inner wheel is slower than the outer wheel
+const int v_small_slow = 40;
+const int v_small_fast = 60;
 
-const int nudge = 750;
-const int degrees180 = 1725; 	// turn 180 degrees
+const int v_full_slow = 50;
+const int v_full_fast = 75;
+
+const int v_center = 50;
+
+// Line sensor thresholds
+const int line_fwd = 75;		// max fwd
+
+const int line_rev = 75;		// max rev
+const int nudge = 750;			// duration of reverse maneuver (ms)
+
+const int line_180 = 75;
+const int degrees180 = 1500; 	// duration of 180 deg turn (ms)
 
 // Accelerometer collision threshold
 
-// 		Consult with Mason
+// 		Consult with Mason, TBD

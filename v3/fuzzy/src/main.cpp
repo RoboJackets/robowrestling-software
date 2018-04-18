@@ -460,6 +460,27 @@ void fuzzy_init() {
   LLLL->joinWithAND(left_low_low, right_low_low);
   FuzzyRule* fr28 = new FuzzyRule(28, LLLL, drive_center);	// should it be search?
   fuzzy->addFuzzyRule(fr28);
+
+  // Revisions
+  FuzzyRuleAntecedent* LHLL = new FuzzyRuleAntecedent();
+  LHLL->joinWithAND(left_low_high, right_low_low);
+  FuzzyRule* fr29 = new FuzzyRule(29, LHLL, drive_small_left);
+  fuzzy->addFuzzyRule(fr29);
+
+  FuzzyRuleAntecedent* LMLL = new FuzzyRuleAntecedent();
+  LMLL->joinWithAND(left_low_med, right_low_low);
+  FuzzyRule* fr30 = new FuzzyRule(30, LMLL, drive_small_left);
+  fuzzy->addFuzzyRule(fr30);
+
+  FuzzyRuleAntecedent* LLML = new FuzzyRuleAntecedent();
+  LLML->joinWithAND(left_low_low, right_med_low);
+  FuzzyRule* fr31 = new FuzzyRule(31, LLML, drive_small_right);
+  fuzzy->addFuzzyRule(fr31);
+
+  FuzzyRuleAntecedent* LLHL = new FuzzyRuleAntecedent();
+  LLHL->joinWithAND(left_low_low, right_high_low);
+  FuzzyRule* fr32 = new FuzzyRule(32, LLHL, drive_small_right);
+  fuzzy->addFuzzyRule(fr32);
 }
 
 void setup() {
@@ -499,54 +520,54 @@ void getToF() {
 }
 
 void doFuzzy() {
-  	fuzzy->setInput(1, LL_distance);
-  	fuzzy->setInput(2, LM_distance);
-  	fuzzy->setInput(3, RM_distance);
-  	fuzzy->setInput(4, RR_distance);
-  	fuzzy->fuzzify();
-  	output = fuzzy->defuzzify(1);
+  fuzzy->setInput(1, LL_distance);
+  fuzzy->setInput(2, LM_distance);
+  fuzzy->setInput(3, RM_distance);
+  fuzzy->setInput(4, RR_distance);
+  fuzzy->fuzzify();
+  output = fuzzy->defuzzify(1);
 
-  	if((output >= 0) && (output < 20)) {
-  		decision = "Full Left";
-  		RGB.color(0, 0, 255);
+	if((output >= 0) && (output < 20)) {
+		decision = "Full Left";
+		RGB.color(0, 0, 255);
 
-  		L_command = 50;
-  		R_command = 100;
-  		L_dir = 1;
-  		R_dir = 1;
-  	} else if((output >= 20) && (output < 40)) {
-  		decision = "Small Left";
-  		RGB.color(0, 128, 128);
+		L_command = v_full_slow;
+		R_command = v_full_fast;
+		L_dir = 1;
+		R_dir = 1;
+	} else if((output >= 20) && (output < 40)) {
+		decision = "Small Left";
+		RGB.color(0, 128, 128);
 
-   		L_command = 75;
-  		R_command = 100;
-  		L_dir = 1;
-  		R_dir = 1;
-	} else if((output >= 40) && (output < 60)) {
-		decision = "Center";
-		RGB.color(0, 255, 0);
+ 		L_command = v_small_slow;
+		R_command = v_small_fast;
+		L_dir = 1;
+		R_dir = 1;
+  } else if((output >= 40) && (output < 60)) {
+	  decision = "Center";
+	  RGB.color(0, 255, 0);
 
-  		L_command = 50;
-  		R_command = 50;
-  		L_dir = 1;
-  		R_dir = 1;
-	} else if((output >= 60) && (output < 80)) {
-		decision = "Small Right";
-		RGB.color(128, 128, 0);
+		L_command = v_center;
+		R_command = v_center;
+		L_dir = 1;
+		R_dir = 1;
+  } else if((output >= 60) && (output < 80)) {
+	  decision = "Small Right";
+	  RGB.color(128, 128, 0);
 
-  		L_command = 100;
-  		R_command = 75;
-  		L_dir = 1;
-  		R_dir = 1;
-	} else if((output >= 80) && (output < 100)) {
-		decision = "Full Right";
-		RGB.color(255, 0, 0);
+		L_command = v_small_fast;
+		R_command = v_small_slow;
+		L_dir = 1;
+		R_dir = 1;
+  } else if((output >= 80) && (output < 100)) {
+	  decision = "Full Right";
+	  RGB.color(255, 0, 0);
 
-  		L_command = 100;
-  		R_command = 50;
-  		L_dir = 1;
-  		R_dir = 1;
-	}
+		L_command = v_full_fast;
+		R_command = v_full_slow;
+		L_dir = 1;
+		R_dir = 1;
+  }
 }
 
 void checkSwitch() {
@@ -580,29 +601,33 @@ void move(int motor, int speed, int direction){
 void movement(int state) {
 	// right now, there are only states 0, 1, and 10***
 	if(state == 0) {			// move forward
-  		L_command = maxS;
-  		R_command = maxS;
+  		L_command = line_fwd;
+  		R_command = line_fwd;
   		L_dir = 1;
   		R_dir = 1;
+      Serial.println("Back triggered, moving forward");
 	} else if(state == 10) {
 	    if (cur - prevFlag < nudge) {			// go backwards a 'nudge'
-	  		L_command = maxR;
-	  		R_command = maxR;
+	  		L_command = line_rev;
+	  		R_command = line_rev;
 	  		L_dir = 0;
 	  		R_dir = 0;
+        Serial.println("Moving backwards a nudge");
 	    }
-	    else if (cur - prevFlag < degrees180) {	// turn 180
-	  		L_command = maxR;
-	  		R_command = maxR;
+	    else if (cur - prevFlag < degrees180) {	// turn cw 180
+	  		L_command = line_180;
+	  		R_command = line_180;
 	  		R_dir = 0;
 	  		L_dir = 1;
+        Serial.println("Turning 180");
 	    }
 	    else {									// reset line flags & detection flag
-	        FLflag = true;						// only when movement is FINISHED
-	        FRflag = true;
-	        BLflag = true;
-	        BRflag = true;
-	        prevFlagSet = false;
+        FLflag = true;						// only when movement is FINISHED
+        FRflag = true;
+	      BLflag = true;
+	      BRflag = true;
+	      prevFlagSet = false;
+        Serial.println("FINISHED DEALING WITH THE LINE");
 	    }
 	    // moving = true;
 	} else {					// stop
@@ -610,36 +635,58 @@ void movement(int state) {
   		R_command = 0;
   		R_dir = 1;
   		L_dir = 1;
+      Serial.println("Stopped before death");
 	}
 }
 
 void checkLine() {
-  if (!FLflag || !FRflag) {				// if front line triggered
+  if (!FLflag || !FRflag || prevFlagSet) {				// if front line triggered
     if (!prevFlagSet) {					// and if this is the FIRST detection of the line
+      RGB.color(255, 255, 255);
       prevFlag = cur;					// reset the turn timer
       prevFlagSet = true;				// ensures timer is reset only ONCE
       movement(1);						// stop before you fall off
     }
     movement(10);						// begin/continue the turn sequence
   } else if (!BRflag || !BLflag) {		// if back line triggered, move forward
+    RGB.color(255, 255, 255);
     movement(0);
-  } else if (!prevFlagSet) {			
-  	// if a line hasn't been seen, continue fuzzy
-  }
 
-  cur = millis();						// update timer
+    // prevFlagSet = true;
+
+  } else if(!prevFlagSet) {  // if a line hasn't been seen, continue fuzzy
+    Serial.println("Doing Fuzzy");
+    // prevFlagSet = false;	
+  }
 }
 
 void loop(){
 	checkLine();
 
-	if (!prevFlagSet) {	// if dealing with line
+  // Serial.print(decision);
+  // Serial.print(" | ");
+
+  // Serial.print("RR: ");
+  // Serial.print(RR_distance);
+  // Serial.print(" | ");
+  // Serial.print("RM: ");
+  // Serial.print(RM_distance);
+  // Serial.print(" | ");
+  // Serial.print("LM: ");
+  // Serial.print(LM_distance);
+  // Serial.print(" | ");
+  // Serial.print("LL: ");
+  // Serial.print(LL_distance);
+
+	if (!prevFlagSet) {	// if dealing with line don't do fuzzy
 		getToF();
 		doFuzzy();
 	}
 
+  cur = millis();           // update timer
+
 	checkSwitch();
 
-  	move(1, R_command, R_dir);
-  	move(2, L_command, L_dir);
+  move(1, R_command, R_dir);
+  move(2, L_command, L_dir);
 }
