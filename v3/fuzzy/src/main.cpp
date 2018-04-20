@@ -677,6 +677,7 @@ void loop(){
   // Serial.print(" | ");
   // Serial.print("LL: ");
   // Serial.print(LL_distance);
+  
 
 	if (!prevFlagSet) {	// if dealing with line don't do fuzzy
 		getToF();
