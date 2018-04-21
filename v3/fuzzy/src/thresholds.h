@@ -27,7 +27,7 @@ const int v_small_fast = 60;
 const int v_full_slow = 50;
 const int v_full_fast = 75;
 
-const int v_center = 50;
+const int v_center = 75;
 
 // Line sensor thresholds
 const int line_fwd = 75;		// max fwd
