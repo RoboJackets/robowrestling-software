@@ -45,6 +45,7 @@ int cur;
 int prevFlag;
 // boolean moving;
 boolean prevFlagSet = false;
+boolean start = true;
 
 // Remote switch module
 int RS = D4;
@@ -606,7 +607,18 @@ void movement(int state) {
   		L_dir = 1;
   		R_dir = 1;
       Serial.println("Back triggered, moving forward");
-	} else if(state == 10) {
+	} else if (state == 2) {
+    if (cur - prevFlag < degrees45) {
+      L_command = line_180;
+      R_command = line_180;
+      L_dir = 0;
+      R_dir = 1;
+    } else {
+      Serial.print("start done");
+      start = false;
+      prevFlagSet = false;
+    }
+  } else if (state == 10) {
 	    if (cur - prevFlag < nudge) {			// go backwards a 'nudge'
 	  		L_command = line_rev;
 	  		R_command = line_rev;
@@ -639,6 +651,15 @@ void movement(int state) {
 	}
 }
 
+void startUp() {
+  if (!prevFlagSet) {
+    prevFlag = cur;
+    prevFlagSet = true;
+  } else {
+    movement(2);
+  }
+}
+
 void checkLine() {
   if (!FLflag || !FRflag || prevFlagSet) {				// if front line triggered
     if (!prevFlagSet) {					// and if this is the FIRST detection of the line
@@ -661,30 +682,44 @@ void checkLine() {
 }
 
 void loop(){
-	checkLine();
-
-  // Serial.print(decision);
-  // Serial.print(" | ");
-
-  // Serial.print("RR: ");
-  // Serial.print(RR_distance);
-  // Serial.print(" | ");
-  // Serial.print("RM: ");
-  // Serial.print(RM_distance);
-  // Serial.print(" | ");
-  // Serial.print("LM: ");
-  // Serial.print(LM_distance);
-  // Serial.print(" | ");
-  // Serial.print("LL: ");
-  // Serial.print(LL_distance);
-  
-
-	if (!prevFlagSet) {	// if dealing with line don't do fuzzy
-		getToF();
-		doFuzzy();
-	}
-
   cur = millis();           // update timer
+
+  if (start) {
+    startUp();
+  }
+
+  if (!start) {
+    checkLine();
+
+
+    // Serial.print(decision);
+    // Serial.print(" | ");
+
+    // Serial.print("RR: ");
+    // Serial.print(RR_distance);
+    // Serial.print(" | ");
+    // Serial.print("RM: ");
+    // Serial.print(RM_distance);
+    // Serial.print(" | ");
+    // Serial.print("LM: ");
+    // Serial.print(LM_distance);
+    // Serial.print(" | ");
+    // Serial.print("LL: ");
+    // Serial.print(LL_distance);
+
+
+  	if (!prevFlagSet) {	// if dealing with line don't do fuzzy
+  		getToF();
+  		doFuzzy();
+  	}
+  }
+
+
+  Serial.print("cur: ");
+  Serial.println(cur);
+  Serial.print("prevFlag: ");
+  Serial.println(prevFlag);
+  Serial.println(start);
 
 	checkSwitch();
 
