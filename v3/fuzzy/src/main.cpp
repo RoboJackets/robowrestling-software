@@ -146,7 +146,7 @@ void tof_init() {
     sensor0.startContinuous(10);
     sensor1.startContinuous(10);
     sensor2.startContinuous(10);
-    sensor3.startContinuous(10);			
+    sensor3.startContinuous(10);
 }
 
 void accel_init() {
@@ -181,8 +181,8 @@ void interrupt_init() {
   	// Remote switch
   	attachInterrupt(RS, RSISR, CHANGE);
   	// Accel software timer
-  	Timer accelTimer(PRINT_SAMPLE_PERIOD, getAccel); 
-  	accelTimer.start();  
+  	Timer accelTimer(PRINT_SAMPLE_PERIOD, getAccel);
+  	accelTimer.start();
 }
 
 void ESC_init() {
@@ -205,7 +205,7 @@ void robot_init() {
   }
   Serial.println("Starting in 5 seconds...");
   delay(5000);
-  Serial.println("GO!");    
+  Serial.println("GO!");
 }
 
 void fuzzy_init() {
@@ -310,7 +310,7 @@ void fuzzy_init() {
   FuzzyRuleConsequent* drive_center = new FuzzyRuleConsequent();
   drive_center->addOutput(center);
   FuzzyRuleConsequent* drive_small_left = new FuzzyRuleConsequent();
-  drive_small_left->addOutput(small_left);  
+  drive_small_left->addOutput(small_left);
   FuzzyRuleConsequent* drive_full_left = new FuzzyRuleConsequent();
   drive_full_left->addOutput(full_left);
   FuzzyRuleConsequent* drive_full_right = new FuzzyRuleConsequent();
@@ -329,7 +329,7 @@ void fuzzy_init() {
   FuzzyRuleAntecedent* MHHL = new FuzzyRuleAntecedent();
   MHHL->joinWithAND(left_med_high, right_high_low);
   FuzzyRule* fr2 = new FuzzyRule(2, MHHL, drive_center);
-  fuzzy->addFuzzyRule(fr2); 
+  fuzzy->addFuzzyRule(fr2);
 
   FuzzyRuleAntecedent* LHHM = new FuzzyRuleAntecedent();
   LHHM->joinWithAND(left_low_high, right_high_med);
@@ -648,7 +648,7 @@ void checkLine() {
       movement(1);						// stop before you fall off
     }
     movement(10);						// begin/continue the turn sequence
-  } else if (!BRflag || !BLflag) {		// if back line triggered, move forward
+  } else if ((!BRflag || !BLflag) && !prevFlagSet) {		// if back line triggered, move forward
     RGB.color(255, 255, 255);
     movement(0);
 
@@ -656,7 +656,7 @@ void checkLine() {
 
   } else if(!prevFlagSet) {  // if a line hasn't been seen, continue fuzzy
     Serial.println("Doing Fuzzy");
-    // prevFlagSet = false;	
+    // prevFlagSet = false;
   }
 }
 
