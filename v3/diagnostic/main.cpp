@@ -174,6 +174,7 @@ void setup()
   accel_init();
   interrupt_init();
   ESC_init();
+  RGB.control(true);  // take control of the on-board LED for debugging
 
   while(!RSflag) {  // initial LOW
     Serial.println("Waiting for Start");
@@ -185,56 +186,62 @@ void setup()
 
 void loop()
 {
-  Serial.print("remote status:");
-  Serial.print(RSflag);
-  Serial.print(" | ");
+  // Serial.print("remote status:");
+  // Serial.print(RSflag);
+  // Serial.print(" | ");
 
-  Serial.print("sensor 0:");
-  Serial.print(sensor0.readRangeContinuousMillimeters());
-  Serial.print(" | ");
-  Serial.print("sensor 1:");
-  Serial.print(sensor1.readRangeContinuousMillimeters());
-  Serial.print(" | ");
-  Serial.print("sensor 2:");
-  Serial.print(sensor2.readRangeContinuousMillimeters());
-  Serial.print(" | ");
-  Serial.print("sensor 3:");
-  Serial.print(sensor3.readRangeContinuousMillimeters());
-  if (sensor0.timeoutOccurred() || sensor1.timeoutOccurred() || sensor2.timeoutOccurred() || sensor3.timeoutOccurred()) { Serial.print(" SENSOR TIMEOUT"); }
+  // Serial.print("sensor 0:");
+  // Serial.print(sensor0.readRangeContinuousMillimeters());
+  // Serial.print(" | ");
+  // Serial.print("sensor 1:");
+  // Serial.print(sensor1.readRangeContinuousMillimeters());
+  // Serial.print(" | ");
+  // Serial.print("sensor 2:");
+  // Serial.print(sensor2.readRangeContinuousMillimeters());
+  // Serial.print(" | ");
+  // Serial.print("sensor 3:");
+  // Serial.print(sensor3.readRangeContinuousMillimeters());
+  // if (sensor0.timeoutOccurred() || sensor1.timeoutOccurred() || sensor2.timeoutOccurred() || sensor3.timeoutOccurred()) { Serial.print(" SENSOR TIMEOUT"); }
 
-  Serial.print(" | ");
-  Serial.print("front left:");
-  Serial.print(FLflag);
+  // Serial.print(" | ");
+  // Serial.print("front left:");
+  // Serial.print(FLflag);
 
-  Serial.print(" | ");
-  Serial.print("front right:");
-  Serial.print(FRflag);
+  // Serial.print(" | ");
+  // Serial.print("front right:");
+  // Serial.print(FRflag);
 
-  Serial.print(" | ");
-  Serial.print("back left:");
-  Serial.print(BLflag);
+  // Serial.print(" | ");
+  // Serial.print("back left:");
+  // Serial.print(BLflag);
 
-  Serial.print(" | ");
-  Serial.print("back right:");
-  Serial.print(BRflag);
+  // Serial.print(" | ");
+  // Serial.print("back right:");
+  // Serial.print(BRflag);
 
-  Serial.print(" | ");
-  if (millis() - lastPrintSample >= PRINT_SAMPLE_PERIOD) {
-    lastPrintSample = millis();
-
-    LIS3DHSample sample;
-    if (accel.getSample(sample)) {
-      Serial.printlnf("%d,%d,%d", sample.x, sample.y, sample.z);
-    }
-    else {
-      Serial.println("no sample");
-    }
+  if(!FLflag || !FRflag || !BLflag || !BRflag) {
+    RGB.color(255, 255, 255);
+  } else {
+    RGB.color(255, 0, 0);
   }
-  // printing just x to confirm functionality of software timer
-  Serial.print(" | ");
-  Serial.print(curAccel);
 
-  Serial.println();
+  // Serial.print(" | ");
+  // if (millis() - lastPrintSample >= PRINT_SAMPLE_PERIOD) {
+  //   lastPrintSample = millis();
+
+  //   LIS3DHSample sample;
+  //   if (accel.getSample(sample)) {
+  //     Serial.printlnf("%d,%d,%d", sample.x, sample.y, sample.z);
+  //   }
+  //   else {
+  //     Serial.println("no sample");
+  //   }
+  // }
+  // printing just x to confirm functionality of software timer
+  // Serial.print(" | ");
+  // Serial.print(curAccel);
+
+  // Serial.println();
 
   if(RSflag == LOW) {
     // LESC.writeMicroseconds(1700);

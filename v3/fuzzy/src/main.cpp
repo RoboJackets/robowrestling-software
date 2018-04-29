@@ -170,7 +170,7 @@ void others_init() {
 
   	// ***Remove for competition***
   	// ***Serial monitor***
-  	Serial.begin(9600);	// *** need to modify before comp ***
+  	// Serial.begin(9600);	// *** need to modify before comp ***
 }
 
 void interrupt_init() {
@@ -181,9 +181,11 @@ void interrupt_init() {
   	attachInterrupt(BR, BRISR, CHANGE);
   	// Remote switch
   	attachInterrupt(RS, RSISR, CHANGE);
+
+    // NOT USED
   	// Accel software timer
-  	Timer accelTimer(PRINT_SAMPLE_PERIOD, getAccel);
-  	accelTimer.start();
+  	// Timer accelTimer(PRINT_SAMPLE_PERIOD, getAccel);
+  	// accelTimer.start();
 }
 
 void ESC_init() {
@@ -206,7 +208,7 @@ void robot_init() {
   }
   Serial.println("Starting in 5 seconds...");
   delay(5000);
-  Serial.println("GO!");
+  // Serial.println("GO!");
 }
 
 void fuzzy_init() {
@@ -486,7 +488,9 @@ void fuzzy_init() {
 
 void setup() {
 	tof_init();			// ToF and I2C
-	accel_init();		// accelerometer
+
+	// accel_init();		// accelerometer NOT USED
+
 	others_init();		// line, remote, esc, ***printing***
 	interrupt_init();	// interrupts for lines and remote
 	ESC_init();			// Car ESCs
@@ -574,7 +578,7 @@ void doFuzzy() {
 void checkSwitch() {
   	if(RSflag == LOW) {
   		stop();
-  		Serial.print("STOPPED");
+  		// Serial.print("STOPPED");
   		while(true);
   	}
 }
@@ -606,7 +610,7 @@ void movement(int state) {
   		R_command = line_fwd;
   		L_dir = 1;
   		R_dir = 1;
-      Serial.println("Back triggered, moving forward");
+      // Serial.println("Back triggered, moving forward");
 	} else if (state == 2) {
     if (cur - prevFlag < degrees45) {
       L_command = line_180;
@@ -614,7 +618,7 @@ void movement(int state) {
       L_dir = 0;
       R_dir = 1;
     } else {
-      Serial.print("start done");
+      // Serial.print("start done");
       start = false;
       prevFlagSet = false;
     }
@@ -624,14 +628,14 @@ void movement(int state) {
 	  		R_command = line_rev;
 	  		L_dir = 0;
 	  		R_dir = 0;
-        Serial.println("Moving backwards a nudge");
+        // Serial.println("Moving backwards a nudge");
 	    }
 	    else if (cur - prevFlag < degrees180) {	// turn cw 180
 	  		L_command = line_180;
 	  		R_command = line_180;
 	  		R_dir = 0;
 	  		L_dir = 1;
-        Serial.println("Turning 180");
+        // Serial.println("Turning 180");
 	    }
 	    else {									// reset line flags & detection flag
         FLflag = true;						// only when movement is FINISHED
@@ -639,7 +643,7 @@ void movement(int state) {
 	      BLflag = true;
 	      BRflag = true;
 	      prevFlagSet = false;
-        Serial.println("FINISHED DEALING WITH THE LINE");
+        // Serial.println("FINISHED DEALING WITH THE LINE");
 	    }
 	    // moving = true;
 	} else {					// stop
@@ -647,7 +651,7 @@ void movement(int state) {
   		R_command = 0;
   		R_dir = 1;
   		L_dir = 1;
-      Serial.println("Stopped before death");
+      // Serial.println("Stopped before death");
 	}
 }
 
@@ -676,7 +680,7 @@ void checkLine() {
     // prevFlagSet = true;
 
   } else if(!prevFlagSet) {  // if a line hasn't been seen, continue fuzzy
-    Serial.println("Doing Fuzzy");
+    // Serial.println("Doing Fuzzy");
     // prevFlagSet = false;
   }
 }
@@ -715,11 +719,11 @@ void loop(){
   }
 
 
-  Serial.print("cur: ");
-  Serial.println(cur);
-  Serial.print("prevFlag: ");
-  Serial.println(prevFlag);
-  Serial.println(start);
+  // Serial.print("cur: ");
+  // Serial.println(cur);
+  // Serial.print("prevFlag: ");
+  // Serial.println(prevFlag);
+  // Serial.println(start);
 
 	checkSwitch();
 
