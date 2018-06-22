@@ -1,3 +1,4 @@
-v1: Spring 2017, RoboGames <br />
-v2: Fall 2017, All Japan Robot-Sumo Tournament <br />
-v3: Spring 2018, RoboGames <br />
+# Gucci repository contents: <br/> <br/>
+**drc**: used design rule check files <br/>
+**libraries**: used EAGLE libraries <br/>
+**vX board**: contains .brd, .sch, and gerber .zip files <br/>
