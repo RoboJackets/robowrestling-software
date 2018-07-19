@@ -183,7 +183,7 @@
 <layer number="255" name="routoute" color="7" fill="1" visible="yes" active="yes"/>
 </layers>
 <board>
-<fusionsync huburn="a.cGVyc29uYWw6dWUyZDhlY2M3" projecturn="a.cGVyc29uYWw6dWUyZDhlY2M3IzIwMTgwNjIyMTM3MzM5MDA2" f3durn="urn:adsk.wipprod:dm.lineage:oCK5GsSnSQyYjkxJwpRfxw" pcbguid="18f558be-6b05-4ec2-9f37-b6cf3be909b8" lastpulledtime="" lastsyncedchangeguid="d21e2af2-68d8-ea46-7203-759839e72bc3"/>
+<fusionsync huburn="a.cGVyc29uYWw6dWUyZDhlY2M3" projecturn="a.cGVyc29uYWw6dWUyZDhlY2M3IzIwMTgwNjIyMTM3MzM5MDA2" f3durn="urn:adsk.wipprod:dm.lineage:oCK5GsSnSQyYjkxJwpRfxw" pcbguid="18f558be-6b05-4ec2-9f37-b6cf3be909b8" lastpulledtime="" lastsyncedchangeguid="8d8fb52a-4eb0-973f-465f-7277e2d40251"/>
 <plain>
 <wire x1="0" y1="0" x2="43.16" y2="0" width="0" layer="20"/>
 <wire x1="43.16" y1="0" x2="43.16" y2="45.7075" width="0" layer="20"/>
@@ -2070,14 +2070,15 @@ design rules under a new name.</description>
 </signal>
 <signal name="BR">
 <contactref element="B-LINES" pad="3"/>
-<contactref element="PHOTON" pad="7"/>
-<wire x1="12.7" y1="27.4955" x2="18.923" y2="21.2725" width="0.3048" layer="16"/>
-<wire x1="18.923" y1="21.2725" x2="19.05" y2="21.2725" width="0.3048" layer="16"/>
-<via x="19.05" y="21.2725" extent="1-16" drill="0.35"/>
+<wire x1="19.05" y1="22.098" x2="19.05" y2="22.225" width="0.3048" layer="16"/>
+<via x="19.05" y="22.225" extent="1-16" drill="0.35"/>
 <wire x1="19.05" y1="10.4775" x2="20.6375" y2="8.89" width="0.3048" layer="1"/>
 <wire x1="20.6375" y1="8.89" x2="36.5125" y2="8.89" width="0.3048" layer="1"/>
 <wire x1="36.5125" y1="8.89" x2="38.1" y2="7.3025" width="0.3048" layer="1"/>
-<wire x1="19.05" y1="21.2725" x2="19.05" y2="10.4775" width="0.3048" layer="1"/>
+<wire x1="19.05" y1="22.225" x2="19.05" y2="10.4775" width="0.3048" layer="1"/>
+<contactref element="PHOTON" pad="6"/>
+<wire x1="12.7" y1="30.0355" x2="19.05" y2="23.6855" width="0.3048" layer="16"/>
+<wire x1="19.05" y1="23.6855" x2="19.05" y2="22.225" width="0.3048" layer="16"/>
 </signal>
 <signal name="L-CONTROL">
 <contactref element="R-ESC" pad="1"/>
@@ -2130,9 +2131,9 @@ design rules under a new name.</description>
 </signal>
 <signal name="SHDN3">
 <contactref element="X1" pad="P$10"/>
-<contactref element="PHOTON" pad="6"/>
-<wire x1="20.09" y1="5.2225" x2="20.09" y2="22.6455" width="0.3048" layer="16"/>
-<wire x1="20.09" y1="22.6455" x2="12.7" y2="30.0355" width="0.3048" layer="16"/>
+<contactref element="PHOTON" pad="5"/>
+<wire x1="12.7" y1="32.5755" x2="20.09" y2="25.1855" width="0.3048" layer="16"/>
+<wire x1="20.09" y1="25.1855" x2="20.09" y2="5.2225" width="0.3048" layer="16"/>
 </signal>
 <signal name="SHDN2">
 <contactref element="X1" pad="P$12"/>

@@ -7580,9 +7580,9 @@ RECOMMENDED ON ALL LAYERS</text>
 <label x="88.9" y="-2.54" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="PHOTON" gate="G$1" pin="A5"/>
-<wire x1="81.28" y1="66.04" x2="50.8" y2="66.04" width="0.1524" layer="91"/>
-<label x="50.8" y="66.04" size="1.778" layer="95"/>
+<pinref part="PHOTON" gate="G$1" pin="DAC"/>
+<wire x1="81.28" y1="71.12" x2="55.88" y2="71.12" width="0.1524" layer="91"/>
+<label x="55.88" y="71.12" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="L-CONTROL" class="0">
@@ -7676,9 +7676,9 @@ RECOMMENDED ON ALL LAYERS</text>
 <label x="-12.7" y="68.58" size="1.778" layer="95"/>
 </segment>
 <segment>
-<pinref part="PHOTON" gate="G$1" pin="DAC"/>
-<wire x1="81.28" y1="71.12" x2="55.88" y2="71.12" width="0.1524" layer="91"/>
-<label x="55.88" y="71.12" size="1.778" layer="95"/>
+<pinref part="PHOTON" gate="G$1" pin="WKP"/>
+<wire x1="81.28" y1="76.2" x2="50.8" y2="76.2" width="0.1524" layer="91"/>
+<label x="50.8" y="76.2" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="SHDN2" class="0">
