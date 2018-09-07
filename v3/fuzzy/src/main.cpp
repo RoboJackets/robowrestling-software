@@ -16,200 +16,18 @@
 #include <thresholds.h>
 
 #include <VL53L0X.h>
-#include <LIS3DH.h>
 
 #if !defined(PARTICLE)
 #  include <Wire.h>
 #endif
 
-// Time of Flight sensors
-VL53L0X sensor0;	// RR
-VL53L0X sensor1;	// RM
-VL53L0X sensor2;	// LM
-VL53L0X sensor3;	// LL
-uint16_t LL_distance;
-uint16_t LM_distance;
-uint16_t RM_distance;
-uint16_t RR_distance;
+#include <sensors.h>
 
-// Line sensors
-int FL = D7;    // AUX BOARD SWITCHED FL and FR up
-int FR = A4;    // A5 does not support attachInterrupt, so jump A5 to D7 on the board, also cut INT line
-int BL = D5;
-int BR = D6;
-boolean FLflag = true; // active low
-boolean FRflag = true;
-boolean BLflag = true;
-boolean BRflag = true;
-int cur;
-int prevFlag;
-// boolean moving;
-boolean prevFlagSet = false;
-boolean start = true;
-
-// Remote switch module
-int RS = D4;
-boolean RSflag = false;
-
-// Accelerometer
-const unsigned long PRINT_SAMPLE_PERIOD = 100;
-int curAccel = 0;
-void getAccel();        // ISR prototype
-LIS3DHSample sample;
-LIS3DHI2C accel(Wire, 0, WKP);
-
-// Car ESCs
-Servo LESC;
-Servo RESC;
-int Lmotor = D2;
-int Rmotor = D3;
-int L_command = 0;
-int R_command = 0;
-int L_dir = 1;
-int R_dir = 1;
-
-// Fuzzy logic
-Fuzzy* fuzzy = new Fuzzy();
-float output;
-String decision;
+#include <init.h>
 
 // Particle Photon settings
 SYSTEM_THREAD(ENABLED);
 SYSTEM_MODE(MANUAL);
-
-void FLISR() {
-    FLflag = digitalRead(FL);
-}
-
-void FRISR() {
-    FRflag = digitalRead(FR);
-}
-
-void BLISR() {
-    BLflag = digitalRead(BL);
-}
-
-void BRISR() {
-    BRflag = digitalRead(BR);
-}
-
-void RSISR() {
-    RSflag = digitalRead(RS);
-}
-
-void tof_init() {
-    pinMode(A0, OUTPUT);
-    pinMode(A1, OUTPUT);
-    pinMode(A2, OUTPUT);
-    pinMode(A3, OUTPUT);
-    digitalWrite(A0, LOW);
-    digitalWrite(A1, LOW);
-    digitalWrite(A2, LOW);
-    digitalWrite(A3, LOW);
-    delay(500);
-
-    Wire.setSpeed(CLOCK_SPEED_100KHZ);  // need to initialize i2c protocol after driving shdn pins low
-    Wire.begin();
-
-    delay(10);
-    digitalWrite(A0, HIGH);
-    digitalWrite(A1, HIGH);
-    digitalWrite(A2, HIGH);
-    digitalWrite(A3, HIGH);
-    delay(10);
-    digitalWrite(A1, LOW);
-    digitalWrite(A2, LOW);
-    digitalWrite(A3, LOW);
-    sensor0.init();
-    sensor0.setAddress(0x30);
-    sensor0.setTimeout(1000);
-    delay(10);
-    digitalWrite(A1, HIGH);
-    sensor1.init();
-    sensor1.setAddress(0x31);
-    sensor1.setTimeout(1000);
-    delay(10);
-    digitalWrite(A2, HIGH);
-    sensor2.init();
-    sensor2.setAddress(0x32);
-    sensor2.setTimeout(1000);
-    delay(10);
-    digitalWrite(A3, HIGH);
-    sensor3.init();
-    sensor3.setAddress(0x33);
-    sensor3.setTimeout(1000);
-    delay(10);
-
-    // Start continuous back-to-back mode (take readings as
-    // fast as possible).  To use continuous timed mode
-    // instead, provide a desired inter-measurement period in
-    // ms (e.g. sensor.startContinuous(100)).
-    sensor0.startContinuous(10);
-    sensor1.startContinuous(10);
-    sensor2.startContinuous(10);
-    sensor3.startContinuous(10);
-}
-
-void accel_init() {
-  LIS3DHConfig config;
-  config.setAccelMode(LIS3DH::RATE_400_HZ);
-  accel.setup(config);
-}
-
-void others_init() {
-	// Line sensors
-  	pinMode(FL, INPUT);
-  	pinMode(FR, INPUT);
-  	pinMode(BL, INPUT);
-  	pinMode(BR, INPUT);
-  	// Remote switch
-  	pinMode(RS, INPUT);
-  	// Car ESCs
-  	pinMode(Lmotor, OUTPUT);
-  	pinMode(Rmotor, OUTPUT);
-
-  	// ***Remove for competition***
-  	// ***Serial monitor***
-  	// Serial.begin(9600);	// *** need to modify before comp ***
-}
-
-void interrupt_init() {
-	// Line sensors
-  	attachInterrupt(FL, FLISR, CHANGE);
-  	attachInterrupt(FR, FRISR, CHANGE);
-  	attachInterrupt(BL, BLISR, CHANGE);
-  	attachInterrupt(BR, BRISR, CHANGE);
-  	// Remote switch
-  	attachInterrupt(RS, RSISR, CHANGE);
-
-    // NOT USED
-  	// Accel software timer
-  	// Timer accelTimer(PRINT_SAMPLE_PERIOD, getAccel);
-  	// accelTimer.start();
-}
-
-void ESC_init() {
-  	// Necessary for Servo objects
-  	LESC.attach(Lmotor);
-  	RESC.attach(Rmotor);
-  	// Write stop command
-  	LESC.writeMicroseconds(1500);
-  	RESC.writeMicroseconds(1500);
-}
-
-void line_init() {
-	// moving = true;
-	prevFlag = millis();
-}
-
-void robot_init() {
-  while(RSflag == LOW) {    // initial LOW
-    Serial.println("Waiting for Start");
-  }
-  Serial.println("Starting in 5 seconds...");
-  delay(5000);
-  // Serial.println("GO!");
-}
 
 void fuzzy_init() {
   // low = far, high = close
@@ -487,19 +305,19 @@ void fuzzy_init() {
 }
 
 void setup() {
-	tof_init();			// ToF and I2C
+    tof_init();			// ToF and I2C
 
-	// accel_init();		// accelerometer NOT USED
+    // accel_init();		// accelerometer NOT USED
 
-	others_init();		// line, remote, esc, ***printing***
-	interrupt_init();	// interrupts for lines and remote
-	ESC_init();			// Car ESCs
-	fuzzy_init();		// Fuzzy library************
+    others_init();		// line, remote, esc, ***printing***
+    interrupt_init();	// interrupts for lines and remote
+    ESC_init();			// Car ESCs
+    fuzzy_init();		// Fuzzy library************
 
-	RGB.control(true); 	// take control of the on-board LED for debugging
+    RGB.control(true); 	// take control of the on-board LED for debugging
 
-	robot_init();
-	line_init();		// initialize line variables
+    robot_init();
+    line_init();		// initialize line variables
 }
 
 // -----------------------------------------------------------
@@ -653,15 +471,6 @@ void movement(int state) {
   		L_dir = 1;
       // Serial.println("Stopped before death");
 	}
-}
-
-void startUp() {
-  if (!prevFlagSet) {
-    prevFlag = cur;
-    prevFlagSet = true;
-  } else {
-    movement(2);
-  }
 }
 
 void checkLine() {
