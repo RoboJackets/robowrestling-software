@@ -24,7 +24,25 @@
 
 #include <sensors.h>
 
-#include <hotfuzz.h>
+#include <movement.h>
+
+#include <logic.h>
+
+VL53L0X sensor0;
+VL53L0X sensor1;
+VL53L0X sensor2;
+VL53L0X sensor3;
+int L_command = 0;
+int R_command = 0;
+int L_dir = 1;
+int R_dir = 1;
+Fuzzy* fuzzy = new Fuzzy();
+uint16_t RR_distance = sensor0.readRangeContinuousMillimeters();
+uint16_t RM_distance = sensor1.readRangeContinuousMillimeters();
+uint16_t LM_distance = sensor2.readRangeContinuousMillimeters();
+uint16_t LL_distance = sensor3.readRangeContinuousMillimeters();
+float output = 0;
+String decision = "";
 
 void fuzzy_init() {
     // low = far, high = close

@@ -12,7 +12,27 @@
 
 #include <sensors.h>
 
+#include <movement.h>
+
 #include <init.h>
+
+//Defining variables
+int FL = D7;    // AUX BOARD SWITCHED FL and FR up
+int FR = A4;    // A5 does not support attachInterrupt, so jump A5 to D7 on the board, also cut INT line
+int BL = D5;
+int BR = D6;
+boolean FLflag = true;
+boolean FRflag = true;
+boolean BLflag = true;
+boolean BRflag = true;
+int cur = 0;
+int prevFlag = 0;
+boolean prevFlagSet = false;
+boolean start = true;
+int RS = D4;
+boolean RSflag = false;
+int Lmotor = D2;
+int Rmotor = D3;
 
 // Particle Photon settings
 SYSTEM_THREAD(ENABLED);
