@@ -39,8 +39,6 @@ extern int RS;
 extern boolean RSflag;
 
 // Car ESCs
-extern Servo LESC;
-extern Servo RESC;
 extern int Lmotor;
 extern int Rmotor;
 extern int L_command;

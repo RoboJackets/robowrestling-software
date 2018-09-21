@@ -38,6 +38,7 @@ int Rmotor = D3;
 SYSTEM_THREAD(ENABLED);
 SYSTEM_MODE(MANUAL);
 
+//Setting flags to line sensors pins
 void FLISR() {
     FLflag = digitalRead(FL);
 }
@@ -58,6 +59,7 @@ void RSISR() {
     RSflag = digitalRead(RS);
 }
 
+//Setting up TOF sensors
 void tof_init() {
     pinMode(A0, OUTPUT);
     pinMode(A1, OUTPUT);
@@ -111,6 +113,7 @@ void tof_init() {
     sensor3.startContinuous(10);
 }
 
+//Setting up random pins to right modes
 void others_init() {
     // Line sensors
     pinMode(FL, INPUT);
@@ -128,6 +131,7 @@ void others_init() {
     // Serial.begin(9600);	// *** need to modify before comp ***
 }
 
+//Setting up line sensors to interrupt is triggered
 void interrupt_init() {
     // Line sensors
     attachInterrupt(FL, FLISR, CHANGE);
@@ -143,20 +147,12 @@ void interrupt_init() {
     // accelTimer.start();
 }
 
-void ESC_init() {
-    // Necessary for Servo objects
-    LESC.attach(Lmotor);
-    RESC.attach(Rmotor);
-    // Write stop command
-    LESC.writeMicroseconds(1500);
-    RESC.writeMicroseconds(1500);
-}
-
 void line_init() {
     // moving = true;
     prevFlag = millis();
 }
 
+//Wait 5 seconds before moving as per the rules
 void robot_init() {
     while(RSflag == LOW) {    // initial LOW
         Serial.println("Waiting for Start");
@@ -166,6 +162,7 @@ void robot_init() {
     // Serial.println("GO!");
 }
 
+//Initial movement settings
 void startUp() {
     if (!prevFlagSet) {
         prevFlag = cur;

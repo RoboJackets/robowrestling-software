@@ -1,10 +1,27 @@
 #include <Particle.h>
 
+#if !defined(PARTICLE)
+#  include <Wire.h>
+#endif
+
 #include <thresholds.h>
 
 #include <sensors.h>
 
 #include <movement.h>
+
+Servo LESC;
+Servo RESC;
+
+//Setting up servos
+void ESC_init() {
+    // Necessary for Servo objects
+    LESC.attach(Lmotor);
+    RESC.attach(Rmotor);
+    // Write stop command
+    LESC.writeMicroseconds(1500);
+    RESC.writeMicroseconds(1500);
+}
 
 void stop() {
   	LESC.writeMicroseconds(1500);
@@ -31,6 +48,7 @@ void move(int motor, int speed, int direction){
   }
 }
 
+//
 void movement(int state) {
 	// right now, there are only states 0, 1, and 10***
 	if(state == 0) {			// move forward

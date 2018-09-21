@@ -44,6 +44,7 @@ uint16_t LL_distance = sensor3.readRangeContinuousMillimeters();
 float output = 0;
 String decision = "";
 
+//Setting up all the fuzzy logic cases so we can decide how much to turn
 void fuzzy_init() {
     // low = far, high = close
 
@@ -319,6 +320,7 @@ void fuzzy_init() {
     fuzzy->addFuzzyRule(fr32);
 }
 
+//Check is the other robot is close using the ToF sensors
 void getToF() {
     RR_distance = sensor0.readRangeContinuousMillimeters();
     RM_distance = sensor1.readRangeContinuousMillimeters();
@@ -327,6 +329,7 @@ void getToF() {
     // if (sensor0.timeoutOccurred() || sensor1.timeoutOccurred() || sensor2.timeoutOccurred() || sensor3.timeoutOccurred()) { Serial.print(" SENSOR TIMEOUT"); }
 }
 
+//Use the set up fuzzy settings to determine how to move
 void doFuzzy() {
     fuzzy->setInput(1, LL_distance);
     fuzzy->setInput(2, LM_distance);
@@ -378,6 +381,7 @@ void doFuzzy() {
     }
 }
 
+//Check the switch
 void checkSwitch() {
     if(RSflag == LOW) {
         stop();
@@ -386,6 +390,7 @@ void checkSwitch() {
     }
 }
 
+//Check to see if the robot is near a line and adjust movement accordingly
 void checkLine() {
     if (!FLflag || !FRflag || prevFlagSet) {				// if front line triggered
         if (!prevFlagSet) {					// and if this is the FIRST detection of the line

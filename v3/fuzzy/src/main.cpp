@@ -29,9 +29,9 @@
 #  include <Wire.h>
 #endif
 
-#include <sensors.h>
+//n#include <sensors.h>
 
-#include <init.h>
+// #include <init.h>
 
 // Particle Photon settings
 SYSTEM_THREAD(ENABLED);

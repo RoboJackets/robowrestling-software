@@ -1,4 +1,4 @@
-
+void ESC_init();
 
 void stop();
 

@@ -19,9 +19,9 @@ void tof_init();
 
 void others_init();
 
-void interrupt_init();
+//void ESC_init();
 
-void ESC_init();
+void interrupt_init();
 
 void line_init();
 
