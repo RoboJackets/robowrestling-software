@@ -23,6 +23,7 @@ void ESC_init() {
     RESC.writeMicroseconds(1500);
 }
 
+//Stop the motors
 void stop() {
   	LESC.writeMicroseconds(1500);
   	RESC.writeMicroseconds(1500);
@@ -49,7 +50,7 @@ void move(int motor, int speed, int direction){
 }
 
 //
-void movement(int state) {
+void moveState(int state) {
 	// right now, there are only states 0, 1, and 10***
 	if(state == 0) {			// move forward
   		L_command = line_fwd;

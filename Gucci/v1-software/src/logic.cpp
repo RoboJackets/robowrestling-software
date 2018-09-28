@@ -423,12 +423,12 @@ void checkLine() {
             RGB.color(255, 255, 255);
             prevFlag = cur;					// reset the turn timer
             prevFlagSet = true;				// ensures timer is reset only ONCE
-            movement(1);						// stop before you fall off
+            moveState(1);						// stop before you fall off
         }
-        movement(10);						// begin/continue the turn sequence
+        moveState(10);						// begin/continue the turn sequence
     } else if ((!BRflag || !BLflag) && !prevFlagSet) {		// if back line triggered, move forward
         RGB.color(255, 255, 255);
-        movement(0);
+        moveState(0);
 
         // prevFlagSet = true;
 

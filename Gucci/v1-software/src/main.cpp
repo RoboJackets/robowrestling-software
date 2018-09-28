@@ -33,7 +33,7 @@
 
 // #include <init.h>
 
-// Particle Photon settings
+// Particle Photon settings. Should only be in 1 place in all the files
 SYSTEM_THREAD(ENABLED);
 SYSTEM_MODE(MANUAL);
 
@@ -43,29 +43,29 @@ void setup() {
     // accel_init();		// accelerometer NOT USED
 
     others_init();		// line, remote, esc, ***printing***
-    interrupt_init();	// interrupts for lines and remote
+    interrupt_init();	// interrupts for lines, remote, and eventually encoders/current
     ESC_init();			// Car ESCs
     fuzzy_init();		// Fuzzy library************
 
     RGB.control(true); 	// take control of the on-board LED for debugging
 
-    robot_init();
+    robot_init();   // makes the bot wait 5s before starting as per the rules
     line_init();		// initialize line variables
 }
 
 // -----------------------------------------------------------
 // ------------------Runtime functions------------------------
 // -----------------------------------------------------------
-
+// The functions that robot loops through during the match
 void loop(){
   cur = millis();           // update timer
 
   if (start) {
-    startUp();
+    startUp(); //If the game has just begun move the robot forward(?) a bit
   }
 
   if (!start) {
-    checkLine();
+    checkLine(); //Make sure we're not too close to a line
 
 
     // Serial.print(decision);
@@ -84,7 +84,7 @@ void loop(){
     // Serial.print(LL_distance);
 
 
-  	if (!prevFlagSet) {	// if dealing with line don't do fuzzy
+  	if (!prevFlagSet) {	// If we didn't see a line do Fuzzy logic to determine move inputs
   		getToF();
   		doFuzzy();
   	}
@@ -97,8 +97,8 @@ void loop(){
   // Serial.println(prevFlag);
   // Serial.println(start);
 
-	checkSwitch();
+	checkSwitch(); //See if we hit the off switch
 
-  move(1, R_command, R_dir);
+  move(1, R_command, R_dir); //Move based off what info we got from doFuzzy()
   move(2, L_command, L_dir);
 }
