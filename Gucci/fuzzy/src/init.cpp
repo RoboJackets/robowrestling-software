@@ -34,10 +34,6 @@ boolean RSflag = false;
 int Lmotor = D2;
 int Rmotor = D3;
 
-// Particle Photon settings
-SYSTEM_THREAD(ENABLED);
-SYSTEM_MODE(MANUAL);
-
 //Setting flags to line sensors pins
 void FLISR() {
     FLflag = digitalRead(FL);
