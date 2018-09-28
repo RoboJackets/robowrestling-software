@@ -2,8 +2,6 @@
 
 #include <Particle.h>
 
-#include <LIS3DH.h>
-
 #if !defined(PARTICLE)
 #  include <Wire.h>
 #endif
@@ -31,7 +29,7 @@ void accel_init() {
   delay(500);
 	LIS3DHConfig config;
 	config.setAccelMode(LIS3DH::RATE_100_HZ);
-  
+
 	bool setupSuccess = accel.setup(config);
 	Serial.printlnf("setupSuccess=%d", setupSuccess);
 }
