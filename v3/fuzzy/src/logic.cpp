@@ -41,10 +41,15 @@ uint16_t RR_distance = sensor0.readRangeContinuousMillimeters();
 uint16_t RM_distance = sensor1.readRangeContinuousMillimeters();
 uint16_t LM_distance = sensor2.readRangeContinuousMillimeters();
 uint16_t LL_distance = sensor3.readRangeContinuousMillimeters();
+/**Add 2 more sensors here
+*  uint16_t RF_distance = sensor4.readRangeContinuousMillimeters();
+*  uint16_t LF_distance = sensor5.readRangeContinuousMillimeters();
+*/
 float output = 0;
 String decision = "";
 
 //Setting up all the fuzzy logic cases so we can decide how much to turn
+//Need to increase the number of inputs to 6 and changing the output and antecedent stuff
 void fuzzy_init() {
     // low = far, high = close
 
@@ -87,6 +92,26 @@ void fuzzy_init() {
     RR_input->addFuzzySet(RR_med);
     RR_input->addFuzzySet(RR_high);
     fuzzy->addFuzzyInput(RR_input);
+
+    //INPUT: 5 of 4
+    // FuzzyInput* RF_input = new FuzzyInput(4);
+    // FuzzySet* RF_low = new FuzzySet(low1, low2, low3, low4);
+    // FuzzySet* RF_med = new FuzzySet(med1, med2, med3, med4);
+    // FuzzySet* RF_high = new FuzzySet(high1, high2, high3, high4);
+    // RF_input->addFuzzySet(RF_low);
+    // RF_input->addFuzzySet(RF_med);
+    // RF_input->addFuzzySet(RF_high);
+    // fuzzy->addFuzzyInput(RF_input);
+
+    //INPUT: 6 of 4
+    // FuzzyInput* LF_input = new FuzzyInput(4);
+    // FuzzySet* LF_low = new FuzzySet(low1, low2, low3, low4);
+    // FuzzySet* LF_med = new FuzzySet(med1, med2, med3, med4);
+    // FuzzySet* LF_high = new FuzzySet(high1, high2, high3, high4);
+    // LF_input->addFuzzySet(LF_low);
+    // LF_input->addFuzzySet(LF_med);
+    // LF_input->addFuzzySet(LF_high);
+    // fuzzy->addFuzzyInput(LF_input);
 
     // OUTPUT: 1 of 1 (Test 1 *********************************)
     FuzzyOutput* drive_state = new FuzzyOutput(1);
@@ -330,6 +355,7 @@ void getToF() {
 }
 
 //Use the set up fuzzy settings to determine how to move
+//Add 2 additional inputs
 void doFuzzy() {
     fuzzy->setInput(1, LL_distance);
     fuzzy->setInput(2, LM_distance);
