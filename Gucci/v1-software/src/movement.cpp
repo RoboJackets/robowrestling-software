@@ -29,6 +29,12 @@ void stop() {
   	RESC.writeMicroseconds(1500);
 }
 
+/**
+* Set the motor you want with a speed and direction
+* Motor should be set 1 for the right anything else for the left
+* Speed should be max 300 for forward and max 400 for reverse
+* Direction should be 1 for forward anything else for reverse
+*/
 void move(int motor, int speed, int direction){
   // usage: x_ESC.writeMicroseconds(pwm)
   // pwm should between 1100 and 1800
@@ -49,16 +55,16 @@ void move(int motor, int speed, int direction){
   }
 }
 
-//
+//Takes in a state number to decide what inputs the move methods should take
 void moveState(int state) {
 	// right now, there are only states 0, 1, and 10***
-	if(state == 0) {			// move forward
+	if(state == 0) {			// move forward because we saw a line from behind
   		L_command = line_fwd;
   		R_command = line_fwd;
   		L_dir = 1;
   		R_dir = 1;
       // Serial.println("Back triggered, moving forward");
-	} else if (state == 2) { //Should be 1?
+	} else if (state == 2) { //Should be 1? Turn around because we saw a line from the front
     if (cur - prevFlag < degrees45) {
       L_command = line_180;
       R_command = line_180;
