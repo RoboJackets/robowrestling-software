@@ -18,24 +18,39 @@
 
 //Defining variables
 
+// Line sensors: Front Left, Front Right, Back Left, Back Right
 int FL = A2;    // AUX BOARD SWITCHED FL and FR up
 int FR = A3;    // A5 does not support attachInterrupt, so jump A5 to D7 on the board, also cut INT line
 int BL = A4;
 int BR = A6;
+// Line sensor flags that are flipped at an interrupt
 boolean FLflag = true;
 boolean FRflag = true;
 boolean BLflag = true;
 boolean BRflag = true;
+
+// timer for current time in milis()
 int cur = 0;
+
+// timer for time elapsed after cur for timed movements
 int prevFlag = 0;
+
+// flag that helps prioritize timed movements, which are most likely for line detection
 boolean prevFlagSet = false;
+
+// flag to denote whether or not we want to run startup sequence
 boolean start = true;
+
+// remote start pin
 int RS = D4;
+// remote start flag that is flipped once we press the button on the remote
 boolean RSflag = false;
+
+// setting pins for the motors
 int Lmotor = D2;
 int Rmotor = D3;
 
-//Setting flags to line sensors pins
+//Setting flags to line sensors pins during an interrupt handler
 void FLISR() {
     FLflag = digitalRead(FL);
 }
@@ -52,6 +67,7 @@ void BRISR() {
     BRflag = digitalRead(BR);
 }
 
+// interrupt handler for remote start
 void RSISR() {
     RSflag = digitalRead(RS);
 }
@@ -138,7 +154,8 @@ void tof_init() {
     // sensor5.startContinuous(10);
 }
 
-//Setting up random pins to right modes
+//Setting up pins for line sensor, remote start, and ESCs to right modes
+// INITIALIZE THE ENCODERS HERE
 void others_init() {
     // Line sensors
     pinMode(FL, INPUT);
@@ -156,7 +173,8 @@ void others_init() {
     // Serial.begin(9600);	// *** need to modify before comp ***
 }
 
-//Setting up line sensors to interrupt is triggered
+//Setting up line sensor interrupts so they can be triggered
+// ADD THE INTERRUPT FOR THE ENCODERS HERE
 void interrupt_init() {
     // Line sensors
     attachInterrupt(FL, FLISR, CHANGE);
@@ -172,6 +190,7 @@ void interrupt_init() {
     // accelTimer.start();
 }
 
+// initialize prevFlag to be in unison with cur
 void line_init() {
     // moving = true;
     prevFlag = millis();
@@ -187,7 +206,7 @@ void robot_init() {
     // Serial.println("GO!");
 }
 
-//Initial movement settings
+// setting the startup sequence
 void startUp() {
     if (!prevFlagSet) {
         prevFlag = cur;
