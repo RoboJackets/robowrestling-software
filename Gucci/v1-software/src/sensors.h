@@ -24,14 +24,19 @@ extern int FL;    // AUX BOARD SWITCHED FL and FR up
 extern int FR;    // A5 does not support attachInterrupt, so jump A5 to D7 on the board, also cut INT line
 extern int BL;
 extern int BR;
+
+// line sensor flags
 extern boolean FLflag; // active low
 extern boolean FRflag;
 extern boolean BLflag;
 extern boolean BRflag;
+
+// timers
 extern int cur;
 extern int prevFlag;
-// boolean moving;
 extern boolean prevFlagSet;
+
+// startup flag
 extern boolean start;
 
 // Remote switch module
