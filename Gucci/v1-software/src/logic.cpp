@@ -41,21 +41,15 @@ uint16_t RR_distance = sensor0.readRangeContinuousMillimeters();
 uint16_t RM_distance = sensor1.readRangeContinuousMillimeters();
 uint16_t LM_distance = sensor2.readRangeContinuousMillimeters();
 uint16_t LL_distance = sensor3.readRangeContinuousMillimeters();
-<<<<<<< .merge_file_uIA3C7
-=======
 /**Add 2 more sensors here
 *  uint16_t RF_distance = sensor4.readRangeContinuousMillimeters();
 *  uint16_t LF_distance = sensor5.readRangeContinuousMillimeters();
 */
->>>>>>> .merge_file_SaHZlp
 float output = 0;
 String decision = "";
 
 //Setting up all the fuzzy logic cases so we can decide how much to turn
-<<<<<<< .merge_file_uIA3C7
-=======
 //Need to increase the number of inputs to 6 and changing the output and antecedent stuff
->>>>>>> .merge_file_SaHZlp
 void fuzzy_init() {
     // low = far, high = close
 
@@ -99,8 +93,6 @@ void fuzzy_init() {
     RR_input->addFuzzySet(RR_high);
     fuzzy->addFuzzyInput(RR_input);
 
-<<<<<<< .merge_file_uIA3C7
-=======
     //INPUT: 5 of 4
     // FuzzyInput* RF_input = new FuzzyInput(4);
     // FuzzySet* RF_low = new FuzzySet(low1, low2, low3, low4);
@@ -121,7 +113,6 @@ void fuzzy_init() {
     // LF_input->addFuzzySet(LF_high);
     // fuzzy->addFuzzyInput(LF_input);
 
->>>>>>> .merge_file_SaHZlp
     // OUTPUT: 1 of 1 (Test 1 *********************************)
     FuzzyOutput* drive_state = new FuzzyOutput(1);
     FuzzySet* full_left = new FuzzySet(0, 5, 15, 20);
@@ -364,10 +355,7 @@ void getToF() {
 }
 
 //Use the set up fuzzy settings to determine how to move
-<<<<<<< .merge_file_uIA3C7
-=======
 //Add 2 additional inputs
->>>>>>> .merge_file_SaHZlp
 void doFuzzy() {
     fuzzy->setInput(1, LL_distance);
     fuzzy->setInput(2, LM_distance);

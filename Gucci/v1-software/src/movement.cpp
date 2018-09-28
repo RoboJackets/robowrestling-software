@@ -57,11 +57,7 @@ void movement(int state) {
   		L_dir = 1;
   		R_dir = 1;
       // Serial.println("Back triggered, moving forward");
-<<<<<<< .merge_file_6wvTYL
-	} else if (state == 2) {
-=======
 	} else if (state == 2) { //Should be 1?
->>>>>>> .merge_file_S6NY75
     if (cur - prevFlag < degrees45) {
       L_command = line_180;
       R_command = line_180;
