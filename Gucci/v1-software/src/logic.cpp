@@ -42,8 +42,8 @@ uint16_t RM_distance = sensor1.readRangeContinuousMillimeters();
 uint16_t LM_distance = sensor2.readRangeContinuousMillimeters();
 uint16_t LL_distance = sensor3.readRangeContinuousMillimeters();
 /**Add 2 more sensors here
-*  uint16_t RF_distance = sensor4.readRangeContinuousMillimeters();
-*  uint16_t LF_distance = sensor5.readRangeContinuousMillimeters();
+*  uint16_t RS_distance = sensor4.readRangeContinuousMillimeters();
+*  uint16_t LS_distance = sensor5.readRangeContinuousMillimeters();
 */
 float output = 0;
 String decision = "";
@@ -94,24 +94,24 @@ void fuzzy_init() {
     fuzzy->addFuzzyInput(RR_input);
 
     //INPUT: 5 of 4
-    // FuzzyInput* RF_input = new FuzzyInput(4);
-    // FuzzySet* RF_low = new FuzzySet(low1, low2, low3, low4);
-    // FuzzySet* RF_med = new FuzzySet(med1, med2, med3, med4);
-    // FuzzySet* RF_high = new FuzzySet(high1, high2, high3, high4);
-    // RF_input->addFuzzySet(RF_low);
-    // RF_input->addFuzzySet(RF_med);
-    // RF_input->addFuzzySet(RF_high);
-    // fuzzy->addFuzzyInput(RF_input);
+    // FuzzyInput* RS_input = new FuzzyInput(4);
+    // FuzzySet* RS_low = new FuzzySet(low1, low2, low3, low4);
+    // FuzzySet* RS_med = new FuzzySet(med1, med2, med3, med4);
+    // FuzzySet* RS_high = new FuzzySet(high1, high2, high3, high4);
+    // RS_input->addFuzzySet(RS_low);
+    // RS_input->addFuzzySet(RS_med);
+    // RS_input->addFuzzySet(RS_high);
+    // fuzzy->addFuzzyInput(RS_input);
 
     //INPUT: 6 of 4
-    // FuzzyInput* LF_input = new FuzzyInput(4);
-    // FuzzySet* LF_low = new FuzzySet(low1, low2, low3, low4);
-    // FuzzySet* LF_med = new FuzzySet(med1, med2, med3, med4);
-    // FuzzySet* LF_high = new FuzzySet(high1, high2, high3, high4);
-    // LF_input->addFuzzySet(LF_low);
-    // LF_input->addFuzzySet(LF_med);
-    // LF_input->addFuzzySet(LF_high);
-    // fuzzy->addFuzzyInput(LF_input);
+    // FuzzyInput* LS_input = new FuzzyInput(4);
+    // FuzzySet* LS_low = new FuzzySet(low1, low2, low3, low4);
+    // FuzzySet* LS_med = new FuzzySet(med1, med2, med3, med4);
+    // FuzzySet* LS_high = new FuzzySet(high1, high2, high3, high4);
+    // LS_input->addFuzzySet(LS_low);
+    // LS_input->addFuzzySet(LS_med);
+    // LS_input->addFuzzySet(LS_high);
+    // fuzzy->addFuzzyInput(LS_input);
 
     // OUTPUT: 1 of 1 (Test 1 *********************************)
     FuzzyOutput* drive_state = new FuzzyOutput(1);
