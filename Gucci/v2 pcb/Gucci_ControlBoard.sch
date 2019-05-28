@@ -5882,8 +5882,8 @@ For Teensy</text>
 <instance part="GND2" gate="1" x="223.52" y="223.52" smashed="yes">
 <attribute name="VALUE" x="223.52" y="223.266" size="1.778" layer="96" align="top-center"/>
 </instance>
-<instance part="GND3" gate="1" x="223.52" y="190.5" smashed="yes">
-<attribute name="VALUE" x="223.52" y="190.246" size="1.778" layer="96" align="top-center"/>
+<instance part="GND3" gate="1" x="241.3" y="190.5" smashed="yes">
+<attribute name="VALUE" x="241.3" y="190.246" size="1.778" layer="96" align="top-center"/>
 </instance>
 <instance part="GND4" gate="1" x="58.42" y="180.34" smashed="yes">
 <attribute name="VALUE" x="58.42" y="180.086" size="1.778" layer="96" align="top-center"/>
@@ -6558,7 +6558,7 @@ For Teensy</text>
 </segment>
 <segment>
 <pinref part="U1" gate="G$1" pin="AGND"/>
-<wire x1="218.44" y1="193.04" x2="223.52" y2="193.04" width="0.1524" layer="91"/>
+<wire x1="218.44" y1="193.04" x2="241.3" y2="193.04" width="0.1524" layer="91"/>
 <pinref part="GND3" gate="1" pin="GND"/>
 </segment>
 <segment>
@@ -6949,9 +6949,9 @@ For Teensy</text>
 <label x="210.82" y="50.8" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U1" gate="G$1" pin="15/A1/T"/>
-<wire x1="165.1" y1="198.12" x2="160.02" y2="198.12" width="0.1524" layer="91"/>
-<label x="160.02" y="198.12" size="1.778" layer="95" rot="R180" xref="yes"/>
+<pinref part="U1" gate="G$1" pin="16/A2/T/PWM"/>
+<wire x1="165.1" y1="195.58" x2="160.02" y2="195.58" width="0.1524" layer="91"/>
+<label x="160.02" y="195.58" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="ENCODER1_A" class="0">
@@ -7334,9 +7334,9 @@ For Teensy</text>
 <label x="218.44" y="91.44" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U1" gate="G$1" pin="16/A2/T/PWM"/>
-<wire x1="165.1" y1="195.58" x2="160.02" y2="195.58" width="0.1524" layer="91"/>
-<label x="160.02" y="195.58" size="1.778" layer="95" rot="R180" xref="yes"/>
+<pinref part="U1" gate="G$1" pin="A22/DAC1"/>
+<wire x1="218.44" y1="187.96" x2="223.52" y2="187.96" width="0.1524" layer="91"/>
+<label x="223.52" y="187.96" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="RB_INT" class="0">
