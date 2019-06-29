@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.1.0">
+<eagle version="9.1.3">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="no" active="no"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="no" active="no"/>
@@ -180,28 +180,28 @@ No Auxiliary Board. YAY!!</description>
 <text x="-5.08" y="2.54" size="1.27" layer="21" ratio="6">&gt;Name</text>
 </package>
 <package name="JST_PH_1X05_90">
-<wire x1="-5.95" y1="0.35" x2="5.95" y2="0.35" width="0.127" layer="21"/>
-<wire x1="5.95" y1="0.35" x2="5.95" y2="-5.25" width="0.127" layer="21"/>
-<wire x1="5.95" y1="-5.25" x2="-5.95" y2="-5.25" width="0.127" layer="21"/>
-<wire x1="-5.95" y1="-5.25" x2="-5.95" y2="0.35" width="0.127" layer="21"/>
+<wire x1="-5.95" y1="1.35" x2="5.95" y2="1.35" width="0.127" layer="21"/>
+<wire x1="5.95" y1="1.35" x2="5.95" y2="-6.25" width="0.127" layer="21"/>
+<wire x1="5.95" y1="-6.25" x2="-5.95" y2="-6.25" width="0.127" layer="21"/>
+<wire x1="-5.95" y1="-6.25" x2="-5.95" y2="1.35" width="0.127" layer="21"/>
 <pad name="1" x="-4" y="-1" drill="0.7"/>
 <pad name="2" x="-2" y="-1" drill="0.7"/>
 <pad name="3" x="0" y="-1" drill="0.7"/>
 <pad name="4" x="2" y="-1" drill="0.7"/>
 <pad name="5" x="4" y="-1" drill="0.7"/>
-<text x="-3.1" y="-6.3" size="0.8128" layer="21">Board Edge</text>
-<text x="-4" y="0.5" size="1.016" layer="21">&gt;Name</text>
+<text x="-3" y="-6" size="0.8128" layer="21">Board Edge</text>
+<text x="-4" y="1.5" size="1.016" layer="21">&gt;Name</text>
 </package>
 <package name="JST_PH_1X03_90">
 <wire x1="-3.95" y1="1.35" x2="3.95" y2="1.35" width="0.127" layer="21"/>
-<wire x1="3.95" y1="1.35" x2="3.95" y2="-4.25" width="0.127" layer="21"/>
-<wire x1="3.95" y1="-4.25" x2="-3.95" y2="-4.25" width="0.127" layer="21"/>
-<wire x1="-3.95" y1="-4.25" x2="-3.95" y2="1.35" width="0.127" layer="21"/>
+<wire x1="3.95" y1="1.35" x2="3.95" y2="-6.25" width="0.127" layer="21"/>
+<wire x1="3.95" y1="-6.25" x2="-3.95" y2="-6.25" width="0.127" layer="21"/>
+<wire x1="-3.95" y1="-6.25" x2="-3.95" y2="1.35" width="0.127" layer="21"/>
 <pad name="1" x="-2" y="0" drill="0.7"/>
 <pad name="2" x="0" y="0" drill="0.7"/>
 <pad name="3" x="2" y="0" drill="0.7"/>
 <text x="-4" y="1.5" size="1.27" layer="21" ratio="6">&gt;NAME</text>
-<text x="-2.54" y="-5.588" size="0.8128" layer="21" ratio="6">Board Edge</text>
+<text x="-2.74" y="-5.988" size="0.8128" layer="21" ratio="6">Board Edge</text>
 </package>
 <package name="JST_PH_1X03">
 <wire x1="-3.95" y1="2.25" x2="3.95" y2="2.25" width="0.127" layer="21"/>
