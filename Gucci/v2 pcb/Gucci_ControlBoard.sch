@@ -5875,13 +5875,13 @@ Warning: This is the KIT version of this package. This package has a smaller dia
 <part name="GND24" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="GND25" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="FRAME1" library="RoboJackets-Frames" deviceset="FRAME_B_L" device=""/>
+<part name="C15" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="C14" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="C13" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="C12" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="C11" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="C10" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="C9" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
-<part name="C8" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="C7" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="1uF"/>
 <part name="C5" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="1uF"/>
 <part name="GND26" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
@@ -5890,10 +5890,10 @@ Warning: This is the KIT version of this package. This package has a smaller dia
 <part name="U6" library="Gucci_ControlBoard" deviceset="AP2114H-1.8TRG1" device=""/>
 <part name="U7" library="Gucci_ControlBoard" deviceset="AP2114H-3.3TRG1" device=""/>
 <part name="C6" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
+<part name="C22" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="4.7uF"/>
+<part name="C21" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="4.7uF"/>
 <part name="C20" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="4.7uF"/>
 <part name="C19" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="4.7uF"/>
-<part name="C18" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="4.7uF"/>
-<part name="C17" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="4.7uF"/>
 <part name="GND22" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="SUPPLY21" library="SparkFun-PowerSymbols" deviceset="5V" device=""/>
 <part name="SUPPLY2" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device=""/>
@@ -5915,12 +5915,12 @@ Warning: This is the KIT version of this package. This package has a smaller dia
 <part name="SUPPLY34" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="1.8V" device=""/>
 <part name="R15" library="SparkFun-Resistors" deviceset="1KOHM" device="-0603-1/10W-1%" value="10k"/>
 <part name="R14" library="SparkFun-Resistors" deviceset="1KOHM" device="-0603-1/10W-1%" value="10k"/>
-<part name="TOF_3" library="Gucci_ControlBoard" deviceset="AMPHENOL_2X03_2.54MM_SHROUD" device=""/>
 <part name="TOF_1" library="Gucci_ControlBoard" deviceset="AMPHENOL_2X03_2.54MM_SHROUD" device=""/>
-<part name="TOF_5" library="Gucci_ControlBoard" deviceset="AMPHENOL_2X03_2.54MM_SHROUD" device=""/>
 <part name="TOF_2" library="Gucci_ControlBoard" deviceset="AMPHENOL_2X03_2.54MM_SHROUD" device=""/>
-<part name="TOF_6" library="Gucci_ControlBoard" deviceset="AMPHENOL_2X03_2.54MM_SHROUD" device=""/>
+<part name="TOF_3" library="Gucci_ControlBoard" deviceset="AMPHENOL_2X03_2.54MM_SHROUD" device=""/>
 <part name="TOF_4" library="Gucci_ControlBoard" deviceset="AMPHENOL_2X03_2.54MM_SHROUD" device=""/>
+<part name="TOF_5" library="Gucci_ControlBoard" deviceset="AMPHENOL_2X03_2.54MM_SHROUD" device=""/>
+<part name="TOF_6" library="Gucci_ControlBoard" deviceset="AMPHENOL_2X03_2.54MM_SHROUD" device=""/>
 <part name="LINE_RF" library="Gucci_ControlBoard" deviceset="AMPHENOL_2X02_2.54MM_SHROUD" device=""/>
 <part name="LINE_LF" library="Gucci_ControlBoard" deviceset="AMPHENOL_2X02_2.54MM_SHROUD" device=""/>
 <part name="START" library="Gucci_ControlBoard" deviceset="AMPHENOL_2X02_2.54MM_SHROUD" device=""/>
@@ -5953,8 +5953,8 @@ Warning: This is the KIT version of this package. This package has a smaller dia
 <part name="R21" library="SparkFun-Resistors" deviceset="1KOHM" device="-0603-1/10W-1%" value="1k"/>
 <part name="SUPPLY27" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device=""/>
 <part name="SUPPLY29" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device=""/>
-<part name="C16" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="15pF"/>
-<part name="C15" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="15pF"/>
+<part name="C18" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="15pF"/>
+<part name="C17" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="15pF"/>
 <part name="L_MOT" library="pinhead" library_urn="urn:adsk.eagle:library:325" deviceset="PINHD-1X2" device="" package3d_urn="urn:adsk.eagle:package:22435/2"/>
 <part name="R_MOT" library="pinhead" library_urn="urn:adsk.eagle:library:325" deviceset="PINHD-1X2" device="" package3d_urn="urn:adsk.eagle:package:22435/2"/>
 <part name="U4" library="Gucci_ControlBoard" deviceset="MAX4173-SOT-23" device=""/>
@@ -5963,6 +5963,8 @@ Warning: This is the KIT version of this package. This package has a smaller dia
 <part name="GND29" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="SUPPLY30" library="SparkFun-PowerSymbols" deviceset="5V" device=""/>
 <part name="SUPPLY31" library="SparkFun-PowerSymbols" deviceset="5V" device=""/>
+<part name="C8" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
+<part name="C16" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 </parts>
 <sheets>
 <sheet>
@@ -6037,8 +6039,8 @@ For Teensy</text>
 <attribute name="NAME" x="297.18" y="103.632" size="1.778" layer="95" ratio="6" rot="R180"/>
 <attribute name="VALUE" x="302.514" y="119.634" size="1.778" layer="96" ratio="6" rot="R180"/>
 </instance>
-<instance part="SUPPLY1" gate="G$1" x="231.14" y="248.92" smashed="yes">
-<attribute name="VALUE" x="231.14" y="251.714" size="1.778" layer="96" align="bottom-center"/>
+<instance part="SUPPLY1" gate="G$1" x="231.14" y="241.3" smashed="yes">
+<attribute name="VALUE" x="231.14" y="244.094" size="1.778" layer="96" align="bottom-center"/>
 </instance>
 <instance part="GND2" gate="1" x="223.52" y="223.52" smashed="yes">
 <attribute name="VALUE" x="223.52" y="223.266" size="1.778" layer="96" align="top-center"/>
@@ -6171,31 +6173,31 @@ For Teensy</text>
 <attribute name="DRAWING_NAME" x="340.36" y="19.05" size="2.54" layer="94" font="vector"/>
 <attribute name="SCH_DESC" x="326.39" y="6.35" size="2.54" layer="94"/>
 </instance>
-<instance part="C14" gate="G$1" x="337.82" y="58.42" smashed="yes">
+<instance part="C15" gate="G$1" x="337.82" y="58.42" smashed="yes">
 <attribute name="NAME" x="339.344" y="61.341" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="339.344" y="56.261" size="1.778" layer="96" font="vector"/>
 </instance>
-<instance part="C13" gate="G$1" x="345.44" y="58.42" smashed="yes">
+<instance part="C14" gate="G$1" x="345.44" y="58.42" smashed="yes">
 <attribute name="NAME" x="346.964" y="61.341" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="346.964" y="56.261" size="1.778" layer="96" font="vector"/>
 </instance>
-<instance part="C12" gate="G$1" x="353.06" y="58.42" smashed="yes">
+<instance part="C13" gate="G$1" x="353.06" y="58.42" smashed="yes">
 <attribute name="NAME" x="354.584" y="61.341" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="354.584" y="56.261" size="1.778" layer="96" font="vector"/>
 </instance>
-<instance part="C11" gate="G$1" x="360.68" y="58.42" smashed="yes">
+<instance part="C12" gate="G$1" x="360.68" y="58.42" smashed="yes">
 <attribute name="NAME" x="362.204" y="61.341" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="362.204" y="56.261" size="1.778" layer="96" font="vector"/>
 </instance>
-<instance part="C10" gate="G$1" x="368.3" y="58.42" smashed="yes">
+<instance part="C11" gate="G$1" x="368.3" y="58.42" smashed="yes">
 <attribute name="NAME" x="369.824" y="61.341" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="369.824" y="56.261" size="1.778" layer="96" font="vector"/>
 </instance>
-<instance part="C9" gate="G$1" x="375.92" y="58.42" smashed="yes">
+<instance part="C10" gate="G$1" x="375.92" y="58.42" smashed="yes">
 <attribute name="NAME" x="377.444" y="61.341" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="377.444" y="56.261" size="1.778" layer="96" font="vector"/>
 </instance>
-<instance part="C8" gate="G$1" x="383.54" y="58.42" smashed="yes">
+<instance part="C9" gate="G$1" x="383.54" y="58.42" smashed="yes">
 <attribute name="NAME" x="385.064" y="61.341" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="385.064" y="56.261" size="1.778" layer="96" font="vector"/>
 </instance>
@@ -6228,19 +6230,19 @@ For Teensy</text>
 <attribute name="NAME" x="232.664" y="234.061" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="232.664" y="228.981" size="1.778" layer="96" font="vector"/>
 </instance>
-<instance part="C20" gate="G$1" x="20.32" y="38.1" smashed="yes">
+<instance part="C22" gate="G$1" x="20.32" y="38.1" smashed="yes">
 <attribute name="NAME" x="21.844" y="41.021" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="21.844" y="35.941" size="1.778" layer="96" font="vector"/>
 </instance>
-<instance part="C19" gate="G$1" x="86.36" y="38.1" smashed="yes">
+<instance part="C21" gate="G$1" x="86.36" y="38.1" smashed="yes">
 <attribute name="NAME" x="87.884" y="41.021" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="87.884" y="35.941" size="1.778" layer="96" font="vector"/>
 </instance>
-<instance part="C18" gate="G$1" x="96.52" y="38.1" smashed="yes">
+<instance part="C20" gate="G$1" x="96.52" y="38.1" smashed="yes">
 <attribute name="NAME" x="98.044" y="41.021" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="98.044" y="35.941" size="1.778" layer="96" font="vector"/>
 </instance>
-<instance part="C17" gate="G$1" x="162.56" y="38.1" smashed="yes">
+<instance part="C19" gate="G$1" x="162.56" y="38.1" smashed="yes">
 <attribute name="NAME" x="164.084" y="41.021" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="164.084" y="35.941" size="1.778" layer="96" font="vector"/>
 </instance>
@@ -6315,12 +6317,12 @@ For Teensy</text>
 <attribute name="NAME" x="346.456" y="104.14" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
 <attribute name="VALUE" x="349.504" y="104.14" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
 </instance>
-<instance part="TOF_3" gate="G$1" x="38.1" y="223.52"/>
-<instance part="TOF_1" gate="G$1" x="81.28" y="223.52"/>
-<instance part="TOF_5" gate="G$1" x="38.1" y="187.96"/>
-<instance part="TOF_2" gate="G$1" x="81.28" y="187.96"/>
-<instance part="TOF_6" gate="G$1" x="38.1" y="152.4"/>
-<instance part="TOF_4" gate="G$1" x="81.28" y="152.4"/>
+<instance part="TOF_1" gate="G$1" x="38.1" y="223.52"/>
+<instance part="TOF_2" gate="G$1" x="81.28" y="223.52"/>
+<instance part="TOF_3" gate="G$1" x="38.1" y="187.96"/>
+<instance part="TOF_4" gate="G$1" x="81.28" y="187.96"/>
+<instance part="TOF_5" gate="G$1" x="38.1" y="152.4"/>
+<instance part="TOF_6" gate="G$1" x="81.28" y="152.4"/>
 <instance part="LINE_RF" gate="G$1" x="30.48" y="101.6"/>
 <instance part="LINE_LF" gate="G$1" x="78.74" y="101.6"/>
 <instance part="START" gate="G$1" x="215.9" y="99.06"/>
@@ -6413,11 +6415,11 @@ For Teensy</text>
 <instance part="SUPPLY29" gate="G$1" x="175.26" y="109.22" smashed="yes">
 <attribute name="VALUE" x="175.26" y="112.014" size="1.778" layer="96" align="bottom-center"/>
 </instance>
-<instance part="C16" gate="G$1" x="162.56" y="101.6" smashed="yes">
+<instance part="C18" gate="G$1" x="162.56" y="101.6" smashed="yes">
 <attribute name="NAME" x="165.1" y="101.981" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="164.084" y="99.441" size="1.778" layer="96" font="vector"/>
 </instance>
-<instance part="C15" gate="G$1" x="175.26" y="91.44" smashed="yes">
+<instance part="C17" gate="G$1" x="175.26" y="91.44" smashed="yes">
 <attribute name="NAME" x="178.054" y="92.329" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="176.784" y="89.281" size="1.778" layer="96" font="vector"/>
 </instance>
@@ -6436,6 +6438,14 @@ For Teensy</text>
 </instance>
 <instance part="SUPPLY31" gate="G$1" x="193.04" y="66.04" smashed="yes">
 <attribute name="VALUE" x="193.04" y="68.834" size="1.778" layer="96" align="bottom-center"/>
+</instance>
+<instance part="C8" gate="G$1" x="391.16" y="58.42" smashed="yes">
+<attribute name="NAME" x="392.684" y="61.341" size="1.778" layer="95" font="vector"/>
+<attribute name="VALUE" x="392.684" y="56.261" size="1.778" layer="96" font="vector"/>
+</instance>
+<instance part="C16" gate="G$1" x="330.2" y="58.42" smashed="yes">
+<attribute name="NAME" x="331.724" y="61.341" size="1.778" layer="95" font="vector"/>
+<attribute name="VALUE" x="331.724" y="56.261" size="1.778" layer="96" font="vector"/>
 </instance>
 </instances>
 <busses>
@@ -6500,7 +6510,7 @@ For Teensy</text>
 <pinref part="U7" gate="A" pin="VIN"/>
 <wire x1="30.48" y1="40.64" x2="30.48" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="30.48" y1="45.72" x2="20.32" y2="45.72" width="0.1524" layer="91"/>
-<pinref part="C20" gate="G$1" pin="1"/>
+<pinref part="C22" gate="G$1" pin="1"/>
 <wire x1="20.32" y1="45.72" x2="20.32" y2="43.18" width="0.1524" layer="91"/>
 <wire x1="30.48" y1="48.26" x2="30.48" y2="45.72" width="0.1524" layer="91"/>
 <junction x="30.48" y="45.72"/>
@@ -6509,12 +6519,10 @@ For Teensy</text>
 <segment>
 <pinref part="C6" gate="G$1" pin="1"/>
 <pinref part="SUPPLY1" gate="G$1" pin="5V"/>
-<wire x1="231.14" y1="236.22" x2="231.14" y2="246.38" width="0.1524" layer="91"/>
 <pinref part="U2" gate="G$1" pin="VIN"/>
-<wire x1="231.14" y1="246.38" x2="231.14" y2="248.92" width="0.1524" layer="91"/>
-<wire x1="218.44" y1="236.22" x2="218.44" y2="246.38" width="0.1524" layer="91"/>
-<wire x1="218.44" y1="246.38" x2="231.14" y2="246.38" width="0.1524" layer="91"/>
-<junction x="231.14" y="246.38"/>
+<wire x1="231.14" y1="236.22" x2="231.14" y2="241.3" width="0.1524" layer="91"/>
+<wire x1="218.44" y1="236.22" x2="231.14" y2="236.22" width="0.1524" layer="91"/>
+<junction x="231.14" y="236.22"/>
 </segment>
 <segment>
 <pinref part="U5" gate="G$1" pin="VCC"/>
@@ -6537,35 +6545,41 @@ For Teensy</text>
 <pinref part="SUPPLY24" gate="G$1" pin="3.3V"/>
 </segment>
 <segment>
-<pinref part="C14" gate="G$1" pin="1"/>
+<pinref part="C15" gate="G$1" pin="1"/>
 <wire x1="337.82" y1="63.5" x2="337.82" y2="66.04" width="0.1524" layer="91"/>
 <wire x1="337.82" y1="66.04" x2="345.44" y2="66.04" width="0.1524" layer="91"/>
-<pinref part="C13" gate="G$1" pin="1"/>
+<pinref part="C14" gate="G$1" pin="1"/>
 <wire x1="345.44" y1="66.04" x2="345.44" y2="63.5" width="0.1524" layer="91"/>
 <wire x1="345.44" y1="66.04" x2="353.06" y2="66.04" width="0.1524" layer="91"/>
 <junction x="345.44" y="66.04"/>
-<pinref part="C12" gate="G$1" pin="1"/>
+<pinref part="C13" gate="G$1" pin="1"/>
 <wire x1="353.06" y1="66.04" x2="353.06" y2="63.5" width="0.1524" layer="91"/>
 <wire x1="353.06" y1="66.04" x2="360.68" y2="66.04" width="0.1524" layer="91"/>
 <junction x="353.06" y="66.04"/>
-<pinref part="C11" gate="G$1" pin="1"/>
+<pinref part="C12" gate="G$1" pin="1"/>
 <wire x1="360.68" y1="66.04" x2="360.68" y2="63.5" width="0.1524" layer="91"/>
-<pinref part="C10" gate="G$1" pin="1"/>
+<pinref part="C11" gate="G$1" pin="1"/>
 <wire x1="360.68" y1="66.04" x2="368.3" y2="66.04" width="0.1524" layer="91"/>
 <wire x1="368.3" y1="66.04" x2="368.3" y2="63.5" width="0.1524" layer="91"/>
 <junction x="360.68" y="66.04"/>
-<pinref part="C9" gate="G$1" pin="1"/>
+<pinref part="C10" gate="G$1" pin="1"/>
 <wire x1="368.3" y1="66.04" x2="375.92" y2="66.04" width="0.1524" layer="91"/>
 <wire x1="375.92" y1="66.04" x2="375.92" y2="63.5" width="0.1524" layer="91"/>
 <junction x="368.3" y="66.04"/>
 <wire x1="375.92" y1="66.04" x2="383.54" y2="66.04" width="0.1524" layer="91"/>
 <wire x1="383.54" y1="66.04" x2="383.54" y2="63.5" width="0.1524" layer="91"/>
 <junction x="375.92" y="66.04"/>
-<pinref part="C8" gate="G$1" pin="1"/>
+<pinref part="C9" gate="G$1" pin="1"/>
 <wire x1="383.54" y1="66.04" x2="383.54" y2="63.5" width="0.1524" layer="91"/>
 <junction x="383.54" y="66.04"/>
 <pinref part="SUPPLY8" gate="G$1" pin="3.3V"/>
 <junction x="337.82" y="66.04"/>
+<pinref part="C8" gate="G$1" pin="1"/>
+<wire x1="391.16" y1="63.5" x2="391.16" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="391.16" y1="66.04" x2="383.54" y2="66.04" width="0.1524" layer="91"/>
+<wire x1="337.82" y1="66.04" x2="330.2" y2="66.04" width="0.1524" layer="91"/>
+<pinref part="C16" gate="G$1" pin="1"/>
+<wire x1="330.2" y1="66.04" x2="330.2" y2="63.5" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="U7" gate="A" pin="VOUT"/>
@@ -6573,11 +6587,11 @@ For Teensy</text>
 <wire x1="83.82" y1="38.1" x2="83.82" y2="40.64" width="0.1524" layer="91"/>
 <wire x1="83.82" y1="40.64" x2="83.82" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="83.82" y1="45.72" x2="86.36" y2="45.72" width="0.1524" layer="91"/>
-<pinref part="C19" gate="G$1" pin="1"/>
+<pinref part="C21" gate="G$1" pin="1"/>
 <wire x1="86.36" y1="45.72" x2="86.36" y2="43.18" width="0.1524" layer="91"/>
 <wire x1="86.36" y1="45.72" x2="96.52" y2="45.72" width="0.1524" layer="91"/>
 <junction x="86.36" y="45.72"/>
-<pinref part="C18" gate="G$1" pin="1"/>
+<pinref part="C20" gate="G$1" pin="1"/>
 <wire x1="96.52" y1="45.72" x2="96.52" y2="43.18" width="0.1524" layer="91"/>
 <wire x1="96.52" y1="45.72" x2="106.68" y2="45.72" width="0.1524" layer="91"/>
 <junction x="96.52" y="45.72"/>
@@ -6605,37 +6619,37 @@ For Teensy</text>
 <wire x1="406.4" y1="114.3" x2="401.32" y2="114.3" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="TOF_3" gate="G$1" pin="6"/>
+<pinref part="TOF_1" gate="G$1" pin="6"/>
 <wire x1="41.91" y1="220.98" x2="58.42" y2="220.98" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="220.98" x2="58.42" y2="228.6" width="0.1524" layer="91"/>
 <pinref part="SUPPLY3" gate="G$1" pin="3.3V"/>
 </segment>
 <segment>
-<pinref part="TOF_1" gate="G$1" pin="6"/>
+<pinref part="TOF_2" gate="G$1" pin="6"/>
 <wire x1="85.09" y1="220.98" x2="101.6" y2="220.98" width="0.1524" layer="91"/>
 <wire x1="101.6" y1="220.98" x2="101.6" y2="228.6" width="0.1524" layer="91"/>
 <pinref part="SUPPLY4" gate="G$1" pin="3.3V"/>
 </segment>
 <segment>
-<pinref part="TOF_2" gate="G$1" pin="6"/>
+<pinref part="TOF_4" gate="G$1" pin="6"/>
 <wire x1="85.09" y1="185.42" x2="101.6" y2="185.42" width="0.1524" layer="91"/>
 <wire x1="101.6" y1="185.42" x2="101.6" y2="193.04" width="0.1524" layer="91"/>
 <pinref part="SUPPLY5" gate="G$1" pin="3.3V"/>
 </segment>
 <segment>
-<pinref part="TOF_5" gate="G$1" pin="6"/>
+<pinref part="TOF_3" gate="G$1" pin="6"/>
 <wire x1="41.91" y1="185.42" x2="58.42" y2="185.42" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="185.42" x2="58.42" y2="193.04" width="0.1524" layer="91"/>
 <pinref part="SUPPLY6" gate="G$1" pin="3.3V"/>
 </segment>
 <segment>
-<pinref part="TOF_6" gate="G$1" pin="6"/>
+<pinref part="TOF_5" gate="G$1" pin="6"/>
 <wire x1="41.91" y1="149.86" x2="58.42" y2="149.86" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="149.86" x2="58.42" y2="157.48" width="0.1524" layer="91"/>
 <pinref part="SUPPLY7" gate="G$1" pin="3.3V"/>
 </segment>
 <segment>
-<pinref part="TOF_4" gate="G$1" pin="6"/>
+<pinref part="TOF_6" gate="G$1" pin="6"/>
 <wire x1="85.09" y1="149.86" x2="101.6" y2="149.86" width="0.1524" layer="91"/>
 <wire x1="101.6" y1="149.86" x2="101.6" y2="157.48" width="0.1524" layer="91"/>
 <pinref part="SUPPLY9" gate="G$1" pin="3.3V"/>
@@ -6676,32 +6690,32 @@ For Teensy</text>
 <label x="160.02" y="149.86" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="TOF_3" gate="G$1" pin="1"/>
+<pinref part="TOF_1" gate="G$1" pin="1"/>
 <wire x1="34.29" y1="226.06" x2="27.94" y2="226.06" width="0.1524" layer="91"/>
 <label x="27.94" y="226.06" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="TOF_5" gate="G$1" pin="1"/>
+<pinref part="TOF_3" gate="G$1" pin="1"/>
 <wire x1="34.29" y1="190.5" x2="27.94" y2="190.5" width="0.1524" layer="91"/>
 <label x="27.94" y="190.5" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="TOF_2" gate="G$1" pin="1"/>
+<pinref part="TOF_4" gate="G$1" pin="1"/>
 <wire x1="77.47" y1="190.5" x2="71.12" y2="190.5" width="0.1524" layer="91"/>
 <label x="71.12" y="190.5" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="TOF_1" gate="G$1" pin="1"/>
+<pinref part="TOF_2" gate="G$1" pin="1"/>
 <wire x1="77.47" y1="226.06" x2="71.12" y2="226.06" width="0.1524" layer="91"/>
 <label x="71.12" y="226.06" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="TOF_6" gate="G$1" pin="1"/>
+<pinref part="TOF_5" gate="G$1" pin="1"/>
 <wire x1="34.29" y1="154.94" x2="27.94" y2="154.94" width="0.1524" layer="91"/>
 <label x="27.94" y="154.94" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="TOF_4" gate="G$1" pin="1"/>
+<pinref part="TOF_6" gate="G$1" pin="1"/>
 <wire x1="77.47" y1="154.94" x2="71.12" y2="154.94" width="0.1524" layer="91"/>
 <label x="71.12" y="154.94" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -6713,32 +6727,32 @@ For Teensy</text>
 <label x="160.02" y="152.4" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="TOF_3" gate="G$1" pin="2"/>
+<pinref part="TOF_1" gate="G$1" pin="2"/>
 <wire x1="41.91" y1="226.06" x2="48.26" y2="226.06" width="0.1524" layer="91"/>
 <label x="48.26" y="226.06" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="TOF_1" gate="G$1" pin="2"/>
+<pinref part="TOF_2" gate="G$1" pin="2"/>
 <wire x1="85.09" y1="226.06" x2="91.44" y2="226.06" width="0.1524" layer="91"/>
 <label x="91.44" y="226.06" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="TOF_5" gate="G$1" pin="2"/>
+<pinref part="TOF_3" gate="G$1" pin="2"/>
 <wire x1="41.91" y1="190.5" x2="48.26" y2="190.5" width="0.1524" layer="91"/>
 <label x="48.26" y="190.5" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="TOF_2" gate="G$1" pin="2"/>
+<pinref part="TOF_4" gate="G$1" pin="2"/>
 <wire x1="85.09" y1="190.5" x2="91.44" y2="190.5" width="0.1524" layer="91"/>
 <label x="91.44" y="190.5" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="TOF_6" gate="G$1" pin="2"/>
+<pinref part="TOF_5" gate="G$1" pin="2"/>
 <wire x1="41.91" y1="154.94" x2="48.26" y2="154.94" width="0.1524" layer="91"/>
 <label x="48.26" y="154.94" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="TOF_4" gate="G$1" pin="2"/>
+<pinref part="TOF_6" gate="G$1" pin="2"/>
 <wire x1="85.09" y1="154.94" x2="91.44" y2="154.94" width="0.1524" layer="91"/>
 <label x="91.44" y="154.94" size="1.778" layer="95" xref="yes"/>
 </segment>
@@ -6819,38 +6833,39 @@ For Teensy</text>
 <pinref part="GND25" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="C14" gate="G$1" pin="2"/>
+<pinref part="C15" gate="G$1" pin="2"/>
 <wire x1="337.82" y1="55.88" x2="337.82" y2="53.34" width="0.1524" layer="91"/>
-<pinref part="C13" gate="G$1" pin="2"/>
+<pinref part="C14" gate="G$1" pin="2"/>
 <wire x1="337.82" y1="53.34" x2="345.44" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="345.44" y1="53.34" x2="345.44" y2="55.88" width="0.1524" layer="91"/>
-<pinref part="C12" gate="G$1" pin="2"/>
+<pinref part="C13" gate="G$1" pin="2"/>
 <wire x1="345.44" y1="53.34" x2="353.06" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="353.06" y1="53.34" x2="353.06" y2="55.88" width="0.1524" layer="91"/>
 <junction x="345.44" y="53.34"/>
-<pinref part="C11" gate="G$1" pin="2"/>
+<pinref part="C12" gate="G$1" pin="2"/>
 <wire x1="353.06" y1="53.34" x2="360.68" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="360.68" y1="53.34" x2="360.68" y2="55.88" width="0.1524" layer="91"/>
 <junction x="353.06" y="53.34"/>
-<pinref part="C10" gate="G$1" pin="2"/>
+<pinref part="C11" gate="G$1" pin="2"/>
 <wire x1="360.68" y1="53.34" x2="368.3" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="368.3" y1="53.34" x2="368.3" y2="55.88" width="0.1524" layer="91"/>
 <junction x="360.68" y="53.34"/>
-<pinref part="C9" gate="G$1" pin="2"/>
+<pinref part="C10" gate="G$1" pin="2"/>
 <wire x1="368.3" y1="53.34" x2="375.92" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="375.92" y1="53.34" x2="375.92" y2="55.88" width="0.1524" layer="91"/>
 <junction x="368.3" y="53.34"/>
 <wire x1="375.92" y1="53.34" x2="383.54" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="383.54" y1="53.34" x2="383.54" y2="55.88" width="0.1524" layer="91"/>
 <junction x="375.92" y="53.34"/>
-<pinref part="C8" gate="G$1" pin="2"/>
+<pinref part="C9" gate="G$1" pin="2"/>
 <wire x1="383.54" y1="53.34" x2="383.54" y2="55.88" width="0.1524" layer="91"/>
 <junction x="383.54" y="53.34"/>
 <pinref part="GND26" gate="1" pin="GND"/>
 <junction x="337.82" y="53.34"/>
-<wire x1="383.54" y1="53.34" x2="398.78" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="383.54" y1="53.34" x2="391.16" y2="53.34" width="0.1524" layer="91"/>
 <junction x="383.54" y="53.34"/>
 <pinref part="C7" gate="G$1" pin="2"/>
+<wire x1="391.16" y1="53.34" x2="398.78" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="398.78" y1="53.34" x2="398.78" y2="55.88" width="0.1524" layer="91"/>
 <wire x1="398.78" y1="53.34" x2="406.4" y2="53.34" width="0.1524" layer="91"/>
 <junction x="398.78" y="53.34"/>
@@ -6860,24 +6875,30 @@ For Teensy</text>
 <junction x="406.4" y="53.34"/>
 <pinref part="C4" gate="G$1" pin="2"/>
 <wire x1="414.02" y1="53.34" x2="414.02" y2="55.88" width="0.1524" layer="91"/>
+<pinref part="C8" gate="G$1" pin="2"/>
+<wire x1="391.16" y1="55.88" x2="391.16" y2="53.34" width="0.1524" layer="91"/>
+<junction x="391.16" y="53.34"/>
+<wire x1="337.82" y1="53.34" x2="330.2" y2="53.34" width="0.1524" layer="91"/>
+<pinref part="C16" gate="G$1" pin="2"/>
+<wire x1="330.2" y1="53.34" x2="330.2" y2="55.88" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="U7" gate="A" pin="GND"/>
 <wire x1="30.48" y1="38.1" x2="30.48" y2="30.48" width="0.1524" layer="91"/>
 <wire x1="30.48" y1="30.48" x2="20.32" y2="30.48" width="0.1524" layer="91"/>
-<pinref part="C20" gate="G$1" pin="2"/>
+<pinref part="C22" gate="G$1" pin="2"/>
 <wire x1="20.32" y1="30.48" x2="20.32" y2="35.56" width="0.1524" layer="91"/>
 <wire x1="30.48" y1="30.48" x2="86.36" y2="30.48" width="0.1524" layer="91"/>
 <junction x="30.48" y="30.48"/>
-<pinref part="C19" gate="G$1" pin="2"/>
+<pinref part="C21" gate="G$1" pin="2"/>
 <wire x1="86.36" y1="30.48" x2="86.36" y2="35.56" width="0.1524" layer="91"/>
 <wire x1="86.36" y1="30.48" x2="96.52" y2="30.48" width="0.1524" layer="91"/>
 <junction x="86.36" y="30.48"/>
-<pinref part="C18" gate="G$1" pin="2"/>
+<pinref part="C20" gate="G$1" pin="2"/>
 <wire x1="96.52" y1="30.48" x2="96.52" y2="35.56" width="0.1524" layer="91"/>
 <wire x1="96.52" y1="30.48" x2="106.68" y2="30.48" width="0.1524" layer="91"/>
 <junction x="96.52" y="30.48"/>
-<pinref part="C17" gate="G$1" pin="2"/>
+<pinref part="C19" gate="G$1" pin="2"/>
 <wire x1="106.68" y1="30.48" x2="162.56" y2="30.48" width="0.1524" layer="91"/>
 <wire x1="162.56" y1="30.48" x2="162.56" y2="35.56" width="0.1524" layer="91"/>
 <pinref part="U6" gate="A" pin="GND"/>
@@ -6925,37 +6946,37 @@ For Teensy</text>
 <pinref part="GND27" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="TOF_3" gate="G$1" pin="5"/>
+<pinref part="TOF_1" gate="G$1" pin="5"/>
 <wire x1="34.29" y1="220.98" x2="27.94" y2="220.98" width="0.1524" layer="91"/>
 <wire x1="27.94" y1="220.98" x2="27.94" y2="218.44" width="0.1524" layer="91"/>
 <pinref part="GND1" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="TOF_1" gate="G$1" pin="5"/>
+<pinref part="TOF_2" gate="G$1" pin="5"/>
 <wire x1="77.47" y1="220.98" x2="71.12" y2="220.98" width="0.1524" layer="91"/>
 <wire x1="71.12" y1="220.98" x2="71.12" y2="218.44" width="0.1524" layer="91"/>
 <pinref part="GND4" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="TOF_2" gate="G$1" pin="5"/>
+<pinref part="TOF_4" gate="G$1" pin="5"/>
 <wire x1="77.47" y1="185.42" x2="71.12" y2="185.42" width="0.1524" layer="91"/>
 <wire x1="71.12" y1="185.42" x2="71.12" y2="182.88" width="0.1524" layer="91"/>
 <pinref part="GND5" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="TOF_5" gate="G$1" pin="5"/>
+<pinref part="TOF_3" gate="G$1" pin="5"/>
 <wire x1="34.29" y1="185.42" x2="27.94" y2="185.42" width="0.1524" layer="91"/>
 <wire x1="27.94" y1="185.42" x2="27.94" y2="182.88" width="0.1524" layer="91"/>
 <pinref part="GND6" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="TOF_6" gate="G$1" pin="5"/>
+<pinref part="TOF_5" gate="G$1" pin="5"/>
 <wire x1="34.29" y1="149.86" x2="27.94" y2="149.86" width="0.1524" layer="91"/>
 <wire x1="27.94" y1="149.86" x2="27.94" y2="147.32" width="0.1524" layer="91"/>
 <pinref part="GND7" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="TOF_4" gate="G$1" pin="5"/>
+<pinref part="TOF_6" gate="G$1" pin="5"/>
 <wire x1="77.47" y1="149.86" x2="71.12" y2="149.86" width="0.1524" layer="91"/>
 <wire x1="71.12" y1="149.86" x2="71.12" y2="147.32" width="0.1524" layer="91"/>
 <pinref part="GND8" gate="1" pin="GND"/>
@@ -6988,11 +7009,11 @@ For Teensy</text>
 <pinref part="U5" gate="G$1" pin="GND"/>
 <pinref part="GND13" gate="1" pin="GND"/>
 <wire x1="144.78" y1="83.82" x2="144.78" y2="86.36" width="0.1524" layer="91"/>
-<pinref part="C15" gate="G$1" pin="2"/>
+<pinref part="C17" gate="G$1" pin="2"/>
 <wire x1="175.26" y1="88.9" x2="175.26" y2="86.36" width="0.1524" layer="91"/>
 <wire x1="175.26" y1="86.36" x2="162.56" y2="86.36" width="0.1524" layer="91"/>
 <junction x="144.78" y="86.36"/>
-<pinref part="C16" gate="G$1" pin="2"/>
+<pinref part="C18" gate="G$1" pin="2"/>
 <wire x1="162.56" y1="86.36" x2="144.78" y2="86.36" width="0.1524" layer="91"/>
 <wire x1="162.56" y1="99.06" x2="162.56" y2="86.36" width="0.1524" layer="91"/>
 <junction x="162.56" y="86.36"/>
@@ -7013,7 +7034,7 @@ For Teensy</text>
 <label x="160.02" y="236.22" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="TOF_3" gate="G$1" pin="3"/>
+<pinref part="TOF_1" gate="G$1" pin="3"/>
 <wire x1="34.29" y1="223.52" x2="27.94" y2="223.52" width="0.1524" layer="91"/>
 <label x="27.94" y="223.52" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -7025,7 +7046,7 @@ For Teensy</text>
 <label x="160.02" y="233.68" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="TOF_1" gate="G$1" pin="3"/>
+<pinref part="TOF_2" gate="G$1" pin="3"/>
 <wire x1="77.47" y1="223.52" x2="71.12" y2="223.52" width="0.1524" layer="91"/>
 <label x="71.12" y="223.52" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -7037,7 +7058,7 @@ For Teensy</text>
 <label x="160.02" y="231.14" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="TOF_5" gate="G$1" pin="3"/>
+<pinref part="TOF_3" gate="G$1" pin="3"/>
 <wire x1="34.29" y1="187.96" x2="27.94" y2="187.96" width="0.1524" layer="91"/>
 <label x="27.94" y="187.96" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -7049,7 +7070,7 @@ For Teensy</text>
 <label x="160.02" y="160.02" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="TOF_2" gate="G$1" pin="3"/>
+<pinref part="TOF_4" gate="G$1" pin="3"/>
 <wire x1="77.47" y1="187.96" x2="71.12" y2="187.96" width="0.1524" layer="91"/>
 <label x="71.12" y="187.96" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -7061,7 +7082,7 @@ For Teensy</text>
 <label x="160.02" y="157.48" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="TOF_6" gate="G$1" pin="3"/>
+<pinref part="TOF_5" gate="G$1" pin="3"/>
 <wire x1="34.29" y1="152.4" x2="27.94" y2="152.4" width="0.1524" layer="91"/>
 <label x="27.94" y="152.4" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -7073,7 +7094,7 @@ For Teensy</text>
 <label x="160.02" y="154.94" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="TOF_4" gate="G$1" pin="3"/>
+<pinref part="TOF_6" gate="G$1" pin="3"/>
 <wire x1="77.47" y1="152.4" x2="71.12" y2="152.4" width="0.1524" layer="91"/>
 <label x="71.12" y="152.4" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -7374,7 +7395,7 @@ For Teensy</text>
 <wire x1="160.02" y1="40.64" x2="160.02" y2="43.18" width="0.1524" layer="91"/>
 <wire x1="160.02" y1="43.18" x2="160.02" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="160.02" y1="45.72" x2="162.56" y2="45.72" width="0.1524" layer="91"/>
-<pinref part="C17" gate="G$1" pin="1"/>
+<pinref part="C19" gate="G$1" pin="1"/>
 <wire x1="162.56" y1="45.72" x2="162.56" y2="43.18" width="0.1524" layer="91"/>
 <pinref part="SUPPLY22" gate="G$1" pin="1.8V"/>
 <wire x1="162.56" y1="48.26" x2="162.56" y2="45.72" width="0.1524" layer="91"/>
@@ -7466,7 +7487,7 @@ For Teensy</text>
 <label x="175.26" y="96.52" size="1.778" layer="95" xref="yes"/>
 <pinref part="R21" gate="G$1" pin="1"/>
 <wire x1="160.02" y1="96.52" x2="175.26" y2="96.52" width="0.1524" layer="91"/>
-<pinref part="C15" gate="G$1" pin="1"/>
+<pinref part="C17" gate="G$1" pin="1"/>
 <junction x="175.26" y="96.52"/>
 </segment>
 <segment>
@@ -7481,7 +7502,7 @@ For Teensy</text>
 <wire x1="160.02" y1="106.68" x2="162.56" y2="106.68" width="0.1524" layer="91"/>
 <label x="162.56" y="106.68" size="1.778" layer="95" xref="yes"/>
 <pinref part="R22" gate="G$1" pin="1"/>
-<pinref part="C16" gate="G$1" pin="1"/>
+<pinref part="C18" gate="G$1" pin="1"/>
 <junction x="162.56" y="106.68"/>
 </segment>
 <segment>
@@ -7573,9 +7594,9 @@ For Teensy</text>
 <label x="251.46" y="53.34" size="1.778" layer="95" rot="R90" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U2" gate="G$1" pin="13/SCK0/LED"/>
-<wire x1="165.1" y1="203.2" x2="160.02" y2="203.2" width="0.1524" layer="91"/>
-<label x="160.02" y="203.2" size="1.778" layer="95" rot="R180" xref="yes"/>
+<label x="160.02" y="200.66" size="1.778" layer="95" rot="R180" xref="yes"/>
+<pinref part="U2" gate="G$1" pin="14/A0/PWM"/>
+<wire x1="165.1" y1="200.66" x2="160.02" y2="200.66" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="L_MOT+" class="0">
