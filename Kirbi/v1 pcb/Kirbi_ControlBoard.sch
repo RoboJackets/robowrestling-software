@@ -5889,7 +5889,7 @@ by exp-lbrs.ulp</description>
 <part name="GND8" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="BATT" library="Kirbi_ControlBoard" deviceset="TE_02X01_3.96MM" device=""/>
 <part name="GND14" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
-<part name="J1" library="Kirbi_ControlBoard" deviceset="MOLEX_1.25MM_4PIN_90" device=""/>
+<part name="ESC" library="Kirbi_ControlBoard" deviceset="MOLEX_1.25MM_4PIN_90" device=""/>
 <part name="C8" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="1uF"/>
 <part name="C7" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="10uF"/>
 <part name="C16" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="1uF"/>
@@ -5928,9 +5928,7 @@ by exp-lbrs.ulp</description>
 <part name="+3V6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="U4" library="Gucci_ControlBoard" deviceset="MAX4173-SOT-23" device=""/>
 <part name="U3" library="Gucci_ControlBoard" deviceset="MAX4173-SOT-23" device=""/>
-<part name="P+17" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="GND13" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
-<part name="P+18" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="GND15" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="L_MOT" library="pinhead" library_urn="urn:adsk.eagle:library:325" deviceset="PINHD-1X2" device="" package3d_urn="urn:adsk.eagle:package:22435/2"/>
 <part name="R_MOT" library="pinhead" library_urn="urn:adsk.eagle:library:325" deviceset="PINHD-1X2" device="" package3d_urn="urn:adsk.eagle:package:22435/2"/>
@@ -5950,6 +5948,8 @@ by exp-lbrs.ulp</description>
 <part name="C4" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="C12" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="C13" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
+<part name="+3V11" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
+<part name="+3V12" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -6272,7 +6272,7 @@ For Teensy</text>
 <instance part="GND14" gate="1" x="307.34" y="83.82" smashed="yes">
 <attribute name="VALUE" x="307.34" y="83.566" size="1.778" layer="96" align="top-center"/>
 </instance>
-<instance part="J1" gate="G$1" x="281.94" y="137.16" rot="MR180"/>
+<instance part="ESC" gate="G$1" x="281.94" y="137.16" rot="MR180"/>
 <instance part="C8" gate="G$1" x="317.5" y="134.62" smashed="yes">
 <attribute name="NAME" x="319.024" y="137.541" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="319.024" y="132.461" size="1.778" layer="96" font="vector"/>
@@ -6362,11 +6362,9 @@ For Teensy</text>
 <instance part="+3V6" gate="G$1" x="195.58" y="109.22"/>
 <instance part="U4" gate="G$1" x="193.04" y="53.34"/>
 <instance part="U3" gate="G$1" x="233.68" y="53.34"/>
-<instance part="P+17" gate="1" x="193.04" y="68.58"/>
 <instance part="GND13" gate="1" x="193.04" y="38.1" smashed="yes">
 <attribute name="VALUE" x="193.04" y="37.846" size="1.778" layer="96" align="top-center"/>
 </instance>
-<instance part="P+18" gate="1" x="233.68" y="68.58"/>
 <instance part="GND15" gate="1" x="233.68" y="38.1" smashed="yes">
 <attribute name="VALUE" x="233.68" y="37.846" size="1.778" layer="96" align="top-center"/>
 </instance>
@@ -6418,6 +6416,8 @@ For Teensy</text>
 <attribute name="NAME" x="367.284" y="61.341" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="367.284" y="56.261" size="1.778" layer="96" font="vector"/>
 </instance>
+<instance part="+3V11" gate="G$1" x="193.04" y="68.58"/>
+<instance part="+3V12" gate="G$1" x="233.68" y="68.58"/>
 </instances>
 <busses>
 </busses>
@@ -6507,6 +6507,14 @@ For Teensy</text>
 <wire x1="212.09" y1="100.33" x2="195.58" y2="100.33" width="0.1524" layer="91"/>
 <wire x1="195.58" y1="100.33" x2="195.58" y2="106.68" width="0.1524" layer="91"/>
 <pinref part="+3V6" gate="G$1" pin="+3V3"/>
+</segment>
+<segment>
+<pinref part="+3V11" gate="G$1" pin="+3V3"/>
+<pinref part="U4" gate="G$1" pin="VCC"/>
+</segment>
+<segment>
+<pinref part="+3V12" gate="G$1" pin="+3V3"/>
+<pinref part="U3" gate="G$1" pin="VCC"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -6735,7 +6743,7 @@ For Teensy</text>
 <pinref part="GND16" gate="1" pin="GND"/>
 <wire x1="317.5" y1="129.54" x2="327.66" y2="129.54" width="0.1524" layer="91"/>
 <junction x="317.5" y="129.54"/>
-<pinref part="J1" gate="G$1" pin="4"/>
+<pinref part="ESC" gate="G$1" pin="4"/>
 <wire x1="287.02" y1="132.08" x2="309.88" y2="132.08" width="0.1524" layer="91"/>
 <wire x1="309.88" y1="132.08" x2="309.88" y2="129.54" width="0.1524" layer="91"/>
 <wire x1="317.5" y1="129.54" x2="309.88" y2="129.54" width="0.1524" layer="91"/>
@@ -7196,7 +7204,7 @@ For Teensy</text>
 <pinref part="P+16" gate="1" pin="+5V"/>
 <junction x="317.5" y="142.24"/>
 <wire x1="309.88" y1="139.7" x2="309.88" y2="142.24" width="0.1524" layer="91"/>
-<pinref part="J1" gate="G$1" pin="3"/>
+<pinref part="ESC" gate="G$1" pin="3"/>
 <wire x1="287.02" y1="134.62" x2="292.1" y2="134.62" width="0.1524" layer="91"/>
 <wire x1="292.1" y1="134.62" x2="309.88" y2="134.62" width="0.1524" layer="91"/>
 <wire x1="309.88" y1="134.62" x2="309.88" y2="139.7" width="0.1524" layer="91"/>
@@ -7247,14 +7255,6 @@ For Teensy</text>
 <segment>
 <pinref part="U5" gate="G$1" pin="VCC"/>
 <pinref part="P+7" gate="1" pin="+5V"/>
-</segment>
-<segment>
-<pinref part="U4" gate="G$1" pin="VCC"/>
-<pinref part="P+17" gate="1" pin="+5V"/>
-</segment>
-<segment>
-<pinref part="U3" gate="G$1" pin="VCC"/>
-<pinref part="P+18" gate="1" pin="+5V"/>
 </segment>
 </net>
 <net name="24V" class="0">
@@ -7438,7 +7438,7 @@ For Teensy</text>
 </net>
 <net name="S1/TX" class="0">
 <segment>
-<pinref part="J1" gate="G$1" pin="2"/>
+<pinref part="ESC" gate="G$1" pin="2"/>
 <wire x1="287.02" y1="137.16" x2="292.1" y2="137.16" width="0.1524" layer="91"/>
 <label x="292.1" y="137.16" size="1.778" layer="95" xref="yes"/>
 </segment>
@@ -7450,7 +7450,7 @@ For Teensy</text>
 </net>
 <net name="S2" class="0">
 <segment>
-<pinref part="J1" gate="G$1" pin="1"/>
+<pinref part="ESC" gate="G$1" pin="1"/>
 <wire x1="287.02" y1="139.7" x2="292.1" y2="139.7" width="0.1524" layer="91"/>
 <label x="292.1" y="139.7" size="1.778" layer="95" xref="yes"/>
 </segment>

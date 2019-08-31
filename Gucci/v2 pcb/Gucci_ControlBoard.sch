@@ -5882,8 +5882,8 @@ Warning: This is the KIT version of this package. This package has a smaller dia
 <part name="C11" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="C10" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="C9" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
-<part name="C7" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="1uF"/>
-<part name="C5" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="1uF"/>
+<part name="C7" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="10uF"/>
+<part name="C5" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="10uF"/>
 <part name="GND26" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="SUPPLY8" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device=""/>
 <part name="SUPPLY25" library="SparkFun-PowerSymbols" deviceset="5V" device=""/>
@@ -5961,10 +5961,10 @@ Warning: This is the KIT version of this package. This package has a smaller dia
 <part name="U3" library="Gucci_ControlBoard" deviceset="MAX4173-SOT-23" device=""/>
 <part name="GND28" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="GND29" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
-<part name="SUPPLY30" library="SparkFun-PowerSymbols" deviceset="5V" device=""/>
-<part name="SUPPLY31" library="SparkFun-PowerSymbols" deviceset="5V" device=""/>
 <part name="C8" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="C16" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
+<part name="SUPPLY30" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device=""/>
+<part name="SUPPLY31" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -6433,12 +6433,6 @@ For Teensy</text>
 <instance part="GND29" gate="1" x="233.68" y="38.1" smashed="yes">
 <attribute name="VALUE" x="233.68" y="37.846" size="1.778" layer="96" align="top-center"/>
 </instance>
-<instance part="SUPPLY30" gate="G$1" x="233.68" y="66.04" smashed="yes">
-<attribute name="VALUE" x="233.68" y="68.834" size="1.778" layer="96" align="bottom-center"/>
-</instance>
-<instance part="SUPPLY31" gate="G$1" x="193.04" y="66.04" smashed="yes">
-<attribute name="VALUE" x="193.04" y="68.834" size="1.778" layer="96" align="bottom-center"/>
-</instance>
 <instance part="C8" gate="G$1" x="391.16" y="58.42" smashed="yes">
 <attribute name="NAME" x="392.684" y="61.341" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="392.684" y="56.261" size="1.778" layer="96" font="vector"/>
@@ -6446,6 +6440,12 @@ For Teensy</text>
 <instance part="C16" gate="G$1" x="330.2" y="58.42" smashed="yes">
 <attribute name="NAME" x="331.724" y="61.341" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="331.724" y="56.261" size="1.778" layer="96" font="vector"/>
+</instance>
+<instance part="SUPPLY30" gate="G$1" x="193.04" y="66.04" smashed="yes">
+<attribute name="VALUE" x="193.04" y="68.834" size="1.778" layer="96" align="bottom-center"/>
+</instance>
+<instance part="SUPPLY31" gate="G$1" x="233.68" y="66.04" smashed="yes">
+<attribute name="VALUE" x="233.68" y="68.834" size="1.778" layer="96" align="bottom-center"/>
 </instance>
 </instances>
 <busses>
@@ -6527,14 +6527,6 @@ For Teensy</text>
 <segment>
 <pinref part="U5" gate="G$1" pin="VCC"/>
 <pinref part="SUPPLY14" gate="G$1" pin="5V"/>
-</segment>
-<segment>
-<pinref part="U3" gate="G$1" pin="VCC"/>
-<pinref part="SUPPLY30" gate="G$1" pin="5V"/>
-</segment>
-<segment>
-<pinref part="U4" gate="G$1" pin="VCC"/>
-<pinref part="SUPPLY31" gate="G$1" pin="5V"/>
 </segment>
 </net>
 <net name="3V3" class="0">
@@ -6681,6 +6673,14 @@ For Teensy</text>
 <pinref part="R21" gate="G$1" pin="2"/>
 <pinref part="SUPPLY29" gate="G$1" pin="3.3V"/>
 <wire x1="175.26" y1="109.22" x2="175.26" y2="106.68" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="SUPPLY30" gate="G$1" pin="3.3V"/>
+<pinref part="U4" gate="G$1" pin="VCC"/>
+</segment>
+<segment>
+<pinref part="SUPPLY31" gate="G$1" pin="3.3V"/>
+<pinref part="U3" gate="G$1" pin="VCC"/>
 </segment>
 </net>
 <net name="SDA0" class="0">
