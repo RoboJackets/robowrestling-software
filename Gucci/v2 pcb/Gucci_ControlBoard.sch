@@ -6529,7 +6529,7 @@ For Teensy</text>
 <pinref part="SUPPLY14" gate="G$1" pin="5V"/>
 </segment>
 </net>
-<net name="3V3" class="0">
+<net name="3.3V" class="0">
 <segment>
 <pinref part="D2" gate="G$1" pin="A"/>
 <wire x1="271.78" y1="45.72" x2="266.7" y2="45.72" width="0.1524" layer="91"/>
@@ -6562,7 +6562,6 @@ For Teensy</text>
 <wire x1="383.54" y1="66.04" x2="383.54" y2="63.5" width="0.1524" layer="91"/>
 <junction x="375.92" y="66.04"/>
 <pinref part="C9" gate="G$1" pin="1"/>
-<wire x1="383.54" y1="66.04" x2="383.54" y2="63.5" width="0.1524" layer="91"/>
 <junction x="383.54" y="66.04"/>
 <pinref part="SUPPLY8" gate="G$1" pin="3.3V"/>
 <junction x="337.82" y="66.04"/>
@@ -6858,7 +6857,6 @@ For Teensy</text>
 <wire x1="383.54" y1="53.34" x2="383.54" y2="55.88" width="0.1524" layer="91"/>
 <junction x="375.92" y="53.34"/>
 <pinref part="C9" gate="G$1" pin="2"/>
-<wire x1="383.54" y1="53.34" x2="383.54" y2="55.88" width="0.1524" layer="91"/>
 <junction x="383.54" y="53.34"/>
 <pinref part="GND26" gate="1" pin="GND"/>
 <junction x="337.82" y="53.34"/>
@@ -7651,17 +7649,7 @@ For Teensy</text>
 </sheet>
 </sheets>
 <errors>
-<approved hash="104,1,218.44,236.22,U1,VIN,5V,,,"/>
-<approved hash="104,1,218.44,193.04,U1,AGND,GND,,,"/>
-<approved hash="104,1,396.24,137.16,U4,VDDIO,1.8V,,,"/>
-<approved hash="104,1,396.24,139.7,U4,VDD,1.8V,,,"/>
-<approved hash="202,1,355.6,127,U4,AUX_DA,,,,"/>
-<approved hash="202,1,355.6,129.54,U4,AUX_CL,,,,"/>
 <approved hash="208,1,157.48,38.1,1.8V,out,,,,"/>
-<approved hash="208,1,398.78,149.86,1.8V,sup,,,,"/>
-<approved hash="208,1,132.08,246.38,1.8V,sup,,,,"/>
-<approved hash="113,1,285.708,214.856,J13,,,,,"/>
-<approved hash="113,1,285.708,189.456,J14,,,,,"/>
 </errors>
 </schematic>
 </drawing>

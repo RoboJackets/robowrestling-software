@@ -6422,7 +6422,7 @@ For Teensy</text>
 <busses>
 </busses>
 <nets>
-<net name="3V3" class="0">
+<net name="+3.3V" class="0">
 <segment>
 <pinref part="C18" gate="G$1" pin="1"/>
 <wire x1="337.82" y1="66.04" x2="337.82" y2="63.5" width="0.1524" layer="91"/>

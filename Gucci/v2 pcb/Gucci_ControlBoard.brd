@@ -8074,7 +8074,7 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="20" y="43.635" size="1.016" layer="21" font="vector" ratio="20" rot="R180" align="top-center"/>
 </element>
 <element name="C15" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF" x="-11" y="27" smashed="yes">
-<attribute name="NAME" x="-11" y="27.762" size="1.016" layer="25" font="vector" ratio="20" align="bottom-center"/>
+<attribute name="NAME" x="-11" y="27.962" size="1.016" layer="25" font="vector" ratio="20" align="bottom-center"/>
 <attribute name="PROD_ID" value="CAP-00810" x="-11" y="27" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="-11" y="26.238" size="0.8128" layer="27" font="vector" ratio="20" align="top-center"/>
 </element>
@@ -8084,22 +8084,22 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="5.999996875" y="14.762" size="0.8128" layer="27" font="vector" ratio="20" rot="R180" align="top-center"/>
 </element>
 <element name="C13" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF" x="5" y="3" smashed="yes" rot="R90">
-<attribute name="NAME" x="4.238" y="3" size="1.016" layer="25" font="vector" ratio="20" rot="R90" align="bottom-center"/>
+<attribute name="NAME" x="3.838" y="3" size="1.016" layer="25" font="vector" ratio="20" rot="R90" align="bottom-center"/>
 <attribute name="PROD_ID" value="CAP-00810" x="5" y="3" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="VALUE" x="5.762" y="3" size="0.8128" layer="27" font="vector" ratio="20" rot="R90" align="top-center"/>
 </element>
 <element name="C12" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF" x="23" y="3" smashed="yes" rot="R90">
-<attribute name="NAME" x="22.238" y="3" size="1.016" layer="25" font="vector" ratio="20" rot="R90" align="bottom-center"/>
+<attribute name="NAME" x="21.838" y="3" size="1.016" layer="25" font="vector" ratio="20" rot="R90" align="bottom-center"/>
 <attribute name="PROD_ID" value="CAP-00810" x="23" y="3" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="VALUE" x="23.762" y="3" size="0.8128" layer="27" font="vector" ratio="20" rot="R90" align="top-center"/>
 </element>
 <element name="C11" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF" x="39.5" y="5.7" smashed="yes" rot="R135">
-<attribute name="NAME" x="38.9611875" y="5.161184375" size="1.016" layer="25" font="vector" ratio="20" rot="R135" align="bottom-center"/>
+<attribute name="NAME" x="38.5611875" y="4.761184375" size="1.016" layer="25" font="vector" ratio="20" rot="R135" align="bottom-center"/>
 <attribute name="PROD_ID" value="CAP-00810" x="39.5" y="5.7" size="1.778" layer="27" rot="R135" display="off"/>
 <attribute name="VALUE" x="40.038815625" y="6.2388125" size="0.8128" layer="27" font="vector" ratio="20" rot="R135" align="top-center"/>
 </element>
 <element name="C10" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF" x="49" y="17" smashed="yes" rot="R180">
-<attribute name="NAME" x="49" y="16.238" size="1.016" layer="25" font="vector" ratio="20" rot="R180" align="bottom-center"/>
+<attribute name="NAME" x="49" y="15.838" size="1.016" layer="25" font="vector" ratio="20" rot="R180" align="bottom-center"/>
 <attribute name="PROD_ID" value="CAP-00810" x="49" y="17" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="49" y="17.762" size="0.8128" layer="27" font="vector" ratio="20" rot="R180" align="top-center"/>
 </element>
@@ -8305,7 +8305,7 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="31" y="13.238" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
 </element>
 <element name="C16" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF" x="-8.4" y="12.6" smashed="yes" rot="R45">
-<attribute name="NAME" x="-8.9388125" y="13.1388125" size="1.016" layer="25" font="vector" ratio="20" rot="R45" align="bottom-center"/>
+<attribute name="NAME" x="-9.2388125" y="13.4388125" size="1.016" layer="25" font="vector" ratio="20" rot="R45" align="bottom-center"/>
 <attribute name="PROD_ID" value="CAP-00810" x="-8.4" y="12.6" size="1.778" layer="27" rot="R45" display="off"/>
 <attribute name="VALUE" x="-7.861184375" y="12.061184375" size="0.6096" layer="27" font="vector" ratio="20" rot="R45" align="top-center"/>
 </element>
@@ -8512,7 +8512,7 @@ design rules under a new name.</description>
 <contactref element="C4" pad="1"/>
 <contactref element="U5" pad="P$8"/>
 </signal>
-<signal name="3V3">
+<signal name="3.3V">
 <polygon width="0.2" layer="1" isolate="0.1524" thermals="no">
 <vertex x="-14" y="26"/>
 <vertex x="-4" y="26"/>
