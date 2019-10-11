@@ -1,7 +1,9 @@
-
+//512=572 every rotation adds an additional 60 ticks to the expected
 int counter = 0;
+int current = 0;
+int last = 0;
 
-#define outputA 4
+#define outputA 0
 
 void encoderISR() {
   counter++;
@@ -17,5 +19,6 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
   Serial.println(counter);
-  delay(500);
+  counter=0;
+  delay(1000);
 }
