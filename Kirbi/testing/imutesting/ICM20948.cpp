@@ -34,28 +34,20 @@ ICM20948::ICM20948(TwoWire &bus, uint8_t address) {
 
 /* starts communication with the ICM-20948 */
 int ICM20948::begin() {
-  _i2c->begin(); // starting the I2C bus
   _i2c->setClock(_i2cRate); // setting the I2C clock
-
+/*
   if (changeUserBank(USER_BANK_0, true) < 0) { // Make sure that the user bank selection is in sync
   	return -1;
   }
   if (selectAutoClockSource() < 0) { // TODO: Why set clock source here? It is resetted anyway...
     return -1;
-  }
-  // enable I2C master mode
-  if(enableI2cMaster() < 0){
-    return -2;
-  }
-  if (powerDownMag() < 0) {
-  	return -3;
-  }
+  }*/
   reset(); // reset the ICM20948. Don't check return value as a reset clears the register and can't be verified.
   delay(1); // wait for ICM-20948 to come back up
-  resetMag(); // Don't check return value as a reset clears the register and can't be verified.
-  if (selectAutoClockSource() < 0) {
+  /*if (selectAutoClockSource() < 0) {
     return -6;
   }
+  */
   if (whoAmI() != ICM20948_WHO_AM_I) {
     return -7;
   }
@@ -74,19 +66,9 @@ int ICM20948::begin() {
   if (setAccelSrd(0) < 0) { 
     return -12;
   }
-  if(enableI2cMaster() < 0) {
-    return -13;
-  }
-	if(whoAmIMag() != MAG_AK09916_WHO_AM_I ) {
-    return -14;
-	}
-  if(configMag() < 0){
-    return -18;
-  }
   if(selectAutoClockSource() < 0) { // TODO: Why do this again here?
     return -19;
   }       
-  readMagRegisters(MAG_HXL, MAG_DATA_LENGTH, _buffer); // instruct the ICM20948 to get data from the magnetometer at the sample rate
   return 1;
 }
 
@@ -253,13 +235,6 @@ int ICM20948::configGyro(GyroRange range, GyroDlpfBandwidth bandwidth) {
   return 1;
 }
 
-int ICM20948::configMag() { // TODO: Add possibility to use other modes
-	if (writeMagRegister(MAG_CNTL2, MAG_CNTL2_MODE_100HZ) < 0) {
-		return -1;
-	}
-	return 1;
-}
-
 int ICM20948::setGyroSrd(uint8_t srd) {
 	if (changeUserBank(USER_BANK_2) < 0 || writeRegister(UB2_GYRO_SMPLRT_DIV, srd) < 0) {
   	return -1;
@@ -289,7 +264,7 @@ int ICM20948::readSensor() {
 	if (changeUserBank(USER_BANK_0) < 0) {
   	return -1;
   }
- 	if (readRegisters(UB0_ACCEL_XOUT_H, 20, _buffer) < 0) {
+ 	if (readRegisters(UB0_ACCEL_XOUT_H, 14, _buffer) < 0) {
     return -1;
   }
   // combine into 16 bit values
@@ -300,9 +275,6 @@ int ICM20948::readSensor() {
   _gycounts = (((int16_t)_buffer[8]) << 8) | _buffer[9];
   _gzcounts = (((int16_t)_buffer[10]) << 8) | _buffer[11];
   _tcounts = (((int16_t)_buffer[12]) << 8) | _buffer[13];
-  _hxcounts = (((int16_t)_buffer[15]) << 8) | _buffer[14];
-  _hycounts = (((int16_t)_buffer[17]) << 8) | _buffer[16];
-  _hzcounts = (((int16_t)_buffer[19]) << 8) | _buffer[18];
   // transform and convert to float values
   _ax = (((float)_axcounts * _accelScale) - _axb)*_axs;
   _ay = (((float)_aycounts * _accelScale) - _ayb)*_ays;
@@ -311,9 +283,6 @@ int ICM20948::readSensor() {
   _gy = ((float)_gycounts * _gyroScale) - _gyb;
   _gz = ((float)_gzcounts * _gyroScale) - _gzb;
   _t = ((((float) _tcounts) - _tempOffset)/_tempScale) + _tempOffset;
-  _hx = (((float)(tX[0]*_hxcounts + tX[1]*_hycounts + tX[2]*_hzcounts) * _magScale) - _hxb)*_hxs;
-  _hy = (((float)(tY[0]*_hxcounts + tY[1]*_hycounts + tY[2]*_hzcounts) * _magScale) - _hyb)*_hys;
-  _hz = (((float)(tZ[0]*_hxcounts + tZ[1]*_hycounts + tZ[2]*_hzcounts) * _magScale) - _hzb)*_hzs;
   return 1;
 }
 
@@ -347,21 +316,6 @@ float ICM20948::getGyroZ_rads() {
   return _gz;
 }
 
-/* returns the magnetometer measurement in the x direction, uT */
-float ICM20948::getMagX_uT() {
-  return _hx;
-}
-
-/* returns the magnetometer measurement in the y direction, uT */
-float ICM20948::getMagY_uT() {
-  return _hy;
-}
-
-/* returns the magnetometer measurement in the z direction, uT */
-float ICM20948::getMagZ_uT() {
-  return _hz;
-}
-
 /* returns the die temperature, C */
 float ICM20948::getTemperature_C() {
   return _t;
@@ -378,27 +332,6 @@ int ICM20948::whoAmI() {
   }
   // return the register value
   return _buffer[0];
-}
-
-int ICM20948::whoAmIMag() {
-	if (readMagRegisters(MAG_WHO_AM_I, 2, _buffer) < 0) {
-    return -1;
-  }
-  return (_buffer[0] << 8) + _buffer[1];
-}
-
-int ICM20948::powerDownMag() {
-	if (writeMagRegister(MAG_CNTL2, MAG_CNTL2_POWER_DOWN) < 0) {
-		return -1;
-	}
-	return 1;
-}
-
-int ICM20948::resetMag() {
-	if (writeMagRegister(MAG_CNTL3, MAG_CNTL3_RESET) < 0) {
-		return -1;
-	}
-	return 1;
 }
 
 int ICM20948::changeUserBank(UserBank userBank) {
@@ -433,59 +366,6 @@ int ICM20948::changeUserBank(UserBank userBank, bool force) {
   }
   _currentUserBank = userBank;
   return 1;
-}
-
-int ICM20948::writeMagRegister(uint8_t subAddress, uint8_t data) {
-	if (changeUserBank(USER_BANK_3) < 0) {
-  	return -1;
-  }
-	if (writeRegister(UB3_I2C_SLV0_ADDR, MAG_AK09916_I2C_ADDR) < 0) {
-    return -2;
-  }
-  // set the register to the desired magnetometer sub address 
-	if (writeRegister(UB3_I2C_SLV0_REG, subAddress) < 0) {
-    return -3;
-  }
-  // store the data for write
-	if (writeRegister(UB3_I2C_SLV0_DO, data) < 0) {
-    return -4;
-  }
-  // enable I2C and send 1 byte
-	if (writeRegister(UB3_I2C_SLV0_CTRL, UB3_I2C_SLV0_CTRL_EN | (uint8_t)1) < 0) {
-    return -5;
-  }
-	// read the register and confirm
-	if (readMagRegisters(subAddress, 1, _buffer) < 0) {
-    return -6;
-  }
-	if(_buffer[0] != data) {
-  	return -7;
-  }
-  return 1;
-}
-
-int ICM20948::readMagRegisters(uint8_t subAddress, uint8_t count, uint8_t* dest) {
-	if (changeUserBank(USER_BANK_3) < 0) {
-  	return -1;
-  }
-	if (writeRegister(UB3_I2C_SLV0_ADDR, MAG_AK09916_I2C_ADDR | UB3_I2C_SLV0_ADDR_READ_FLAG) < 0) {
-    return -2;
-  }
-  // set the register to the desired magnetometer sub address
-	if (writeRegister(UB3_I2C_SLV0_REG, subAddress) < 0) {
-    return -3;
-  }
-  // enable I2C and request the bytes
-	if (writeRegister(UB3_I2C_SLV0_CTRL, UB3_I2C_SLV0_CTRL_EN | count) < 0) {
-    return -4;
-  }
-	delay(1); // takes some time for these registers to fill
-  // read the bytes off the ICM-20948 EXT_SLV_SENS_DATA registers
-  if (changeUserBank(USER_BANK_0) < 0) {
-  	return -5;
-  }
-	_status = readRegisters(UB0_EXT_SLV_SENS_DATA_00, count, dest); 
-  return _status;
 }
 
 /* writes a byte to ICM20948 register given a register address and data */

@@ -94,7 +94,6 @@ class ICM20948 {
   	int begin();
     int configAccel(AccelRange range, AccelDlpfBandwidth bandwidth);
     int configGyro(GyroRange range, GyroDlpfBandwidth bandwidth);
-    int configMag();
     int setGyroSrd(uint8_t srd);
     int setAccelSrd(uint16_t srd);
     int enableDataReadyInterrupt();
@@ -106,9 +105,6 @@ class ICM20948 {
     float getGyroX_rads();
     float getGyroY_rads();
     float getGyroZ_rads();
-    float getMagX_uT();
-    float getMagY_uT();
-    float getMagZ_uT();
     float getTemperature_C();
   protected:
     // i2c
@@ -157,35 +153,13 @@ class ICM20948 {
     float _axs = 1.0f;
     float _ays = 1.0f;
     float _azs = 1.0f;
-    // magnetometer bias and scale factor estimation
-    uint16_t _maxCounts = 1000;
-    float _deltaThresh = 0.3f;
-    uint8_t _coeff = 8;
-    uint16_t _counter;
-    float _framedelta, _delta;
-    float _hxfilt, _hyfilt, _hzfilt;
-    float _hxmax, _hymax, _hzmax;
-    float _hxmin, _hymin, _hzmin;
-    float _hxb, _hyb, _hzb;
-    float _hxs = 1.0f;
-    float _hys = 1.0f;
-    float _hzs = 1.0f;
-    float _avgs;
 
-    // transformation matrix
-    /* transform the magnetometer values to match the coordinate system of the IMU */
-    const int16_t tX[3] = {1,  0,  0}; 
-    const int16_t tY[3] = {0, -1,  0};
-    const int16_t tZ[3] = {0,  0, -1};
     // constants
     const float G = 9.807f;
     const float _d2r = 3.14159265359f/180.0f;
 
     const float accRawScaling = 32767.5f; // =(2^16-1)/2 16 bit representation of acc value to cover +/- range
     const float gyroRawScaling = 32767.5f; // =(2^16-1)/2 16 bit representation of gyro value to cover +/- range
-    const float magRawScaling = 32767.5f; // =(2^16-1)/2 16 bit representation of gyro value to cover +/- range
-
-    const float _magScale = 4912.0f / magRawScaling; // micro Tesla, measurement range is +/- 4912 uT.
 
     const uint8_t ICM20948_WHO_AM_I = 0xEA;
 
@@ -270,25 +244,6 @@ class ICM20948 {
     const uint8_t REG_BANK_SEL_USER_BANK_2 = 0x20;
     const uint8_t REG_BANK_SEL_USER_BANK_3 = 0x30;
 
-    // Magnetometer constants
-		const uint8_t MAG_AK09916_I2C_ADDR = 0x0C;
-		const uint16_t MAG_AK09916_WHO_AM_I = 0x4809;
-		const uint8_t MAG_DATA_LENGTH = 8; // Bytes
-
-		// Magnetometer (AK09916) registers
-		const uint8_t MAG_WHO_AM_I = 0x00;
-
-		const uint8_t MAG_HXL = 0x11;
-
-		const uint8_t MAG_CNTL2 = 0x31;
-		const uint8_t MAG_CNTL2_POWER_DOWN = 0x00;
-		const uint8_t MAG_CNTL2_MODE_10HZ = 0x02;
-		const uint8_t MAG_CNTL2_MODE_50HZ = 0x06;
-		const uint8_t MAG_CNTL2_MODE_100HZ = 0x08;
-
-		const uint8_t MAG_CNTL3 = 0x32;
-		const uint8_t MAG_CNTL3_RESET = 0x01;
-
 		// private functions
 		int enableI2cMaster();
 		int selectAutoClockSource();
@@ -298,12 +253,7 @@ class ICM20948 {
 		int changeUserBank(UserBank userBank, bool force);
     int writeRegister(uint8_t subAddress, uint8_t data);
     int readRegisters(uint8_t subAddress, uint8_t count, uint8_t* dest);
-    int writeMagRegister(uint8_t subAddress, uint8_t data);
-    int readMagRegisters(uint8_t subAddress, uint8_t count, uint8_t* dest);
     int whoAmI();
-    int whoAmIMag();
-    int powerDownMag();
-    int resetMag();
 };
 
 #endif
