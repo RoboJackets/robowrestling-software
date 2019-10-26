@@ -16,7 +16,39 @@ enum States {
 };
 
 
+States state_machine(States lastState) {
+    // TODO: implement
+}
 
-States dispatcher(States lastState, ) {
-    // read sensors
+void drive(int left, int right) {
+    // TODO: implement
+}
+
+/**
+ * INTERRUPT METHODS
+**/
+void do_line_action_left() {
+    //TODO: implement
+}
+void do_line_action_right() {
+    //TODO: implement
+}
+void do_startup_action() {
+    //TODO: implement
+}
+
+/**
+ * SENSOR READ METHODS
+**/
+void get_accel() {
+    //TODO: implement
+}
+void get_gyro() {
+    //TODO: implement
+}
+void get_distances() {
+    //TODO: implement
+}
+void get_current() {
+    // ignore for now
 }
