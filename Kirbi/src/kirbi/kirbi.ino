@@ -1,8 +1,15 @@
 #include "kirbi.h"
+
 State curr_state;
 State last_state;
-void setup() {
 
+ICM20948 icm(Wire2, (uint8_t)0x68);
+
+void setup() {
+  setup_imu();
+  setup_distance();
+  setup_current(); //???
+  setup_motors();
 }
 
 void loop() {

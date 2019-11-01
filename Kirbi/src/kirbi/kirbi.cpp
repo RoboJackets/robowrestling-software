@@ -35,6 +35,8 @@ State state_machine(State lastState) {
 
 void drive(int left, int right) {
     // TODO: implement
+    int true_left = left*left_multi;
+    int true_right = right*right_multi;
 }
 
 /**
@@ -42,9 +44,11 @@ void drive(int left, int right) {
 **/
 void do_line_action_left() {
     //TODO: implement
+    drive(-x, -y);
 }
 void do_line_action_right() {
     //TODO: implement
+    drive(-y, -x);
 }
 
 //Method for startup action
@@ -57,7 +61,15 @@ void do_startup_action() {
 **/
 
  void setup_imu() {
-
+    pinMode(9, OUTPUT);
+    digitalWrite(9, LOW);
+    Wire2.begin();
+    Wire2.setSDA(8);
+    Wire2.setSCL(7);
+    icm.begin()
+    icm.disableDataReadyInterrupt();
+    icm.configAccel(ICM20948::ACCEL_RANGE_2G, ICM20948::ACCEL_DLPF_BANDWIDTH_6HZ);
+    icm.configGyro(ICM20948::GYRO_RANGE_250DPS, ICM20948::GYRO_DLPF_BANDWIDTH_6HZ);
  }
 
  void setup_distance() {

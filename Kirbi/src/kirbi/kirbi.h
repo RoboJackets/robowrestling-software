@@ -23,6 +23,9 @@ int curr_time;
 int prev_time;
 int check_accel;
 
+double left_multi;
+double right_multi;
+
 /* set motor speed */
 void drive(int left, int right);
 
@@ -49,6 +52,11 @@ void get_accel();
 void get_gyro();
 void get_distances();
 void get_current();
+
+/*
+other
+*/
+void balance_motors();
 
 
 #endif
