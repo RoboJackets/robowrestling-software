@@ -19,6 +19,7 @@ int curr_dist_left;
 int current[10];
 int currentcurrent;
 
+/* acceleration timing variables */
 int curr_time;
 int prev_time;
 int check_accel;
@@ -27,7 +28,8 @@ int check_accel;
 double left_multi;
 double right_multi;
 
-/* configs */
+/* configurations */
+//lidar serial configs
 byte configOutput [5] = {0x5A, 0x05, 0x07, 0x01, 0x11};
 byte configUART [5] = {0x5A, 0x05, 0x0A, 0x00, 0x11};
 
@@ -50,7 +52,7 @@ void setup_distance();
 void setup_current();
 void setup_motors();
 
-/*
+/**
 sensor read methods
 void update buffers with new data
  */
