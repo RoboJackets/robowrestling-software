@@ -1,6 +1,8 @@
 #include "kirbi.h"
 #include "Arduino.h"
 
+#define LIDAR_SERIAL Serial1 
+
 enum State {
     SEARCH_LEFT,
     SEARCH_RIGHT,
@@ -73,15 +75,18 @@ void do_startup_action() {
  }
 
  void setup_distance() {
-
+     /* lidar setup */
+     LIDAR_SERIAL.begin(115200);
+     LIDAR_SERIAL.write(configUART, 5);
+     LIDAR_SERIAL.write(configOutput, 5);
  }
 
  void setup_current() {
-
+    // ignore for now
  }
 
  void setup_motors(){
-
+     // TODO: implement
  }
 
 /**
