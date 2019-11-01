@@ -1,13 +1,12 @@
 #include "kirbi.h"
 #include "Arduino.h"
 
-enum States {
+enum State {
     SEARCH_LEFT,
     SEARCH_RIGHT,
     ADJUST_LEFT,
     ADJUST_RIGHT,
     SLAMMY_WHAMMY,
-
     PANIC_HIT,
     PANIC_FIRE,
 
@@ -16,8 +15,22 @@ enum States {
 };
 
 
-States state_machine(States lastState) {
-    // TODO: implement
+State state_machine(State lastState) {
+    curr_time = millis();
+    get_distances();
+    get_current();
+    if (curr_time - prev_time > check_accel) {
+        prev_time = millis();
+        get_accel();
+    }
+    if() {
+
+    } else if () {
+
+    } else if (lastState == WAIT_FOR_START) {
+        return STARTUP;
+    }
+
 }
 
 void drive(int left, int right) {
@@ -33,9 +46,31 @@ void do_line_action_left() {
 void do_line_action_right() {
     //TODO: implement
 }
+
+//Method for startup action
 void do_startup_action() {
     //TODO: implement
 }
+
+/**
+ * SETUP METHODS
+**/
+
+ void setup_imu() {
+
+ }
+
+ void setup_distance() {
+
+ }
+
+ void setup_current() {
+
+ }
+
+ void setup_motors(){
+
+ }
 
 /**
  * SENSOR READ METHODS
