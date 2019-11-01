@@ -36,9 +36,9 @@ State state_machine(State lastState) {
 }
 
 void drive(int left, int right) {
-    // TODO: implement
     int true_left = left*left_multi;
     int true_right = right*right_multi;
+    // TODO: actually set ECSs
 }
 
 /**
@@ -53,7 +53,9 @@ void do_line_action_right() {
     drive(-y, -x);
 }
 
-//Method for startup action
+/** 
+ * Method for startup action
+**/
 void do_startup_action() {
     //TODO: implement
 }
@@ -61,7 +63,6 @@ void do_startup_action() {
 /**
  * SETUP METHODS
 **/
-
  void setup_imu() {
     pinMode(9, OUTPUT);
     digitalWrite(9, LOW);
@@ -79,6 +80,7 @@ void do_startup_action() {
      LIDAR_SERIAL.begin(115200);
      LIDAR_SERIAL.write(configUART, 5);
      LIDAR_SERIAL.write(configOutput, 5);
+     // TODO: the rest of the distance sensors
  }
 
  void setup_current() {
