@@ -23,6 +23,10 @@ int curr_time;
 int prev_time;
 int check_accel;
 
+/* configs */
+byte configOutput [5] = {0x5A, 0x05, 0x07, 0x01, 0x11}; 
+byte configUART [5] = {0x5A, 0x05, 0x0A, 0x00, 0x11};
+
 /* set motor speed */
 void drive(int left, int right);
 
