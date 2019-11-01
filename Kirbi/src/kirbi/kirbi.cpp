@@ -1,7 +1,7 @@
 #include "kirbi.h"
 #include "Arduino.h"
 
-#define LIDAR_SERIAL Serial1 
+#define LIDAR_SERIAL Serial1
 
 enum State {
     SEARCH_LEFT,
@@ -71,7 +71,7 @@ void do_startup_action() {
     icm.begin()
     icm.disableDataReadyInterrupt();
     icm.configAccel(ICM20948::ACCEL_RANGE_2G, ICM20948::ACCEL_DLPF_BANDWIDTH_6HZ);
-    icm.configGyro(ICM20948::GYRO_RANGE_250DPS, ICM20948::GYRO_DLPF_BANDWIDTH_6HZ);
+    icm.configGyro(ICM20948::GYRO_RANGE_250DPS, ICM209480::GYRO_DLPF_BANDWIDTH_6HZ);
  }
 
  void setup_distance() {
