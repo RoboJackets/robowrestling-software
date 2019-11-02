@@ -4,6 +4,8 @@
 #define LEFT_LIDAR_SERIAL Serial1
 #define RIGHT_LIDAR_SERIAL Serial2
 
+#define MAX_DIST //Whatever the lidar returns when it doesn't see anything
+
 x_accel = new CircularArray<>(8);
 y_accel = new CircularArray<>(8);
 distances = new CircularArray<>(8);
@@ -31,9 +33,21 @@ State state_machine(State lastState) {
         prev_time = millis();
         get_accel();
     }
-    if() {
+    int[] curr_distances = distances.getFront();
+    if (curr_distances[2] != MAX_DIST) {
+        if (curr_distances[3] != MAX_DIST) {
+            if (curr_distances[1] == 0 && curr_distances[4] == 0) {
+                return SLAMMY_WHAMMY; //temp but kinda what we want
+            } else if (curr_distances[1] == 1 && curr_distances[4] == 0) {
+                return ADJUST_LEFT;
+            } else if (curr_distances[1] == 0 && curr_distances[4] == 1) {
+                return ADJUST_RIGHT;
+            } else {
+                return SLAMMY_WHAMMY; //either we're seeing them on all 4 middle sensors or something weird is happening
+            }
+        }
 
-    } else if () {
+    } else if (curr_distances[3] != MAX_DIST) {
 
     } else if (lastState == WAIT_FOR_START) {
         return STARTUP;
@@ -42,8 +56,8 @@ State state_machine(State lastState) {
 }
 
 void drive(int left, int right) {
-    int true_left = left*left_multi;
-    int true_right = right*right_multi;
+    left = left*left_multi;
+    right = right*right_multi;
     // TODO: actually set ECSs
 }
 
@@ -128,6 +142,7 @@ void get_distances() {
     dist[4] = digitalRead(omron4);
     dist[5] = digitalRead(omron5);
     distances.add(dist);
+    return dist;
 }
 int read_lidar(Serial s) {
     byte[] bytes = byte[9];
