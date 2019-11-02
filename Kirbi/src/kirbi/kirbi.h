@@ -4,26 +4,24 @@
 
 #include "Arduino.h"
 #include "ICM20948.h"
+#include "CircularArray.h" //?
 
 enum States;
 
 /* IMU and distance sensor data buffers */
-double x_accel[25];
-int curr_x_accel;
-double y_accel[25];
-int curr_y_accel;
-int distances_right[60];
-int curr_dist_right;
-int distances_left[60];
-int curr_dist_left;
-int current[10];
-int currentcurrent;
+CircularArray<double> x_accel;
+CircularArray<double> y_accel;
+CircularArray<int[6]> distances;
+CircularArray<int> current;
 
 /* acceleration timing variables */
 int curr_time;
 int prev_time;
 int check_accel;
 
+/* encoder counts */
+int right_encoder;
+int left_encoder;
 
 double left_multi;
 double right_multi;
@@ -44,6 +42,8 @@ State state_machine(State last_state);
 void do_line_action_left();
 void do_line_action_right();
 void do_startup_action();
+void increment_encoder_left();
+void increment_encoder_right();
 
 /* setup methods */
 
@@ -59,6 +59,7 @@ void update buffers with new data
 void get_accel();
 void get_gyro();
 void get_distances();
+int read_lidar(Serial s);
 void get_current();
 
 /*

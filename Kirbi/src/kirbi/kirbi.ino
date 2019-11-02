@@ -10,6 +10,8 @@ void setup() {
   setup_distance();
   setup_current(); //???
   setup_motors();
+  attachInterrupt(?, increment_encoder_left, RISING); //Replace ? with pin of encoder
+  attachInterrupt(?, increment_encoder_right, RISING); //Replace ? with pin of encoder
 }
 
 void loop() {

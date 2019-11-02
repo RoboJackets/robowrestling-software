@@ -1,7 +1,13 @@
 #include "kirbi.h"
 #include "Arduino.h"
 
-#define LIDAR_SERIAL Serial1
+#define LEFT_LIDAR_SERIAL Serial1
+#define RIGHT_LIDAR_SERIAL Serial2
+
+x_accel = new CircularArray<>(8);
+y_accel = new CircularArray<>(8);
+distances = new CircularArray<>(8);
+current = new CircularArray<>(8);
 
 enum State {
     SEARCH_LEFT,
@@ -53,7 +59,15 @@ void do_line_action_right() {
     drive(-y, -x);
 }
 
-/** 
+void increment_encoder_right() {
+    right_encoder++;
+}
+
+void increment_encoder_left() {
+    left_encoder++;
+}
+
+/**
  * Method for startup action
 **/
 void do_startup_action() {
@@ -89,6 +103,8 @@ void do_startup_action() {
 
  void setup_motors(){
      // TODO: implement
+    left_multi = 1;
+    right_multi = 1;
  }
 
 /**
@@ -96,13 +112,60 @@ void do_startup_action() {
 **/
 void get_accel() {
     //TODO: implement
+    x_accel.add(icm.getAccelX_mss());
+    y_accel.add(icm.getAccelY_mss());
 }
 void get_gyro() {
     //TODO: implement
 }
 void get_distances() {
     //TODO: implement
+    int[] dist = int[6];
+    dist[0] = digitalRead(omron0);
+    dist[1] = digitalRead(omron1);
+    dist[2] = read_lidar(LEFT_LIDAR_SERIAL);
+    dist[3] = read_lidar(RIGHT_LIDAR_SERIAL);
+    dist[4] = digitalRead(omron4);
+    dist[5] = digitalRead(omron5);
+    distances.add(dist);
+}
+int read_lidar(Serial s) {
+    byte[] bytes = byte[9];
+    s.readBytes(bytes, 9);
+    int dist_low = 0;
+    while (dist_low < 9) {
+        if (bytes[dist_low] == 0x89) {
+            if (dist_low == 0) {
+                if (bytes[8] == 0x89) {
+                    return bytes[1] + (bytes[2] << 8);
+                }
+            } else if (dist_low == 7) {
+                if (bytes[8] == 0x89) {
+                    return bytes[0] + (bytes[1] << 8);
+                }
+            } else {
+                if (bytes[++dist_low] == 0x89) {
+                    return bytes[++dist_low] + (bytes[++dist_low] << 8);
+                }
+            }
+        }
+        dist_low++;
+    }
+    return read_lidar(s);
 }
 void get_current() {
     // ignore for now
+}
+
+/**
+ * OTHER
+**/
+void balance_motors() {
+    if (left_encoder > right_encoder) {
+        left_multi = right_encoder/left_encoder;
+        right_multi = 1;
+    } else {
+        right_multi = left_encoder/right_encoder;
+        left_multi = 1;
+    }
 }

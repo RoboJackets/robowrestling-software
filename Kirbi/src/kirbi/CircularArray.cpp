@@ -10,7 +10,10 @@ class CircularArray {
 
         void add(T data) {
             array[index] = data;
-            index = (index + 1) % array.length;
+            index++;
+            if (index == array.length) {
+                index = 0;
+            }
         }
 
         T get(int i) {
@@ -18,6 +21,9 @@ class CircularArray {
         }
 
         T getFront(){
-            return array[index];
+            if (index != 0) {
+                return array[index-1];
+            }
+            return array[array.length-1];
         }
-}
+};
