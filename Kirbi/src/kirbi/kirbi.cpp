@@ -1,15 +1,6 @@
 #include "kirbi.h"
 #include "Arduino.h"
 
-#define LEFT_LIDAR_SERIAL Serial1
-#define RIGHT_LIDAR_SERIAL Serial4
-
-#define ESC_SERIAL Serial5
-#define ESC_ADDRESS 128
-#define ESC_CHECKSUM 0b01111111
-
-#define MAX_DIST //Whatever the lidar returns when it doesn't see anything
-
 x_accel = new CircularArray<>(8);
 y_accel = new CircularArray<>(8);
 distances = new CircularArray<>(8);
@@ -49,10 +40,23 @@ State state_machine(State lastState) {
             } else {
                 return SLAMMY_WHAMMY; //either we're seeing them on all 4 middle sensors or something weird is happening
             }
+        } else {
+            if (curr_distances[0] == 0 && curr_distances[1] == 1) {
+                return ADJUST_LEFT;
+            } else if (curr_distances[1] == 1) {
+                return ADJUST_LEFT;
+            } else {
+                return ADJUST_LEFT;
+            }
         }
-
     } else if (curr_distances[3] != MAX_DIST) {
-
+        if (curr_distances[5] == 0 && curr_distances[4] == 1) {
+                return ADJUST_LEFT;
+            } else if (curr_distances[4] == 1) {
+                return ADJUST_LEFT;
+            } else {
+                return ADJUST_LEFT;
+            }
     } else if (lastState == WAIT_FOR_START) {
         return STARTUP;
     }
@@ -122,7 +126,10 @@ void do_startup_action() {
      RIGHT_LIDAR_SERIAL.begin(115200);
      RIGHT_LIDAR_SERIAL.write(configUART, 5);
      RIGHT_LIDAR_SERIAL.write(configOutput, 5);
-     // TODO: the rest of the distance sensors
+     pinMode(DIST_L, INPUT);
+     pinMode(DIST_L_45, INPUT);
+     pinMode(DIST_R, INPUT);
+     pinMode(DIST_R_45, INPUT);
  }
 
  void setup_current() {
@@ -130,7 +137,6 @@ void do_startup_action() {
  }
 
  void setup_motors(){
-     // TODO: implement
     left_multi = 1;
     right_multi = 1;
     ESC_SERIAL.begin(115200);
@@ -140,7 +146,6 @@ void do_startup_action() {
  * SENSOR READ METHODS
 **/
 void get_accel() {
-    //TODO: implement
     x_accel.add(icm.getAccelX_mss());
     y_accel.add(icm.getAccelY_mss());
 }
@@ -148,14 +153,13 @@ void get_gyro() {
     //TODO: implement?
 }
 void get_distances() {
-    //TODO: implement
     int[] dist = int[6];
-    dist[0] = digitalRead(omron0);
-    dist[1] = digitalRead(omron1);
+    dist[0] = digitalRead(DIST_L);
+    dist[1] = digitalRead(DIST_L_45);
     dist[2] = read_lidar(LEFT_LIDAR_SERIAL);
     dist[3] = read_lidar(RIGHT_LIDAR_SERIAL);
-    dist[4] = digitalRead(omron4);
-    dist[5] = digitalRead(omron5);
+    dist[4] = digitalRead(DIST_R_45);
+    dist[5] = digitalRead(DIST_R);
     distances.add(dist);
     return dist;
 }

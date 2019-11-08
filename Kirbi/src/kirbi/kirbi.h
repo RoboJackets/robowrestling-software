@@ -6,6 +6,24 @@
 #include "ICM20948.h"
 #include "CircularArray.h" //?
 
+#define LEFT_LIDAR_SERIAL Serial1
+#define RIGHT_LIDAR_SERIAL Serial4
+
+#define ESC_SERIAL Serial5
+#define ESC_ADDRESS 128
+#define ESC_CHECKSUM 0b01111111
+
+#define MAX_DIST //Whatever the lidar returns when it doesn't see anything
+
+/* Definitions for pin numbers or Omron sensors */
+#define DIST_L 30
+#define DIST_L_45 28
+#define DIST_R 2
+#define DIST_R_45 3
+
+#define LEFT_ENCODER 38
+#define RIGHT_ENCODER 22
+
 enum States;
 
 /* IMU and distance sensor data buffers */

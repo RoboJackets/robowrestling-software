@@ -8,10 +8,10 @@ ICM20948 icm(Wire2, (uint8_t)0x68);
 void setup() {
   setup_imu();
   setup_distance();
-  setup_current(); //???
+  setup_current();
   setup_motors();
-  attachInterrupt(?, increment_encoder_left, RISING); //Replace ? with pin of encoder
-  attachInterrupt(?, increment_encoder_right, RISING); //Replace ? with pin of encoder
+  attachInterrupt(LEFT_ENCODER, increment_encoder_left, RISING);
+  attachInterrupt(RIGHT_ENCODER, increment_encoder_right, RISING);
 }
 
 void loop() {
@@ -57,5 +57,5 @@ void loop() {
             do_startup_action();
 
     }
-    
+
 }
