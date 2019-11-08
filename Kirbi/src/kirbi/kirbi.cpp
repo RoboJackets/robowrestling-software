@@ -32,41 +32,69 @@ State state_machine(State lastState) {
     if (curr_distances[2] != MAX_DIST) {
         if (curr_distances[3] != MAX_DIST) {
             if (curr_distances[1] == 0 && curr_distances[4] == 0) {
+                left_turn_ratio = 1;
+                right_turn_ratio = 1;
                 return SLAMMY_WHAMMY; //temp but kinda what we want
             } else if (curr_distances[1] == 1 && curr_distances[4] == 0) {
+                left_turn_ratio = 1;
+                right_turn_ratio = ?;
                 return ADJUST_LEFT;
             } else if (curr_distances[1] == 0 && curr_distances[4] == 1) {
+                left_turn_ratio = ?;
+                right_turn_ratio = 1;
                 return ADJUST_RIGHT;
             } else {
+                left_turn_ratio = 1;
+                right_turn_ratio = 1;
                 return SLAMMY_WHAMMY; //either we're seeing them on all 4 middle sensors or something weird is happening
             }
         } else {
             if (curr_distances[0] == 0 && curr_distances[1] == 1) {
+                left_turn_ratio = 1;
+                right_turn_ratio = ?;
                 return ADJUST_LEFT;
             } else if (curr_distances[1] == 1) {
+                left_turn_ratio = 1;
+                right_turn_ratio = ?;
                 return ADJUST_LEFT;
             } else {
+                left_turn_ratio = 1;
+                right_turn_ratio = ?;
                 return ADJUST_LEFT;
             }
         }
     } else if (curr_distances[3] != MAX_DIST) {
         if (curr_distances[5] == 0 && curr_distances[4] == 1) {
-                return ADJUST_RIGHT;
-            } else if (curr_distances[4] == 1) {
-                return ADJUST_RIGHT;
-            } else {
-                return ADJUST_RIGHT;
-            }
+            left_turn_ratio = ?;
+            right_turn_ratio = 1;
+            return ADJUST_RIGHT;
+        } else if (curr_distances[4] == 1) {
+            left_turn_ratio = ?;
+            right_turn_ratio = 1;
+            return ADJUST_RIGHT;
+        } else {
+            left_turn_ratio = ?;
+            right_turn_ratio = 1;
+            return ADJUST_RIGHT;
+        }
     } else if (curr_distances[1] == 1) {
         if (curr_distances[0] == 1) {
+            left_turn_ratio = 1;
+            right_turn_ratio = ?;
             return ADJUST_LEFT;
         } else {
+            left_turn_ratio = 1;
+            right_turn_ratio = ?;
             return ADJUST_LEFT;
         }
     } else if (curr_distances[4] == 1) {
         if (curr_distances[5] == 1) {
+            left_turn_ratio = ?;
+            right_turn_ratio = 1;
             return ADJUST_RIGHT;
         } else {
+            left_turn_ratio = ?;
+            right_turn_ratio = 1;
             return ADJUST_RIGHT;
         }
     } else if (lastState == WAIT_FOR_START) {
@@ -76,8 +104,8 @@ State state_machine(State lastState) {
 }
 
 void drive(int left, int right, bool left_reverse, bool right_reverse) {
-    left = left*left_multi;
-    right = right*right_multi;
+    left = left*left_multi*left_turn_ratio;
+    right = right*right_multi*right_turn_ratio;
     ESC_SERIAL.write(ESC_ADDRESS);
     ESC_SERIAL.write(left_reverse);
     ESC_SERIAL.write(left);
@@ -151,6 +179,8 @@ void do_startup_action() {
  void setup_motors(){
     left_multi = 1;
     right_multi = 1;
+    left_turn_ratio = 1;
+    right_turn_ratio = 1;
     ESC_SERIAL.begin(115200);
  }
 

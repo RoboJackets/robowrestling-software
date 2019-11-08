@@ -44,6 +44,9 @@ int left_encoder;
 double left_multi;
 double right_multi;
 
+double left_turn_ratio;
+double right_turn_ratio;
+
 /* configurations */
 //lidar serial configs
 byte configOutput [5] = {0x5A, 0x05, 0x07, 0x01, 0x11};
