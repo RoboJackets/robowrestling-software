@@ -51,12 +51,24 @@ State state_machine(State lastState) {
         }
     } else if (curr_distances[3] != MAX_DIST) {
         if (curr_distances[5] == 0 && curr_distances[4] == 1) {
-                return ADJUST_LEFT;
+                return ADJUST_RIGHT;
             } else if (curr_distances[4] == 1) {
-                return ADJUST_LEFT;
+                return ADJUST_RIGHT;
             } else {
-                return ADJUST_LEFT;
+                return ADJUST_RIGHT;
             }
+    } else if (curr_distances[1] == 1) {
+        if (curr_distances[0] == 1) {
+            return ADJUST_LEFT;
+        } else {
+            return ADJUST_LEFT;
+        }
+    } else if (curr_distances[4] == 1) {
+        if (curr_distances[5] == 1) {
+            return ADJUST_RIGHT;
+        } else {
+            return ADJUST_RIGHT;
+        }
     } else if (lastState == WAIT_FOR_START) {
         return STARTUP;
     }
