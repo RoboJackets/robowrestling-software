@@ -2,7 +2,11 @@
 #include "Arduino.h"
 
 #define LEFT_LIDAR_SERIAL Serial1
-#define RIGHT_LIDAR_SERIAL Serial2
+#define RIGHT_LIDAR_SERIAL Serial4
+
+#define ESC_SERIAL Serial5
+#define ESC_ADDRESS 128
+#define ESC_CHECKSUM 0b01111111
 
 #define MAX_DIST //Whatever the lidar returns when it doesn't see anything
 
@@ -55,10 +59,17 @@ State state_machine(State lastState) {
 
 }
 
-void drive(int left, int right) {
+void drive(int left, int right, bool left_reverse, bool right_reverse) {
     left = left*left_multi;
     right = right*right_multi;
-    // TODO: actually set ECSs
+    ESC_SERIAL.write(ESC_ADDRESS);
+    ESC_SERIAL.write(left_reverse);
+    ESC_SERIAL.write(left);
+    ESC_SERIAL.write((ESC_ADDRESS+left_reverse+left)&ESC_CHECKSUM);
+    ESC_SERIAL.write(ESC_ADDRESS);
+    ESC_SERIAL.write(right_reverse);
+    ESC_SERIAL.write(right);
+    ESC_SERIAL.write((ESC_ADDRESS+right_reverse+right)&ESC_CHECKSUM);
 }
 
 /**
@@ -66,11 +77,11 @@ void drive(int left, int right) {
 **/
 void do_line_action_left() {
     //TODO: implement
-    drive(-x, -y);
+    drive(x, y, true, true);
 }
 void do_line_action_right() {
     //TODO: implement
-    drive(-y, -x);
+    drive(y, x, true, true);
 }
 
 void increment_encoder_right() {
@@ -105,9 +116,12 @@ void do_startup_action() {
 
  void setup_distance() {
      /* lidar setup */
-     LIDAR_SERIAL.begin(115200);
-     LIDAR_SERIAL.write(configUART, 5);
-     LIDAR_SERIAL.write(configOutput, 5);
+     LEFT_LIDAR_SERIAL.begin(115200);
+     LEFT_LIDAR_SERIAL.write(configUART, 5);
+     LEFT_LIDAR_SERIAL.write(configOutput, 5);
+     RIGHT_LIDAR_SERIAL.begin(115200);
+     RIGHT_LIDAR_SERIAL.write(configUART, 5);
+     RIGHT_LIDAR_SERIAL.write(configOutput, 5);
      // TODO: the rest of the distance sensors
  }
 
@@ -119,6 +133,7 @@ void do_startup_action() {
      // TODO: implement
     left_multi = 1;
     right_multi = 1;
+    ESC_SERIAL.begin(115200);
  }
 
 /**
@@ -130,7 +145,7 @@ void get_accel() {
     y_accel.add(icm.getAccelY_mss());
 }
 void get_gyro() {
-    //TODO: implement
+    //TODO: implement?
 }
 void get_distances() {
     //TODO: implement
