@@ -27,10 +27,29 @@ void loop() {
       }
     }
   }
-
   ESC_L_SERIAL.write(bytes[0]);
   ESC_L_SERIAL.write(bytes[1]);
   ESC_L_SERIAL.write(bytes[2]);
   ESC_L_SERIAL.write(crc);
- 
+  delay(100);
+  
+  bytes[0] = ESC_L_ADDRESS;
+  bytes[1] = 0; //0 is drive forward
+  bytes[2] = 0; //drive motor at half speed
+  crc = 0;
+  for(int i = 0; i < 3; i++) {
+    crc = crc ^ (bytes[i] << 8);
+    for (int j = 0; j < 8; j++) {
+      if (crc & 0x8000) {
+        crc = (crc << 1) ^ 0x1021;
+      } else {
+        crc = crc << 1;
+      }
+    }
+  }
+  ESC_L_SERIAL.write(bytes[0]);
+  ESC_L_SERIAL.write(bytes[1]);
+  ESC_L_SERIAL.write(bytes[2]);
+  ESC_L_SERIAL.write(crc);
+  delay(100);
 }
