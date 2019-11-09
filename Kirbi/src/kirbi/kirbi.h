@@ -50,6 +50,8 @@ double right_multi;
 double left_turn_ratio;
 double right_turn_ratio;
 
+
+/* Current sensing stuff */
 double r1 = 2.3;
 double r2 = 7.28;
 double nominal_current = 4.12;
@@ -57,7 +59,6 @@ double precalc = 2.01873 //nominal_current*(sqrt(r1/(r1+r2)))
 double tw = 42.2;
 int total_currentxtime_left;
 int total_currentxtime_right;
-int k_scalars[] = {}
 double percent_overloaded_left;
 double percent_overloaded_right;
 int prev_time_current; //for use with curr_time

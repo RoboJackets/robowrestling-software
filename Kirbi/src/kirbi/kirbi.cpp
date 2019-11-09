@@ -236,26 +236,29 @@ int read_lidar(Serial s) {
 void get_current() {
     int time_at_current = curr_time - last_read_current;
     last_read_current = curr_time;
-    int current = analogRead(LEFT_CURRENT)*voltage_to_current;
-    total_currentxtime_left = time_at_current*current;
+    int current = analogRead(LEFT_CURRENT)*voltage_to_current; //read in voltage then change to current using magic number
+    total_currentxtime_left += time_at_current*current; //Keep track of current*time over the interval to average later
     int current = analogRead(RIGHT_CURRENT)*voltage_to_current;
-    total_currentxtime_right = time_at_current*current;
+    total_currentxtime_right += time_at_current*current;
     int time_since_check = curr_time - prev_time_current;
-    if (time_since_check > check_overload) {
+    if (time_since_check > check_overload) { //is it time to check the overload?
         prev_time_current = curr_time;
         current = total_currentxtime_left/(time_since_check);
         double k_left = current/precalc;
+        total_currentxtime_left = 0;
         current = total_currentxtime_right/(time_since_check);
         double k_right = current/precalc;
-        if (k_left > 1) {
+        total_currentxtime_right = 0;
+        if (k_left > 1) { //are we overloading?
             double k2 = pow(k_left, 2);
             double ton = tw * log(k2/(k2-1));
-            percent_overloaded_left += ton/time_since_check;
+            percent_overloaded_left += time_since_check/ton; //add the time that we were overloading/time we can
+                                                             //overload for at that at that amperage to our percent overloaded
         }
         if (k_right > 1) {
             double k2 = pow(k_right, 2);
             double ton = tw * log(k2/(k2-1));
-            percent_overloaded_right += ton/time_since_check;
+            percent_overloaded_right += time_since_check/ton;
         }
     }
 
