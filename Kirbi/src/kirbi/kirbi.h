@@ -3,8 +3,9 @@
 #define kirbi_h
 
 #include "Arduino.h"
-#include "ICM20948.h"
 #include "CircularArray.h" //?
+#include "ICM20948.h"
+#include "math.h"
 
 #define LEFT_LIDAR_SERIAL Serial1
 #define RIGHT_LIDAR_SERIAL Serial4
@@ -24,17 +25,19 @@
 #define LEFT_ENCODER 38
 #define RIGHT_ENCODER 22
 
+#define LEFT_CURRENT A21
+#define RIGHT_CURRENT A0
+
 enum States;
 
 /* IMU and distance sensor data buffers */
 CircularArray<double> x_accel;
 CircularArray<double> y_accel;
 CircularArray<int[6]> distances;
-CircularArray<int> current;
 
 /* acceleration timing variables */
 int curr_time;
-int prev_time;
+int prev_time_accel;
 int check_accel;
 
 /* encoder counts */
@@ -46,6 +49,21 @@ double right_multi;
 
 double left_turn_ratio;
 double right_turn_ratio;
+
+double r1 = 2.3;
+double r2 = 7.28;
+double nominal_current = 4.12;
+double precalc = 2.01873 //nominal_current*(sqrt(r1/(r1+r2)))
+double tw = 42.2;
+int total_currentxtime_left;
+int total_currentxtime_right;
+int k_scalars[] = {}
+double percent_overloaded_left;
+double percent_overloaded_right;
+int prev_time_current; //for use with curr_time
+int last_read_current;
+int check_overload;
+double voltage_to_current = .00805664;
 
 /* configurations */
 //lidar serial configs

@@ -4,7 +4,6 @@
 x_accel = new CircularArray<>(8);
 y_accel = new CircularArray<>(8);
 distances = new CircularArray<>(8);
-current = new CircularArray<>(8);
 
 enum State {
     SEARCH_LEFT,
@@ -21,11 +20,14 @@ enum State {
 
 
 State state_machine(State lastState) {
-    curr_time = millis();
+    curr_time = micros();
     get_distances();
     get_current();
+    if (percent_overloaded_left > 1 || percent_overloaded_right > 1) {
+        return PANIC_FIRE;
+    }
     if (curr_time - prev_time > check_accel) {
-        prev_time = millis();
+        prev_time_accel = millis();
         get_accel();
     }
     int[] curr_distances = distances.getFront();
@@ -173,7 +175,9 @@ void do_startup_action() {
  }
 
  void setup_current() {
-    // ignore for now
+    pinMode(LEFT_CURRENT, INPUT);
+    percent_overloaded = 0;
+    check_current = 0;
  }
 
  void setup_motors(){
@@ -230,7 +234,32 @@ int read_lidar(Serial s) {
     return read_lidar(s);
 }
 void get_current() {
-    // ignore for now
+    int time_at_current = curr_time - last_read_current;
+    last_read_current = curr_time;
+    int current = analogRead(LEFT_CURRENT)*voltage_to_current;
+    total_currentxtime_left = time_at_current*current;
+    int current = analogRead(RIGHT_CURRENT)*voltage_to_current;
+    total_currentxtime_right = time_at_current*current;
+    int time_since_check = curr_time - prev_time_current;
+    if (time_since_check > check_overload) {
+        prev_time_current = curr_time;
+        current = total_currentxtime_left/(time_since_check);
+        double k_left = current/precalc;
+        current = total_currentxtime_right/(time_since_check);
+        double k_right = current/precalc;
+        if (k_left > 1) {
+            double k2 = pow(k_left, 2);
+            double ton = tw * log(k2/(k2-1));
+            percent_overloaded_left += ton/time_since_check;
+        }
+        if (k_right > 1) {
+            double k2 = pow(k_right, 2);
+            double ton = tw * log(k2/(k2-1));
+            percent_overloaded_right += ton/time_since_check;
+        }
+    }
+
+
 }
 
 /**
