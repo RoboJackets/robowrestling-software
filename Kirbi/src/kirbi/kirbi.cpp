@@ -1,5 +1,4 @@
 #include "kirbi.h"
-#include "Arduino.h"
 
 x_accel = new CircularArray<>(8);
 y_accel = new CircularArray<>(8);

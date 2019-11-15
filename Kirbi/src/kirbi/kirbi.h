@@ -64,7 +64,7 @@ double percent_overloaded_right;
 int prev_time_current; //for use with curr_time
 int last_read_current;
 int check_overload;
-const double voltage_to_current = .00402832;
+const double voltage_to_current = .01611328;
 
 /* configurations */
 //lidar serial configs
