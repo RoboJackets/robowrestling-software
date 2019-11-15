@@ -14,7 +14,7 @@
 #define ESC_ADDRESS 128
 #define ESC_CHECKSUM 0b01111111
 
-#define MAX_DIST //Whatever the lidar returns when it doesn't see anything
+#define MAX_DIST 150 //Whatever the lidar returns when it doesn't see anything
 
 /* Definitions for pin numbers or Omron sensors */
 #define DIST_L 30
