@@ -1,8 +1,8 @@
 #include "kirbi.h"
 
-x_accel = new CircularArray<>(8);
-y_accel = new CircularArray<>(8);
-distances = new CircularArray<>(8);
+x_accel = new CircularArray<double>(8);
+y_accel = new CircularArray<double>(8);
+distances = new CircularArray<int[6]>(8);
 
 enum State {
     SEARCH_LEFT,
@@ -30,18 +30,32 @@ State state_machine(State lastState) {
         get_accel();
     }
     int[] curr_distances = distances.getFront();
-    if (curr_distances[2] != MAX_DIST) {
-        if (curr_distances[3] != MAX_DIST) {
+    /**
+    curr distances
+    [0]: dist left
+    [1]: dist left 45
+    [2]: left lidar
+    [3]: right lidar
+    [4]: dist right 45
+    [5]: dist right
+    **/
+    // TODO: probably do math to get better ratios for left & right turn
+
+    if (curr_distances[2] <= MAX_DIST) { // bot on left
+        if (curr_distances[3] <= MAX_DIST) { // bot on right
             if (curr_distances[1] == 0 && curr_distances[4] == 0) {
+              //
                 left_turn_ratio = 1;
                 right_turn_ratio = 1;
                 return SLAMMY_WHAMMY; //temp but kinda what we want
             } else if (curr_distances[1] == 1 && curr_distances[4] == 0) {
+              //45 left
                 left_turn_ratio = 1;
-                right_turn_ratio = ?;
+                right_turn_ratio = 0.9;
                 return ADJUST_LEFT;
             } else if (curr_distances[1] == 0 && curr_distances[4] == 1) {
-                left_turn_ratio = ?;
+              // 45 right
+                left_turn_ratio = 0.9;
                 right_turn_ratio = 1;
                 return ADJUST_RIGHT;
             } else {
@@ -49,22 +63,25 @@ State state_machine(State lastState) {
                 right_turn_ratio = 1;
                 return SLAMMY_WHAMMY; //either we're seeing them on all 4 middle sensors or something weird is happening
             }
-        } else {
+        } else { // no bot on right
             if (curr_distances[0] == 0 && curr_distances[1] == 1) {
+              // no left, on 45 left only
                 left_turn_ratio = 1;
                 right_turn_ratio = ?;
                 return ADJUST_LEFT;
             } else if (curr_distances[1] == 1) {
+              // on left and 45 left
                 left_turn_ratio = 1;
                 right_turn_ratio = ?;
                 return ADJUST_LEFT;
             } else {
+              //
                 left_turn_ratio = 1;
                 right_turn_ratio = ?;
                 return ADJUST_LEFT;
             }
         }
-    } else if (curr_distances[3] != MAX_DIST) {
+    } else if (curr_distances[3] <= MAX_DIST) { // bot on right
         if (curr_distances[5] == 0 && curr_distances[4] == 1) {
             left_turn_ratio = ?;
             right_turn_ratio = 1;
@@ -78,7 +95,7 @@ State state_machine(State lastState) {
             right_turn_ratio = 1;
             return ADJUST_RIGHT;
         }
-    } else if (curr_distances[1] == 1) {
+    } else if (curr_distances[1] == 1) { // no bot on right and bot left 45
         if (curr_distances[0] == 1) {
             left_turn_ratio = 1;
             right_turn_ratio = ?;
@@ -98,6 +115,10 @@ State state_machine(State lastState) {
             right_turn_ratio = 1;
             return ADJUST_RIGHT;
         }
+    } else if (curr_distances[0] == 1) {
+        return SEARCH_LEFT;
+    } else if (curr_distances[5] == 1) {
+        return SEARCH_RIGHT;
     } else if (lastState == WAIT_FOR_START) {
         return STARTUP;
     }
