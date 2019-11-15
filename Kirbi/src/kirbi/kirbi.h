@@ -55,8 +55,8 @@ double right_turn_ratio;
 double r1 = 2.3;
 double r2 = 7.28;
 double nominal_current = 4.12;
-double precalc = 2.01873 //nominal_current*(sqrt(r1/(r1+r2)))
-double tw = 42.2;
+const double precalc = 2.01873 //nominal_current*(sqrt(r1/(r1+r2)))
+const double tw = 42.2;
 int total_currentxtime_left;
 int total_currentxtime_right;
 double percent_overloaded_left;
@@ -64,7 +64,7 @@ double percent_overloaded_right;
 int prev_time_current; //for use with curr_time
 int last_read_current;
 int check_overload;
-double voltage_to_current = .00805664;
+const double voltage_to_current = .00402832;
 
 /* configurations */
 //lidar serial configs
