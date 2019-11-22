@@ -1,21 +1,51 @@
 #include "gucci.h"
-#include "VL53L0X.h"
 
-x_accel = new CircularArray<double>(8);
-y_accel = new CircularArray<double>(8);
-distances = new CircularArray<int[6]>(8);
+//x_accel = new CircularArray<double>(8);
+//y_accel = new CircularArray<double>(8);
+//distances = new CircularArray<int[6]>(8);
 
-enum State {
-    SEARCH_LEFT,
-    SEARCH_RIGHT,
-    ADJUST_LEFT,
-    ADJUST_RIGHT,
-    SLAMMY_WHAMMY,
-    PANIC_HIT,
-    PANIC_FIRE,
-    WAIT_FOR_START,
-    STARTUP
-};
+ICM20948 icm(Wire2, (uint8_t)0x68);
+
+int dist[6];
+
+/* distance sensors */
+VL53L0X tof_left;
+VL53L0X tof_left_45;
+VL53L0X tof_left_center;
+VL53L0X tof_right_center;
+VL53L0X tof_right_45;
+VL53L0X tof_right;
+
+/* acceleration timing variables */
+int curr_time;
+int prev_time_accel;
+int check_accel;
+
+/* encoder counts */
+int right_encoder;
+int left_encoder;
+
+double left_multi;
+double right_multi;
+
+double left_turn_ratio;
+double right_turn_ratio;
+
+
+/* Current sensing stuff */
+double r1 = 2.3;
+double r2 = 7.28;
+double nominal_current = 4.12;
+const double precalc = 2.01873; //nominal_current*(sqrt(r1/(r1+r2)))
+const double tw = 42.2;
+int total_currentxtime_left;
+int total_currentxtime_right;
+double percent_overloaded_left;
+double percent_overloaded_right;
+int prev_time_current; //for use with curr_time
+int last_read_current;
+int check_overload;
+const double voltage_to_current = .01611328;
 
 
 State state_machine(State lastState) {
@@ -25,11 +55,11 @@ State state_machine(State lastState) {
     if (percent_overloaded_left > 1 || percent_overloaded_right > 1) {
         return PANIC_FIRE;
     }
-    if (curr_time - prev_time > check_accel) {
+    if (curr_time - prev_time_accel > check_accel) {
         prev_time_accel = millis();
         get_accel();
     }
-    int[] curr_distances = distances.getFront();
+    int* curr_distances = dist;
 
     if (curr_distances[2] <= MAX_DIST) { // bot on left
         if (curr_distances[3] <= MAX_DIST) { // bot on right
@@ -57,51 +87,51 @@ State state_machine(State lastState) {
             if (curr_distances[0] > MAX_DIST && curr_distances[1] < MAX_DIST) {
               // no left, on 45 left only
                 left_turn_ratio = 1;
-                right_turn_ratio = ?;
+                right_turn_ratio = 1;
                 return ADJUST_LEFT;
             } else if (curr_distances[1] < MAX_DIST) {
               // on left and 45 left
                 left_turn_ratio = 1;
-                right_turn_ratio = ?;
+                right_turn_ratio = 1;
                 return ADJUST_LEFT;
             } else {
               //
                 left_turn_ratio = 1;
-                right_turn_ratio = ?;
+                right_turn_ratio = 1;
                 return ADJUST_LEFT;
             }
         }
     } else if (curr_distances[3] <= MAX_DIST) { // bot on right
         if (curr_distances[5] > MAX_DIST && curr_distances[4] < MAX_DIST) {
-            left_turn_ratio = ?;
+            left_turn_ratio = 1;
             right_turn_ratio = 1;
             return ADJUST_RIGHT;
         } else if (curr_distances[4] < MAX_DIST) {
-            left_turn_ratio = ?;
+            left_turn_ratio = 1;
             right_turn_ratio = 1;
             return ADJUST_RIGHT;
         } else {
-            left_turn_ratio = ?;
+            left_turn_ratio = 1;
             right_turn_ratio = 1;
             return ADJUST_RIGHT;
         }
     } else if (curr_distances[1] < MAX_DIST) { // no bot on right and bot left 45
         if (curr_distances[0] < MAX_DIST) {
             left_turn_ratio = 1;
-            right_turn_ratio = ?;
+            right_turn_ratio = 1;
             return ADJUST_LEFT;
         } else {
             left_turn_ratio = 1;
-            right_turn_ratio = ?;
+            right_turn_ratio = 1;
             return ADJUST_LEFT;
         }
     } else if (curr_distances[4] < MAX_DIST) {
         if (curr_distances[5] < MAX_DIST) {
-            left_turn_ratio = ?;
+            left_turn_ratio = 1;
             right_turn_ratio = 1;
             return ADJUST_RIGHT;
         } else {
-            left_turn_ratio = ?;
+            left_turn_ratio = 1;
             right_turn_ratio = 1;
             return ADJUST_RIGHT;
         }
@@ -119,7 +149,7 @@ void drive(int left, int right, bool left_reverse, bool right_reverse) {
     left = left*left_multi*left_turn_ratio;
     right = right*right_multi*right_turn_ratio;
     uint8_t bytes[3];
-    bytes[0] = ESC_R_ADDRESS;
+    bytes[0] = ESC_ADDRESS;
     bytes[1] = right_reverse; //0 is drive forward
     bytes[2] = right;
     uint32_t crc = 0;
@@ -139,7 +169,7 @@ void drive(int left, int right, bool left_reverse, bool right_reverse) {
     ESC_R_SERIAL.write(((crc >> 8) & 0xFF));
     ESC_R_SERIAL.write((crc & 0xFF));
 
-    bytes[0] = ESC_L_ADDRESS;
+    bytes[0] = ESC_ADDRESS;
     bytes[1] = left_reverse; //0 is drive forward
     bytes[2] = left;
     crc = 0;
@@ -165,11 +195,11 @@ void drive(int left, int right, bool left_reverse, bool right_reverse) {
 **/
 void do_line_action_left() {
     //TODO: implement
-    drive(x, y, true, true);
+    //drive(x, y, true, true);
 }
 void do_line_action_right() {
     //TODO: implement
-    drive(y, x, true, true);
+    //drive(y, x, true, true);
 }
 
 void increment_encoder_right() {
@@ -196,10 +226,10 @@ void do_startup_action() {
     Wire2.begin();
     Wire2.setSDA(8);
     Wire2.setSCL(7);
-    icm.begin()
+    icm.begin();
     icm.disableDataReadyInterrupt();
     icm.configAccel(ICM20948::ACCEL_RANGE_2G, ICM20948::ACCEL_DLPF_BANDWIDTH_6HZ);
-    icm.configGyro(ICM20948::GYRO_RANGE_250DPS, ICM209480::GYRO_DLPF_BANDWIDTH_6HZ);
+    icm.configGyro(ICM20948::GYRO_RANGE_250DPS, ICM20948::GYRO_DLPF_BANDWIDTH_6HZ);
  }
 
  void setup_distance() {
@@ -219,7 +249,7 @@ void do_startup_action() {
     digitalWrite(31, LOW);
     digitalWrite(32, LOW);
 
-    Wire.setSpeed(CLOCK_SPEED_100KHZ);
+    Wire.setClock(100000);
     Wire.begin();
     Wire.setSDA(A15);
     Wire.setSCL(A14);
@@ -273,8 +303,8 @@ void do_startup_action() {
 
  void setup_current() {
     pinMode(LEFT_CURRENT, INPUT);
-    percent_overloaded = 0;
-    check_current = 0;
+    percent_overloaded_left = 0;
+    check_overload = 0;
  }
 
  void setup_motors(){
@@ -294,22 +324,20 @@ void do_startup_action() {
  * SENSOR READ METHODS
 **/
 void get_accel() {
-    x_accel.add(icm.getAccelX_mss());
-    y_accel.add(icm.getAccelY_mss());
+//    x_accel.add(icm.getAccelX_mss());
+//    y_accel.add(icm.getAccelY_mss());
 }
 void get_gyro() {
     //TODO: implement?
 }
 void get_distances() {
-    int[] dist = int[6];
     dist[0] = tof_left.readRangeContinuousMillimeters();
     dist[1] = tof_left_45.readRangeContinuousMillimeters();
     dist[2] = tof_left_center.readRangeContinuousMillimeters();
     dist[3] = tof_right_center.readRangeContinuousMillimeters();
     dist[4] = tof_right_45.readRangeContinuousMillimeters();
     dist[5] = tof_right.readRangeContinuousMillimeters();
-    distances.add(dist);
-    return dist;
+    //distances.add(dist);
 }
 
 void get_current() {
@@ -317,7 +345,7 @@ void get_current() {
     last_read_current = curr_time;
     int current = analogRead(LEFT_CURRENT)*voltage_to_current; //read in voltage then change to current using magic number
     total_currentxtime_left += time_at_current*current; //Keep track of current*time over the interval to average later
-    int current = analogRead(RIGHT_CURRENT)*voltage_to_current;
+    current = analogRead(RIGHT_CURRENT)*voltage_to_current;
     total_currentxtime_right += time_at_current*current;
     int time_since_check = curr_time - prev_time_current;
     if (time_since_check > check_overload) { //is it time to check the overload?
