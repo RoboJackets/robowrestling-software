@@ -13,18 +13,18 @@ void encoderISR() {
 
 void setup() {
   // put your setup code here, to run once:
-  ESC_L_SERIAL.begin(115200);
-  ESC_L_SERIAL.setRX(27);
-  ESC_L_SERIAL.setTX(26);
+  ESC_R_SERIAL.begin(115200);
+  ESC_R_SERIAL.setRX(7);
+  ESC_R_SERIAL.setTX(8);
   pinMode(A19, INPUT);
   attachInterrupt(A19, encoderISR, RISING);
 }
 
 void loop() {
   uint8_t bytes[3];
-  bytes[0] = ESC_L_ADDRESS;
+  bytes[0] = ESC_R_ADDRESS;
   bytes[1] = 0; //0 is drive forward
-  bytes[2] = 20; //drive motor at half speed
+  bytes[2] = 63; //drive motor at half speed
   uint32_t crc = 0;
   for(int i = 0; i < 3; i++) {
     crc = crc ^ (bytes[i] << 8);
@@ -36,11 +36,11 @@ void loop() {
       }
     }
   }
-  ESC_L_SERIAL.write(bytes[0]);
-  ESC_L_SERIAL.write(bytes[1]);
-  ESC_L_SERIAL.write(bytes[2]);
-  ESC_L_SERIAL.write(((crc >> 8) & 0xFF));
-  ESC_L_SERIAL.write((crc & 0xFF));
+  ESC_R_SERIAL.write(bytes[0]);
+  ESC_R_SERIAL.write(bytes[1]);
+  ESC_R_SERIAL.write(bytes[2]);
+  ESC_R_SERIAL.write(((crc >> 8) & 0xFF));
+  ESC_R_SERIAL.write((crc & 0xFF));
   Serial.println(counter);
   delay(100);
 }
