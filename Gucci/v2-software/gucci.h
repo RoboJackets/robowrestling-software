@@ -11,17 +11,11 @@
 // #define LEFT_LIDAR_SERIAL Serial1
 // #define RIGHT_LIDAR_SERIAL Serial4
 
-#define ESC_SERIAL Serial5
+#define ESC_L_SERIAL Serial1
+#define ESC_R_SERIAL Serial3
 #define ESC_ADDRESS 128
-#define ESC_CHECKSUM 0b01111111
 
-#define MAX_DIST 150 //Whatever the lidar returns when it doesn't see anything
-
-/* Definitions for pin numbers or Omron sensors */
-#define DIST_L 30
-#define DIST_L_45 28
-#define DIST_R 2
-#define DIST_R_45 3
+#define MAX_DIST 150 //Max distance we care about
 
 #define LEFT_ENCODER 38
 #define RIGHT_ENCODER 22
@@ -75,11 +69,6 @@ int last_read_current;
 int check_overload;
 const double voltage_to_current = .01611328;
 
-/* configurations */
-//lidar serial configs
-byte configOutput [5] = {0x5A, 0x05, 0x07, 0x01, 0x11};
-byte configUART [5] = {0x5A, 0x05, 0x0A, 0x00, 0x11};
-
 
 /* set motor speed */
 void drive(int left, int right);
@@ -108,7 +97,6 @@ void update buffers with new data
 void get_accel();
 void get_gyro();
 void get_distances();
-int read_lidar(Serial s);
 void get_current();
 
 /*

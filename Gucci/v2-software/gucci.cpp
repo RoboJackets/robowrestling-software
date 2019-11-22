@@ -118,14 +118,46 @@ State state_machine(State lastState) {
 void drive(int left, int right, bool left_reverse, bool right_reverse) {
     left = left*left_multi*left_turn_ratio;
     right = right*right_multi*right_turn_ratio;
-    ESC_SERIAL.write(ESC_ADDRESS);
-    ESC_SERIAL.write(left_reverse);
-    ESC_SERIAL.write(left);
-    ESC_SERIAL.write((ESC_ADDRESS+left_reverse+left)&ESC_CHECKSUM);
-    ESC_SERIAL.write(ESC_ADDRESS);
-    ESC_SERIAL.write(right_reverse);
-    ESC_SERIAL.write(right);
-    ESC_SERIAL.write((ESC_ADDRESS+right_reverse+right)&ESC_CHECKSUM);
+    uint8_t bytes[3];
+    bytes[0] = ESC_R_ADDRESS;
+    bytes[1] = right_reverse; //0 is drive forward
+    bytes[2] = right;
+    uint32_t crc = 0;
+    for(int i = 0; i < 3; i++) {
+        crc = crc ^ (bytes[i] << 8);
+        for (int j = 0; j < 8; j++) {
+            if (crc & 0x8000) {
+                crc = (crc << 1) ^ 0x1021;
+            } else {
+                crc = crc << 1;
+            }
+        }
+    }
+    ESC_R_SERIAL.write(bytes[0]);
+    ESC_R_SERIAL.write(bytes[1]);
+    ESC_R_SERIAL.write(bytes[2]);
+    ESC_R_SERIAL.write(((crc >> 8) & 0xFF));
+    ESC_R_SERIAL.write((crc & 0xFF));
+
+    bytes[0] = ESC_L_ADDRESS;
+    bytes[1] = left_reverse; //0 is drive forward
+    bytes[2] = left;
+    crc = 0;
+    for(int i = 0; i < 3; i++) {
+        crc = crc ^ (bytes[i] << 8);
+        for (int j = 0; j < 8; j++) {
+            if (crc & 0x8000) {
+                crc = (crc << 1) ^ 0x1021;
+            } else {
+                crc = crc << 1;
+            }
+        }
+    }
+    ESC_L_SERIAL.write(bytes[0]);
+    ESC_L_SERIAL.write(bytes[1]);
+    ESC_L_SERIAL.write(bytes[2]);
+    ESC_L_SERIAL.write(((crc >> 8) & 0xFF));
+    ESC_L_SERIAL.write((crc & 0xFF));
 }
 
 /**
@@ -172,7 +204,7 @@ void do_startup_action() {
 
  void setup_distance() {
     /* tof setup */
-    
+
     pinMode(0, OUTPUT);
     pinMode(1, OUTPUT);
     pinMode(2, OUTPUT);
@@ -236,7 +268,7 @@ void do_startup_action() {
     tof_left_center.startContinuous(10);
     tof_right_center.startContinuous(10);
     tof_right_45.startContinuous(10);
-    tof_right.startContinuous(10);  
+    tof_right.startContinuous(10);
  }
 
  void setup_current() {
@@ -250,8 +282,12 @@ void do_startup_action() {
     right_multi = 1;
     left_turn_ratio = 1;
     right_turn_ratio = 1;
-    ESC_SERIAL.begin(115200);
-    
+    ESC_L_SERIAL.begin(115200);
+    ESC_L_SERIAL.setRX(22);
+    ESC_L_SERIAL.setTX(26);
+    ESC_R_SERIAL.begin(115200);
+    ESC_R_SERIAL.setRX(7);
+    ESC_R_SERIAL.setTX(8);
  }
 
 /**
@@ -275,30 +311,7 @@ void get_distances() {
     distances.add(dist);
     return dist;
 }
-int read_lidar(Serial s) {
-    byte[] bytes = byte[9];
-    s.readBytes(bytes, 9);
-    int dist_low = 0;
-    while (dist_low < 9) {
-        if (bytes[dist_low] == 0x89) {
-            if (dist_low == 0) {
-                if (bytes[8] == 0x89) {
-                    return bytes[1] + (bytes[2] << 8);
-                }
-            } else if (dist_low == 7) {
-                if (bytes[8] == 0x89) {
-                    return bytes[0] + (bytes[1] << 8);
-                }
-            } else {
-                if (bytes[++dist_low] == 0x89) {
-                    return bytes[++dist_low] + (bytes[++dist_low] << 8);
-                }
-            }
-        }
-        dist_low++;
-    }
-    return read_lidar(s);
-}
+
 void get_current() {
     int time_at_current = curr_time - last_read_current;
     last_read_current = curr_time;
