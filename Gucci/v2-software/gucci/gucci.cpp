@@ -268,30 +268,35 @@ void do_startup_action() {
     digitalWrite(31, LOW);
     digitalWrite(32, LOW);
 
-    tof_left.init();
-    tof_left.setAddress(0x31);
-    tof_left.setTimeout(1000);
     digitalWrite(0, HIGH);
-    tof_left_45.init();
+    tof_left.init(1);
+    tof_left.setAddress(0x30);
+    tof_left.setTimeout(1000);
+    delay(100);
+    digitalWrite(1, HIGH);
+    tof_left_45.init(1);
     tof_left_45.setAddress(0x32);
     tof_left_45.setTimeout(1000);
-    digitalWrite(1, HIGH);
-    tof_left_center.init();
+    delay(100);
+    digitalWrite(2, HIGH);
+    tof_left_center.init(1);    
     tof_left_center.setAddress(0x33);
     tof_left_center.setTimeout(1000);
-    digitalWrite(2, HIGH);
-    tof_right_center.init();
-    tof_right_center.setAddress(0x34);
-    tof_right_center.setTimeout(1000);
+    delay(100);
     digitalWrite(30, HIGH);
-    tof_right_45.init();
+    tof_right_center.init(1);
+    tof_right_center.setAddress(0x34);
+    tof_right_center.setTimeout(1000); 
+    delay(100);
+    digitalWrite(31, HIGH);
+    tof_right_45.init(1);
     tof_right_45.setAddress(0x35);
     tof_right_45.setTimeout(1000);
-    digitalWrite(31, HIGH);
-    tof_right.init();
-    tof_right.setAddress(0x36);
-    tof_right.setTimeout(1000);
+    delay(100);
     digitalWrite(32, HIGH);
+    tof_right.init(1);
+    tof_right.setAddress(0x29);
+    tof_right.setTimeout(1000);
 
     tof_left.startContinuous(10);
     tof_left_45.startContinuous(10);
@@ -332,11 +337,18 @@ void get_gyro() {
 }
 void get_distances() {
     dist[0] = tof_left.readRangeContinuousMillimeters();
+//    Serial.println("left ");
+    Serial.println(dist[0]);
     dist[1] = tof_left_45.readRangeContinuousMillimeters();
+    Serial.println(dist[1]);
     dist[2] = tof_left_center.readRangeContinuousMillimeters();
+    Serial.println(dist[2]);
     dist[3] = tof_right_center.readRangeContinuousMillimeters();
+    Serial.println(dist[3]);
     dist[4] = tof_right_45.readRangeContinuousMillimeters();
+    Serial.println(dist[4]);
     dist[5] = tof_right.readRangeContinuousMillimeters();
+    Serial.println(dist[5]);
     //distances.add(dist);
 }
 

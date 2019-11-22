@@ -16,7 +16,7 @@
 #define ESC_R_SERIAL Serial3
 #define ESC_ADDRESS 128
 
-#define MAX_DIST 150 //Max distance we care about
+#define MAX_DIST 1500 //Max distance we care about
 
 #define LEFT_ENCODER 38
 #define RIGHT_ENCODER 22
