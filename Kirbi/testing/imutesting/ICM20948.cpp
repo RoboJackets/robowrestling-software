@@ -44,10 +44,10 @@ int ICM20948::begin() {
   }*/
   reset(); // reset the ICM20948. Don't check return value as a reset clears the register and can't be verified.
   delay(1); // wait for ICM-20948 to come back up
-  /*if (selectAutoClockSource() < 0) {
+  if (selectAutoClockSource() < 0) {
     return -6;
   }
-  */
+
   if (whoAmI() != ICM20948_WHO_AM_I) {
     return -7;
   }
