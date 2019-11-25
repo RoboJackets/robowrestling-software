@@ -10,10 +10,22 @@ void setup() {
   setup_motors();
   //attachInterrupt(LEFT_ENCODER, increment_encoder_left, RISING);
   //attachInterrupt(RIGHT_ENCODER, increment_encoder_right, RISING);
+  pinMode(A22, OUTPUT);
+  analogWrite(A22, 192);
+  pinMode(17, INPUT);
+  pinMode(35, INPUT);
+  pinMode(23, INPUT);
+  pinMode(LL_INT, INPUT);
+  pinMode(RL_INT, INPUT);
+  attachInterrupt(LL_INT, do_line_action_left, FALLING);
+  attachInterrupt(RL_INT, do_line_action_right, FALLING);
 }
 
 void loop() {
   curr_state = state_machine(last_state);
+  Serial.println(digitalRead(LL_INT));
+  Serial.println(digitalRead(RL_INT));
+//  Serial.println(digitalRead(17));
   switch(curr_state) {
         case SEARCH_LEFT:
 //            drive(100, 100, 1, 0);
@@ -60,5 +72,6 @@ void loop() {
             do_startup_action();
             break;
     }
+    delay(1000);
 
 }

@@ -8,6 +8,8 @@ ICM20948 icm(Wire2, (uint8_t)0x68);
 
 int dist[6];
 
+int last_line_int;
+
 /* distance sensors */
 VL53L0X tof_left;
 VL53L0X tof_left_45;
@@ -56,7 +58,7 @@ State state_machine(State lastState) {
         return PANIC_FIRE;
     }
     if (curr_time - prev_time_accel > check_accel) {
-        prev_time_accel = millis();
+        prev_time_accel = micros();
         get_accel();
     }
     int* curr_distances = dist;
@@ -139,7 +141,7 @@ State state_machine(State lastState) {
         return SEARCH_LEFT;
     } else if (curr_distances[5] < MAX_DIST) {
         return SEARCH_RIGHT;
-    } else if (lastState == WAIT_FOR_START) {
+    } else {
         return STARTUP;
     }
 
@@ -196,10 +198,18 @@ void drive(int left, int right, bool left_reverse, bool right_reverse) {
 void do_line_action_left() {
     //TODO: implement
     //drive(x, y, true, true);
+    if (last_line_int < ((int)millis()-LINE_COOLDOWN)) {
+      Serial.println("left line");  
+    }
+    last_line_int = millis();
 }
 void do_line_action_right() {
     //TODO: implement
     //drive(y, x, true, true);
+    if (last_line_int < ((int)millis()-LINE_COOLDOWN)) {
+      Serial.println("right line");  
+    }
+    last_line_int = millis();
 }
 
 void increment_encoder_right() {
@@ -268,32 +278,32 @@ void do_startup_action() {
     digitalWrite(31, LOW);
     digitalWrite(32, LOW);
 
-    digitalWrite(0, HIGH);
+    digitalWrite(32, HIGH);
     tof_left.init(1);
     tof_left.setAddress(0x30);
     tof_left.setTimeout(1000);
     delay(100);
-    digitalWrite(1, HIGH);
+    digitalWrite(31, HIGH);
     tof_left_45.init(1);
     tof_left_45.setAddress(0x32);
     tof_left_45.setTimeout(1000);
     delay(100);
-    digitalWrite(2, HIGH);
+    digitalWrite(30, HIGH);
     tof_left_center.init(1);    
     tof_left_center.setAddress(0x33);
     tof_left_center.setTimeout(1000);
     delay(100);
-    digitalWrite(30, HIGH);
+    digitalWrite(2, HIGH);
     tof_right_center.init(1);
     tof_right_center.setAddress(0x34);
     tof_right_center.setTimeout(1000); 
     delay(100);
-    digitalWrite(31, HIGH);
+    digitalWrite(1, HIGH);
     tof_right_45.init(1);
     tof_right_45.setAddress(0x35);
     tof_right_45.setTimeout(1000);
     delay(100);
-    digitalWrite(32, HIGH);
+    digitalWrite(0, HIGH);
     tof_right.init(1);
     tof_right.setAddress(0x29);
     tof_right.setTimeout(1000);
@@ -338,17 +348,17 @@ void get_gyro() {
 void get_distances() {
     dist[0] = tof_left.readRangeContinuousMillimeters();
 //    Serial.println("left ");
-    Serial.println(dist[0]);
+//    Serial.println(dist[0]);
     dist[1] = tof_left_45.readRangeContinuousMillimeters();
     Serial.println(dist[1]);
     dist[2] = tof_left_center.readRangeContinuousMillimeters();
-    Serial.println(dist[2]);
+//    Serial.println(dist[2]);
     dist[3] = tof_right_center.readRangeContinuousMillimeters();
-    Serial.println(dist[3]);
+//    Serial.println(dist[3]);
     dist[4] = tof_right_45.readRangeContinuousMillimeters();
     Serial.println(dist[4]);
     dist[5] = tof_right.readRangeContinuousMillimeters();
-    Serial.println(dist[5]);
+//    Serial.println(dist[5]);
     //distances.add(dist);
 }
 

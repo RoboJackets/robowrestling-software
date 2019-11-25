@@ -9,8 +9,9 @@
 #include "VL53L0X.h"
 #include "math.h"
 
-// #define LEFT_LIDAR_SERIAL Serial1
-// #define RIGHT_LIDAR_SERIAL Serial4
+#define LL_INT 18
+#define RL_INT 19
+#define LINE_COOLDOWN 100
 
 #define ESC_L_SERIAL Serial1
 #define ESC_R_SERIAL Serial3
@@ -40,7 +41,6 @@ enum State {
 //CircularArray<double> x_accel;
 //CircularArray<double> y_accel;
 //CircularArray<int[6]> distances;
-
 
 /* set motor speed */
 void drive(int left, int right, bool left_reverse, bool right_reverse);

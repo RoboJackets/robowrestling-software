@@ -10,8 +10,8 @@ void setup() {
   Serial.begin(115200);
   //Wire with SDA 8 and SCL 7 for Kirbi. Wire2 with SDA 4 and SCL3
   Wire2.begin();
-  Wire2.setSDA(8);
-  Wire2.setSCL(7);
+  Wire2.setSDA(4);
+  Wire2.setSCL(3);
   Serial.print(icm.begin());
   icm.disableDataReadyInterrupt();
   icm.configAccel(ICM20948::ACCEL_RANGE_2G, ICM20948::ACCEL_DLPF_BANDWIDTH_6HZ);
