@@ -4,11 +4,12 @@
 ICM20948 icm(Wire2, (uint8_t)0x68);
 
 void setup() {
+    delay(1000);
   // put your setup code here, to run once:
   pinMode(9, OUTPUT);
   digitalWrite(9, LOW);
   Serial.begin(115200);
-  //Wire with SDA 8 and SCL 7 for Kirbi. Wire2 with SDA 4 and SCL3
+  //Wire with SDA 8 and SCL 7 for Kirbi. Wire2 with SDA 4 and SCL3 for Gucci.
   Wire2.begin();
   Wire2.setSDA(4);
   Wire2.setSCL(3);
