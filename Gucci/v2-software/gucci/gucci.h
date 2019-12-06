@@ -14,7 +14,11 @@
 #define LINE_COOLDOWN 100
 
 #define ESC_L_SERIAL Serial1
+#define ESC_L_RX 22
+#define ESC_L_TX 26
 #define ESC_R_SERIAL Serial3
+#define ESC_R_RX 7
+#define ESC_R_TX 8
 #define ESC_ADDRESS 128
 
 #define MAX_DIST 1500 //Max distance we care about
@@ -24,6 +28,17 @@
 
 #define LEFT_CURRENT A21
 #define RIGHT_CURRENT A0
+
+#define IMU_ADDRESS_PIN 9
+#define IMU_SDA 8
+#define IMU_SCL 7
+
+#define TOF_L 0
+#define TOF_L_45 1
+#define TOF_L_C 2
+#define TOF_R_C 30
+#define TOF_R_45 31
+#define TOF_R 32
 
 enum State {
     SEARCH_LEFT,
