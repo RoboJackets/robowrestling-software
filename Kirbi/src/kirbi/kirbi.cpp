@@ -1,133 +1,97 @@
 #include "kirbi.h"
 
-x_accel = new CircularArray<double>(8);
-y_accel = new CircularArray<double>(8);
-distances = new CircularArray<int[6]>(8);
+ICM20948 icm(Wire2, (uint8_t)0x68);
 
-enum State {
-    SEARCH_LEFT,
-    SEARCH_RIGHT,
-    ADJUST_LEFT,
-    ADJUST_RIGHT,
-    SLAMMY_WHAMMY,
-    PANIC_HIT,
-    PANIC_FIRE,
+int dist[6];
 
-    WAIT_FOR_START,
-    STARTUP
-};
+volatile bool left_line_hit;
+volatile bool right_line_hit;
+
+/* acceleration timing variables */
+int curr_time;
+int prev_time_accel;
+int check_accel;
+
+/* encoder counts */
+volatile int right_encoder;
+volatile int left_encoder;
+
+double left_multi;
+double right_multi;
 
 
-State state_machine(State lastState) {
+/* Current sensing stuff */
+double r1 = 2.3;
+double r2 = 7.28;
+double nominal_current = 4.12;
+const double precalc = 2.01873 //nominal_current*(sqrt(r1/(r1+r2)))
+const double tw = 42.2;
+int total_currentxtime_left;
+int total_currentxtime_right;
+double percent_overloaded_left;
+double percent_overloaded_right;
+int prev_time_current; //for use with curr_time
+int last_read_current;
+int check_overload;
+const double voltage_to_current = .01611328;
+
+/* configurations */
+//lidar serial configs
+byte configOutput [5] = {0x5A, 0x05, 0x07, 0x01, 0x11};
+byte configUART [5] = {0x5A, 0x05, 0x0A, 0x00, 0x11};
+
+
+State state_machine() {
     curr_time = micros();
     get_distances();
     get_current();
     if (percent_overloaded_left > 1 || percent_overloaded_right > 1) {
         return PANIC_FIRE;
     }
-    if (curr_time - prev_time > check_accel) {
-        prev_time_accel = millis();
+    if (curr_time - prev_time_accel > check_accel) {
+        prev_time_accel = micros();
         get_accel();
-    }
-    int[] curr_distances = distances.getFront();
-    /**
-    curr distances
-    [0]: dist left
-    [1]: dist left 45
-    [2]: left lidar
-    [3]: right lidar
-    [4]: dist right 45
-    [5]: dist right
-    **/
-    // TODO: probably do math to get better ratios for left & right turn
-
-    if (curr_distances[2] <= MAX_DIST) { // bot on left
-        if (curr_distances[3] <= MAX_DIST) { // bot on right
-            if (curr_distances[1] == 0 && curr_distances[4] == 0) {
-              //
-                left_turn_ratio = 1;
-                right_turn_ratio = 1;
-                return SLAMMY_WHAMMY; //temp but kinda what we want
-            } else if (curr_distances[1] == 1 && curr_distances[4] == 0) {
-              //45 left
-                left_turn_ratio = 1;
-                right_turn_ratio = 0.9;
-                return ADJUST_LEFT;
-            } else if (curr_distances[1] == 0 && curr_distances[4] == 1) {
-              // 45 right
-                left_turn_ratio = 0.9;
-                right_turn_ratio = 1;
-                return ADJUST_RIGHT;
-            } else {
-                left_turn_ratio = 1;
-                right_turn_ratio = 1;
-                return SLAMMY_WHAMMY; //either we're seeing them on all 4 middle sensors or something weird is happening
-            }
-        } else { // no bot on right
-            if (curr_distances[0] == 0 && curr_distances[1] == 1) {
-              // no left, on 45 left only
-                left_turn_ratio = 1;
-                right_turn_ratio = ?;
-                return ADJUST_LEFT;
-            } else if (curr_distances[1] == 1) {
-              // on left and 45 left
-                left_turn_ratio = 1;
-                right_turn_ratio = ?;
-                return ADJUST_LEFT;
-            } else {
-              //
-                left_turn_ratio = 1;
-                right_turn_ratio = ?;
-                return ADJUST_LEFT;
-            }
-        }
-    } else if (curr_distances[3] <= MAX_DIST) { // bot on right
-        if (curr_distances[5] == 0 && curr_distances[4] == 1) {
-            left_turn_ratio = ?;
-            right_turn_ratio = 1;
-            return ADJUST_RIGHT;
-        } else if (curr_distances[4] == 1) {
-            left_turn_ratio = ?;
-            right_turn_ratio = 1;
-            return ADJUST_RIGHT;
-        } else {
-            left_turn_ratio = ?;
-            right_turn_ratio = 1;
-            return ADJUST_RIGHT;
-        }
-    } else if (curr_distances[1] == 1) { // no bot on right and bot left 45
-        if (curr_distances[0] == 1) {
-            left_turn_ratio = 1;
-            right_turn_ratio = ?;
-            return ADJUST_LEFT;
-        } else {
-            left_turn_ratio = 1;
-            right_turn_ratio = ?;
-            return ADJUST_LEFT;
-        }
-    } else if (curr_distances[4] == 1) {
-        if (curr_distances[5] == 1) {
-            left_turn_ratio = ?;
-            right_turn_ratio = 1;
-            return ADJUST_RIGHT;
-        } else {
-            left_turn_ratio = ?;
-            right_turn_ratio = 1;
-            return ADJUST_RIGHT;
-        }
-    } else if (curr_distances[0] == 1) {
-        return SEARCH_LEFT;
-    } else if (curr_distances[5] == 1) {
-        return SEARCH_RIGHT;
-    } else if (lastState == WAIT_FOR_START) {
-        return STARTUP;
+        //if (y_acceleration > ouch || y_acceleration < -ouch) {
+            // return PANIC_HIT;
+        // }
     }
 
+    Location curr_opponent_location = get_opponent();
+    switch curr_opponent_location{
+        case FRONT_CLOSE:
+            return MEGA_SLAMMY_WHAMMY;
+
+        case FRONT_FAR:
+            return SLAMMY_WHAMMY;
+
+        case LEFT_CORNER_FRONT:
+            return ADJUST_1_LEFT;
+
+        case RIGHT_CORNER_FRONT:
+            return ADJUST_1_RIGHT;
+
+        case LEFT_CORNER:
+            return ADJUST_2_LEFT;
+
+        case RIGHT_CORNER:
+            return ADJUST_2_RIGHT;
+        case LEFT_CORNER_SIDE:
+            return ADJUST_3_LEFT;
+
+        case RIGHT_CORNER_SIDE:
+            return ADJUST_3_RIGHT;
+
+        case LEFT_SIDE:
+            return ADJUST_4_LEFT;
+
+        case RIGHT_SIDE:
+            return ADJUST_4_RIGHT;
+    }
 }
 
 void drive(int left, int right, bool left_reverse, bool right_reverse) {
-    left = left*left_multi*left_turn_ratio;
-    right = right*right_multi*right_turn_ratio;
+    left = left*left_multi;
+    right = right*right_multi;
     ESC_SERIAL.write(ESC_ADDRESS);
     ESC_SERIAL.write(left_reverse);
     ESC_SERIAL.write(left);
@@ -141,21 +105,36 @@ void drive(int left, int right, bool left_reverse, bool right_reverse) {
 /**
  * INTERRUPT METHODS
 **/
-void do_line_action_left() {
-    //TODO: implement
-    drive(x, y, true, true);
+void left_on_line_int() {
+    left_line_hit = true;
 }
-void do_line_action_right() {
-    //TODO: implement
-    drive(y, x, true, true);
+void right_on_line_int() {
+    right_line_hit = true;
+}
+
+void left_off_line_int() {
+    left_line_hit = false;
+}
+void right_off_line_int() {
+    right_line_hit = false;
 }
 
 void increment_encoder_right() {
-    right_encoder++;
+    if (digitalReadFast(RIGHT_B_ENCODER)) {
+        right_encoder--;
+    }
+    else {
+        right_encoder++;
+    }
 }
 
 void increment_encoder_left() {
-    left_encoder++;
+    if (digitalReadFast(LEFT_B_ENCODER)) {
+        left_encoder++;
+    }
+    else {
+        left_encoder--;
+    }
 }
 
 /**
@@ -169,15 +148,15 @@ void do_startup_action() {
  * SETUP METHODS
 **/
  void setup_imu() {
-    pinMode(9, OUTPUT);
-    digitalWrite(9, LOW);
+    pinMode(IMU_ADDRESS_PIN, OUTPUT);
+    digitalWrite(IMU_ADDRESS_PIN, LOW); //Don't ever set this high
     Wire2.begin();
-    Wire2.setSDA(8);
-    Wire2.setSCL(7);
-    icm.begin()
+    Wire2.setSDA(IMU_SDA);
+    Wire2.setSCL(IMU_SCL);
+    icm.begin();
     icm.disableDataReadyInterrupt();
     icm.configAccel(ICM20948::ACCEL_RANGE_2G, ICM20948::ACCEL_DLPF_BANDWIDTH_6HZ);
-    icm.configGyro(ICM20948::GYRO_RANGE_250DPS, ICM209480::GYRO_DLPF_BANDWIDTH_6HZ);
+    icm.configGyro(ICM20948::GYRO_RANGE_250DPS, ICM20948::GYRO_DLPF_BANDWIDTH_6HZ);
  }
 
  void setup_distance() {
@@ -203,10 +182,35 @@ void do_startup_action() {
  void setup_motors(){
     left_multi = 1;
     right_multi = 1;
-    left_turn_ratio = 1;
-    right_turn_ratio = 1;
     ESC_SERIAL.begin(115200);
  }
+
+ void setup_encoders(){
+    pinMode(LEFT_A_ENCODER, INPUT);
+    pinMode(RIGHT_A_ENCODER, INPUT);
+
+    attachInterrupt(digitalPinToInterrupt(LEFT_A_ENCODER), increment_encoder_left, RISING);
+    attachInterrupt(digitalPinToInterrupt(RIGHT_A_ENCODER), increment_encoder_right, RISING);
+}
+
+void setup_line(){
+    pinMode(LEFT_REF_LINE, OUTPUT);
+    analogWrite(LEFT_REF_LINE, LEFT_THRES_LINE);
+    pinMode(RIGHT_REF_LINE, OUTPUT);
+    analogWrite(RIGHT_REF_LINE, RIGHT_THRES_LINE);
+
+    pinMode(LEFT_INT_LINE, INPUT);
+    pinMode(RIGHT_INT_LINE, INPUT);
+
+    attachInterrupt(digitalPinToInterrupt(LEFT_INT_LINE), left_line_int, FALLING);
+    attachInterrupt(digitalPinToInterrupt(RIGHT_INT_LINE), right_line_int, FALLING);
+    attachInterrupt(digitalPinToInterrupt(LEFT_INT_LINE), left_line_int, RISING);
+    attachInterrupt(digitalPinToInterrupt(RIGHT_INT_LINE), right_line_int, RISING);
+}
+
+void setup_remote(){
+    pinMode(REMOTE_PIN, INPUT);
+}
 
 /**
  * SENSOR READ METHODS
@@ -281,8 +285,68 @@ void get_current() {
             percent_overloaded_right += time_since_check/ton;
         }
     }
+}
 
+Location get_opponent(){
 
+    bool left_side_valid = DIST_LEFT_SIDE == 1; //Is the distance on the sensor a resonable number
+    bool left_corner_valid = DIST_LEFT_CORNER == 1;
+    bool left_front_valid = DIST_LEFT_CENTER < MAX_DIST;
+    bool left_front_close_valid = DIST_LEFT_CENTER < CLOSE_DIST;
+    bool right_front_close_valid = DIST_RIGHT_CENTER < CLOSE_DIST;
+    bool right_front_valid = DIST_RIGHT_CENTER < MAX_DIST;
+    bool right_corner_valid = DIST_RIGHT_CORNER == 1;
+    bool right_side_valid = DIST_RIGHT_SIDE == 1;
+
+    if((left_front_close_valid || right_front_close_valid)
+        && !(right_corner_valid || left_corner_valid || left_side_valid || right_side_valid)){
+        return FRONT_CLOSE;
+    }
+
+    if((left_front_valid || right_front_valid)
+            && !(right_corner_valid || left_corner_valid || left_side_valid || right_side_valid)){
+        return FRONT_FAR;
+    }
+
+    if(left_front_valid && left_corner_valid
+            && !(right_corner_valid || right_front_valid || left_side_valid || right_side_valid)){
+        return LEFT_CORNER_FRONT;
+    }
+
+    if(right_front_valid && right_corner_valid
+            && !(left_corner_valid || left_front_valid || left_side_valid || right_side_valid)){
+        return RIGHT_CORNER_FRONT;
+    }
+
+    if(left_corner_valid
+            && !(right_corner_valid || right_front_valid || left_side_valid || right_side_valid || left_front_valid)){
+        return LEFT_CORNER;
+    }
+
+    if(right_corner_valid
+            && !(left_corner_valid || right_front_valid || left_side_valid || right_side_valid || left_front_valid)){
+        return RIGHT_CORNER;
+    }
+
+    if(left_side_valid && left_corner_valid
+            && !(right_corner_valid || right_front_valid || left_front_valid || right_side_valid)){
+        return LEFT_CORNER_SIDE;
+    }
+
+    if(right_side_valid && right_corner_valid
+            && !(left_corner_valid || left_front_valid || left_side_valid || right_front_valid)){
+        return RIGHT_CORNER_SIDE;
+    }
+
+    if(left_side_valid
+            && !(right_corner_valid || right_front_valid || left_corner_valid || right_side_valid || left_front_valid)){
+        return LEFT_SIDE;
+    }
+
+    if(right_side_valid
+            && !(left_corner_valid || right_front_valid || left_side_valid || right_corner_valid || left_front_valid)){
+        return RIGHT_SIDE;
+    }
 }
 
 /**

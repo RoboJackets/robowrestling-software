@@ -93,16 +93,11 @@ enum Location{
 	RIGHT_SIDE
 };
 
-/* IMU and distance sensor data buffers */
-//CircularArray<double> x_accel;
-//CircularArray<double> y_accel;
-//CircularArray<int[6]> distances;
-
 /* set motor speed */
 void drive(int left, int right, bool left_reverse, bool right_reverse);
 
 /* state machine */
-State state_machine(State last_state);
+State state_machine();
 
 /* interrupt methods */
 void left_on_line_int();

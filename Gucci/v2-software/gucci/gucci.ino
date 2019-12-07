@@ -15,10 +15,10 @@ void setup() {
 }
 
 void loop() {
-  curr_state = state_machine(last_state);
-  Serial.println(digitalRead(LL_INT));
-  Serial.println(digitalRead(RL_INT));
-//  Serial.println(digitalRead(17));
+  curr_state = state_machine();
+  Serial.println(digitalRead(LEFT_INT_LINE));
+  Serial.println(digitalRead(RIGHT_INT_LINE));
+//  Serial.println(digitalRead(REMOTE_PIN));
   switch(curr_state) {
         case SEARCH_LEFT:
 //            drive(100, 100, 1, 0);

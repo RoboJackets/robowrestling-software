@@ -15,6 +15,7 @@
 #define ESC_CHECKSUM 0b01111111
 
 #define MAX_DIST 150 //Whatever the lidar returns when it doesn't see anything
+#define CLOSE_DIST 500
 
 /* Definitions for pin numbers or Omron sensors */
 #define DIST_L 30
@@ -22,65 +23,77 @@
 #define DIST_R 2
 #define DIST_R_45 3
 
-#define LEFT_ENCODER 38
-#define RIGHT_ENCODER 22
+#define LEFT_A_ENCODER 38
+#define RIGHT_A_ENCODER 22
+#define LEFT_B_ENCODER 37
+#define RIGHT_B_ENCODER 21
 
 #define LEFT_CURRENT A21
 #define RIGHT_CURRENT A0
 
-enum States;
+#define IMU_ADDRESS_PIN 9
+#define IMU_SDA 8
+#define IMU_SCL 7
 
-/* IMU and distance sensor data buffers */
-CircularArray<double> x_accel;
-CircularArray<double> y_accel;
-CircularArray<int[6]> distances;
+#define LINE_REF A22
+#define RIGHT_INT_LINE 19
+#define LEFT_INT_LINE 18
 
-/* acceleration timing variables */
-int curr_time;
-int prev_time_accel;
-int check_accel;
+#define RIGHT_THRES_LINE 150
+#define LEFT_THRES_LINE 150
 
-/* encoder counts */
-int right_encoder;
-int left_encoder;
+#define REMOTE_PIN 17
 
-double left_multi;
-double right_multi;
+#define DIST_LEFT_SIDE    dist[0]
+#define DIST_LEFT_CORNER  dist[1]
+#define DIST_LEFT_CENTER  dist[2]
+#define DIST_RIGHT_CENTER dist[3]
+#define DIST_RIGHT_CORNER dist[4]
+#define DIST_RIGHT_SIDE   dist[5]
 
-double left_turn_ratio;
-double right_turn_ratio;
+enum State {
+    SEARCH_LEFT,
+    SEARCH_RIGHT,
+    ADJUST_1_LEFT,
+    ADJUST_1_RIGHT,
+    ADJUST_2_LEFT,
+    ADJUST_2_RIGHT,
+    ADJUST_3_LEFT,
+    ADJUST_3_RIGHT,
+    ADJUST_4_LEFT,
+    ADJUST_4_RIGHT,
+    SLAMMY_WHAMMY,
+    MEGA_SLAMMY_WHAMMY,
+    PANIC_HIT,
+    PANIC_FIRE,
+    WAIT_FOR_START,
+    STARTUP
+};
 
-
-/* Current sensing stuff */
-double r1 = 2.3;
-double r2 = 7.28;
-double nominal_current = 4.12;
-const double precalc = 2.01873 //nominal_current*(sqrt(r1/(r1+r2)))
-const double tw = 42.2;
-int total_currentxtime_left;
-int total_currentxtime_right;
-double percent_overloaded_left;
-double percent_overloaded_right;
-int prev_time_current; //for use with curr_time
-int last_read_current;
-int check_overload;
-const double voltage_to_current = .01611328;
-
-/* configurations */
-//lidar serial configs
-byte configOutput [5] = {0x5A, 0x05, 0x07, 0x01, 0x11};
-byte configUART [5] = {0x5A, 0x05, 0x0A, 0x00, 0x11};
-
+enum Location{
+    FRONT_FAR,
+    FRONT_CLOSE,
+    LEFT_CORNER_FRONT,
+    RIGHT_CORNER_FRONT,
+    LEFT_CORNER,
+    RIGHT_CORNER.
+    LEFT_CORNER_SIDE,
+    RIGHT_CORNER_SIDE,
+    LEFT_SIDE,
+    RIGHT_SIDE
+};
 
 /* set motor speed */
-void drive(int left, int right);
+void drive(int left, int right, bool left_reverse, bool right_reverse);
 
 /* state machine */
-State state_machine(State last_state);
+State state_machine();
 
 /* interrupt methods */
-void do_line_action_left();
-void do_line_action_right();
+void left_on_line_int();
+void right_on_line_int();
+void left_off_line_int();
+void right_off_line_int();
 void do_startup_action();
 void increment_encoder_left();
 void increment_encoder_right();
@@ -91,7 +104,9 @@ void setup_imu();
 void setup_distance();
 void setup_current();
 void setup_motors();
-
+void setup_encoders();
+void setup_line();
+void setup_remote();
 /**
 sensor read methods
 void update buffers with new data
@@ -101,6 +116,7 @@ void get_gyro();
 void get_distances();
 int read_lidar(Serial s);
 void get_current();
+Location get_opponent();
 
 /*
 other

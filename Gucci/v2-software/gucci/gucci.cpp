@@ -1,9 +1,5 @@
 #include "gucci.h"
 
-//x_accel = new CircularArray<double>(8);
-//y_accel = new CircularArray<double>(8);
-//distances = new CircularArray<int[6]>(8);
-
 ICM20948 icm(Wire2, (uint8_t)0x68);
 
 int dist[6];
@@ -48,7 +44,7 @@ int check_overload;
 const double voltage_to_current = .01611328;
 
 
-State state_machine(State lastState) {
+State state_machine() {
     curr_time = micros();
     get_distances();
     get_current();
@@ -285,8 +281,6 @@ void do_startup_action() {
  void setup_motors(){
     left_multi = 1;
     right_multi = 1;
-    left_turn_ratio = 1;
-    right_turn_ratio = 1;
     ESC_L_SERIAL.begin(115200);
     ESC_L_SERIAL.setRX(ESC_L_RX);
     ESC_L_SERIAL.setTX(ESC_L_TX);
