@@ -39,8 +39,7 @@
 #define RIGHT_INT_LINE 19
 #define LEFT_INT_LINE 18
 
-#define RIGHT_THRES_LINE 150
-#define LEFT_THRES_LINE 150
+#define LINE_THRES 190
 
 #define REMOTE_PIN 17
 
@@ -65,9 +64,7 @@ enum State {
     SLAMMY_WHAMMY,
     MEGA_SLAMMY_WHAMMY,
     PANIC_HIT,
-    PANIC_FIRE,
-    WAIT_FOR_START,
-    STARTUP
+    PANIC_FIRE
 };
 
 enum Location{
@@ -76,7 +73,7 @@ enum Location{
     LEFT_CORNER_FRONT,
     RIGHT_CORNER_FRONT,
     LEFT_CORNER,
-    RIGHT_CORNER.
+    RIGHT_CORNER,
     LEFT_CORNER_SIDE,
     RIGHT_CORNER_SIDE,
     LEFT_SIDE,
@@ -111,10 +108,11 @@ void setup_remote();
 sensor read methods
 void update buffers with new data
  */
+bool get_line_flag();
 void get_accel();
 void get_gyro();
 void get_distances();
-int read_lidar(Serial s);
+int read_lidar(HardwareSerial s);
 void get_current();
 Location get_opponent();
 

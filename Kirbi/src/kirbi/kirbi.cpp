@@ -24,7 +24,7 @@ double right_multi;
 double r1 = 2.3;
 double r2 = 7.28;
 double nominal_current = 4.12;
-const double precalc = 2.01873 //nominal_current*(sqrt(r1/(r1+r2)))
+const double precalc = 2.01873; //nominal_current*(sqrt(r1/(r1+r2)))
 const double tw = 42.2;
 int total_currentxtime_left;
 int total_currentxtime_right;
@@ -45,19 +45,19 @@ State state_machine() {
     curr_time = micros();
     get_distances();
     get_current();
-    if (percent_overloaded_left > 1 || percent_overloaded_right > 1) {
-        return PANIC_FIRE;
-    }
-    if (curr_time - prev_time_accel > check_accel) {
-        prev_time_accel = micros();
-        get_accel();
-        //if (y_acceleration > ouch || y_acceleration < -ouch) {
-            // return PANIC_HIT;
-        // }
-    }
+//    if (percent_overloaded_left > 1 || percent_overloaded_right > 1) {
+//        return PANIC_FIRE;
+//    }
+//    if (curr_time - prev_time_accel > check_accel) {
+//        prev_time_accel = micros();
+//        get_accel();
+//        //if (y_acceleration > ouch || y_acceleration < -ouch) {
+//            // return PANIC_HIT;
+//        // }
+//    }
 
     Location curr_opponent_location = get_opponent();
-    switch curr_opponent_location{
+    switch(curr_opponent_location) {
         case FRONT_CLOSE:
             return MEGA_SLAMMY_WHAMMY;
 
@@ -93,7 +93,7 @@ void drive(int left, int right, bool left_reverse, bool right_reverse) {
     left = left*left_multi;
     right = right*right_multi;
     ESC_SERIAL.write(ESC_ADDRESS);
-    ESC_SERIAL.write(left_reverse);
+    ESC_SERIAL.write(!left_reverse);
     ESC_SERIAL.write(left);
     ESC_SERIAL.write((ESC_ADDRESS+left_reverse+left)&ESC_CHECKSUM);
     ESC_SERIAL.write(ESC_ADDRESS);
@@ -175,8 +175,8 @@ void do_startup_action() {
 
  void setup_current() {
     pinMode(LEFT_CURRENT, INPUT);
-    percent_overloaded = 0;
-    check_current = 0;
+    percent_overloaded_left = 0;
+    check_overload = 0;
  }
 
  void setup_motors(){
@@ -194,18 +194,18 @@ void do_startup_action() {
 }
 
 void setup_line(){
-    pinMode(LEFT_REF_LINE, OUTPUT);
-    analogWrite(LEFT_REF_LINE, LEFT_THRES_LINE);
-    pinMode(RIGHT_REF_LINE, OUTPUT);
-    analogWrite(RIGHT_REF_LINE, RIGHT_THRES_LINE);
+    left_line_hit = 0;
+    right_line_hit = 0;
+    pinMode(LINE_REF, OUTPUT);
+    analogWrite(LINE_REF, LINE_THRES);
 
     pinMode(LEFT_INT_LINE, INPUT);
     pinMode(RIGHT_INT_LINE, INPUT);
 
-    attachInterrupt(digitalPinToInterrupt(LEFT_INT_LINE), left_line_int, FALLING);
-    attachInterrupt(digitalPinToInterrupt(RIGHT_INT_LINE), right_line_int, FALLING);
-    attachInterrupt(digitalPinToInterrupt(LEFT_INT_LINE), left_line_int, RISING);
-    attachInterrupt(digitalPinToInterrupt(RIGHT_INT_LINE), right_line_int, RISING);
+    attachInterrupt(digitalPinToInterrupt(LEFT_INT_LINE), left_on_line_int, FALLING);
+    attachInterrupt(digitalPinToInterrupt(RIGHT_INT_LINE), right_on_line_int, FALLING);
+    attachInterrupt(digitalPinToInterrupt(LEFT_INT_LINE), left_off_line_int, RISING);
+    attachInterrupt(digitalPinToInterrupt(RIGHT_INT_LINE), right_off_line_int, RISING);
 }
 
 void setup_remote(){
@@ -215,26 +215,27 @@ void setup_remote(){
 /**
  * SENSOR READ METHODS
 **/
+bool get_line_flag() {
+  return (left_line_hit || right_line_hit);
+}
+
 void get_accel() {
-    x_accel.add(icm.getAccelX_mss());
-    y_accel.add(icm.getAccelY_mss());
+//    x_accel.add(icm.getAccelX_mss());
+//    y_accel.add(icm.getAccelY_mss());
 }
 void get_gyro() {
     //TODO: implement?
 }
 void get_distances() {
-    int[] dist = int[6];
     dist[0] = digitalRead(DIST_L);
     dist[1] = digitalRead(DIST_L_45);
     dist[2] = read_lidar(LEFT_LIDAR_SERIAL);
     dist[3] = read_lidar(RIGHT_LIDAR_SERIAL);
     dist[4] = digitalRead(DIST_R_45);
     dist[5] = digitalRead(DIST_R);
-    distances.add(dist);
-    return dist;
 }
-int read_lidar(Serial s) {
-    byte[] bytes = byte[9];
+int read_lidar(HardwareSerial s) {
+    byte bytes[9];
     s.readBytes(bytes, 9);
     int dist_low = 0;
     while (dist_low < 9) {
@@ -262,7 +263,7 @@ void get_current() {
     last_read_current = curr_time;
     int current = analogRead(LEFT_CURRENT)*voltage_to_current; //read in voltage then change to current using magic number
     total_currentxtime_left += time_at_current*current; //Keep track of current*time over the interval to average later
-    int current = analogRead(RIGHT_CURRENT)*voltage_to_current;
+    current = analogRead(RIGHT_CURRENT)*voltage_to_current;
     total_currentxtime_right += time_at_current*current;
     int time_since_check = curr_time - prev_time_current;
     if (time_since_check > check_overload) { //is it time to check the overload?
