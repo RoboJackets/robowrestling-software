@@ -30,28 +30,60 @@ void loop() {
 //            drive(100, 100, 0, 1);
               break;
 
-        case ADJUST_LEFT:
-              Serial.println("AL");
+        case ADJUST_1_LEFT:
+              Serial.println("A1L");
 
-//            drive(100, 80, 0, 0);
+//            drive(20, 0, 0, 0);
               break;
-        case ADJUST_RIGHT:
-              Serial.println("AR");
+        case ADJUST_1_RIGHT:
+              Serial.println("A1R");
 
-//            drive(80, 100, 0, 0);
+//            drive(0, 20, 0, 0);
+              break;
+        case ADJUST_2_LEFT:
+              Serial.println("A2L");
+
+//            drive(40, 0, 0, 0);
+              break;
+        case ADJUST_2_RIGHT:
+              Serial.println("A2R");
+
+//            drive(0, 40, 0, 0);
+              break;
+        case ADJUST_3_LEFT:
+              Serial.println("A3L");
+
+//            drive(60, 0, 0, 0);
+              break;
+        case ADJUST_3_RIGHT:
+              Serial.println("A3R");
+
+//            drive(0, 60, 0, 0);
+              break;
+        case ADJUST_4_LEFT:
+              Serial.println("A4L");
+
+//            drive(80, 0, 0, 0);
+              break;
+        case ADJUST_4_RIGHT:
+              Serial.println("A4R");
+
+//            drive(0, 80, 0, 0);
               break;
         case SLAMMY_WHAMMY:
               Serial.println("Come on and slam");
 
-//            drive(110, 110, 0, 0);
+//            drive(80, 80, 0, 0);
               break;
+        case MEGA_SLAMMY_WHAMMY:
+              Serial.println("Gucci used Skull Bash. It was super effective!")
         case PANIC_HIT:
+              // drive(40, 100, 1, 1);
 
-            
               break;
         case PANIC_FIRE:
+              //drive(0, 0, 0, 0);
 
-            
               break;
         case WAIT_FOR_START:
 

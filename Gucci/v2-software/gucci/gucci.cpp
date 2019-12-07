@@ -31,9 +31,6 @@ volatile long left_encoder;
 double left_multi;
 double right_multi;
 
-double left_turn_ratio;
-double right_turn_ratio;
-
 
 /* Current sensing stuff */
 double r1 = 2.3;
@@ -61,36 +58,47 @@ State state_machine(State lastState) {
     if (curr_time - prev_time_accel > check_accel) {
         prev_time_accel = micros();
         get_accel();
+        //if (y_acceleration > ouch || y_acceleration < -ouch) {
+            // return PANIC_HIT;
+        // }
     }
 
     Location curr_opponent_location = get_opponent();
     switch curr_opponent_location{
         case FRONT_CLOSE:
             return MEGA_SLAMMY_WHAMMY;
+
         case FRONT_FAR:
             return SLAMMY_WHAMMY;
+
         case LEFT_CORNER_FRONT:
             return ADJUST_1_LEFT;
+
         case RIGHT_CORNER_FRONT:
             return ADJUST_1_RIGHT;
+
         case LEFT_CORNER:
             return ADJUST_2_LEFT;
+
         case RIGHT_CORNER:
             return ADJUST_2_RIGHT;
         case LEFT_CORNER_SIDE:
             return ADJUST_3_LEFT;
+
         case RIGHT_CORNER_SIDE:
             return ADJUST_3_RIGHT;
+
         case LEFT_SIDE:
             return ADJUST_4_LEFT;
+
         case RIGHT_SIDE:
             return ADJUST_4_RIGHT;
     }
 }
 
 void drive(int left, int right, bool left_reverse, bool right_reverse) {
-    left = left*left_multi*left_turn_ratio;
-    right = right*right_multi*right_turn_ratio;
+    left = left*left_multi;
+    right = right*right_multi;
     uint8_t bytes[3];
     bytes[0] = ESC_ADDRESS;
     bytes[1] = right_reverse; //0 is drive forward
@@ -300,7 +308,7 @@ void setup_line(){
     analogWrite(LEFT_REF_LINE, LEFT_THRES_LINE);
     pinMode(RIGHT_REF_LINE, OUTPUT);
     analogWrite(RIGHT_REF_LINE, RIGHT_THRES_LINE);
-    
+
     pinMode(LEFT_INT_LINE, INPUT);
     pinMode(RIGHT_INT_LINE, INPUT);
 
