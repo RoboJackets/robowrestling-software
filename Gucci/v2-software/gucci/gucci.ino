@@ -4,21 +4,14 @@ State curr_state;
 State last_state;
 
 void setup() {
-  //setup_imu();
+  setup_imu();
   setup_distance();
-  //setup_current();
+  setup_current();
   setup_motors();
-  //attachInterrupt(LEFT_ENCODER, increment_encoder_left, RISING);
-  //attachInterrupt(RIGHT_ENCODER, increment_encoder_right, RISING);
-  pinMode(A22, OUTPUT);
-  analogWrite(A22, 192);
-  pinMode(17, INPUT);
-  pinMode(35, INPUT);
-  pinMode(23, INPUT);
-  pinMode(LL_INT, INPUT);
-  pinMode(RL_INT, INPUT);
-  attachInterrupt(LL_INT, do_line_action_left, FALLING);
-  attachInterrupt(RL_INT, do_line_action_right, FALLING);
+  setup_encoders();
+  setup_line();
+  setup_remote();
+
 }
 
 void loop() {

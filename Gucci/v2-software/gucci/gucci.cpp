@@ -8,7 +8,8 @@ ICM20948 icm(Wire2, (uint8_t)0x68);
 
 int dist[6];
 
-int last_line_int;
+volatile bool left_line_hit;
+volatile bool right_line_hit;
 
 /* distance sensors */
 VL53L0X tof_left;
@@ -24,8 +25,8 @@ int prev_time_accel;
 int check_accel;
 
 /* encoder counts */
-int right_encoder;
-int left_encoder;
+volatile long right_encoder;
+volatile long left_encoder;
 
 double left_multi;
 double right_multi;
@@ -61,90 +62,30 @@ State state_machine(State lastState) {
         prev_time_accel = micros();
         get_accel();
     }
-    int* curr_distances = dist;
 
-    if (curr_distances[2] <= MAX_DIST) { // bot on left
-        if (curr_distances[3] <= MAX_DIST) { // bot on right
-            if (curr_distances[1] > MAX_DIST && curr_distances[4] > MAX_DIST) {
-              //
-                left_turn_ratio = 1;
-                right_turn_ratio = 1;
-                return SLAMMY_WHAMMY; //temp but kinda what we want
-            } else if (curr_distances[1] < MAX_DIST && curr_distances[4] > MAX_DIST) {
-              //45 left
-                left_turn_ratio = 1;
-                right_turn_ratio = 0.9;
-                return ADJUST_LEFT;
-            } else if (curr_distances[1] > MAX_DIST && curr_distances[4] < MAX_DIST) {
-              // 45 right
-                left_turn_ratio = 0.9;
-                right_turn_ratio = 1;
-                return ADJUST_RIGHT;
-            } else {
-                left_turn_ratio = 1;
-                right_turn_ratio = 1;
-                return SLAMMY_WHAMMY; //either we're seeing them on all 4 middle sensors or something weird is happening
-            }
-        } else { // no bot on right
-            if (curr_distances[0] > MAX_DIST && curr_distances[1] < MAX_DIST) {
-              // no left, on 45 left only
-                left_turn_ratio = 1;
-                right_turn_ratio = 1;
-                return ADJUST_LEFT;
-            } else if (curr_distances[1] < MAX_DIST) {
-              // on left and 45 left
-                left_turn_ratio = 1;
-                right_turn_ratio = 1;
-                return ADJUST_LEFT;
-            } else {
-              //
-                left_turn_ratio = 1;
-                right_turn_ratio = 1;
-                return ADJUST_LEFT;
-            }
-        }
-    } else if (curr_distances[3] <= MAX_DIST) { // bot on right
-        if (curr_distances[5] > MAX_DIST && curr_distances[4] < MAX_DIST) {
-            left_turn_ratio = 1;
-            right_turn_ratio = 1;
-            return ADJUST_RIGHT;
-        } else if (curr_distances[4] < MAX_DIST) {
-            left_turn_ratio = 1;
-            right_turn_ratio = 1;
-            return ADJUST_RIGHT;
-        } else {
-            left_turn_ratio = 1;
-            right_turn_ratio = 1;
-            return ADJUST_RIGHT;
-        }
-    } else if (curr_distances[1] < MAX_DIST) { // no bot on right and bot left 45
-        if (curr_distances[0] < MAX_DIST) {
-            left_turn_ratio = 1;
-            right_turn_ratio = 1;
-            return ADJUST_LEFT;
-        } else {
-            left_turn_ratio = 1;
-            right_turn_ratio = 1;
-            return ADJUST_LEFT;
-        }
-    } else if (curr_distances[4] < MAX_DIST) {
-        if (curr_distances[5] < MAX_DIST) {
-            left_turn_ratio = 1;
-            right_turn_ratio = 1;
-            return ADJUST_RIGHT;
-        } else {
-            left_turn_ratio = 1;
-            right_turn_ratio = 1;
-            return ADJUST_RIGHT;
-        }
-    } else if (curr_distances[0] < MAX_DIST) {
-        return SEARCH_LEFT;
-    } else if (curr_distances[5] < MAX_DIST) {
-        return SEARCH_RIGHT;
-    } else {
-        return STARTUP;
+    Location curr_opponent_location = get_opponent();
+    switch curr_opponent_location{
+        case FRONT_CLOSE:
+            return MEGA_SLAMMY_WHAMMY;
+        case FRONT_FAR:
+            return SLAMMY_WHAMMY;
+        case LEFT_CORNER_FRONT:
+            return ADJUST_1_LEFT;
+        case RIGHT_CORNER_FRONT:
+            return ADJUST_1_RIGHT;
+        case LEFT_CORNER:
+            return ADJUST_2_LEFT;
+        case RIGHT_CORNER:
+            return ADJUST_2_RIGHT;
+        case LEFT_CORNER_SIDE:
+            return ADJUST_3_LEFT;
+        case RIGHT_CORNER_SIDE:
+            return ADJUST_3_RIGHT;
+        case LEFT_SIDE:
+            return ADJUST_4_LEFT;
+        case RIGHT_SIDE:
+            return ADJUST_4_RIGHT;
     }
-
 }
 
 void drive(int left, int right, bool left_reverse, bool right_reverse) {
@@ -195,29 +136,36 @@ void drive(int left, int right, bool left_reverse, bool right_reverse) {
 /**
  * INTERRUPT METHODS
 **/
-void do_line_action_left() {
-    //TODO: implement
-    //drive(x, y, true, true);
-    if (last_line_int < ((int)millis()-LINE_COOLDOWN)) {
-      Serial.println("left line");
-    }
-    last_line_int = millis();
+void left_on_line_int() {
+    left_line_hit = true;
 }
-void do_line_action_right() {
-    //TODO: implement
-    //drive(y, x, true, true);
-    if (last_line_int < ((int)millis()-LINE_COOLDOWN)) {
-      Serial.println("right line");
-    }
-    last_line_int = millis();
+void right_on_line_int() {
+    right_line_hit = true;
+}
+
+void left_off_line_int() {
+    left_line_hit = false;
+}
+void right_off_line_int() {
+    right_line_hit = false;
 }
 
 void increment_encoder_right() {
-    right_encoder++;
+    if (digitalReadFast(RIGHT_B_ENCODER)) {
+        right_encoder--;
+    }
+    else {
+        right_encoder++;
+    }
 }
 
 void increment_encoder_left() {
-    left_encoder++;
+    if (digitalReadFast(LEFT_B_ENCODER)) {
+        left_encoder++;
+    }
+    else {
+        left_encoder--;
+    }
 }
 
 /**
@@ -244,6 +192,7 @@ void do_startup_action() {
 
  void setup_distance() {
     /* tof setup */
+    dist = {MAX_DIST, MAX_DIST, MAX_DIST, MAX_DIST, MAX_DIST, MAX_DIST};
 
     pinMode(TOF_L, OUTPUT);
     pinMode(TOF_L_45, OUTPUT);
@@ -317,8 +266,11 @@ void do_startup_action() {
  }
 
  void setup_current() {
+    analogReadResolution(13);
     pinMode(LEFT_CURRENT, INPUT);
+    pinMode(RIGHT_CURRENT, INPUT);
     percent_overloaded_left = 0;
+    percent_overloaded_right = 0;
     check_overload = 0;
  }
 
@@ -335,6 +287,34 @@ void do_startup_action() {
     ESC_R_SERIAL.setTX(ESC_R_TX);
  }
 
+void setup_encoders(){
+    pinMode(LEFT_A_ENCODER, INPUT);
+    pinMode(RIGHT_A_ENCODER, INPUT);
+
+    attachInterrupt(digitalPinToInterrupt(LEFT_A_ENCODER), increment_encoder_left, RISING);
+    attachInterrupt(digitalPinToInterrupt(RIGHT_A_ENCODER), increment_encoder_right, RISING);
+}
+
+void setup_line(){
+    pinMode(LEFT_REF_LINE, OUTPUT);
+    analogWrite(LEFT_REF_LINE, LEFT_THRES_LINE);
+    pinMode(RIGHT_REF_LINE, OUTPUT);
+    analogWrite(RIGHT_REF_LINE, RIGHT_THRES_LINE);
+    
+    pinMode(LEFT_INT_LINE, INPUT);
+    pinMode(RIGHT_INT_LINE, INPUT);
+
+    attachInterrupt(digitalPinToInterrupt(LEFT_INT_LINE), left_line_int, FALLING);
+    attachInterrupt(digitalPinToInterrupt(RIGHT_INT_LINE), right_line_int, FALLING);
+    attachInterrupt(digitalPinToInterrupt(LEFT_INT_LINE), left_line_int, RISING);
+    attachInterrupt(digitalPinToInterrupt(RIGHT_INT_LINE), right_line_int, RISING);
+}
+
+void setup_remote(){
+    pinMode(REMOTE_PIN, INPUT);
+}
+
+
 /**
  * SENSOR READ METHODS
 **/
@@ -347,19 +327,11 @@ void get_gyro() {
 }
 void get_distances() {
     dist[0] = tof_left.readRangeContinuousMillimeters();
-//    Serial.println("left ");
-    Serial.println(dist[0]);
     dist[1] = tof_left_45.readRangeContinuousMillimeters();
-    Serial.println(dist[1]);
     dist[2] = tof_left_center.readRangeContinuousMillimeters();
-    Serial.println(dist[2]);
     dist[3] = tof_right_center.readRangeContinuousMillimeters();
-    Serial.println(dist[3]);
     dist[4] = tof_right_45.readRangeContinuousMillimeters();
-    Serial.println(dist[4]);
     dist[5] = tof_right.readRangeContinuousMillimeters();
-    Serial.println(dist[5]);
-    //distances.add(dist);
 }
 
 void get_current() {
@@ -391,6 +363,69 @@ void get_current() {
         }
     }
 
+
+}
+
+Location get_opponent(){
+
+    bool left_side_valid = DIST_LEFT_SIDE < MAX_DIST; //Is the distance on the sensor a resonable number
+    bool left_corner_valid = DIST_LEFT_CORNER < MAX_DIST;
+    bool left_front_valid = DIST_LEFT_CENTER < MAX_DIST;
+    bool left_front_close_valid = DIST_LEFT_CENTER < CLOSE_DIST;
+    bool right_front_close_valid = DIST_RIGHT_CENTER < CLOSE_DIST;
+    bool right_front_valid = DIST_RIGHT_CENTER < MAX_DIST;
+    bool right_corner_valid = DIST_RIGHT_CORNER < MAX_DIST;
+    bool right_side_valid = DIST_RIGHT_SIDE < MAX_DIST;
+
+    if((left_front_close_valid || right_front_close_valid)
+        && !(right_corner_valid || left_corner_valid || left_side_valid || right_side_valid)){
+        return FRONT_CLOSE;
+    }
+
+    if((left_front_valid || right_front_valid)
+            && !(right_corner_valid || left_corner_valid || left_side_valid || right_side_valid)){
+        return FRONT_FAR;
+    }
+
+    if(left_front_valid && left_corner_valid
+            && !(right_corner_valid || right_front_valid || left_side_valid || right_side_valid)){
+        return LEFT_CORNER_FRONT;
+    }
+
+    if(right_front_valid && right_corner_valid
+            && !(left_corner_valid || left_front_valid || left_side_valid || right_side_valid)){
+        return RIGHT_CORNER_FRONT;
+    }
+
+    if(left_corner_valid
+            && !(right_corner_valid || right_front_valid || left_side_valid || right_side_valid || left_front_valid)){
+        return LEFT_CORNER;
+    }
+
+    if(right_corner_valid
+            && !(left_corner_valid || right_front_valid || left_side_valid || right_side_valid || left_front_valid)){
+        return RIGHT_CORNER;
+    }
+
+    if(left_side_valid && left_corner_valid
+            && !(right_corner_valid || right_front_valid || left_front_valid || right_side_valid)){
+        return LEFT_CORNER_SIDE;
+    }
+
+    if(right_side_valid && right_corner_valid
+            && !(left_corner_valid || left_front_valid || left_side_valid || right_front_valid)){
+        return RIGHT_CORNER_SIDE;
+    }
+
+    if(left_side_valid
+            && !(right_corner_valid || right_front_valid || left_corner_valid || right_side_valid || left_front_valid)){
+        return LEFT_SIDE;
+    }
+
+    if(right_side_valid
+            && !(left_corner_valid || right_front_valid || left_side_valid || right_corner_valid || left_front_valid)){
+        return RIGHT_SIDE;
+    }
 
 }
 
