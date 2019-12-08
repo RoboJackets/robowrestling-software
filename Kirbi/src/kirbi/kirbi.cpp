@@ -181,9 +181,12 @@ void do_startup_action() {
      pinMode(DIST_R_45, INPUT);
  }
 
- void setup_current() {
+void setup_current() {
+    analogReadResolution(13);
     pinMode(LEFT_CURRENT, INPUT);
+    pinMode(RIGHT_CURRENT, INPUT);
     percent_overloaded_left = 0;
+    percent_overloaded_right = 0;
     check_overload = 0;
  }
 

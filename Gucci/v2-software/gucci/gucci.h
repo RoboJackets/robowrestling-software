@@ -40,13 +40,11 @@
 #define TOF_R_45 31
 #define TOF_R 32
 
-#define RIGHT_REF_LINE 35
-#define LEFT_REF_LINE 23
+#define LINE_REF A22
 #define RIGHT_INT_LINE 19
 #define LEFT_INT_LINE 18
 
-#define RIGHT_THRES_LINE 150
-#define LEFT_THRES_LINE 150
+#define THRES_LINE 190
 
 #define LINE_COOLDOWN 100
 
@@ -62,8 +60,7 @@
 
 
 enum State {
-    SEARCH_LEFT,
-    SEARCH_RIGHT,
+    SEARCH,
     ADJUST_1_LEFT,
     ADJUST_1_RIGHT,
     ADJUST_2_LEFT,
@@ -75,9 +72,7 @@ enum State {
     SLAMMY_WHAMMY,
     MEGA_SLAMMY_WHAMMY,
     PANIC_HIT,
-    PANIC_FIRE,
-    WAIT_FOR_START,
-    STARTUP
+    PANIC_FIRE
 };
 
 enum Location{
@@ -86,11 +81,12 @@ enum Location{
 	LEFT_CORNER_FRONT,
 	RIGHT_CORNER_FRONT,
 	LEFT_CORNER,
-	RIGHT_CORNER.
+	RIGHT_CORNER,
 	LEFT_CORNER_SIDE,
 	RIGHT_CORNER_SIDE,
 	LEFT_SIDE,
-	RIGHT_SIDE
+	RIGHT_SIDE,
+  BEHIND
 };
 
 /* set motor speed */
@@ -100,10 +96,8 @@ void drive(int left, int right, bool left_reverse, bool right_reverse);
 State state_machine();
 
 /* interrupt methods */
-void left_on_line_int();
-void right_on_line_int();
-void left_off_line_int();
-void right_off_line_int();
+void left_line_int();
+void right_line_int();
 void do_startup_action();
 void increment_encoder_left();
 void increment_encoder_right();
@@ -122,6 +116,7 @@ void setup_remote();
 sensor read methods
 void update buffers with new data
  */
+bool get_line_flag();
 void get_accel();
 void get_gyro();
 void get_distances();

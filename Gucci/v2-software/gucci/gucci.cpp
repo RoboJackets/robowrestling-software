@@ -4,8 +4,7 @@ ICM20948 icm(Wire2, (uint8_t)0x68);
 
 int dist[6];
 
-volatile bool left_line_hit;
-volatile bool right_line_hit;
+volatile bool line_hit;
 
 /* distance sensors */
 VL53L0X tof_left;
@@ -47,20 +46,20 @@ const double voltage_to_current = .01611328;
 State state_machine() {
     curr_time = micros();
     get_distances();
-    get_current();
-    if (percent_overloaded_left > 1 || percent_overloaded_right > 1) {
-        return PANIC_FIRE;
-    }
-    if (curr_time - prev_time_accel > check_accel) {
-        prev_time_accel = micros();
-        get_accel();
-        //if (y_acceleration > ouch || y_acceleration < -ouch) {
-            // return PANIC_HIT;
-        // }
-    }
+//    get_current();
+//    if (percent_overloaded_left > 1 || percent_overloaded_right > 1) {
+//        return PANIC_FIRE;
+//    }
+//    if (curr_time - prev_time_accel > check_accel) {
+//        prev_time_accel = micros();
+//        get_accel();
+//        //if (y_acceleration > ouch || y_acceleration < -ouch) {
+//            // return PANIC_HIT;
+//        // }
+//    }
 
     Location curr_opponent_location = get_opponent();
-    switch curr_opponent_location{
+    switch (curr_opponent_location) {
         case FRONT_CLOSE:
             return MEGA_SLAMMY_WHAMMY;
 
@@ -89,6 +88,9 @@ State state_machine() {
 
         case RIGHT_SIDE:
             return ADJUST_4_RIGHT;
+
+        case BEHIND:
+            return SEARCH;
     }
 }
 
@@ -140,18 +142,11 @@ void drive(int left, int right, bool left_reverse, bool right_reverse) {
 /**
  * INTERRUPT METHODS
 **/
-void left_on_line_int() {
-    left_line_hit = true;
+void left_line_int() {
+    line_hit = digitalReadFast(LEFT_INT_LINE);
 }
-void right_on_line_int() {
-    right_line_hit = true;
-}
-
-void left_off_line_int() {
-    left_line_hit = false;
-}
-void right_off_line_int() {
-    right_line_hit = false;
+void right_line_int() {
+    line_hit = digitalReadFast(RIGHT_INT_LINE);
 }
 
 void increment_encoder_right() {
@@ -196,7 +191,6 @@ void do_startup_action() {
 
  void setup_distance() {
     /* tof setup */
-    dist = {MAX_DIST, MAX_DIST, MAX_DIST, MAX_DIST, MAX_DIST, MAX_DIST};
 
     pinMode(TOF_L, OUTPUT);
     pinMode(TOF_L_45, OUTPUT);
@@ -298,18 +292,16 @@ void setup_encoders(){
 }
 
 void setup_line(){
-    pinMode(LEFT_REF_LINE, OUTPUT);
-    analogWrite(LEFT_REF_LINE, LEFT_THRES_LINE);
-    pinMode(RIGHT_REF_LINE, OUTPUT);
-    analogWrite(RIGHT_REF_LINE, RIGHT_THRES_LINE);
+    line_hit = 0;
+    
+    pinMode(LINE_REF, OUTPUT);
+    analogWrite(LINE_REF, THRES_LINE);
 
     pinMode(LEFT_INT_LINE, INPUT);
     pinMode(RIGHT_INT_LINE, INPUT);
 
-    attachInterrupt(digitalPinToInterrupt(LEFT_INT_LINE), left_line_int, FALLING);
-    attachInterrupt(digitalPinToInterrupt(RIGHT_INT_LINE), right_line_int, FALLING);
-    attachInterrupt(digitalPinToInterrupt(LEFT_INT_LINE), left_line_int, RISING);
-    attachInterrupt(digitalPinToInterrupt(RIGHT_INT_LINE), right_line_int, RISING);
+    attachInterrupt(digitalPinToInterrupt(LEFT_INT_LINE), left_line_int, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(RIGHT_INT_LINE), right_line_int, CHANGE);
 }
 
 void setup_remote(){
@@ -320,6 +312,10 @@ void setup_remote(){
 /**
  * SENSOR READ METHODS
 **/
+bool get_line_flag() {
+  return line_hit;
+}
+
 void get_accel() {
 //    x_accel.add(icm.getAccelX_mss());
 //    y_accel.add(icm.getAccelY_mss());
@@ -428,6 +424,8 @@ Location get_opponent(){
             && !(left_corner_valid || right_front_valid || left_side_valid || right_corner_valid || left_front_valid)){
         return RIGHT_SIDE;
     }
+
+    return BEHIND;
 
 }
 
