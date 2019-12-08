@@ -10,33 +10,29 @@ void setup() {
   setup_encoders();
   setup_line();
   setup_remote();
-  while (!digitalRead(REMOTE_PIN)) {
-    Serial.println("Waiting");
-  }
+  //while (!digitalRead(REMOTE_PIN)) {
+   // Serial.println("Waiting");
+  //}
+  Serial.println("Hello");
   delay(500);
   do_startup_action();
 }
 
 void loop() {
   if (get_line_flag()) {
-    drive(60, 60, 1, 1);
+//    drive(60, 60, 1, 1);
+    Serial.println("Line");
   } else {
     curr_state = state_machine();
-    Serial.println(digitalRead(LEFT_INT_LINE));
-    Serial.println(digitalRead(RIGHT_INT_LINE));
-  //  Serial.println(digitalRead(REMOTE_PIN));
+//    Serial.println(digitalRead(LEFT_INT_LINE));
+//    Serial.println(digitalRead(RIGHT_INT_LINE));
+//    Serial.println(digitalRead(REMOTE_PIN));
     switch(curr_state) {
-          case SEARCH_LEFT:
+          case SEARCH:
   //            drive(100, 100, 1, 0);
-                Serial.println("SL");
+                Serial.println("S");
                 break;
-          case SEARCH_RIGHT:
-                Serial.println("SR");
-  
-  //            drive(100, 100, 0, 1);
-                break;
-  
-          case ADJUST_1_LEFT:
+       case ADJUST_1_LEFT:
                 Serial.println("A1L");
   
   //            drive(20, 0, 0, 0);
@@ -83,6 +79,7 @@ void loop() {
                 break;
           case MEGA_SLAMMY_WHAMMY:
                 Serial.println("Gucci used Skull Bash. It was super effective!");
+                break;
           case PANIC_HIT:
                 // drive(40, 100, 1, 1);
                 Serial.println("We're hit captain!");

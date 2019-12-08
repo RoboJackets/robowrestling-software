@@ -7,15 +7,17 @@
 #include "ICM20948.h"
 #include "math.h"
 
-#define LEFT_LIDAR_SERIAL Serial1
-#define RIGHT_LIDAR_SERIAL Serial4
+#define LEFT_LIDAR_SERIAL Serial4
+#define RIGHT_LIDAR_SERIAL Serial1
+#define LEFT_LIDAR 4 // for use in read lidar methods
+#define RIGHT_LIDAR 1
 
 #define ESC_SERIAL Serial5
 #define ESC_ADDRESS 128
 #define ESC_CHECKSUM 0b01111111
 
 #define MAX_DIST 150 //Whatever the lidar returns when it doesn't see anything
-#define CLOSE_DIST 500
+#define CLOSE_DIST 100
 
 /* Definitions for pin numbers or Omron sensors */
 #define DIST_L 30
@@ -51,8 +53,7 @@
 #define DIST_RIGHT_SIDE   dist[5]
 
 enum State {
-    SEARCH_LEFT,
-    SEARCH_RIGHT,
+    SEARCH,
     ADJUST_1_LEFT,
     ADJUST_1_RIGHT,
     ADJUST_2_LEFT,
@@ -77,7 +78,8 @@ enum Location{
     LEFT_CORNER_SIDE,
     RIGHT_CORNER_SIDE,
     LEFT_SIDE,
-    RIGHT_SIDE
+    RIGHT_SIDE,
+    BEHIND
 };
 
 /* set motor speed */
@@ -112,7 +114,7 @@ bool get_line_flag();
 void get_accel();
 void get_gyro();
 void get_distances();
-int read_lidar(HardwareSerial s);
+int read_lidar(int serial_port);
 void get_current();
 Location get_opponent();
 

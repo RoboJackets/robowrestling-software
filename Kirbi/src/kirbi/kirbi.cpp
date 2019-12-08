@@ -44,7 +44,7 @@ byte configUART [5] = {0x5A, 0x05, 0x0A, 0x00, 0x11};
 State state_machine() {
     curr_time = micros();
     get_distances();
-    get_current();
+//    get_current();
 //    if (percent_overloaded_left > 1 || percent_overloaded_right > 1) {
 //        return PANIC_FIRE;
 //    }
@@ -57,6 +57,7 @@ State state_machine() {
 //    }
 
     Location curr_opponent_location = get_opponent();
+//    Serial.println(curr_opponent_location);
     switch(curr_opponent_location) {
         case FRONT_CLOSE:
             return MEGA_SLAMMY_WHAMMY;
@@ -86,6 +87,9 @@ State state_machine() {
 
         case RIGHT_SIDE:
             return ADJUST_4_RIGHT;
+
+        case BEHIND:
+            return SEARCH;
     }
 }
 
@@ -161,9 +165,13 @@ void do_startup_action() {
 
  void setup_distance() {
      /* lidar setup */
+     //LEFT_LIDAR_SERIAL.setRX(31);
+     //LEFT_LIDAR_SERIAL.setTX(32);
      LEFT_LIDAR_SERIAL.begin(115200);
      LEFT_LIDAR_SERIAL.write(configUART, 5);
      LEFT_LIDAR_SERIAL.write(configOutput, 5);
+     //RIGHT_LIDAR_SERIAL.setRX(0);
+     //RIGHT_LIDAR_SERIAL.setTX(1);
      RIGHT_LIDAR_SERIAL.begin(115200);
      RIGHT_LIDAR_SERIAL.write(configUART, 5);
      RIGHT_LIDAR_SERIAL.write(configOutput, 5);
@@ -229,34 +237,46 @@ void get_gyro() {
 void get_distances() {
     dist[0] = digitalRead(DIST_L);
     dist[1] = digitalRead(DIST_L_45);
-    dist[2] = read_lidar(LEFT_LIDAR_SERIAL);
-    dist[3] = read_lidar(RIGHT_LIDAR_SERIAL);
+    dist[2] = read_lidar(LEFT_LIDAR);
+    dist[3] = read_lidar(RIGHT_LIDAR);
     dist[4] = digitalRead(DIST_R_45);
     dist[5] = digitalRead(DIST_R);
+    Serial.println(String(dist[0]) + " " + String(dist[1]) + " " + String(dist[2]) + " " + String(dist[3]) + " " + String(dist[4]) + " " + String(dist[5]));
 }
-int read_lidar(HardwareSerial s) {
+int read_lidar(int serial_port) {
     byte bytes[9];
-    s.readBytes(bytes, 9);
+    if (serial_port == 4) {
+      LEFT_LIDAR_SERIAL.readBytes(bytes, 9);
+    } else {
+      RIGHT_LIDAR_SERIAL.readBytes(bytes, 9);
+    }
+//    Serial.println(String(bytes[0]) + " " + String(bytes[1]) + " " + String(bytes[2]) + " " + String(bytes[3]) + " " + String(bytes[4]) + " " + String(bytes[5]) + " " + String(bytes[6]) + " " + String(bytes[7]) + " " + String(bytes[8]));
     int dist_low = 0;
-    while (dist_low < 9) {
-        if (bytes[dist_low] == 0x89) {
+    int value = -1;
+    while (dist_low < 9 && value == -1) {
+        if (bytes[dist_low] == 0x59) {
             if (dist_low == 0) {
-                if (bytes[8] == 0x89) {
-                    return bytes[1] + (bytes[2] << 8);
+                if (bytes[8] == 0x59) {
+                    value = (int)bytes[1] + ((int)bytes[2] << 8);
+                } else if (bytes[1] == 0x59) {
+                    value = (int)bytes[2] + (((int)bytes[3]) << 8);
                 }
             } else if (dist_low == 7) {
-                if (bytes[8] == 0x89) {
-                    return bytes[0] + (bytes[1] << 8);
+                if (bytes[8] == 0x59) {
+                    value = (int)bytes[0] + ((int)bytes[1] << 8);
                 }
             } else {
-                if (bytes[++dist_low] == 0x89) {
-                    return bytes[++dist_low] + (bytes[++dist_low] << 8);
+                if (bytes[++dist_low] == 0x59) {
+                    value = (int)bytes[++dist_low] + (((int)bytes[++dist_low]) << 8);
                 }
             }
         }
         dist_low++;
     }
-    return read_lidar(s);
+    if (value == 0 || value == -1) {
+        return MAX_DIST+1;
+    }
+    return value;
 }
 void get_current() {
     int time_at_current = curr_time - last_read_current;
@@ -298,7 +318,6 @@ Location get_opponent(){
     bool right_front_valid = DIST_RIGHT_CENTER < MAX_DIST;
     bool right_corner_valid = DIST_RIGHT_CORNER == 1;
     bool right_side_valid = DIST_RIGHT_SIDE == 1;
-
     if((left_front_close_valid || right_front_close_valid)
         && !(right_corner_valid || left_corner_valid || left_side_valid || right_side_valid)){
         return FRONT_CLOSE;
@@ -348,6 +367,7 @@ Location get_opponent(){
             && !(left_corner_valid || right_front_valid || left_side_valid || right_corner_valid || left_front_valid)){
         return RIGHT_SIDE;
     }
+    return BEHIND;
 }
 
 /**
