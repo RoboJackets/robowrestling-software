@@ -76,21 +76,21 @@ enum State {
 };
 
 enum Location{
-	FRONT_FAR,
-	FRONT_CLOSE,
-	LEFT_CORNER_FRONT,
-	RIGHT_CORNER_FRONT,
-	LEFT_CORNER,
-	RIGHT_CORNER,
-	LEFT_CORNER_SIDE,
-	RIGHT_CORNER_SIDE,
-	LEFT_SIDE,
-	RIGHT_SIDE,
+  FRONT_FAR,
+  FRONT_CLOSE,
+  LEFT_CORNER_FRONT,
+  RIGHT_CORNER_FRONT,
+  LEFT_CORNER,
+  RIGHT_CORNER,
+  LEFT_CORNER_SIDE,
+  RIGHT_CORNER_SIDE,
+  LEFT_SIDE,
+  RIGHT_SIDE,
   BEHIND
 };
 
 /* set motor speed */
-void drive(int left, int right, bool left_reverse, bool right_reverse);
+void drive(int left, int right);
 
 /* state machine */
 State state_machine();

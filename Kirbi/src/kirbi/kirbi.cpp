@@ -93,7 +93,12 @@ State state_machine() {
     }
 }
 
-void drive(int left, int right, bool left_reverse, bool right_reverse) {
+void drive(int left, int right) {
+    bool left_reverse = left < 0;
+    bool right_reverse = right < 0;
+    left = abs(left);
+    right = abs(right);
+
     left = left*left_multi;
     right = right*right_multi;
     ESC_SERIAL.write(ESC_ADDRESS);

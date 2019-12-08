@@ -83,7 +83,7 @@ enum Location{
 };
 
 /* set motor speed */
-void drive(int left, int right, bool left_reverse, bool right_reverse);
+void drive(int left, int right);
 
 /* state machine */
 State state_machine();

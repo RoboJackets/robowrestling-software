@@ -94,12 +94,17 @@ State state_machine() {
     }
 }
 
-void drive(int left, int right, bool left_reverse, bool right_reverse) {
+void drive(int left, int right) {
+    bool left_reverse = left < 0;
+    bool right_reverse = right < 0;
+    left = abs(left);
+    right = abs(right);
+    
     left = left*left_multi;
     right = right*right_multi;
     uint8_t bytes[3];
     bytes[0] = ESC_ADDRESS;
-    bytes[1] = right_reverse; //0 is drive forward
+    bytes[1] = !right_reverse; // the right one is reversed apparently 
     bytes[2] = right;
     uint32_t crc = 0;
     for(int i = 0; i < 3; i++) {
@@ -143,10 +148,10 @@ void drive(int left, int right, bool left_reverse, bool right_reverse) {
  * INTERRUPT METHODS
 **/
 void left_line_int() {
-    line_hit = digitalReadFast(LEFT_INT_LINE);
+    line_hit = !digitalReadFast(LEFT_INT_LINE);
 }
 void right_line_int() {
-    line_hit = digitalReadFast(RIGHT_INT_LINE);
+    line_hit = !digitalReadFast(RIGHT_INT_LINE);
 }
 
 void increment_encoder_right() {
