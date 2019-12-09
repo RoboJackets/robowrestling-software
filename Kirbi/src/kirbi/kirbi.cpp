@@ -93,40 +93,58 @@ State state_machine() {
     }
 }
 
-void drive(int left, int right) {
-    bool left_reverse = left < 0;
-    bool right_reverse = right < 0;
-    left = abs(left);
-    right = abs(right);
+// void drive(int left, int right) {
+//     bool left_reverse = left < 0;
+//     bool right_reverse = right < 0;
+//     left = abs(left);
+//     right = abs(right);
 
-    left = left*left_multi;
-    right = right*right_multi;
-    ESC_SERIAL.write(ESC_ADDRESS);
-    ESC_SERIAL.write(!left_reverse);
-    ESC_SERIAL.write(left);
-    ESC_SERIAL.write((ESC_ADDRESS+(unsigned int)left_reverse+(unsigned int)left)&ESC_CHECKSUM);
-    ESC_SERIAL.write(ESC_ADDRESS);
-    ESC_SERIAL.write(right_reverse);
-    ESC_SERIAL.write(right);
-    ESC_SERIAL.write((ESC_ADDRESS+(unsigned int)right_reverse+(unsigned int)right)&ESC_CHECKSUM);
+//     left = left*left_multi;
+//     right = right*right_multi;
+//     ESC_SERIAL.write(ESC_ADDRESS);
+//     ESC_SERIAL.write(!left_reverse);
+//     ESC_SERIAL.write(left);
+//     ESC_SERIAL.write((ESC_ADDRESS+(unsigned int)left_reverse+(unsigned int)left)&ESC_CHECKSUM);
+//     ESC_SERIAL.write(ESC_ADDRESS);
+//     ESC_SERIAL.write(right_reverse);
+//     ESC_SERIAL.write(right);
+//     ESC_SERIAL.write((ESC_ADDRESS+(unsigned int)right_reverse+(unsigned int)right)&ESC_CHECKSUM);
+// }
+
+/**
+ * using simple serial. valid input range is 0-63 for left and right
+**/
+void drive(int left, int right) {
+     if (left == 0 && right == 0) {
+         ESC_SERIAL.write(0);
+     } else {
+        right = right + 64;
+        left = left + 193;
+
+        // 0: both motor stop
+        // 1-63: motor 1 reverse, 64: motor 1 stop, 65-127: motor 1 forward
+        // 128-191: motor 2 reverse, 192: motor 2 stop, 193-255 motor 2 forward
+        ESC_SERIAL.write(left);
+        ESC_SERIAL.write(right);
+     }
 }
 
 /**
  * INTERRUPT METHODS
 **/
-void left_on_line_int() {
-    left_line_hit = true;
+void left_line_int() {
+    left_line_hit = !digitalReadFast(LEFT_INT_LINE);
 }
-void right_on_line_int() {
-    right_line_hit = true;
+void right_line_int() {
+    right_line_hit = !digitalReadFast(RIGHT_INT_LINE);
 }
 
-void left_off_line_int() {
-    left_line_hit = false;
-}
-void right_off_line_int() {
-    right_line_hit = false;
-}
+// void left_off_line_int() {
+//     left_line_hit = false;
+// }
+// void right_off_line_int() {
+//     right_line_hit = false;
+// }
 
 void increment_encoder_right() {
     if (digitalReadFast(RIGHT_B_ENCODER)) {
@@ -198,7 +216,9 @@ void setup_current() {
  void setup_motors(){
     left_multi = 1;
     right_multi = 1;
-    ESC_SERIAL.begin(115200);
+    ESC_SERIAL.begin(38400);
+    
+    
  }
 
  void setup_encoders(){
@@ -212,16 +232,15 @@ void setup_current() {
 void setup_line(){
     left_line_hit = 0;
     right_line_hit = 0;
+    
     pinMode(LINE_REF, OUTPUT);
     analogWrite(LINE_REF, LINE_THRES);
 
     pinMode(LEFT_INT_LINE, INPUT);
     pinMode(RIGHT_INT_LINE, INPUT);
 
-    attachInterrupt(digitalPinToInterrupt(LEFT_INT_LINE), left_on_line_int, FALLING);
-    attachInterrupt(digitalPinToInterrupt(RIGHT_INT_LINE), right_on_line_int, FALLING);
-    attachInterrupt(digitalPinToInterrupt(LEFT_INT_LINE), left_off_line_int, RISING);
-    attachInterrupt(digitalPinToInterrupt(RIGHT_INT_LINE), right_off_line_int, RISING);
+    attachInterrupt(digitalPinToInterrupt(LEFT_INT_LINE), left_line_int, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(RIGHT_INT_LINE), right_line_int, CHANGE);
 }
 
 void setup_remote(){
