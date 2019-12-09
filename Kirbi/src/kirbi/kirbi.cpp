@@ -104,11 +104,11 @@ void drive(int left, int right) {
     ESC_SERIAL.write(ESC_ADDRESS);
     ESC_SERIAL.write(!left_reverse);
     ESC_SERIAL.write(left);
-    ESC_SERIAL.write((ESC_ADDRESS+left_reverse+left)&ESC_CHECKSUM);
+    ESC_SERIAL.write((ESC_ADDRESS+(unsigned int)left_reverse+(unsigned int)left)&ESC_CHECKSUM);
     ESC_SERIAL.write(ESC_ADDRESS);
     ESC_SERIAL.write(right_reverse);
     ESC_SERIAL.write(right);
-    ESC_SERIAL.write((ESC_ADDRESS+right_reverse+right)&ESC_CHECKSUM);
+    ESC_SERIAL.write((ESC_ADDRESS+(unsigned int)right_reverse+(unsigned int)right)&ESC_CHECKSUM);
 }
 
 /**

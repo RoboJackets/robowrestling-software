@@ -29,7 +29,7 @@ void loop()
             {
                   if (get_line_flag())
                   {
-                        drive(-60, -60);
+                        drive(-80, -80);
                         delay(200);
                         Serial.println("Line");
                   }
@@ -44,56 +44,56 @@ void loop()
                         case SEARCH:
                              
                               Serial.println("SEARCH");
-                              drive(-60, 60);
+                              drive(-80, 80);
                               break;
                         case ADJUST_1_LEFT:
                               Serial.println("A1L");
 
-                              drive(60, 0);
+                              drive(80, 0);
                               break;
                         case ADJUST_1_RIGHT:
                               Serial.println("A1R");
 
-                               drive(0, 60);
+                               drive(0, 70);
                               break;
                         case ADJUST_2_LEFT:
                               Serial.println("A2L");
 
-                               drive(60, 0);
+                               drive(70, 0);
                               break;
                         case ADJUST_2_RIGHT:
                               Serial.println("A2R");
 
-                               drive(0, 60);
+                               drive(0, 70);
                               break;
                         case ADJUST_3_LEFT:
                               Serial.println("A3L");
 
-                              drive(60, 0);
+                              drive(70, 0);
                               break;
                         case ADJUST_3_RIGHT:
                               Serial.println("A3R");
 
-                              drive(0, 60);
+                              drive(0, 70);
                               break;
                         case ADJUST_4_LEFT:
                               Serial.println("A4L");
 
-                              drive(60, 0);
+                              drive(70, 0);
                               break;
                         case ADJUST_4_RIGHT:
                               Serial.println("A4R");
 
-                              drive(0, 60);
+                              drive(0, 70);
                               break;
                         case SLAMMY_WHAMMY:
                               Serial.println("Come on and slam");
 
-                              drive(60, 60);
+                              drive(70, 70);
                               break;
                         case MEGA_SLAMMY_WHAMMY:
                               Serial.println("Kirbi used Skull Bash. It was super effective!");
-                              drive(60,60);
+                              drive(70,70);
                               break;
                         case PANIC_HIT:
                               // drive(-40, -100);
