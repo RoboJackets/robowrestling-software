@@ -54,7 +54,7 @@ void loop()
                         {
                         case SEARCH:
                               Serial.println("SEARCH");
-                              drive(70, 70);
+                              drive(100, 100); //fix l8r++
                               break;
                         case ADJUST_1_LEFT:
                               Serial.println("A1L");
@@ -90,10 +90,11 @@ void loop()
                               break;
                         case SLAMMY_WHAMMY:
                               Serial.println("Come on and slam");
-                              drive(70, 70);
+                              drive(100, 100);
                               break;
                         case MEGA_SLAMMY_WHAMMY:
                               Serial.println("Gucci used Skull Bash. It was super effective!");
+                              drive(127, 127);
                         case PANIC_HIT:
                               // drive(40, 40);
                               Serial.println("we've been hit cap");

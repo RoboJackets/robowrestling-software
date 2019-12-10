@@ -91,6 +91,7 @@ State state_machine() {
         case BEHIND:
             return SEARCH;
     }
+    return SEARCH;
 }
 
 // void drive(int left, int right) {
@@ -118,8 +119,8 @@ void drive(int left, int right) {
      if (left == 0 && right == 0) {
          ESC_SERIAL.write(0);
      } else {
-        right = right + 64;
-        left = left + 193;
+        right = 64 - right;
+        left = 192 - left;
 
         // 0: both motor stop
         // 1-63: motor 1 reverse, 64: motor 1 stop, 65-127: motor 1 forward
@@ -188,13 +189,15 @@ void do_startup_action() {
 
  void setup_distance() {
      /* lidar setup */
-     //LEFT_LIDAR_SERIAL.setRX(31);
-     //LEFT_LIDAR_SERIAL.setTX(32);
+     LEFT_LIDAR_SERIAL.setRX(31);
+     LEFT_LIDAR_SERIAL.setTX(32);
+     while(!LEFT_LIDAR_SERIAL){delay(10);}
      LEFT_LIDAR_SERIAL.begin(115200);
      LEFT_LIDAR_SERIAL.write(configUART, 5);
      LEFT_LIDAR_SERIAL.write(configOutput, 5);
-     //RIGHT_LIDAR_SERIAL.setRX(0);
-     //RIGHT_LIDAR_SERIAL.setTX(1);
+     RIGHT_LIDAR_SERIAL.setRX(0);
+     RIGHT_LIDAR_SERIAL.setTX(1);
+     while(!RIGHT_LIDAR_SERIAL){delay(10);}
      RIGHT_LIDAR_SERIAL.begin(115200);
      RIGHT_LIDAR_SERIAL.write(configUART, 5);
      RIGHT_LIDAR_SERIAL.write(configOutput, 5);
@@ -216,9 +219,10 @@ void setup_current() {
  void setup_motors(){
     left_multi = 1;
     right_multi = 1;
+    while(!ESC_SERIAL){delay(10);}
+    ESC_SERIAL.setRX(34);
+    ESC_SERIAL.setTX(33);
     ESC_SERIAL.begin(38400);
-    
-    
  }
 
  void setup_encoders(){
@@ -232,7 +236,7 @@ void setup_current() {
 void setup_line(){
     left_line_hit = 0;
     right_line_hit = 0;
-    
+
     pinMode(LINE_REF, OUTPUT);
     analogWrite(LINE_REF, LINE_THRES);
 
@@ -262,12 +266,13 @@ void get_gyro() {
     //TODO: implement?
 }
 void get_distances() {
-    dist[0] = digitalRead(DIST_L);
-    dist[1] = digitalRead(DIST_L_45);
+    dist[0] = digitalReadFast(DIST_L);
+    dist[1] = digitalReadFast(DIST_L_45);
     dist[2] = read_lidar(LEFT_LIDAR);
+    if (dist[2] == 65535) { digitalWrite(13, HIGH); } else { digitalWrite(13, LOW); }
     dist[3] = read_lidar(RIGHT_LIDAR);
-    dist[4] = digitalRead(DIST_R_45);
-    dist[5] = digitalRead(DIST_R);
+    dist[4] = digitalReadFast(DIST_R_45);
+    dist[5] = digitalReadFast(DIST_R);
     Serial.println(String(dist[0]) + " " + String(dist[1]) + " " + String(dist[2]) + " " + String(dist[3]) + " " + String(dist[4]) + " " + String(dist[5]));
 }
 int read_lidar(int serial_port) {

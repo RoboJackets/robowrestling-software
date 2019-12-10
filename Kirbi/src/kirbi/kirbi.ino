@@ -4,19 +4,22 @@ State curr_state;
 
 void setup()
 {
-      setup_imu();
+//      setup_imu();
       setup_distance();
-      setup_current();
       setup_motors();
-      setup_encoders();
+//      setup_encoders();
       setup_line();
       setup_remote();
+      pinMode(13, OUTPUT);
       //while (!digitalRead(REMOTE_PIN)) {
       // Serial.println("Waiting");
       //}
       // delay(500);
+      Serial.begin(115200);
+      while (!Serial);
       Serial.println("finished setup");
-      
+//      Serial.println("finished setup");
+
 }
 
 void loop()
@@ -34,7 +37,8 @@ void loop()
                         Serial.println("Line!");
                   }
                   else
-                  {
+                  { 
+                        //curr_state = SLAMMY_WHAMMY; //for testing purposes only
                         curr_state = state_machine();
                         //Serial.println(digitalRead(LEFT_INT_LINE));
                         //Serial.println(digitalRead(RIGHT_INT_LINE));
@@ -44,56 +48,56 @@ void loop()
                         case SEARCH:
                              
                               Serial.println("SEARCH");
-                              drive(-30, 30);
+                              drive(-50, 50);
                               break;
                         case ADJUST_1_LEFT:
                               Serial.println("A1L");
 
-                              drive(30, 0);
+                              drive(10, -10);
                               break;
                         case ADJUST_1_RIGHT:
                               Serial.println("A1R");
 
-                               drive(0, 30);
+                               drive(-10, 10);
                               break;
                         case ADJUST_2_LEFT:
                               Serial.println("A2L");
 
-                               drive(30, 0);
+                               drive(20, -20);
                               break;
                         case ADJUST_2_RIGHT:
                               Serial.println("A2R");
 
-                              drive(0, 30);
+                              drive(-20, 20);
                               break;
                         case ADJUST_3_LEFT:
                               Serial.println("A3L");
 
-                              drive(30, 0);
+                              drive(30, -30);
                               break;
                         case ADJUST_3_RIGHT:
                               Serial.println("A3R");
 
-                              drive(0, 30);
+                              drive(-30, 30);
                               break;
                         case ADJUST_4_LEFT:
                               Serial.println("A4L");
 
-                              drive(30, 0);
+                              drive(40, -40);
                               break;
                         case ADJUST_4_RIGHT:
                               Serial.println("A4R");
 
-                              drive(0, 30);
+                              drive(-40, 40);
                               break;
                         case SLAMMY_WHAMMY:
                               Serial.println("Come on and slam");
 
-                              drive(30, 30);
+                              drive(55, 55);
                               break;
                         case MEGA_SLAMMY_WHAMMY:
                               Serial.println("Kirbi used Skull Bash. It was super effective!");
-                              drive(30,30);
+                              drive(63,63);
                               break;
                         case PANIC_HIT:
                               // drive(-40, -100);
@@ -106,8 +110,10 @@ void loop()
                         }
                   }
             }
-            Serial.println("END SIGNAL");
-            drive(0,0);
-
-      }
+//            Serial.println("END SIGNAL");
+//            drive(0,0);
+//
+//      }
+//      get_distances();
+//      delay(1000);
 }

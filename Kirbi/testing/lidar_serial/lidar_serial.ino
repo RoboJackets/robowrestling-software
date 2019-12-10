@@ -12,16 +12,21 @@ byte configUART [5] = {0x5A, 0x05, 0x0A, 0x00, 0x11}; // write this array to HWS
 
 void setup() {
   Serial.begin(115200); 
+  Serial.println("Hello");
+  HWSERIAL.setRX(0);
+  HWSERIAL.setTX(1);
   HWSERIAL.begin(115200);// default baud rate
+  while(!HWSERIAL) { delay(100); }
   HWSERIAL.write(configUART, 5); // set sensor to UART mode
   HWSERIAL.write(configOutput, 5); // enable output
 }
 
 void loop() {
-  if (HWSERIAL.available() > 0) {
+  if (HWSERIAL) {
     HWSERIAL.readBytes(byteArray, 9); // write output of read to an array of length 9
     for (int i =0;i<9;i++){
-      Serial.println(byteArray[i]);  
+      Serial.print(String(byteArray[i])+ " ");  
     }  
   }
+  Serial.println();
 }

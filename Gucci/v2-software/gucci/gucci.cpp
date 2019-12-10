@@ -94,7 +94,7 @@ State state_machine() {
     }
 }
 
-void drive(int left, int right) {
+void drive(int left, int right) { //Values should be between 0-127
     bool left_reverse = left < 0;
     bool right_reverse = right < 0;
     left = abs(left);
