@@ -34,7 +34,7 @@ void loop()
                   {
                         drive(-30, -30);
                         delay(200);
-                        Serial.println("Line!");
+//                        Serial.println("Line!");
                   }
                   else
                   { 
@@ -47,71 +47,71 @@ void loop()
                         {
                         case SEARCH:
                              
-                              Serial.println("SEARCH");
+//                              Serial.println("SEARCH");
                               drive(-50, 50);
                               break;
                         case ADJUST_1_LEFT:
-                              Serial.println("A1L");
+//                              Serial.println("A1L");
 
                               drive(10, -10);
                               break;
                         case ADJUST_1_RIGHT:
-                              Serial.println("A1R");
+//                              Serial.println("A1R");
 
                                drive(-10, 10);
                               break;
                         case ADJUST_2_LEFT:
-                              Serial.println("A2L");
+//                              Serial.println("A2L");
 
                                drive(20, -20);
                               break;
                         case ADJUST_2_RIGHT:
-                              Serial.println("A2R");
+//                              Serial.println("A2R");
 
                               drive(-20, 20);
                               break;
                         case ADJUST_3_LEFT:
-                              Serial.println("A3L");
+//                              Serial.println("A3L");
 
                               drive(30, -30);
                               break;
                         case ADJUST_3_RIGHT:
-                              Serial.println("A3R");
+//                              Serial.println("A3R");
 
                               drive(-30, 30);
                               break;
                         case ADJUST_4_LEFT:
-                              Serial.println("A4L");
+//                              Serial.println("A4L");
 
                               drive(40, -40);
                               break;
                         case ADJUST_4_RIGHT:
-                              Serial.println("A4R");
+//                              Serial.println("A4R");
 
                               drive(-40, 40);
                               break;
                         case SLAMMY_WHAMMY:
-                              Serial.println("Come on and slam");
+//                              Serial.println("Come on and slam");
 
                               drive(55, 55);
                               break;
                         case MEGA_SLAMMY_WHAMMY:
-                              Serial.println("Kirbi used Skull Bash. It was super effective!");
+//                              Serial.println("Kirbi used Skull Bash. It was super effective!");
                               drive(63,63);
                               break;
                         case PANIC_HIT:
                               // drive(-40, -100);
-                              Serial.println("We're hit captain!");
+//                              Serial.println("We're hit captain!");
                               break;
                         case PANIC_FIRE:
                               drive(0, 0);
-                              Serial.println("AGHHHHHHHHHH FIREEEE");
+//                              Serial.println("AGHHHHHHHHHH FIREEEE");
                               break;
                         }
                   }
             }
 //            Serial.println("END SIGNAL");
-//            drive(0,0);
+            drive(0,0);
 //
 //      }
 //      get_distances();

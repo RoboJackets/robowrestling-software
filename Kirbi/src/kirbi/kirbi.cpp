@@ -169,7 +169,7 @@ void increment_encoder_left() {
  * Method for startup action
 **/
 void do_startup_action() {
-    //TODO: implement
+    delay(5000);
 }
 
 /**
