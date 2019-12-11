@@ -176,7 +176,7 @@ void increment_encoder_left() {
  * Method for startup action
 **/
 void do_startup_action() {
-    //TODO: implement
+    delay(5000);
 }
 
 /**
@@ -395,8 +395,18 @@ Location get_opponent(){
         return LEFT_CORNER_FRONT;
     }
 
+    if(left_front_valid && left_corner_valid && right_front_valid
+            && !(right_corner_valid || left_side_valid || right_side_valid)){
+        return LEFT_CORNER_FRONT;
+    }
+
     if(right_front_valid && right_corner_valid
             && !(left_corner_valid || left_front_valid || left_side_valid || right_side_valid)){
+        return RIGHT_CORNER_FRONT;
+    }
+
+    if(right_front_valid && right_corner_valid && left_front_valid 
+            && !(left_corner_valid || left_side_valid || right_side_valid)){
         return RIGHT_CORNER_FRONT;
     }
 
