@@ -5,10 +5,10 @@ State curr_state;
 void setup()
 {
 //      setup_imu();
-      setup_distance();
+//      setup_distance();
       setup_motors();
 //      setup_encoders();
-      setup_line();
+//      setup_line();
       setup_remote();
       pinMode(13, OUTPUT);
       //while (!digitalRead(REMOTE_PIN)) {
@@ -16,7 +16,7 @@ void setup()
       //}
       // delay(500);
       Serial.begin(115200);
-      while (!Serial);
+//      while (!Serial);
       Serial.println("finished setup");
 //      Serial.println("finished setup");
 
@@ -30,16 +30,16 @@ void loop()
             do_startup_action();
             while (digitalRead(REMOTE_PIN))
             {
-                  if (get_line_flag())
-                  {
-                        drive(-30, -30);
-                        delay(200);
-//                        Serial.println("Line!");
-                  }
-                  else
-                  { 
-                        //curr_state = SLAMMY_WHAMMY; //for testing purposes only
-                        curr_state = state_machine();
+//                  if (get_line_flag())
+//                  {
+//                        drive(-30, -30);
+//                        delay(200);
+////                        Serial.println("Line!");
+//                  }
+//                  else
+//                  { 
+                        curr_state = SLAMMY_WHAMMY; //for testing purposes only
+//                        curr_state = state_machine();
                         //Serial.println(digitalRead(LEFT_INT_LINE));
                         //Serial.println(digitalRead(RIGHT_INT_LINE));
                         //Serial.println(digitalRead(REMOTE_PIN));
@@ -107,13 +107,13 @@ void loop()
                               drive(0, 0);
 //                              Serial.println("AGHHHHHHHHHH FIREEEE");
                               break;
-                        }
+//                        }
                   }
             }
 //            Serial.println("END SIGNAL");
             drive(0,0);
 //
-//      }
+      }
 //      get_distances();
 //      delay(1000);
 }
