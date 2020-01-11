@@ -16,9 +16,7 @@ void setup()
       //}
       // delay(500);
       Serial.begin(115200);
-//      while (!Serial);
       Serial.println("finished setup");
-//      Serial.println("finished setup");
 
 }
 
