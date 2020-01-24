@@ -8361,10 +8361,14 @@ design rules under a new name.</description>
 <via x="45" y="49" extent="1-16" drill="0.4"/>
 <contactref element="IMU" pad="11"/>
 <contactref element="IMU" pad="9"/>
+<wire x1="23.6" y1="19.455" x2="23.6" y2="17.25" width="0.2" layer="1"/>
+<wire x1="22.8" y1="19.455" x2="22.8" y2="18.8" width="0.2" layer="1"/>
+<wire x1="22.8" y1="18.8" x2="22" y2="18" width="0.2" layer="1"/>
+<wire x1="19.25" y1="18" x2="18.4" y2="17.15" width="0.2" layer="1"/>
+<wire x1="18.4" y1="17.15" x2="18" y2="17.15" width="0.2" layer="1"/>
+<wire x1="22" y1="18" x2="19.25" y2="18" width="0.2" layer="1"/>
 <wire x1="4.075" y1="40.075" x2="4.15" y2="40.15" width="0" layer="19" extent="1-1"/>
 <wire x1="12" y1="43.85" x2="6.5" y2="43.85" width="0" layer="19" extent="1-1"/>
-<wire x1="23.6" y1="19.455" x2="23.6" y2="17.25" width="0" layer="19" extent="1-1"/>
-<wire x1="22.8" y1="19.455" x2="23.6" y2="19.455" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="5V">
 <contactref element="R_ESC" pad="3"/>
