@@ -5448,12 +5448,6 @@ https://www.digikey.com/product-detail/en/texas-instruments/LM339DR/296-1013-1-N
 </gates>
 <devices>
 <device name="" package="MOLEX_1.25MM_4PIN_SMT">
-<connects>
-<connect gate="G$1" pin="1" pad="P$3"/>
-<connect gate="G$1" pin="2" pad="P$4"/>
-<connect gate="G$1" pin="3" pad="P$5"/>
-<connect gate="G$1" pin="4" pad="P$6"/>
-</connects>
 <technologies>
 <technology name=""/>
 </technologies>
