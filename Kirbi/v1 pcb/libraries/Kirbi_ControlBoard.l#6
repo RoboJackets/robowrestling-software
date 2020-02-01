@@ -4725,6 +4725,18 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 <pin name="+" x="7.62" y="0" length="middle" direction="pas" swaplevel="1" rot="R180"/>
 <pin name="-" x="7.62" y="-2.54" length="middle" direction="pas" swaplevel="1" rot="R180"/>
 </symbol>
+<symbol name="SURFACE_MOUNT_CONNECTOR_6_POSITIONS">
+<wire x1="-7.62" y1="7.62" x2="-7.62" y2="-12.7" width="0.1524" layer="94"/>
+<wire x1="-7.62" y1="-12.7" x2="5.08" y2="-12.7" width="0.1524" layer="94"/>
+<wire x1="5.08" y1="-12.7" x2="5.08" y2="7.62" width="0.1524" layer="94"/>
+<wire x1="5.08" y1="7.62" x2="-7.62" y2="7.62" width="0.1524" layer="94"/>
+<pin name="P$1" x="-12.7" y="2.54" length="middle"/>
+<pin name="P$2" x="-12.7" y="-2.54" length="middle"/>
+<pin name="P$3" x="-12.7" y="-7.62" length="middle"/>
+<pin name="P$4" x="10.16" y="2.54" length="middle" rot="R180"/>
+<pin name="P$5" x="10.16" y="-2.54" length="middle" rot="R180"/>
+<pin name="P$6" x="10.16" y="-7.62" length="middle" rot="R180"/>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="AP2114H-1.8TRG1" prefix="U">
