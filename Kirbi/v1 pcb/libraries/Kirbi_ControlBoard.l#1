@@ -1210,10 +1210,10 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 <smd name="P$4" x="-3.24" y="2.5" dx="1.2" dy="4.75" layer="1"/>
 <smd name="P$5" x="-5.78" y="8.25" dx="1.2" dy="4.75" layer="1"/>
 <smd name="P$6" x="-5.78" y="2.5" dx="1.2" dy="4.75" layer="1"/>
-<wire x1="1.2" y1="0.7" x2="1.2" y2="9.7" width="0.1524" layer="21"/>
-<wire x1="-7.8" y1="9.7" x2="-7.8" y2="0.7" width="0.1524" layer="21"/>
-<wire x1="-7.8" y1="9.7" x2="1.2" y2="9.7" width="0.1524" layer="21"/>
-<wire x1="1.2" y1="0.7" x2="-7.8" y2="0.7" width="0.1524" layer="21"/>
+<wire x1="4" y1="0.7" x2="4" y2="9.7" width="0.1524" layer="21"/>
+<wire x1="4" y1="9.7" x2="-11" y2="9.7" width="0.1524" layer="21"/>
+<wire x1="-11" y1="9.7" x2="-11" y2="0.7" width="0.1524" layer="21"/>
+<wire x1="-11" y1="0.7" x2="4" y2="0.7" width="0.1524" layer="21"/>
 </package>
 </packages>
 <symbols>

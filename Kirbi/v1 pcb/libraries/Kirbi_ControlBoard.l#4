@@ -9,7 +9,7 @@
 <grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="no" altdistance="0.1" altunitdist="mm" altunit="mm"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
-<layer number="2" name="Route2" color="16" fill="1" visible="no" active="yes"/>
+<layer number="2" name="Route2" color="16" fill="1" visible="yes" active="yes"/>
 <layer number="3" name="Route3" color="17" fill="1" visible="no" active="yes"/>
 <layer number="4" name="Route4" color="18" fill="1" visible="no" active="yes"/>
 <layer number="5" name="Route5" color="19" fill="1" visible="no" active="yes"/>
@@ -19,9 +19,9 @@
 <layer number="9" name="Route9" color="28" fill="1" visible="no" active="yes"/>
 <layer number="10" name="Route10" color="29" fill="1" visible="no" active="yes"/>
 <layer number="11" name="Route11" color="30" fill="1" visible="no" active="yes"/>
-<layer number="12" name="Route12" color="20" fill="1" visible="no" active="yes"/>
+<layer number="12" name="Route12" color="20" fill="1" visible="yes" active="yes"/>
 <layer number="13" name="Route13" color="21" fill="1" visible="no" active="yes"/>
-<layer number="14" name="Route14" color="22" fill="1" visible="no" active="yes"/>
+<layer number="14" name="Route14" color="22" fill="1" visible="yes" active="yes"/>
 <layer number="15" name="Route15" color="23" fill="1" visible="no" active="yes"/>
 <layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
 <layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
@@ -1204,10 +1204,10 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 <text x="-4" y="-4" size="1.6" layer="27">&gt;Value</text>
 </package>
 <package name="SHROUDED_2X2_2.54MM">
-<rectangle x1="-1.2" y1="0" x2="0" y2="4.75" layer="21"/>
-<rectangle x1="-1.2" y1="5.75" x2="0" y2="10.5" layer="21"/>
-<rectangle x1="-3.74" y1="5.75" x2="-2.54" y2="10.5" layer="21"/>
-<rectangle x1="-3.74" y1="0" x2="-2.54" y2="4.75" layer="21"/>
+<smd name="P$1" x="0" y="0" dx="1.2" dy="4.75" layer="1"/>
+<smd name="P$2" x="0" y="5.75" dx="1.2" dy="4.75" layer="1"/>
+<smd name="P$3" x="-2.54" y="5.75" dx="1.2" dy="4.75" layer="1"/>
+<smd name="P$4" x="-2.54" y="0" dx="1.2" dy="4.75" layer="1"/>
 </package>
 </packages>
 <symbols>
