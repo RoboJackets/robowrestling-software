@@ -5904,7 +5904,6 @@ Warning: This is the KIT version of this package. This package has a smaller dia
 <part name="C1" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="IMU" library="ICM-20948" deviceset="ICM-20948" device=""/>
 <part name="SUPPLY26" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="1.8V" device=""/>
-<part name="GND27" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="C4" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="U1" library="Gucci_ControlBoard" deviceset="PCA9306_LSSOP" device=""/>
 <part name="SUPPLY28" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device=""/>
@@ -5966,6 +5965,7 @@ Warning: This is the KIT version of this package. This package has a smaller dia
 <part name="LED1" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="WS2812B" device="5050" package3d_urn="urn:adsk.eagle:package:6240942/1"/>
 <part name="GND19" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="SUPPLY19" library="SparkFun-PowerSymbols" deviceset="5V" device=""/>
+<part name="GND18" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -6212,9 +6212,6 @@ Connectors</text>
 <instance part="SUPPLY26" gate="G$1" x="398.78" y="170.18" smashed="yes">
 <attribute name="VALUE" x="398.78" y="172.974" size="1.778" layer="96" align="bottom-center"/>
 </instance>
-<instance part="GND27" gate="1" x="350.52" y="149.86" smashed="yes">
-<attribute name="VALUE" x="350.52" y="149.606" size="1.778" layer="96" align="top-center"/>
-</instance>
 <instance part="C4" gate="G$1" x="414.02" y="58.42" smashed="yes">
 <attribute name="NAME" x="415.544" y="61.341" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="415.544" y="56.261" size="1.778" layer="96" font="vector"/>
@@ -6422,6 +6419,9 @@ Connectors</text>
 </instance>
 <instance part="SUPPLY19" gate="G$1" x="299.72" y="233.68" smashed="yes">
 <attribute name="VALUE" x="299.72" y="236.474" size="1.778" layer="96" align="bottom-center"/>
+</instance>
+<instance part="GND18" gate="1" x="340.36" y="139.7" smashed="yes">
+<attribute name="VALUE" x="340.36" y="139.446" size="1.778" layer="96" align="top-center"/>
 </instance>
 </instances>
 <busses>
@@ -6879,11 +6879,6 @@ Connectors</text>
 <junction x="401.32" y="124.46"/>
 </segment>
 <segment>
-<pinref part="IMU" gate="G$1" pin="FSYNC"/>
-<wire x1="355.6" y1="152.4" x2="350.52" y2="152.4" width="0.1524" layer="91"/>
-<pinref part="GND27" gate="1" pin="GND"/>
-</segment>
-<segment>
 <pinref part="TOF_1" gate="G$1" pin="5"/>
 <wire x1="34.29" y1="220.98" x2="27.94" y2="220.98" width="0.1524" layer="91"/>
 <wire x1="27.94" y1="220.98" x2="27.94" y2="218.44" width="0.1524" layer="91"/>
@@ -6968,6 +6963,15 @@ Connectors</text>
 <pinref part="LED1" gate="G$1" pin="GND"/>
 <pinref part="GND19" gate="1" pin="GND"/>
 <wire x1="294.64" y1="205.74" x2="294.64" y2="203.2" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="IMU" gate="G$1" pin="FSYNC"/>
+<wire x1="355.6" y1="152.4" x2="340.36" y2="152.4" width="0.1524" layer="91"/>
+<pinref part="IMU" gate="G$1" pin="AD0/SDO"/>
+<wire x1="355.6" y1="142.24" x2="340.36" y2="142.24" width="0.1524" layer="91"/>
+<wire x1="340.36" y1="142.24" x2="340.36" y2="152.4" width="0.1524" layer="91"/>
+<pinref part="GND18" gate="1" pin="GND"/>
+<junction x="340.36" y="142.24"/>
 </segment>
 </net>
 <net name="SHDN0" class="0">
@@ -7239,30 +7243,6 @@ Connectors</text>
 <wire x1="271.78" y1="30.48" x2="266.7" y2="30.48" width="0.1524" layer="91"/>
 <wire x1="266.7" y1="30.48" x2="266.7" y2="33.02" width="0.1524" layer="91"/>
 <pinref part="SUPPLY13" gate="G$1" pin="1.8V"/>
-</segment>
-</net>
-<net name="IMU_INT" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="12/MISO0"/>
-<wire x1="165.1" y1="205.74" x2="160.02" y2="205.74" width="0.1524" layer="91"/>
-<label x="160.02" y="205.74" size="1.778" layer="95" rot="R180" xref="yes"/>
-</segment>
-<segment>
-<pinref part="IMU" gate="G$1" pin="INT1"/>
-<wire x1="396.24" y1="149.86" x2="398.78" y2="149.86" width="0.1524" layer="91"/>
-<label x="398.78" y="149.86" size="1.778" layer="95" xref="yes"/>
-</segment>
-</net>
-<net name="IMU_AD0" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="9/RX2/PWM"/>
-<wire x1="165.1" y1="213.36" x2="160.02" y2="213.36" width="0.1524" layer="91"/>
-<label x="160.02" y="213.36" size="1.778" layer="95" rot="R180" xref="yes"/>
-</segment>
-<segment>
-<pinref part="IMU" gate="G$1" pin="AD0/SDO"/>
-<wire x1="355.6" y1="142.24" x2="353.06" y2="142.24" width="0.1524" layer="91"/>
-<label x="353.06" y="142.24" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="N$3" class="0">

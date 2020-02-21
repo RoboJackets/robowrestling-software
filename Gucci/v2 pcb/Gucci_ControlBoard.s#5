@@ -5818,12 +5818,6 @@ Warning: This is the KIT version of this package. This package has a smaller dia
 <packages>
 </packages>
 <symbols>
-<symbol name="+5V" urn="urn:adsk.eagle:symbol:26929/1" library_version="1">
-<wire x1="1.27" y1="-1.905" x2="0" y2="0" width="0.254" layer="94"/>
-<wire x1="0" y1="0" x2="-1.27" y2="-1.905" width="0.254" layer="94"/>
-<text x="-2.54" y="-5.08" size="1.778" layer="96" rot="R90">&gt;VALUE</text>
-<pin name="+5V" x="0" y="-2.54" visible="off" length="short" direction="sup" rot="R90"/>
-</symbol>
 <symbol name="GND" urn="urn:adsk.eagle:symbol:26925/1" library_version="1">
 <wire x1="-1.905" y1="0" x2="1.905" y2="0" width="0.254" layer="94"/>
 <text x="-2.54" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
@@ -5831,19 +5825,6 @@ Warning: This is the KIT version of this package. This package has a smaller dia
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="+5V" urn="urn:adsk.eagle:component:26963/1" prefix="P+" library_version="1">
-<description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
-<gates>
-<gate name="1" symbol="+5V" x="0" y="0"/>
-</gates>
-<devices>
-<device name="">
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="GND" urn="urn:adsk.eagle:component:26954/1" prefix="GND" library_version="1">
 <description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
 <gates>
@@ -5983,8 +5964,8 @@ Warning: This is the KIT version of this package. This package has a smaller dia
 <part name="SUPPLY30" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device=""/>
 <part name="SUPPLY31" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device=""/>
 <part name="LED1" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="WS2812B" device="5050" package3d_urn="urn:adsk.eagle:package:6240942/1"/>
-<part name="P+1" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="GND19" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="SUPPLY19" library="SparkFun-PowerSymbols" deviceset="5V" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -6436,11 +6417,11 @@ Connectors</text>
 <attribute name="VALUE" x="233.68" y="68.834" size="1.778" layer="96" align="bottom-center"/>
 </instance>
 <instance part="LED1" gate="G$1" x="294.64" y="215.9" smashed="yes"/>
-<instance part="P+1" gate="1" x="299.72" y="236.22" smashed="yes">
-<attribute name="VALUE" x="297.18" y="231.14" size="1.778" layer="96" rot="R180"/>
-</instance>
 <instance part="GND19" gate="1" x="294.64" y="200.66" smashed="yes">
 <attribute name="VALUE" x="292.1" y="198.12" size="1.778" layer="96"/>
+</instance>
+<instance part="SUPPLY19" gate="G$1" x="299.72" y="233.68" smashed="yes">
+<attribute name="VALUE" x="299.72" y="236.474" size="1.778" layer="96" align="bottom-center"/>
 </instance>
 </instances>
 <busses>
@@ -6451,6 +6432,7 @@ Connectors</text>
 <pinref part="R_ESC" gate="G$1" pin="3"/>
 <pinref part="SUPPLY15" gate="G$1" pin="5V"/>
 <wire x1="367.284" y1="226.06" x2="358.14" y2="226.06" width="0.1524" layer="91"/>
+<wire x1="358.14" y1="226.06" x2="358.14" y2="231.14" width="0.1524" layer="91"/>
 <wire x1="358.14" y1="226.06" x2="358.14" y2="231.14" width="0.1524" layer="91"/>
 </segment>
 <segment>
@@ -6510,6 +6492,11 @@ Connectors</text>
 <segment>
 <pinref part="U5" gate="G$1" pin="VCC"/>
 <pinref part="SUPPLY14" gate="G$1" pin="5V"/>
+</segment>
+<segment>
+<pinref part="LED1" gate="G$1" pin="VDD"/>
+<wire x1="299.72" y1="231.14" x2="299.72" y2="233.68" width="0.1524" layer="91"/>
+<pinref part="SUPPLY19" gate="G$1" pin="5V"/>
 </segment>
 </net>
 <net name="3.3V" class="0">
@@ -7449,13 +7436,6 @@ Connectors</text>
 <pinref part="R_MOT" gate="G$1" pin="1"/>
 <wire x1="231.14" y1="27.94" x2="236.22" y2="27.94" width="0.1524" layer="91"/>
 <label x="236.22" y="27.94" size="1.778" layer="95" xref="yes"/>
-</segment>
-</net>
-<net name="+5V" class="0">
-<segment>
-<pinref part="LED1" gate="G$1" pin="VDD"/>
-<pinref part="P+1" gate="1" pin="+5V"/>
-<wire x1="299.72" y1="231.14" x2="299.72" y2="233.68" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="NEO_DI" class="0">
