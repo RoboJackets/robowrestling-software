@@ -1204,13 +1204,16 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 <text x="-4" y="-4" size="1.6" layer="27">&gt;Value</text>
 </package>
 <package name="SHROUDED_2X2_2.54MM">
-<smd name="P$1" x="0" y="0" dx="1.2" dy="4.75" layer="1"/>
-<smd name="P$2" x="0" y="5.75" dx="1.2" dy="4.75" layer="1"/>
-<smd name="P$3" x="-2.54" y="5.75" dx="1.2" dy="4.75" layer="1"/>
-<smd name="P$4" x="-2.54" y="0" dx="1.2" dy="4.75" layer="1"/>
-<smd name="P$5" x="-5.08" y="5.75" dx="1.2" dy="4.75" layer="1"/>
-<smd name="P$6" x="-5.08" y="0" dx="1.2" dy="4.75" layer="1"/>
-<wire x1="4" y1="-4" x2="4" y2="7" width="0.1524" layer="21"/>
+<smd name="P$1" x="-0.7" y="2.5" dx="1.2" dy="4.75" layer="1"/>
+<smd name="P$2" x="-0.7" y="8.25" dx="1.2" dy="4.75" layer="1"/>
+<smd name="P$3" x="-3.24" y="8.25" dx="1.2" dy="4.75" layer="1"/>
+<smd name="P$4" x="-3.24" y="2.5" dx="1.2" dy="4.75" layer="1"/>
+<smd name="P$5" x="-5.78" y="8.25" dx="1.2" dy="4.75" layer="1"/>
+<smd name="P$6" x="-5.78" y="2.5" dx="1.2" dy="4.75" layer="1"/>
+<wire x1="1.2" y1="0.7" x2="1.2" y2="9.7" width="0.1524" layer="21"/>
+<wire x1="-7.8" y1="9.7" x2="-7.8" y2="0.7" width="0.1524" layer="21"/>
+<wire x1="-7.8" y1="9.7" x2="1.2" y2="9.7" width="0.1524" layer="21"/>
+<wire x1="1.2" y1="0.7" x2="-7.8" y2="0.7" width="0.1524" layer="21"/>
 </package>
 </packages>
 <symbols>
