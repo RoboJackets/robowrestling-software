@@ -7039,7 +7039,7 @@ by exp-lbrs.ulp</description>
 <label x="124.46" y="93.98" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
-<net name="5V" class="0">
+<net name="+5V" class="0">
 <segment>
 <pinref part="P+1" gate="1" pin="+5V"/>
 <wire x1="231.14" y1="248.92" x2="231.14" y2="246.38" width="0.1524" layer="91"/>
@@ -7110,6 +7110,11 @@ by exp-lbrs.ulp</description>
 <segment>
 <pinref part="U5" gate="G$1" pin="VCC"/>
 <pinref part="P+7" gate="1" pin="+5V"/>
+</segment>
+<segment>
+<pinref part="P+2" gate="1" pin="+5V"/>
+<pinref part="LED1" gate="G$1" pin="VDD"/>
+<wire x1="287.02" y1="213.36" x2="284.48" y2="213.36" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="24V" class="0">
@@ -7473,13 +7478,6 @@ by exp-lbrs.ulp</description>
 <wire x1="41.91" y1="180.34" x2="35.56" y2="180.34" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="+5V" class="0">
-<segment>
-<pinref part="P+2" gate="1" pin="+5V"/>
-<pinref part="LED1" gate="G$1" pin="VDD"/>
-<wire x1="287.02" y1="213.36" x2="284.48" y2="213.36" width="0.1524" layer="91"/>
-</segment>
-</net>
 <net name="NEO_DO" class="0">
 <segment>
 <pinref part="LED1" gate="G$1" pin="DO"/>
@@ -7487,6 +7485,8 @@ by exp-lbrs.ulp</description>
 <label x="297.18" y="195.58" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
+<pinref part="U2" gate="G$1" pin="39/A20"/>
+<wire x1="165.1" y1="137.16" x2="162.56" y2="137.16" width="0.1524" layer="91"/>
 <label x="162.56" y="137.16" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
@@ -7497,19 +7497,9 @@ by exp-lbrs.ulp</description>
 <label x="266.7" y="195.58" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<label x="162.56" y="139.7" size="1.778" layer="95" rot="R180" xref="yes"/>
-</segment>
-</net>
-<net name="N$5" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="39/A20"/>
-<wire x1="165.1" y1="137.16" x2="162.56" y2="137.16" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$8" class="0">
-<segment>
 <pinref part="U2" gate="G$1" pin="38/A19/SDA1/PWM"/>
 <wire x1="165.1" y1="139.7" x2="162.56" y2="139.7" width="0.1524" layer="91"/>
+<label x="162.56" y="139.7" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 </nets>

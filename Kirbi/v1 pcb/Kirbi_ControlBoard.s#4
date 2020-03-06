@@ -5992,6 +5992,7 @@ by exp-lbrs.ulp</description>
 <text x="266.7" y="111.76" size="5.08" layer="97">Battery Connector</text>
 <wire x1="190.5" y1="127" x2="190.5" y2="78.74" width="1.27" layer="97" style="shortdash"/>
 <text x="185.42" y="71.12" size="5.08" layer="97">Current Sensing</text>
+<text x="383.54" y="251.46" size="5.08" layer="97">Power</text>
 </plain>
 <instances>
 <instance part="U2" gate="G$1" x="193.04" y="185.42" smashed="yes">
