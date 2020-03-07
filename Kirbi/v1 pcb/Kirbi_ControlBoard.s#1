@@ -7590,13 +7590,6 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <wire x1="41.91" y1="180.34" x2="35.56" y2="180.34" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="NEO_DO" class="0">
-<segment>
-<pinref part="LED1" gate="G$1" pin="DO"/>
-<wire x1="294.64" y1="195.58" x2="297.18" y2="195.58" width="0.1524" layer="91"/>
-<label x="297.18" y="195.58" size="1.778" layer="95" xref="yes"/>
-</segment>
-</net>
 <net name="NEO_DI" class="0">
 <segment>
 <pinref part="LED1" gate="G$1" pin="DI"/>

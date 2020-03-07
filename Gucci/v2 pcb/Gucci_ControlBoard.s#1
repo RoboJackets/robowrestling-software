@@ -7131,11 +7131,6 @@ Connectors</text>
 <wire x1="165.1" y1="137.16" x2="160.02" y2="137.16" width="0.1524" layer="91"/>
 <label x="160.02" y="137.16" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
-<segment>
-<pinref part="LED1" gate="G$1" pin="DO"/>
-<wire x1="307.34" y1="213.36" x2="314.96" y2="213.36" width="0.1524" layer="91"/>
-<label x="314.96" y="213.36" size="1.778" layer="95" xref="yes"/>
-</segment>
 </net>
 <net name="N$5" class="0">
 <segment>
