@@ -392,7 +392,7 @@
 <wire x1="-5.425" y1="2" x2="-5.425" y2="-2" width="0.1524" layer="46"/>
 <wire x1="5.425" y1="2" x2="5.425" y2="-2" width="0.1524" layer="46"/>
 <wire x1="7.425" y1="2" x2="7.425" y2="-2" width="0.1524" layer="46"/>
-<text x="-3.81" y="10.16" size="1.778" layer="25">&gt;Name</text>
+<text x="-3.81" y="8.89" size="1.778" layer="25">&gt;Name</text>
 <wire x1="-5.08" y1="-16.51" x2="5.08" y2="-16.51" width="0.1524" layer="21"/>
 <wire x1="5.08" y1="-16.51" x2="5.08" y2="-8.89" width="0.1524" layer="21"/>
 <wire x1="5.08" y1="-8.89" x2="11.43" y2="-8.89" width="0.1524" layer="21"/>
@@ -401,7 +401,7 @@
 <wire x1="-11.43" y1="7.62" x2="-11.43" y2="-8.89" width="0.1524" layer="21"/>
 <wire x1="-11.43" y1="-8.89" x2="-5.08" y2="-8.89" width="0.1524" layer="21"/>
 <wire x1="-5.08" y1="-8.89" x2="-5.08" y2="-16.51" width="0.1524" layer="21"/>
-<text x="-3.81" y="7.62" size="1.778" layer="27">&gt;Value</text>
+<text x="-3.81" y="-19.05" size="1.778" layer="27">&gt;Value</text>
 </package>
 </packages>
 <symbols>
