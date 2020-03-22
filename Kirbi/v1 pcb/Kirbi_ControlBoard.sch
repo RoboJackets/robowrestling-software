@@ -6167,7 +6167,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <part name="ESC" library="Kirbi_ControlBoard" deviceset="MOLEX_1.25MM_4PIN_SMT" device=""/>
 <part name="LIDAR_R" library="Kirbi_ControlBoard" deviceset="MOLEX_1.25MM_4PIN_SMT" device=""/>
 <part name="LIDAR_L" library="Kirbi_ControlBoard" deviceset="MOLEX_1.25MM_4PIN_SMT" device=""/>
-<part name="U$5" library="Kirbi_ControlBoard" deviceset="POWER_SWITCH" device=""/>
+<part name="POWER" library="Kirbi_ControlBoard" deviceset="POWER_SWITCH" device=""/>
 <part name="P+3" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="R1" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="50"/>
 </parts>
@@ -6645,7 +6645,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <attribute name="VALUE" x="66.04" y="221.234" size="1.778" layer="96" font="vector"/>
 <attribute name="NAME" x="66.04" y="236.728" size="1.778" layer="95" font="vector"/>
 </instance>
-<instance part="U$5" gate="G$1" x="297.18" y="149.86" smashed="yes">
+<instance part="POWER" gate="G$1" x="297.18" y="149.86" smashed="yes">
 <attribute name="NAME" x="294.64" y="149.86" size="1.27" layer="97"/>
 </instance>
 <instance part="P+3" gate="1" x="297.18" y="162.56" smashed="yes">
@@ -7238,7 +7238,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <wire x1="317.5" y1="142.24" x2="309.88" y2="142.24" width="0.1524" layer="91"/>
 <junction x="317.5" y="142.24"/>
 <pinref part="P+3" gate="1" pin="+5V"/>
-<pinref part="U$5" gate="G$1" pin="P3"/>
+<pinref part="POWER" gate="G$1" pin="P3"/>
 <wire x1="297.18" y1="160.02" x2="297.18" y2="154.94" width="0.1524" layer="91"/>
 <wire x1="297.18" y1="154.94" x2="297.18" y2="147.32" width="0.1524" layer="91"/>
 <junction x="297.18" y="154.94"/>
@@ -7246,7 +7246,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <wire x1="309.88" y1="142.24" x2="309.88" y2="160.02" width="0.1524" layer="91"/>
 <wire x1="309.88" y1="160.02" x2="297.18" y2="160.02" width="0.1524" layer="91"/>
 <wire x1="297.18" y1="147.32" x2="292.1" y2="147.32" width="0.1524" layer="91"/>
-<pinref part="U$5" gate="G$1" pin="P5"/>
+<pinref part="POWER" gate="G$1" pin="P5"/>
 <wire x1="292.1" y1="147.32" x2="292.1" y2="142.24" width="0.1524" layer="91"/>
 </segment>
 <segment>
@@ -7494,7 +7494,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <net name="S2" class="0">
 <segment>
 <pinref part="ESC" gate="G$1" pin="4"/>
-<pinref part="U$5" gate="G$1" pin="P4"/>
+<pinref part="POWER" gate="G$1" pin="P4"/>
 <wire x1="287.02" y1="154.94" x2="266.7" y2="154.94" width="0.1524" layer="91"/>
 <wire x1="266.7" y1="154.94" x2="266.7" y2="139.7" width="0.1524" layer="91"/>
 </segment>
@@ -7590,13 +7590,6 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <wire x1="41.91" y1="180.34" x2="35.56" y2="180.34" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="NEO_DO" class="0">
-<segment>
-<pinref part="LED1" gate="G$1" pin="DO"/>
-<wire x1="294.64" y1="195.58" x2="297.18" y2="195.58" width="0.1524" layer="91"/>
-<label x="297.18" y="195.58" size="1.778" layer="95" xref="yes"/>
-</segment>
-</net>
 <net name="NEO_DI" class="0">
 <segment>
 <pinref part="LED1" gate="G$1" pin="DI"/>
@@ -7611,7 +7604,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 </net>
 <net name="N$8" class="0">
 <segment>
-<pinref part="U$5" gate="G$1" pin="P1"/>
+<pinref part="POWER" gate="G$1" pin="P1"/>
 <pinref part="R1" gate="G$1" pin="2"/>
 <wire x1="304.8" y1="139.7" x2="304.8" y2="142.24" width="0.1524" layer="91"/>
 </segment>
