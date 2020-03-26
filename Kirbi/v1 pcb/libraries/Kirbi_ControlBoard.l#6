@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="no" altdistance="0.1" altunitdist="mm" altunit="mm"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="yes" active="yes"/>
@@ -1245,8 +1245,8 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 <smd name="P$6" x="-2.54" y="-2.875" dx="1.2" dy="4.75" layer="1" rot="R180"/>
 <wire x1="-7.62" y1="4.375" x2="-7.62" y2="-4.375" width="0.1524" layer="21"/>
 <wire x1="7.62" y1="4.375" x2="7.62" y2="-4.375" width="0.1524" layer="21"/>
-<text x="-4" y="7" size="1.778" layer="21">&gt;Name</text>
-<text x="-4" y="-8" size="1.778" layer="21">&gt;Value</text>
+<text x="-3.81" y="6.35" size="1.778" layer="25">&gt;Name</text>
+<text x="-3.81" y="-7.62" size="1.778" layer="27">&gt;Value</text>
 </package>
 </packages>
 <symbols>
@@ -5537,6 +5537,17 @@ https://www.digikey.com/product-detail/en/texas-instruments/LM339DR/296-1013-1-N
 <connect gate="G$1" pin="P4" pad="P4"/>
 <connect gate="G$1" pin="P5" pad="P5"/>
 </connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="CONNHEADER_SMD_6POS_2.54MM">
+<gates>
+</gates>
+<devices>
+<device name="">
 <technologies>
 <technology name=""/>
 </technologies>
