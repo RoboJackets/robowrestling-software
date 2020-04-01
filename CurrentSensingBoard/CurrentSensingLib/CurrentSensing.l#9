@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.1" altunitdist="mm" altunit="mm"/>
+<grid distance="50" unitdist="mil" unit="mil" style="lines" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="no" active="yes"/>
@@ -53,7 +53,7 @@
 <layer number="43" name="vRestrict" color="2" fill="10" visible="yes" active="yes"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
 <layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
-<layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="yes" active="yes"/>
 <layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
 <layer number="48" name="Document" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="49" name="Reference" color="7" fill="1" visible="yes" active="yes"/>
@@ -384,6 +384,16 @@
 <pad name="P$5" x="1.27" y="-13.8" drill="0.8"/>
 <pad name="P$6" x="-6.425" y="0" drill="2" diameter="6" shape="long" rot="R90"/>
 <pad name="P$7" x="6.425" y="0" drill="2" diameter="6" shape="long" rot="R90"/>
+<wire x1="-7.425" y1="2" x2="-5.425" y2="2" width="0.1524" layer="46" curve="-180"/>
+<wire x1="-5.425" y1="-2" x2="-7.425" y2="-2" width="0.1524" layer="46" curve="-180"/>
+<wire x1="7.425" y1="-2" x2="5.425" y2="-2" width="0.1524" layer="46" curve="-180"/>
+<wire x1="5.425" y1="2" x2="7.425" y2="2" width="0.1524" layer="46" curve="-180"/>
+<wire x1="-7.425" y1="2" x2="-7.425" y2="-2" width="0.1524" layer="46"/>
+<wire x1="-5.425" y1="2" x2="-5.425" y2="-2" width="0.1524" layer="46"/>
+<wire x1="5.425" y1="2" x2="5.425" y2="-2" width="0.1524" layer="46"/>
+<wire x1="7.425" y1="2" x2="7.425" y2="-2" width="0.1524" layer="46"/>
+<text x="-3.81" y="7.62" size="1.778" layer="25">&gt;Name</text>
+<text x="-3.81" y="5.08" size="1.778" layer="27">&gt;Value</text>
 </package>
 </packages>
 <symbols>

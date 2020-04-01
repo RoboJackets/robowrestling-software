@@ -5841,8 +5841,8 @@ Warning: This is the KIT version of this package. This package has a smaller dia
 <part name="LED1" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="WS2812B" device="5050" package3d_urn="urn:adsk.eagle:package:6240942/1"/>
 <part name="GND19" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="SUPPLY19" library="SparkFun-PowerSymbols" deviceset="5V" device=""/>
-<part name="U$5" library="Gucci_ControlBoard" deviceset="POWER_SWITCH" device=""/>
-<part name="U$6" library="Gucci_ControlBoard" deviceset="MOLEX_1.25MM_4PIN_SMT" device=""/>
+<part name="POWER" library="Gucci_ControlBoard" deviceset="POWER_SWITCH" device=""/>
+<part name="ESC" library="Gucci_ControlBoard" deviceset="MOLEX_1.25MM_4PIN_SMT" device=""/>
 <part name="R1" library="SparkFun-Resistors" deviceset="1KOHM" device="-0603-1/10W-1%" value="50"/>
 <part name="GND14" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="SUPPLY15" library="SparkFun-PowerSymbols" deviceset="5V" device=""/>
@@ -6240,10 +6240,10 @@ Connectors</text>
 <instance part="SUPPLY19" gate="G$1" x="299.72" y="233.68" smashed="yes">
 <attribute name="VALUE" x="299.72" y="236.474" size="1.778" layer="96" align="bottom-center"/>
 </instance>
-<instance part="U$5" gate="G$1" x="312.42" y="147.32" smashed="yes">
+<instance part="POWER" gate="G$1" x="312.42" y="147.32" smashed="yes">
 <attribute name="NAME" x="309.88" y="147.32" size="1.27" layer="97"/>
 </instance>
-<instance part="U$6" gate="G$1" x="269.24" y="144.78" smashed="yes">
+<instance part="ESC" gate="G$1" x="269.24" y="144.78" smashed="yes">
 <attribute name="VALUE" x="264.16" y="137.414" size="1.778" layer="96" font="vector"/>
 <attribute name="NAME" x="264.16" y="152.908" size="1.778" layer="95" font="vector"/>
 </instance>
@@ -6310,11 +6310,11 @@ Connectors</text>
 <segment>
 <wire x1="312.42" y1="152.4" x2="312.42" y2="165.1" width="0.1524" layer="91"/>
 <pinref part="SUPPLY15" gate="G$1" pin="5V"/>
-<pinref part="U$5" gate="G$1" pin="P3"/>
+<pinref part="POWER" gate="G$1" pin="P3"/>
 <wire x1="312.42" y1="152.4" x2="312.42" y2="144.78" width="0.1524" layer="91"/>
 <wire x1="312.42" y1="144.78" x2="307.34" y2="144.78" width="0.1524" layer="91"/>
 <junction x="312.42" y="152.4"/>
-<pinref part="U$5" gate="G$1" pin="P5"/>
+<pinref part="POWER" gate="G$1" pin="P5"/>
 <wire x1="307.34" y1="144.78" x2="307.34" y2="139.7" width="0.1524" layer="91"/>
 </segment>
 </net>
@@ -6745,7 +6745,7 @@ Connectors</text>
 <pinref part="GND14" gate="1" pin="GND"/>
 </segment>
 <segment>
-<pinref part="U$6" gate="G$1" pin="1"/>
+<pinref part="ESC" gate="G$1" pin="1"/>
 <pinref part="GND15" gate="1" pin="GND"/>
 <wire x1="274.32" y1="142.24" x2="276.86" y2="142.24" width="0.1524" layer="91"/>
 <wire x1="276.86" y1="142.24" x2="276.86" y2="132.08" width="0.1524" layer="91"/>
@@ -7115,9 +7115,9 @@ Connectors</text>
 </net>
 <net name="NEO_DI" class="0">
 <segment>
-<pinref part="U2" gate="G$1" pin="38/A19/SDA1/PWM"/>
-<wire x1="165.1" y1="139.7" x2="160.02" y2="139.7" width="0.1524" layer="91"/>
-<label x="160.02" y="139.7" size="1.778" layer="95" rot="R180" xref="yes"/>
+<label x="160.02" y="208.28" size="1.778" layer="95" rot="R180" xref="yes"/>
+<pinref part="U2" gate="G$1" pin="11/MOSI0"/>
+<wire x1="160.02" y1="208.28" x2="165.1" y2="208.28" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="LED1" gate="G$1" pin="DI"/>
@@ -7131,25 +7131,20 @@ Connectors</text>
 <wire x1="165.1" y1="137.16" x2="160.02" y2="137.16" width="0.1524" layer="91"/>
 <label x="160.02" y="137.16" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
-<segment>
-<pinref part="LED1" gate="G$1" pin="DO"/>
-<wire x1="307.34" y1="213.36" x2="314.96" y2="213.36" width="0.1524" layer="91"/>
-<label x="314.96" y="213.36" size="1.778" layer="95" xref="yes"/>
-</segment>
 </net>
 <net name="N$5" class="0">
 <segment>
-<pinref part="U$5" gate="G$1" pin="P1"/>
+<pinref part="POWER" gate="G$1" pin="P1"/>
 <wire x1="320.04" y1="139.7" x2="320.04" y2="137.16" width="0.1524" layer="91"/>
 <pinref part="R1" gate="G$1" pin="1"/>
 </segment>
 </net>
 <net name="N$6" class="0">
 <segment>
-<pinref part="U$5" gate="G$1" pin="P4"/>
+<pinref part="POWER" gate="G$1" pin="P4"/>
 <wire x1="302.26" y1="152.4" x2="281.94" y2="152.4" width="0.1524" layer="91"/>
 <wire x1="281.94" y1="152.4" x2="281.94" y2="149.86" width="0.1524" layer="91"/>
-<pinref part="U$6" gate="G$1" pin="4"/>
+<pinref part="ESC" gate="G$1" pin="4"/>
 <wire x1="281.94" y1="149.86" x2="274.32" y2="149.86" width="0.1524" layer="91"/>
 </segment>
 </net>

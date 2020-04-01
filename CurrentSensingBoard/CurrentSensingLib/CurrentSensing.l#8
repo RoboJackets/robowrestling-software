@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.1" altunitdist="mm" altunit="mm"/>
+<grid distance="50" unitdist="mil" unit="mil" style="lines" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="no" active="yes"/>
@@ -392,6 +392,15 @@
 <wire x1="-5.425" y1="2" x2="-5.425" y2="-2" width="0.1524" layer="46"/>
 <wire x1="5.425" y1="2" x2="5.425" y2="-2" width="0.1524" layer="46"/>
 <wire x1="7.425" y1="2" x2="7.425" y2="-2" width="0.1524" layer="46"/>
+<text x="-3.81" y="7.62" size="1.778" layer="25">&gt;Name</text>
+<wire x1="-5.08" y1="-16.51" x2="5.08" y2="-16.51" width="0.1524" layer="21"/>
+<wire x1="5.08" y1="-16.51" x2="5.08" y2="-11.43" width="0.1524" layer="21"/>
+<wire x1="5.08" y1="-11.43" x2="12.7" y2="-11.43" width="0.1524" layer="21"/>
+<wire x1="12.7" y1="-11.43" x2="12.7" y2="7.62" width="0.1524" layer="21"/>
+<wire x1="12.7" y1="7.62" x2="-12.7" y2="7.62" width="0.1524" layer="21"/>
+<wire x1="-12.7" y1="7.62" x2="-12.7" y2="-11.43" width="0.1524" layer="21"/>
+<wire x1="-12.7" y1="-11.43" x2="-5.08" y2="-11.43" width="0.1524" layer="21"/>
+<wire x1="-5.08" y1="-11.43" x2="-5.08" y2="-16.51" width="0.1524" layer="21"/>
 </package>
 </packages>
 <symbols>
