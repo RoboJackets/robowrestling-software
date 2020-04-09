@@ -5921,7 +5921,6 @@ Warning: This is the KIT version of this package. This package has a smaller dia
 <part name="C11" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="C10" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="C9" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
-<part name="C7" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="10uF"/>
 <part name="C5" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="10uF"/>
 <part name="GND26" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="SUPPLY8" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device=""/>
@@ -6140,10 +6139,6 @@ Connectors</text>
 <instance part="C9" gate="G$1" x="383.54" y="58.42" smashed="yes">
 <attribute name="NAME" x="385.064" y="61.341" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="385.064" y="56.261" size="1.778" layer="96" font="vector"/>
-</instance>
-<instance part="C7" gate="G$1" x="398.78" y="58.42" smashed="yes">
-<attribute name="NAME" x="400.304" y="61.341" size="1.778" layer="95" font="vector"/>
-<attribute name="VALUE" x="400.304" y="56.261" size="1.778" layer="96" font="vector"/>
 </instance>
 <instance part="C5" gate="G$1" x="406.4" y="58.42" smashed="yes">
 <attribute name="NAME" x="407.924" y="61.341" size="1.778" layer="95" font="vector"/>
@@ -6471,9 +6466,6 @@ Connectors</text>
 <pinref part="SUPPLY23" gate="G$1" pin="5V"/>
 </segment>
 <segment>
-<pinref part="C7" gate="G$1" pin="1"/>
-<wire x1="398.78" y1="63.5" x2="398.78" y2="66.04" width="0.1524" layer="91"/>
-<wire x1="398.78" y1="66.04" x2="406.4" y2="66.04" width="0.1524" layer="91"/>
 <pinref part="C5" gate="G$1" pin="1"/>
 <wire x1="406.4" y1="66.04" x2="406.4" y2="63.5" width="0.1524" layer="91"/>
 <pinref part="SUPPLY25" gate="G$1" pin="5V"/>
@@ -6805,11 +6797,7 @@ Connectors</text>
 <junction x="337.82" y="53.34"/>
 <wire x1="383.54" y1="53.34" x2="391.16" y2="53.34" width="0.1524" layer="91"/>
 <junction x="383.54" y="53.34"/>
-<pinref part="C7" gate="G$1" pin="2"/>
-<wire x1="391.16" y1="53.34" x2="398.78" y2="53.34" width="0.1524" layer="91"/>
-<wire x1="398.78" y1="53.34" x2="398.78" y2="55.88" width="0.1524" layer="91"/>
-<wire x1="398.78" y1="53.34" x2="406.4" y2="53.34" width="0.1524" layer="91"/>
-<junction x="398.78" y="53.34"/>
+<wire x1="391.16" y1="53.34" x2="406.4" y2="53.34" width="0.1524" layer="91"/>
 <pinref part="C5" gate="G$1" pin="2"/>
 <wire x1="406.4" y1="53.34" x2="406.4" y2="55.88" width="0.1524" layer="91"/>
 <wire x1="406.4" y1="53.34" x2="414.02" y2="53.34" width="0.1524" layer="91"/>

@@ -7412,7 +7412,7 @@ Connectors</text>
 <label x="160.02" y="208.28" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
-<net name="SCK" class="0">
+<net name="RADIO_SCK" class="0">
 <segment>
 <label x="223.52" y="55.88" size="1.778" layer="95" rot="R180" xref="yes"/>
 <pinref part="TRANSCEIVER" gate="G$1" pin="3"/>
@@ -7431,7 +7431,7 @@ Connectors</text>
 <wire x1="218.44" y1="43.18" x2="228.6" y2="43.18" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="NSS" class="0">
+<net name="RADIO_NSS" class="0">
 <segment>
 <pinref part="TRANSCEIVER" gate="G$1" pin="4"/>
 <wire x1="228.6" y1="53.34" x2="223.52" y2="53.34" width="0.1524" layer="91"/>
@@ -7443,7 +7443,7 @@ Connectors</text>
 <label x="160.02" y="210.82" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
-<net name="DIO0" class="0">
+<net name="RADIO_DIO0" class="0">
 <segment>
 <pinref part="TRANSCEIVER" gate="G$1" pin="6"/>
 <wire x1="228.6" y1="48.26" x2="223.52" y2="48.26" width="0.1524" layer="91"/>

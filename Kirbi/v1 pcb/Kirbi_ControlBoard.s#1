@@ -6861,7 +6861,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <attribute name="VALUE" x="306.324" y="134.62" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
 </instance>
 <instance part="TRANSCEIVER" gate="G$1" x="322.58" y="200.66" smashed="yes">
-<attribute name="NAME" x="316.23" y="211.455" size="1.778" layer="95"/>
+<attribute name="NAME" x="316.23" y="212.217" size="1.778" layer="95"/>
 <attribute name="VALUE" x="316.23" y="185.42" size="1.778" layer="96"/>
 </instance>
 <instance part="GND13" gate="1" x="302.26" y="185.42" smashed="yes">
