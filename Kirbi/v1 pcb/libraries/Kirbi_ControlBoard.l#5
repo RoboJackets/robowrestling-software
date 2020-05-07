@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="no" altdistance="0.1" altunitdist="mil" altunit="mil"/>
+<grid distance="50" unitdist="mil" unit="mm" style="lines" multiple="1" display="no" altdistance="5" altunitdist="mil" altunit="mm"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="yes" active="yes"/>
@@ -1250,10 +1250,10 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 </package>
 <package name="PINNHEADER8-0.079''">
 <description>Through Hole Pinn Header 8 Pin (2mm)</description>
-<wire x1="-8" y1="2" x2="-8" y2="-2" width="0.127" layer="21"/>
-<wire x1="8" y1="-2" x2="8" y2="2" width="0.127" layer="21"/>
-<wire x1="8" y1="2" x2="-8" y2="2" width="0.127" layer="21"/>
-<wire x1="-8" y1="-2" x2="8" y2="-2" width="0.127" layer="21"/>
+<wire x1="-8" y1="1" x2="-8" y2="-1" width="0.127" layer="21"/>
+<wire x1="8" y1="-1" x2="8" y2="1" width="0.127" layer="21"/>
+<wire x1="8" y1="1" x2="-8" y2="1" width="0.127" layer="21"/>
+<wire x1="-8" y1="-1" x2="8" y2="-1" width="0.127" layer="21"/>
 <pad name="5" x="1" y="0" drill="1" diameter="1.4224"/>
 <pad name="4" x="-1" y="0" drill="1" diameter="1.4224"/>
 <pad name="3" x="-3" y="0" drill="1" diameter="1.4224"/>
@@ -5623,6 +5623,28 @@ https://www.digikey.com/product-detail/en/texas-instruments/LM339DR/296-1013-1-N
 <connect gate="G$1" pin="4" pad="P$2"/>
 <connect gate="G$1" pin="5" pad="P$6"/>
 <connect gate="G$1" pin="6" pad="P$3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="PINHD-1X8">
+<gates>
+<gate name="G$1" symbol="CONN_08" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="PINNHEADER8-0.079''">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="4" pad="4"/>
+<connect gate="G$1" pin="5" pad="5"/>
+<connect gate="G$1" pin="6" pad="6"/>
+<connect gate="G$1" pin="7" pad="7"/>
+<connect gate="G$1" pin="8" pad="8"/>
 </connects>
 <technologies>
 <technology name=""/>

@@ -4881,8 +4881,10 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 <pin name="P$2" x="-12.7" y="-5.08" length="middle"/>
 <pin name="P$3" x="0" y="-15.24" length="middle" rot="R90"/>
 <pin name="P$4" x="12.7" y="0" length="middle" rot="R180"/>
-<text x="-7.62" y="12.7" size="2.1844" layer="125">&gt;NAME</text>
+<text x="-7.62" y="17.78" size="2.1844" layer="125">&gt;NAME</text>
 <text x="-7.62" y="-20.32" size="2.1844" layer="127">&gt;VALUE</text>
+<pin name="P$5" x="-2.54" y="15.24" length="middle" rot="R270"/>
+<pin name="P$6" x="2.54" y="15.24" length="middle" rot="R270"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -5673,6 +5675,27 @@ https://www.digikey.com/product-detail/en/texas-instruments/LM339DR/296-1013-1-N
 <connect gate="G$1" pin="6" pad="6"/>
 <connect gate="G$1" pin="7" pad="7"/>
 <connect gate="G$1" pin="8" pad="8"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="MUX_74LVC1G157GV">
+<description>MUX_74LVC1G157GV</description>
+<gates>
+<gate name="G$1" symbol="MUX_74LVC1G157GV" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="MUX_74LVC1G157GV">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$3"/>
+<connect gate="G$1" pin="P$2" pad="P$1"/>
+<connect gate="G$1" pin="P$3" pad="P$4"/>
+<connect gate="G$1" pin="P$4" pad="P$6"/>
+<connect gate="G$1" pin="P$5" pad="P$2"/>
+<connect gate="G$1" pin="P$6" pad="P$5"/>
 </connects>
 <technologies>
 <technology name=""/>
