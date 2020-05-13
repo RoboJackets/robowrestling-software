@@ -5680,6 +5680,25 @@ https://www.digikey.com/product-detail/en/texas-instruments/LM339DR/296-1013-1-N
 </device>
 </devices>
 </deviceset>
+<deviceset name="MUX_74LVC1G157GV">
+<description>MUX_74LVC1G157GV</description>
+<gates>
+<gate name="G$1" symbol="MUX_74LVC1G157GV" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="MUX_74LVC1G157GV">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$3"/>
+<connect gate="G$1" pin="P$2" pad="P$1"/>
+<connect gate="G$1" pin="P$3" pad="P$4"/>
+<connect gate="G$1" pin="P$4" pad="P$6"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
 </devicesets>
 </library>
 </drawing>

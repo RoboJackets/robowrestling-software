@@ -5630,7 +5630,7 @@ https://www.digikey.com/product-detail/en/texas-instruments/LM339DR/296-1013-1-N
 </device>
 </devices>
 </deviceset>
-<deviceset name="PINNHEADER8-0.079''">
+<deviceset name="PINHD-1X8">
 <gates>
 <gate name="G$1" symbol="CONN_08" x="0" y="0"/>
 </gates>

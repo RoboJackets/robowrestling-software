@@ -3,7 +3,7 @@
 <eagle version="9.5.1">
 <drawing>
 <settings>
-<setting alwaysvectorfont="yes"/>
+<setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
 <grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.1" altunitdist="mm" altunit="mm"/>
@@ -8001,10 +8001,10 @@ design rules under a new name.</description>
 <attribute name="NAME" x="19.7234" y="33.265" size="1.27" layer="25" ratio="6" rot="SR0"/>
 <attribute name="VENDOR" value="Diodes Inc" x="21" y="39" size="1.778" layer="27" display="off"/>
 </element>
-<element name="C6" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF" x="-9" y="42" smashed="yes">
-<attribute name="NAME" x="-9" y="42.762" size="1.016" layer="25" font="vector" ratio="20" align="bottom-center"/>
-<attribute name="PROD_ID" value="CAP-00810" x="-9" y="42" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="-9" y="41.238" size="0.8128" layer="27" font="vector" ratio="20" align="top-center"/>
+<element name="C6" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF" x="-8" y="50" smashed="yes">
+<attribute name="NAME" x="-8" y="50.762" size="1.016" layer="25" font="vector" ratio="20" align="bottom-center"/>
+<attribute name="PROD_ID" value="CAP-00810" x="-8" y="50" size="1.778" layer="27" display="off"/>
+<attribute name="VALUE" x="-8" y="49.238" size="0.8128" layer="27" font="vector" ratio="20" align="top-center"/>
 </element>
 <element name="C24" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="4.7uF" x="27.8" y="36.5" smashed="yes" rot="R270">
 <attribute name="NAME" x="27.738" y="38.3" size="1.016" layer="25" font="vector" ratio="20" align="bottom-center"/>
@@ -8286,8 +8286,9 @@ design rules under a new name.</description>
 <contactref element="C3" pad="2"/>
 <contactref element="C2" pad="2"/>
 <contactref element="C1" pad="2"/>
-<wire x1="-8.15" y1="42" x2="-7" y2="42" width="0.2" layer="1"/>
-<via x="-7" y="42" extent="1-16" drill="0.4"/>
+<wire x1="-7.15" y1="50" x2="-6" y2="50" width="0.2" layer="1"/>
+<wire x1="-5" y1="49" x2="-6" y2="50" width="0.2" layer="1"/>
+<via x="-5" y="49" extent="1-16" drill="0.4"/>
 <wire x1="16.7" y1="8.975" x2="17.675" y2="8" width="0.2" layer="1"/>
 <wire x1="17.675" y1="8" x2="18" y2="8" width="0.2" layer="1"/>
 <via x="18" y="8" extent="1-16" drill="0.4"/>

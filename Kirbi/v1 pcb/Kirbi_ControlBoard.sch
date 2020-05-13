@@ -5420,10 +5420,10 @@ by exp-lbrs.ulp</description>
 <wire x1="-1.55" y1="-0.85" x2="-1.55" y2="0.85" width="0.1524" layer="21"/>
 <smd name="P$5" x="0" y="1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
 <smd name="P$2" x="0" y="-1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
-<smd name="P$4" x="-0.95" y="1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
+<smd name="P$6" x="-0.95" y="1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
 <smd name="P$3" x="0.95" y="-1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
 <smd name="P$1" x="-0.95" y="-1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
-<smd name="P$6" x="0.95" y="1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
+<smd name="P$4" x="0.95" y="1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
 <text x="-1.524" y="2.032" size="0.6096" layer="25">&gt;Name</text>
 <text x="-1.651" y="-2.413" size="0.6096" layer="27">&gt;Value</text>
 </package>
@@ -5559,8 +5559,8 @@ by exp-lbrs.ulp</description>
 <connects>
 <connect gate="G$1" pin="P$1" pad="P$3"/>
 <connect gate="G$1" pin="P$2" pad="P$1"/>
-<connect gate="G$1" pin="P$3" pad="P$4"/>
-<connect gate="G$1" pin="P$4" pad="P$6"/>
+<connect gate="G$1" pin="P$3" pad="P$6"/>
+<connect gate="G$1" pin="P$4" pad="P$4"/>
 <connect gate="G$1" pin="P$5" pad="P$2"/>
 <connect gate="G$1" pin="P$6" pad="P$5"/>
 </connects>
@@ -7880,50 +7880,50 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 </net>
 <net name="TXO1" class="0">
 <segment>
-<pinref part="MUX_TX1" gate="G$1" pin="P$4"/>
-<wire x1="292.1" y1="213.36" x2="294.64" y2="213.36" width="0.1524" layer="91"/>
-<label x="292.1" y="213.36" size="1.778" layer="95" xref="yes"/>
-</segment>
-<segment>
 <pinref part="U2" gate="G$1" pin="10/TX2/PWM"/>
 <wire x1="165.1" y1="210.82" x2="160.02" y2="210.82" width="0.1524" layer="91"/>
 <label x="160.02" y="210.82" size="1.778" layer="95" rot="MR0" xref="yes"/>
 </segment>
-</net>
-<net name="TXO2" class="0">
-<segment>
-<pinref part="MUX_TX2" gate="G$1" pin="P$4"/>
-<wire x1="327.66" y1="213.36" x2="330.2" y2="213.36" width="0.1524" layer="91"/>
-<label x="330.2" y="213.36" size="1.778" layer="95" xref="yes"/>
-</segment>
-<segment>
-<pinref part="U2" gate="G$1" pin="8/TX3/PWM"/>
-<wire x1="165.1" y1="215.9" x2="160.02" y2="215.9" width="0.1524" layer="91"/>
-<label x="160.02" y="215.9" size="1.778" layer="95" rot="MR0" xref="yes"/>
-</segment>
-</net>
-<net name="RXO1" class="0">
 <segment>
 <pinref part="MUX_RX1" gate="G$1" pin="P$4"/>
 <wire x1="370.84" y1="213.36" x2="373.38" y2="213.36" width="0.1524" layer="91"/>
 <label x="370.84" y="213.36" size="1.778" layer="95" xref="yes"/>
 </segment>
-<segment>
-<pinref part="U2" gate="G$1" pin="9/RX2/PWM"/>
-<wire x1="165.1" y1="213.36" x2="160.02" y2="213.36" width="0.1524" layer="91"/>
-<label x="160.02" y="213.36" size="1.778" layer="95" rot="MR0" xref="yes"/>
-</segment>
 </net>
-<net name="RXO2" class="0">
+<net name="TXO2" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="8/TX3/PWM"/>
+<wire x1="165.1" y1="215.9" x2="160.02" y2="215.9" width="0.1524" layer="91"/>
+<label x="160.02" y="215.9" size="1.778" layer="95" rot="MR0" xref="yes"/>
+</segment>
 <segment>
 <pinref part="MUX_RX2" gate="G$1" pin="P$4"/>
 <wire x1="406.4" y1="213.36" x2="408.94" y2="213.36" width="0.1524" layer="91"/>
 <label x="408.94" y="213.36" size="1.778" layer="95" xref="yes"/>
 </segment>
+</net>
+<net name="RXO1" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="9/RX2/PWM"/>
+<wire x1="165.1" y1="213.36" x2="160.02" y2="213.36" width="0.1524" layer="91"/>
+<label x="160.02" y="213.36" size="1.778" layer="95" rot="MR0" xref="yes"/>
+</segment>
+<segment>
+<pinref part="MUX_TX1" gate="G$1" pin="P$4"/>
+<wire x1="292.1" y1="213.36" x2="294.64" y2="213.36" width="0.1524" layer="91"/>
+<label x="292.1" y="213.36" size="1.778" layer="95" xref="yes"/>
+</segment>
+</net>
+<net name="RXO2" class="0">
 <segment>
 <pinref part="U2" gate="G$1" pin="7/RX3/PWM"/>
 <wire x1="165.1" y1="218.44" x2="160.02" y2="218.44" width="0.1524" layer="91"/>
 <label x="160.02" y="218.44" size="1.778" layer="95" rot="MR0" xref="yes"/>
+</segment>
+<segment>
+<pinref part="MUX_TX2" gate="G$1" pin="P$4"/>
+<wire x1="327.66" y1="213.36" x2="330.2" y2="213.36" width="0.1524" layer="91"/>
+<label x="330.2" y="213.36" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="MUXS1" class="0">

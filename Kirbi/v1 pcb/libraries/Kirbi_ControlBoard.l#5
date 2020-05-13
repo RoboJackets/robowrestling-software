@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="50" unitdist="mil" unit="mm" style="lines" multiple="1" display="no" altdistance="5" altunitdist="mil" altunit="mm"/>
+<grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="no" altdistance="0.1" altunitdist="mm" altunit="mm"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="yes" active="yes"/>
@@ -1264,6 +1264,19 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 <pad name="8" x="7" y="0" drill="1" diameter="1.4224"/>
 <text x="7.7235" y="4.614159375" size="1.778" layer="25" rot="R180">&gt;NAME</text>
 <text x="-1.520459375" y="-5.077459375" size="1.778" layer="27">&gt;VALUE</text>
+</package>
+<package name="MUX_74LVC1G157GV">
+<description>2:1 Multiplexer (74LVC1G157GV)</description>
+<wire x1="-1.55" y1="0.85" x2="1.55" y2="0.85" width="0.1524" layer="21"/>
+<wire x1="1.55" y1="0.85" x2="1.55" y2="-0.85" width="0.1524" layer="21"/>
+<wire x1="1.55" y1="-0.85" x2="-1.55" y2="-0.85" width="0.1524" layer="21"/>
+<wire x1="-1.55" y1="-0.85" x2="-1.55" y2="0.85" width="0.1524" layer="21"/>
+<smd name="P$5" x="0" y="1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
+<smd name="P$2" x="0" y="-1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
+<smd name="P$4" x="-0.95" y="1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
+<smd name="P$3" x="0.95" y="-1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
+<smd name="P$1" x="-0.95" y="-1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
+<smd name="P$6" x="0.95" y="1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
 </package>
 </packages>
 <symbols>
