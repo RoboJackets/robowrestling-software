@@ -1273,10 +1273,10 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 <wire x1="-1.55" y1="-0.85" x2="-1.55" y2="0.85" width="0.1524" layer="21"/>
 <smd name="P$5" x="0" y="1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
 <smd name="P$2" x="0" y="-1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
-<smd name="P$4" x="-0.95" y="1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
+<smd name="P$6" x="-0.95" y="1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
 <smd name="P$3" x="0.95" y="-1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
 <smd name="P$1" x="-0.95" y="-1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
-<smd name="P$6" x="0.95" y="1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
+<smd name="P$4" x="0.95" y="1.1" dx="0.4" dy="0.65" layer="1" rot="R180"/>
 <text x="-1.524" y="2.032" size="0.6096" layer="25">&gt;Name</text>
 <text x="-1.651" y="-2.413" size="0.6096" layer="27">&gt;Value</text>
 </package>
@@ -4877,12 +4877,14 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 <wire x1="7.62" y1="10.16" x2="7.62" y2="-10.16" width="0.1524" layer="94"/>
 <wire x1="7.62" y1="-10.16" x2="-7.62" y2="-10.16" width="0.1524" layer="94"/>
 <wire x1="-7.62" y1="-10.16" x2="-7.62" y2="10.16" width="0.1524" layer="94"/>
-<pin name="P$1" x="-12.7" y="5.08" length="middle"/>
-<pin name="P$2" x="-12.7" y="-5.08" length="middle"/>
-<pin name="P$3" x="0" y="-15.24" length="middle" rot="R90"/>
-<pin name="P$4" x="12.7" y="0" length="middle" rot="R180"/>
-<text x="-7.62" y="12.7" size="2.1844" layer="125">&gt;NAME</text>
+<pin name="I0" x="-12.7" y="5.08" length="middle"/>
+<pin name="I1" x="-12.7" y="0" length="middle"/>
+<pin name="S" x="-12.7" y="-5.08" length="middle"/>
+<pin name="Y" x="12.7" y="0" length="middle" rot="R180"/>
+<text x="-7.62" y="17.78" size="2.1844" layer="125">&gt;NAME</text>
 <text x="-7.62" y="-20.32" size="2.1844" layer="127">&gt;VALUE</text>
+<pin name="GND" x="0" y="-15.24" length="middle" rot="R90"/>
+<pin name="3.3V" x="0" y="15.24" length="middle" rot="R270"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -5673,6 +5675,27 @@ https://www.digikey.com/product-detail/en/texas-instruments/LM339DR/296-1013-1-N
 <connect gate="G$1" pin="6" pad="6"/>
 <connect gate="G$1" pin="7" pad="7"/>
 <connect gate="G$1" pin="8" pad="8"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="MUX_74LVC1G157GV">
+<description>MUX_74LVC1G157GV</description>
+<gates>
+<gate name="G$1" symbol="MUX_74LVC1G157GV" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="MUX_74LVC1G157GV">
+<connects>
+<connect gate="G$1" pin="3.3V" pad="P$5"/>
+<connect gate="G$1" pin="GND" pad="P$2"/>
+<connect gate="G$1" pin="I0" pad="P$3"/>
+<connect gate="G$1" pin="I1" pad="P$1"/>
+<connect gate="G$1" pin="S" pad="P$6"/>
+<connect gate="G$1" pin="Y" pad="P$4"/>
 </connects>
 <technologies>
 <technology name=""/>
