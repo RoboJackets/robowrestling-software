@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="no" altdistance="0.1" altunitdist="mm" altunit="mm"/>
+<grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="mm" altunit="mm"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="no" active="no"/>
@@ -167,6 +167,8 @@
 <wire x1="48" y1="0" x2="48" y2="46" width="0" layer="20"/>
 <wire x1="48" y1="46" x2="0" y2="46" width="0" layer="20"/>
 <wire x1="0" y1="46" x2="0" y2="0" width="0" layer="20"/>
+<text x="5" y="1" size="1.778" layer="27" rot="R90">RoboWrestling 2020
+v1.0</text>
 </plain>
 <libraries>
 <library name="I'mRADIOactive">
@@ -1672,7 +1674,7 @@ design rules under a new name.</description>
 </autorouter>
 <elements>
 <element name="U$1" library="I'mRADIOactive" package="NANO" value="NANO" x="35" y="13" smashed="yes" rot="R90">
-<attribute name="VALUE" x="4.411" y="15.239" size="1.778" layer="25" rot="R270"/>
+<attribute name="VALUE" x="8.411" y="14.239" size="1.778" layer="25" rot="R270"/>
 </element>
 <element name="SENSOR_0" library="CurrentSensing" package="CQ2065" value="CQ2065" x="36" y="38" smashed="yes">
 <attribute name="NAME" x="35.11" y="32.19" size="1.778" layer="25" rot="R90"/>
@@ -1751,9 +1753,9 @@ design rules under a new name.</description>
 <attribute name="POPULARITY" value="77" x="30" y="10" size="1.778" layer="27" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="30" y="10" size="1.778" layer="27" display="off"/>
 </element>
-<element name="Q1" library="Adafruit FET 4-Channel Shifter" package="ADAFRUIT_SOT23" value="" x="38.7" y="13" smashed="yes" rot="R90">
-<attribute name="NAME" x="39.805" y="16.695" size="1.27" layer="25" rot="R180"/>
-<attribute name="VALUE" x="41.875" y="11.095" size="1.27" layer="27" rot="R90"/>
+<element name="Q1" library="Adafruit FET 4-Channel Shifter" package="ADAFRUIT_SOT23" value="" x="38.7" y="12" smashed="yes" rot="R180">
+<attribute name="NAME" x="35.005" y="13.105" size="1.27" layer="25" rot="R270"/>
+<attribute name="VALUE" x="40.605" y="15.175" size="1.27" layer="27" rot="R180"/>
 </element>
 <element name="R5" library="rcl" library_urn="urn:adsk.eagle:library:334" package="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="10k" x="35" y="8" smashed="yes" rot="R90">
 <attribute name="NAME" x="35.435" y="6.265" size="1.27" layer="25" rot="R180"/>
@@ -1813,7 +1815,11 @@ design rules under a new name.</description>
 <wire x1="17.36495" y1="9.4" x2="17.37745" y2="9.4125" width="0.2" layer="1"/>
 <wire x1="23.6798" y1="9.1" x2="23.3673" y2="9.4125" width="0.2" layer="1"/>
 <wire x1="22.62255" y1="9.4125" x2="23.3673" y2="9.4125" width="0.2" layer="1"/>
-<wire x1="17.37745" y1="9.4125" x2="22.62255" y2="9.4125" width="0" layer="19" extent="1-1"/>
+<via x="19.7" y="6.3" extent="1-16" drill="0.4"/>
+<wire x1="20.2524" y1="5.7476" x2="22.3976" y2="5.7476" width="0.2" layer="1"/>
+<wire x1="22.85" y1="6.2" x2="22.85" y2="7" width="0.2" layer="1"/>
+<wire x1="22.85" y1="6.2" x2="22.3976" y2="5.7476" width="0.2" layer="1"/>
+<wire x1="19.7" y1="6.3" x2="20.2524" y2="5.7476" width="0.2" layer="1"/>
 </signal>
 <signal name="N$3">
 <contactref element="SENSOR_1" pad="4"/>
@@ -1957,10 +1963,10 @@ design rules under a new name.</description>
 <wire x1="43.8026" y1="15.6274" x2="41.35" y2="18.08" width="0.2" layer="1"/>
 <wire x1="43.8026" y1="10.2026" x2="43.8026" y2="15.6274" width="0.2" layer="1"/>
 <wire x1="43.1" y1="9.5" x2="43.8026" y2="10.2026" width="0.2" layer="1"/>
-<wire x1="37.6" y1="13" x2="37.6" y2="9.15" width="0.2" layer="1"/>
-<wire x1="37.6" y1="9.15" x2="37.9" y2="8.85" width="0.2" layer="1"/>
+<wire x1="38.55" y1="9.5" x2="38.7" y2="9.5" width="0.2" layer="1"/>
+<wire x1="38.7" y1="9.5" x2="43.1" y2="9.5" width="0.2" layer="1"/>
+<wire x1="38.7" y1="10.9" x2="38.7" y2="9.5" width="0.2" layer="1"/>
 <wire x1="37.9" y1="8.85" x2="38.55" y2="9.5" width="0.2" layer="1"/>
-<wire x1="38.55" y1="9.5" x2="43.1" y2="9.5" width="0.2" layer="1"/>
 </signal>
 <signal name="+3V3">
 <contactref element="R3" pad="1"/>
@@ -1968,10 +1974,6 @@ design rules under a new name.</description>
 <contactref element="R5" pad="1"/>
 <contactref element="Q1" pad="1"/>
 <contactref element="U$1" pad="3.3V"/>
-<wire x1="40.8286" y1="12.9553125" x2="40.8286" y2="14.5446875" width="0.2" layer="1"/>
-<wire x1="40.8286" y1="14.5446875" x2="40.3946875" y2="14.9786" width="0.2" layer="1"/>
-<wire x1="39.8" y1="12.05" x2="39.923284375" y2="12.049996875" width="0.2" layer="1"/>
-<wire x1="39.923284375" y1="12.049996875" x2="40.8286" y2="12.9553125" width="0.2" layer="1"/>
 <wire x1="33.7214" y1="9.4446875" x2="33.7214" y2="8.1553125" width="0.2" layer="1"/>
 <wire x1="33.7214" y1="9.4446875" x2="34.3" y2="10.0232875" width="0.2" layer="1"/>
 <wire x1="35" y1="7.15" x2="34.7267125" y2="7.15" width="0.2" layer="1"/>
@@ -1987,10 +1989,13 @@ design rules under a new name.</description>
 <wire x1="30.6232875" y1="15.3" x2="29.5767125" y2="15.3" width="0.2" layer="1"/>
 <wire x1="30.9286" y1="14.2214" x2="32.1" y2="13.05" width="0.2" layer="1"/>
 <wire x1="34.3" y1="10.0232875" x2="34.3" y2="13.25" width="0.2" layer="1"/>
-<wire x1="36.0286" y1="14.9786" x2="34.3" y2="13.25" width="0.2" layer="1"/>
-<wire x1="40.3946875" y1="14.9786" x2="36.0286" y2="14.9786" width="0.2" layer="1"/>
 <wire x1="32.1" y1="13.05" x2="34.1" y2="13.05" width="0.2" layer="1"/>
 <wire x1="34.1" y1="13.05" x2="34.3" y2="13.25" width="0.2" layer="1"/>
+<wire x1="36.05" y1="15" x2="39" y2="15" width="0.2" layer="1"/>
+<wire x1="39" y1="15" x2="39.7" y2="14.3" width="0.2" layer="1"/>
+<wire x1="39.7" y1="14.3" x2="39.7" y2="13.15" width="0.2" layer="1"/>
+<wire x1="39.7" y1="13.15" x2="39.65" y2="13.1" width="0.2" layer="1"/>
+<wire x1="34.3" y1="13.25" x2="36.05" y2="15" width="0.2" layer="1"/>
 </signal>
 <signal name="RX_TEENSY">
 <contactref element="R3" pad="2"/>
@@ -2009,21 +2014,21 @@ design rules under a new name.</description>
 <contactref element="R5" pad="2"/>
 <contactref element="Q1" pad="2"/>
 <contactref element="U$2" pad="P$2"/>
-<wire x1="39.8" y1="13.95" x2="39.4214" y2="14.3286" width="0.2" layer="1"/>
-<wire x1="39.4214" y1="14.3286" x2="36.5053125" y2="14.3286" width="0.2" layer="1"/>
 <wire x1="35" y1="8.85" x2="35.9" y2="9.75" width="0.2" layer="1"/>
-<wire x1="38.9714" y1="12.6446875" x2="38.9714" y2="11.3553125" width="0.2" layer="1"/>
-<wire x1="38.9714" y1="11.3553125" x2="39.3053125" y2="11.0214" width="0.2" layer="1"/>
-<wire x1="39.3053125" y1="11.0214" x2="40.1946875" y2="11.0214" width="0.2" layer="1"/>
-<wire x1="40.1946875" y1="11.0214" x2="41.2334" y2="12.0601125" width="0.2" layer="1"/>
-<wire x1="39.8" y1="13.95" x2="39.8" y2="13.4732875" width="0.2" layer="1"/>
-<wire x1="39.8" y1="13.4732875" x2="38.9714" y2="12.6446875" width="0.2" layer="1"/>
-<wire x1="41.2334" y1="12.0601125" x2="41.2334" y2="15.6944125" width="0.2" layer="1"/>
-<wire x1="41.2334" y1="15.6944125" x2="39.8674" y2="17.0604125" width="0.2" layer="1"/>
-<wire x1="39.8674" y1="17.0604125" x2="39.8674" y2="20.8674" width="0.2" layer="1"/>
-<wire x1="39.8674" y1="20.8674" x2="43" y2="24" width="0.2" layer="1"/>
-<wire x1="36.5053125" y1="14.3286" x2="35.9" y2="13.7232875" width="0.2" layer="1"/>
+<wire x1="40.7334" y1="16.1944125" x2="39.8674" y2="17.0604125" width="0.18" layer="1"/>
+<wire x1="39.8674" y1="20.8674" x2="39.8674" y2="17.0604125" width="0.18" layer="1"/>
+<wire x1="43" y1="24" x2="39.8674" y2="20.8674" width="0.18" layer="1"/>
+<wire x1="35.9" y1="13.7232875" x2="36.5053125" y2="14.3286" width="0.2" layer="1"/>
 <wire x1="35.9" y1="13.7232875" x2="35.9" y2="9.75" width="0.2" layer="1"/>
+<wire x1="36.5053125" y1="14.3286" x2="37.4714" y2="14.3286" width="0.2" layer="1"/>
+<wire x1="37.4714" y1="14.3286" x2="37.8" y2="14" width="0.2" layer="1"/>
+<wire x1="37.8" y1="14" x2="37.8" y2="13.15" width="0.2" layer="1"/>
+<wire x1="37.8" y1="13.15" x2="37.75" y2="13.1" width="0.2" layer="1"/>
+<wire x1="37.75" y1="13.1" x2="38.08305" y2="13.1" width="0.2" layer="1"/>
+<wire x1="38.08305" y1="13.1" x2="39.02845" y2="12.1546" width="0.18" layer="1"/>
+<wire x1="39.02845" y1="12.1546" x2="40.307" y2="12.1546" width="0.18" layer="1"/>
+<wire x1="40.307" y1="12.1546" x2="40.7334" y2="12.581" width="0.18" layer="1"/>
+<wire x1="40.7334" y1="12.581" x2="40.7334" y2="16.1944125" width="0.18" layer="1"/>
 </signal>
 </signals>
 <mfgpreviewcolors>
@@ -2033,9 +2038,22 @@ design rules under a new name.</description>
 <mfgpreviewcolor name="coppercolor" color="0xFFFFBF00"/>
 <mfgpreviewcolor name="substratecolor" color="0xFF786E46"/>
 </mfgpreviewcolors>
+<errors>
+<approved hash="3,1,96b992fa32df0c57"/>
+<approved hash="3,1,5214c6d6c788534a"/>
+<approved hash="3,1,51258e556c555546"/>
+<approved hash="3,1,108544e746ca12a8"/>
+<approved hash="3,1,6d62af611341d039"/>
+<approved hash="3,1,024ec626590ba6e8"/>
+<approved hash="3,1,6b730311021a6a78"/>
+</errors>
 </board>
 </drawing>
 <compatibility>
+<note version="6.3" minversion="6.2.2" severity="warning">
+Since Version 6.2.2 text objects can contain more than one line,
+which will not be processed correctly with this version.
+</note>
 <note version="8.2" severity="warning">
 Since Version 8.2, EAGLE supports online libraries. The ids
 of those online libraries will not be understood (or retained)
