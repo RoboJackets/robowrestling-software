@@ -4722,6 +4722,80 @@ In this library you will find logos and images specific to RoboJackets. The part
 </package>
 </packages>
 </library>
+<library name="STM32F031C4T6">
+<packages>
+<package name="QFP50P900X900X160-48N">
+<text x="-5" y="-6" size="1.27" layer="27" align="top-left">&gt;VALUE</text>
+<text x="-5" y="6" size="1.27" layer="25">&gt;NAME</text>
+<circle x="-5.94" y="2.75" radius="0.1" width="0.2" layer="21"/>
+<circle x="-5.94" y="2.75" radius="0.1" width="0.2" layer="51"/>
+<wire x1="3.5" y1="-3.5" x2="-3.5" y2="-3.5" width="0.127" layer="51"/>
+<wire x1="3.5" y1="3.5" x2="-3.5" y2="3.5" width="0.127" layer="51"/>
+<wire x1="3.5" y1="-3.5" x2="3.5" y2="3.5" width="0.127" layer="51"/>
+<wire x1="-3.5" y1="-3.5" x2="-3.5" y2="3.5" width="0.127" layer="51"/>
+<wire x1="3.5" y1="-3.5" x2="3.21" y2="-3.5" width="0.127" layer="21"/>
+<wire x1="3.5" y1="3.5" x2="3.21" y2="3.5" width="0.127" layer="21"/>
+<wire x1="-3.5" y1="-3.5" x2="-3.21" y2="-3.5" width="0.127" layer="21"/>
+<wire x1="-3.5" y1="3.5" x2="-3.21" y2="3.5" width="0.127" layer="21"/>
+<wire x1="3.5" y1="-3.5" x2="3.5" y2="-3.21" width="0.127" layer="21"/>
+<wire x1="3.5" y1="3.5" x2="3.5" y2="3.21" width="0.127" layer="21"/>
+<wire x1="-3.5" y1="-3.5" x2="-3.5" y2="-3.21" width="0.127" layer="21"/>
+<wire x1="-3.5" y1="3.5" x2="-3.5" y2="3.21" width="0.127" layer="21"/>
+<wire x1="-5.21" y1="-5.21" x2="5.21" y2="-5.21" width="0.05" layer="39"/>
+<wire x1="-5.21" y1="5.21" x2="5.21" y2="5.21" width="0.05" layer="39"/>
+<wire x1="-5.21" y1="-5.21" x2="-5.21" y2="5.21" width="0.05" layer="39"/>
+<wire x1="5.21" y1="-5.21" x2="5.21" y2="5.21" width="0.05" layer="39"/>
+<smd name="13" x="-2.75" y="-4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="14" x="-2.25" y="-4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="15" x="-1.75" y="-4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="16" x="-1.25" y="-4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="17" x="-0.75" y="-4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="18" x="-0.25" y="-4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="19" x="0.25" y="-4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="20" x="0.75" y="-4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="21" x="1.25" y="-4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="22" x="1.75" y="-4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="23" x="2.25" y="-4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="24" x="2.75" y="-4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="37" x="2.75" y="4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="38" x="2.25" y="4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="39" x="1.75" y="4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="40" x="1.25" y="4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="41" x="0.75" y="4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="42" x="0.25" y="4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="43" x="-0.25" y="4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="44" x="-0.75" y="4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="45" x="-1.25" y="4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="46" x="-1.75" y="4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="47" x="-2.25" y="4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="48" x="-2.75" y="4.18" dx="1.56" dy="0.28" layer="1" roundness="25" rot="R90"/>
+<smd name="1" x="-4.18" y="2.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="2" x="-4.18" y="2.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="3" x="-4.18" y="1.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="4" x="-4.18" y="1.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="5" x="-4.18" y="0.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="6" x="-4.18" y="0.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="7" x="-4.18" y="-0.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="8" x="-4.18" y="-0.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="9" x="-4.18" y="-1.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="10" x="-4.18" y="-1.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="11" x="-4.18" y="-2.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="12" x="-4.18" y="-2.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="25" x="4.18" y="-2.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="26" x="4.18" y="-2.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="27" x="4.18" y="-1.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="28" x="4.18" y="-1.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="29" x="4.18" y="-0.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="30" x="4.18" y="-0.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="31" x="4.18" y="0.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="32" x="4.18" y="0.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="33" x="4.18" y="1.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="34" x="4.18" y="1.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="35" x="4.18" y="2.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+<smd name="36" x="4.18" y="2.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
+</package>
+</packages>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -4912,12 +4986,12 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="5.411" y="5.239" size="1" layer="25" font="vector" rot="R270"/>
 </element>
 <element name="SENSOR_0" library="CurrentSensing" package="CQ2065" value="CQ2065" x="36" y="38" smashed="yes">
-<attribute name="NAME" x="35.11" y="32.19" size="1.778" layer="25" rot="R90"/>
-<attribute name="VALUE" x="38.05" y="33.19" size="1.778" layer="27" rot="R90"/>
+<attribute name="NAME" x="35.11" y="32.19" size="1" layer="25" font="vector" rot="R90"/>
+<attribute name="VALUE" x="38.05" y="33.19" size="1" layer="27" font="vector" rot="R90"/>
 </element>
 <element name="SENSOR_1" library="CurrentSensing" package="CQ2065" value="CQ2065" x="12" y="38" smashed="yes">
-<attribute name="NAME" x="11.11" y="32.19" size="1.778" layer="25" rot="R90"/>
-<attribute name="VALUE" x="14.05" y="33.19" size="1.778" layer="27" rot="R90"/>
+<attribute name="NAME" x="11.11" y="32.19" size="1" layer="25" font="vector" rot="R90"/>
+<attribute name="VALUE" x="14.05" y="33.19" size="1" layer="27" font="vector" rot="R90"/>
 </element>
 <element name="12-BIT_ADC" library="CurrentSensing" package="21-0055H_16-L" value="MAX11634EEE+T21-0055H_16-L" x="20" y="11" smashed="yes">
 <attribute name="BUILT_BY" value="EMA_UL_Team" x="20" y="11" size="1.778" layer="27" display="off"/>
@@ -4928,22 +5002,22 @@ design rules under a new name.</description>
 <element name="R1" library="rcl" library_urn="urn:adsk.eagle:library:334" package="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="RF0" x="28" y="24" smashed="yes" rot="R180">
 <attribute name="POPULARITY" value="77" x="28" y="24" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="28" y="24" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="VALUE" x="22.765" y="22.195" size="1" layer="27"/>
+<attribute name="VALUE" x="24.025" y="23.035" size="1" layer="27" font="vector"/>
 </element>
 <element name="R2" library="rcl" library_urn="urn:adsk.eagle:library:334" package="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="RF1" x="19" y="24" smashed="yes">
 <attribute name="POPULARITY" value="77" x="19" y="24" size="1.778" layer="27" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="19" y="24" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="20.565" y="23.895" size="1" layer="27"/>
+<attribute name="VALUE" x="21.005" y="23.055" size="1" layer="27" font="vector"/>
 </element>
 <element name="C1" library="rcl" library_urn="urn:adsk.eagle:library:334" package="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="CF0" x="28" y="27" smashed="yes" rot="R180">
 <attribute name="POPULARITY" value="37" x="28" y="27" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="SPICEPREFIX" value="C" x="28" y="27" size="1.778" layer="27" rot="R180" display="off"/>
-<attribute name="VALUE" x="26.335" y="26.505" size="1" layer="27" rot="R180"/>
+<attribute name="VALUE" x="26.125" y="26.425" size="1" layer="27" font="vector" rot="R180"/>
 </element>
 <element name="C2" library="rcl" library_urn="urn:adsk.eagle:library:334" package="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="CF1" x="19" y="27" smashed="yes">
 <attribute name="POPULARITY" value="37" x="19" y="27" size="1.778" layer="27" display="off"/>
 <attribute name="SPICEPREFIX" value="C" x="19" y="27" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="20.885" y="27.665" size="1" layer="27"/>
+<attribute name="VALUE" x="20.815" y="25.395" size="1" layer="27" font="vector"/>
 </element>
 <element name="C3" library="rcl" library_urn="urn:adsk.eagle:library:334" package="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="0.1uF" x="19" y="21" smashed="yes" rot="R180">
 <attribute name="NAME" x="16.435" y="21.165" size="1" layer="25" font="vector" rot="R180"/>
@@ -4978,7 +5052,7 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="34.175" y="12.095" size="1.27" layer="27" rot="R90"/>
 </element>
 <element name="R3" library="rcl" library_urn="urn:adsk.eagle:library:334" package="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="10k" x="34.3" y="14.1" smashed="yes" rot="R90">
-<attribute name="NAME" x="37.605" y="16.645" size="1" layer="25" font="vector" rot="R180"/>
+<attribute name="NAME" x="37.395" y="16.555" size="1" layer="25" font="vector" rot="R180"/>
 <attribute name="POPULARITY" value="77" x="34.3" y="14.1" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="34.3" y="14.1" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
@@ -5001,7 +5075,11 @@ design rules under a new name.</description>
 <attribute name="POPULARITY" value="77" x="37.9" y="8" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="SPICEPREFIX" value="R" x="37.9" y="8" size="1.778" layer="27" rot="R90" display="off"/>
 </element>
-<element name="U$3" library="RoboJackets-Aesthetics" package="ROBOBUZZ_0.4X" value="" x="3.68" y="21.02" smashed="yes"/>
+<element name="U$3" library="RoboJackets-Aesthetics" package="ROBOBUZZ_0.4X" value="" x="3.13" y="20.77" smashed="yes"/>
+<element name="U$4" library="STM32F031C4T6" package="QFP50P900X900X160-48N" value="STM32F0" x="-6" y="8" smashed="yes">
+<attribute name="NAME" x="-11" y="14" size="1.27" layer="25"/>
+<attribute name="VALUE" x="-11" y="2" size="1.27" layer="27" align="top-left"/>
+</element>
 </elements>
 <signals>
 <signal name="GND">
