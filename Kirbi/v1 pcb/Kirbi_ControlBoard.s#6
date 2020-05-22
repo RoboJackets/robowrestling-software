@@ -6454,17 +6454,17 @@ by exp-lbrs.ulp</description>
 <instance part="GND20" gate="1" x="401.32" y="200.66" smashed="yes">
 <attribute name="VALUE" x="401.32" y="200.406" size="1.778" layer="96" align="top-center"/>
 </instance>
-<instance part="+3V12" gate="G$1" x="279.908" y="235.966" smashed="yes">
-<attribute name="VALUE" x="277.368" y="230.886" size="1.778" layer="96" rot="R90"/>
+<instance part="+3V12" gate="G$1" x="320.04" y="238.76" smashed="yes">
+<attribute name="VALUE" x="317.5" y="233.68" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="+3V13" gate="G$1" x="320.04" y="236.22" smashed="yes">
-<attribute name="VALUE" x="317.5" y="231.14" size="1.778" layer="96" rot="R90"/>
+<instance part="+3V13" gate="G$1" x="360.68" y="238.76" smashed="yes">
+<attribute name="VALUE" x="358.14" y="233.68" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="+3V14" gate="G$1" x="360.68" y="236.22" smashed="yes">
-<attribute name="VALUE" x="358.14" y="231.14" size="1.778" layer="96" rot="R90"/>
+<instance part="+3V14" gate="G$1" x="401.32" y="238.76" smashed="yes">
+<attribute name="VALUE" x="398.78" y="233.68" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="+3V15" gate="G$1" x="401.32" y="236.22" smashed="yes">
-<attribute name="VALUE" x="398.78" y="231.14" size="1.778" layer="96" rot="R90"/>
+<instance part="+3V15" gate="G$1" x="279.908" y="238.76" smashed="yes">
+<attribute name="VALUE" x="277.368" y="233.68" size="1.778" layer="96" rot="R90"/>
 </instance>
 </instances>
 <busses>
@@ -6553,6 +6553,31 @@ by exp-lbrs.ulp</description>
 <wire x1="212.09" y1="100.33" x2="195.58" y2="100.33" width="0.1524" layer="91"/>
 <wire x1="195.58" y1="100.33" x2="195.58" y2="106.68" width="0.1524" layer="91"/>
 <pinref part="+3V6" gate="G$1" pin="+3V3"/>
+</segment>
+<segment>
+<pinref part="MUX_TX1" gate="G$1" pin="V"/>
+<wire x1="279.908" y1="233.426" x2="279.908" y2="236.22" width="0.1524" layer="91"/>
+<pinref part="+3V15" gate="G$1" pin="+3V3"/>
+</segment>
+<segment>
+<pinref part="MUX_TX2" gate="G$1" pin="V"/>
+<wire x1="320.04" y1="233.68" x2="320.04" y2="236.22" width="0.1524" layer="91"/>
+<pinref part="+3V12" gate="G$1" pin="+3V3"/>
+</segment>
+<segment>
+<pinref part="MUX_RX1" gate="G$1" pin="V"/>
+<wire x1="360.68" y1="233.68" x2="360.68" y2="236.22" width="0.1524" layer="91"/>
+<pinref part="+3V13" gate="G$1" pin="+3V3"/>
+</segment>
+<segment>
+<pinref part="MUX_RX2" gate="G$1" pin="V"/>
+<wire x1="401.32" y1="233.68" x2="401.32" y2="236.22" width="0.1524" layer="91"/>
+<pinref part="+3V14" gate="G$1" pin="+3V3"/>
+</segment>
+<segment>
+<pinref part="+3V11" gate="G$1" pin="+3V3"/>
+<pinref part="TRANSCEIVER" gate="G$1" pin="8"/>
+<wire x1="208.28" y1="38.1" x2="218.44" y2="38.1" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -7220,29 +7245,6 @@ by exp-lbrs.ulp</description>
 <wire x1="218.44" y1="50.8" x2="213.36" y2="50.8" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="+3V3" class="0">
-<segment>
-<pinref part="+3V11" gate="G$1" pin="+3V3"/>
-<pinref part="TRANSCEIVER" gate="G$1" pin="8"/>
-<wire x1="208.28" y1="38.1" x2="218.44" y2="38.1" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="+3V12" gate="G$1" pin="+3V3"/>
-<pinref part="MUX_TX1" gate="G$1" pin="V"/>
-</segment>
-<segment>
-<pinref part="+3V13" gate="G$1" pin="+3V3"/>
-<pinref part="MUX_TX2" gate="G$1" pin="V"/>
-</segment>
-<segment>
-<pinref part="+3V14" gate="G$1" pin="+3V3"/>
-<pinref part="MUX_RX1" gate="G$1" pin="V"/>
-</segment>
-<segment>
-<pinref part="+3V15" gate="G$1" pin="+3V3"/>
-<pinref part="MUX_RX2" gate="G$1" pin="V"/>
-</segment>
-</net>
 <net name="RADIO_NSS" class="0">
 <segment>
 <label x="160.02" y="220.98" size="1.778" layer="95" rot="R180" xref="yes"/>
@@ -7317,11 +7319,6 @@ by exp-lbrs.ulp</description>
 </net>
 <net name="MUXS1" class="0">
 <segment>
-<pinref part="U2" gate="G$1" pin="15/A1/T"/>
-<wire x1="165.1" y1="198.12" x2="160.02" y2="198.12" width="0.1524" layer="91"/>
-<label x="160.02" y="198.12" size="1.778" layer="95" rot="MR0" xref="yes"/>
-</segment>
-<segment>
 <pinref part="MUX_TX1" gate="G$1" pin="S"/>
 <wire x1="267.208" y1="213.106" x2="266.446" y2="213.106" width="0.1524" layer="91"/>
 <label x="266.446" y="213.106" size="1.778" layer="95" rot="MR0" xref="yes"/>
@@ -7331,13 +7328,13 @@ by exp-lbrs.ulp</description>
 <wire x1="347.98" y1="213.36" x2="347.472" y2="213.36" width="0.1524" layer="91"/>
 <label x="347.472" y="213.36" size="1.778" layer="95" rot="MR0" xref="yes"/>
 </segment>
+<segment>
+<pinref part="U2" gate="G$1" pin="2/PWM"/>
+<wire x1="165.1" y1="231.14" x2="160.02" y2="231.14" width="0.1524" layer="91"/>
+<label x="160.02" y="231.14" size="1.778" layer="95" rot="MR0" xref="yes"/>
+</segment>
 </net>
 <net name="MUXS2" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="16/A2/T/PWM"/>
-<wire x1="165.1" y1="195.58" x2="160.02" y2="195.58" width="0.1524" layer="91"/>
-<label x="160.02" y="195.58" size="1.778" layer="95" rot="MR0" xref="yes"/>
-</segment>
 <segment>
 <pinref part="MUX_TX2" gate="G$1" pin="S"/>
 <wire x1="307.34" y1="213.36" x2="306.832" y2="213.868" width="0.1524" layer="91"/>
@@ -7348,17 +7345,22 @@ by exp-lbrs.ulp</description>
 <wire x1="388.62" y1="213.36" x2="388.112" y2="213.106" width="0.1524" layer="91"/>
 <label x="388.112" y="213.106" size="1.778" layer="95" rot="MR0" xref="yes"/>
 </segment>
+<segment>
+<pinref part="U2" gate="G$1" pin="25"/>
+<wire x1="165.1" y1="172.72" x2="160.02" y2="172.72" width="0.1524" layer="91"/>
+<label x="160.02" y="172.72" size="1.778" layer="95" rot="MR0" xref="yes"/>
+</segment>
 </net>
 <net name="TRX1" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="9/RX2/PWM"/>
-<wire x1="165.1" y1="213.36" x2="160.02" y2="213.36" width="0.1524" layer="91"/>
-<label x="160.02" y="213.36" size="1.778" layer="95" rot="MR0" xref="yes"/>
-</segment>
 <segment>
 <pinref part="MUX_RX1" gate="G$1" pin="Y"/>
 <wire x1="373.38" y1="218.44" x2="375.666" y2="218.44" width="0.1524" layer="91"/>
 <label x="375.666" y="218.44" size="1.778" layer="95" rot="R90" xref="yes"/>
+</segment>
+<segment>
+<pinref part="U2" gate="G$1" pin="7/RX3/PWM"/>
+<wire x1="165.1" y1="218.44" x2="160.02" y2="218.44" width="0.1524" layer="91"/>
+<label x="160.02" y="218.44" size="1.778" layer="95" rot="MR0" xref="yes"/>
 </segment>
 </net>
 <net name="TXD6" class="0">
@@ -7387,26 +7389,26 @@ by exp-lbrs.ulp</description>
 </net>
 <net name="TRX2" class="0">
 <segment>
-<pinref part="U2" gate="G$1" pin="7/RX3/PWM"/>
-<wire x1="165.1" y1="218.44" x2="160.02" y2="218.44" width="0.1524" layer="91"/>
-<label x="160.02" y="218.44" size="1.778" layer="95" rot="MR0" xref="yes"/>
-</segment>
-<segment>
 <pinref part="MUX_RX2" gate="G$1" pin="Y"/>
 <wire x1="414.02" y1="218.44" x2="416.56" y2="218.948" width="0.1524" layer="91"/>
 <label x="416.56" y="218.948" size="1.778" layer="95" rot="R90" xref="yes"/>
 </segment>
+<segment>
+<pinref part="U2" gate="G$1" pin="9/RX2/PWM"/>
+<wire x1="165.1" y1="213.36" x2="160.02" y2="213.36" width="0.1524" layer="91"/>
+<label x="160.02" y="213.36" size="1.778" layer="95" rot="MR0" xref="yes"/>
+</segment>
 </net>
 <net name="TTX1" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="10/TX2/PWM"/>
-<wire x1="165.1" y1="210.82" x2="160.02" y2="210.82" width="0.1524" layer="91"/>
-<label x="160.02" y="210.82" size="1.778" layer="95" rot="MR0" xref="yes"/>
-</segment>
 <segment>
 <pinref part="MUX_TX1" gate="G$1" pin="Y"/>
 <wire x1="292.608" y1="218.186" x2="294.894" y2="218.186" width="0.1524" layer="91"/>
 <label x="294.894" y="218.186" size="1.778" layer="95" rot="R90" xref="yes"/>
+</segment>
+<segment>
+<pinref part="U2" gate="G$1" pin="8/TX3/PWM"/>
+<wire x1="165.1" y1="215.9" x2="160.02" y2="215.9" width="0.1524" layer="91"/>
+<label x="160.02" y="215.9" size="1.778" layer="95" rot="MR0" xref="yes"/>
 </segment>
 </net>
 <net name="RXD5" class="0">
@@ -7435,14 +7437,14 @@ by exp-lbrs.ulp</description>
 </net>
 <net name="TTX2" class="0">
 <segment>
-<pinref part="U2" gate="G$1" pin="8/TX3/PWM"/>
-<wire x1="165.1" y1="215.9" x2="160.02" y2="215.9" width="0.1524" layer="91"/>
-<label x="160.02" y="215.9" size="1.778" layer="95" rot="MR0" xref="yes"/>
-</segment>
-<segment>
 <pinref part="MUX_TX2" gate="G$1" pin="Y"/>
 <wire x1="332.74" y1="218.44" x2="335.534" y2="218.44" width="0.1524" layer="91"/>
 <label x="335.534" y="218.44" size="1.778" layer="95" rot="R90" xref="yes"/>
+</segment>
+<segment>
+<pinref part="U2" gate="G$1" pin="10/TX2/PWM"/>
+<wire x1="165.1" y1="210.82" x2="160.02" y2="210.82" width="0.1524" layer="91"/>
+<label x="160.02" y="210.82" size="1.778" layer="95" rot="MR0" xref="yes"/>
 </segment>
 </net>
 <net name="TXD3" class="0">

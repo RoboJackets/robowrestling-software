@@ -5914,7 +5914,7 @@ Temp: -40~+85°C</text>
 <part name="+3V13" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="+3V14" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="+3V15" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
-<part name="TRANSCIEVER" library="Kirbi_ControlBoard" deviceset="RFM69HCW" device="_SMT"/>
+<part name="TRANSCEIVER" library="Kirbi_ControlBoard" deviceset="RFM69HCW" device="_SMT"/>
 <part name="GND13" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="+3V11" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="C4" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
@@ -6356,7 +6356,7 @@ Temp: -40~+85°C</text>
 <instance part="+3V15" gate="G$1" x="279.908" y="238.76" smashed="yes">
 <attribute name="VALUE" x="277.368" y="233.68" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="TRANSCIEVER" gate="RFM59HCW" x="213.36" y="45.72" smashed="yes">
+<instance part="TRANSCEIVER" gate="RFM59HCW" x="213.36" y="45.72" smashed="yes">
 <attribute name="NAME" x="203.2" y="63.5" size="1.27" layer="95"/>
 <attribute name="VALUE" x="203.2" y="25.4" size="1.27" layer="95"/>
 </instance>
@@ -6479,7 +6479,7 @@ Temp: -40~+85°C</text>
 <pinref part="+3V14" gate="G$1" pin="+3V3"/>
 </segment>
 <segment>
-<pinref part="TRANSCIEVER" gate="RFM59HCW" pin="VDD"/>
+<pinref part="TRANSCEIVER" gate="RFM59HCW" pin="VDD"/>
 <wire x1="226.06" y1="45.72" x2="236.22" y2="45.72" width="0.1524" layer="91"/>
 <pinref part="+3V11" gate="G$1" pin="+3V3"/>
 <pinref part="C4" gate="G$1" pin="1"/>
@@ -6711,14 +6711,14 @@ Temp: -40~+85°C</text>
 <junction x="190.5" y="35.56"/>
 <pinref part="GND13" gate="1" pin="GND"/>
 <wire x1="190.5" y1="30.48" x2="190.5" y2="33.02" width="0.1524" layer="91"/>
-<pinref part="TRANSCIEVER" gate="RFM59HCW" pin="GND@3"/>
+<pinref part="TRANSCEIVER" gate="RFM59HCW" pin="GND@3"/>
 <wire x1="190.5" y1="33.02" x2="190.5" y2="35.56" width="0.1524" layer="91"/>
 <wire x1="200.66" y1="35.56" x2="190.5" y2="35.56" width="0.1524" layer="91"/>
-<pinref part="TRANSCIEVER" gate="RFM59HCW" pin="GND@2"/>
+<pinref part="TRANSCEIVER" gate="RFM59HCW" pin="GND@2"/>
 <wire x1="200.66" y1="53.34" x2="177.8" y2="53.34" width="0.1524" layer="91"/>
 <wire x1="177.8" y1="53.34" x2="177.8" y2="35.56" width="0.1524" layer="91"/>
 <wire x1="177.8" y1="35.56" x2="190.5" y2="35.56" width="0.1524" layer="91"/>
-<pinref part="TRANSCIEVER" gate="RFM59HCW" pin="GND@1"/>
+<pinref part="TRANSCEIVER" gate="RFM59HCW" pin="GND@1"/>
 <pinref part="C4" gate="G$1" pin="2"/>
 <wire x1="236.22" y1="38.1" x2="226.06" y2="38.1" width="0.1524" layer="91"/>
 <wire x1="236.22" y1="38.1" x2="236.22" y2="25.4" width="0.1524" layer="91"/>
@@ -7137,7 +7137,7 @@ Temp: -40~+85°C</text>
 <label x="160.02" y="205.74" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="TRANSCIEVER" gate="RFM59HCW" pin="MISO"/>
+<pinref part="TRANSCEIVER" gate="RFM59HCW" pin="MISO"/>
 <wire x1="200.66" y1="50.8" x2="198.12" y2="50.8" width="0.1524" layer="91"/>
 <label x="198.12" y="50.8" size="1.778" layer="95" rot="MR0" xref="yes"/>
 </segment>
@@ -7149,7 +7149,7 @@ Temp: -40~+85°C</text>
 <label x="160.02" y="208.28" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="TRANSCIEVER" gate="RFM59HCW" pin="MOSI"/>
+<pinref part="TRANSCEIVER" gate="RFM59HCW" pin="MOSI"/>
 <wire x1="200.66" y1="48.26" x2="198.12" y2="48.26" width="0.1524" layer="91"/>
 <label x="198.12" y="48.26" size="1.778" layer="95" rot="MR0" xref="yes"/>
 </segment>
@@ -7161,7 +7161,7 @@ Temp: -40~+85°C</text>
 <wire x1="165.1" y1="203.2" x2="160.02" y2="203.2" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="TRANSCIEVER" gate="RFM59HCW" pin="SCK"/>
+<pinref part="TRANSCEIVER" gate="RFM59HCW" pin="SCK"/>
 <wire x1="200.66" y1="45.72" x2="198.12" y2="45.72" width="0.1524" layer="91"/>
 <label x="198.12" y="45.72" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
@@ -7173,21 +7173,21 @@ Temp: -40~+85°C</text>
 <wire x1="160.02" y1="220.98" x2="165.1" y2="220.98" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="TRANSCIEVER" gate="RFM59HCW" pin="NSS"/>
+<pinref part="TRANSCEIVER" gate="RFM59HCW" pin="NSS"/>
 <wire x1="200.66" y1="43.18" x2="198.12" y2="43.18" width="0.1524" layer="91"/>
 <label x="198.12" y="43.18" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="RADIO_DIO0" class="0">
 <segment>
-<pinref part="U2" gate="G$1" pin="14/A0/PWM"/>
-<wire x1="165.1" y1="200.66" x2="160.02" y2="200.66" width="0.1524" layer="91"/>
-<label x="160.02" y="200.66" size="1.778" layer="95" rot="R180" xref="yes"/>
-</segment>
-<segment>
-<pinref part="TRANSCIEVER" gate="RFM59HCW" pin="DIO0"/>
+<pinref part="TRANSCEIVER" gate="RFM59HCW" pin="DIO0"/>
 <wire x1="226.06" y1="48.26" x2="228.6" y2="48.26" width="0.1524" layer="91"/>
 <label x="228.6" y="48.26" size="1.778" layer="95" rot="R90" xref="yes"/>
+</segment>
+<segment>
+<pinref part="U2" gate="G$1" pin="5/PWM"/>
+<wire x1="165.1" y1="223.52" x2="160.02" y2="223.52" width="0.1524" layer="91"/>
+<label x="160.02" y="223.52" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="TXD2" class="0">
