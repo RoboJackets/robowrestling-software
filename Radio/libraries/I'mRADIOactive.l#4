@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="50" unitdist="mil" unit="mil" style="lines" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="no" active="yes"/>
@@ -390,7 +390,7 @@
 <smd name="2" x="0.6516" y="0" dx="0.8032" dy="0.9" layer="1"/>
 <wire x1="-1.8034" y1="0" x2="-1.9558" y2="0" width="0.1524" layer="21" curve="-180"/>
 <wire x1="-1.9558" y1="0" x2="-1.8034" y2="0" width="0.1524" layer="21" curve="-180"/>
-<text x="-1.7272" y="-0.635" size="1.27" layer="27" ratio="6" rot="SR0">&gt;Value</text>
+<text x="-1.7272" y="-0.635" size="1.27" layer="21" ratio="6" rot="SR0">&gt;Value</text>
 <wire x1="-0.254" y1="-0.4572" x2="-0.254" y2="0.4572" width="0.1524" layer="51"/>
 <wire x1="-0.254" y1="0.4572" x2="-0.8382" y2="0.4572" width="0.1524" layer="51"/>
 <wire x1="-0.8382" y1="-0.4572" x2="-0.254" y2="-0.4572" width="0.1524" layer="51"/>
