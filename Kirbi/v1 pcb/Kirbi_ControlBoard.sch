@@ -7535,6 +7535,18 @@ Temp: -40~+85°C</text>
 <wire x1="226.06" y1="30.48" x2="226.06" y2="35.56" width="0.1524" layer="91"/>
 </segment>
 </net>
+<net name="RADIO_RESET" class="0">
+<segment>
+<pinref part="TRANSCEIVER" gate="RFM59HCW" pin="RESET"/>
+<wire x1="200.66" y1="40.64" x2="198.12" y2="40.64" width="0.1524" layer="91"/>
+<label x="198.12" y="40.64" size="1.778" layer="95" rot="R180" xref="yes"/>
+</segment>
+<segment>
+<pinref part="U2" gate="G$1" pin="29/T/PWM"/>
+<wire x1="165.1" y1="162.56" x2="160.02" y2="162.56" width="0.1524" layer="91"/>
+<label x="160.02" y="162.56" size="1.778" layer="95" rot="R180" xref="yes"/>
+</segment>
+</net>
 </nets>
 </sheet>
 </sheets>

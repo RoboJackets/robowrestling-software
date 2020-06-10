@@ -3,7 +3,7 @@
 <eagle version="9.5.1">
 <drawing>
 <settings>
-<setting alwaysvectorfont="yes"/>
+<setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
 <grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.1" altunitdist="mm" altunit="mm"/>
@@ -5281,7 +5281,6 @@ design rules under a new name.</description>
 <contactref element="R13" pad="2"/>
 <wire x1="14.4" y1="24.55" x2="14.425" y2="24.575" width="0.2" layer="1"/>
 <wire x1="14.425" y1="24.575" x2="15.425" y2="25.575" width="0.2" layer="1"/>
-<wire x1="15.425" y1="25.575" x2="15.45" y2="25.6" width="0.2" layer="1"/>
 <wire x1="12" y1="24.55" x2="14.4" y2="24.55" width="0.2" layer="1"/>
 <contactref element="LINE_LF" pad="1"/>
 <contactref element="LINE_RF" pad="1"/>
@@ -5757,14 +5756,15 @@ design rules under a new name.</description>
 <signal name="TXD5">
 <contactref element="MUX_TX2" pad="P$3"/>
 <contactref element="DIST_5" pad="P$5"/>
-<wire x1="42.544584375" y1="11.664803125" x2="40.5093875" y2="13.7" width="0.2" layer="1"/>
-<wire x1="39.2" y1="13.7" x2="40.5093875" y2="13.7" width="0.2" layer="1"/>
-<via x="39.2" y="13.7" extent="1-16" drill="0.4"/>
-<wire x1="41.5" y1="15.7" x2="41.2" y2="15.7" width="0.2" layer="16"/>
-<wire x1="41.2" y1="15.7" x2="39.2" y2="13.7" width="0.2" layer="16"/>
-<via x="41.5" y="15.7" extent="1-16" drill="0.4"/>
-<wire x1="41.5" y1="15.7" x2="41.5" y2="16.325" width="0.2" layer="1"/>
-<wire x1="41.5" y1="16.325" x2="40.95" y2="16.875" width="0.2" layer="1"/>
+<wire x1="42.544584375" y1="11.664803125" x2="40.4093875" y2="13.8" width="0.2" layer="1"/>
+<wire x1="39" y1="13.8" x2="40.4093875" y2="13.8" width="0.2" layer="1"/>
+<via x="39" y="13.8" extent="1-16" drill="0.4"/>
+<wire x1="41" y1="15.7" x2="40.9" y2="15.7" width="0.2" layer="16"/>
+<wire x1="40.9" y1="15.7" x2="39" y2="13.8" width="0.2" layer="16"/>
+<via x="41" y="15.7" extent="1-16" drill="0.4"/>
+<wire x1="41" y1="15.7" x2="40.9" y2="15.8" width="0.2" layer="1"/>
+<wire x1="40.95" y1="16.875" x2="40.9" y2="16.825" width="0.2" layer="1"/>
+<wire x1="40.9" y1="16.825" x2="40.9" y2="15.8" width="0.2" layer="1"/>
 </signal>
 <signal name="TRX2">
 <contactref element="MUX_RX2" pad="P$4"/>
@@ -5872,6 +5872,25 @@ design rules under a new name.</description>
 <contactref element="TRANSCEIVER" pad="1P"/>
 <wire x1="19" y1="2.1" x2="13.8" y2="2.1" width="0.2" layer="16"/>
 <wire x1="10.9" y1="5" x2="13.8" y2="2.1" width="0.2" layer="16"/>
+</signal>
+<signal name="RADIO_RESET">
+<contactref element="TRANSCEIVER" pad="14P"/>
+<wire x1="27.1" y1="9" x2="28.9" y2="7.2" width="0.2" layer="16"/>
+<wire x1="28.9" y1="7.2" x2="28.9" y2="6.6" width="0.2" layer="16"/>
+<via x="28.9" y="6.6" extent="1-16" drill="0.4"/>
+<via x="38" y="12" extent="1-16" drill="0.4"/>
+<wire x1="28.9" y1="6.6" x2="29.03458125" y2="6.6" width="0.2" layer="1"/>
+<wire x1="30.9556" y1="8.52101875" x2="29.03458125" y2="6.6" width="0.2" layer="1"/>
+<wire x1="34.73458125" y1="12" x2="38" y2="12" width="0.2" layer="1"/>
+<wire x1="32.69018125" y1="9.9556" x2="34.73458125" y2="12" width="0.2" layer="1"/>
+<wire x1="30.9556" y1="8.52101875" x2="30.9556" y2="8.85018125" width="0.2" layer="1"/>
+<wire x1="30.9556" y1="8.85018125" x2="32.06101875" y2="9.9556" width="0.2" layer="1"/>
+<wire x1="32.06101875" y1="9.9556" x2="32.69018125" y2="9.9556" width="0.2" layer="1"/>
+<wire x1="38" y1="12" x2="38.2271625" y2="12" width="0.2" layer="16"/>
+<wire x1="38.2271625" y1="12" x2="41.9476" y2="15.7204375" width="0.2" layer="16"/>
+<contactref element="U2" pad="29"/>
+<wire x1="41.9476" y1="29.2924" x2="40.86" y2="30.38" width="0.2" layer="16"/>
+<wire x1="41.9476" y1="15.7204375" x2="41.9476" y2="29.2924" width="0.2" layer="16"/>
 </signal>
 </signals>
 <mfgpreviewcolors>
