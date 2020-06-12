@@ -181,6 +181,8 @@
 <pin name="BOOT0" x="20.32" y="-20.32" length="middle" rot="R180"/>
 <pin name="PB8" x="20.32" y="-22.86" length="middle" rot="R180"/>
 <pin name="PB9" x="20.32" y="-25.4" length="middle" rot="R180"/>
+<pin name="P$47" x="20.32" y="-27.94" length="middle" rot="R180"/>
+<pin name="P$48" x="20.32" y="-30.48" length="middle" rot="R180"/>
 <text x="-5.334" y="31.75" size="1.778" layer="95">&gt;NAME</text>
 <text x="-5.08" y="-35.56" size="1.778" layer="96">&gt;VALUE</text>
 </symbol>
@@ -195,6 +197,8 @@
 <connects>
 <connect gate="G$1" pin="BOOT0" pad="44"/>
 <connect gate="G$1" pin="NRST" pad="7"/>
+<connect gate="G$1" pin="P$47" pad="47"/>
+<connect gate="G$1" pin="P$48" pad="48"/>
 <connect gate="G$1" pin="PA0" pad="10"/>
 <connect gate="G$1" pin="PA1" pad="11"/>
 <connect gate="G$1" pin="PA10" pad="31"/>
@@ -235,9 +239,9 @@
 <connect gate="G$1" pin="PF6" pad="35"/>
 <connect gate="G$1" pin="PF7" pad="36"/>
 <connect gate="G$1" pin="VBAT" pad="1"/>
-<connect gate="G$1" pin="VDD" pad="24 48"/>
+<connect gate="G$1" pin="VDD" pad="24"/>
 <connect gate="G$1" pin="VDDA" pad="9"/>
-<connect gate="G$1" pin="VSS" pad="23 47"/>
+<connect gate="G$1" pin="VSS" pad="23"/>
 <connect gate="G$1" pin="VSSA" pad="8"/>
 </connects>
 <technologies>
