@@ -4859,6 +4859,9 @@ In this library you will find frames that can be used to help organize a schemat
 <text x="175.26" y="193.04" size="5.08" layer="97">5V to 3V Level Shifter</text>
 <text x="73.66" y="58.42" size="5.08" layer="97">Radio Module</text>
 <text x="208.28" y="119.38" size="5.08" layer="97">LCD Display</text>
+<text x="200.66" y="7.62" size="2.54" layer="94">Radio Debugging Device 
+for Sumo Bot</text>
+<text x="193.04" y="27.94" size="5.08" layer="94">RoboWrestling</text>
 </plain>
 <instances>
 <instance part="U4" gate="G$1" x="81.28" y="165.1" smashed="yes"/>
