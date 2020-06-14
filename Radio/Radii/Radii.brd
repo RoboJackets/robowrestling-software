@@ -341,6 +341,43 @@
 <smd name="35" x="4.18" y="2.25" dx="1.56" dy="0.28" layer="1" roundness="25"/>
 <smd name="36" x="4.18" y="2.75" dx="1.56" dy="0.28" layer="1" roundness="25"/>
 </package>
+<package name="POWERREG">
+<smd name="5" x="1.0995" y="0" dx="0.7" dy="1" layer="1" rot="R270"/>
+<smd name="2" x="-1.0995" y="0" dx="0.7" dy="1" layer="1" rot="R270"/>
+<smd name="4" x="1.0995" y="-0.95" dx="0.7" dy="1" layer="1" rot="R270"/>
+<smd name="3" x="-1.0995" y="-0.95" dx="0.7" dy="1" layer="1" rot="R270"/>
+<smd name="6" x="1.0995" y="0.95" dx="0.7" dy="1" layer="1" rot="R270"/>
+<smd name="1" x="-1.0995" y="0.95" dx="0.7" dy="1" layer="1" rot="R270"/>
+<wire x1="1.778" y1="1.492" x2="1.778" y2="-1.508" width="0.0762" layer="21"/>
+<wire x1="-1.778" y1="1.492" x2="-1.778" y2="-1.508" width="0.0762" layer="21"/>
+<wire x1="1.778" y1="1.524" x2="-1.778" y2="1.524" width="0.0762" layer="21"/>
+<wire x1="1.778" y1="-1.524" x2="-1.778" y2="-1.524" width="0.0762" layer="21"/>
+<text x="-4.318" y="1.778" size="1.778" layer="21">&gt;Name</text>
+<text x="-4.445" y="-3.556" size="1.778" layer="21">&gt;Value</text>
+</package>
+<package name="IND_BOURNS_SRN3015">
+<smd name="1" x="-1.0922" y="0" dx="0.9906" dy="2.6924" layer="1"/>
+<smd name="2" x="1.0922" y="0" dx="0.9906" dy="2.6924" layer="1"/>
+<wire x1="-0.5588" y1="-1.6764" x2="0.5588" y2="-1.6764" width="0.1524" layer="21"/>
+<wire x1="0.5588" y1="1.6764" x2="-0.5588" y2="1.6764" width="0.1524" layer="21"/>
+<wire x1="-2.286" y1="0" x2="-2.4384" y2="0" width="0.1524" layer="21" curve="-180"/>
+<wire x1="-2.4384" y1="0" x2="-2.286" y2="0" width="0.1524" layer="21" curve="-180"/>
+<text x="-2.9972" y="-3.175" size="1.27" layer="27" ratio="6" rot="SR0">&gt;Value</text>
+<wire x1="-1.5494" y1="-1.5494" x2="1.5494" y2="-1.5494" width="0.1524" layer="51"/>
+<wire x1="1.5494" y1="-1.5494" x2="1.5494" y2="1.5494" width="0.1524" layer="51"/>
+<wire x1="1.5494" y1="1.5494" x2="-1.5494" y2="1.5494" width="0.1524" layer="51"/>
+<wire x1="-1.5494" y1="1.5494" x2="-1.5494" y2="0" width="0.1524" layer="51"/>
+<wire x1="-1.5494" y1="0" x2="-1.5494" y2="-1.5494" width="0.1524" layer="51"/>
+<wire x1="-1.397" y1="0" x2="-1.5494" y2="0" width="0" layer="51" curve="-180"/>
+<wire x1="-1.5494" y1="0" x2="-1.397" y2="0" width="0" layer="51" curve="-180"/>
+<polygon width="0.1524" layer="41">
+<vertex x="-0.5461" y="1.4986"/>
+<vertex x="0.5461" y="1.4986"/>
+<vertex x="0.5461" y="-1.4986"/>
+<vertex x="-0.5461" y="-1.4986"/>
+</polygon>
+<text x="-2.8956" y="1.778" size="1.27" layer="25" ratio="6" rot="SR0">&gt;Name</text>
+</package>
 </packages>
 <packages3d>
 <package3d name="1X07" urn="urn:adsk.eagle:package:22477/2" type="model">
@@ -691,6 +728,36 @@ design rules under a new name.</description>
 <attribute name="PROD_ID" value="CAP-00810" x="-10" y="-14" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="-10" y="-14.762" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
 </element>
+<element name="U$2" library="I'mRADIOactive" package="POWERREG" value="AP63203WU-7" x="-7" y="-20" smashed="yes">
+<attribute name="NAME" x="-11.318" y="-18.222" size="1.778" layer="21"/>
+<attribute name="VALUE" x="-11.445" y="-23.556" size="1.778" layer="21"/>
+</element>
+<element name="U$3" library="I'mRADIOactive" package="POWERREG" value="AP63203WU-7" x="-7" y="-29" smashed="yes">
+<attribute name="NAME" x="-11.318" y="-27.222" size="1.778" layer="21"/>
+<attribute name="VALUE" x="-11.445" y="-32.556" size="1.778" layer="21"/>
+</element>
+<element name="C5" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="10uF" x="-10" y="-35" smashed="yes">
+<attribute name="NAME" x="-10" y="-34.238" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center"/>
+<attribute name="PROD_ID" value="CAP-11015" x="-10" y="-35" size="1.778" layer="27" display="off"/>
+<attribute name="VALUE" x="-10" y="-35.762" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
+</element>
+<element name="C6" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF" x="-10" y="-39" smashed="yes">
+<attribute name="NAME" x="-10" y="-38.238" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center"/>
+<attribute name="PROD_ID" value="CAP-00810" x="-10" y="-39" size="1.778" layer="27" display="off"/>
+<attribute name="VALUE" x="-10" y="-39.762" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
+</element>
+<element name="C7" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="44uF" x="-10" y="-43" smashed="yes">
+<attribute name="NAME" x="-10" y="-42.238" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center"/>
+<attribute name="PROD_ID" value="CAP-11015" x="-10" y="-43" size="1.778" layer="27" display="off"/>
+<attribute name="VALUE" x="-10" y="-43.762" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
+</element>
+<element name="L1" library="I'mRADIOactive" package="IND_BOURNS_SRN3015" value="SRN3015-4R7M" x="-16" y="-40" smashed="yes">
+<attribute name="BUILT_BY" value="EMA_UL_Team" x="-16" y="-40" size="1.778" layer="27" display="off"/>
+<attribute name="MANUFACTURER_PART_NUMBER" value="SRN3015-4R7M" x="-16" y="-40" size="1.778" layer="27" display="off"/>
+<attribute name="NAME" x="-18.8956" y="-38.222" size="1.27" layer="25" ratio="6" rot="SR0"/>
+<attribute name="VALUE" x="-18.9972" y="-43.175" size="1.27" layer="27" ratio="6" rot="SR0"/>
+<attribute name="VENDOR" value="Bourns Electronics" x="-16" y="-40" size="1.778" layer="27" display="off"/>
+</element>
 </elements>
 <signals>
 <signal name="MISO">
@@ -728,6 +795,9 @@ design rules under a new name.</description>
 <contactref element="C4" pad="2"/>
 <contactref element="U$1" pad="48"/>
 <contactref element="U$1" pad="24"/>
+<contactref element="C5" pad="2"/>
+<contactref element="U$3" pad="4"/>
+<contactref element="C7" pad="2"/>
 <wire x1="38.045" y1="18.295" x2="40.69" y2="26.11" width="0" layer="19" extent="1-1"/>
 <wire x1="37.73" y1="12.02" x2="38.045" y2="18.295" width="0" layer="19" extent="1-1"/>
 <wire x1="25.418" y1="8.058" x2="37.73" y2="12.02" width="0" layer="19" extent="1-1"/>
@@ -739,6 +809,9 @@ design rules under a new name.</description>
 <wire x1="-10.18" y1="-5.25" x2="-8.75" y2="0.18" width="0" layer="19" extent="1-1"/>
 <wire x1="-3.25" y1="-8.18" x2="-10.18" y2="-5.25" width="0" layer="19" extent="1-1"/>
 <wire x1="-9.15" y1="-14" x2="-3.25" y2="-8.18" width="0" layer="19" extent="1-1"/>
+<wire x1="-5.9005" y1="-29.95" x2="-9.15" y2="-14" width="0" layer="19" extent="1-1"/>
+<wire x1="-9.15" y1="-35" x2="-5.9005" y2="-29.95" width="0" layer="19" extent="1-1"/>
+<wire x1="-9.15" y1="-43" x2="-9.15" y2="-35" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="DISP_RESET">
 <contactref element="JP1" pad="6"/>
@@ -807,6 +880,12 @@ design rules under a new name.</description>
 <contactref element="C4" pad="1"/>
 <contactref element="U$1" pad="47"/>
 <contactref element="U$1" pad="23"/>
+<contactref element="U$3" pad="3"/>
+<contactref element="U$3" pad="2"/>
+<contactref element="C5" pad="1"/>
+<contactref element="L1" pad="1"/>
+<contactref element="C7" pad="1"/>
+<contactref element="U$3" pad="1"/>
 <wire x1="6.40465" y1="35.145" x2="21.95" y2="41.23" width="0" layer="19" extent="1-1"/>
 <wire x1="31.9078" y1="8.9078" x2="31.25" y2="3.75" width="0" layer="19" extent="1-1"/>
 <wire x1="36.03" y1="12.02" x2="32" y2="9" width="0" layer="19" extent="1-1"/>
@@ -815,6 +894,12 @@ design rules under a new name.</description>
 <wire x1="-10.18" y1="-4.75" x2="-8.25" y2="0.18" width="0" layer="19" extent="1-1"/>
 <wire x1="-3.75" y1="-8.18" x2="-10.18" y2="-4.75" width="0" layer="19" extent="1-1"/>
 <wire x1="-10.85" y1="-14" x2="-3.75" y2="-8.18" width="0" layer="19" extent="1-1"/>
+<wire x1="-8.0995" y1="-28.05" x2="-10.85" y2="-14" width="0" layer="19" extent="1-1"/>
+<wire x1="-8.0995" y1="-29" x2="-8.0995" y2="-28.05" width="0" layer="19" extent="1-1"/>
+<wire x1="-8.0995" y1="-29.95" x2="-8.0995" y2="-29" width="0" layer="19" extent="1-1"/>
+<wire x1="-10.85" y1="-35" x2="-8.0995" y2="-29.95" width="0" layer="19" extent="1-1"/>
+<wire x1="-17.0922" y1="-40" x2="-10.85" y2="-35" width="0" layer="19" extent="1-1"/>
+<wire x1="-10.85" y1="-43" x2="-17.0922" y2="-40" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$3">
 <contactref element="U1" pad="1P"/>
@@ -883,6 +968,23 @@ design rules under a new name.</description>
 </signal>
 <signal name="CS5">
 <contactref element="U$1" pad="25"/>
+</signal>
+<signal name="RADIO_RESET">
+<contactref element="U1" pad="14P"/>
+<contactref element="U$1" pad="18"/>
+<wire x1="-6.25" y1="-8.18" x2="21.845" y2="20.295" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$1">
+<contactref element="U$3" pad="5"/>
+<contactref element="L1" pad="2"/>
+<contactref element="C6" pad="2"/>
+<wire x1="-9.15" y1="-39" x2="-14.9078" y2="-40" width="0" layer="19" extent="1-1"/>
+<wire x1="-5.9005" y1="-29" x2="-9.15" y2="-39" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$2">
+<contactref element="U$3" pad="6"/>
+<contactref element="C6" pad="1"/>
+<wire x1="-5.9005" y1="-28.05" x2="-10.85" y2="-39" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>
 <mfgpreviewcolors>
