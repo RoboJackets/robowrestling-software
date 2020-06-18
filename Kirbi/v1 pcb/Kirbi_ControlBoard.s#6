@@ -7180,14 +7180,14 @@ Temp: -40~+85°C</text>
 </net>
 <net name="RADIO_DIO0" class="0">
 <segment>
-<pinref part="U2" gate="G$1" pin="14/A0/PWM"/>
-<wire x1="165.1" y1="200.66" x2="160.02" y2="200.66" width="0.1524" layer="91"/>
-<label x="160.02" y="200.66" size="1.778" layer="95" rot="R180" xref="yes"/>
-</segment>
-<segment>
 <pinref part="TRANSCEIVER" gate="RFM59HCW" pin="DIO0"/>
 <wire x1="226.06" y1="48.26" x2="228.6" y2="48.26" width="0.1524" layer="91"/>
 <label x="228.6" y="48.26" size="1.778" layer="95" rot="R90" xref="yes"/>
+</segment>
+<segment>
+<pinref part="U2" gate="G$1" pin="5/PWM"/>
+<wire x1="165.1" y1="223.52" x2="160.02" y2="223.52" width="0.1524" layer="91"/>
+<label x="160.02" y="223.52" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="TXD2" class="0">
@@ -7414,12 +7414,6 @@ Temp: -40~+85°C</text>
 <pinref part="U2" gate="G$1" pin="31/A12/RX4"/>
 <wire x1="165.1" y1="157.48" x2="160.02" y2="157.48" width="0.1524" layer="91"/>
 <label x="160.02" y="157.48" size="1.778" layer="95" rot="R180" xref="yes"/>
-</segment>
-</net>
-<net name="`NAME" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="5/PWM"/>
-<wire x1="165.1" y1="223.52" x2="160.02" y2="223.52" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>

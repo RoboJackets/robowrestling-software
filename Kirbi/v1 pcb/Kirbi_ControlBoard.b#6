@@ -5123,8 +5123,6 @@ design rules under a new name.</description>
 <via x="34.4" y="15" extent="1-16" drill="0.4"/>
 <wire x1="34.4" y1="15" x2="33.85" y2="15" width="0.2" layer="1"/>
 <wire x1="33.85" y1="15" x2="32.85" y2="14" width="0.2" layer="1"/>
-<wire x1="18.9" y1="34.1" x2="19" y2="34" width="0.2" layer="1"/>
-<wire x1="25.85" y1="42" x2="25.9" y2="41.95" width="0.2" layer="1"/>
 <contactref element="R1" pad="1"/>
 <wire x1="16.35" y1="33.9" x2="18.9" y2="33.9" width="0.2" layer="1"/>
 <wire x1="18.9" y1="33.9" x2="19" y2="34" width="0.2" layer="1"/>
@@ -5729,16 +5727,17 @@ design rules under a new name.</description>
 <signal name="TRX1">
 <contactref element="MUX_RX1" pad="P$4"/>
 <contactref element="U2" pad="7"/>
-<wire x1="3.95" y1="19.125" x2="3.95" y2="19.30695" width="0.2" layer="1"/>
-<wire x1="3.95" y1="19.125" x2="3.475" y2="19.125" width="0.2" layer="1"/>
-<wire x1="3.475" y1="19.125" x2="1.1" y2="21.5" width="0.2" layer="1"/>
-<via x="1.1" y="21.5" extent="1-16" drill="0.4"/>
+<wire x1="3" y1="20.5" x2="1.8" y2="20.5" width="0.2" layer="1"/>
+<wire x1="1.1" y1="21.2" x2="1.8" y2="20.5" width="0.2" layer="1"/>
+<via x="1.1" y="21.2" extent="1-16" drill="0.4"/>
 <wire x1="1.1" y1="25.601625" x2="4.2524" y2="28.754025" width="0.2" layer="16"/>
-<wire x1="1.1" y1="21.5" x2="1.1" y2="25.601625" width="0.2" layer="16"/>
+<wire x1="1.1" y1="21.2" x2="1.1" y2="25.601625" width="0.2" layer="16"/>
 <wire x1="4.2524" y1="31.169" x2="4.8" y2="31.7166" width="0.2" layer="16"/>
 <wire x1="4.8" y1="31.7166" x2="9.0434" y2="31.7166" width="0.2" layer="16"/>
 <wire x1="9.0434" y1="31.7166" x2="10.38" y2="30.38" width="0.2" layer="16"/>
 <wire x1="4.2524" y1="28.754025" x2="4.2524" y2="31.169" width="0.2" layer="16"/>
+<wire x1="3" y1="20.5" x2="3.95" y2="19.55" width="0.2" layer="1"/>
+<wire x1="3.95" y1="19.55" x2="3.95" y2="19.125" width="0.2" layer="1"/>
 </signal>
 <signal name="TXD6">
 <contactref element="MUX_TX2" pad="P$1"/>
