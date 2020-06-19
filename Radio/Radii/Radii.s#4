@@ -5040,13 +5040,10 @@ for Sumo Bot</text>
 <pinref part="U$1" gate="G$1" pin="VSS"/>
 </segment>
 <segment>
-<wire x1="256.54" y1="104.14" x2="256.54" y2="88.9" width="0.1524" layer="91"/>
-<wire x1="210.82" y1="104.14" x2="256.54" y2="104.14" width="0.1524" layer="91"/>
-<pinref part="U$3" gate="G$1" pin="FB"/>
-<wire x1="210.82" y1="96.012" x2="210.82" y2="104.14" width="0.1524" layer="91"/>
 <pinref part="SUPPLY7" gate="G$1" pin="3.3V"/>
-<wire x1="256.54" y1="88.9" x2="259.842" y2="88.9" width="0.1524" layer="91"/>
-<wire x1="259.842" y1="88.9" x2="259.842" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="U$2" gate="G$1" pin="2"/>
+<wire x1="259.842" y1="101.6" x2="259.842" y2="88.9" width="0.1524" layer="91"/>
+<wire x1="259.842" y1="88.9" x2="256.54" y2="88.9" width="0.1524" layer="91"/>
 <pinref part="C8" gate="G$1" pin="1"/>
 <wire x1="264.16" y1="86.36" x2="264.16" y2="83.82" width="0.1524" layer="91"/>
 <wire x1="256.54" y1="86.36" x2="264.16" y2="86.36" width="0.1524" layer="91"/>
@@ -5055,6 +5052,10 @@ for Sumo Bot</text>
 <wire x1="256.54" y1="88.9" x2="256.54" y2="86.36" width="0.1524" layer="91"/>
 <junction x="256.54" y="88.9"/>
 <junction x="256.54" y="86.36"/>
+<wire x1="210.82" y1="104.14" x2="256.54" y2="104.14" width="0.1524" layer="91"/>
+<pinref part="U$3" gate="G$1" pin="FB"/>
+<wire x1="210.82" y1="96.012" x2="210.82" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="256.54" y1="104.14" x2="256.54" y2="88.9" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$3" class="0">

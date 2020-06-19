@@ -5128,12 +5128,10 @@ for Sumo Bot</text>
 <label x="76.2" y="30.48" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U$1" gate="G$1" pin="PB0"/>
-<wire x1="55.88" y1="144.78" x2="55.118" y2="144.78" width="0.1524" layer="91"/>
-<label x="53.34" y="142.24" size="1.778" layer="95" rot="R180" xref="yes"/>
-<wire x1="55.88" y1="144.78" x2="54.864" y2="144.78" width="0.1524" layer="91"/>
-<wire x1="54.864" y1="144.78" x2="54.864" y2="142.24" width="0.1524" layer="91"/>
-<wire x1="54.864" y1="142.24" x2="53.34" y2="142.24" width="0.1524" layer="91"/>
+<label x="53.34" y="157.48" size="1.778" layer="95" rot="R180" xref="yes"/>
+<wire x1="54.864" y1="157.48" x2="53.34" y2="157.48" width="0.1524" layer="91"/>
+<pinref part="U$1" gate="G$1" pin="PA3"/>
+<wire x1="55.88" y1="157.48" x2="54.864" y2="157.48" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$1" class="0">
