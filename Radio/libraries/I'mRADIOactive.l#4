@@ -1730,7 +1730,7 @@ Temp: -40~+85°C</text>
 </device>
 </devices>
 </deviceset>
-<deviceset name="IND_1255AY-3R9N=P3">
+<deviceset name="IND_1255AY-3R9N=P3" uservalue="yes">
 <gates>
 <gate name="G$1" symbol="IND" x="-7.62" y="0"/>
 </gates>

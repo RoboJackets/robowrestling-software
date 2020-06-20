@@ -1694,9 +1694,18 @@ Temp: -40~+85°C</text>
 </deviceset>
 <deviceset name="AP63203WU-7">
 <gates>
+<gate name="G$1" symbol="AP63203WU-7" x="0" y="0"/>
 </gates>
 <devices>
 <device name="" package="POWERREG">
+<connects>
+<connect gate="G$1" pin="BST" pad="6"/>
+<connect gate="G$1" pin="EN" pad="2"/>
+<connect gate="G$1" pin="FB" pad="1"/>
+<connect gate="G$1" pin="GND" pad="4"/>
+<connect gate="G$1" pin="SW" pad="5"/>
+<connect gate="G$1" pin="VIN" pad="3"/>
+</connects>
 <technologies>
 <technology name=""/>
 </technologies>

@@ -1015,14 +1015,14 @@
 <text x="-3.2766" y="-0.635" size="1.27" layer="25" ratio="6" rot="SR0">&gt;Name</text>
 </package>
 <package name="INDUCTOR22">
-<smd name="P$1" x="2.985" y="1.14" dx="1.27" dy="3.3" layer="1"/>
-<smd name="P$2" x="-2.985" y="-1.14" dx="1.27" dy="3.3" layer="1"/>
-<wire x1="-3.81" y1="-3.048" x2="-3.81" y2="3.048" width="0.127" layer="21"/>
-<wire x1="-3.81" y1="3.048" x2="3.81" y2="3.048" width="0.127" layer="21"/>
-<wire x1="3.81" y1="3.048" x2="3.81" y2="-3.048" width="0.127" layer="21"/>
-<wire x1="3.81" y1="-3.048" x2="-3.81" y2="-3.048" width="0.127" layer="21"/>
-<text x="-3.81" y="3.81" size="1.27" layer="25">&gt;Name</text>
-<text x="-3.556" y="-4.699" size="1.27" layer="27">&gt;Value</text>
+<smd name="P$1" x="0" y="4.95" dx="5.4" dy="2.9" layer="1"/>
+<smd name="P$2" x="0" y="-4.95" dx="5.4" dy="2.9" layer="1"/>
+<wire x1="-6.5" y1="6.5" x2="6.5" y2="6.5" width="0.127" layer="21"/>
+<wire x1="6.5" y1="6.5" x2="6.5" y2="-6.5" width="0.127" layer="21"/>
+<wire x1="6.5" y1="-6.5" x2="-6.5" y2="-6.5" width="0.127" layer="21"/>
+<wire x1="-6.5" y1="-6.5" x2="-6.5" y2="6.5" width="0.127" layer="21"/>
+<text x="-2.54" y="6.985" size="1.27" layer="25">&gt;Name</text>
+<text x="-2.413" y="-8.382" size="1.27" layer="27">&gt;Value</text>
 </package>
 </packages>
 <symbols>
@@ -1115,7 +1115,7 @@
 <text x="28.2956" y="9.1186" size="2.0828" layer="95" ratio="6" rot="SR0">&gt;Name</text>
 <text x="27.6606" y="6.5786" size="2.0828" layer="96" ratio="6" rot="SR0">&gt;Value</text>
 </symbol>
-<symbol name="744914122">
+<symbol name="7447709220">
 <wire x1="0" y1="5.08" x2="1.27" y2="3.81" width="0.254" layer="94" curve="-90" cap="flat"/>
 <wire x1="0" y1="2.54" x2="1.27" y2="3.81" width="0.254" layer="94" curve="90" cap="flat"/>
 <wire x1="0" y1="2.54" x2="1.27" y2="1.27" width="0.254" layer="94" curve="-90" cap="flat"/>
@@ -1487,9 +1487,9 @@
 </device>
 </devices>
 </deviceset>
-<deviceset name="744914122">
+<deviceset name="7447709220">
 <gates>
-<gate name="G$1" symbol="744914122" x="0" y="0"/>
+<gate name="G$1" symbol="7447709220" x="0" y="0"/>
 </gates>
 <devices>
 <device name="" package="INDUCTOR22">

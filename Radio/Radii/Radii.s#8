@@ -349,6 +349,24 @@
 <text x="-4.318" y="1.778" size="1.778" layer="21">&gt;Name</text>
 <text x="-4.445" y="-3.556" size="1.778" layer="21">&gt;Value</text>
 </package>
+<package name="IND_1255AY-3R9N=P3">
+<wire x1="-3" y1="3" x2="3" y2="3" width="0.127" layer="51"/>
+<wire x1="3" y1="3" x2="3" y2="-3" width="0.127" layer="51"/>
+<wire x1="3" y1="-3" x2="-3" y2="-3" width="0.127" layer="51"/>
+<wire x1="-3" y1="-3" x2="-3" y2="3" width="0.127" layer="51"/>
+<wire x1="-1.2" y1="3" x2="1.2" y2="3" width="0.127" layer="21"/>
+<wire x1="-1.2" y1="-3" x2="1.2" y2="-3" width="0.127" layer="21"/>
+<circle x="-4" y="0" radius="0.1" width="0.2" layer="21"/>
+<circle x="-4" y="0" radius="0.1" width="0.2" layer="51"/>
+<wire x1="-3.4" y1="3.25" x2="3.4" y2="3.25" width="0.05" layer="39"/>
+<wire x1="3.4" y1="3.25" x2="3.4" y2="-3.25" width="0.05" layer="39"/>
+<wire x1="3.4" y1="-3.25" x2="-3.4" y2="-3.25" width="0.05" layer="39"/>
+<wire x1="-3.4" y1="-3.25" x2="-3.4" y2="3.25" width="0.05" layer="39"/>
+<text x="-3.81" y="3.81" size="1.27" layer="25">&gt;NAME</text>
+<text x="-3.81" y="-5.08" size="1.27" layer="27">&gt;VALUE</text>
+<smd name="1" x="-2.35" y="0" dx="5.7" dy="1.6" layer="1" rot="R90"/>
+<smd name="2" x="2.35" y="0" dx="5.7" dy="1.6" layer="1" rot="R90"/>
+</package>
 </packages>
 <packages3d>
 <package3d name="1X07" urn="urn:adsk.eagle:package:22477/2" type="model">
@@ -475,6 +493,20 @@ Temp: -40~+85°C</text>
 <pin name="GND" x="12.7" y="-7.112" length="middle" rot="R180"/>
 <text x="-4.318" y="8.89" size="1.778" layer="95">&gt;Name</text>
 <text x="-4.064" y="-12.446" size="1.778" layer="96">&gt;Value</text>
+</symbol>
+<symbol name="INDUCTOR">
+<wire x1="0" y1="5.08" x2="1.27" y2="3.81" width="0.254" layer="94" curve="-90" cap="flat"/>
+<wire x1="0" y1="2.54" x2="1.27" y2="3.81" width="0.254" layer="94" curve="90" cap="flat"/>
+<wire x1="0" y1="2.54" x2="1.27" y2="1.27" width="0.254" layer="94" curve="-90" cap="flat"/>
+<wire x1="0" y1="0" x2="1.27" y2="1.27" width="0.254" layer="94" curve="90" cap="flat"/>
+<wire x1="0" y1="0" x2="1.27" y2="-1.27" width="0.254" layer="94" curve="-90" cap="flat"/>
+<wire x1="0" y1="-2.54" x2="1.27" y2="-1.27" width="0.254" layer="94" curve="90" cap="flat"/>
+<wire x1="0" y1="-2.54" x2="1.27" y2="-3.81" width="0.254" layer="94" curve="-90" cap="flat"/>
+<wire x1="0" y1="-5.08" x2="1.27" y2="-3.81" width="0.254" layer="94" curve="90" cap="flat"/>
+<text x="2.54" y="6.35" size="1.778" layer="95">&gt;NAME</text>
+<text x="2.54" y="-6.35" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="1" x="0" y="7.62" visible="off" length="short" direction="pas" swaplevel="1" rot="R270"/>
+<pin name="2" x="0" y="-7.62" visible="off" length="short" direction="pas" swaplevel="1" rot="R90"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -616,6 +648,22 @@ Temp: -40~+85°C</text>
 </device>
 </devices>
 </deviceset>
+<deviceset name="IND_1255AY-3R9N=P3">
+<gates>
+<gate name="G$1" symbol="INDUCTOR" x="0" y="-2.54"/>
+</gates>
+<devices>
+<device name="" package="IND_1255AY-3R9N=P3">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
 </devicesets>
 </library>
 <library name="supply1" urn="urn:adsk.eagle:library:371">
@@ -675,6 +723,13 @@ You are welcome to use this library for commercial purposes. For attribution, we
 <pin name="3.3V" x="0" y="0" visible="off" length="short" direction="sup" rot="R90"/>
 <text x="0" y="2.794" size="1.778" layer="96" align="bottom-center">&gt;VALUE</text>
 </symbol>
+<symbol name="VCC_2" urn="urn:adsk.eagle:symbol:39423/1" library_version="1">
+<description>&lt;h3&gt;VCC2 Voltage Supply&lt;/h3&gt;</description>
+<wire x1="0.762" y1="1.27" x2="0" y2="2.54" width="0.254" layer="94"/>
+<wire x1="0" y1="2.54" x2="-0.762" y2="1.27" width="0.254" layer="94"/>
+<pin name="VCC_2" x="0" y="0" visible="off" length="short" direction="sup" rot="R90"/>
+<text x="0" y="2.794" size="1.778" layer="96" align="bottom-center">&gt;VALUE</text>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="3.3V" urn="urn:adsk.eagle:component:39435/1" prefix="SUPPLY" library_version="1">
@@ -682,6 +737,20 @@ You are welcome to use this library for commercial purposes. For attribution, we
 &lt;p&gt;Power supply symbol for a specifically-stated 3.3V source.&lt;/p&gt;</description>
 <gates>
 <gate name="G$1" symbol="3.3V" x="0" y="0"/>
+</gates>
+<devices>
+<device name="">
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="VCC_2" urn="urn:adsk.eagle:component:39453/1" prefix="SUPPLY" library_version="1">
+<description>&lt;h3&gt;VCC2 Voltage Supply&lt;/h3&gt;
+&lt;p&gt;Secondary VCC voltage supply - Useful for a system with multiple VCC supplies.&lt;/p&gt;</description>
+<gates>
+<gate name="G$1" symbol="VCC_2" x="0" y="0"/>
 </gates>
 <devices>
 <device name="">
@@ -4638,7 +4707,6 @@ In this library you will find frames that can be used to help organize a schemat
 <part name="C2" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="C3" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="P1" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="JST_2PIN" device="-SMT-RA" package3d_urn="urn:adsk.eagle:package:6240692/1"/>
-<part name="SUPPLY6" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device="" value="9V"/>
 <part name="GND5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="JP2" library="pinhead" library_urn="urn:adsk.eagle:library:325" deviceset="PINHD-1X1" device="" package3d_urn="urn:adsk.eagle:package:22485/2"/>
 <part name="FRAME1" library="RoboJackets-Frames" deviceset="FRAME_A_L" device=""/>
@@ -4648,15 +4716,16 @@ In this library you will find frames that can be used to help organize a schemat
 <part name="GND3" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="C4" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="SUPPLY4" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device=""/>
-<part name="U$2" library="I'mRADIOactive" deviceset="AP63203WU-7" device=""/>
 <part name="U$3" library="I'mRADIOactive" deviceset="AP63203WU-7" device=""/>
-<part name="SUPPLY5" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device="" value="9V"/>
 <part name="C5" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="10UF" device="-0603-6.3V-20%" package3d_urn="urn:adsk.eagle:package:37414/1" value="10uF"/>
 <part name="C6" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="GND4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="SUPPLY7" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device=""/>
 <part name="C7" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="22UF" device="-1210-16V-20%" package3d_urn="urn:adsk.eagle:package:37436/1"/>
 <part name="C8" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="22UF" device="-1210-16V-20%" package3d_urn="urn:adsk.eagle:package:37436/1"/>
+<part name="U$2" library="I'mRADIOactive" deviceset="IND_1255AY-3R9N=P3" device=""/>
+<part name="SUPPLY5" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="VCC_2" device="" value="9V"/>
+<part name="SUPPLY6" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="VCC_2" device="" value="9V"/>
 </parts>
 <sheets>
 <sheet>
@@ -4684,7 +4753,6 @@ In this library you will find frames that can be used to help organize a schemat
 <text x="200.66" y="7.62" size="2.54" layer="94">Radio Debugging Device 
 for Sumo Bot</text>
 <text x="193.04" y="27.94" size="5.08" layer="94">RoboWrestling</text>
-<text x="190.5" y="109.22" size="1.778" layer="91">44uF capacitor doesn't exist</text>
 </plain>
 <instances>
 <instance part="JP1" gate="A" x="226.06" y="152.4" smashed="yes">
@@ -4720,9 +4788,6 @@ for Sumo Bot</text>
 <attribute name="NAME" x="179.07" y="85.725" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="179.07" y="96.52" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="SUPPLY6" gate="G$1" x="185.42" y="96.52" smashed="yes">
-<attribute name="VALUE" x="185.42" y="99.314" size="1.778" layer="96" align="bottom-center"/>
-</instance>
 <instance part="GND5" gate="1" x="185.42" y="83.82" smashed="yes">
 <attribute name="VALUE" x="182.88" y="81.28" size="1.778" layer="96"/>
 </instance>
@@ -4756,16 +4821,9 @@ for Sumo Bot</text>
 <instance part="SUPPLY4" gate="G$1" x="28.702" y="139.7" smashed="yes">
 <attribute name="VALUE" x="28.702" y="142.494" size="1.778" layer="96" align="bottom-center"/>
 </instance>
-<instance part="U$2" gate="G$1" x="157.48" y="48.26" smashed="yes">
-<attribute name="NAME" x="153.162" y="57.15" size="1.778" layer="95"/>
-<attribute name="VALUE" x="153.416" y="35.814" size="1.778" layer="96"/>
-</instance>
 <instance part="U$3" gate="G$1" x="223.52" y="91.44" smashed="yes">
 <attribute name="NAME" x="219.202" y="100.33" size="1.778" layer="95"/>
 <attribute name="VALUE" x="219.456" y="78.994" size="1.778" layer="96"/>
-</instance>
-<instance part="SUPPLY5" gate="G$1" x="198.12" y="91.44" smashed="yes">
-<attribute name="VALUE" x="198.12" y="94.234" size="1.778" layer="96" align="bottom-center"/>
 </instance>
 <instance part="C5" gate="G$1" x="198.12" y="76.2" smashed="yes">
 <attribute name="NAME" x="199.644" y="79.121" size="1.778" layer="95" font="vector"/>
@@ -4788,6 +4846,16 @@ for Sumo Bot</text>
 <instance part="C8" gate="G$1" x="264.16" y="78.74" smashed="yes">
 <attribute name="NAME" x="265.684" y="81.661" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="265.684" y="76.581" size="1.778" layer="96" font="vector"/>
+</instance>
+<instance part="U$2" gate="G$1" x="248.92" y="88.9" smashed="yes" rot="R90">
+<attribute name="NAME" x="242.57" y="91.44" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="255.27" y="91.44" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="SUPPLY5" gate="G$1" x="185.42" y="96.52" smashed="yes">
+<attribute name="VALUE" x="185.42" y="99.314" size="1.778" layer="96" align="bottom-center"/>
+</instance>
+<instance part="SUPPLY6" gate="G$1" x="198.12" y="91.44" smashed="yes">
+<attribute name="VALUE" x="198.12" y="94.234" size="1.778" layer="96" align="bottom-center"/>
 </instance>
 </instances>
 <busses>
@@ -4863,16 +4931,16 @@ for Sumo Bot</text>
 <wire x1="243.84" y1="73.66" x2="243.84" y2="76.2" width="0.1524" layer="91"/>
 <pinref part="GND4" gate="1" pin="GND"/>
 <wire x1="243.84" y1="76.2" x2="248.92" y2="76.2" width="0.1524" layer="91"/>
-<pinref part="U$3" gate="G$1" pin="GND"/>
-<wire x1="236.22" y1="84.328" x2="236.22" y2="83.82" width="0.1524" layer="91"/>
-<wire x1="236.22" y1="83.82" x2="248.92" y2="83.82" width="0.1524" layer="91"/>
-<wire x1="248.92" y1="83.82" x2="248.92" y2="76.2" width="0.1524" layer="91"/>
 <junction x="248.92" y="76.2"/>
 <wire x1="256.54" y1="76.2" x2="248.92" y2="76.2" width="0.1524" layer="91"/>
 <pinref part="C7" gate="G$1" pin="2"/>
 <pinref part="C8" gate="G$1" pin="2"/>
 <wire x1="264.16" y1="76.2" x2="256.54" y2="76.2" width="0.1524" layer="91"/>
 <junction x="256.54" y="76.2"/>
+<pinref part="U$3" gate="G$1" pin="GND"/>
+<wire x1="236.22" y1="84.328" x2="236.22" y2="83.82" width="0.1524" layer="91"/>
+<wire x1="236.22" y1="83.82" x2="248.92" y2="83.82" width="0.1524" layer="91"/>
+<wire x1="248.92" y1="83.82" x2="248.92" y2="76.2" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="CS5" class="0">
@@ -4943,12 +5011,6 @@ for Sumo Bot</text>
 <junction x="129.54" y="35.56"/>
 </segment>
 <segment>
-<pinref part="SUPPLY6" gate="G$1" pin="3.3V"/>
-<pinref part="P1" gate="G$1" pin="2"/>
-<wire x1="185.42" y1="96.52" x2="185.42" y2="91.44" width="0.1524" layer="91"/>
-<wire x1="185.42" y1="91.44" x2="175.26" y2="91.44" width="0.1524" layer="91"/>
-</segment>
-<segment>
 <pinref part="C2" gate="G$1" pin="1"/>
 <wire x1="205.74" y1="175.26" x2="205.74" y2="170.18" width="0.1524" layer="91"/>
 <pinref part="JP1" gate="A" pin="1"/>
@@ -4978,20 +5040,6 @@ for Sumo Bot</text>
 <pinref part="U$1" gate="G$1" pin="VSS"/>
 </segment>
 <segment>
-<pinref part="U$3" gate="G$1" pin="VIN"/>
-<wire x1="210.82" y1="84.328" x2="198.12" y2="84.328" width="0.1524" layer="91"/>
-<pinref part="U$3" gate="G$1" pin="EN"/>
-<wire x1="198.12" y1="84.328" x2="198.12" y2="90.17" width="0.1524" layer="91"/>
-<wire x1="198.12" y1="90.17" x2="198.12" y2="91.44" width="0.1524" layer="91"/>
-<wire x1="210.82" y1="90.17" x2="198.12" y2="90.17" width="0.1524" layer="91"/>
-<pinref part="SUPPLY5" gate="G$1" pin="3.3V"/>
-<pinref part="C5" gate="G$1" pin="1"/>
-<wire x1="198.12" y1="81.28" x2="198.12" y2="84.328" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<wire x1="256.54" y1="88.9" x2="256.54" y2="86.36" width="0.1524" layer="91"/>
-<junction x="256.54" y="88.9"/>
-<wire x1="256.54" y1="86.36" x2="256.54" y2="83.82" width="0.1524" layer="91"/>
 <wire x1="256.54" y1="104.14" x2="256.54" y2="88.9" width="0.1524" layer="91"/>
 <wire x1="210.82" y1="104.14" x2="256.54" y2="104.14" width="0.1524" layer="91"/>
 <pinref part="U$3" gate="G$1" pin="FB"/>
@@ -4999,10 +5047,13 @@ for Sumo Bot</text>
 <pinref part="SUPPLY7" gate="G$1" pin="3.3V"/>
 <wire x1="256.54" y1="88.9" x2="259.842" y2="88.9" width="0.1524" layer="91"/>
 <wire x1="259.842" y1="88.9" x2="259.842" y2="101.6" width="0.1524" layer="91"/>
-<pinref part="C7" gate="G$1" pin="1"/>
 <pinref part="C8" gate="G$1" pin="1"/>
-<wire x1="256.54" y1="86.36" x2="264.16" y2="86.36" width="0.1524" layer="91"/>
 <wire x1="264.16" y1="86.36" x2="264.16" y2="83.82" width="0.1524" layer="91"/>
+<wire x1="256.54" y1="86.36" x2="264.16" y2="86.36" width="0.1524" layer="91"/>
+<wire x1="256.54" y1="86.36" x2="256.54" y2="83.82" width="0.1524" layer="91"/>
+<pinref part="C7" gate="G$1" pin="1"/>
+<wire x1="256.54" y1="88.9" x2="256.54" y2="86.36" width="0.1524" layer="91"/>
+<junction x="256.54" y="88.9"/>
 <junction x="256.54" y="86.36"/>
 </segment>
 </net>
@@ -5101,6 +5152,8 @@ for Sumo Bot</text>
 <wire x1="236.22" y1="88.9" x2="241.3" y2="88.9" width="0.1524" layer="91"/>
 <pinref part="C6" gate="G$1" pin="2"/>
 <wire x1="241.3" y1="93.98" x2="241.3" y2="88.9" width="0.1524" layer="91"/>
+<pinref part="U$2" gate="G$1" pin="1"/>
+<junction x="241.3" y="88.9"/>
 </segment>
 </net>
 <net name="N$2" class="0">
@@ -5109,6 +5162,25 @@ for Sumo Bot</text>
 <pinref part="C6" gate="G$1" pin="1"/>
 <wire x1="236.22" y1="96.012" x2="236.22" y2="101.6" width="0.1524" layer="91"/>
 <wire x1="236.22" y1="101.6" x2="241.3" y2="101.6" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="VCC_2" class="0">
+<segment>
+<pinref part="P1" gate="G$1" pin="2"/>
+<wire x1="185.42" y1="96.52" x2="185.42" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="185.42" y1="91.44" x2="175.26" y2="91.44" width="0.1524" layer="91"/>
+<pinref part="SUPPLY5" gate="G$1" pin="VCC_2"/>
+</segment>
+<segment>
+<pinref part="U$3" gate="G$1" pin="VIN"/>
+<wire x1="210.82" y1="84.328" x2="198.12" y2="84.328" width="0.1524" layer="91"/>
+<pinref part="U$3" gate="G$1" pin="EN"/>
+<wire x1="198.12" y1="84.328" x2="198.12" y2="90.17" width="0.1524" layer="91"/>
+<wire x1="198.12" y1="90.17" x2="198.12" y2="91.44" width="0.1524" layer="91"/>
+<wire x1="210.82" y1="90.17" x2="198.12" y2="90.17" width="0.1524" layer="91"/>
+<pinref part="C5" gate="G$1" pin="1"/>
+<wire x1="198.12" y1="81.28" x2="198.12" y2="84.328" width="0.1524" layer="91"/>
+<pinref part="SUPPLY6" gate="G$1" pin="VCC_2"/>
 </segment>
 </net>
 </nets>
