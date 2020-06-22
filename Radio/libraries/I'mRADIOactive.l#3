@@ -976,12 +976,36 @@
 <text x="-3.2766" y="-0.635" size="1.27" layer="25" ratio="6" rot="SR0">&gt;Name</text>
 </package>
 <package name="POWERREG">
-<smd name="5" x="0" y="1.0995" dx="0.7" dy="1" layer="1"/>
-<smd name="2" x="0" y="-1.0995" dx="0.7" dy="1" layer="1"/>
-<smd name="4" x="0.95" y="1.0995" dx="0.7" dy="1" layer="1"/>
-<smd name="3" x="0.95" y="-1.0995" dx="0.7" dy="1" layer="1"/>
-<smd name="6" x="-0.95" y="1.0995" dx="0.7" dy="1" layer="1"/>
-<smd name="1" x="-0.95" y="-1.0995" dx="0.7" dy="1" layer="1"/>
+<smd name="5" x="1.0995" y="0" dx="0.7" dy="1" layer="1" rot="R270"/>
+<smd name="2" x="-1.0995" y="0" dx="0.7" dy="1" layer="1" rot="R270"/>
+<smd name="4" x="1.0995" y="-0.95" dx="0.7" dy="1" layer="1" rot="R270"/>
+<smd name="3" x="-1.0995" y="-0.95" dx="0.7" dy="1" layer="1" rot="R270"/>
+<smd name="6" x="1.0995" y="0.95" dx="0.7" dy="1" layer="1" rot="R270"/>
+<smd name="1" x="-1.0995" y="0.95" dx="0.7" dy="1" layer="1" rot="R270"/>
+<wire x1="1.778" y1="1.492" x2="1.778" y2="-1.508" width="0.0762" layer="21"/>
+<wire x1="-1.778" y1="1.492" x2="-1.778" y2="-1.508" width="0.0762" layer="21"/>
+<wire x1="1.778" y1="1.524" x2="-1.778" y2="1.524" width="0.0762" layer="21"/>
+<wire x1="1.778" y1="-1.524" x2="-1.778" y2="-1.524" width="0.0762" layer="21"/>
+<text x="-4.318" y="1.778" size="1.778" layer="21">&gt;Name</text>
+<text x="-4.445" y="-3.556" size="1.778" layer="21">&gt;Value</text>
+</package>
+<package name="IND_1255AY-3R9N=P3">
+<wire x1="-3" y1="3" x2="3" y2="3" width="0.127" layer="51"/>
+<wire x1="3" y1="3" x2="3" y2="-3" width="0.127" layer="51"/>
+<wire x1="3" y1="-3" x2="-3" y2="-3" width="0.127" layer="51"/>
+<wire x1="-3" y1="-3" x2="-3" y2="3" width="0.127" layer="51"/>
+<wire x1="-1.2" y1="3" x2="1.2" y2="3" width="0.127" layer="21"/>
+<wire x1="-1.2" y1="-3" x2="1.2" y2="-3" width="0.127" layer="21"/>
+<circle x="-4" y="0" radius="0.1" width="0.2" layer="21"/>
+<circle x="-4" y="0" radius="0.1" width="0.2" layer="51"/>
+<wire x1="-3.4" y1="3.25" x2="3.4" y2="3.25" width="0.05" layer="39"/>
+<wire x1="3.4" y1="3.25" x2="3.4" y2="-3.25" width="0.05" layer="39"/>
+<wire x1="3.4" y1="-3.25" x2="-3.4" y2="-3.25" width="0.05" layer="39"/>
+<wire x1="-3.4" y1="-3.25" x2="-3.4" y2="3.25" width="0.05" layer="39"/>
+<text x="-3.81" y="3.81" size="1.27" layer="25">&gt;NAME</text>
+<text x="-3.81" y="-5.08" size="1.27" layer="27">&gt;VALUE</text>
+<smd name="1" x="-2.35" y="0" dx="5.7" dy="1.6" layer="1" rot="R90"/>
+<smd name="2" x="2.35" y="0" dx="5.7" dy="1.6" layer="1" rot="R90"/>
 </package>
 </packages>
 <packages3d>
@@ -1682,6 +1706,26 @@ Temp: -40~+85°C</text>
 <attribute name="SOURCELIBRARY" value="TI_2019-03-25_3" constant="no"/>
 <attribute name="VENDOR" value="Texas Instruments" constant="no"/>
 </technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="AP63203WU-7">
+<gates>
+<gate name="G$1" symbol="AP63203WU-7" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="POWERREG">
+<connects>
+<connect gate="G$1" pin="BST" pad="6"/>
+<connect gate="G$1" pin="EN" pad="2"/>
+<connect gate="G$1" pin="FB" pad="1"/>
+<connect gate="G$1" pin="GND" pad="4"/>
+<connect gate="G$1" pin="SW" pad="5"/>
+<connect gate="G$1" pin="VIN" pad="3"/>
+</connects>
+<technologies>
+<technology name=""/>
 </technologies>
 </device>
 </devices>
