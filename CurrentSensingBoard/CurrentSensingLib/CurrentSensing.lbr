@@ -823,16 +823,6 @@
 <text x="-1.7272" y="-0.635" size="1.27" layer="21" ratio="6" rot="SR0">&gt;Value</text>
 <text x="-3.2766" y="-0.635" size="1.27" layer="25" ratio="6" rot="SR0">&gt;Name</text>
 </package>
-<package name="INDUCTOR15">
-<smd name="1" x="-4.313" y="0" dx="3.254" dy="3.439" layer="1"/>
-<smd name="2" x="4.313" y="0" dx="3.254" dy="3.439" layer="1"/>
-<wire x1="-5.55" y1="5.55" x2="5.55" y2="5.55" width="0.1524" layer="21"/>
-<wire x1="5.55" y1="5.55" x2="5.55" y2="-5.55" width="0.1524" layer="21"/>
-<wire x1="5.55" y1="-5.55" x2="-5.55" y2="-5.55" width="0.1524" layer="21"/>
-<wire x1="-5.55" y1="-5.55" x2="-5.55" y2="5.55" width="0.1524" layer="21"/>
-<text x="-3.81" y="6.35" size="1.778" layer="25">&gt;Name</text>
-<text x="-3.81" y="-7.62" size="1.778" layer="27">&gt;Value</text>
-</package>
 <package name="SCHDIODE">
 <smd name="3" x="4.0894" y="2.286" dx="2.9972" dy="1.6002" layer="1"/>
 <smd name="1" x="4.0894" y="-2.286" dx="2.9972" dy="1.6002" layer="1"/>
@@ -1024,6 +1014,16 @@
 <text x="-1.7272" y="-0.635" size="1.27" layer="21" ratio="6" rot="SR0">&gt;Value</text>
 <text x="-3.2766" y="-0.635" size="1.27" layer="25" ratio="6" rot="SR0">&gt;Name</text>
 </package>
+<package name="INDUCTOR22">
+<smd name="P$1" x="0" y="4.95" dx="5.4" dy="2.9" layer="1"/>
+<smd name="P$2" x="0" y="-4.95" dx="5.4" dy="2.9" layer="1"/>
+<wire x1="-6.5" y1="6.5" x2="6.5" y2="6.5" width="0.127" layer="21"/>
+<wire x1="6.5" y1="6.5" x2="6.5" y2="-6.5" width="0.127" layer="21"/>
+<wire x1="6.5" y1="-6.5" x2="-6.5" y2="-6.5" width="0.127" layer="21"/>
+<wire x1="-6.5" y1="-6.5" x2="-6.5" y2="6.5" width="0.127" layer="21"/>
+<text x="-2.54" y="6.985" size="1.27" layer="25">&gt;Name</text>
+<text x="-2.413" y="-8.382" size="1.27" layer="27">&gt;Value</text>
+</package>
 </packages>
 <symbols>
 <symbol name="MAX11634EEE+T">
@@ -1115,7 +1115,7 @@
 <text x="28.2956" y="9.1186" size="2.0828" layer="95" ratio="6" rot="SR0">&gt;Name</text>
 <text x="27.6606" y="6.5786" size="2.0828" layer="96" ratio="6" rot="SR0">&gt;Value</text>
 </symbol>
-<symbol name="ETQ-P4M150KVC">
+<symbol name="7447709220">
 <wire x1="0" y1="5.08" x2="1.27" y2="3.81" width="0.254" layer="94" curve="-90" cap="flat"/>
 <wire x1="0" y1="2.54" x2="1.27" y2="3.81" width="0.254" layer="94" curve="90" cap="flat"/>
 <wire x1="0" y1="2.54" x2="1.27" y2="1.27" width="0.254" layer="94" curve="-90" cap="flat"/>
@@ -1400,22 +1400,6 @@
 </device>
 </devices>
 </deviceset>
-<deviceset name="ETQ-P4M150KVC">
-<gates>
-<gate name="G$1" symbol="ETQ-P4M150KVC" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="INDUCTOR15">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="MBRD835LT4G">
 <gates>
 <gate name="A" symbol="MBRD835LT4G" x="0" y="0"/>
@@ -1499,6 +1483,22 @@
 <attribute name="SOURCELIBRARY" value="TI_2019-03-25_3" constant="no"/>
 <attribute name="VENDOR" value="Texas Instruments" constant="no"/>
 </technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="7447709220">
+<gates>
+<gate name="G$1" symbol="7447709220" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="INDUCTOR22">
+<connects>
+<connect gate="G$1" pin="1" pad="P$1"/>
+<connect gate="G$1" pin="2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
 </technologies>
 </device>
 </devices>
