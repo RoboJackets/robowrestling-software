@@ -4924,11 +4924,6 @@ design rules under a new name.</description>
 <attribute name="PROD_ID" value="RES-07856" x="30" y="28" size="1.778" layer="28" rot="MR180" display="off"/>
 <attribute name="VALUE" x="30" y="28.762" size="0.6096" layer="28" font="vector" ratio="20" rot="MR180" align="top-center"/>
 </element>
-<element name="C12" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF" x="10" y="5" smashed="yes">
-<attribute name="NAME" x="10" y="5.762" size="1.016" layer="25" font="vector" ratio="20" align="bottom-center"/>
-<attribute name="PROD_ID" value="CAP-00810" x="10" y="5" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="10" y="4.238" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
-</element>
 <element name="ESC" library="Kirbi_ControlBoard" package="MOLEX_1.25MM_4PIN_SMT" value="MOLEX_1.25MM_4PIN_SMT" x="49.6" y="38.1" smashed="yes" rot="MR270">
 <attribute name="NAME" x="45.6" y="33" size="1.6" layer="26" rot="MR0"/>
 <attribute name="VALUE" x="53.6" y="42.1" size="1.6" layer="28" rot="MR270"/>
@@ -5029,6 +5024,11 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="-12.3" y="33.8" size="1.778" layer="28" rot="MR90"/>
 </element>
 <element name="U$2" library="Kirbi_ControlBoard" package="BEL_FUSE_C1F_3.5" value="BEL_FUSE_C1F_3.5" x="8" y="41" smashed="yes" rot="MR90"/>
+<element name="C12" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF" x="10" y="5" smashed="yes">
+<attribute name="NAME" x="10" y="5.762" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center"/>
+<attribute name="PROD_ID" value="CAP-00810" x="10" y="5" size="1.778" layer="27" display="off"/>
+<attribute name="VALUE" x="10" y="4.238" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
+</element>
 </elements>
 <signals>
 <signal name="GND">
@@ -5206,16 +5206,16 @@ design rules under a new name.</description>
 <wire x1="47.698959375" y1="16.201040625" x2="48.2" y2="15.7" width="0.2" layer="1"/>
 <via x="48.2" y="15.7" extent="1-16" drill="0.4"/>
 <contactref element="C11" pad="2"/>
-<contactref element="C12" pad="2"/>
 <contactref element="C14" pad="2"/>
 <wire x1="27.8" y1="41.95" x2="28.85" y2="43" width="0.2" layer="1"/>
 <wire x1="28.85" y1="43" x2="29" y2="43" width="0.2" layer="1"/>
 <via x="29" y="43" extent="1-16" drill="0.4"/>
-<wire x1="10.85" y1="5" x2="13" y2="5" width="0.2" layer="1"/>
-<via x="13" y="5" extent="1-16" drill="0.4"/>
 <wire x1="13" y1="53.85" x2="13.15" y2="54" width="0.2" layer="1"/>
 <wire x1="17.46" y1="54" x2="17.73" y2="54.27" width="0.2" layer="1"/>
 <wire x1="13.15" y1="54" x2="17.46" y2="54" width="0.2" layer="1"/>
+<contactref element="C12" pad="2"/>
+<wire x1="10.85" y1="5" x2="13" y2="5" width="0.2" layer="1"/>
+<via x="13" y="5" extent="1-16" drill="0.4"/>
 </signal>
 <signal name="+5V">
 <contactref element="C6" pad="1"/>
@@ -5253,7 +5253,6 @@ design rules under a new name.</description>
 <contactref element="C7" pad="1"/>
 <contactref element="C11" pad="1"/>
 <contactref element="U5" pad="P$8"/>
-<contactref element="C12" pad="1"/>
 <contactref element="DIST_3" pad="P$6"/>
 <contactref element="DIST_4" pad="P$6"/>
 <contactref element="POWER" pad="P3"/>
@@ -5277,6 +5276,7 @@ design rules under a new name.</description>
 <via x="29.9" y="25.8" extent="1-16" drill="0.4"/>
 <wire x1="29.9" y1="25.8" x2="29.9" y2="29.2" width="0.2" layer="1"/>
 <wire x1="21.45" y1="24.65" x2="28.65" y2="24.65" width="0.2" layer="16"/>
+<contactref element="C12" pad="1"/>
 </signal>
 <signal name="+3.3V">
 <contactref element="C18" pad="1"/>

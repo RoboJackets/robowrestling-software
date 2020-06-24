@@ -5982,6 +5982,12 @@ Temp: -40~+85°C</text>
 <part name="+3V11" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="C4" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="JP1" library="pinhead" library_urn="urn:adsk.eagle:library:325" deviceset="PINHD-1X1" device="" package3d_urn="urn:adsk.eagle:package:22485/2"/>
+<part name="C5" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
+<part name="C9" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
+<part name="C10" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
+<part name="C15" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
+<part name="C16" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
+<part name="C25" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 </parts>
 <sheets>
 <sheet>
@@ -6176,8 +6182,8 @@ Temp: -40~+85°C</text>
 <instance part="P+12" gate="1" x="58.42" y="243.84" smashed="yes">
 <attribute name="VALUE" x="55.88" y="238.76" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="P+13" gate="1" x="101.346" y="244.094" smashed="yes">
-<attribute name="VALUE" x="104.14" y="239.522" size="1.778" layer="96" rot="R90"/>
+<instance part="P+13" gate="1" x="101.854" y="243.84" smashed="yes">
+<attribute name="VALUE" x="104.648" y="239.268" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="GND7" gate="1" x="58.42" y="220.98" smashed="yes">
 <attribute name="VALUE" x="58.42" y="220.726" size="1.778" layer="96" align="top-center"/>
@@ -6438,6 +6444,30 @@ Temp: -40~+85°C</text>
 <attribute name="NAME" x="227.33" y="33.655" size="1.778" layer="95"/>
 <attribute name="VALUE" x="227.33" y="25.4" size="1.778" layer="96"/>
 </instance>
+<instance part="C5" gate="G$1" x="101.6" y="154.94" smashed="yes">
+<attribute name="NAME" x="103.124" y="157.861" size="1.778" layer="95" font="vector"/>
+<attribute name="VALUE" x="103.124" y="152.781" size="1.778" layer="96" font="vector"/>
+</instance>
+<instance part="C9" gate="G$1" x="58.42" y="154.94" smashed="yes">
+<attribute name="NAME" x="59.944" y="157.861" size="1.778" layer="95" font="vector"/>
+<attribute name="VALUE" x="59.944" y="152.781" size="1.778" layer="96" font="vector"/>
+</instance>
+<instance part="C10" gate="G$1" x="58.42" y="190.5" smashed="yes">
+<attribute name="NAME" x="59.944" y="193.421" size="1.778" layer="95" font="vector"/>
+<attribute name="VALUE" x="59.944" y="188.341" size="1.778" layer="96" font="vector"/>
+</instance>
+<instance part="C15" gate="G$1" x="101.6" y="190.5" smashed="yes">
+<attribute name="NAME" x="103.124" y="193.421" size="1.778" layer="95" font="vector"/>
+<attribute name="VALUE" x="103.124" y="188.341" size="1.778" layer="96" font="vector"/>
+</instance>
+<instance part="C16" gate="G$1" x="58.42" y="228.6" smashed="yes">
+<attribute name="NAME" x="59.944" y="231.521" size="1.778" layer="95" font="vector"/>
+<attribute name="VALUE" x="59.944" y="226.441" size="1.778" layer="96" font="vector"/>
+</instance>
+<instance part="C25" gate="G$1" x="101.854" y="229.108" smashed="yes">
+<attribute name="NAME" x="103.378" y="232.029" size="1.778" layer="95" font="vector"/>
+<attribute name="VALUE" x="103.378" y="226.949" size="1.778" layer="96" font="vector"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -6663,12 +6693,16 @@ Temp: -40~+85°C</text>
 <wire x1="58.42" y1="226.06" x2="58.42" y2="223.52" width="0.1524" layer="91"/>
 <pinref part="GND7" gate="1" pin="GND"/>
 <pinref part="DIST_3" gate="G$1" pin="1"/>
+<pinref part="C16" gate="G$1" pin="2"/>
+<junction x="58.42" y="226.06"/>
 </segment>
 <segment>
 <wire x1="81.534" y1="226.568" x2="101.854" y2="226.568" width="0.1524" layer="91"/>
 <wire x1="101.854" y1="226.568" x2="101.854" y2="224.028" width="0.1524" layer="91"/>
 <pinref part="GND8" gate="1" pin="GND"/>
 <pinref part="DIST_4" gate="G$1" pin="1"/>
+<pinref part="C25" gate="G$1" pin="2"/>
+<junction x="101.854" y="226.568"/>
 </segment>
 <segment>
 <pinref part="C7" gate="G$1" pin="2"/>
@@ -6735,24 +6769,32 @@ Temp: -40~+85°C</text>
 <wire x1="101.6" y1="187.96" x2="101.6" y2="185.42" width="0.1524" layer="91"/>
 <pinref part="GND4" gate="1" pin="GND"/>
 <pinref part="DIST_2" gate="G$1" pin="1"/>
+<pinref part="C15" gate="G$1" pin="2"/>
+<junction x="101.6" y="187.96"/>
 </segment>
 <segment>
 <wire x1="38.1" y1="152.4" x2="58.42" y2="152.4" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="152.4" x2="58.42" y2="149.86" width="0.1524" layer="91"/>
 <pinref part="GND5" gate="1" pin="GND"/>
 <pinref part="DIST_5" gate="G$1" pin="1"/>
+<pinref part="C9" gate="G$1" pin="2"/>
+<junction x="58.42" y="152.4"/>
 </segment>
 <segment>
 <wire x1="81.28" y1="152.4" x2="101.6" y2="152.4" width="0.1524" layer="91"/>
 <wire x1="101.6" y1="152.4" x2="101.6" y2="149.86" width="0.1524" layer="91"/>
 <pinref part="GND6" gate="1" pin="GND"/>
 <pinref part="DIST_6" gate="G$1" pin="1"/>
+<pinref part="C5" gate="G$1" pin="2"/>
+<junction x="101.6" y="152.4"/>
 </segment>
 <segment>
 <wire x1="38.1" y1="187.96" x2="58.42" y2="187.96" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="187.96" x2="58.42" y2="185.42" width="0.1524" layer="91"/>
 <pinref part="GND1" gate="1" pin="GND"/>
 <pinref part="DIST_1" gate="G$1" pin="1"/>
+<pinref part="C10" gate="G$1" pin="2"/>
+<junction x="58.42" y="187.96"/>
 </segment>
 <segment>
 <pinref part="LED1" gate="G$1" pin="GND"/>
@@ -7055,12 +7097,16 @@ Temp: -40~+85°C</text>
 <wire x1="38.1" y1="233.68" x2="58.42" y2="233.68" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="233.68" x2="58.42" y2="241.3" width="0.1524" layer="91"/>
 <pinref part="DIST_3" gate="G$1" pin="4"/>
+<pinref part="C16" gate="G$1" pin="1"/>
+<junction x="58.42" y="233.68"/>
 </segment>
 <segment>
 <pinref part="P+13" gate="1" pin="+5V"/>
 <wire x1="81.534" y1="234.188" x2="101.854" y2="234.188" width="0.1524" layer="91"/>
-<wire x1="101.854" y1="234.188" x2="101.346" y2="241.554" width="0.1524" layer="91"/>
+<wire x1="101.854" y1="234.188" x2="101.854" y2="241.3" width="0.1524" layer="91"/>
 <pinref part="DIST_4" gate="G$1" pin="4"/>
+<pinref part="C25" gate="G$1" pin="1"/>
+<junction x="101.854" y="234.188"/>
 </segment>
 <segment>
 <pinref part="C11" gate="G$1" pin="1"/>
@@ -7084,24 +7130,32 @@ Temp: -40~+85°C</text>
 <wire x1="81.28" y1="195.58" x2="101.6" y2="195.58" width="0.1524" layer="91"/>
 <wire x1="101.6" y1="195.58" x2="101.6" y2="203.2" width="0.1524" layer="91"/>
 <pinref part="DIST_2" gate="G$1" pin="4"/>
+<pinref part="C15" gate="G$1" pin="1"/>
+<junction x="101.6" y="195.58"/>
 </segment>
 <segment>
 <pinref part="P+10" gate="1" pin="+5V"/>
 <wire x1="38.1" y1="160.02" x2="58.42" y2="160.02" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="160.02" x2="58.42" y2="167.64" width="0.1524" layer="91"/>
 <pinref part="DIST_5" gate="G$1" pin="4"/>
+<pinref part="C9" gate="G$1" pin="1"/>
+<junction x="58.42" y="160.02"/>
 </segment>
 <segment>
 <pinref part="P+11" gate="1" pin="+5V"/>
 <wire x1="81.28" y1="160.02" x2="101.6" y2="160.02" width="0.1524" layer="91"/>
 <wire x1="101.6" y1="160.02" x2="101.6" y2="167.64" width="0.1524" layer="91"/>
 <pinref part="DIST_6" gate="G$1" pin="4"/>
+<pinref part="C5" gate="G$1" pin="1"/>
+<junction x="101.6" y="160.02"/>
 </segment>
 <segment>
 <pinref part="P+8" gate="1" pin="+5V"/>
 <wire x1="38.1" y1="195.58" x2="58.42" y2="195.58" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="195.58" x2="58.42" y2="203.2" width="0.1524" layer="91"/>
 <pinref part="DIST_1" gate="G$1" pin="4"/>
+<pinref part="C10" gate="G$1" pin="1"/>
+<junction x="58.42" y="195.58"/>
 </segment>
 <segment>
 <pinref part="P+2" gate="1" pin="+5V"/>

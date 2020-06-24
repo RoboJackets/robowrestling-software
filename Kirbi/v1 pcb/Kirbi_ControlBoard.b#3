@@ -5376,7 +5376,7 @@ design rules under a new name.</description>
 <wire x1="-1.45455" y1="18.3976" x2="3.54545" y2="18.3976" width="0.2" layer="1"/>
 <wire x1="21.85" y1="48" x2="21.85" y2="42.875" width="0.2" layer="1"/>
 <wire x1="21.85" y1="42.875" x2="21" y2="42.025" width="0.2" layer="1"/>
-<wire x1="21" y1="35.975" x2="21" y2="42.025" width="0.2" layer="1"/>
+<wire x1="21" y1="35.975" x2="21" y2="42.025" width="0.5" layer="1"/>
 </signal>
 <signal name="LINE_LF">
 <contactref element="U2" pad="35/A16"/>

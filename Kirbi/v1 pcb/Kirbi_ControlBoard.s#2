@@ -6062,7 +6062,6 @@ Temp: -40~+85°C</text>
 <part name="C9" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="C10" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="C15" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
-<part name="C16" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="C25" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="POWER_CONN" library="Kirbi_ControlBoard" deviceset="MOLEX_2.54MM_2PIN" device=""/>
 <part name="U$2" library="Kirbi_ControlBoard" deviceset="BEL_FUSE_C1F_3.5" device=""/>
@@ -6538,10 +6537,6 @@ Temp: -40~+85°C</text>
 <attribute name="NAME" x="103.124" y="193.421" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="103.124" y="188.341" size="1.778" layer="96" font="vector"/>
 </instance>
-<instance part="C16" gate="G$1" x="58.42" y="228.6" smashed="yes">
-<attribute name="NAME" x="59.944" y="231.521" size="1.778" layer="95" font="vector"/>
-<attribute name="VALUE" x="59.944" y="226.441" size="1.778" layer="96" font="vector"/>
-</instance>
 <instance part="C25" gate="G$1" x="101.854" y="229.108" smashed="yes">
 <attribute name="NAME" x="103.378" y="232.029" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="103.378" y="226.949" size="1.778" layer="96" font="vector"/>
@@ -6776,8 +6771,6 @@ Temp: -40~+85°C</text>
 <wire x1="58.42" y1="226.06" x2="58.42" y2="223.52" width="0.1524" layer="91"/>
 <pinref part="GND7" gate="1" pin="GND"/>
 <pinref part="DIST_3" gate="G$1" pin="1"/>
-<pinref part="C16" gate="G$1" pin="2"/>
-<junction x="58.42" y="226.06"/>
 </segment>
 <segment>
 <wire x1="81.534" y1="226.568" x2="101.854" y2="226.568" width="0.1524" layer="91"/>
@@ -6966,9 +6959,9 @@ Temp: -40~+85°C</text>
 <label x="205.994" y="102.87" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U2" gate="G$1" pin="17/A3/T/PWM"/>
-<wire x1="165.1" y1="193.04" x2="160.02" y2="193.04" width="0.1524" layer="91"/>
-<label x="160.02" y="193.04" size="1.778" layer="95" rot="R180" xref="yes"/>
+<label x="160.02" y="200.66" size="1.778" layer="95" rot="R180" xref="yes"/>
+<pinref part="U2" gate="G$1" pin="14/A0/PWM"/>
+<wire x1="165.1" y1="200.66" x2="160.02" y2="200.66" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="SCL1" class="0">
@@ -7093,9 +7086,9 @@ Temp: -40~+85°C</text>
 <label x="162.56" y="106.68" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U2" gate="G$1" pin="19/A5/T/SCL0"/>
-<wire x1="165.1" y1="187.96" x2="160.02" y2="187.96" width="0.1524" layer="91"/>
-<label x="160.02" y="187.96" size="1.778" layer="95" rot="R180" xref="yes"/>
+<label x="160.02" y="195.58" size="1.778" layer="95" rot="R180" xref="yes"/>
+<pinref part="U2" gate="G$1" pin="16/A2/T/PWM"/>
+<wire x1="165.1" y1="195.58" x2="160.02" y2="195.58" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="LF_INT" class="0">
@@ -7108,9 +7101,9 @@ Temp: -40~+85°C</text>
 <label x="175.26" y="96.52" size="1.778" layer="95" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U2" gate="G$1" pin="18/A4/T/SDA0"/>
-<wire x1="165.1" y1="190.5" x2="160.02" y2="190.5" width="0.1524" layer="91"/>
-<label x="160.02" y="190.5" size="1.778" layer="95" rot="R180" xref="yes"/>
+<label x="160.02" y="198.12" size="1.778" layer="95" rot="R180" xref="yes"/>
+<pinref part="U2" gate="G$1" pin="15/A1/T"/>
+<wire x1="165.1" y1="198.12" x2="160.02" y2="198.12" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="LINE_REF" class="0">
@@ -7183,8 +7176,6 @@ Temp: -40~+85°C</text>
 <wire x1="38.1" y1="233.68" x2="58.42" y2="233.68" width="0.1524" layer="91"/>
 <wire x1="58.42" y1="233.68" x2="58.42" y2="241.3" width="0.1524" layer="91"/>
 <pinref part="DIST_3" gate="G$1" pin="4"/>
-<pinref part="C16" gate="G$1" pin="1"/>
-<junction x="58.42" y="233.68"/>
 </segment>
 <segment>
 <pinref part="P+13" gate="1" pin="+5V"/>

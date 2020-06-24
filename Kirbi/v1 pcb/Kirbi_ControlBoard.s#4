@@ -5437,14 +5437,16 @@ by exp-lbrs.ulp</description>
 <description>MOLEX_2.54MM_2PIN
 1719770002
 DigiKey: WM22676-ND</description>
-<smd name="P$1" x="1.27" y="8.9" dx="5.33" dy="1.65" layer="1" rot="R90"/>
-<smd name="P$2" x="-1.27" y="8.9" dx="5.33" dy="1.65" layer="1" rot="R90"/>
-<wire x1="-4.37" y1="12" x2="-4.37" y2="0" width="0.1524" layer="21"/>
-<wire x1="-4.37" y1="0" x2="4.37" y2="0" width="0.1524" layer="21"/>
-<wire x1="4.37" y1="0" x2="4.37" y2="12" width="0.1524" layer="21"/>
-<wire x1="4.37" y1="12" x2="-4.37" y2="12" width="0.1524" layer="21"/>
-<text x="-4.4" y="13.2" size="1.778" layer="25">&gt;Name</text>
-<text x="-4.2" y="-3" size="1.778" layer="27">&gt;Value</text>
+<smd name="P$1" x="1.27" y="10.69" dx="5.33" dy="1.65" layer="1" rot="R90"/>
+<smd name="P$2" x="-1.27" y="10.69" dx="5.33" dy="1.65" layer="1" rot="R90"/>
+<wire x1="-5" y1="14" x2="-5" y2="-2" width="0.1524" layer="21"/>
+<wire x1="-5" y1="-2" x2="5" y2="-2" width="0.1524" layer="21"/>
+<wire x1="5" y1="-2" x2="5" y2="14" width="0.1524" layer="21"/>
+<wire x1="5" y1="14" x2="-5" y2="14" width="0.1524" layer="21"/>
+<text x="-5.4" y="14.2" size="1.778" layer="25">&gt;Name</text>
+<text x="-4.2" y="-4" size="1.778" layer="27">&gt;Value</text>
+<hole x="-2.67" y="0" drill="3.4"/>
+<hole x="2.67" y="0" drill="3.4"/>
 </package>
 </packages>
 <symbols>
