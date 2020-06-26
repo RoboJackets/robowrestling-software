@@ -174,8 +174,6 @@
 <text x="32.8" y="31.6" size="1.5" layer="22" rot="MR0">Kirbi Controller Board V1.0</text>
 <hole x="35" y="23" drill="3.3"/>
 <hole x="3" y="23" drill="3.3"/>
-<text x="12.9" y="4.7" size="2.54" layer="21">+</text>
-<text x="23.3" y="4.9" size="2.54" layer="21">-</text>
 </plain>
 <libraries>
 <library name="Gucci_ControlBoard">
