@@ -989,6 +989,24 @@
 <text x="-4.318" y="1.778" size="1.778" layer="21">&gt;Name</text>
 <text x="-4.445" y="-3.556" size="1.778" layer="21">&gt;Value</text>
 </package>
+<package name="IND_1255AY-3R9N=P3">
+<wire x1="-3" y1="3" x2="3" y2="3" width="0.127" layer="51"/>
+<wire x1="3" y1="3" x2="3" y2="-3" width="0.127" layer="51"/>
+<wire x1="3" y1="-3" x2="-3" y2="-3" width="0.127" layer="51"/>
+<wire x1="-3" y1="-3" x2="-3" y2="3" width="0.127" layer="51"/>
+<wire x1="-1.2" y1="3" x2="1.2" y2="3" width="0.127" layer="21"/>
+<wire x1="-1.2" y1="-3" x2="1.2" y2="-3" width="0.127" layer="21"/>
+<circle x="-4" y="0" radius="0.1" width="0.2" layer="21"/>
+<circle x="-4" y="0" radius="0.1" width="0.2" layer="51"/>
+<wire x1="-3.4" y1="3.25" x2="3.4" y2="3.25" width="0.05" layer="39"/>
+<wire x1="3.4" y1="3.25" x2="3.4" y2="-3.25" width="0.05" layer="39"/>
+<wire x1="3.4" y1="-3.25" x2="-3.4" y2="-3.25" width="0.05" layer="39"/>
+<wire x1="-3.4" y1="-3.25" x2="-3.4" y2="3.25" width="0.05" layer="39"/>
+<text x="-3.81" y="3.81" size="1.27" layer="25">&gt;NAME</text>
+<text x="-3.81" y="-5.08" size="1.27" layer="27">&gt;VALUE</text>
+<smd name="1" x="-2.35" y="0" dx="5.7" dy="1.6" layer="1" rot="R90"/>
+<smd name="2" x="2.35" y="0" dx="5.7" dy="1.6" layer="1" rot="R90"/>
+</package>
 </packages>
 <packages3d>
 <package3d name="1X07" urn="urn:adsk.eagle:package:22477/2" type="model">
@@ -1705,6 +1723,22 @@ Temp: -40~+85°C</text>
 <connect gate="G$1" pin="GND" pad="4"/>
 <connect gate="G$1" pin="SW" pad="5"/>
 <connect gate="G$1" pin="VIN" pad="3"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="IND_1255AY-3R9N=P3" uservalue="yes">
+<gates>
+<gate name="G$1" symbol="IND" x="-7.62" y="0"/>
+</gates>
+<devices>
+<device name="" package="IND_1255AY-3R9N=P3">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
 </connects>
 <technologies>
 <technology name=""/>

@@ -2,14 +2,14 @@ EAGLE AutoRouter Statistics:
 
 Job           : C:/Users/Maanas/Documents/GitHub/battlebots-sumo/Radio/Radii/Radii.brd
 
-Start at      : 16:19:00 (6/18/2020)
-End at        : 16:19:02 (6/18/2020)
+Start at      : 18:20:24 (6/22/2020)
+End at        : 18:20:28 (6/22/2020)
 Elapsed time  : 00:00:00
 
-Signals       :    17   RoutingGrid: 39.3701 mil  Layers: 2
-Connections   :    44   predefined:  22 ( 0 Vias )
+Signals       :    20   RoutingGrid: 39.3701 mil  Layers: 2
+Connections   :    31   predefined:  28 ( 8 Vias )
 
-Router memory :   11220
+Router memory :   11236
 
 Passname          :     Route Optimize1 Optimize2 Optimize3 Optimize4
 
@@ -18,8 +18,8 @@ Number of Ripups  :         0         0         0         0         0
 max. Level        :         0         0         0         0         0
 max. Total        :         0         0         0         0         0
 
-Routed            :        13        13        13        13        13
-Vias              :         6         1         1         1         1
-Resolution        :    79.5 %    79.5 %    79.5 %    79.5 %    79.5 %
+Routed            :         2         2         2         2         2
+Vias              :         3         0         0         0         0
+Resolution        :    96.8 %    96.8 %    96.8 %    96.8 %    96.8 %
 
-Final             : 79.5% finished
+Final             : 96.8% finished
