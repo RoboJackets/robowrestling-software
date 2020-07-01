@@ -981,6 +981,19 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 <text x="0" y="1.397" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center">&gt;NAME</text>
 <text x="0" y="-1.397" size="0.6096" layer="27" font="vector" ratio="20" align="top-center">&gt;VALUE</text>
 </package>
+<package name="CAP-PTH-10MM" urn="urn:adsk.eagle:footprint:37393/1" library_version="1">
+<description>2 PTH spaced 10mm apart</description>
+<wire x1="-0.5" y1="0.635" x2="-0.5" y2="0" width="0.2032" layer="21"/>
+<wire x1="-0.5" y1="0" x2="-0.5" y2="-0.635" width="0.2032" layer="21"/>
+<wire x1="0.5" y1="0.635" x2="0.5" y2="0" width="0.2032" layer="21"/>
+<wire x1="0.5" y1="0" x2="0.5" y2="-0.635" width="0.2032" layer="21"/>
+<wire x1="-0.5" y1="0" x2="-3.5" y2="0" width="0.2032" layer="21"/>
+<wire x1="0.5" y1="0" x2="3.5" y2="0" width="0.2032" layer="21"/>
+<pad name="1" x="-5" y="0" drill="0.9" diameter="1.651"/>
+<pad name="2" x="5" y="0" drill="0.9" diameter="1.651"/>
+<text x="0" y="1" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center">&gt;Name</text>
+<text x="0" y="-1" size="0.6096" layer="27" font="vector" ratio="20" align="top-center">&gt;Value</text>
+</package>
 </packages>
 <packages3d>
 <package3d name="0402" urn="urn:adsk.eagle:package:37413/1" type="box" library_version="1">
@@ -1025,6 +1038,12 @@ Warning: This is the KIT version of this package. This package has a smaller dia
 0.2mm courtyard excess rounded to nearest 0.05mm.</description>
 <packageinstances>
 <packageinstance name="1210"/>
+</packageinstances>
+</package3d>
+<package3d name="CAP-PTH-10MM" urn="urn:adsk.eagle:package:37419/1" type="box" library_version="1">
+<description>2 PTH spaced 10mm apart</description>
+<packageinstances>
+<packageinstance name="CAP-PTH-10MM"/>
 </packageinstances>
 </package3d>
 </packages3d>
@@ -1309,6 +1328,47 @@ Warning: This is the KIT version of this package. This package has a smaller dia
 <technology name="">
 <attribute name="PROD_ID" value="CAP-08064"/>
 <attribute name="VALUE" value="1.0uF"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="10NF" urn="urn:adsk.eagle:component:37465/1" prefix="C" library_version="1">
+<description>&lt;h3&gt;0.01uF/10nF/10,000pF ceramic capacitors&lt;/h3&gt;
+&lt;p&gt;A capacitor is a passive two-terminal electrical component used to store electrical energy temporarily in an electric field.&lt;/p&gt;
+
+CAP-09321</description>
+<gates>
+<gate name="G$1" symbol="CAP" x="0" y="0"/>
+</gates>
+<devices>
+<device name="-PTH-10MM-10000V-1-%" package="CAP-PTH-10MM">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:37419/1"/>
+</package3dinstances>
+<technologies>
+<technology name="">
+<attribute name="PROD_ID" value="CAP-09321"/>
+<attribute name="VALUE" value="10nF"/>
+</technology>
+</technologies>
+</device>
+<device name="-0603-50V-10%" package="0603">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:37414/1"/>
+</package3dinstances>
+<technologies>
+<technology name="">
+<attribute name="PROD_ID" value="CAP-00867"/>
+<attribute name="VALUE" value="10nF"/>
 </technology>
 </technologies>
 </device>
@@ -7653,6 +7713,8 @@ In this library you will find frames that can be used to help organize a schemat
 <classes>
 <class number="0" name="default" width="0" drill="0">
 </class>
+<class number="1" name="diff" width="0.003871875" drill="0">
+</class>
 </classes>
 <parts>
 <part name="JP1" library="I'mRADIOactive" deviceset="PINHD-1X7" device="" package3d_urn="urn:adsk.eagle:package:22477/2"/>
@@ -7678,13 +7740,18 @@ In this library you will find frames that can be used to help organize a schemat
 <part name="SUPPLY6" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="VCC_2" device="" value="9V"/>
 <part name="SUPPLY1" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device=""/>
 <part name="GND1" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
-<part name="C1" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="1.0UF" device="-0603-16V-10%" package3d_urn="urn:adsk.eagle:package:37414/1" value="1.0uF"/>
 <part name="GND3" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="J1" library="I'mRADIOactive" deviceset="10118193-0001LF" device=""/>
 <part name="C4" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="1.0UF" device="-0603-16V-10%" package3d_urn="urn:adsk.eagle:package:37414/1" value="1.0uF"/>
 <part name="U2" library="I'mRADIOactive" deviceset="ATMEGA32U4-AUR" device=""/>
 <part name="R1" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="R-US_" device="R0603" package3d_urn="urn:adsk.eagle:package:6240565/1" value="22Ω"/>
 <part name="R2" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="R-US_" device="R0603" package3d_urn="urn:adsk.eagle:package:6240565/1" value="22Ω"/>
+<part name="C1" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
+<part name="C9" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
+<part name="C10" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
+<part name="C11" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
+<part name="C12" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="10NF" device="-0603-50V-10%" package3d_urn="urn:adsk.eagle:package:37414/1" value="10nF"/>
+<part name="GND6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -7796,10 +7863,6 @@ for Sumo Bot</text>
 <instance part="GND1" gate="1" x="63.5" y="78.74" smashed="yes">
 <attribute name="VALUE" x="60.96" y="76.2" size="1.778" layer="96"/>
 </instance>
-<instance part="C1" gate="G$1" x="43.18" y="160.02" smashed="yes">
-<attribute name="NAME" x="44.704" y="162.941" size="1.778" layer="95" font="vector"/>
-<attribute name="VALUE" x="44.704" y="157.861" size="1.778" layer="96" font="vector"/>
-</instance>
 <instance part="GND3" gate="1" x="43.18" y="144.78" smashed="yes">
 <attribute name="VALUE" x="40.64" y="142.24" size="1.778" layer="96"/>
 </instance>
@@ -7822,6 +7885,29 @@ for Sumo Bot</text>
 <instance part="R2" gate="G$1" x="60.96" y="134.62" smashed="yes">
 <attribute name="NAME" x="57.15" y="136.1186" size="1.778" layer="95"/>
 <attribute name="VALUE" x="57.15" y="131.318" size="1.778" layer="96"/>
+</instance>
+<instance part="C1" gate="G$1" x="43.18" y="160.02" smashed="yes">
+<attribute name="NAME" x="44.704" y="162.941" size="1.778" layer="95" font="vector"/>
+<attribute name="VALUE" x="44.704" y="157.861" size="1.778" layer="96" font="vector"/>
+</instance>
+<instance part="C9" gate="G$1" x="35.052" y="160.02" smashed="yes">
+<attribute name="NAME" x="36.576" y="162.941" size="1.778" layer="95" font="vector"/>
+<attribute name="VALUE" x="36.576" y="157.861" size="1.778" layer="96" font="vector"/>
+</instance>
+<instance part="C10" gate="G$1" x="26.67" y="160.02" smashed="yes">
+<attribute name="NAME" x="28.194" y="162.941" size="1.778" layer="95" font="vector"/>
+<attribute name="VALUE" x="28.194" y="157.861" size="1.778" layer="96" font="vector"/>
+</instance>
+<instance part="C11" gate="G$1" x="17.272" y="160.02" smashed="yes">
+<attribute name="NAME" x="18.796" y="162.941" size="1.778" layer="95" font="vector"/>
+<attribute name="VALUE" x="18.796" y="157.861" size="1.778" layer="96" font="vector"/>
+</instance>
+<instance part="C12" gate="G$1" x="152.4" y="144.78" smashed="yes" rot="R90">
+<attribute name="NAME" x="149.479" y="146.304" size="1.778" layer="95" font="vector" rot="R90"/>
+<attribute name="VALUE" x="154.559" y="146.304" size="1.778" layer="96" font="vector" rot="R90"/>
+</instance>
+<instance part="GND6" gate="1" x="154.94" y="142.24" smashed="yes">
+<attribute name="VALUE" x="152.4" y="139.7" size="1.778" layer="96"/>
 </instance>
 </instances>
 <busses>
@@ -7891,12 +7977,21 @@ for Sumo Bot</text>
 <wire x1="248.92" y1="83.82" x2="248.92" y2="76.2" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="C1" gate="G$1" pin="2"/>
 <pinref part="GND3" gate="1" pin="GND"/>
 <wire x1="43.18" y1="157.48" x2="43.18" y2="147.32" width="0.1524" layer="91"/>
 <pinref part="C4" gate="G$1" pin="2"/>
 <wire x1="50.8" y1="147.32" x2="43.18" y2="147.32" width="0.1524" layer="91"/>
 <junction x="43.18" y="147.32"/>
+<pinref part="C1" gate="G$1" pin="2"/>
+<pinref part="C11" gate="G$1" pin="2"/>
+<wire x1="17.272" y1="157.48" x2="26.67" y2="157.48" width="0.1524" layer="91"/>
+<junction x="43.18" y="157.48"/>
+<pinref part="C9" gate="G$1" pin="2"/>
+<wire x1="26.67" y1="157.48" x2="35.052" y2="157.48" width="0.1524" layer="91"/>
+<wire x1="35.052" y1="157.48" x2="43.18" y2="157.48" width="0.1524" layer="91"/>
+<junction x="35.052" y="157.48"/>
+<pinref part="C10" gate="G$1" pin="2"/>
+<junction x="26.67" y="157.48"/>
 </segment>
 <segment>
 <pinref part="J1" gate="G$1" pin="GND"/>
@@ -7913,6 +8008,10 @@ for Sumo Bot</text>
 <pinref part="U2" gate="G$1" pin="UGND"/>
 <wire x1="66.04" y1="86.36" x2="66.04" y2="83.82" width="0.1524" layer="91"/>
 <junction x="66.04" y="83.82"/>
+</segment>
+<segment>
+<pinref part="C12" gate="G$1" pin="2"/>
+<pinref part="GND6" gate="1" pin="GND"/>
 </segment>
 </net>
 <net name="DISP_RESET" class="0">
@@ -7995,7 +8094,6 @@ for Sumo Bot</text>
 </segment>
 <segment>
 <pinref part="SUPPLY1" gate="G$1" pin="3.3V"/>
-<pinref part="C1" gate="G$1" pin="1"/>
 <wire x1="43.18" y1="170.18" x2="43.18" y2="167.64" width="0.1524" layer="91"/>
 <wire x1="43.18" y1="167.64" x2="43.18" y2="165.1" width="0.1524" layer="91"/>
 <wire x1="43.18" y1="170.18" x2="66.04" y2="170.18" width="0.1524" layer="91"/>
@@ -8005,13 +8103,18 @@ for Sumo Bot</text>
 <junction x="43.18" y="167.64"/>
 <wire x1="60.96" y1="167.64" x2="60.96" y2="160.02" width="0.1524" layer="91"/>
 <wire x1="60.96" y1="160.02" x2="66.04" y2="160.02" width="0.1524" layer="91"/>
-<wire x1="43.18" y1="165.1" x2="58.42" y2="165.1" width="0.1524" layer="91"/>
-<junction x="43.18" y="165.1"/>
-<wire x1="58.42" y1="165.1" x2="58.42" y2="157.48" width="0.1524" layer="91"/>
-<wire x1="58.42" y1="157.48" x2="66.04" y2="157.48" width="0.1524" layer="91"/>
 <pinref part="U2" gate="G$1" pin="VCC"/>
 <pinref part="U2" gate="G$1" pin="AVCC"/>
-<pinref part="U2" gate="G$1" pin="UVCC"/>
+<pinref part="C1" gate="G$1" pin="1"/>
+<pinref part="C9" gate="G$1" pin="1"/>
+<wire x1="43.18" y1="167.64" x2="35.052" y2="167.64" width="0.1524" layer="91"/>
+<wire x1="35.052" y1="167.64" x2="35.052" y2="165.1" width="0.1524" layer="91"/>
+<pinref part="C10" gate="G$1" pin="1"/>
+<wire x1="35.052" y1="167.64" x2="26.67" y2="167.64" width="0.1524" layer="91"/>
+<wire x1="26.67" y1="167.64" x2="26.67" y2="165.1" width="0.1524" layer="91"/>
+<wire x1="26.67" y1="167.64" x2="17.272" y2="167.64" width="0.1524" layer="91"/>
+<pinref part="C11" gate="G$1" pin="1"/>
+<wire x1="17.272" y1="167.64" x2="17.272" y2="165.1" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$3" class="0">
@@ -8064,9 +8167,9 @@ for Sumo Bot</text>
 <label x="66.04" y="33.02" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<label x="154.94" y="121.92" size="1.778" layer="95" xref="yes"/>
-<pinref part="U2" gate="G$1" pin="PB4(PCINT4/ADC11)"/>
-<wire x1="132.08" y1="121.92" x2="154.94" y2="121.92" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$1" pin="PB5(PCINT5/OC1A/OC4B/ADC)"/>
+<wire x1="132.08" y1="119.38" x2="134.62" y2="119.38" width="0.1524" layer="91"/>
+<label x="134.62" y="119.38" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="CS3" class="0">
@@ -8099,9 +8202,9 @@ for Sumo Bot</text>
 <label x="76.2" y="30.48" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<label x="134.62" y="119.38" size="1.778" layer="95" xref="yes"/>
-<pinref part="U2" gate="G$1" pin="PB5(PCINT5/OC1A/OC4B/ADC)"/>
-<wire x1="132.08" y1="119.38" x2="134.62" y2="119.38" width="0.1524" layer="91"/>
+<pinref part="U2" gate="G$1" pin="PB4(PCINT4/ADC11)"/>
+<wire x1="132.08" y1="121.92" x2="142.748" y2="121.666" width="0.1524" layer="91"/>
+<label x="142.748" y="121.666" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
 <net name="N$1" class="0">
@@ -8142,21 +8245,22 @@ for Sumo Bot</text>
 <pinref part="SUPPLY6" gate="G$1" pin="VCC_2"/>
 </segment>
 </net>
-<net name="N$7" class="0">
+<net name="DIFF_N" class="1">
 <segment>
 <pinref part="J1" gate="G$1" pin="D-"/>
-<wire x1="40.64" y1="129.54" x2="48.26" y2="129.54" width="0.1524" layer="91"/>
-<wire x1="48.26" y1="129.54" x2="48.26" y2="134.62" width="0.1524" layer="91"/>
-<wire x1="48.26" y1="134.62" x2="50.8" y2="139.7" width="0.1524" layer="91"/>
+<wire x1="40.64" y1="129.54" x2="50.8" y2="129.54" width="0.1524" layer="91"/>
+<wire x1="50.8" y1="129.54" x2="50.8" y2="139.7" width="0.1524" layer="91"/>
 <pinref part="R1" gate="G$1" pin="1"/>
+<label x="45.72" y="134.62" size="1.778" layer="95"/>
 </segment>
 </net>
-<net name="N$10" class="0">
+<net name="DIFF_P" class="1">
 <segment>
 <pinref part="J1" gate="G$1" pin="D+"/>
-<wire x1="40.64" y1="127" x2="50.8" y2="127" width="0.1524" layer="91"/>
-<wire x1="50.8" y1="127" x2="55.88" y2="134.62" width="0.1524" layer="91"/>
+<wire x1="40.64" y1="127" x2="55.88" y2="127" width="0.1524" layer="91"/>
+<wire x1="55.88" y1="127" x2="55.88" y2="134.62" width="0.1524" layer="91"/>
 <pinref part="R2" gate="G$1" pin="1"/>
+<label x="50.8" y="127" size="1.778" layer="95"/>
 </segment>
 </net>
 <net name="N$4" class="0">
@@ -8190,6 +8294,13 @@ for Sumo Bot</text>
 <pinref part="U2" gate="G$1" pin="D+"/>
 <wire x1="66.04" y1="134.62" x2="66.04" y2="137.16" width="0.1524" layer="91"/>
 <pinref part="R2" gate="G$1" pin="2"/>
+</segment>
+</net>
+<net name="N$7" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="AREF"/>
+<pinref part="C12" gate="G$1" pin="1"/>
+<wire x1="132.08" y1="144.78" x2="147.32" y2="144.78" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
