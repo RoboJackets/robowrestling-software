@@ -12938,6 +12938,7 @@ XT-60 Power Connector
 <part name="C14" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="15uF"/>
 <part name="P+6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="C15" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100nF"/>
+<part name="P+7" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -13164,6 +13165,9 @@ Connector</text>
 <attribute name="NAME" x="114.046" y="53.975" size="1.778" layer="95"/>
 <attribute name="VALUE" x="114.046" y="49.149" size="1.778" layer="96"/>
 </instance>
+<instance part="P+7" gate="1" x="74.93" y="96.52" smashed="yes">
+<attribute name="VALUE" x="76.2" y="92.71" size="1.778" layer="96" rot="R180"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -13317,6 +13321,11 @@ Connector</text>
 <wire x1="26.67" y1="139.7" x2="20.32" y2="139.7" width="0.1524" layer="91"/>
 <pinref part="P+3" gate="1" pin="+5V"/>
 <wire x1="20.32" y1="142.24" x2="20.32" y2="139.7" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="U2" gate="A" pin="ON/~OFF"/>
+<wire x1="87.63" y1="93.98" x2="74.93" y2="93.98" width="0.1524" layer="91"/>
+<pinref part="P+7" gate="1" pin="+5V"/>
 </segment>
 </net>
 <net name="AIN1" class="0">
