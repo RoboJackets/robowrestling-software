@@ -171,7 +171,7 @@
 <wire x1="0" y1="0" x2="38" y2="0" width="0" layer="20"/>
 <wire x1="38" y1="0" x2="52" y2="14" width="0" layer="20"/>
 <text x="3" y="27" size="1.778" layer="21" font="vector">Kirbi Controller Board V1.0</text>
-<text x="32.8" y="31.6" size="1.5" layer="22" font="vector" rot="MR0">Kirbi Controller Board V1.0</text>
+<text x="32.8" y="31.6" size="1.5" layer="22" font="vector" rot="MR0">Gucci Controller Board V2.0</text>
 <hole x="35" y="23" drill="3.3"/>
 <hole x="3" y="23" drill="3.3"/>
 </plain>
@@ -4491,6 +4491,22 @@ DigiKey: WM22676-ND</description>
 <wire x1="2.94" y1="-1.27" x2="2.94" y2="1.27" width="0.1524" layer="21"/>
 <wire x1="2.94" y1="1.27" x2="-2.94" y2="1.27" width="0.1524" layer="21"/>
 </package>
+<package name="MOLEX_1.25MM_3PIN_SMT">
+<description>MOLEX_1.25MM_3PIN_SMT
+0532610371
+WM7621CT-ND</description>
+<smd name="P$4" x="-3.8" y="-1.5" dx="2.1" dy="3" layer="1"/>
+<smd name="P$2" x="0" y="1.4" dx="1.6" dy="0.8" layer="1" rot="R90"/>
+<smd name="P$5" x="3.8" y="-1.5" dx="2.1" dy="3" layer="1"/>
+<smd name="P$1" x="-1.25" y="1.4" dx="1.6" dy="0.8" layer="1" rot="R90"/>
+<smd name="P$3" x="1.25" y="1.4" dx="1.6" dy="0.8" layer="1" rot="R90"/>
+<wire x1="-2.75" y1="0.6" x2="-2.75" y2="-3.6" width="0.1524" layer="21"/>
+<wire x1="-2.75" y1="-3.6" x2="2.75" y2="-3.6" width="0.1524" layer="21"/>
+<wire x1="2.75" y1="-3.6" x2="2.75" y2="0.6" width="0.1524" layer="21"/>
+<wire x1="2.75" y1="0.6" x2="-2.75" y2="0.6" width="0.1524" layer="21"/>
+<text x="-5" y="3" size="1.778" layer="25" font="vector">&gt;Name</text>
+<text x="-5" y="-6" size="1.778" layer="27" font="vector">&gt;Value</text>
+</package>
 </packages>
 </library>
 <library name="adafruit" urn="urn:adsk.eagle:library:420">
@@ -4962,10 +4978,6 @@ design rules under a new name.</description>
 <attribute name="NAME" x="29" y="27.365" size="0.8128" layer="26" font="vector" ratio="20" rot="MR180" align="bottom-center"/>
 <attribute name="VALUE" x="27.3" y="27.735" size="0.8128" layer="22" font="vector" ratio="20" rot="MR90" align="top-center"/>
 </element>
-<element name="ESC" library="Kirbi_ControlBoard" package="MOLEX_1.25MM_4PIN_SMT" value="MOLEX_1.25MM_4PIN_SMT" x="49.6" y="38.1" smashed="yes" rot="MR270">
-<attribute name="NAME" x="45.6" y="33" size="1.6" layer="26" font="vector" rot="MR0"/>
-<attribute name="VALUE" x="53.6" y="42.1" size="1.6" layer="28" rot="MR270"/>
-</element>
 <element name="DIST_3" library="Kirbi_ControlBoard" package="MOLEX_1.25MM_4PIN_SMT" value="MOLEX_1.25MM_4PIN_SMT" x="5.6" y="2.1" smashed="yes">
 <attribute name="NAME" x="13.9" y="0.5" size="1.6" layer="25" font="vector" rot="R90"/>
 <attribute name="VALUE" x="1.6" y="-1.9" size="1.6" layer="27"/>
@@ -5066,6 +5078,22 @@ design rules under a new name.</description>
 <attribute name="NAME" x="10" y="5.862" size="0.8128" layer="25" font="vector" ratio="20" align="bottom-center"/>
 <attribute name="PROD_ID" value="CAP-00810" x="10" y="5.1" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="10" y="4.338" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
+</element>
+<element name="ESC_RX" library="Kirbi_ControlBoard" package="MUX_74LVC1G157GV" value="MUX_74LVC1G157GV" x="34" y="52" smashed="yes" rot="MR180">
+<attribute name="NAME" x="31.276" y="54.968" size="0.8128" layer="26" rot="MR180"/>
+<attribute name="VALUE" x="32.349" y="54.413" size="0.6096" layer="28" rot="MR180"/>
+</element>
+<element name="ESC1" library="Kirbi_ControlBoard" package="MOLEX_1.25MM_3PIN_SMT" value="MOLEX_1.25MM_3PIN_SMT" x="48.6" y="38" smashed="yes" rot="MR270">
+<attribute name="NAME" x="46" y="38.2" size="1.778" layer="26" font="vector" rot="MR270"/>
+<attribute name="VALUE" x="54.6" y="43" size="1.778" layer="28" font="vector" rot="MR270"/>
+</element>
+<element name="ESC2" library="Kirbi_ControlBoard" package="MOLEX_1.25MM_3PIN_SMT" value="MOLEX_1.25MM_3PIN_SMT" x="46.4" y="52.7" smashed="yes" rot="MR180">
+<attribute name="NAME" x="45.9" y="49.9" size="1.778" layer="26" font="vector" rot="MR180"/>
+<attribute name="VALUE" x="41.4" y="58.7" size="1.778" layer="28" font="vector" rot="MR180"/>
+</element>
+<element name="ESC_TX" library="Kirbi_ControlBoard" package="MUX_74LVC1G157GV" value="MUX_74LVC1G157GV" x="39" y="52" smashed="yes" rot="MR180">
+<attribute name="NAME" x="36.476" y="54.968" size="0.8128" layer="26" rot="MR180"/>
+<attribute name="VALUE" x="37.349" y="54.413" size="0.6096" layer="28" rot="MR180"/>
 </element>
 </elements>
 <signals>
@@ -5255,6 +5283,8 @@ design rules under a new name.</description>
 <wire x1="24.945" y1="22.4" x2="25.4" y2="22.4" width="0.2" layer="1"/>
 <via x="25.4" y="22.4" extent="1-16" drill="0.4"/>
 <contactref element="D4" pad="C"/>
+<contactref element="ESC1" pad="P$3"/>
+<contactref element="ESC2" pad="P$3"/>
 </signal>
 <signal name="+5V">
 <contactref element="C6" pad="1"/>
@@ -5418,6 +5448,18 @@ design rules under a new name.</description>
 <wire x1="14.7" y1="25.9" x2="14.8" y2="26" width="0.2" layer="16"/>
 <wire x1="16.123" y1="26" x2="18.123" y2="28" width="0.2" layer="16"/>
 <wire x1="14.8" y1="26" x2="16.123" y2="26" width="0.2" layer="16"/>
+<contactref element="ESC_TX" pad="P$5"/>
+<contactref element="ESC_RX" pad="P$5"/>
+<via x="39" y="48.5" extent="1-16" drill="0.4"/>
+<wire x1="39" y1="48.5" x2="32.6968" y2="48.5" width="0.2" layer="1"/>
+<wire x1="32.6968" y1="48.5" x2="26.5" y2="48.5" width="0.2" layer="1"/>
+<wire x1="26.5" y1="48.5" x2="24" y2="51" width="0.2" layer="1"/>
+<wire x1="34" y1="50.875" x2="34" y2="49.8032" width="0.2" layer="16"/>
+<via x="34" y="49.8032" extent="1-16" drill="0.4"/>
+<wire x1="34" y1="49.8032" x2="32.6968" y2="48.5" width="0.2" layer="1"/>
+<wire x1="20.7" y1="51" x2="20.27" y2="51.43" width="0.2" layer="1"/>
+<wire x1="24" y1="51" x2="20.7" y2="51" width="0.2" layer="1"/>
+<wire x1="39" y1="48.5" x2="39" y2="50.875" width="0.2" layer="16"/>
 </signal>
 <signal name="LINE_LF">
 <contactref element="U2" pad="35/A16"/>
@@ -5589,13 +5631,16 @@ design rules under a new name.</description>
 <wire x1="12.335" y1="37.665" x2="11.065" y2="38.935" width="0.2" layer="1"/>
 </signal>
 <signal name="S1/TX">
-<contactref element="U2" pad="33/A14"/>
-<contactref element="ESC" pad="P$5"/>
-<wire x1="46.603571875" y1="38.596428125" x2="46.7" y2="38.725" width="0.2" layer="16"/>
-<wire x1="45.5" y1="39.5" x2="45.5" y2="42.64" width="0.2" layer="16"/>
-<wire x1="45.5" y1="42.64" x2="48.48" y2="45.62" width="0.2" layer="16"/>
-<wire x1="46.403571875" y1="38.596428125" x2="46.603571875" y2="38.596428125" width="0.2" layer="16"/>
-<wire x1="45.5" y1="39.5" x2="46.403571875" y2="38.596428125" width="0.2" layer="16"/>
+<contactref element="ESC1" pad="P$1"/>
+<contactref element="ESC_TX" pad="P$3"/>
+<wire x1="39.95" y1="53.125" x2="40.9" y2="53.125" width="0.2" layer="16"/>
+<wire x1="40.9" y1="53.125" x2="40.9" y2="53.1" width="0.2" layer="16"/>
+<via x="40.9" y="53.1" extent="1-16" drill="0.4"/>
+<wire x1="40.9" y1="53.1" x2="47" y2="47" width="0.2" layer="1"/>
+<wire x1="47" y1="47" x2="47" y2="41" width="0.2" layer="1"/>
+<via x="47" y="41" extent="1-16" drill="0.4"/>
+<wire x1="47" y1="41" x2="47.2" y2="40.8" width="0.2" layer="16"/>
+<wire x1="47.2" y1="40.8" x2="47.2" y2="39.25" width="0.2" layer="16"/>
 </signal>
 <signal name="SCL2">
 <contactref element="R16" pad="1"/>
@@ -5677,27 +5722,36 @@ design rules under a new name.</description>
 <wire x1="30.2" y1="13" x2="31" y2="12.2" width="0.2" layer="16"/>
 <wire x1="27.1" y1="12.8" x2="30.2" y2="13" width="0.2" layer="16"/>
 <wire x1="35.7" y1="7.4" x2="44.451" y2="16.151" width="0.2" layer="16"/>
-<wire x1="43.3096625" y1="47.309" x2="44.451" y2="46.1676625" width="0.2" layer="16"/>
-<wire x1="24.769" y1="47.309" x2="23.08" y2="45.62" width="0.2" layer="16"/>
-<wire x1="43.3096625" y1="47.309" x2="24.769" y2="47.309" width="0.2" layer="16"/>
-<wire x1="44.451" y1="46.1676625" x2="44.451" y2="16.151" width="0.2" layer="16"/>
 <wire x1="31" y1="12.2" x2="31" y2="8" width="0.2" layer="16"/>
 <wire x1="31" y1="8" x2="31.6" y2="7.4" width="0.2" layer="16"/>
 <wire x1="31.6" y1="7.4" x2="35.7" y2="7.4" width="0.2" layer="16"/>
+<wire x1="44.451" y1="16.151" x2="44.451" y2="26.549" width="0.2" layer="16"/>
+<wire x1="44.451" y1="26.549" x2="44" y2="27" width="0.2" layer="16"/>
+<via x="44" y="27" extent="1-16" drill="0.4"/>
+<wire x1="44" y1="27" x2="42" y2="29" width="0.2" layer="1"/>
+<wire x1="42" y1="34" x2="38" y2="38" width="0.2" layer="1"/>
+<via x="38" y="38" extent="1-16" drill="0.4"/>
+<wire x1="38" y1="38" x2="32" y2="44" width="0.2" layer="16"/>
+<wire x1="32" y1="44" x2="30" y2="44" width="0.2" layer="16"/>
+<wire x1="30" y1="44" x2="29.549" y2="44.451" width="0.2" layer="16"/>
+<wire x1="29.549" y1="44.451" x2="29.549" y2="45.6296625" width="0.2" layer="16"/>
+<wire x1="28.2696625" y1="46.909" x2="24.369" y2="46.909" width="0.2" layer="16"/>
+<wire x1="24.369" y1="46.909" x2="23.08" y2="45.62" width="0.2" layer="16"/>
+<wire x1="42" y1="29" x2="42" y2="34" width="0.2" layer="1"/>
+<wire x1="29.549" y1="45.6296625" x2="28.2696625" y2="46.909" width="0.2" layer="16"/>
 </signal>
 <signal name="RADIO_NSS">
 <contactref element="TRANSCEIVER" pad="13P"/>
-<contactref element="U2" pad="34/A15"/>
 <wire x1="27.1" y1="10.8" x2="28.6156" y2="9.4844" width="0.2" layer="16"/>
 <wire x1="28.6156" y1="9.4844" x2="28.6156" y2="8.00981875" width="0.2" layer="16"/>
 <wire x1="28.6156" y1="8.00981875" x2="30.12541875" y2="6.5" width="0.2" layer="16"/>
 <wire x1="30.12541875" y1="6.5" x2="35.7" y2="6.5" width="0.2" layer="16"/>
 <wire x1="45.2066" y1="16.0066" x2="45.2066" y2="27.3" width="0.2" layer="16"/>
 <via x="45.2066" y="27.3" extent="1-16" drill="0.4"/>
-<wire x1="45.2066" y1="27.3" x2="44.751" y2="27.7556" width="0.2" layer="1"/>
-<wire x1="44.751" y1="44.431" x2="45.94" y2="45.62" width="0.2" layer="1"/>
 <wire x1="35.7" y1="6.5" x2="45.2066" y2="16.0066" width="0.2" layer="16"/>
-<wire x1="44.751" y1="27.7556" x2="44.751" y2="44.431" width="0.2" layer="1"/>
+<contactref element="U2" pad="30"/>
+<wire x1="45.2066" y1="27.3" x2="43.4" y2="29.1066" width="0.2" layer="1"/>
+<wire x1="43.4" y1="29.1066" x2="43.4" y2="30.38" width="0.2" layer="1"/>
 </signal>
 <signal name="RADIO_DIO0">
 <contactref element="TRANSCEIVER" pad="6P"/>
@@ -5949,6 +6003,70 @@ design rules under a new name.</description>
 <wire x1="-4.88641875" y1="40.88641875" x2="-8" y2="44" width="0.6" layer="1"/>
 <wire x1="-8" y1="44" x2="-10.95" y2="44" width="0.6" layer="1"/>
 <wire x1="-10.95" y1="44" x2="-12.53" y2="42.42" width="0.6" layer="1"/>
+</signal>
+<signal name="S1/RX">
+<contactref element="ESC1" pad="P$2"/>
+<contactref element="ESC_RX" pad="P$3"/>
+<wire x1="34.95" y1="53.125" x2="35.875" y2="53.125" width="0.2" layer="16"/>
+<wire x1="35.875" y1="53.125" x2="36" y2="53" width="0.2" layer="16"/>
+<via x="36" y="53" extent="1-16" drill="0.4"/>
+<wire x1="36" y1="53" x2="42" y2="47" width="0.2" layer="1"/>
+<wire x1="42" y1="47" x2="42" y2="40" width="0.2" layer="1"/>
+<wire x1="42" y1="40" x2="43" y2="39" width="0.2" layer="1"/>
+<via x="43" y="39" extent="1-16" drill="0.4"/>
+<wire x1="43" y1="39" x2="44" y2="38" width="0.2" layer="16"/>
+<wire x1="44" y1="38" x2="47.2" y2="38" width="0.2" layer="16"/>
+</signal>
+<signal name="S2/TX">
+<contactref element="ESC_TX" pad="P$1"/>
+<contactref element="ESC2" pad="P$1"/>
+<wire x1="45.15" y1="51.3" x2="41.7" y2="51.3" width="0.2" layer="16"/>
+<wire x1="40.6024" y1="52.3976" x2="39" y2="52.3976" width="0.2" layer="16"/>
+<wire x1="41.7" y1="51.3" x2="40.6024" y2="52.3976" width="0.2" layer="16"/>
+<wire x1="38.05" y1="52.94305" x2="38.05" y2="53.125" width="0.2" layer="16"/>
+<wire x1="39" y1="52.3976" x2="38.59545" y2="52.3976" width="0.2" layer="16"/>
+<wire x1="38.59545" y1="52.3976" x2="38.05" y2="52.94305" width="0.2" layer="16"/>
+</signal>
+<signal name="ESC_S">
+<contactref element="ESC_TX" pad="P$6"/>
+<contactref element="ESC_RX" pad="P$6"/>
+<contactref element="U2" pad="36/A17"/>
+<wire x1="38.7296625" y1="46.909" x2="35.83405" y2="46.909" width="0.2" layer="16"/>
+<wire x1="40.0186625" y1="45.62" x2="40.86" y2="45.62" width="0.2" layer="16"/>
+<wire x1="38.7296625" y1="46.909" x2="40.0186625" y2="45.62" width="0.2" layer="16"/>
+<wire x1="38.05" y1="50.875" x2="36.08195" y2="50.875" width="0.2" layer="16"/>
+<wire x1="36.08195" y1="50.875" x2="35.35455" y2="51.6024" width="0.2" layer="16"/>
+<wire x1="33.59545" y1="51.6024" x2="33.05" y2="51.05695" width="0.2" layer="16"/>
+<wire x1="33.05" y1="51.05695" x2="33.05" y2="50.875" width="0.2" layer="16"/>
+<wire x1="35.35455" y1="51.6024" x2="33.59545" y2="51.6024" width="0.2" layer="16"/>
+<wire x1="33.05" y1="49.69305" x2="33.05" y2="50.875" width="0.2" layer="16"/>
+<wire x1="35.83405" y1="46.909" x2="33.05" y2="49.69305" width="0.2" layer="16"/>
+</signal>
+<signal name="ESC_TTX">
+<contactref element="ESC_TX" pad="P$4"/>
+<contactref element="U2" pad="33/A14"/>
+<wire x1="39.95" y1="50.875" x2="42.825" y2="48" width="0.2" layer="16"/>
+<wire x1="46.1" y1="48" x2="48.48" y2="45.62" width="0.2" layer="16"/>
+<wire x1="42.825" y1="48" x2="46.1" y2="48" width="0.2" layer="16"/>
+</signal>
+<signal name="S2/RX">
+<contactref element="ESC_RX" pad="P$1"/>
+<contactref element="ESC2" pad="P$2"/>
+<wire x1="46.4024" y1="50.99545" x2="45.65455" y2="50.2476" width="0.2" layer="16"/>
+<wire x1="46.4" y1="51.3" x2="46.4024" y2="51.2976" width="0.2" layer="16"/>
+<wire x1="46.4024" y1="51.2976" x2="46.4024" y2="50.99545" width="0.2" layer="16"/>
+<wire x1="39.95455" y1="52.0024" x2="33.8726" y2="52.0024" width="0.2" layer="16"/>
+<wire x1="33.8726" y1="52.0024" x2="33.05" y2="52.825" width="0.2" layer="16"/>
+<wire x1="33.05" y1="52.825" x2="33.05" y2="53.125" width="0.2" layer="16"/>
+<wire x1="45.65455" y1="50.2476" x2="41.70935" y2="50.2476" width="0.2" layer="16"/>
+<wire x1="41.70935" y1="50.2476" x2="39.95455" y2="52.0024" width="0.2" layer="16"/>
+</signal>
+<signal name="ESC_TRX">
+<contactref element="ESC_RX" pad="P$4"/>
+<contactref element="U2" pad="34/A15"/>
+<wire x1="34.95" y1="50.875" x2="38.325" y2="47.5" width="0.2" layer="16"/>
+<wire x1="44.06" y1="47.5" x2="45.94" y2="45.62" width="0.2" layer="16"/>
+<wire x1="38.325" y1="47.5" x2="44.06" y2="47.5" width="0.2" layer="16"/>
 </signal>
 </signals>
 <mfgpreviewcolors>

@@ -3,7 +3,7 @@
 <eagle version="9.5.1">
 <drawing>
 <settings>
-<setting alwaysvectorfont="yes"/>
+<setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
 <grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="no" altdistance="0.1" altunitdist="mm" altunit="mm"/>
@@ -4491,6 +4491,22 @@ DigiKey: WM22676-ND</description>
 <wire x1="2.94" y1="-1.27" x2="2.94" y2="1.27" width="0.1524" layer="21"/>
 <wire x1="2.94" y1="1.27" x2="-2.94" y2="1.27" width="0.1524" layer="21"/>
 </package>
+<package name="MOLEX_1.25MM_3PIN_SMT">
+<description>MOLEX_1.25MM_3PIN_SMT
+0532610371
+WM7621CT-ND</description>
+<smd name="P$4" x="-3.8" y="-1.5" dx="2.1" dy="3" layer="1"/>
+<smd name="P$2" x="0" y="1.4" dx="1.6" dy="0.8" layer="1" rot="R90"/>
+<smd name="P$5" x="3.8" y="-1.5" dx="2.1" dy="3" layer="1"/>
+<smd name="P$1" x="-1.25" y="1.4" dx="1.6" dy="0.8" layer="1" rot="R90"/>
+<smd name="P$3" x="1.25" y="1.4" dx="1.6" dy="0.8" layer="1" rot="R90"/>
+<wire x1="-2.75" y1="0.6" x2="-2.75" y2="-3.6" width="0.1524" layer="21"/>
+<wire x1="-2.75" y1="-3.6" x2="2.75" y2="-3.6" width="0.1524" layer="21"/>
+<wire x1="2.75" y1="-3.6" x2="2.75" y2="0.6" width="0.1524" layer="21"/>
+<wire x1="2.75" y1="0.6" x2="-2.75" y2="0.6" width="0.1524" layer="21"/>
+<text x="-5" y="3" size="1.778" layer="25" font="vector">&gt;Name</text>
+<text x="-5" y="-6" size="1.778" layer="27" font="vector">&gt;Value</text>
+</package>
 </packages>
 </library>
 <library name="adafruit" urn="urn:adsk.eagle:library:420">
@@ -4962,10 +4978,6 @@ design rules under a new name.</description>
 <attribute name="NAME" x="29" y="27.365" size="0.8128" layer="26" font="vector" ratio="20" rot="MR180" align="bottom-center"/>
 <attribute name="VALUE" x="27.3" y="27.735" size="0.8128" layer="22" font="vector" ratio="20" rot="MR90" align="top-center"/>
 </element>
-<element name="ESC" library="Kirbi_ControlBoard" package="MOLEX_1.25MM_4PIN_SMT" value="MOLEX_1.25MM_4PIN_SMT" x="49.6" y="38.1" smashed="yes" rot="MR270">
-<attribute name="NAME" x="45.6" y="33" size="1.6" layer="26" font="vector" rot="MR0"/>
-<attribute name="VALUE" x="53.6" y="42.1" size="1.6" layer="28" rot="MR270"/>
-</element>
 <element name="DIST_3" library="Kirbi_ControlBoard" package="MOLEX_1.25MM_4PIN_SMT" value="MOLEX_1.25MM_4PIN_SMT" x="5.6" y="2.1" smashed="yes">
 <attribute name="NAME" x="13.9" y="0.5" size="1.6" layer="25" font="vector" rot="R90"/>
 <attribute name="VALUE" x="1.6" y="-1.9" size="1.6" layer="27"/>
@@ -5066,6 +5078,10 @@ design rules under a new name.</description>
 <attribute name="NAME" x="10" y="5.862" size="0.8128" layer="25" font="vector" ratio="20" align="bottom-center"/>
 <attribute name="PROD_ID" value="CAP-00810" x="10" y="5.1" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="10" y="4.338" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
+</element>
+<element name="ESC" library="Kirbi_ControlBoard" package="MOLEX_1.25MM_3PIN_SMT" value="MOLEX_1.25MM_3PIN_SMT" x="48.4" y="38" smashed="yes" rot="MR270">
+<attribute name="NAME" x="45.4" y="43" size="1.778" layer="26" font="vector" rot="MR270"/>
+<attribute name="VALUE" x="54.4" y="43" size="1.778" layer="28" font="vector" rot="MR270"/>
 </element>
 </elements>
 <signals>
@@ -5255,6 +5271,7 @@ design rules under a new name.</description>
 <wire x1="24.945" y1="22.4" x2="25.4" y2="22.4" width="0.2" layer="1"/>
 <via x="25.4" y="22.4" extent="1-16" drill="0.4"/>
 <contactref element="D4" pad="C"/>
+<contactref element="ESC" pad="P$3"/>
 </signal>
 <signal name="+5V">
 <contactref element="C6" pad="1"/>
@@ -5588,15 +5605,6 @@ design rules under a new name.</description>
 <wire x1="25.84" y1="43.3" x2="17.5" y2="43.3" width="0.2" layer="16"/>
 <wire x1="12.335" y1="37.665" x2="11.065" y2="38.935" width="0.2" layer="1"/>
 </signal>
-<signal name="S1/TX">
-<contactref element="U2" pad="33/A14"/>
-<contactref element="ESC" pad="P$5"/>
-<wire x1="46.603571875" y1="38.596428125" x2="46.7" y2="38.725" width="0.2" layer="16"/>
-<wire x1="45.5" y1="39.5" x2="45.5" y2="42.64" width="0.2" layer="16"/>
-<wire x1="45.5" y1="42.64" x2="48.48" y2="45.62" width="0.2" layer="16"/>
-<wire x1="46.403571875" y1="38.596428125" x2="46.603571875" y2="38.596428125" width="0.2" layer="16"/>
-<wire x1="45.5" y1="39.5" x2="46.403571875" y2="38.596428125" width="0.2" layer="16"/>
-</signal>
 <signal name="SCL2">
 <contactref element="R16" pad="1"/>
 <contactref element="U1" pad="P$6"/>
@@ -5687,17 +5695,16 @@ design rules under a new name.</description>
 </signal>
 <signal name="RADIO_NSS">
 <contactref element="TRANSCEIVER" pad="13P"/>
-<contactref element="U2" pad="34/A15"/>
 <wire x1="27.1" y1="10.8" x2="28.6156" y2="9.4844" width="0.2" layer="16"/>
 <wire x1="28.6156" y1="9.4844" x2="28.6156" y2="8.00981875" width="0.2" layer="16"/>
 <wire x1="28.6156" y1="8.00981875" x2="30.12541875" y2="6.5" width="0.2" layer="16"/>
 <wire x1="30.12541875" y1="6.5" x2="35.7" y2="6.5" width="0.2" layer="16"/>
 <wire x1="45.2066" y1="16.0066" x2="45.2066" y2="27.3" width="0.2" layer="16"/>
 <via x="45.2066" y="27.3" extent="1-16" drill="0.4"/>
-<wire x1="45.2066" y1="27.3" x2="44.751" y2="27.7556" width="0.2" layer="1"/>
-<wire x1="44.751" y1="44.431" x2="45.94" y2="45.62" width="0.2" layer="1"/>
 <wire x1="35.7" y1="6.5" x2="45.2066" y2="16.0066" width="0.2" layer="16"/>
-<wire x1="44.751" y1="27.7556" x2="44.751" y2="44.431" width="0.2" layer="1"/>
+<contactref element="U2" pad="30"/>
+<wire x1="45.2066" y1="27.3" x2="43.4" y2="29.1066" width="0.2" layer="1"/>
+<wire x1="43.4" y1="29.1066" x2="43.4" y2="30.38" width="0.2" layer="1"/>
 </signal>
 <signal name="RADIO_DIO0">
 <contactref element="TRANSCEIVER" pad="6P"/>
@@ -5949,6 +5956,20 @@ design rules under a new name.</description>
 <wire x1="-4.88641875" y1="40.88641875" x2="-8" y2="44" width="0.6" layer="1"/>
 <wire x1="-8" y1="44" x2="-10.95" y2="44" width="0.6" layer="1"/>
 <wire x1="-10.95" y1="44" x2="-12.53" y2="42.42" width="0.6" layer="1"/>
+</signal>
+<signal name="S1/TTX">
+<contactref element="U2" pad="33/A14"/>
+<contactref element="ESC" pad="P$1"/>
+<wire x1="47" y1="39.25" x2="47" y2="44.14" width="0.2" layer="16"/>
+<wire x1="47" y1="44.14" x2="48.48" y2="45.62" width="0.2" layer="16"/>
+</signal>
+<signal name="S1/TRX">
+<contactref element="U2" pad="34/A15"/>
+<contactref element="ESC" pad="P$2"/>
+<wire x1="45.94" y1="45.62" x2="45.74" y2="45.42" width="0.2" layer="16"/>
+<wire x1="45.74" y1="45.42" x2="45.74" y2="38.36" width="0.2" layer="16"/>
+<wire x1="45.74" y1="38.36" x2="46.1" y2="38" width="0.2" layer="16"/>
+<wire x1="46.1" y1="38" x2="47" y2="38" width="0.2" layer="16"/>
 </signal>
 </signals>
 <mfgpreviewcolors>

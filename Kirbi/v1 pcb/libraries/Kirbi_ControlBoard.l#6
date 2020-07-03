@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="50" unitdist="mil" unit="mil" style="lines" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="yes" active="yes"/>
@@ -1320,14 +1320,39 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 <description>MOLEX_2.54MM_2PIN
 1719770002
 DigiKey: WM22676-ND</description>
-<smd name="P$1" x="1.27" y="8.9" dx="5.33" dy="1.65" layer="1" rot="R90"/>
-<smd name="P$2" x="-1.27" y="8.9" dx="5.33" dy="1.65" layer="1" rot="R90"/>
-<wire x1="-4.37" y1="12" x2="-4.37" y2="0" width="0.1524" layer="21"/>
-<wire x1="-4.37" y1="0" x2="4.37" y2="0" width="0.1524" layer="21"/>
-<wire x1="4.37" y1="0" x2="4.37" y2="12" width="0.1524" layer="21"/>
-<wire x1="4.37" y1="12" x2="-4.37" y2="12" width="0.1524" layer="21"/>
-<text x="-4.4" y="13.2" size="1.778" layer="25">&gt;Name</text>
-<text x="-4.2" y="-3" size="1.778" layer="27">&gt;Value</text>
+<smd name="P$1" x="1.27" y="10.69" dx="5.33" dy="1.65" layer="1" rot="R90"/>
+<smd name="P$2" x="-1.27" y="10.69" dx="5.33" dy="1.65" layer="1" rot="R90"/>
+<wire x1="-5" y1="14" x2="-5" y2="-2" width="0.1524" layer="21"/>
+<wire x1="-5" y1="-2" x2="5" y2="-2" width="0.1524" layer="21"/>
+<wire x1="5" y1="-2" x2="5" y2="14" width="0.1524" layer="21"/>
+<wire x1="5" y1="14" x2="-5" y2="14" width="0.1524" layer="21"/>
+<text x="-5.4" y="14.2" size="1.778" layer="25">&gt;Name</text>
+<text x="-4.2" y="-4" size="1.778" layer="27">&gt;Value</text>
+<hole x="-2.67" y="0" drill="3.4"/>
+<hole x="2.67" y="0" drill="3.4"/>
+</package>
+<package name="BEL_FUSE_C1F_3.5">
+<description>507-1884-1-ND</description>
+<smd name="P$1" x="-2.09" y="0" dx="1.78" dy="1.14" layer="1" rot="R90"/>
+<smd name="P$2" x="2.09" y="0" dx="1.78" dy="1.14" layer="1" rot="R90"/>
+<wire x1="-2.94" y1="1.27" x2="-2.94" y2="-1.27" width="0.1524" layer="21"/>
+<wire x1="-2.94" y1="-1.27" x2="2.94" y2="-1.27" width="0.1524" layer="21"/>
+<wire x1="2.94" y1="-1.27" x2="2.94" y2="1.27" width="0.1524" layer="21"/>
+<wire x1="2.94" y1="1.27" x2="-2.94" y2="1.27" width="0.1524" layer="21"/>
+</package>
+<package name="MOLEX_1.25MM_3PIN_SMT">
+<description>MOLEX_1.25MM_3PIN_SMT
+0532610371
+WM7621CT-ND</description>
+<smd name="P$1" x="-3.8" y="-1.5" dx="2.1" dy="3" layer="1"/>
+<smd name="P$4" x="0" y="1.4" dx="1.6" dy="0.8" layer="1" rot="R90"/>
+<smd name="P$2" x="3.8" y="-1.5" dx="2.1" dy="3" layer="1"/>
+<smd name="P$3" x="-1.25" y="1.4" dx="1.6" dy="0.8" layer="1" rot="R90"/>
+<smd name="P$5" x="1.25" y="1.4" dx="1.6" dy="0.8" layer="1" rot="R90"/>
+<wire x1="-5.08" y1="1.27" x2="-5.08" y2="-3.81" width="0.1524" layer="21"/>
+<wire x1="-5.08" y1="-3.81" x2="5.08" y2="-3.81" width="0.1524" layer="21"/>
+<wire x1="5.08" y1="-3.81" x2="5.08" y2="1.27" width="0.1524" layer="21"/>
+<wire x1="5.08" y1="1.27" x2="-5.08" y2="1.27" width="0.1524" layer="21"/>
 </package>
 </packages>
 <symbols>
@@ -4982,6 +5007,12 @@ Temp: -40~+85°C</text>
 <text x="-3.81" y="6.604" size="1.778" layer="95">&gt;NAME</text>
 <text x="-4.064" y="-7.62" size="1.778" layer="95">&gt;VALUE</text>
 </symbol>
+<symbol name="FUSE">
+<pin name="P$1" x="-2.54" y="0" length="point"/>
+<pin name="P$2" x="2.54" y="0" length="point"/>
+<wire x1="-2.54" y1="0" x2="0" y2="0" width="0.1524" layer="94" curve="180"/>
+<wire x1="0" y1="0" x2="2.54" y2="0" width="0.1524" layer="94" curve="-180"/>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="AP2114H-1.8TRG1" prefix="U">
@@ -5837,6 +5868,22 @@ https://www.digikey.com/product-detail/en/texas-instruments/LM339DR/296-1013-1-N
 </gates>
 <devices>
 <device name="" package="MOLEX_2.54MM_2PIN">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="BEL_FUSE_C1F_3.5">
+<gates>
+<gate name="G$1" symbol="FUSE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="BEL_FUSE_C1F_3.5">
 <connects>
 <connect gate="G$1" pin="P$1" pad="P$1"/>
 <connect gate="G$1" pin="P$2" pad="P$2"/>

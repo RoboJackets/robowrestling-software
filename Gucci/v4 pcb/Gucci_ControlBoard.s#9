@@ -7279,14 +7279,14 @@ Temp: -40~+85°C</text>
 </net>
 <net name="RADIO_NSS" class="0">
 <segment>
-<label x="160.02" y="220.98" size="1.778" layer="95" rot="R180" xref="yes"/>
-<pinref part="U2" gate="G$1" pin="6/PWM"/>
-<wire x1="160.02" y1="220.98" x2="165.1" y2="220.98" width="0.1524" layer="91"/>
-</segment>
-<segment>
 <pinref part="TRANSCEIVER" gate="RFM59HCW" pin="NSS"/>
 <wire x1="200.66" y1="43.18" x2="198.12" y2="43.18" width="0.1524" layer="91"/>
 <label x="198.12" y="43.18" size="1.778" layer="95" rot="R180" xref="yes"/>
+</segment>
+<segment>
+<pinref part="U2" gate="G$1" pin="34/A15/RX5/CAN1-RX"/>
+<wire x1="165.1" y1="149.86" x2="160.02" y2="149.86" width="0.1524" layer="91"/>
+<label x="160.02" y="149.86" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="RADIO_DIO0" class="0">
@@ -7533,6 +7533,18 @@ Temp: -40~+85°C</text>
 <pinref part="TRANSCEIVER" gate="RFM59HCW" pin="ANT"/>
 <wire x1="231.14" y1="30.48" x2="226.06" y2="30.48" width="0.1524" layer="91"/>
 <wire x1="226.06" y1="30.48" x2="226.06" y2="35.56" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="RADIO_RESET" class="0">
+<segment>
+<pinref part="TRANSCEIVER" gate="RFM59HCW" pin="RESET"/>
+<wire x1="200.66" y1="40.64" x2="198.12" y2="40.64" width="0.1524" layer="91"/>
+<label x="198.12" y="40.64" size="1.778" layer="95" rot="R180" xref="yes"/>
+</segment>
+<segment>
+<pinref part="U2" gate="G$1" pin="29/T/PWM"/>
+<wire x1="165.1" y1="162.56" x2="160.02" y2="162.56" width="0.1524" layer="91"/>
+<label x="160.02" y="162.56" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 </nets>
