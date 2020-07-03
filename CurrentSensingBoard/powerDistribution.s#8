@@ -8458,6 +8458,14 @@ Source: AVX .. aphvc.pdf</description>
 <text x="-2.54" y="-5.08" size="1.778" layer="96" rot="R90">&gt;VALUE</text>
 <pin name="+3V3" x="0" y="-2.54" visible="off" length="short" direction="sup" rot="R90"/>
 </symbol>
+<symbol name="+24V" urn="urn:adsk.eagle:symbol:26935/1" library_version="1">
+<wire x1="1.27" y1="-0.635" x2="0" y2="0" width="0.254" layer="94"/>
+<wire x1="0" y1="0" x2="-1.27" y2="-0.635" width="0.254" layer="94"/>
+<wire x1="1.27" y1="-0.635" x2="0" y2="1.27" width="0.254" layer="94"/>
+<wire x1="0" y1="1.27" x2="-1.27" y2="-0.635" width="0.254" layer="94"/>
+<text x="-2.54" y="-5.08" size="1.778" layer="96" rot="R90">&gt;VALUE</text>
+<pin name="+24V" x="0" y="-2.54" visible="off" length="short" direction="sup" rot="R90"/>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="+5V" urn="urn:adsk.eagle:component:26963/1" prefix="P+" library_version="1">
@@ -8490,6 +8498,19 @@ Source: AVX .. aphvc.pdf</description>
 <description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
 <gates>
 <gate name="G$1" symbol="+3V3" x="0" y="0"/>
+</gates>
+<devices>
+<device name="">
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="+24V" urn="urn:adsk.eagle:component:26964/1" prefix="P+" library_version="1">
+<description>&lt;b&gt;SUPPLY SYMBOL&lt;/b&gt;</description>
+<gates>
+<gate name="1" symbol="+24V" x="0" y="0"/>
 </gates>
 <devices>
 <device name="">
@@ -12554,6 +12575,8 @@ XT-60 Power Connector
 <part name="P+3" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="GND7" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="J1" library="RoboJackets-Connectors" deviceset="XT-60" device="BATT_LABEL"/>
+<part name="GND8" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="P+4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+24V" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -12719,6 +12742,12 @@ Connector</text>
 <attribute name="NAME" x="15.24" y="90.805" size="1.778" layer="95"/>
 <attribute name="VALUE" x="15.24" y="80.01" size="1.778" layer="96"/>
 </instance>
+<instance part="GND8" gate="1" x="11.43" y="80.01" smashed="yes">
+<attribute name="VALUE" x="8.89" y="77.47" size="1.778" layer="96"/>
+</instance>
+<instance part="P+4" gate="1" x="11.43" y="92.71" smashed="yes">
+<attribute name="VALUE" x="8.89" y="87.63" size="1.778" layer="96" rot="R90"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -12757,6 +12786,12 @@ Connector</text>
 <wire x1="26.67" y1="121.92" x2="20.32" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="20.32" y1="121.92" x2="20.32" y2="119.38" width="0.1524" layer="91"/>
 <pinref part="GND7" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="J1" gate="G$1" pin="2"/>
+<wire x1="19.05" y1="85.09" x2="11.43" y2="85.09" width="0.1524" layer="91"/>
+<wire x1="11.43" y1="85.09" x2="11.43" y2="82.55" width="0.1524" layer="91"/>
+<pinref part="GND8" gate="1" pin="GND"/>
 </segment>
 </net>
 <net name="+5V" class="0">
@@ -13065,6 +13100,14 @@ Connector</text>
 <pinref part="R11" gate="G$1" pin="2"/>
 <pinref part="R14" gate="G$1" pin="2"/>
 <junction x="248.92" y="99.06"/>
+</segment>
+</net>
+<net name="+24V" class="0">
+<segment>
+<pinref part="J1" gate="G$1" pin="1"/>
+<wire x1="19.05" y1="87.63" x2="11.43" y2="87.63" width="0.1524" layer="91"/>
+<wire x1="11.43" y1="87.63" x2="11.43" y2="90.17" width="0.1524" layer="91"/>
+<pinref part="P+4" gate="1" pin="+24V"/>
 </segment>
 </net>
 </nets>

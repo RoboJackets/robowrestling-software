@@ -4804,6 +4804,37 @@ In this library you will find logos and images specific to RoboJackets. The part
 </package3d>
 </packages3d>
 </library>
+<library name="RoboJackets-Connectors">
+<description>&lt;img src="http://www.robojackets.org/wp-content/themes/RoboJackets-3.0/img/banner.png" width="600"&gt;
+&lt;hr&gt;
+&lt;h1&gt;RoboJackets EAGLE Libraries - Connectors&lt;/h1&gt;&lt;/br&gt;
+&lt;p&gt;
+In this library you will find all the connectors used on any of our boards.
+&lt;/p&gt;</description>
+<packages>
+<package name="XT-60">
+<wire x1="-4.064" y1="0.2" x2="-4.064" y2="11.851" width="0.127" layer="21"/>
+<wire x1="-4.064" y1="11.851" x2="-4" y2="12.1" width="0.127" layer="21" curve="-28.829296"/>
+<wire x1="-4" y1="12.1" x2="-1.1" y2="15.6" width="0.127" layer="21"/>
+<wire x1="-1.1" y1="15.6" x2="-0.8" y2="15.735" width="0.127" layer="21" curve="-48.455379"/>
+<wire x1="3.864" y1="0" x2="4.064" y2="0.2" width="0.127" layer="21" curve="90"/>
+<wire x1="4.064" y1="0.2" x2="4.064" y2="11.851" width="0.127" layer="21"/>
+<wire x1="4.064" y1="11.851" x2="4" y2="12.1" width="0.127" layer="21" curve="28.829296"/>
+<wire x1="4" y1="12.1" x2="1.1" y2="15.6" width="0.127" layer="21"/>
+<wire x1="1.1" y1="15.6" x2="0.8" y2="15.735" width="0.127" layer="21" curve="48.455379"/>
+<wire x1="-0.8" y1="15.735" x2="0.8" y2="15.735" width="0.127" layer="21"/>
+<wire x1="-3.864" y1="0" x2="3.864" y2="0" width="0.127" layer="21"/>
+<text x="-4.5" y="0" size="1" layer="25" font="vector" rot="R90">&gt;NAME</text>
+<pad name="BATT" x="0" y="4.1545" drill="4.7"/>
+<pad name="GND" x="0" y="11.092" drill="4.7"/>
+<dimension x1="-2.35" y1="4.1545" x2="2.35" y2="4.1545" x3="0" y3="-1.6" textsize="0.5" layer="49" dtype="diameter" width="0.01" visible="yes"/>
+<wire x1="-4.064" y1="0.2" x2="-3.864" y2="0" width="0.127" layer="21" curve="90"/>
+<text x="5" y="4.1545" size="1.2" layer="21" font="vector" rot="R90" align="top-center">BATT+</text>
+<text x="5" y="11.092" size="1.2" layer="21" font="vector" rot="R90" align="top-center">GND</text>
+<text x="-4.572" y="8.89" size="1" layer="27" font="vector" rot="R90">&gt;VALUE</text>
+</package>
+</packages>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -5125,6 +5156,10 @@ design rules under a new name.</description>
 <attribute name="NAME" x="-29.795" y="-130.81" size="1.27" layer="25" ratio="10" rot="R90"/>
 <attribute name="POPULARITY" value="7" x="-19" y="-127" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="-6.935" y="-130.81" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="J1" library="RoboJackets-Connectors" package="XT-60" value="XT-60BATT_LABEL" x="-40" y="-130" smashed="yes">
+<attribute name="NAME" x="-44.5" y="-130" size="1" layer="25" font="vector" rot="R90"/>
+<attribute name="VALUE" x="-44.572" y="-121.11" size="1" layer="27" font="vector" rot="R90"/>
 </element>
 </elements>
 <signals>

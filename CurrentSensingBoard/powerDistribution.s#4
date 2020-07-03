@@ -12981,18 +12981,18 @@ XT-60 Power Connector
 <part name="U$2" library="CurrentSensing" deviceset="MBRD835LT4G" device=""/>
 <part name="U2" library="CurrentSensing" deviceset="LM2678SX-5.0/NOPB" device=""/>
 <part name="P+5" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+24V" device=""/>
-<part name="C12" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="47uF"/>
+<part name="C12" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="0.47uF"/>
 <part name="GND9" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND10" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND11" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="P+6" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="C15" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="C-US" device="C0603" package3d_urn="urn:adsk.eagle:package:23616/2" value="100nF"/>
 <part name="P+7" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
-<part name="U$6" library="CurrentSensing" deviceset="860010373009" device=""/>
-<part name="U$7" library="CurrentSensing" deviceset="860010373009" device=""/>
-<part name="U$8" library="CurrentSensing" deviceset="TR3E156M050C0300" device=""/>
-<part name="U$9" library="CurrentSensing" deviceset="TR3E156M050C0300" device=""/>
-<part name="U$10" library="CurrentSensing" deviceset="TR3E156M050C0300" device=""/>
+<part name="U$6" library="CurrentSensing" deviceset="860010373009" device="" value="180uF"/>
+<part name="U$7" library="CurrentSensing" deviceset="860010373009" device="" value="180uF"/>
+<part name="U$8" library="CurrentSensing" deviceset="TR3E156M050C0300" device="" value="15uF"/>
+<part name="U$9" library="CurrentSensing" deviceset="TR3E156M050C0300" device="" value="15uF"/>
+<part name="U$10" library="CurrentSensing" deviceset="TR3E156M050C0300" device="" value="15uF"/>
 </parts>
 <sheets>
 <sheet>
