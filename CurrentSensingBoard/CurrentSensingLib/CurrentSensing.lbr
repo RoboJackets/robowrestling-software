@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.5.1">
+<eagle version="9.5.2">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="no" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="no" active="yes"/>
@@ -909,6 +909,16 @@
 <text x="-3" y="4" size="1.016" layer="25">&gt;NAME</text>
 <text x="-3" y="-4" size="1.016" layer="27" align="top-left">&gt;VALUE</text>
 </package>
+<package name="SD2114S040S8R0">
+<smd name="1" x="-2.325" y="0" dx="3" dy="2" layer="1" rot="R90"/>
+<smd name="2" x="2.325" y="0" dx="3" dy="2" layer="1" rot="R90"/>
+<wire x1="-3.6" y1="1.8" x2="-3.6" y2="-1.8" width="0.1524" layer="21"/>
+<wire x1="-3.6" y1="-1.8" x2="3.6" y2="-1.8" width="0.1524" layer="21"/>
+<wire x1="3.6" y1="-1.8" x2="3.6" y2="1.8" width="0.1524" layer="21"/>
+<wire x1="3.6" y1="1.8" x2="-3.6" y2="1.8" width="0.1524" layer="21"/>
+<text x="-4" y="-2" size="1" layer="27" align="top-left">&gt;VALUE</text>
+<text x="-4" y="2" size="1" layer="25">&gt;NAME</text>
+</package>
 </packages>
 <symbols>
 <symbol name="MAX11634EEE+T">
@@ -1312,22 +1322,6 @@ Diode with low voltage drop</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="MBRD835LT4G">
-<gates>
-<gate name="G$1" symbol="DIODE-SCHOTTKY" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="SCHDIODE">
-<connects>
-<connect gate="G$1" pin="A" pad="1 3"/>
-<connect gate="G$1" pin="C" pad="4"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="LM2678SX-5.0/NOPB" prefix="U">
 <gates>
 <gate name="G$1" symbol="LM2678SX-5.0/NOPB" x="0" y="0"/>
@@ -1396,6 +1390,22 @@ Diode with low voltage drop</description>
 <technology name="">
 <attribute name="VALUE" value="180uF" constant="no"/>
 </technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="SD2114S040S8R0">
+<gates>
+<gate name="G$1" symbol="DIODE-SCHOTTKY" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SD2114S040S8R0">
+<connects>
+<connect gate="G$1" pin="A" pad="1"/>
+<connect gate="G$1" pin="C" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
 </technologies>
 </device>
 </devices>
