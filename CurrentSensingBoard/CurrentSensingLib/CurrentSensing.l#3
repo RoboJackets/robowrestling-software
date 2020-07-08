@@ -898,12 +898,16 @@
 <wire x1="5.08" y1="-2.54" x2="5.08" y2="2.54" width="0.1524" layer="1"/>
 <wire x1="5.08" y1="2.54" x2="-5.08" y2="2.54" width="0.1524" layer="1"/>
 <wire x1="-5.08" y1="2.54" x2="-5.08" y2="-2.54" width="0.1524" layer="1"/>
+<text x="-3" y="3" size="1.016" layer="25">&gt;NAME</text>
+<text x="-3" y="-3" size="1.016" layer="27" align="top-left">&gt;VALUE</text>
 </package>
 <package name="860010373009">
 <circle x="0" y="0" radius="3.2" width="0.1524" layer="1"/>
 <text x="0.635" y="-2.159" size="1.778" layer="21">+</text>
 <pad name="2" x="-1.25" y="0" drill="0.55" diameter="0.8"/>
 <pad name="1" x="1.25" y="0" drill="0.55" diameter="0.8"/>
+<text x="-3" y="4" size="1.016" layer="25">&gt;NAME</text>
+<text x="-3" y="-4" size="1.016" layer="27" align="top-left">&gt;VALUE</text>
 </package>
 </packages>
 <symbols>
@@ -1371,7 +1375,9 @@ Diode with low voltage drop</description>
 <connect gate="G$1" pin="-" pad="2"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="VALUE" value="15uF" constant="no"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -1387,7 +1393,9 @@ Diode with low voltage drop</description>
 <connect gate="G$1" pin="-" pad="2"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="VALUE" value="180uF" constant="no"/>
+</technology>
 </technologies>
 </device>
 </devices>
