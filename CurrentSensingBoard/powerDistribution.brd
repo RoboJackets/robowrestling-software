@@ -358,17 +358,6 @@ v1.0</text>
 <text x="6.9548" y="-1.978" size="1.27" layer="27" ratio="6" rot="SR90">&gt;VALUE</text>
 <text x="-6.0166" y="-2.005" size="1.27" layer="25" ratio="6" rot="SR90">&gt;NAME</text>
 </package>
-<package name="SCHDIODE">
-<smd name="3" x="4.0894" y="2.286" dx="2.9972" dy="1.6002" layer="1"/>
-<smd name="1" x="4.0894" y="-2.286" dx="2.9972" dy="1.6002" layer="1"/>
-<smd name="4" x="-3.0988" y="0" dx="6.1976" dy="5.7912" layer="1"/>
-<wire x1="-6.731" y1="3.429" x2="6.096" y2="3.429" width="0.127" layer="21"/>
-<wire x1="6.096" y1="3.429" x2="6.096" y2="-3.429" width="0.127" layer="21"/>
-<wire x1="6.096" y1="-3.429" x2="-6.731" y2="-3.429" width="0.127" layer="21"/>
-<wire x1="-6.731" y1="-3.429" x2="-6.731" y2="3.429" width="0.127" layer="21"/>
-<text x="-2.54" y="3.81" size="1.27" layer="25" ratio="6">&gt;NAME</text>
-<text x="-2.54" y="-5.08" size="1.27" layer="27" ratio="6">&gt;VALUE</text>
-</package>
 <package name="860010373009">
 <circle x="0" y="0" radius="3.2" width="0.1524" layer="1"/>
 <text x="0.635" y="-2.159" size="1.778" layer="21">+</text>
@@ -387,6 +376,18 @@ v1.0</text>
 <wire x1="-5.08" y1="2.54" x2="-5.08" y2="-2.54" width="0.1524" layer="1"/>
 <text x="-3" y="3" size="1.016" layer="25">&gt;NAME</text>
 <text x="-3" y="-3" size="1.016" layer="27" align="top-left">&gt;VALUE</text>
+</package>
+<package name="SD2114S040S8R0">
+<smd name="1" x="-2.325" y="0" dx="3" dy="2" layer="1" rot="R90"/>
+<smd name="2" x="2.325" y="0" dx="3" dy="2" layer="1" rot="R90"/>
+<wire x1="-3.6" y1="1.8" x2="-3.6" y2="-1.8" width="0.1524" layer="21"/>
+<wire x1="-3.6" y1="-1.8" x2="3.6" y2="-1.8" width="0.1524" layer="21"/>
+<wire x1="3.6" y1="-1.8" x2="3.6" y2="1.8" width="0.1524" layer="21"/>
+<wire x1="3.6" y1="1.8" x2="1" y2="1.8" width="0.1524" layer="21"/>
+<text x="-4" y="-2" size="1" layer="27" align="top-left">&gt;VALUE</text>
+<text x="-4" y="2" size="1" layer="25">&gt;NAME</text>
+<wire x1="1" y1="1.8" x2="-3.6" y2="1.8" width="0.1524" layer="21"/>
+<wire x1="1" y1="1.8" x2="1" y2="-1.7" width="0.1524" layer="21"/>
 </package>
 </packages>
 </library>
@@ -4911,13 +4912,14 @@ In this library you will find all the connectors used on any of our boards.
 <wire x1="1.1" y1="15.6" x2="0.8" y2="15.735" width="0.127" layer="21" curve="48.455379"/>
 <wire x1="-0.8" y1="15.735" x2="0.8" y2="15.735" width="0.127" layer="21"/>
 <wire x1="-3.864" y1="0" x2="3.864" y2="0" width="0.127" layer="21"/>
-<text x="-4.5" y="0" size="1" layer="25" font="vector" ratio="10" rot="R90">&gt;NAME</text>
+<text x="-4.5" y="0" size="1" layer="25" font="vector" rot="R90">&gt;NAME</text>
 <pad name="BATT" x="0" y="4.1545" drill="4.7"/>
 <pad name="GND" x="0" y="11.092" drill="4.7"/>
 <dimension x1="-2.35" y1="4.1545" x2="2.35" y2="4.1545" x3="0" y3="-1.6" textsize="0.5" layer="49" dtype="diameter" width="0.01" visible="yes"/>
 <wire x1="-4.064" y1="0.2" x2="-3.864" y2="0" width="0.127" layer="21" curve="90"/>
-<text x="5" y="4.1545" size="1.2" layer="21" font="vector" ratio="15" rot="R90" align="top-center">BATT+</text>
-<text x="5" y="11.092" size="1.2" layer="21" font="vector" ratio="15" rot="R90" align="top-center">GND</text>
+<text x="5" y="4.1545" size="1.2" layer="21" font="vector" rot="R90" align="top-center">BATT+</text>
+<text x="5" y="11.092" size="1.2" layer="21" font="vector" rot="R90" align="top-center">GND</text>
+<text x="-4.572" y="8.89" size="1" layer="27" font="vector" rot="R90">&gt;VALUE</text>
 </package>
 </packages>
 </library>
@@ -4947,6 +4949,31 @@ For MINI Blade Fuses</description>
 <wire x1="5.45" y1="-7.5" x2="5.45" y2="-15.8" width="0.2" layer="51"/>
 <wire x1="5.45" y1="-15.8" x2="-5.45" y2="-15.8" width="0.2" layer="51"/>
 <wire x1="-5.45" y1="-15.8" x2="-5.45" y2="-7.5" width="0.2" layer="51"/>
+</package>
+</packages>
+</library>
+<library name="RoboJackets-LEDs">
+<description>&lt;img src="http://www.robojackets.org/wp-content/themes/RoboJackets-3.0/img/banner.png" width="600"&gt;
+&lt;hr&gt;
+&lt;h1&gt;RoboJackets EAGLE Libraries - LEDs&lt;/h1&gt;&lt;/br&gt;
+&lt;p&gt;
+In this library you will find LEDs and other visual output devices.
+&lt;/p&gt;</description>
+<packages>
+<package name="CHIP-LED0603">
+<wire x1="-0.4" y1="0.45" x2="-0.4" y2="-0.45" width="0.1016" layer="51"/>
+<wire x1="0.4" y1="0.45" x2="0.4" y2="-0.45" width="0.1016" layer="51"/>
+<smd name="C" x="0" y="0.75" dx="0.8" dy="0.8" layer="1"/>
+<smd name="A" x="0" y="-0.75" dx="0.8" dy="0.8" layer="1"/>
+<text x="-0.635" y="-0.635" size="1.27" layer="25" rot="R90">&gt;NAME</text>
+<text x="1.905" y="-0.635" size="1.27" layer="27" rot="R90">&gt;VALUE</text>
+<rectangle x1="-0.45" y1="0.45" x2="0.45" y2="0.85" layer="51"/>
+<rectangle x1="-0.45" y1="-0.85" x2="0.45" y2="-0.45" layer="51"/>
+<polygon width="0.1" layer="21">
+<vertex x="-0.3" y="-0.2"/>
+<vertex x="0" y="0.2"/>
+<vertex x="0.3" y="-0.2"/>
+</polygon>
 </package>
 </packages>
 </library>
@@ -5290,10 +5317,6 @@ design rules under a new name.</description>
 <attribute name="SPICEPREFIX" value="C" x="34" y="40" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="34.635" y="41.905" size="1.27" layer="27" rot="R180"/>
 </element>
-<element name="U$2" library="CurrentSensing" package="SCHDIODE" value="MBRD835LT4G" x="31" y="33" smashed="yes">
-<attribute name="NAME" x="28.46" y="36.81" size="1.27" layer="25" ratio="6"/>
-<attribute name="VALUE" x="28.46" y="27.92" size="1.27" layer="27" ratio="6"/>
-</element>
 <element name="C7" library="CurrentSensing" package="860010373009" value="180uF" x="41" y="23" smashed="yes" rot="R90">
 <attribute name="NAME" x="37" y="20" size="1.016" layer="25" rot="R90"/>
 <attribute name="VALUE" x="45" y="20" size="1.016" layer="27" rot="R90" align="top-left"/>
@@ -5332,6 +5355,46 @@ design rules under a new name.</description>
 <element name="J3" library="RoboJackets-Connectors" package="XT-60" value="XT-60BATT_LABEL" x="71" y="39" smashed="yes" rot="R180">
 <attribute name="NAME" x="75.5" y="39" size="1" layer="25" font="vector" ratio="10" rot="R270"/>
 </element>
+<element name="R3" library="rcl" library_urn="urn:adsk.eagle:library:334" package="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="100Ω" x="-6" y="-9" smashed="yes">
+<attribute name="NAME" x="-6.635" y="-8.365" size="1.27" layer="25"/>
+<attribute name="POPULARITY" value="77" x="-6" y="-9" size="1.778" layer="27" display="off"/>
+<attribute name="SPICEPREFIX" value="R" x="-6" y="-9" size="1.778" layer="27" display="off"/>
+<attribute name="VALUE" x="-6.635" y="-10.905" size="1.27" layer="27"/>
+</element>
+<element name="R4" library="rcl" library_urn="urn:adsk.eagle:library:334" package="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="200Ω" x="-6" y="-13" smashed="yes">
+<attribute name="NAME" x="-6.635" y="-12.365" size="1.27" layer="25"/>
+<attribute name="POPULARITY" value="77" x="-6" y="-13" size="1.778" layer="27" display="off"/>
+<attribute name="SPICEPREFIX" value="R" x="-6" y="-13" size="1.778" layer="27" display="off"/>
+<attribute name="VALUE" x="-6.635" y="-14.905" size="1.27" layer="27"/>
+</element>
+<element name="R5" library="rcl" library_urn="urn:adsk.eagle:library:334" package="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="1200Ω" x="-6" y="-17" smashed="yes">
+<attribute name="NAME" x="-6.635" y="-16.365" size="1.27" layer="25"/>
+<attribute name="POPULARITY" value="77" x="-6" y="-17" size="1.778" layer="27" display="off"/>
+<attribute name="SPICEPREFIX" value="R" x="-6" y="-17" size="1.778" layer="27" display="off"/>
+<attribute name="VALUE" x="-6.635" y="-18.905" size="1.27" layer="27"/>
+</element>
+<element name="D1" library="RoboJackets-LEDs" package="CHIP-LED0603" value="LED-SMD" x="-11" y="-16" smashed="yes">
+<attribute name="DIGIKEY" value="" x="-11" y="-16" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="" x="-11" y="-16" size="1.778" layer="27" display="off"/>
+<attribute name="NAME" x="-11.635" y="-16.635" size="1.27" layer="25" rot="R90"/>
+<attribute name="VALUE" x="-9.095" y="-16.635" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="D2" library="RoboJackets-LEDs" package="CHIP-LED0603" value="LED-SMD" x="-16" y="-16" smashed="yes">
+<attribute name="DIGIKEY" value="" x="-16" y="-16" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="" x="-16" y="-16" size="1.778" layer="27" display="off"/>
+<attribute name="NAME" x="-16.635" y="-16.635" size="1.27" layer="25" rot="R90"/>
+<attribute name="VALUE" x="-14.095" y="-16.635" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="D3" library="RoboJackets-LEDs" package="CHIP-LED0603" value="LED-SMD" x="-21" y="-16" smashed="yes">
+<attribute name="DIGIKEY" value="" x="-21" y="-16" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="" x="-21" y="-16" size="1.778" layer="27" display="off"/>
+<attribute name="NAME" x="-21.635" y="-16.635" size="1.27" layer="25" rot="R90"/>
+<attribute name="VALUE" x="-19.095" y="-16.635" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="U$2" library="CurrentSensing" package="SD2114S040S8R0" value="SD2114S040S8R0" x="-18" y="-23" smashed="yes">
+<attribute name="NAME" x="-22" y="-21" size="1" layer="25"/>
+<attribute name="VALUE" x="-22" y="-25" size="1" layer="27" align="top-left"/>
+</element>
 </elements>
 <signals>
 <signal name="GND">
@@ -5349,8 +5412,6 @@ design rules under a new name.</description>
 <contactref element="R11" pad="1"/>
 <contactref element="R12" pad="2"/>
 <contactref element="C4" pad="2"/>
-<contactref element="U$2" pad="1"/>
-<contactref element="U$2" pad="3"/>
 <contactref element="U2" pad="8"/>
 <contactref element="U2" pad="4"/>
 <contactref element="C14" pad="2"/>
@@ -5370,6 +5431,10 @@ design rules under a new name.</description>
 <contactref element="C6" pad="2"/>
 <contactref element="J2" pad="GND"/>
 <contactref element="J3" pad="GND"/>
+<contactref element="D1" pad="C"/>
+<contactref element="D2" pad="C"/>
+<contactref element="D3" pad="C"/>
+<contactref element="U$2" pad="1"/>
 <wire x1="60" y1="37.4" x2="62.54" y2="37.4" width="0" layer="19" extent="1-1"/>
 <wire x1="57.46" y1="37.4" x2="60" y2="37.4" width="0" layer="19" extent="1-1"/>
 <wire x1="56" y1="30.85" x2="57.46" y2="37.4" width="0" layer="19" extent="1-1"/>
@@ -5402,8 +5467,10 @@ design rules under a new name.</description>
 <wire x1="36" y1="58.908" x2="46.15" y2="50" width="0" layer="19" extent="1-1"/>
 <wire x1="25.85" y1="50" x2="36" y2="58.908" width="0" layer="19" extent="1-1"/>
 <wire x1="28.15" y1="46" x2="25.85" y2="50" width="0" layer="19" extent="1-1"/>
-<wire x1="35.0894" y1="35.286" x2="27.11" y2="4.81" width="0" layer="19" extent="1-1"/>
-<wire x1="35.0894" y1="30.714" x2="35.0894" y2="35.286" width="0" layer="19" extent="1-1"/>
+<wire x1="-11" y1="-15.25" x2="19" y2="13.15" width="0" layer="19" extent="1-1"/>
+<wire x1="-16" y1="-15.25" x2="-11" y2="-15.25" width="0" layer="19" extent="1-1"/>
+<wire x1="-21" y1="-15.25" x2="-16" y2="-15.25" width="0" layer="19" extent="1-1"/>
+<wire x1="-20.325" y1="-23" x2="-21" y2="-15.25" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="+5V">
 <contactref element="U7" pad="3"/>
@@ -5419,6 +5486,7 @@ design rules under a new name.</description>
 <contactref element="U2" pad="6"/>
 <contactref element="C7" pad="1"/>
 <contactref element="C10" pad="1"/>
+<contactref element="R4" pad="2"/>
 <wire x1="60.85" y1="30" x2="58.73" y2="35.2" width="0" layer="19" extent="1-1"/>
 <wire x1="56" y1="29.15" x2="60.85" y2="30" width="0" layer="19" extent="1-1"/>
 <wire x1="41" y1="24.25" x2="56" y2="29.15" width="0" layer="19" extent="1-1"/>
@@ -5431,6 +5499,7 @@ design rules under a new name.</description>
 <wire x1="8.85" y1="30" x2="11" y2="20.15" width="0" layer="19" extent="1-1"/>
 <wire x1="10.73" y1="35.2" x2="8.85" y2="30" width="0" layer="19" extent="1-1"/>
 <wire x1="44.89" y1="4.81" x2="41" y2="24.25" width="0" layer="19" extent="1-1"/>
+<wire x1="-5.15" y1="-13" x2="19" y2="14.85" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="AIN1">
 <contactref element="U1" pad="2"/>
@@ -5482,10 +5551,12 @@ design rules under a new name.</description>
 <contactref element="U7" pad="2"/>
 <contactref element="U1" pad="11"/>
 <contactref element="C6" pad="1"/>
+<contactref element="R3" pad="2"/>
 <wire x1="36.15" y1="10" x2="36.0475" y2="12.27585" width="0" layer="19" extent="1-1"/>
 <wire x1="29" y1="13.15" x2="36.0475" y2="12.27585" width="0" layer="19" extent="1-1"/>
 <wire x1="24" y1="10.975" x2="29" y2="13.15" width="0" layer="19" extent="1-1"/>
 <wire x1="24" y1="17.025" x2="24" y2="10.975" width="0" layer="19" extent="1-1"/>
+<wire x1="-5.15" y1="-9" x2="24" y2="10.975" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$3">
 <contactref element="U$4" pad="4"/>
@@ -5535,6 +5606,7 @@ design rules under a new name.</description>
 <contactref element="F1" pad="LEG1" route="any" routetag="G$1.1"/>
 <contactref element="F2" pad="1" route="any" routetag="G$1.1"/>
 <contactref element="F2" pad="LEG1" route="any" routetag="G$1.1"/>
+<contactref element="R5" pad="2"/>
 <wire x1="39.85" y1="50" x2="58.92" y2="59.935" width="0" layer="19" extent="1-1"/>
 <wire x1="39.85" y1="44" x2="39.85" y2="50" width="0" layer="19" extent="1-1"/>
 <wire x1="39.68" y1="36.54" x2="39.85" y2="44" width="0" layer="19" extent="1-1"/>
@@ -5542,15 +5614,16 @@ design rules under a new name.</description>
 <wire x1="29.85" y1="46" x2="32.15" y2="50" width="0" layer="19" extent="1-1"/>
 <wire x1="36" y1="65.8455" x2="39.85" y2="50" width="0" layer="19" extent="1-1"/>
 <wire x1="13.08" y1="68.065" x2="36" y2="65.8455" width="0" layer="19" extent="1-1"/>
+<wire x1="-5.15" y1="-17" x2="39.68" y2="36.54" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$6">
-<contactref element="U$2" pad="4"/>
 <contactref element="U$1" pad="P$1"/>
 <contactref element="U2" pad="1"/>
 <contactref element="C15" pad="2"/>
+<contactref element="U$2" pad="2"/>
 <wire x1="33.15" y1="40" x2="39.68" y2="37.81" width="0" layer="19" extent="1-1"/>
 <wire x1="24" y1="37.95" x2="33.15" y2="40" width="0" layer="19" extent="1-1"/>
-<wire x1="27.9012" y1="33" x2="24" y2="37.95" width="0" layer="19" extent="1-1"/>
+<wire x1="-15.675" y1="-23" x2="24" y2="37.95" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$7">
 <contactref element="U2" pad="3"/>
@@ -5580,6 +5653,21 @@ design rules under a new name.</description>
 <contactref element="U$5" pad="7"/>
 <contactref element="J3" pad="BATT"/>
 <wire x1="71" y1="34.8455" x2="53.575" y2="49" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$5">
+<contactref element="R3" pad="1"/>
+<contactref element="D1" pad="A"/>
+<wire x1="-6.85" y1="-9" x2="-11" y2="-16.75" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$8">
+<contactref element="R4" pad="1"/>
+<contactref element="D2" pad="A"/>
+<wire x1="-6.85" y1="-13" x2="-16" y2="-16.75" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$9">
+<contactref element="R5" pad="1"/>
+<contactref element="D3" pad="A"/>
+<wire x1="-6.85" y1="-17" x2="-21" y2="-16.75" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>
 <mfgpreviewcolors>
