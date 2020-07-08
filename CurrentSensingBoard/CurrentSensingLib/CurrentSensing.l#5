@@ -1360,7 +1360,7 @@ Diode with low voltage drop</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="TR3E156M050C0300">
+<deviceset name="TR3E156M050C0300" uservalue="yes">
 <gates>
 <gate name="G$1" symbol="CPOL-US" x="0" y="0"/>
 </gates>
@@ -1376,7 +1376,7 @@ Diode with low voltage drop</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="860010373009">
+<deviceset name="860010373009" uservalue="yes">
 <gates>
 <gate name="G$1" symbol="CPOL-US" x="0" y="0"/>
 </gates>
