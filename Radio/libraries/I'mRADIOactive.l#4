@@ -2134,7 +2134,7 @@ Temp: -40~+85°C</text>
 </device>
 </devices>
 </deviceset>
-<deviceset name="BUTTON">
+<deviceset name="BUTTON" prefix="U">
 <gates>
 <gate name="G$1" symbol="BUTTON" x="0" y="0"/>
 </gates>

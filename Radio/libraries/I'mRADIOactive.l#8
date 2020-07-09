@@ -1549,8 +1549,8 @@ Temp: -40~+85°C</text>
 <wire x1="-0.635" y1="0.635" x2="0.635" y2="0.635" width="0.254" layer="94"/>
 <wire x1="0.635" y1="0.635" x2="0.635" y2="0" width="0.254" layer="94"/>
 <wire x1="0.635" y1="0" x2="1.27" y2="0" width="0.254" layer="94"/>
-<pin name="P$1" x="-0.635" y="-0.635" length="short" rot="R180"/>
-<pin name="P$2" x="0.635" y="-0.635" length="short"/>
+<pin name="P$1" x="-0.635" y="-0.635" visible="off" length="short" rot="R180"/>
+<pin name="P$2" x="0.635" y="-0.635" visible="off" length="short"/>
 <text x="-3.048" y="3.302" size="1.27" layer="95">&gt;Name</text>
 <text x="-2.54" y="-4.318" size="1.27" layer="96">&gt;Value</text>
 <wire x1="-0.635" y1="-0.635" x2="0.635" y2="-0.635" width="0.254" layer="94"/>

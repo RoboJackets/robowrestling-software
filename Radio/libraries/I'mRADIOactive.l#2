@@ -1983,7 +1983,7 @@ Temp: -40~+85°C</text>
 </device>
 </devices>
 </deviceset>
-<deviceset name="AP63203WU-7">
+<deviceset name="AP63203WU-7" prefix="U">
 <gates>
 <gate name="G$1" symbol="AP63203WU-7" x="0" y="0"/>
 </gates>
