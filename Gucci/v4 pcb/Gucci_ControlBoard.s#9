@@ -5433,6 +5433,30 @@ by exp-lbrs.ulp</description>
 <text x="-8" y="8.5" size="0.8128" layer="25" ratio="18">&gt;NAME</text>
 <text x="-8.1" y="-8.7" size="0.4064" layer="25" ratio="10">&gt;VALUE</text>
 </package>
+<package name="MOLEX_2.54MM_2PIN">
+<description>MOLEX_2.54MM_2PIN
+1719770002
+DigiKey: WM22676-ND</description>
+<smd name="P$1" x="1.27" y="10.69" dx="5.33" dy="1.65" layer="1" rot="R90"/>
+<smd name="P$2" x="-1.27" y="10.69" dx="5.33" dy="1.65" layer="1" rot="R90"/>
+<wire x1="-5" y1="14" x2="-5" y2="-2" width="0.1524" layer="21"/>
+<wire x1="-5" y1="-2" x2="5" y2="-2" width="0.1524" layer="21"/>
+<wire x1="5" y1="-2" x2="5" y2="14" width="0.1524" layer="21"/>
+<wire x1="5" y1="14" x2="-5" y2="14" width="0.1524" layer="21"/>
+<text x="-5.4" y="14.2" size="1.778" layer="25">&gt;Name</text>
+<text x="-4.2" y="-4" size="1.778" layer="27">&gt;Value</text>
+<hole x="-2.67" y="0" drill="3.4"/>
+<hole x="2.67" y="0" drill="3.4"/>
+</package>
+<package name="BEL_FUSE_C1F_3.5">
+<description>507-1884-1-ND</description>
+<smd name="P$1" x="-2.09" y="0" dx="1.78" dy="1.14" layer="1" rot="R90"/>
+<smd name="P$2" x="2.09" y="0" dx="1.78" dy="1.14" layer="1" rot="R90"/>
+<wire x1="-2.94" y1="1.27" x2="-2.94" y2="-1.27" width="0.1524" layer="21"/>
+<wire x1="-2.94" y1="-1.27" x2="2.94" y2="-1.27" width="0.1524" layer="21"/>
+<wire x1="2.94" y1="-1.27" x2="2.94" y2="1.27" width="0.1524" layer="21"/>
+<wire x1="2.94" y1="1.27" x2="-2.94" y2="1.27" width="0.1524" layer="21"/>
+</package>
 </packages>
 <symbols>
 <symbol name="CONN_04">
@@ -5520,6 +5544,25 @@ ISM BAND RADIO</text>
 <text x="0" y="-15.24" size="1.27" layer="94" align="center">VDD: 1.8-3.6V
 Temp: -40~+85°C</text>
 </symbol>
+<symbol name="CONN_02">
+<description>2 Pin Connection</description>
+<wire x1="-3.81" y1="-5.08" x2="-3.81" y2="5.08" width="0.4064" layer="94"/>
+<wire x1="-3.81" y1="5.08" x2="3.81" y2="5.08" width="0.4064" layer="94"/>
+<wire x1="3.81" y1="5.08" x2="3.81" y2="-5.08" width="0.4064" layer="94"/>
+<wire x1="3.81" y1="-5.08" x2="-3.81" y2="-5.08" width="0.4064" layer="94"/>
+<pin name="P$1" x="7.62" y="2.54" length="middle" rot="R180"/>
+<pin name="P$2" x="7.62" y="-2.54" length="middle" rot="R180"/>
+<wire x1="1.27" y1="2.54" x2="2.54" y2="2.54" width="0.6096" layer="94"/>
+<wire x1="1.27" y1="-2.54" x2="2.54" y2="-2.54" width="0.6096" layer="94"/>
+<text x="-3.81" y="6.604" size="1.778" layer="95">&gt;NAME</text>
+<text x="-4.064" y="-7.62" size="1.778" layer="95">&gt;VALUE</text>
+</symbol>
+<symbol name="FUSE">
+<pin name="P$1" x="-2.54" y="0" length="point"/>
+<pin name="P$2" x="2.54" y="0" length="point"/>
+<wire x1="-2.54" y1="0" x2="0" y2="0" width="0.1524" layer="94" curve="180"/>
+<wire x1="0" y1="0" x2="2.54" y2="0" width="0.1524" layer="94" curve="-180"/>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="MOLEX_1.25MM_4PIN_SMT">
@@ -5604,6 +5647,39 @@ Temp: -40~+85°C</text>
 <connect gate="RFM59HCW" pin="RESET" pad="14P"/>
 <connect gate="RFM59HCW" pin="SCK" pad="12P"/>
 <connect gate="RFM59HCW" pin="VDD" pad="5P"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="MOLEX_2.54MM_2PIN">
+<description>MOLEX_2.54MM_2PIN 1719770002 DigiKey: WM22676-ND</description>
+<gates>
+<gate name="G$1" symbol="CONN_02" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="MOLEX_2.54MM_2PIN">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="BEL_FUSE_C1F_3.5">
+<gates>
+<gate name="G$1" symbol="FUSE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="BEL_FUSE_C1F_3.5">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -5988,6 +6064,8 @@ Temp: -40~+85°C</text>
 <part name="C15" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="C16" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="C25" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
+<part name="POWER_CONN" library="Kirbi_ControlBoard" deviceset="MOLEX_2.54MM_2PIN" device=""/>
+<part name="U$2" library="Kirbi_ControlBoard" deviceset="BEL_FUSE_C1F_3.5" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -6468,6 +6546,11 @@ Temp: -40~+85°C</text>
 <attribute name="NAME" x="103.378" y="232.029" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="103.378" y="226.949" size="1.778" layer="96" font="vector"/>
 </instance>
+<instance part="POWER_CONN" gate="G$1" x="266.7" y="101.6" smashed="yes">
+<attribute name="NAME" x="262.89" y="108.204" size="1.778" layer="95"/>
+<attribute name="VALUE" x="262.636" y="93.98" size="1.778" layer="95"/>
+</instance>
+<instance part="U$2" gate="G$1" x="279.4" y="104.14" smashed="yes"/>
 </instances>
 <busses>
 </busses>
@@ -6717,6 +6800,9 @@ Temp: -40~+85°C</text>
 <pinref part="R1" gate="G$1" pin="1"/>
 <wire x1="304.292" y1="85.09" x2="283.972" y2="85.09" width="0.1524" layer="91"/>
 <junction x="304.292" y="85.09"/>
+<pinref part="POWER_CONN" gate="G$1" pin="P$2"/>
+<wire x1="274.32" y1="99.06" x2="283.972" y2="99.06" width="0.1524" layer="91"/>
+<wire x1="283.972" y1="99.06" x2="283.972" y2="85.09" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="LINE_LF" gate="G$1" pin="3"/>
@@ -7545,6 +7631,22 @@ Temp: -40~+85°C</text>
 <pinref part="U2" gate="G$1" pin="29/T/PWM"/>
 <wire x1="165.1" y1="162.56" x2="160.02" y2="162.56" width="0.1524" layer="91"/>
 <label x="160.02" y="162.56" size="1.778" layer="95" rot="R180" xref="yes"/>
+</segment>
+</net>
+<net name="N$7" class="0">
+<segment>
+<pinref part="U$2" gate="G$1" pin="P$1"/>
+<pinref part="POWER_CONN" gate="G$1" pin="P$1"/>
+<wire x1="274.32" y1="104.14" x2="276.86" y2="104.14" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$6" class="0">
+<segment>
+<pinref part="U$2" gate="G$1" pin="P$2"/>
+<wire x1="281.94" y1="104.14" x2="284.48" y2="104.14" width="0.1524" layer="91"/>
+<wire x1="284.48" y1="104.14" x2="284.48" y2="110.49" width="0.1524" layer="91"/>
+<pinref part="POWER" gate="G$1" pin="P4"/>
+<wire x1="284.48" y1="110.49" x2="286.512" y2="110.49" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
