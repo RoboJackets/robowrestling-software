@@ -4975,7 +4975,7 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="9.54" y="14.445" size="1.27" layer="27" rot="R180"/>
 </element>
 <element name="U5" library="Gucci_ControlBoard" package="8-SOIC" value="LM393-8-SOIC" x="12.7" y="38.3" smashed="yes">
-<attribute name="NAME" x="16.3" y="35.8" size="1" layer="25" font="vector" rot="R180"/>
+<attribute name="NAME" x="16.4" y="41.7" size="1" layer="25" font="vector" rot="R180"/>
 <attribute name="VALUE" x="10.7" y="34.5" size="1" layer="27"/>
 </element>
 <element name="C20" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="15pF" x="11.4" y="43" smashed="yes" rot="R270">
@@ -4989,7 +4989,7 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="17" y="48.762" size="0.6096" layer="27" font="vector" ratio="20" rot="R180" align="top-center"/>
 </element>
 <element name="C19" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="15pF" x="14" y="43" smashed="yes" rot="R90">
-<attribute name="NAME" x="15.738" y="42.9" size="0.8128" layer="25" font="vector" ratio="20" rot="R270" align="bottom-center"/>
+<attribute name="NAME" x="15.738" y="43" size="0.8128" layer="25" font="vector" ratio="20" rot="R270" align="bottom-center"/>
 <attribute name="PROD_ID" value="CAP-00810" x="14" y="43" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="VALUE" x="14.762" y="43" size="0.6096" layer="27" font="vector" ratio="20" rot="R90" align="top-center"/>
 </element>
@@ -5111,11 +5111,11 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="41.949" y="43.413" size="0.6096" layer="28" rot="MR180"/>
 </element>
 <element name="ESC1" library="Kirbi_ControlBoard" package="MOLEX_1.25MM_3PIN_SMT" value="MOLEX_1.25MM_3PIN_SMT" x="48.6" y="38" smashed="yes" rot="MR270">
-<attribute name="NAME" x="49.5" y="43.4" size="1.778" layer="26" font="vector" rot="MR90"/>
+<attribute name="NAME" x="44.2" y="32.5" size="1.778" layer="26" font="vector" rot="MR90"/>
 <attribute name="VALUE" x="54.6" y="43" size="1.778" layer="28" font="vector" rot="MR270"/>
 </element>
 <element name="ESC2" library="Kirbi_ControlBoard" package="MOLEX_1.25MM_3PIN_SMT" value="MOLEX_1.25MM_3PIN_SMT" x="46.4" y="52.4" smashed="yes" rot="MR180">
-<attribute name="NAME" x="41.9" y="49.6" size="1.778" layer="26" font="vector" rot="MR180"/>
+<attribute name="NAME" x="46.2" y="49.4" size="1.778" layer="26" font="vector" rot="MR180"/>
 <attribute name="VALUE" x="41.4" y="58.4" size="1.778" layer="28" font="vector" rot="MR180"/>
 </element>
 <element name="ESC_TX" library="Kirbi_ControlBoard" package="MUX_74LVC1G157GV" value="MUX_74LVC1G157GV" x="40" y="41" smashed="yes" rot="MR180">
@@ -5137,7 +5137,7 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="14.9" y="33.238" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
 </element>
 <element name="R4" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" package="0603" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k" x="10.3" y="32.2" smashed="yes">
-<attribute name="NAME" x="10.5" y="30.562" size="0.8128" layer="25" font="vector" ratio="20" align="bottom-center"/>
+<attribute name="NAME" x="12.838" y="32.2" size="0.8128" layer="25" font="vector" ratio="20" rot="R90" align="bottom-center"/>
 <attribute name="PROD_ID" value="RES-07856" x="10.3" y="32.2" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="10.3" y="31.438" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
 </element>
@@ -5286,9 +5286,9 @@ design rules under a new name.</description>
 <wire x1="11.15" y1="42.4" x2="10.3" y2="42.4" width="0.2" layer="1"/>
 <via x="10.3" y="42.4" extent="1-16" drill="0.4"/>
 <contactref element="POWER_CONN" pad="P$2"/>
-<wire x1="12.6" y1="33.2" x2="11.8" y2="34" width="0.2" layer="1"/>
-<wire x1="11.8" y1="34" x2="11.25" y2="34" width="0.2" layer="1"/>
-<via x="12.6" y="33.2" extent="1-16" drill="0.4"/>
+<wire x1="12.6" y1="33.9" x2="12.5" y2="34" width="0.2" layer="1"/>
+<wire x1="12.5" y1="34" x2="11.25" y2="34" width="0.2" layer="1"/>
+<via x="12.6" y="33.9" extent="1-16" drill="0.4"/>
 <wire x1="23.6" y1="23.2" x2="23.9" y2="23.5" width="0.2" layer="1"/>
 <wire x1="23.9" y1="23.5" x2="24.8" y2="23.5" width="0.2" layer="1"/>
 <via x="24.8" y="23.5" extent="1-16" drill="0.4"/>

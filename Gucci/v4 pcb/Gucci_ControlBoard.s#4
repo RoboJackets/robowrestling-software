@@ -6886,11 +6886,11 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <attribute name="NAME" x="276.86" y="162.56" size="2.1844" layer="125"/>
 <attribute name="VALUE" x="266.7" y="129.54" size="2.1844" layer="127"/>
 </instance>
-<instance part="+3V16" gate="G$1" x="274.32" y="167.64" smashed="yes">
-<attribute name="VALUE" x="271.78" y="162.56" size="1.778" layer="96" rot="R90"/>
+<instance part="+3V16" gate="G$1" x="274.32" y="170.18" smashed="yes">
+<attribute name="VALUE" x="271.78" y="165.1" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="+3V17" gate="G$1" x="312.42" y="167.894" smashed="yes">
-<attribute name="VALUE" x="309.88" y="162.814" size="1.778" layer="96" rot="R90"/>
+<instance part="+3V17" gate="G$1" x="312.42" y="170.434" smashed="yes">
+<attribute name="VALUE" x="309.88" y="165.354" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="GND21" gate="1" x="279.4" y="170.18" smashed="yes">
 <attribute name="VALUE" x="279.4" y="169.926" size="1.778" layer="96" align="top-center"/>
@@ -7012,6 +7012,16 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <pinref part="+3V11" gate="G$1" pin="+3V3"/>
 <pinref part="C4" gate="G$1" pin="1"/>
 <junction x="236.22" y="45.72"/>
+</segment>
+<segment>
+<pinref part="+3V16" gate="G$1" pin="+3V3"/>
+<pinref part="ESC_TX" gate="G$1" pin="V"/>
+<wire x1="274.32" y1="167.64" x2="274.32" y2="165.1" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="+3V17" gate="G$1" pin="+3V3"/>
+<pinref part="ESC_RX" gate="G$1" pin="V"/>
+<wire x1="312.42" y1="167.894" x2="312.42" y2="165.1" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -7979,12 +7989,6 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <wire x1="284.48" y1="104.14" x2="284.48" y2="110.49" width="0.1524" layer="91"/>
 <pinref part="POWER" gate="G$1" pin="P4"/>
 <wire x1="284.48" y1="110.49" x2="286.512" y2="110.49" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="+3V3" class="0">
-<segment>
-<pinref part="+3V16" gate="G$1" pin="+3V3"/>
-<pinref part="ESC_TX" gate="G$1" pin="V"/>
 </segment>
 </net>
 <net name="S1/RX" class="0">

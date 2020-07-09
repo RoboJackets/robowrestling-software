@@ -5524,12 +5524,11 @@ design rules under a new name.</description>
 <contactref element="R4" pad="2"/>
 <wire x1="41" y1="48" x2="35.1" y2="48" width="0.2" layer="16"/>
 <wire x1="35.1" y1="48" x2="34.6" y2="48.5" width="0.2" layer="16"/>
-<wire x1="12.55" y1="28" x2="12.55" y2="25.55" width="0.2" layer="1"/>
-<wire x1="12.55" y1="25.55" x2="12" y2="25" width="0.2" layer="1"/>
 <wire x1="17.9566" y1="33.3444" x2="16.0056" y2="33.3444" width="0.2" layer="1"/>
 <wire x1="15.85" y1="33.5" x2="16.0056" y2="33.3444" width="0.2" layer="1"/>
 <wire x1="17.9566" y1="33.3444" x2="19.301" y2="32" width="0.2" layer="1"/>
-<wire x1="12" y1="24.55" x2="12" y2="25" width="0" layer="19" extent="1-1"/>
+<wire x1="12.55" y1="28" x2="12.55" y2="25.1" width="0.2" layer="1"/>
+<wire x1="12.55" y1="25.1" x2="12" y2="24.55" width="0.2" layer="1"/>
 </signal>
 <signal name="LINE_LF">
 <contactref element="U2" pad="35/A16"/>

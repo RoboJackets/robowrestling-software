@@ -7333,6 +7333,19 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <pinref part="ESC_RX" gate="G$1" pin="V"/>
 <wire x1="312.42" y1="167.894" x2="312.42" y2="165.1" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="+3V19" gate="G$1" pin="+3V3"/>
+<pinref part="R5" gate="G$1" pin="2"/>
+<wire x1="137.16" y1="164.084" x2="137.16" y2="162.56" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="+3V18" gate="G$1" pin="+3V3"/>
+<pinref part="R3" gate="G$1" pin="2"/>
+<wire x1="121.412" y1="221.742" x2="121.412" y2="219.964" width="0.1524" layer="91"/>
+<pinref part="R4" gate="G$1" pin="2"/>
+<wire x1="128.524" y1="220.218" x2="121.412" y2="219.964" width="0.1524" layer="91"/>
+<junction x="121.412" y="219.964"/>
+</segment>
 </net>
 <net name="GND" class="0">
 <segment>
@@ -8399,21 +8412,6 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <pinref part="R2" gate="G$1" pin="1"/>
 <pinref part="D4" gate="G$1" pin="C"/>
 <wire x1="287.02" y1="33.02" x2="279.4" y2="33.02" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="+3V3" class="0">
-<segment>
-<pinref part="+3V19" gate="G$1" pin="+3V3"/>
-<pinref part="R5" gate="G$1" pin="2"/>
-<wire x1="137.16" y1="164.084" x2="137.16" y2="162.56" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="+3V18" gate="G$1" pin="+3V3"/>
-<pinref part="R3" gate="G$1" pin="2"/>
-<wire x1="121.412" y1="221.742" x2="121.412" y2="219.964" width="0.1524" layer="91"/>
-<pinref part="R4" gate="G$1" pin="2"/>
-<wire x1="128.524" y1="220.218" x2="121.412" y2="219.964" width="0.1524" layer="91"/>
-<junction x="121.412" y="219.964"/>
 </segment>
 </net>
 </nets>

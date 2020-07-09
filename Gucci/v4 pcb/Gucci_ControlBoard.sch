@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.5.1">
+<eagle version="9.5.2">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -6686,6 +6686,8 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <part name="R5" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k"/>
 <part name="+3V18" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="+3V19" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
+<part name="GND29" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
+<part name="GND30" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -7208,6 +7210,12 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <instance part="+3V19" gate="G$1" x="137.16" y="166.624" smashed="yes">
 <attribute name="VALUE" x="134.62" y="161.544" size="1.778" layer="96" rot="R90"/>
 </instance>
+<instance part="GND29" gate="1" x="274.32" y="132.08" smashed="yes">
+<attribute name="VALUE" x="274.32" y="131.826" size="1.778" layer="96" align="top-center"/>
+</instance>
+<instance part="GND30" gate="1" x="312.42" y="132.08" smashed="yes">
+<attribute name="VALUE" x="312.42" y="131.826" size="1.778" layer="96" align="top-center"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -7603,6 +7611,14 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <pinref part="ESC2" gate="G$1" pin="1"/>
 <wire x1="312.42" y1="172.72" x2="317.5" y2="172.72" width="0.1524" layer="91"/>
 <pinref part="GND27" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="ESC_RX" gate="G$1" pin="GND"/>
+<pinref part="GND30" gate="1" pin="GND"/>
+</segment>
+<segment>
+<pinref part="ESC_TX" gate="G$1" pin="GND"/>
+<pinref part="GND29" gate="1" pin="GND"/>
 </segment>
 </net>
 <net name="LINE_LF" class="0">

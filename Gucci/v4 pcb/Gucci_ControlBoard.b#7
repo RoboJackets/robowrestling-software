@@ -4999,7 +4999,7 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="44.871659375" y="4.344603125" size="1.6" layer="27" rot="R43.7"/>
 </element>
 <element name="DIST_6" library="Kirbi_ControlBoard" package="MOLEX_1.25MM_4PIN_SMT" value="MOLEX_1.25MM_4PIN_SMT" x="50" y="22" smashed="yes" rot="R90">
-<attribute name="NAME" x="45.8" y="18.9" size="1.6" layer="25" font="vector" rot="R90"/>
+<attribute name="NAME" x="45.8" y="18.3" size="1.6" layer="25" font="vector" rot="R90"/>
 <attribute name="VALUE" x="54" y="18" size="1.6" layer="27" rot="R90"/>
 </element>
 <element name="DIST_1" library="Kirbi_ControlBoard" package="MOLEX_1.25MM_4PIN_SMT" value="MOLEX_1.25MM_4PIN_SMT" x="-12" y="22" smashed="yes" rot="R270">
@@ -5045,7 +5045,7 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="17.73" y="-1.175" size="1.27" layer="27"/>
 </element>
 <element name="C5" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF" x="47" y="26.3" smashed="yes" rot="R89.5">
-<attribute name="NAME" x="46.238025" y="26.306640625" size="0.8128" layer="25" font="vector" ratio="20" rot="R89.5" align="bottom-center"/>
+<attribute name="NAME" x="46.038025" y="26.306640625" size="0.8128" layer="25" font="vector" ratio="20" rot="R89.5" align="bottom-center"/>
 <attribute name="PROD_ID" value="CAP-00810" x="47" y="26.3" size="1.778" layer="27" rot="R89.5" display="off"/>
 <attribute name="VALUE" x="47.76196875" y="26.293340625" size="0.6096" layer="27" font="vector" ratio="20" rot="R89.5" align="top-center"/>
 </element>
@@ -5725,10 +5725,10 @@ design rules under a new name.</description>
 <wire x1="31" y1="12.2" x2="31" y2="8" width="0.2" layer="16"/>
 <wire x1="31" y1="8" x2="31.6" y2="7.4" width="0.2" layer="16"/>
 <wire x1="31.6" y1="7.4" x2="35.7" y2="7.4" width="0.2" layer="16"/>
-<wire x1="44.451" y1="16.151" x2="44.451" y2="26.549" width="0.2" layer="16"/>
-<wire x1="44.451" y1="26.549" x2="44" y2="27" width="0.2" layer="16"/>
-<via x="44" y="27" extent="1-16" drill="0.4"/>
-<wire x1="44" y1="27" x2="42" y2="29" width="0.2" layer="1"/>
+<wire x1="44.451" y1="16.151" x2="44.451" y2="26.149" width="0.2" layer="16"/>
+<wire x1="44.451" y1="26.149" x2="43.8" y2="26.8" width="0.2" layer="16"/>
+<via x="43.8" y="26.8" extent="1-16" drill="0.4"/>
+<wire x1="43.8" y1="26.8" x2="42" y2="28.6" width="0.2" layer="1"/>
 <wire x1="42" y1="34" x2="38" y2="38" width="0.2" layer="1"/>
 <via x="38" y="38" extent="1-16" drill="0.4"/>
 <wire x1="38" y1="38" x2="32" y2="44" width="0.2" layer="16"/>
@@ -5737,7 +5737,7 @@ design rules under a new name.</description>
 <wire x1="29.549" y1="44.451" x2="29.549" y2="45.6296625" width="0.2" layer="16"/>
 <wire x1="28.2696625" y1="46.909" x2="24.369" y2="46.909" width="0.2" layer="16"/>
 <wire x1="24.369" y1="46.909" x2="23.08" y2="45.62" width="0.2" layer="16"/>
-<wire x1="42" y1="29" x2="42" y2="34" width="0.2" layer="1"/>
+<wire x1="42" y1="28.6" x2="42" y2="34" width="0.2" layer="1"/>
 <wire x1="29.549" y1="45.6296625" x2="28.2696625" y2="46.909" width="0.2" layer="16"/>
 </signal>
 <signal name="RADIO_NSS">
@@ -5746,12 +5746,12 @@ design rules under a new name.</description>
 <wire x1="28.6156" y1="9.4844" x2="28.6156" y2="8.00981875" width="0.2" layer="16"/>
 <wire x1="28.6156" y1="8.00981875" x2="30.12541875" y2="6.5" width="0.2" layer="16"/>
 <wire x1="30.12541875" y1="6.5" x2="35.7" y2="6.5" width="0.2" layer="16"/>
-<wire x1="45.2066" y1="16.0066" x2="45.2066" y2="27.3" width="0.2" layer="16"/>
-<via x="45.2066" y="27.3" extent="1-16" drill="0.4"/>
-<wire x1="35.7" y1="6.5" x2="45.2066" y2="16.0066" width="0.2" layer="16"/>
+<wire x1="44.9066" y1="15.7066" x2="44.9066" y2="27.3" width="0.2" layer="16"/>
+<via x="44.9066" y="27.3" extent="1-16" drill="0.4"/>
+<wire x1="35.7" y1="6.5" x2="44.9066" y2="15.7066" width="0.2" layer="16"/>
 <contactref element="U2" pad="30"/>
-<wire x1="45.2066" y1="27.3" x2="43.4" y2="29.1066" width="0.2" layer="1"/>
-<wire x1="43.4" y1="29.1066" x2="43.4" y2="30.38" width="0.2" layer="1"/>
+<wire x1="44.9066" y1="27.3" x2="43.4" y2="28.8066" width="0.2" layer="1"/>
+<wire x1="43.4" y1="28.8066" x2="43.4" y2="30.38" width="0.2" layer="1"/>
 </signal>
 <signal name="RADIO_DIO0">
 <contactref element="TRANSCEIVER" pad="6P"/>
