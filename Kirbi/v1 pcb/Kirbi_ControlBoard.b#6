@@ -3,7 +3,7 @@
 <eagle version="9.5.1">
 <drawing>
 <settings>
-<setting alwaysvectorfont="no"/>
+<setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
 <grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="no" altdistance="0.1" altunitdist="mm" altunit="mm"/>
@@ -5084,9 +5084,9 @@ design rules under a new name.</description>
 <attribute name="NAME" x="45.4" y="43" size="1.778" layer="26" font="vector" rot="MR270"/>
 <attribute name="VALUE" x="54.4" y="43" size="1.778" layer="28" font="vector" rot="MR270"/>
 </element>
-<element name="F1" library="Kirbi_ControlBoard" package="BEL_FUSE_C1F_3.5" value="3.5" x="8" y="40" smashed="yes" rot="MR90">
-<attribute name="NAME" x="6.805" y="34.452" size="1.778" layer="26" font="vector" rot="MR90"/>
-<attribute name="VALUE" x="4.444" y="37.079" size="1.778" layer="28" font="vector" rot="MR90"/>
+<element name="F1" library="Kirbi_ControlBoard" package="BEL_FUSE_C1F_3.5" value="3.5" x="7.5" y="35.6" smashed="yes" rot="MR90">
+<attribute name="NAME" x="9.305" y="35.052" size="1.778" layer="26" font="vector" rot="MR90"/>
+<attribute name="VALUE" x="3.944" y="32.679" size="1.778" layer="28" font="vector" rot="MR90"/>
 </element>
 </elements>
 <signals>
@@ -5173,9 +5173,9 @@ design rules under a new name.</description>
 <contactref element="MUX_TX2" pad="P$2"/>
 <contactref element="MUX_RX1" pad="P$2"/>
 <contactref element="MUX_RX2" pad="P$2"/>
-<wire x1="10" y1="36.395" x2="10.9" y2="35.495" width="0.2" layer="1"/>
-<wire x1="10.9" y1="35.495" x2="10.9" y2="35.1" width="0.2" layer="1"/>
-<via x="10.9" y="35.1" extent="1-16" drill="0.4"/>
+<wire x1="10" y1="36.395" x2="11.295" y2="35.1" width="0.2" layer="1"/>
+<wire x1="11.295" y1="35.1" x2="11.9" y2="35.1" width="0.2" layer="1"/>
+<via x="11.9" y="35.1" extent="1-16" drill="0.4"/>
 <wire x1="-2" y1="16.875" x2="-2" y2="15" width="0.2" layer="1"/>
 <via x="-2" y="15" extent="1-16" drill="0.4"/>
 <wire x1="3" y1="15.7" x2="3.8" y2="14.9" width="0.2" layer="1"/>
@@ -5468,18 +5468,16 @@ design rules under a new name.</description>
 <wire x1="-4.3413375" y1="29.3" x2="-3.62" y2="30.0213375" width="0.2" layer="16"/>
 <wire x1="-11.6" y1="23.4" x2="-5.7" y2="29.3" width="0.2" layer="16"/>
 <wire x1="-5.7" y1="29.3" x2="-4.3413375" y2="29.3" width="0.2" layer="16"/>
-<wire x1="-3.62" y1="44.32" x2="-3.62" y2="37" width="0.2" layer="16"/>
-<wire x1="-3.62" y1="37" x2="-3.62" y2="30.0213375" width="0.2" layer="16"/>
+<wire x1="-3.62" y1="44.32" x2="-3.62" y2="43" width="0.2" layer="16"/>
+<wire x1="-3.62" y1="43" x2="-3.62" y2="30.0213375" width="0.2" layer="16"/>
 <wire x1="-3.62" y1="44.32" x2="-2.32" y2="45.62" width="0.2" layer="16"/>
 <wire x1="11.435" y1="37.565" x2="10.1" y2="37.565" width="0.2" layer="1"/>
 <wire x1="10" y1="37.665" x2="10.1" y2="37.565" width="0.2" layer="1"/>
 <wire x1="11.6" y1="37.4" x2="11.435" y2="37.565" width="0.2" layer="1"/>
 <via x="11.6" y="37.4" extent="1-16" drill="0.4"/>
-<wire x1="-2.62" y1="38" x2="-3.62" y2="37" width="0.2" layer="16"/>
-<wire x1="-2.62" y1="38" x2="5" y2="38" width="0.2" layer="16"/>
-<wire x1="5" y1="38" x2="6.1" y2="36.9" width="0.2" layer="16"/>
-<wire x1="6.1" y1="36.9" x2="11.1" y2="36.9" width="0.2" layer="16"/>
-<wire x1="11.1" y1="36.9" x2="11.6" y2="37.4" width="0.2" layer="16"/>
+<wire x1="11.6" y1="37.4" x2="7" y2="42" width="0.2" layer="16"/>
+<wire x1="-2.62" y1="42" x2="-3.62" y2="43" width="0.2" layer="16"/>
+<wire x1="7" y1="42" x2="-2.62" y2="42" width="0.2" layer="16"/>
 </signal>
 <signal name="START">
 <contactref element="START" pad="1"/>
@@ -5951,8 +5949,11 @@ design rules under a new name.</description>
 <signal name="N$7">
 <contactref element="POWER_CONN" pad="P$1"/>
 <contactref element="F1" pad="P$1"/>
-<wire x1="1.39" y1="39.27" x2="6.64" y2="39.27" width="0.6" layer="16"/>
-<wire x1="6.64" y1="39.27" x2="8" y2="37.91" width="0.6" layer="16"/>
+<wire x1="5.7" y1="35" x2="5.7" y2="37.4" width="0.6" layer="16"/>
+<wire x1="5.7" y1="35" x2="7.19" y2="33.51" width="0.6" layer="16"/>
+<wire x1="7.19" y1="33.51" x2="7.5" y2="33.51" width="0.6" layer="16"/>
+<wire x1="5.7" y1="37.4" x2="3.83" y2="39.27" width="0.6" layer="16"/>
+<wire x1="3.83" y1="39.27" x2="1.39" y2="39.27" width="0.6" layer="16"/>
 </signal>
 <signal name="N$6">
 <contactref element="POWER" pad="P4"/>
@@ -5962,8 +5963,8 @@ design rules under a new name.</description>
 <wire x1="-8" y1="44" x2="-10.95" y2="44" width="0.6" layer="1"/>
 <wire x1="-10.95" y1="44" x2="-12.53" y2="42.42" width="0.6" layer="1"/>
 <contactref element="F1" pad="P$2"/>
-<wire x1="6.79641875" y1="40.88641875" x2="8" y2="42.09" width="0.6" layer="16"/>
-<wire x1="-2.41358125" y1="40.88641875" x2="6.79641875" y2="40.88641875" width="0.6" layer="16"/>
+<wire x1="4.30358125" y1="40.88641875" x2="7.5" y2="37.69" width="0.6" layer="16"/>
+<wire x1="-2.41358125" y1="40.88641875" x2="4.30358125" y2="40.88641875" width="0.6" layer="16"/>
 </signal>
 <signal name="S1/TTX">
 <contactref element="U2" pad="33/A14"/>

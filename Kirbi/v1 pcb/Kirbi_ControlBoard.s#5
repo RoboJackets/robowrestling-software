@@ -6393,7 +6393,7 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <part name="POWER_CONN" library="Kirbi_ControlBoard" deviceset="MOLEX_2.54MM_2PIN" device=""/>
 <part name="U$2" library="Kirbi_ControlBoard" deviceset="BEL_FUSE_C1F_3.5" device=""/>
 <part name="C12" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
-<part name="U$5" library="Kirbi_ControlBoard" deviceset="MOLEX_1.25MM_3PIN_SMT" device=""/>
+<part name="ESC" library="Kirbi_ControlBoard" deviceset="MOLEX_1.25MM_3PIN_SMT" device=""/>
 <part name="GND21" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 </parts>
 <sheets>
@@ -6864,7 +6864,7 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <attribute name="NAME" x="59.944" y="231.521" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="59.944" y="226.441" size="1.778" layer="96" font="vector"/>
 </instance>
-<instance part="U$5" gate="G$1" x="271.78" y="149.86" smashed="yes">
+<instance part="ESC" gate="G$1" x="271.78" y="149.86" smashed="yes">
 <attribute name="VALUE" x="269.24" y="142.494" size="1.778" layer="96" font="vector"/>
 <attribute name="NAME" x="269.24" y="155.448" size="1.778" layer="95" font="vector"/>
 </instance>
@@ -7235,7 +7235,7 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <wire x1="304.8" y1="33.02" x2="279.4" y2="33.02" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="U$5" gate="G$1" pin="1"/>
+<pinref part="ESC" gate="G$1" pin="1"/>
 <pinref part="GND21" gate="1" pin="GND"/>
 <wire x1="279.4" y1="147.32" x2="279.908" y2="147.32" width="0.1524" layer="91"/>
 <wire x1="279.908" y1="147.32" x2="279.908" y2="139.446" width="0.1524" layer="91"/>
@@ -7557,18 +7557,6 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <wire x1="342.9" y1="72.898" x2="342.9" y2="73.66" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="S1/TX" class="0">
-<segment>
-<pinref part="U2" gate="G$1" pin="33/A14/TX5/CAN1-TX"/>
-<wire x1="165.1" y1="152.4" x2="160.02" y2="152.4" width="0.1524" layer="91"/>
-<label x="160.02" y="152.4" size="1.778" layer="95" rot="R180" xref="yes"/>
-</segment>
-<segment>
-<pinref part="U$5" gate="G$1" pin="2"/>
-<wire x1="279.4" y1="149.86" x2="281.94" y2="149.86" width="0.1524" layer="91"/>
-<label x="281.94" y="149.86" size="1.778" layer="95" xref="yes"/>
-</segment>
-</net>
 <net name="SCL2" class="0">
 <segment>
 <pinref part="R16" gate="G$1" pin="1"/>
@@ -7671,9 +7659,9 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <label x="198.12" y="43.18" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U2" gate="G$1" pin="34/A15/RX5/CAN1-RX"/>
-<wire x1="165.1" y1="149.86" x2="160.02" y2="149.86" width="0.1524" layer="91"/>
-<label x="160.02" y="149.86" size="1.778" layer="95" rot="R180" xref="yes"/>
+<pinref part="U2" gate="G$1" pin="30/T/PWM"/>
+<wire x1="165.1" y1="160.02" x2="160.02" y2="160.02" width="0.1524" layer="91"/>
+<label x="160.02" y="160.02" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="RADIO_DIO0" class="0">
@@ -7950,11 +7938,28 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <wire x1="284.48" y1="110.49" x2="286.512" y2="110.49" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="S1/RX" class="0">
+<net name="S1/TTX" class="0">
 <segment>
-<pinref part="U$5" gate="G$1" pin="3"/>
+<pinref part="U2" gate="G$1" pin="33/A14/TX5/CAN1-TX"/>
+<wire x1="165.1" y1="152.4" x2="160.02" y2="152.4" width="0.1524" layer="91"/>
+<label x="160.02" y="152.4" size="1.778" layer="95" rot="R180" xref="yes"/>
+</segment>
+<segment>
+<pinref part="ESC" gate="G$1" pin="3"/>
 <wire x1="279.4" y1="152.4" x2="281.94" y2="152.4" width="0.1524" layer="91"/>
 <label x="281.94" y="152.4" size="1.778" layer="95" xref="yes"/>
+</segment>
+</net>
+<net name="S1/TRX" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="34/A15/RX5/CAN1-RX"/>
+<wire x1="165.1" y1="149.86" x2="160.02" y2="149.86" width="0.1524" layer="91"/>
+<label x="160.02" y="149.86" size="1.778" layer="95" rot="MR0" xref="yes"/>
+</segment>
+<segment>
+<pinref part="ESC" gate="G$1" pin="2"/>
+<wire x1="279.4" y1="149.86" x2="281.94" y2="149.86" width="0.1524" layer="91"/>
+<label x="281.94" y="149.86" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
 </nets>
