@@ -5280,9 +5280,9 @@ design rules under a new name.</description>
 <attribute name="POPULARITY" value="7" x="40" y="1" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="27.935" y="4.81" size="1.27" layer="27" rot="R270"/>
 </element>
-<element name="J1" library="RoboJackets-Connectors" package="XT-60" value="XT-60BATT_LABEL" x="33" y="70" smashed="yes" rot="R180">
-<attribute name="NAME" x="37.5" y="70" size="1" layer="25" font="vector" rot="R270"/>
-<attribute name="VALUE" x="37.572" y="61.11" size="1" layer="27" font="vector" rot="R270"/>
+<element name="J1" library="RoboJackets-Connectors" package="XT-60" value="XT-60BATT_LABEL" x="38" y="70" smashed="yes" rot="R180">
+<attribute name="NAME" x="42.5" y="70" size="1" layer="25" font="vector" rot="R270"/>
+<attribute name="VALUE" x="42.572" y="61.11" size="1" layer="27" font="vector" rot="R270"/>
 </element>
 <element name="U$1" library="CurrentSensing" package="INDUCTOR22" value="22uH" x="28" y="33" smashed="yes">
 <attribute name="NAME" x="25.46" y="39.985" size="1.27" layer="25"/>
@@ -5376,13 +5376,13 @@ design rules under a new name.</description>
 <attribute name="NAME" x="32" y="48" size="1" layer="25" rot="R270"/>
 <attribute name="VALUE" x="28" y="48" size="1" layer="27" rot="R270" align="top-left"/>
 </element>
-<element name="U$6" library="CurrentSensing" package="3550" value="3550" x="4" y="-15" smashed="yes">
-<attribute name="NAME" x="0.19" y="-9.92" size="1.778" layer="25"/>
-<attribute name="VALUE" x="0.19" y="-21.35" size="1.778" layer="27"/>
+<element name="U$6" library="CurrentSensing" package="3550" value="3550" x="10" y="64" smashed="yes">
+<attribute name="NAME" x="6.19" y="69.08" size="1.778" layer="25"/>
+<attribute name="VALUE" x="6.19" y="57.65" size="1.778" layer="27"/>
 </element>
-<element name="U$7" library="CurrentSensing" package="3550" value="3550" x="4" y="-30" smashed="yes">
-<attribute name="NAME" x="0.19" y="-24.92" size="1.778" layer="25"/>
-<attribute name="VALUE" x="0.19" y="-36.35" size="1.778" layer="27"/>
+<element name="U$7" library="CurrentSensing" package="3550" value="3550" x="69" y="64" smashed="yes" rot="R180">
+<attribute name="NAME" x="72.81" y="58.92" size="1.778" layer="25" rot="R180"/>
+<attribute name="VALUE" x="72.81" y="70.35" size="1.778" layer="27" rot="R180"/>
 </element>
 </elements>
 <signals>
@@ -5527,7 +5527,6 @@ design rules under a new name.</description>
 <vertex x="80" y="33.38"/>
 <vertex x="0" y="33.38"/>
 </polygon>
-<wire x1="28" y1="28.05" x2="26.7" y2="26.75" width="0.2" layer="1"/>
 <polygon width="0.1524" layer="1" thermals="no">
 <vertex x="0" y="32"/>
 <vertex x="0" y="40"/>
@@ -5586,10 +5585,9 @@ design rules under a new name.</description>
 <contactref element="JP1" pad="5"/>
 <wire x1="38.27585" y1="14.0475" x2="36.5775" y2="14.0475" width="0.2" layer="1"/>
 <wire x1="36.5775" y1="14.0475" x2="34.97" y2="12.44" width="0.2" layer="1"/>
-<wire x1="34.97" y1="12.44" x2="34.97" y2="9.03" width="0.2" layer="1"/>
 <wire x1="38.73" y1="5.31" x2="38.73" y2="4.81" width="0.2" layer="1"/>
-<wire x1="35.01" y1="9.03" x2="38.73" y2="5.31" width="0.2" layer="1"/>
-<wire x1="35.01" y1="9.03" x2="34.97" y2="9.03" width="0" layer="19" extent="1-1"/>
+<wire x1="34.97" y1="12.44" x2="34.97" y2="9.07" width="0.2" layer="1"/>
+<wire x1="34.97" y1="9.07" x2="38.73" y2="5.31" width="0.2" layer="1"/>
 </signal>
 <signal name="SCLK">
 <contactref element="U1" pad="13"/>
@@ -5746,8 +5744,6 @@ design rules under a new name.</description>
 </polygon>
 <contactref element="U$6" pad="P$2"/>
 <contactref element="U$7" pad="P$2"/>
-<wire x1="9.08" y1="-15" x2="9.08" y2="-30" width="0" layer="19" extent="1-1"/>
-<wire x1="39" y1="37.85" x2="9.08" y2="-15" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$6">
 <contactref element="U$1" pad="P$1"/>
@@ -5776,12 +5772,14 @@ design rules under a new name.</description>
 <signal name="P1">
 <contactref element="U$4" pad="6"/>
 <contactref element="U$6" pad="P$1"/>
-<wire x1="-1.08" y1="-15" x2="21.425" y2="49" width="0" layer="19" extent="1-1"/>
+<wire x1="4.92" y1="64" x2="6.425" y2="64" width="1.55" layer="1"/>
+<wire x1="6.425" y1="64" x2="21.425" y2="49" width="1.55" layer="1"/>
 </signal>
 <signal name="P2">
 <contactref element="U$5" pad="6"/>
 <contactref element="U$7" pad="P$1"/>
-<wire x1="-1.08" y1="-30" x2="71.425" y2="49" width="0" layer="19" extent="1-1"/>
+<wire x1="71.425" y1="49" x2="71.425" y2="61.345" width="1.55" layer="1"/>
+<wire x1="71.425" y1="61.345" x2="74.08" y2="64" width="1.55" layer="1"/>
 </signal>
 <signal name="N2">
 <contactref element="U$5" pad="7"/>

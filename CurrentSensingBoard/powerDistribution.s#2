@@ -582,6 +582,23 @@
 <wire x1="1" y1="1.8" x2="-3.6" y2="1.8" width="0.1524" layer="21"/>
 <wire x1="1" y1="1.8" x2="1" y2="-1.7" width="0.1524" layer="21"/>
 </package>
+<package name="3550">
+<pad name="P$1" x="-5.08" y="0" drill="1.5748"/>
+<pad name="P$2" x="5.08" y="0" drill="2.54"/>
+<wire x1="-7.62" y1="3.81" x2="-7.62" y2="-3.81" width="0.1524" layer="21"/>
+<wire x1="-7.62" y1="-3.81" x2="7.62" y2="-3.81" width="0.1524" layer="21"/>
+<wire x1="7.62" y1="-3.81" x2="7.62" y2="3.81" width="0.1524" layer="21"/>
+<wire x1="7.62" y1="3.81" x2="-7.62" y2="3.81" width="0.1524" layer="21"/>
+<text x="-3.81" y="5.08" size="1.778" layer="25">&gt;NAME</text>
+<text x="-3.81" y="-6.35" size="1.778" layer="27">&gt;VALUE</text>
+<wire x1="-2.54" y1="1.27" x2="-2.54" y2="-1.27" width="0.1524" layer="21"/>
+<wire x1="-2.54" y1="-1.27" x2="0" y2="-1.27" width="0.1524" layer="21"/>
+<wire x1="-2.54" y1="1.27" x2="0" y2="1.27" width="0.1524" layer="21"/>
+<wire x1="0" y1="1.27" x2="0" y2="2.54" width="0.1524" layer="21"/>
+<wire x1="0" y1="2.54" x2="2.54" y2="0" width="0.1524" layer="21"/>
+<wire x1="0" y1="-2.54" x2="0" y2="-1.27" width="0.1524" layer="21"/>
+<wire x1="0" y1="-2.54" x2="2.54" y2="0" width="0.1524" layer="21"/>
+</package>
 </packages>
 <symbols>
 <symbol name="CQ2065">
@@ -681,6 +698,14 @@ Diode with low voltage drop</description>
 <vertex x="1.27" y="0"/>
 <vertex x="-1.27" y="-1.27"/>
 </polygon>
+</symbol>
+<symbol name="FUSE">
+<pin name="1" x="-2.54" y="0" visible="off" length="point"/>
+<pin name="2" x="2.54" y="0" visible="off" length="point" rot="R180"/>
+<wire x1="2.54" y1="0" x2="0" y2="0" width="0.254" layer="94" curve="180"/>
+<wire x1="0" y1="0" x2="-2.54" y2="0" width="0.254" layer="94" curve="-180"/>
+<text x="-2.54" y="2.54" size="1.778" layer="95">&gt;NAME</text>
+<text x="-2.54" y="-2.54" size="1.778" layer="96" align="top-left">&gt;VALUE</text>
 </symbol>
 </symbols>
 <devicesets>
@@ -877,6 +902,22 @@ Diode with low voltage drop</description>
 <connects>
 <connect gate="G$1" pin="A" pad="1"/>
 <connect gate="G$1" pin="C" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="3550">
+<gates>
+<gate name="G$1" symbol="FUSE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="3550">
+<connects>
+<connect gate="G$1" pin="1" pad="P$1"/>
+<connect gate="G$1" pin="2" pad="P$2"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -12753,66 +12794,6 @@ XT-60 Power Connector
 </deviceset>
 </devicesets>
 </library>
-<library name="RoboJackets-Fuses">
-<description>RoboJackets EAGLE Libraries - Fuses</description>
-<packages>
-<package name="FUSEHOLDER_3549_X2">
-<description>2x Blade Fuse Clips
-For MINI Blade Fuses</description>
-<pad name="2" x="4.065" y="-5.08" drill="1.93" diameter="3" rot="R180"/>
-<pad name="LEG2" x="4.065" y="5.08" drill="1.17" diameter="2" rot="R180"/>
-<pad name="1" x="-4.065" y="-5.08" drill="1.93" diameter="3" rot="R180"/>
-<pad name="LEG1" x="-4.065" y="5.08" drill="1.17" diameter="2" rot="R180"/>
-<text x="6.5" y="-2.5" size="1" layer="25" rot="R270">&gt;NAME</text>
-<wire x1="6" y1="-7" x2="-6" y2="-7" width="0.2" layer="21"/>
-<wire x1="-6" y1="-7" x2="-6" y2="6.5" width="0.2" layer="21"/>
-<wire x1="-6" y1="6.5" x2="6" y2="6.5" width="0.2" layer="21"/>
-<wire x1="6" y1="6.5" x2="6" y2="-7" width="0.2" layer="21"/>
-<wire x1="0.5" y1="-6.5" x2="-0.5" y2="-6.5" width="0.2" layer="51"/>
-<wire x1="-0.5" y1="-6.5" x2="-0.5" y2="-5" width="0.2" layer="51"/>
-<wire x1="-0.5" y1="-5" x2="-1.5" y2="-5" width="0.2" layer="51"/>
-<wire x1="-1.5" y1="-5" x2="0" y2="-3.5" width="0.2" layer="51"/>
-<wire x1="0" y1="-3.5" x2="1.5" y2="-5" width="0.2" layer="51"/>
-<wire x1="1.5" y1="-5" x2="0.5" y2="-5" width="0.2" layer="51"/>
-<wire x1="0.5" y1="-5" x2="0.5" y2="-6.5" width="0.2" layer="51"/>
-<wire x1="-5.45" y1="-7.5" x2="5.45" y2="-7.5" width="0.2" layer="51"/>
-<wire x1="5.45" y1="-7.5" x2="5.45" y2="-15.8" width="0.2" layer="51"/>
-<wire x1="5.45" y1="-15.8" x2="-5.45" y2="-15.8" width="0.2" layer="51"/>
-<wire x1="-5.45" y1="-15.8" x2="-5.45" y2="-7.5" width="0.2" layer="51"/>
-</package>
-</packages>
-<symbols>
-<symbol name="FUSE">
-<pin name="1" x="-2.54" y="0" visible="off" length="point"/>
-<pin name="2" x="2.54" y="0" visible="off" length="point" rot="R180"/>
-<wire x1="2.54" y1="0" x2="0" y2="0" width="0.254" layer="94" curve="180"/>
-<wire x1="0" y1="0" x2="-2.54" y2="0" width="0.254" layer="94" curve="-180"/>
-<text x="-2.54" y="2.54" size="1.778" layer="95">&gt;NAME</text>
-<text x="-2.54" y="-2.54" size="1.778" layer="96" align="top-left">&gt;VALUE</text>
-</symbol>
-</symbols>
-<devicesets>
-<deviceset name="FUSEHOLDER_3549_X2" prefix="F" uservalue="yes">
-<description>Keystone Electronics
-Fuse Clip 30A 500V Circuit Blade PCB
-3549</description>
-<gates>
-<gate name="G$1" symbol="FUSE" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="FUSEHOLDER_3549_X2">
-<connects>
-<connect gate="G$1" pin="1" pad="1 LEG1" route="any"/>
-<connect gate="G$1" pin="2" pad="2 LEG2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-</devicesets>
-</library>
 <library name="RoboJackets-LEDs">
 <description>&lt;img src="http://www.robojackets.org/wp-content/themes/RoboJackets-3.0/img/banner.png" width="600"&gt;
 &lt;hr&gt;
@@ -12976,8 +12957,6 @@ In this library you will find LEDs and other visual output devices.
 <part name="C11" library="CurrentSensing" deviceset="TR3E156M050C0300" device="" value="15uF"/>
 <part name="C13" library="CurrentSensing" deviceset="TR3E156M050C0300" device="" value="15uF"/>
 <part name="C14" library="CurrentSensing" deviceset="TR3E156M050C0300" device="" value="15uF"/>
-<part name="F1" library="RoboJackets-Fuses" deviceset="FUSEHOLDER_3549_X2" device=""/>
-<part name="F2" library="RoboJackets-Fuses" deviceset="FUSEHOLDER_3549_X2" device=""/>
 <part name="GND11" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND12" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="+3V1" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
@@ -13001,6 +12980,8 @@ In this library you will find LEDs and other visual output devices.
 <part name="GND14" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="GND15" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="U$2" library="CurrentSensing" deviceset="SD2114S040S8R0" device=""/>
+<part name="U$6" library="CurrentSensing" deviceset="3550" device=""/>
+<part name="U$7" library="CurrentSensing" deviceset="3550" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -13205,14 +13186,6 @@ Connector</text>
 <attribute name="NAME" x="25.146" y="41.275" size="1.778" layer="95"/>
 <attribute name="VALUE" x="25.146" y="36.449" size="1.778" layer="96"/>
 </instance>
-<instance part="F1" gate="G$1" x="207.01" y="191.77" smashed="yes" rot="R180">
-<attribute name="NAME" x="209.55" y="189.23" size="1.778" layer="95" rot="R180"/>
-<attribute name="VALUE" x="209.55" y="194.31" size="1.778" layer="96" rot="R180" align="top-left"/>
-</instance>
-<instance part="F2" gate="G$1" x="205.74" y="121.92" smashed="yes" rot="R180">
-<attribute name="NAME" x="208.28" y="119.38" size="1.778" layer="95" rot="R180"/>
-<attribute name="VALUE" x="208.28" y="124.46" size="1.778" layer="96" rot="R180" align="top-left"/>
-</instance>
 <instance part="GND11" gate="1" x="259.08" y="156.21" smashed="yes">
 <attribute name="VALUE" x="256.54" y="153.67" size="1.778" layer="96"/>
 </instance>
@@ -13291,6 +13264,14 @@ Connector</text>
 <instance part="U$2" gate="G$1" x="114.3" y="30.48" smashed="yes" rot="R90">
 <attribute name="NAME" x="112.268" y="27.94" size="1.778" layer="95" font="vector" rot="R90"/>
 <attribute name="VALUE" x="116.332" y="27.94" size="1.778" layer="96" font="vector" rot="R90" align="top-left"/>
+</instance>
+<instance part="U$6" gate="G$1" x="207.01" y="191.77" smashed="yes">
+<attribute name="NAME" x="204.47" y="194.31" size="1.778" layer="95"/>
+<attribute name="VALUE" x="204.47" y="189.23" size="1.778" layer="96" align="top-left"/>
+</instance>
+<instance part="U$7" gate="G$1" x="207.01" y="121.92" smashed="yes">
+<attribute name="NAME" x="204.47" y="124.46" size="1.778" layer="95"/>
+<attribute name="VALUE" x="204.47" y="119.38" size="1.778" layer="96" align="top-left"/>
 </instance>
 </instances>
 <busses>
@@ -13581,6 +13562,11 @@ Connector</text>
 <wire x1="85.09" y1="184.15" x2="87.63" y2="184.15" width="0.1524" layer="91"/>
 <label x="87.63" y="184.15" size="1.27" layer="95" xref="yes"/>
 </segment>
+<segment>
+<pinref part="JP1" gate="A" pin="6"/>
+<wire x1="20.32" y1="127" x2="26.67" y2="127" width="0.1524" layer="91"/>
+<label x="20.32" y="127" size="1.27" layer="95" rot="R180" xref="yes"/>
+</segment>
 </net>
 <net name="!CS!" class="0">
 <segment>
@@ -13731,16 +13717,16 @@ Connector</text>
 <junction x="24.13" y="44.45"/>
 </segment>
 <segment>
-<pinref part="F1" gate="G$1" pin="1"/>
 <pinref part="P+7" gate="1" pin="+24V"/>
-<wire x1="209.55" y1="191.77" x2="214.63" y2="191.77" width="0.1524" layer="91"/>
 <wire x1="214.63" y1="191.77" x2="214.63" y2="194.31" width="0.1524" layer="91"/>
+<pinref part="U$6" gate="G$1" pin="2"/>
+<wire x1="209.55" y1="191.77" x2="214.63" y2="191.77" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="F2" gate="G$1" pin="1"/>
 <pinref part="P+8" gate="1" pin="+24V"/>
-<wire x1="208.28" y1="121.92" x2="214.63" y2="121.92" width="0.1524" layer="91"/>
 <wire x1="214.63" y1="121.92" x2="214.63" y2="124.46" width="0.1524" layer="91"/>
+<pinref part="U$7" gate="G$1" pin="2"/>
+<wire x1="209.55" y1="121.92" x2="214.63" y2="121.92" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="P+11" gate="1" pin="+24V"/>
@@ -13787,16 +13773,16 @@ Connector</text>
 <segment>
 <pinref part="U$4" gate="G$1" pin="I_P"/>
 <wire x1="184.15" y1="189.23" x2="184.15" y2="191.77" width="0.1524" layer="91"/>
-<pinref part="F1" gate="G$1" pin="2"/>
-<wire x1="204.47" y1="191.77" x2="184.15" y2="191.77" width="0.1524" layer="91"/>
+<pinref part="U$6" gate="G$1" pin="1"/>
+<wire x1="184.15" y1="191.77" x2="204.47" y2="191.77" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="P2" class="0">
 <segment>
 <pinref part="U$5" gate="G$1" pin="I_P"/>
 <wire x1="184.15" y1="119.38" x2="184.15" y2="121.92" width="0.1524" layer="91"/>
-<pinref part="F2" gate="G$1" pin="2"/>
-<wire x1="184.15" y1="121.92" x2="203.2" y2="121.92" width="0.1524" layer="91"/>
+<pinref part="U$7" gate="G$1" pin="1"/>
+<wire x1="184.15" y1="121.92" x2="204.47" y2="121.92" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N2" class="0">
@@ -13832,13 +13818,6 @@ Connector</text>
 <pinref part="R5" gate="G$1" pin="1"/>
 <pinref part="D3" gate="G$1" pin="A"/>
 <wire x1="129.54" y1="80.01" x2="129.54" y2="77.47" width="0.1524" layer="91"/>
-</segment>
-</net>
-<net name="N$14" class="0">
-<segment>
-<pinref part="JP1" gate="A" pin="6"/>
-<wire x1="20.32" y1="127" x2="26.67" y2="127" width="0.1524" layer="91"/>
-<label x="20.32" y="127" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 </nets>

@@ -4950,6 +4950,31 @@ For MINI Blade Fuses</description>
 </package>
 </packages>
 </library>
+<library name="RoboJackets-LEDs">
+<description>&lt;img src="http://www.robojackets.org/wp-content/themes/RoboJackets-3.0/img/banner.png" width="600"&gt;
+&lt;hr&gt;
+&lt;h1&gt;RoboJackets EAGLE Libraries - LEDs&lt;/h1&gt;&lt;/br&gt;
+&lt;p&gt;
+In this library you will find LEDs and other visual output devices.
+&lt;/p&gt;</description>
+<packages>
+<package name="CHIP-LED0603">
+<wire x1="-0.4" y1="0.45" x2="-0.4" y2="-0.45" width="0.1016" layer="51"/>
+<wire x1="0.4" y1="0.45" x2="0.4" y2="-0.45" width="0.1016" layer="51"/>
+<smd name="C" x="0" y="0.75" dx="0.8" dy="0.8" layer="1"/>
+<smd name="A" x="0" y="-0.75" dx="0.8" dy="0.8" layer="1"/>
+<text x="-0.635" y="-0.635" size="1.27" layer="25" rot="R90">&gt;NAME</text>
+<text x="1.905" y="-0.635" size="1.27" layer="27" rot="R90">&gt;VALUE</text>
+<rectangle x1="-0.45" y1="0.45" x2="0.45" y2="0.85" layer="51"/>
+<rectangle x1="-0.45" y1="-0.85" x2="0.45" y2="-0.45" layer="51"/>
+<polygon width="0.1" layer="21">
+<vertex x="-0.3" y="-0.2"/>
+<vertex x="0" y="0.2"/>
+<vertex x="0.3" y="-0.2"/>
+</polygon>
+</package>
+</packages>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -5332,6 +5357,42 @@ design rules under a new name.</description>
 <element name="J3" library="RoboJackets-Connectors" package="XT-60" value="XT-60BATT_LABEL" x="71" y="39" smashed="yes" rot="R180">
 <attribute name="NAME" x="75.5" y="39" size="1" layer="25" font="vector" ratio="10" rot="R270"/>
 </element>
+<element name="R3" library="rcl" library_urn="urn:adsk.eagle:library:334" package="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="100Ω" x="-6" y="-9" smashed="yes">
+<attribute name="NAME" x="-6.635" y="-8.365" size="1.27" layer="25"/>
+<attribute name="POPULARITY" value="77" x="-6" y="-9" size="1.778" layer="27" display="off"/>
+<attribute name="SPICEPREFIX" value="R" x="-6" y="-9" size="1.778" layer="27" display="off"/>
+<attribute name="VALUE" x="-6.635" y="-10.905" size="1.27" layer="27"/>
+</element>
+<element name="R4" library="rcl" library_urn="urn:adsk.eagle:library:334" package="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="200Ω" x="-6" y="-13" smashed="yes">
+<attribute name="NAME" x="-6.635" y="-12.365" size="1.27" layer="25"/>
+<attribute name="POPULARITY" value="77" x="-6" y="-13" size="1.778" layer="27" display="off"/>
+<attribute name="SPICEPREFIX" value="R" x="-6" y="-13" size="1.778" layer="27" display="off"/>
+<attribute name="VALUE" x="-6.635" y="-14.905" size="1.27" layer="27"/>
+</element>
+<element name="R5" library="rcl" library_urn="urn:adsk.eagle:library:334" package="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="1200Ω" x="-6" y="-17" smashed="yes">
+<attribute name="NAME" x="-6.635" y="-16.365" size="1.27" layer="25"/>
+<attribute name="POPULARITY" value="77" x="-6" y="-17" size="1.778" layer="27" display="off"/>
+<attribute name="SPICEPREFIX" value="R" x="-6" y="-17" size="1.778" layer="27" display="off"/>
+<attribute name="VALUE" x="-6.635" y="-18.905" size="1.27" layer="27"/>
+</element>
+<element name="D1" library="RoboJackets-LEDs" package="CHIP-LED0603" value="LED-SMD" x="-11" y="-16" smashed="yes">
+<attribute name="DIGIKEY" value="" x="-11" y="-16" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="" x="-11" y="-16" size="1.778" layer="27" display="off"/>
+<attribute name="NAME" x="-11.635" y="-16.635" size="1.27" layer="25" rot="R90"/>
+<attribute name="VALUE" x="-9.095" y="-16.635" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="D2" library="RoboJackets-LEDs" package="CHIP-LED0603" value="LED-SMD" x="-16" y="-16" smashed="yes">
+<attribute name="DIGIKEY" value="" x="-16" y="-16" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="" x="-16" y="-16" size="1.778" layer="27" display="off"/>
+<attribute name="NAME" x="-16.635" y="-16.635" size="1.27" layer="25" rot="R90"/>
+<attribute name="VALUE" x="-14.095" y="-16.635" size="1.27" layer="27" rot="R90"/>
+</element>
+<element name="D3" library="RoboJackets-LEDs" package="CHIP-LED0603" value="LED-SMD" x="-21" y="-16" smashed="yes">
+<attribute name="DIGIKEY" value="" x="-21" y="-16" size="1.778" layer="27" display="off"/>
+<attribute name="MPN" value="" x="-21" y="-16" size="1.778" layer="27" display="off"/>
+<attribute name="NAME" x="-21.635" y="-16.635" size="1.27" layer="25" rot="R90"/>
+<attribute name="VALUE" x="-19.095" y="-16.635" size="1.27" layer="27" rot="R90"/>
+</element>
 </elements>
 <signals>
 <signal name="GND">
@@ -5370,6 +5431,9 @@ design rules under a new name.</description>
 <contactref element="C6" pad="2"/>
 <contactref element="J2" pad="GND"/>
 <contactref element="J3" pad="GND"/>
+<contactref element="D1" pad="C"/>
+<contactref element="D2" pad="C"/>
+<contactref element="D3" pad="C"/>
 <wire x1="60" y1="37.4" x2="62.54" y2="37.4" width="0" layer="19" extent="1-1"/>
 <wire x1="57.46" y1="37.4" x2="60" y2="37.4" width="0" layer="19" extent="1-1"/>
 <wire x1="56" y1="30.85" x2="57.46" y2="37.4" width="0" layer="19" extent="1-1"/>
@@ -5379,18 +5443,20 @@ design rules under a new name.</description>
 <wire x1="71" y1="27.908" x2="68.85" y2="25" width="0" layer="19" extent="1-1"/>
 <wire x1="48" y1="34" x2="56" y2="30.85" width="0" layer="19" extent="1-1"/>
 <wire x1="39.68" y1="34" x2="48" y2="34" width="0" layer="19" extent="1-1"/>
-<wire x1="46.15" y1="44" x2="48" y2="34" width="0" layer="19" extent="1-1"/>
-<wire x1="46.15" y1="50" x2="46.15" y2="44" width="0" layer="19" extent="1-1"/>
-<wire x1="41" y1="21.75" x2="39.68" y2="34" width="0" layer="19" extent="1-1"/>
-<wire x1="35.4125" y1="17.72415" x2="41" y2="21.75" width="0" layer="19" extent="1-1"/>
-<wire x1="34" y1="21.75" x2="35.4125" y2="17.72415" width="0" layer="19" extent="1-1"/>
+<wire x1="35.0894" y1="35.286" x2="39.68" y2="34" width="0" layer="19" extent="1-1"/>
+<wire x1="35.0894" y1="30.714" x2="35.0894" y2="35.286" width="0" layer="19" extent="1-1"/>
+<wire x1="34" y1="21.75" x2="35.0894" y2="30.714" width="0" layer="19" extent="1-1"/>
+<wire x1="35.4125" y1="17.72415" x2="34" y2="21.75" width="0" layer="19" extent="1-1"/>
 <wire x1="35.4125" y1="12.27585" x2="35.4125" y2="17.72415" width="0" layer="19" extent="1-1"/>
 <wire x1="33" y1="10.15" x2="35.4125" y2="12.27585" width="0" layer="19" extent="1-1"/>
 <wire x1="37.85" y1="10" x2="35.4125" y2="12.27585" width="0" layer="19" extent="1-1"/>
 <wire x1="29" y1="14.85" x2="33" y2="10.15" width="0" layer="19" extent="1-1"/>
 <wire x1="26.3" y1="17.025" x2="29" y2="14.85" width="0" layer="19" extent="1-1"/>
+<wire x1="41" y1="21.75" x2="35.4125" y2="17.72415" width="0" layer="19" extent="1-1"/>
 <wire x1="27.11" y1="4.81" x2="33" y2="10.15" width="0" layer="19" extent="1-1"/>
 <wire x1="19" y1="13.15" x2="26.3" y2="17.025" width="0" layer="19" extent="1-1"/>
+<wire x1="46.15" y1="44" x2="48" y2="34" width="0" layer="19" extent="1-1"/>
+<wire x1="46.15" y1="50" x2="46.15" y2="44" width="0" layer="19" extent="1-1"/>
 <wire x1="11" y1="21.85" x2="19" y2="13.15" width="0" layer="19" extent="1-1"/>
 <wire x1="7" y1="26.15" x2="11" y2="21.85" width="0" layer="19" extent="1-1"/>
 <wire x1="1" y1="27.908" x2="7" y2="26.15" width="0" layer="19" extent="1-1"/>
@@ -5399,11 +5465,12 @@ design rules under a new name.</description>
 <wire x1="14.54" y1="37.4" x2="15" y2="28.15" width="0" layer="19" extent="1-1"/>
 <wire x1="12" y1="37.4" x2="14.54" y2="37.4" width="0" layer="19" extent="1-1"/>
 <wire x1="9.46" y1="37.4" x2="12" y2="37.4" width="0" layer="19" extent="1-1"/>
+<wire x1="28.15" y1="46" x2="35.0894" y2="35.286" width="0" layer="19" extent="1-1"/>
+<wire x1="25.85" y1="50" x2="28.15" y2="46" width="0" layer="19" extent="1-1"/>
 <wire x1="36" y1="58.908" x2="46.15" y2="50" width="0" layer="19" extent="1-1"/>
-<wire x1="25.85" y1="50" x2="36" y2="58.908" width="0" layer="19" extent="1-1"/>
-<wire x1="28.15" y1="46" x2="25.85" y2="50" width="0" layer="19" extent="1-1"/>
-<wire x1="35.0894" y1="35.286" x2="27.11" y2="4.81" width="0" layer="19" extent="1-1"/>
-<wire x1="35.0894" y1="30.714" x2="35.0894" y2="35.286" width="0" layer="19" extent="1-1"/>
+<wire x1="-11" y1="-15.25" x2="19" y2="13.15" width="0" layer="19" extent="1-1"/>
+<wire x1="-16" y1="-15.25" x2="-11" y2="-15.25" width="0" layer="19" extent="1-1"/>
+<wire x1="-21" y1="-15.25" x2="-16" y2="-15.25" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="+5V">
 <contactref element="U7" pad="3"/>
@@ -5419,6 +5486,7 @@ design rules under a new name.</description>
 <contactref element="U2" pad="6"/>
 <contactref element="C7" pad="1"/>
 <contactref element="C10" pad="1"/>
+<contactref element="R4" pad="2"/>
 <wire x1="60.85" y1="30" x2="58.73" y2="35.2" width="0" layer="19" extent="1-1"/>
 <wire x1="56" y1="29.15" x2="60.85" y2="30" width="0" layer="19" extent="1-1"/>
 <wire x1="41" y1="24.25" x2="56" y2="29.15" width="0" layer="19" extent="1-1"/>
@@ -5431,6 +5499,7 @@ design rules under a new name.</description>
 <wire x1="8.85" y1="30" x2="11" y2="20.15" width="0" layer="19" extent="1-1"/>
 <wire x1="10.73" y1="35.2" x2="8.85" y2="30" width="0" layer="19" extent="1-1"/>
 <wire x1="44.89" y1="4.81" x2="41" y2="24.25" width="0" layer="19" extent="1-1"/>
+<wire x1="-5.15" y1="-13" x2="19" y2="14.85" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="AIN1">
 <contactref element="U1" pad="2"/>
@@ -5482,10 +5551,12 @@ design rules under a new name.</description>
 <contactref element="U7" pad="2"/>
 <contactref element="U1" pad="11"/>
 <contactref element="C6" pad="1"/>
+<contactref element="R3" pad="2"/>
 <wire x1="36.15" y1="10" x2="36.0475" y2="12.27585" width="0" layer="19" extent="1-1"/>
 <wire x1="29" y1="13.15" x2="36.0475" y2="12.27585" width="0" layer="19" extent="1-1"/>
 <wire x1="24" y1="10.975" x2="29" y2="13.15" width="0" layer="19" extent="1-1"/>
 <wire x1="24" y1="17.025" x2="24" y2="10.975" width="0" layer="19" extent="1-1"/>
+<wire x1="-5.15" y1="-9" x2="24" y2="10.975" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$3">
 <contactref element="U$4" pad="4"/>
@@ -5535,6 +5606,7 @@ design rules under a new name.</description>
 <contactref element="F1" pad="LEG1" route="any" routetag="G$1.1"/>
 <contactref element="F2" pad="1" route="any" routetag="G$1.1"/>
 <contactref element="F2" pad="LEG1" route="any" routetag="G$1.1"/>
+<contactref element="R5" pad="2"/>
 <wire x1="39.85" y1="50" x2="58.92" y2="59.935" width="0" layer="19" extent="1-1"/>
 <wire x1="39.85" y1="44" x2="39.85" y2="50" width="0" layer="19" extent="1-1"/>
 <wire x1="39.68" y1="36.54" x2="39.85" y2="44" width="0" layer="19" extent="1-1"/>
@@ -5542,6 +5614,7 @@ design rules under a new name.</description>
 <wire x1="29.85" y1="46" x2="32.15" y2="50" width="0" layer="19" extent="1-1"/>
 <wire x1="36" y1="65.8455" x2="39.85" y2="50" width="0" layer="19" extent="1-1"/>
 <wire x1="13.08" y1="68.065" x2="36" y2="65.8455" width="0" layer="19" extent="1-1"/>
+<wire x1="-5.15" y1="-17" x2="39.68" y2="36.54" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$6">
 <contactref element="U$2" pad="4"/>
@@ -5580,6 +5653,21 @@ design rules under a new name.</description>
 <contactref element="U$5" pad="7"/>
 <contactref element="J3" pad="BATT"/>
 <wire x1="71" y1="34.8455" x2="53.575" y2="49" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$5">
+<contactref element="R3" pad="1"/>
+<contactref element="D1" pad="A"/>
+<wire x1="-6.85" y1="-9" x2="-11" y2="-16.75" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$8">
+<contactref element="R4" pad="1"/>
+<contactref element="D2" pad="A"/>
+<wire x1="-6.85" y1="-13" x2="-16" y2="-16.75" width="0" layer="19" extent="1-1"/>
+</signal>
+<signal name="N$9">
+<contactref element="R5" pad="1"/>
+<contactref element="D3" pad="A"/>
+<wire x1="-6.85" y1="-17" x2="-21" y2="-16.75" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>
 <mfgpreviewcolors>

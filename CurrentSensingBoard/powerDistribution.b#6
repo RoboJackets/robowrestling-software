@@ -383,9 +383,11 @@ v1.0</text>
 <wire x1="-3.6" y1="1.8" x2="-3.6" y2="-1.8" width="0.1524" layer="21"/>
 <wire x1="-3.6" y1="-1.8" x2="3.6" y2="-1.8" width="0.1524" layer="21"/>
 <wire x1="3.6" y1="-1.8" x2="3.6" y2="1.8" width="0.1524" layer="21"/>
-<wire x1="3.6" y1="1.8" x2="-3.6" y2="1.8" width="0.1524" layer="21"/>
+<wire x1="3.6" y1="1.8" x2="1" y2="1.8" width="0.1524" layer="21"/>
 <text x="-4" y="-2" size="1" layer="27" align="top-left">&gt;VALUE</text>
 <text x="-4" y="2" size="1" layer="25">&gt;NAME</text>
+<wire x1="1" y1="1.8" x2="-3.6" y2="1.8" width="0.1524" layer="21"/>
+<wire x1="1" y1="1.8" x2="1" y2="-1.7" width="0.1524" layer="21"/>
 </package>
 </packages>
 </library>
@@ -4910,13 +4912,14 @@ In this library you will find all the connectors used on any of our boards.
 <wire x1="1.1" y1="15.6" x2="0.8" y2="15.735" width="0.127" layer="21" curve="48.455379"/>
 <wire x1="-0.8" y1="15.735" x2="0.8" y2="15.735" width="0.127" layer="21"/>
 <wire x1="-3.864" y1="0" x2="3.864" y2="0" width="0.127" layer="21"/>
-<text x="-4.5" y="0" size="1" layer="25" font="vector" ratio="10" rot="R90">&gt;NAME</text>
+<text x="-4.5" y="0" size="1" layer="25" font="vector" rot="R90">&gt;NAME</text>
 <pad name="BATT" x="0" y="4.1545" drill="4.7"/>
 <pad name="GND" x="0" y="11.092" drill="4.7"/>
 <dimension x1="-2.35" y1="4.1545" x2="2.35" y2="4.1545" x3="0" y3="-1.6" textsize="0.5" layer="49" dtype="diameter" width="0.01" visible="yes"/>
 <wire x1="-4.064" y1="0.2" x2="-3.864" y2="0" width="0.127" layer="21" curve="90"/>
-<text x="5" y="4.1545" size="1.2" layer="21" font="vector" ratio="15" rot="R90" align="top-center">BATT+</text>
-<text x="5" y="11.092" size="1.2" layer="21" font="vector" ratio="15" rot="R90" align="top-center">GND</text>
+<text x="5" y="4.1545" size="1.2" layer="21" font="vector" rot="R90" align="top-center">BATT+</text>
+<text x="5" y="11.092" size="1.2" layer="21" font="vector" rot="R90" align="top-center">GND</text>
+<text x="-4.572" y="8.89" size="1" layer="27" font="vector" rot="R90">&gt;VALUE</text>
 </package>
 </packages>
 </library>
@@ -5431,7 +5434,7 @@ design rules under a new name.</description>
 <contactref element="D1" pad="C"/>
 <contactref element="D2" pad="C"/>
 <contactref element="D3" pad="C"/>
-<contactref element="U$2" pad="2"/>
+<contactref element="U$2" pad="1"/>
 <wire x1="60" y1="37.4" x2="62.54" y2="37.4" width="0" layer="19" extent="1-1"/>
 <wire x1="57.46" y1="37.4" x2="60" y2="37.4" width="0" layer="19" extent="1-1"/>
 <wire x1="56" y1="30.85" x2="57.46" y2="37.4" width="0" layer="19" extent="1-1"/>
@@ -5467,7 +5470,7 @@ design rules under a new name.</description>
 <wire x1="-11" y1="-15.25" x2="19" y2="13.15" width="0" layer="19" extent="1-1"/>
 <wire x1="-16" y1="-15.25" x2="-11" y2="-15.25" width="0" layer="19" extent="1-1"/>
 <wire x1="-21" y1="-15.25" x2="-16" y2="-15.25" width="0" layer="19" extent="1-1"/>
-<wire x1="-15.675" y1="-23" x2="-16" y2="-15.25" width="0" layer="19" extent="1-1"/>
+<wire x1="-20.325" y1="-23" x2="-21" y2="-15.25" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="+5V">
 <contactref element="U7" pad="3"/>
@@ -5617,10 +5620,10 @@ design rules under a new name.</description>
 <contactref element="U$1" pad="P$1"/>
 <contactref element="U2" pad="1"/>
 <contactref element="C15" pad="2"/>
-<contactref element="U$2" pad="1"/>
+<contactref element="U$2" pad="2"/>
 <wire x1="33.15" y1="40" x2="39.68" y2="37.81" width="0" layer="19" extent="1-1"/>
 <wire x1="24" y1="37.95" x2="33.15" y2="40" width="0" layer="19" extent="1-1"/>
-<wire x1="-20.325" y1="-23" x2="24" y2="37.95" width="0" layer="19" extent="1-1"/>
+<wire x1="-15.675" y1="-23" x2="24" y2="37.95" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$7">
 <contactref element="U2" pad="3"/>

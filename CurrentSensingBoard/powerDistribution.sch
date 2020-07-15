@@ -552,7 +552,7 @@
 <text x="-6.0166" y="-2.005" size="1.27" layer="25" ratio="6" rot="SR90">&gt;NAME</text>
 </package>
 <package name="860010373009">
-<circle x="0" y="0" radius="3.2" width="0.1524" layer="1"/>
+<circle x="0" y="0" radius="3.2" width="0.1524" layer="21"/>
 <text x="0.635" y="-2.159" size="1.778" layer="21">+</text>
 <pad name="2" x="-1.25" y="0" drill="0.55" diameter="0.8"/>
 <pad name="1" x="1.25" y="0" drill="0.55" diameter="0.8"/>
@@ -563,10 +563,10 @@
 <smd name="1" x="-3.15" y="0" dx="4" dy="2.5" layer="1" rot="R270"/>
 <smd name="2" x="3.15" y="0" dx="4" dy="2.5" layer="1" rot="R270"/>
 <text x="-5.08" y="2.54" size="1.778" layer="21">+</text>
-<wire x1="-5.08" y1="-2.54" x2="5.08" y2="-2.54" width="0.1524" layer="1"/>
-<wire x1="5.08" y1="-2.54" x2="5.08" y2="2.54" width="0.1524" layer="1"/>
-<wire x1="5.08" y1="2.54" x2="-5.08" y2="2.54" width="0.1524" layer="1"/>
-<wire x1="-5.08" y1="2.54" x2="-5.08" y2="-2.54" width="0.1524" layer="1"/>
+<wire x1="-5.08" y1="-2.54" x2="5.08" y2="-2.54" width="0.1524" layer="21"/>
+<wire x1="5.08" y1="-2.54" x2="5.08" y2="2.54" width="0.1524" layer="21"/>
+<wire x1="5.08" y1="2.54" x2="-5.08" y2="2.54" width="0.1524" layer="21"/>
+<wire x1="-5.08" y1="2.54" x2="-5.08" y2="-2.54" width="0.1524" layer="21"/>
 <text x="-3" y="3" size="1.016" layer="25">&gt;NAME</text>
 <text x="-3" y="-3" size="1.016" layer="27" align="top-left">&gt;VALUE</text>
 </package>
@@ -13004,7 +13004,7 @@ Connector</text>
 <wire x1="5.08" y1="2.54" x2="170.18" y2="2.54" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="170.18" y1="2.54" x2="170.18" y2="45.72" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="147.574" y1="165.1" x2="148.082" y2="165.1" width="0.1524" layer="97" style="shortdash"/>
-<text x="8.89" y="85.09" size="5.08" layer="97" font="vector" ratio="12">Voltage Regulator</text>
+<text x="8.89" y="85.09" size="5.08" layer="97" font="vector" ratio="12">Voltage Regulators</text>
 <wire x1="170.18" y1="45.72" x2="170.18" y2="95.25" width="0.1524" layer="97" style="shortdash"/>
 <text x="100.584" y="147.066" size="6.35" layer="97" font="vector" ratio="12" distance="12" rot="MR0">Motor &amp; Battery Connector</text>
 <text x="148.844" y="147.066" size="6.35" layer="97" font="vector" ratio="12" distance="12" rot="MR0">Status LEDs</text>
