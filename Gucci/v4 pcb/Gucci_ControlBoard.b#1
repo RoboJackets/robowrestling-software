@@ -5541,8 +5541,6 @@ design rules under a new name.</description>
 <wire x1="45" y1="50" x2="47.3616375" y2="50" width="0.2" layer="1"/>
 <wire x1="47.3616375" y1="50" x2="47.7172375" y2="49.6444" width="0.2" layer="1"/>
 <via x="47.7172375" y="49.6444" extent="1-16" drill="0.4"/>
-<wire x1="47.7172375" y1="49.6444" x2="48.5194" y2="49.6444" width="0.2" layer="16"/>
-<wire x1="48.5194" y1="49.6444" x2="48.875" y2="50" width="0.2" layer="16"/>
 <contactref element="R5" pad="2"/>
 <contactref element="R3" pad="2"/>
 <contactref element="R4" pad="2"/>
@@ -5572,13 +5570,14 @@ design rules under a new name.</description>
 <contactref element="R11" pad="2"/>
 <wire x1="39.8" y1="53.05" x2="39.9" y2="52.95" width="0.2" layer="16"/>
 <wire x1="39.9" y1="52.95" x2="39.9" y2="50" width="0.2" layer="16"/>
-<wire x1="49.05695" y1="50" x2="48.875" y2="50" width="0.2" layer="16"/>
 <wire x1="47.1" y1="43.35" x2="47.1" y2="46.7" width="0.2" layer="16"/>
 <wire x1="47.1" y1="46.7" x2="48.5" y2="48.1" width="0.2" layer="16"/>
 <via x="48.5" y="48.1" extent="1-16" drill="0.4"/>
 <wire x1="47.6" y1="49.5271625" x2="47.6" y2="49" width="0.2" layer="1"/>
 <wire x1="48.5" y1="48.1" x2="47.6" y2="49" width="0.2" layer="1"/>
 <wire x1="47.6" y1="49.5271625" x2="47.7172375" y2="49.6444" width="0.2" layer="1"/>
+<wire x1="47.7172375" y1="49.6444" x2="48.5194" y2="49.6444" width="0.2" layer="16"/>
+<wire x1="48.5194" y1="49.6444" x2="48.875" y2="50" width="0.2" layer="16"/>
 </signal>
 <signal name="LINE_LF">
 <contactref element="U2" pad="35/A16"/>

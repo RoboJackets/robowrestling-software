@@ -3,7 +3,7 @@
 <eagle version="9.5.1">
 <drawing>
 <settings>
-<setting alwaysvectorfont="no"/>
+<setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
 <grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="no" altdistance="0.1" altunitdist="mm" altunit="mm"/>
@@ -5107,7 +5107,7 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="10" y="4.338" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
 </element>
 <element name="ESC_RX" library="Kirbi_ControlBoard" package="MUX_74LVC1G157GV" value="MUX_74LVC1G157GV" x="50" y="50" smashed="yes" rot="MR270">
-<attribute name="NAME" x="52.968" y="51.724" size="0.8128" layer="26" rot="MR270"/>
+<attribute name="NAME" x="47.276" y="47.668" size="0.8128" layer="26" rot="MR180"/>
 <attribute name="VALUE" x="52.413" y="51.651" size="0.6096" layer="28" rot="MR270"/>
 </element>
 <element name="ESC1" library="Kirbi_ControlBoard" package="MOLEX_1.25MM_3PIN_SMT" value="MOLEX_1.25MM_3PIN_SMT" x="48.6" y="38" smashed="yes" rot="MR270">
@@ -5115,11 +5115,11 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="54.6" y="43" size="1.778" layer="28" font="vector" rot="MR270"/>
 </element>
 <element name="ESC2" library="Kirbi_ControlBoard" package="MOLEX_1.25MM_3PIN_SMT" value="MOLEX_1.25MM_3PIN_SMT" x="46.4" y="52.4" smashed="yes" rot="MR180">
-<attribute name="NAME" x="46.2" y="49.4" size="1.778" layer="26" font="vector" rot="MR180"/>
+<attribute name="NAME" x="32.2" y="55.4" size="1.778" layer="26" font="vector" rot="MR180"/>
 <attribute name="VALUE" x="41.4" y="58.4" size="1.778" layer="28" font="vector" rot="MR180"/>
 </element>
 <element name="ESC_TX" library="Kirbi_ControlBoard" package="MUX_74LVC1G157GV" value="MUX_74LVC1G157GV" x="42" y="50" smashed="yes" rot="MR270">
-<attribute name="NAME" x="44.968" y="52.524" size="0.8128" layer="26" rot="MR270"/>
+<attribute name="NAME" x="39.176" y="47.668" size="0.8128" layer="26" rot="MR180"/>
 <attribute name="VALUE" x="44.413" y="51.651" size="0.6096" layer="28" rot="MR270"/>
 </element>
 <element name="F1" library="Kirbi_ControlBoard" package="BEL_FUSE_C1F_3.5" value="3.5" x="8.8" y="35.1" smashed="yes" rot="MR180">
@@ -5166,15 +5166,15 @@ design rules under a new name.</description>
 <attribute name="PROD_ID" value="RES-07856" x="45" y="48" size="1.778" layer="27" rot="R180" display="off"/>
 <attribute name="VALUE" x="45" y="48.762" size="0.6096" layer="27" font="vector" ratio="20" rot="R180" align="top-center"/>
 </element>
-<element name="R10" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" package="0603" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k" x="46.4" y="43.3" smashed="yes" rot="MR0">
-<attribute name="NAME" x="46.4" y="44.062" size="0.6096" layer="26" font="vector" ratio="20" rot="MR0" align="bottom-center"/>
-<attribute name="PROD_ID" value="RES-07856" x="46.4" y="43.3" size="1.778" layer="28" rot="MR0" display="off"/>
-<attribute name="VALUE" x="46.4" y="42.538" size="0.6096" layer="28" font="vector" ratio="20" rot="MR0" align="top-center"/>
+<element name="R10" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" package="0603" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k" x="46.4" y="42.9" smashed="yes" rot="MR0">
+<attribute name="NAME" x="46.4" y="43.662" size="0.8128" layer="26" font="vector" ratio="20" rot="MR0" align="bottom-center"/>
+<attribute name="PROD_ID" value="RES-07856" x="46.4" y="42.9" size="1.778" layer="28" rot="MR0" display="off"/>
+<attribute name="VALUE" x="46.4" y="42.138" size="0.6096" layer="28" font="vector" ratio="20" rot="MR0" align="top-center"/>
 </element>
-<element name="R11" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" package="0603" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k" x="38" y="52" smashed="yes">
-<attribute name="NAME" x="38" y="52.762" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center"/>
-<attribute name="PROD_ID" value="RES-07856" x="38" y="52" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="38" y="51.238" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
+<element name="R11" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" package="0603" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k" x="39.8" y="53.9" smashed="yes" rot="MR270">
+<attribute name="NAME" x="39.038" y="53.9" size="0.8128" layer="26" font="vector" ratio="20" rot="MR270" align="bottom-center"/>
+<attribute name="PROD_ID" value="RES-07856" x="39.8" y="53.9" size="1.778" layer="28" rot="MR270" display="off"/>
+<attribute name="VALUE" x="40.562" y="53.9" size="0.6096" layer="28" font="vector" ratio="20" rot="MR270" align="top-center"/>
 </element>
 </elements>
 <signals>
@@ -5262,8 +5262,8 @@ design rules under a new name.</description>
 <contactref element="MUX_RX1" pad="P$2"/>
 <contactref element="MUX_RX2" pad="P$2"/>
 <wire x1="10" y1="36.395" x2="11.295" y2="35.1" width="0.2" layer="1"/>
-<wire x1="12.5" y1="35.1" x2="11.295" y2="35.1" width="0.2" layer="1"/>
-<via x="12.5" y="35.1" extent="1-16" drill="0.4"/>
+<wire x1="12.6" y1="35.1" x2="11.295" y2="35.1" width="0.2" layer="1"/>
+<via x="12.6" y="35.1" extent="1-16" drill="0.4"/>
 <wire x1="-2" y1="16.875" x2="-2" y2="15.7" width="0.2" layer="1"/>
 <via x="-2" y="15.7" extent="1-16" drill="0.4"/>
 <wire x1="3" y1="15.7" x2="3.8" y2="14.9" width="0.2" layer="1"/>
@@ -5571,11 +5571,12 @@ design rules under a new name.</description>
 <wire x1="16.301" y1="34" x2="19.301" y2="31" width="0.2" layer="1"/>
 <contactref element="R10" pad="2"/>
 <contactref element="R11" pad="2"/>
-<wire x1="45.55" y1="43.3" x2="45.55" y2="43.6113375" width="0.2" layer="16"/>
+<wire x1="45.55" y1="42.9" x2="45.55" y2="43.6113375" width="0.2" layer="16"/>
 <wire x1="45.55" y1="43.6113375" x2="44.951" y2="44.2103375" width="0.2" layer="16"/>
 <wire x1="44.951" y1="44.2103375" x2="44.951" y2="46.8781625" width="0.2" layer="16"/>
 <wire x1="44.951" y1="46.8781625" x2="47.7172375" y2="49.6444" width="0.2" layer="16"/>
-<wire x1="39.9" y1="50" x2="38.85" y2="52" width="0" layer="19" extent="1-1"/>
+<wire x1="39.8" y1="53.05" x2="39.9" y2="52.95" width="0.2" layer="16"/>
+<wire x1="39.9" y1="52.95" x2="39.9" y2="50" width="0.2" layer="16"/>
 </signal>
 <signal name="LINE_LF">
 <contactref element="U2" pad="35/A16"/>
@@ -5750,14 +5751,16 @@ design rules under a new name.</description>
 <signal name="S1/TX">
 <contactref element="ESC1" pad="P$1"/>
 <contactref element="ESC_TX" pad="P$3"/>
-<wire x1="47.2" y1="39.25" x2="45.225" y2="41.225" width="0.2" layer="16"/>
+<wire x1="47.2" y1="39.25" x2="45.4" y2="41.05" width="0.2" layer="16"/>
 <wire x1="45.225" y1="41.225" x2="44.4" y2="42.05" width="0.2" layer="16"/>
 <wire x1="44.4" y1="42.05" x2="44.4" y2="47.9" width="0.2" layer="16"/>
 <wire x1="44.4" y1="47.9" x2="43.25" y2="49.05" width="0.2" layer="16"/>
 <wire x1="43.25" y1="49.05" x2="43.125" y2="49.05" width="0.2" layer="16"/>
 <contactref element="R10" pad="1"/>
-<wire x1="47.25" y1="43.3" x2="45.225" y2="41.275" width="0.2" layer="16"/>
-<wire x1="45.225" y1="41.275" x2="45.225" y2="41.225" width="0.2" layer="16"/>
+<wire x1="47.25" y1="42.9" x2="47.95" y2="42.2" width="0.2" layer="16"/>
+<wire x1="47.95" y1="42.2" x2="47.95" y2="40" width="0.2" layer="16"/>
+<wire x1="47.95" y1="40" x2="47.2" y2="39.25" width="0.2" layer="16"/>
+<wire x1="45.4" y1="41.05" x2="45.225" y2="41.225" width="0" layer="19" extent="16-16"/>
 </signal>
 <signal name="SCL2">
 <contactref element="R16" pad="1"/>
@@ -6136,14 +6139,14 @@ design rules under a new name.</description>
 <wire x1="27.1" y1="8.8" x2="28.9" y2="7.2" width="0.2" layer="16"/>
 <wire x1="28.9" y1="7.2" x2="28.9" y2="6.6" width="0.2" layer="16"/>
 <via x="28.9" y="6.6" extent="1-16" drill="0.4"/>
-<via x="38" y="12" extent="1-16" drill="0.4"/>
-<wire x1="38" y1="12" x2="38.2271625" y2="12" width="0.2" layer="16"/>
-<wire x1="38.2271625" y1="12" x2="41.9476" y2="15.7204375" width="0.2" layer="16"/>
+<via x="37.7" y="12.2" extent="1-16" drill="0.4"/>
+<wire x1="37.7" y1="12.2" x2="38.4271625" y2="12.2" width="0.2" layer="16"/>
+<wire x1="38.4271625" y1="12.2" x2="41.9476" y2="15.7204375" width="0.2" layer="16"/>
 <contactref element="U2" pad="29"/>
 <wire x1="41.9476" y1="29.2924" x2="40.86" y2="30.38" width="0.2" layer="16"/>
 <wire x1="41.9476" y1="15.7204375" x2="41.9476" y2="29.2924" width="0.2" layer="16"/>
-<wire x1="32.6" y1="6.6" x2="38" y2="12" width="0.2" layer="1"/>
-<wire x1="28.9" y1="6.6" x2="32.6" y2="6.6" width="0.2" layer="1"/>
+<wire x1="32.1" y1="6.6" x2="37.7" y2="12.2" width="0.2" layer="1"/>
+<wire x1="28.9" y1="6.6" x2="32.1" y2="6.6" width="0.2" layer="1"/>
 </signal>
 <signal name="N$7">
 <contactref element="POWER_CONN" pad="P$1"/>
@@ -6178,9 +6181,17 @@ design rules under a new name.</description>
 <contactref element="ESC_TX" pad="P$1"/>
 <contactref element="ESC2" pad="P$1"/>
 <wire x1="43.125" y1="50.95" x2="43.175" y2="51" width="0.2" layer="16"/>
-<wire x1="43.175" y1="51" x2="45.15" y2="51" width="0.2" layer="16"/>
+<wire x1="43.175" y1="51" x2="45" y2="51" width="0.2" layer="16"/>
 <contactref element="R11" pad="1"/>
-<wire x1="37.15" y1="52" x2="43.125" y2="50.95" width="0" layer="19" extent="1-16"/>
+<wire x1="45" y1="51" x2="45.15" y2="51" width="0.2" layer="16"/>
+<wire x1="39.8" y1="54.75" x2="40.05" y2="55" width="0.2" layer="16"/>
+<wire x1="40.05" y1="55" x2="40.9944" y2="55" width="0.2" layer="16"/>
+<via x="40.9944" y="55" extent="1-16" drill="0.4"/>
+<wire x1="45.6056" y1="52.6" x2="43.3944" y2="52.6" width="0.2" layer="1"/>
+<wire x1="40.9944" y1="55" x2="43.3944" y2="52.6" width="0.2" layer="1"/>
+<via x="45.6056" y="52.6" extent="1-16" drill="0.4"/>
+<wire x1="45.6056" y1="52.6" x2="45" y2="51.9944" width="0.2" layer="16"/>
+<wire x1="45" y1="51.9944" x2="45" y2="51" width="0.2" layer="16"/>
 </signal>
 <signal name="ESC_S">
 <contactref element="ESC_TX" pad="P$6"/>
