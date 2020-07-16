@@ -6946,9 +6946,9 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <attribute name="NAME" x="276.86" y="106.68" size="1.778" layer="95"/>
 <attribute name="VALUE" x="276.86" y="100.33" size="1.778" layer="96"/>
 </instance>
-<instance part="R2" gate="G$1" x="292.1" y="33.02" smashed="yes">
-<attribute name="NAME" x="292.1" y="34.544" size="1.778" layer="95" font="vector" align="bottom-center"/>
-<attribute name="VALUE" x="292.1" y="31.496" size="1.778" layer="96" font="vector" align="top-center"/>
+<instance part="R2" gate="G$1" x="294.894" y="33.02" smashed="yes">
+<attribute name="NAME" x="294.894" y="34.544" size="1.778" layer="95" font="vector" align="bottom-center"/>
+<attribute name="VALUE" x="294.894" y="31.496" size="1.778" layer="96" font="vector" align="top-center"/>
 </instance>
 </instances>
 <busses>
@@ -7311,7 +7311,7 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <pinref part="GND28" gate="1" pin="GND"/>
 <wire x1="304.8" y1="30.48" x2="304.8" y2="33.02" width="0.1524" layer="91"/>
 <pinref part="R2" gate="G$1" pin="2"/>
-<wire x1="304.8" y1="33.02" x2="297.18" y2="33.02" width="0.1524" layer="91"/>
+<wire x1="304.8" y1="33.02" x2="299.974" y2="33.02" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="ESC" gate="G$1" pin="1"/>
@@ -8045,7 +8045,7 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <segment>
 <pinref part="D4" gate="G$1" pin="C"/>
 <pinref part="R2" gate="G$1" pin="1"/>
-<wire x1="279.4" y1="33.02" x2="287.02" y2="33.02" width="0.1524" layer="91"/>
+<wire x1="279.4" y1="33.02" x2="289.814" y2="33.02" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>

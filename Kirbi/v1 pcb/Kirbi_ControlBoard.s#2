@@ -6676,7 +6676,6 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <part name="F1" library="Kirbi_ControlBoard" deviceset="BEL_FUSE_C1F_3.5" device="" value="3.5"/>
 <part name="R2" library="Kirbi_ControlBoard" deviceset="6.2OHM" device="-0603-1/10W-5%" package3d_urn="urn:adsk.eagle:package:39650/1" value="6.2"/>
 <part name="R3" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k"/>
-<part name="R4" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k"/>
 <part name="+3V16" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="R5" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k"/>
 <part name="+3V17" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
@@ -7174,10 +7173,6 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <instance part="R3" gate="G$1" x="42.418" y="201.93" smashed="yes" rot="R90">
 <attribute name="NAME" x="40.894" y="201.93" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
 <attribute name="VALUE" x="43.942" y="201.93" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
-</instance>
-<instance part="R4" gate="G$1" x="129.032" y="214.63" smashed="yes" rot="R90">
-<attribute name="NAME" x="127.508" y="214.63" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
-<attribute name="VALUE" x="130.556" y="214.63" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
 </instance>
 <instance part="+3V16" gate="G$1" x="42.418" y="211.328" smashed="yes">
 <attribute name="VALUE" x="40.894" y="206.502" size="1.778" layer="96" rot="R90"/>
