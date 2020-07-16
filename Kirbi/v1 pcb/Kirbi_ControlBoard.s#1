@@ -6736,6 +6736,8 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <wire x1="190.5" y1="127" x2="190.5" y2="78.74" width="1.27" layer="97" style="shortdash"/>
 <text x="271.78" y="167.64" size="5.08" layer="97">ESC Connector</text>
 <text x="275.59" y="120.396" size="5.08" layer="97">Power Input</text>
+<text x="20.32" y="134.62" size="1.778" layer="97">*Note: The TX and RX labels refer to the respective Teensy connection 
+(not the sensor pins)</text>
 </plain>
 <instances>
 <instance part="U2" gate="G$1" x="193.04" y="185.42" smashed="yes">

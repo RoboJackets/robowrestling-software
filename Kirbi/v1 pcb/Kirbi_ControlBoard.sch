@@ -466,20 +466,20 @@
 <wire x1="2.54" y1="1.905" x2="2.54" y2="-1.905" width="0.1524" layer="21"/>
 <wire x1="0.635" y1="-2.54" x2="1.905" y2="-2.54" width="0.1524" layer="21"/>
 <wire x1="-1.905" y1="-2.54" x2="-0.635" y2="-2.54" width="0.1524" layer="21"/>
-<pad name="1" x="-1.27" y="-1.27" drill="1.016" shape="octagon"/>
-<pad name="2" x="-1.27" y="1.27" drill="1.016" shape="octagon"/>
-<pad name="3" x="1.27" y="-1.27" drill="1.016" shape="octagon"/>
-<pad name="4" x="1.27" y="1.27" drill="1.016" shape="octagon"/>
-<text x="-2.54" y="3.175" size="1.27" layer="25" ratio="10">&gt;NAME</text>
-<text x="-2.54" y="-4.445" size="1.27" layer="27">&gt;VALUE</text>
+<pad name="1" x="-1.27" y="-1.27" drill="1.02" shape="octagon"/>
+<pad name="2" x="-1.27" y="1.27" drill="1.02" shape="octagon"/>
+<pad name="3" x="1.27" y="-1.27" drill="1.02" shape="octagon"/>
+<pad name="4" x="1.27" y="1.27" drill="1.02" shape="octagon"/>
+<text x="-4.74" y="5.275" size="1.27" layer="25" ratio="10">&gt;NAME</text>
+<text x="-4.54" y="-6.145" size="1.27" layer="27">&gt;VALUE</text>
 <rectangle x1="-1.524" y1="-1.524" x2="-1.016" y2="-1.016" layer="51"/>
 <rectangle x1="-1.524" y1="1.016" x2="-1.016" y2="1.524" layer="51"/>
 <rectangle x1="1.016" y1="1.016" x2="1.524" y2="1.524" layer="51"/>
 <rectangle x1="1.016" y1="-1.524" x2="1.524" y2="-1.016" layer="51"/>
-<wire x1="-4.775" y1="3.1" x2="-4.775" y2="-3.1" width="0.127" layer="21"/>
-<wire x1="-4.775" y1="-3.1" x2="4.775" y2="-3.1" width="0.127" layer="21"/>
-<wire x1="4.775" y1="-3.1" x2="4.775" y2="3.1" width="0.127" layer="21"/>
-<wire x1="4.775" y1="3.1" x2="-4.775" y2="3.1" width="0.127" layer="21"/>
+<wire x1="-6.145" y1="4.6" x2="-6.145" y2="-4.6" width="0.127" layer="21"/>
+<wire x1="-6.145" y1="-4.6" x2="6.145" y2="-4.6" width="0.127" layer="21"/>
+<wire x1="6.145" y1="-4.6" x2="6.145" y2="4.6" width="0.127" layer="21"/>
+<wire x1="6.145" y1="4.6" x2="-6.145" y2="4.6" width="0.127" layer="21"/>
 </package>
 <package name="8-SOIC">
 <smd name="P$1" x="-2.7" y="1.905" dx="1.55" dy="0.6" layer="1"/>
