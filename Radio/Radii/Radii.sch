@@ -276,8 +276,8 @@
 <wire x1="-1.778" y1="1.492" x2="-1.778" y2="-1.508" width="0.0762" layer="21"/>
 <wire x1="1.778" y1="1.524" x2="-1.778" y2="1.524" width="0.0762" layer="21"/>
 <wire x1="1.778" y1="-1.524" x2="-1.778" y2="-1.524" width="0.0762" layer="21"/>
-<text x="-4.318" y="1.778" size="1.778" layer="21">&gt;Name</text>
-<text x="-4.445" y="-3.556" size="1.778" layer="21">&gt;Value</text>
+<text x="-4.318" y="1.778" size="1.778" layer="25">&gt;Name</text>
+<text x="-4.445" y="-3.556" size="1.778" layer="27">&gt;Value</text>
 </package>
 <package name="IND_1255AY-3R9N=P3">
 <wire x1="-3" y1="3" x2="3" y2="3" width="0.127" layer="51"/>
@@ -348,8 +348,6 @@
 <smd name="S2" x="3.2" y="2.45" dx="1.6" dy="1.4" layer="1"/>
 <smd name="S4" x="-1.2" y="0" dx="1.9" dy="1.9" layer="1"/>
 <smd name="S3" x="1.2" y="0" dx="1.9" dy="1.9" layer="1"/>
-<hole x="-3.3" y="0" drill="0.5"/>
-<hole x="3.3" y="0" drill="0.5"/>
 <pad name="S5" x="-3.3" y="0" drill="0.5" diameter="0.9" shape="long" rot="R90"/>
 <pad name="S6" x="3.3" y="0" drill="0.5" diameter="0.9" shape="long" rot="R90"/>
 </package>
@@ -5646,6 +5644,65 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 </deviceset>
 </devicesets>
 </library>
+<library name="RoboJackets-Switches">
+<description>&lt;img src="http://www.robojackets.org/wp-content/themes/RoboJackets-3.0/img/banner.png" width="600"&gt;
+&lt;hr&gt;
+&lt;h1&gt;RoboJackets EAGLE Libraries - Switches&lt;/h1&gt;&lt;/br&gt;
+&lt;p&gt;
+In this library you will find switches and other mechanical assisted circuit elements that are used for controlling connections among wires.
+&lt;/p&gt;</description>
+<packages>
+<package name="KMR2">
+<wire x1="-2.3" y1="1.4" x2="2.3" y2="1.4" width="0.127" layer="21"/>
+<wire x1="2.3" y1="1.4" x2="2.3" y2="-1.4" width="0.127" layer="21"/>
+<wire x1="2.3" y1="-1.4" x2="-2.3" y2="-1.4" width="0.127" layer="21"/>
+<wire x1="-2.3" y1="-1.4" x2="-2.3" y2="1.4" width="0.127" layer="21"/>
+<smd name="1.1" x="-2.05" y="0.8" dx="0.9" dy="1" layer="1"/>
+<smd name="2.1" x="-2.05" y="-0.8" dx="0.9" dy="1" layer="1"/>
+<smd name="2.2" x="2.05" y="-0.8" dx="0.9" dy="1" layer="1"/>
+<smd name="1.2" x="2.05" y="0.8" dx="0.9" dy="1" layer="1"/>
+<text x="-2.54" y="1.905" size="1" layer="25" ratio="10">&gt;NAME</text>
+<text x="0" y="-1.905" size="1" layer="21" ratio="20" align="top-center">&gt;FUNCTION</text>
+<rectangle x1="-2.286" y1="-1.397" x2="2.286" y2="1.397" layer="39"/>
+</package>
+</packages>
+<symbols>
+<symbol name="TS2">
+<wire x1="1.905" y1="3.429" x2="1.905" y2="2.159" width="0.254" layer="94"/>
+<wire x1="-1.905" y1="3.429" x2="-1.905" y2="2.159" width="0.254" layer="94"/>
+<wire x1="1.905" y1="3.429" x2="-1.905" y2="3.429" width="0.254" layer="94"/>
+<wire x1="-2.54" y1="0" x2="1.905" y2="1.27" width="0.254" layer="94"/>
+<circle x="-2.54" y="0" radius="0.127" width="0.4064" layer="94"/>
+<circle x="2.54" y="0" radius="0.127" width="0.4064" layer="94"/>
+<text x="-5.08" y="3.81" size="2.54" layer="95" font="vector">&gt;NAME</text>
+<text x="0" y="-1.27" size="2.54" layer="96" font="vector" ratio="15" align="top-center">&gt;VALUE</text>
+<pin name="1" x="-5.08" y="0" visible="off" length="short" direction="pas"/>
+<pin name="2" x="5.08" y="0" visible="off" length="short" direction="pas" rot="R180"/>
+<wire x1="0" y1="0.762" x2="0" y2="3.302" width="0.254" layer="94" style="shortdash"/>
+<text x="0" y="-4.318" size="1.27" layer="97" ratio="10" align="top-center">&gt;FUNCTION</text>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="KMR2" prefix="S">
+<gates>
+<gate name="G$1" symbol="TS2" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="KMR2">
+<connects>
+<connect gate="G$1" pin="1" pad="1.1 1.2"/>
+<connect gate="G$1" pin="2" pad="2.1 2.2"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="FUNCTION" value="Reset" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -5674,8 +5731,8 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 <part name="C6" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="GND4" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="SUPPLY7" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device=""/>
-<part name="C7" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="22UF" device="-1210-16V-20%" package3d_urn="urn:adsk.eagle:package:37436/1"/>
-<part name="C8" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="22UF" device="-1210-16V-20%" package3d_urn="urn:adsk.eagle:package:37436/1"/>
+<part name="C7" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="22UF" device="-1210-16V-20%" package3d_urn="urn:adsk.eagle:package:37436/1" value="22uF"/>
+<part name="C8" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="22UF" device="-1210-16V-20%" package3d_urn="urn:adsk.eagle:package:37436/1" value="22uF"/>
 <part name="U4" library="I'mRADIOactive" deviceset="IND_1255AY-3R9N=P3" device=""/>
 <part name="SUPPLY5" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="VCC_2" device="" value="9V"/>
 <part name="SUPPLY6" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="VCC_2" device="" value="9V"/>
@@ -5705,8 +5762,8 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 <part name="J2" library="I'mRADIOactive" deviceset="BUTTON" device=""/>
 <part name="J3" library="I'mRADIOactive" deviceset="BUTTON" device=""/>
 <part name="J4" library="I'mRADIOactive" deviceset="BUTTON" device=""/>
-<part name="U8" library="I'mRADIOactive" deviceset="BUTTON" device=""/>
-<part name="U9" library="I'mRADIOactive" deviceset="BUTTON" device=""/>
+<part name="J5" library="I'mRADIOactive" deviceset="BUTTON" device=""/>
+<part name="J6" library="I'mRADIOactive" deviceset="BUTTON" device=""/>
 <part name="SUPPLY9" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device=""/>
 <part name="R5" library="SparkFun-Resistors" deviceset="10KOHM-1/10W-1%(0603)" device="0603" value="10K"/>
 <part name="R6" library="SparkFun-Resistors" deviceset="10KOHM-1/10W-1%(0603)" device="0603" value="10K"/>
@@ -5715,6 +5772,11 @@ Basic schematic elements and footprints for 0603, 1206, and PTH resistors.</desc
 <part name="R9" library="SparkFun-Resistors" deviceset="10KOHM-1/10W-1%(0603)" device="0603" value="10K"/>
 <part name="GND8" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="R3" library="SparkFun-Resistors" deviceset="RESISTOR" device="0603" value="400Ω"/>
+<part name="S1" library="RoboJackets-Switches" deviceset="KMR2" device=""/>
+<part name="C15" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
+<part name="SUPPLY10" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device=""/>
+<part name="GND9" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="R10" library="SparkFun-Resistors" deviceset="10KOHM-1/10W-1%(0603)" device="0603" value="10K"/>
 </parts>
 <sheets>
 <sheet>
@@ -5915,10 +5977,10 @@ for Sumo Bot</text>
 <instance part="J4" gate="G$1" x="86.36" y="81.28" smashed="yes">
 <attribute name="NAME" x="83.312" y="82.296" size="1.27" layer="95"/>
 </instance>
-<instance part="U8" gate="G$1" x="91.44" y="78.74" smashed="yes">
+<instance part="J5" gate="G$1" x="91.44" y="78.74" smashed="yes">
 <attribute name="NAME" x="88.392" y="79.756" size="1.27" layer="95"/>
 </instance>
-<instance part="U9" gate="G$1" x="86.36" y="76.2" smashed="yes">
+<instance part="J6" gate="G$1" x="86.36" y="76.2" smashed="yes">
 <attribute name="NAME" x="83.312" y="77.216" size="1.27" layer="95"/>
 </instance>
 <instance part="SUPPLY9" gate="G$1" x="76.962" y="86.36" smashed="yes">
@@ -5950,6 +6012,25 @@ for Sumo Bot</text>
 <instance part="R3" gate="G$1" x="185.42" y="86.36" smashed="yes">
 <attribute name="NAME" x="181.61" y="87.8586" size="1.778" layer="95"/>
 <attribute name="VALUE" x="181.61" y="83.058" size="1.778" layer="96"/>
+</instance>
+<instance part="S1" gate="G$1" x="165.1" y="185.42" smashed="yes">
+<attribute name="NAME" x="160.02" y="189.23" size="2.54" layer="95" font="vector"/>
+<attribute name="VALUE" x="165.1" y="184.15" size="2.54" layer="96" font="vector" ratio="15" align="top-center"/>
+<attribute name="FUNCTION" x="165.1" y="181.102" size="1.27" layer="97" ratio="10" align="top-center"/>
+</instance>
+<instance part="C15" gate="G$1" x="154.94" y="175.26" smashed="yes">
+<attribute name="NAME" x="156.464" y="178.181" size="1.778" layer="95" font="vector"/>
+<attribute name="VALUE" x="156.464" y="173.101" size="1.778" layer="96" font="vector"/>
+</instance>
+<instance part="SUPPLY10" gate="G$1" x="137.16" y="190.5" smashed="yes">
+<attribute name="VALUE" x="137.16" y="193.294" size="1.778" layer="96" align="bottom-center"/>
+</instance>
+<instance part="GND9" gate="1" x="172.72" y="170.18" smashed="yes">
+<attribute name="VALUE" x="170.18" y="167.64" size="1.778" layer="96"/>
+</instance>
+<instance part="R10" gate="G$1" x="144.697834375" y="185.43219375" smashed="yes">
+<attribute name="NAME" x="140.887834375" y="186.93079375" size="1.778" layer="95"/>
+<attribute name="VALUE" x="140.887834375" y="182.13019375" size="1.778" layer="96"/>
 </instance>
 </instances>
 <busses>
@@ -6097,6 +6178,15 @@ for Sumo Bot</text>
 <wire x1="144.78" y1="83.82" x2="160.02" y2="83.82" width="0.1524" layer="91"/>
 <junction x="160.02" y="83.82"/>
 </segment>
+<segment>
+<pinref part="C15" gate="G$1" pin="2"/>
+<pinref part="GND9" gate="1" pin="GND"/>
+<wire x1="154.94" y1="172.72" x2="172.72" y2="172.72" width="0.1524" layer="91"/>
+<pinref part="S1" gate="G$1" pin="2"/>
+<wire x1="170.18" y1="185.42" x2="172.72" y2="185.42" width="0.1524" layer="91"/>
+<wire x1="172.72" y1="185.42" x2="172.72" y2="172.72" width="0.1524" layer="91"/>
+<junction x="172.72" y="172.72"/>
+</segment>
 </net>
 <net name="DISP_RESET" class="0">
 <segment>
@@ -6208,7 +6298,7 @@ for Sumo Bot</text>
 </segment>
 <segment>
 <pinref part="SUPPLY9" gate="G$1" pin="3.3V"/>
-<pinref part="U9" gate="G$1" pin="P$1"/>
+<pinref part="J6" gate="G$1" pin="P$1"/>
 <wire x1="76.962" y1="86.36" x2="76.962" y2="85.725" width="0.1524" layer="91"/>
 <wire x1="76.962" y1="85.725" x2="76.962" y2="83.185" width="0.1524" layer="91"/>
 <wire x1="76.962" y1="83.185" x2="76.962" y2="80.645" width="0.1524" layer="91"/>
@@ -6221,8 +6311,15 @@ for Sumo Bot</text>
 <wire x1="84.963" y1="80.645" x2="76.962" y2="80.645" width="0.1524" layer="91"/>
 <pinref part="J2" gate="G$1" pin="P$1"/>
 <wire x1="84.963" y1="85.725" x2="76.962" y2="85.725" width="0.1524" layer="91"/>
-<pinref part="U8" gate="G$1" pin="P$1"/>
+<pinref part="J5" gate="G$1" pin="P$1"/>
 <wire x1="90.043" y1="78.105" x2="76.962" y2="78.105" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="SUPPLY10" gate="G$1" pin="3.3V"/>
+<wire x1="137.16" y1="190.5" x2="137.16" y2="185.42" width="0.1524" layer="91"/>
+<pinref part="R10" gate="G$1" pin="1"/>
+<wire x1="137.16" y1="185.42" x2="139.617834375" y2="185.42" width="0.1524" layer="91"/>
+<wire x1="139.617834375" y1="185.42" x2="139.617834375" y2="185.43219375" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$3" class="0">
@@ -6292,15 +6389,6 @@ for Sumo Bot</text>
 <pinref part="U2" gate="G$1" pin="PB6(PCINT6/OC1B/OC4B/ADC)"/>
 <wire x1="134.62" y1="132.08" x2="142.24" y2="132.08" width="0.1524" layer="91"/>
 <label x="142.24" y="132.08" size="1.778" layer="95" xref="yes"/>
-</segment>
-</net>
-<net name="RESET" class="0">
-<segment>
-<label x="137.16" y="162.56" size="1.778" layer="95" xref="yes"/>
-<label x="137.16" y="162.56" size="1.778" layer="95" xref="yes"/>
-<label x="137.16" y="162.56" size="1.778" layer="95" xref="yes"/>
-<pinref part="U2" gate="G$1" pin="!RESET"/>
-<wire x1="137.16" y1="162.56" x2="134.62" y2="162.56" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="RADIO_RESET" class="0">
@@ -6499,7 +6587,7 @@ for Sumo Bot</text>
 </net>
 <net name="N$14" class="0">
 <segment>
-<pinref part="U8" gate="G$1" pin="P$2"/>
+<pinref part="J5" gate="G$1" pin="P$2"/>
 <pinref part="R8" gate="G$1" pin="1"/>
 <wire x1="92.837" y1="78.105" x2="114.3" y2="78.105" width="0.1524" layer="91"/>
 <wire x1="114.3" y1="78.105" x2="114.3" y2="78.74" width="0.1524" layer="91"/>
@@ -6513,7 +6601,7 @@ for Sumo Bot</text>
 </net>
 <net name="N$15" class="0">
 <segment>
-<pinref part="U9" gate="G$1" pin="P$2"/>
+<pinref part="J6" gate="G$1" pin="P$2"/>
 <pinref part="R9" gate="G$1" pin="1"/>
 <wire x1="87.757" y1="75.565" x2="104.14" y2="75.565" width="0.1524" layer="91"/>
 <wire x1="104.14" y1="75.565" x2="104.14" y2="76.2" width="0.1524" layer="91"/>
@@ -6522,6 +6610,23 @@ for Sumo Bot</text>
 <wire x1="134.62" y1="106.68" x2="134.62" y2="93.98" width="0.1524" layer="91"/>
 <wire x1="134.62" y1="93.98" x2="104.14" y2="93.98" width="0.1524" layer="91"/>
 <wire x1="104.14" y1="93.98" x2="104.14" y2="76.2" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$17" class="0">
+<segment>
+<pinref part="S1" gate="G$1" pin="1"/>
+<wire x1="154.94" y1="185.42" x2="160.02" y2="185.42" width="0.1524" layer="91"/>
+<pinref part="C15" gate="G$1" pin="1"/>
+<wire x1="154.94" y1="180.34" x2="154.94" y2="185.42" width="0.1524" layer="91"/>
+<pinref part="R10" gate="G$1" pin="2"/>
+<wire x1="149.777834375" y1="185.43219375" x2="154.94" y2="185.43219375" width="0.1524" layer="91"/>
+<wire x1="154.94" y1="185.43219375" x2="154.94" y2="185.42" width="0.1524" layer="91"/>
+<junction x="154.94" y="185.42"/>
+<pinref part="U2" gate="G$1" pin="!RESET"/>
+<wire x1="134.62" y1="162.56" x2="149.86" y2="162.56" width="0.1524" layer="91"/>
+<wire x1="149.777834375" y1="185.43219375" x2="149.86" y2="185.43219375" width="0.1524" layer="91"/>
+<wire x1="149.86" y1="185.43219375" x2="149.86" y2="162.56" width="0.1524" layer="91"/>
+<junction x="149.777834375" y="185.43219375"/>
 </segment>
 </net>
 </nets>

@@ -1564,7 +1564,6 @@ Temp: -40~+85°C</text>
 <pin name="P$1" x="-1.397" y="-0.635" visible="off" length="short"/>
 <pin name="P$2" x="1.397" y="-0.635" visible="off" length="short" rot="R180"/>
 <text x="-3.048" y="1.016" size="1.27" layer="95">&gt;Name</text>
-<text x="-2.794" y="-2.286" size="1.27" layer="96">&gt;Value</text>
 <wire x1="-0.635" y1="-0.635" x2="0.635" y2="-0.635" width="0.254" layer="94"/>
 </symbol>
 </symbols>
@@ -2134,7 +2133,7 @@ Temp: -40~+85°C</text>
 </device>
 </devices>
 </deviceset>
-<deviceset name="BUTTON" prefix="U">
+<deviceset name="BUTTON" prefix="J">
 <gates>
 <gate name="G$1" symbol="BUTTON" x="0" y="0"/>
 </gates>

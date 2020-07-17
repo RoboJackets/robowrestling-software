@@ -1796,7 +1796,7 @@ Temp: -40~+85°C</text>
 </device>
 </devices>
 </deviceset>
-<deviceset name="XC9140C501MR-G">
+<deviceset name="XC9140C501MR-G" prefix="U">
 <gates>
 <gate name="G$1" symbol="REG" x="0" y="0"/>
 </gates>
@@ -2134,7 +2134,7 @@ Temp: -40~+85°C</text>
 </device>
 </devices>
 </deviceset>
-<deviceset name="BUTTON">
+<deviceset name="BUTTON" prefix="U">
 <gates>
 <gate name="G$1" symbol="BUTTON" x="0" y="0"/>
 </gates>
