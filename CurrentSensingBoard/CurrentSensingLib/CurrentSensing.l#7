@@ -890,6 +890,63 @@
 <text x="-2.54" y="6.985" size="1.27" layer="25">&gt;NAME</text>
 <text x="-2.413" y="-8.382" size="1.27" layer="27">&gt;VALUE</text>
 </package>
+<package name="TR3E156M050C0300">
+<smd name="1" x="-3.15" y="0" dx="4" dy="2.5" layer="1" rot="R270"/>
+<smd name="2" x="3.15" y="0" dx="4" dy="2.5" layer="1" rot="R270"/>
+<text x="-5.08" y="2.54" size="1.778" layer="21">+</text>
+<wire x1="-5.08" y1="-2.54" x2="5.08" y2="-2.54" width="0.1524" layer="21"/>
+<wire x1="5.08" y1="-2.54" x2="5.08" y2="2.54" width="0.1524" layer="21"/>
+<wire x1="5.08" y1="2.54" x2="-5.08" y2="2.54" width="0.1524" layer="21"/>
+<wire x1="-5.08" y1="2.54" x2="-5.08" y2="-2.54" width="0.1524" layer="21"/>
+<text x="-3" y="3" size="1.016" layer="25">&gt;NAME</text>
+<text x="-3" y="-3" size="1.016" layer="27" align="top-left">&gt;VALUE</text>
+</package>
+<package name="860010373009">
+<circle x="0" y="0" radius="3.2" width="0.1524" layer="21"/>
+<text x="0.635" y="-2.159" size="1.778" layer="21">+</text>
+<pad name="2" x="-1.25" y="0" drill="0.55" diameter="0.8"/>
+<pad name="1" x="1.25" y="0" drill="0.55" diameter="0.8"/>
+<text x="-3" y="4" size="1.016" layer="25">&gt;NAME</text>
+<text x="-3" y="-4" size="1.016" layer="27" align="top-left">&gt;VALUE</text>
+</package>
+<package name="SD2114S040S8R0">
+<smd name="1" x="-2.325" y="0" dx="3" dy="2" layer="1" rot="R90"/>
+<smd name="2" x="2.325" y="0" dx="3" dy="2" layer="1" rot="R90"/>
+<wire x1="-3.6" y1="1.8" x2="-3.6" y2="-1.8" width="0.1524" layer="21"/>
+<wire x1="-3.6" y1="-1.8" x2="3.6" y2="-1.8" width="0.1524" layer="21"/>
+<wire x1="3.6" y1="-1.8" x2="3.6" y2="1.8" width="0.1524" layer="21"/>
+<wire x1="3.6" y1="1.8" x2="1" y2="1.8" width="0.1524" layer="21"/>
+<text x="-4" y="-2" size="1" layer="27" align="top-left">&gt;VALUE</text>
+<text x="-4" y="2" size="1" layer="25">&gt;NAME</text>
+<wire x1="1" y1="1.8" x2="-3.6" y2="1.8" width="0.1524" layer="21"/>
+<wire x1="1" y1="1.8" x2="1" y2="-1.7" width="0.1524" layer="21"/>
+</package>
+<package name="3550">
+<pad name="P$1" x="0" y="9.2202" drill="1.7018"/>
+<pad name="P$2" x="10.16" y="9.2202" drill="2.6416"/>
+<text x="1.27" y="13.97" size="1.778" layer="25">&gt;NAME</text>
+<text x="1.27" y="-6.35" size="1.778" layer="27">&gt;VALUE</text>
+<pad name="P$3" x="0" y="0" drill="1.7018"/>
+<pad name="P$4" x="10.16" y="0" drill="2.6416"/>
+<wire x1="2.54" y1="1.27" x2="2.54" y2="-1.27" width="0.1524" layer="21"/>
+<wire x1="2.54" y1="-1.27" x2="5.08" y2="-1.27" width="0.1524" layer="21"/>
+<wire x1="2.54" y1="1.27" x2="5.08" y2="1.27" width="0.1524" layer="21"/>
+<wire x1="5.08" y1="1.27" x2="5.08" y2="2.54" width="0.1524" layer="21"/>
+<wire x1="5.08" y1="2.54" x2="7.62" y2="0" width="0.1524" layer="21"/>
+<wire x1="5.08" y1="-2.54" x2="5.08" y2="-1.27" width="0.1524" layer="21"/>
+<wire x1="5.08" y1="-2.54" x2="7.62" y2="0" width="0.1524" layer="21"/>
+<wire x1="2.54" y1="10.16" x2="2.54" y2="7.62" width="0.1524" layer="21"/>
+<wire x1="2.54" y1="7.62" x2="5.08" y2="7.62" width="0.1524" layer="21"/>
+<wire x1="2.54" y1="10.16" x2="5.08" y2="10.16" width="0.1524" layer="21"/>
+<wire x1="5.08" y1="10.16" x2="5.08" y2="11.43" width="0.1524" layer="21"/>
+<wire x1="5.08" y1="11.43" x2="7.62" y2="8.89" width="0.1524" layer="21"/>
+<wire x1="5.08" y1="6.35" x2="5.08" y2="7.62" width="0.1524" layer="21"/>
+<wire x1="5.08" y1="6.35" x2="7.62" y2="8.89" width="0.1524" layer="21"/>
+<wire x1="-2.54" y1="12.7" x2="-2.54" y2="-3.81" width="0.1524" layer="21"/>
+<wire x1="-2.54" y1="-3.81" x2="13.97" y2="-3.81" width="0.1524" layer="21"/>
+<wire x1="13.97" y1="-3.81" x2="13.97" y2="12.7" width="0.1524" layer="21"/>
+<wire x1="13.97" y1="12.7" x2="-2.54" y2="12.7" width="0.1524" layer="21"/>
+</package>
 </packages>
 <symbols>
 <symbol name="MAX11634EEE+T">
@@ -1029,6 +1086,26 @@ Diode with low voltage drop</description>
 <vertex x="1.27" y="0"/>
 <vertex x="-1.27" y="-1.27"/>
 </polygon>
+</symbol>
+<symbol name="CPOL-US">
+<wire x1="-2.54" y1="0" x2="2.54" y2="0" width="0.254" layer="94"/>
+<wire x1="0" y1="-1.016" x2="0" y2="-2.54" width="0.1524" layer="94"/>
+<wire x1="0" y1="-1" x2="2.4892" y2="-1.8542" width="0.254" layer="94" curve="-37.878202"/>
+<wire x1="-2.4669" y1="-1.8504" x2="0" y2="-1.0161" width="0.254" layer="94" curve="-37.376341"/>
+<text x="1.016" y="0.635" size="1.778" layer="95">&gt;NAME</text>
+<text x="1.016" y="-4.191" size="1.778" layer="96">&gt;VALUE</text>
+<rectangle x1="-2.253" y1="0.668" x2="-1.364" y2="0.795" layer="94"/>
+<rectangle x1="-1.872" y1="0.287" x2="-1.745" y2="1.176" layer="94"/>
+<pin name="+" x="0" y="2.54" visible="off" length="short" direction="pas" swaplevel="1" rot="R270"/>
+<pin name="-" x="0" y="-5.08" visible="off" length="short" direction="pas" swaplevel="1" rot="R90"/>
+</symbol>
+<symbol name="FUSE">
+<pin name="1" x="-2.54" y="0" visible="off" length="point"/>
+<pin name="2" x="2.54" y="0" visible="off" length="point" rot="R180"/>
+<wire x1="2.54" y1="0" x2="0" y2="0" width="0.254" layer="94" curve="180"/>
+<wire x1="0" y1="0" x2="-2.54" y2="0" width="0.254" layer="94" curve="-180"/>
+<text x="-2.54" y="2.54" size="1.778" layer="95">&gt;NAME</text>
+<text x="-2.54" y="-2.54" size="1.778" layer="96" align="top-left">&gt;VALUE</text>
 </symbol>
 </symbols>
 <devicesets>
@@ -1274,22 +1351,6 @@ Diode with low voltage drop</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="MBRD835LT4G">
-<gates>
-<gate name="G$1" symbol="DIODE-SCHOTTKY" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="SCHDIODE">
-<connects>
-<connect gate="G$1" pin="A" pad="1 3"/>
-<connect gate="G$1" pin="C" pad="4"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="LM2678SX-5.0/NOPB" prefix="U">
 <gates>
 <gate name="G$1" symbol="LM2678SX-5.0/NOPB" x="0" y="0"/>
@@ -1316,6 +1377,74 @@ Diode with low voltage drop</description>
 </gates>
 <devices>
 <device name="" package="INDUCTOR22">
+<connects>
+<connect gate="G$1" pin="1" pad="P$1"/>
+<connect gate="G$1" pin="2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="TR3E156M050C0300" prefix="C" uservalue="yes">
+<gates>
+<gate name="G$1" symbol="CPOL-US" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="TR3E156M050C0300">
+<connects>
+<connect gate="G$1" pin="+" pad="1"/>
+<connect gate="G$1" pin="-" pad="2"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="VALUE" value="15uF" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="860010373009" prefix="C" uservalue="yes">
+<gates>
+<gate name="G$1" symbol="CPOL-US" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="860010373009">
+<connects>
+<connect gate="G$1" pin="+" pad="1"/>
+<connect gate="G$1" pin="-" pad="2"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="VALUE" value="180uF" constant="no"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="SD2114S040S8R0">
+<gates>
+<gate name="G$1" symbol="DIODE-SCHOTTKY" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SD2114S040S8R0">
+<connects>
+<connect gate="G$1" pin="A" pad="1"/>
+<connect gate="G$1" pin="C" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="3550(2)">
+<gates>
+<gate name="G$1" symbol="FUSE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="3550">
 <connects>
 <connect gate="G$1" pin="1" pad="P$1"/>
 <connect gate="G$1" pin="2" pad="P$2"/>

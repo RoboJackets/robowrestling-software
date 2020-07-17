@@ -466,20 +466,20 @@
 <wire x1="2.54" y1="1.905" x2="2.54" y2="-1.905" width="0.1524" layer="21"/>
 <wire x1="0.635" y1="-2.54" x2="1.905" y2="-2.54" width="0.1524" layer="21"/>
 <wire x1="-1.905" y1="-2.54" x2="-0.635" y2="-2.54" width="0.1524" layer="21"/>
-<pad name="1" x="-1.27" y="-1.27" drill="1.016" shape="octagon"/>
-<pad name="2" x="-1.27" y="1.27" drill="1.016" shape="octagon"/>
-<pad name="3" x="1.27" y="-1.27" drill="1.016" shape="octagon"/>
-<pad name="4" x="1.27" y="1.27" drill="1.016" shape="octagon"/>
-<text x="-2.54" y="3.175" size="1.27" layer="25" ratio="10">&gt;NAME</text>
-<text x="-2.54" y="-4.445" size="1.27" layer="27">&gt;VALUE</text>
+<pad name="1" x="-1.27" y="-1.27" drill="1.02" shape="octagon"/>
+<pad name="2" x="-1.27" y="1.27" drill="1.02" shape="octagon"/>
+<pad name="3" x="1.27" y="-1.27" drill="1.02" shape="octagon"/>
+<pad name="4" x="1.27" y="1.27" drill="1.02" shape="octagon"/>
+<text x="-4.74" y="5.275" size="1.27" layer="25" ratio="10">&gt;NAME</text>
+<text x="-4.54" y="-6.145" size="1.27" layer="27">&gt;VALUE</text>
 <rectangle x1="-1.524" y1="-1.524" x2="-1.016" y2="-1.016" layer="51"/>
 <rectangle x1="-1.524" y1="1.016" x2="-1.016" y2="1.524" layer="51"/>
 <rectangle x1="1.016" y1="1.016" x2="1.524" y2="1.524" layer="51"/>
 <rectangle x1="1.016" y1="-1.524" x2="1.524" y2="-1.016" layer="51"/>
-<wire x1="-4.775" y1="3.1" x2="-4.775" y2="-3.1" width="0.127" layer="21"/>
-<wire x1="-4.775" y1="-3.1" x2="4.775" y2="-3.1" width="0.127" layer="21"/>
-<wire x1="4.775" y1="-3.1" x2="4.775" y2="3.1" width="0.127" layer="21"/>
-<wire x1="4.775" y1="3.1" x2="-4.775" y2="3.1" width="0.127" layer="21"/>
+<wire x1="-6.145" y1="4.6" x2="-6.145" y2="-4.6" width="0.127" layer="21"/>
+<wire x1="-6.145" y1="-4.6" x2="6.145" y2="-4.6" width="0.127" layer="21"/>
+<wire x1="6.145" y1="-4.6" x2="6.145" y2="4.6" width="0.127" layer="21"/>
+<wire x1="6.145" y1="4.6" x2="-6.145" y2="4.6" width="0.127" layer="21"/>
 </package>
 <package name="8-SOIC">
 <smd name="P$1" x="-2.7" y="1.905" dx="1.55" dy="0.6" layer="1"/>
@@ -5448,15 +5448,6 @@ DigiKey: WM22676-ND</description>
 <hole x="-2.67" y="0" drill="3.4"/>
 <hole x="2.67" y="0" drill="3.4"/>
 </package>
-<package name="BEL_FUSE_C1F_3.5">
-<description>507-1884-1-ND</description>
-<smd name="P$1" x="-2.09" y="0" dx="1.78" dy="1.14" layer="1" rot="R90"/>
-<smd name="P$2" x="2.09" y="0" dx="1.78" dy="1.14" layer="1" rot="R90"/>
-<wire x1="-2.94" y1="1.27" x2="-2.94" y2="-1.27" width="0.1524" layer="21"/>
-<wire x1="-2.94" y1="-1.27" x2="2.94" y2="-1.27" width="0.1524" layer="21"/>
-<wire x1="2.94" y1="-1.27" x2="2.94" y2="1.27" width="0.1524" layer="21"/>
-<wire x1="2.94" y1="1.27" x2="-2.94" y2="1.27" width="0.1524" layer="21"/>
-</package>
 <package name="MOLEX_1.25MM_3PIN_SMT">
 <description>MOLEX_1.25MM_3PIN_SMT
 0532610371
@@ -5473,7 +5464,44 @@ WM7621CT-ND</description>
 <text x="-5" y="3" size="1.778" layer="25" font="vector">&gt;Name</text>
 <text x="-5" y="-6" size="1.778" layer="27" font="vector">&gt;Value</text>
 </package>
+<package name="BEL_FUSE_C1F_3.5">
+<description>507-1884-1-ND</description>
+<smd name="P$1" x="-2.09" y="0" dx="1.78" dy="1.14" layer="1" rot="R90"/>
+<smd name="P$2" x="2.09" y="0" dx="1.78" dy="1.14" layer="1" rot="R90"/>
+<wire x1="-2.94" y1="1.27" x2="-2.94" y2="-1.27" width="0.1524" layer="21"/>
+<wire x1="-2.94" y1="-1.27" x2="2.94" y2="-1.27" width="0.1524" layer="21"/>
+<wire x1="2.94" y1="-1.27" x2="2.94" y2="1.27" width="0.1524" layer="21"/>
+<wire x1="2.94" y1="1.27" x2="-2.94" y2="1.27" width="0.1524" layer="21"/>
+<text x="-3.048" y="1.905" size="1.778" layer="25" font="vector">&gt;NAME</text>
+<text x="-2.921" y="-3.556" size="1.778" layer="27" font="vector">&gt;VALUE</text>
+</package>
+<package name="0603" urn="urn:adsk.eagle:footprint:39615/1">
+<description>&lt;p&gt;&lt;b&gt;Generic 1608 (0603) package&lt;/b&gt;&lt;/p&gt;
+&lt;p&gt;0.2mm courtyard excess rounded to nearest 0.05mm.&lt;/p&gt;</description>
+<wire x1="-1.6" y1="0.7" x2="1.6" y2="0.7" width="0.0508" layer="39"/>
+<wire x1="1.6" y1="0.7" x2="1.6" y2="-0.7" width="0.0508" layer="39"/>
+<wire x1="1.6" y1="-0.7" x2="-1.6" y2="-0.7" width="0.0508" layer="39"/>
+<wire x1="-1.6" y1="-0.7" x2="-1.6" y2="0.7" width="0.0508" layer="39"/>
+<wire x1="-0.356" y1="0.432" x2="0.356" y2="0.432" width="0.1016" layer="51"/>
+<wire x1="-0.356" y1="-0.419" x2="0.356" y2="-0.419" width="0.1016" layer="51"/>
+<smd name="1" x="-0.85" y="0" dx="1.1" dy="1" layer="1"/>
+<smd name="2" x="0.85" y="0" dx="1.1" dy="1" layer="1"/>
+<text x="0" y="0.762" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center">&gt;NAME</text>
+<text x="0" y="-0.762" size="0.6096" layer="27" font="vector" ratio="20" align="top-center">&gt;VALUE</text>
+<rectangle x1="-0.8382" y1="-0.4699" x2="-0.3381" y2="0.4801" layer="51"/>
+<rectangle x1="0.3302" y1="-0.4699" x2="0.8303" y2="0.4801" layer="51"/>
+<rectangle x1="-0.1999" y1="-0.3" x2="0.1999" y2="0.3" layer="35"/>
+</package>
 </packages>
+<packages3d>
+<package3d name="0603" urn="urn:adsk.eagle:package:39650/1" type="box">
+<description>Generic 1608 (0603) package
+0.2mm courtyard excess rounded to nearest 0.05mm.</description>
+<packageinstances>
+<packageinstance name="0603"/>
+</packageinstances>
+</package3d>
+</packages3d>
 <symbols>
 <symbol name="CONN_04">
 <description>&lt;h3&gt;4 Pin Connection&lt;/h3&gt;</description>
@@ -5573,12 +5601,6 @@ Temp: -40~+85°C</text>
 <text x="-3.81" y="6.604" size="1.778" layer="95">&gt;NAME</text>
 <text x="-4.064" y="-7.62" size="1.778" layer="95">&gt;VALUE</text>
 </symbol>
-<symbol name="FUSE">
-<pin name="P$1" x="-2.54" y="0" length="point"/>
-<pin name="P$2" x="2.54" y="0" length="point"/>
-<wire x1="-2.54" y1="0" x2="0" y2="0" width="0.1524" layer="94" curve="180"/>
-<wire x1="0" y1="0" x2="2.54" y2="0" width="0.1524" layer="94" curve="-180"/>
-</symbol>
 <symbol name="CONN_03">
 <description>&lt;h3&gt;3 Pin Connection&lt;/h3&gt;</description>
 <wire x1="3.81" y1="-5.08" x2="-2.54" y2="-5.08" width="0.4064" layer="94"/>
@@ -5593,6 +5615,29 @@ Temp: -40~+85°C</text>
 <pin name="3" x="7.62" y="2.54" visible="pad" length="middle" direction="pas" swaplevel="1" rot="R180"/>
 <text x="-2.54" y="-7.366" size="1.778" layer="96" font="vector">&gt;VALUE</text>
 <text x="-2.54" y="5.588" size="1.778" layer="95" font="vector">&gt;NAME</text>
+</symbol>
+<symbol name="FUSE">
+<pin name="P$1" x="-2.54" y="0" length="point"/>
+<pin name="P$2" x="2.54" y="0" length="point"/>
+<wire x1="-2.54" y1="0" x2="0" y2="0" width="0.1524" layer="94" curve="180"/>
+<wire x1="0" y1="0" x2="2.54" y2="0" width="0.1524" layer="94" curve="-180"/>
+<text x="-2.54" y="2.54" size="1.778" layer="95">&gt;Name</text>
+<text x="-2.54" y="-3.81" size="1.778" layer="96">&gt;Value</text>
+</symbol>
+<symbol name="RESISTOR-1">
+<wire x1="-2.54" y1="0" x2="-2.159" y2="1.016" width="0.1524" layer="94"/>
+<wire x1="-2.159" y1="1.016" x2="-1.524" y2="-1.016" width="0.1524" layer="94"/>
+<wire x1="-1.524" y1="-1.016" x2="-0.889" y2="1.016" width="0.1524" layer="94"/>
+<wire x1="-0.889" y1="1.016" x2="-0.254" y2="-1.016" width="0.1524" layer="94"/>
+<wire x1="-0.254" y1="-1.016" x2="0.381" y2="1.016" width="0.1524" layer="94"/>
+<wire x1="0.381" y1="1.016" x2="1.016" y2="-1.016" width="0.1524" layer="94"/>
+<wire x1="1.016" y1="-1.016" x2="1.651" y2="1.016" width="0.1524" layer="94"/>
+<wire x1="1.651" y1="1.016" x2="2.286" y2="-1.016" width="0.1524" layer="94"/>
+<wire x1="2.286" y1="-1.016" x2="2.54" y2="0" width="0.1524" layer="94"/>
+<text x="0" y="1.524" size="1.778" layer="95" font="vector" align="bottom-center">&gt;NAME</text>
+<text x="0" y="-1.524" size="1.778" layer="96" font="vector" align="top-center">&gt;VALUE</text>
+<pin name="2" x="5.08" y="0" visible="off" length="short" direction="pas" swaplevel="1" rot="R180"/>
+<pin name="1" x="-5.08" y="0" visible="off" length="short" direction="pas" swaplevel="1"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -5702,22 +5747,6 @@ Temp: -40~+85°C</text>
 </device>
 </devices>
 </deviceset>
-<deviceset name="BEL_FUSE_C1F_3.5">
-<gates>
-<gate name="G$1" symbol="FUSE" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="BEL_FUSE_C1F_3.5">
-<connects>
-<connect gate="G$1" pin="P$1" pad="P$1"/>
-<connect gate="G$1" pin="P$2" pad="P$2"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="MOLEX_1.25MM_3PIN_SMT">
 <description>MOLEX_1.25MM_3PIN_SMT
 0532610371
@@ -5734,6 +5763,48 @@ WM7621CT-ND</description>
 </connects>
 <technologies>
 <technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="BEL_FUSE_C1F_3.5">
+<gates>
+<gate name="G$1" symbol="FUSE" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="BEL_FUSE_C1F_3.5">
+<connects>
+<connect gate="G$1" pin="P$1" pad="P$1"/>
+<connect gate="G$1" pin="P$2" pad="P$2"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="VALUE" value="3.5"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="6.2OHM" prefix="R">
+<description>&lt;h3&gt;6.2Ω resistor&lt;/h3&gt;
+&lt;p&gt;A resistor is a passive two-terminal electrical component that implements electrical resistance as a circuit element. Resistors act to reduce current flow, and, at the same time, act to lower voltage levels within circuits. - Wikipedia&lt;/p&gt;</description>
+<gates>
+<gate name="G$1" symbol="RESISTOR-1" x="0" y="0"/>
+</gates>
+<devices>
+<device name="-0603-1/10W-5%" package="0603">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:39650/1"/>
+</package3dinstances>
+<technologies>
+<technology name="">
+<attribute name="PROD_ID" value="P6.2GCT-ND"/>
+<attribute name="VALUE" value="6.2"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -6081,6 +6152,47 @@ It has a reduced top mask to make it harder to install upside-down.</description
 <circle x="-1.27" y="0" radius="0.4572" width="0" layer="29"/>
 <circle x="1.27" y="0" radius="0.4572" width="0" layer="29"/>
 </package>
+<package name="AXIAL-0.3-KIT" urn="urn:adsk.eagle:footprint:39623/1" library_version="1">
+<description>&lt;h3&gt;AXIAL-0.3-KIT&lt;/h3&gt;
+&lt;p&gt;Commonly used for 1/4W through-hole resistors. 0.3" pitch between holes.&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Warning:&lt;/b&gt; This is the KIT version of the AXIAL-0.3 package. This package has a smaller diameter top stop mask, which doesn't cover the diameter of the pad. This means only the bottom side of the pads' copper will be exposed. You'll only be able to solder to the bottom side.&lt;/p&gt;</description>
+<wire x1="-2.54" y1="1.27" x2="2.54" y2="1.27" width="0.254" layer="21"/>
+<wire x1="2.54" y1="1.27" x2="2.54" y2="0" width="0.254" layer="21"/>
+<wire x1="2.54" y1="0" x2="2.54" y2="-1.27" width="0.254" layer="21"/>
+<wire x1="2.54" y1="-1.27" x2="-2.54" y2="-1.27" width="0.254" layer="21"/>
+<wire x1="-2.54" y1="-1.27" x2="-2.54" y2="0" width="0.254" layer="21"/>
+<wire x1="-2.54" y1="0" x2="-2.54" y2="1.27" width="0.254" layer="21"/>
+<wire x1="2.54" y1="0" x2="2.794" y2="0" width="0.254" layer="21"/>
+<wire x1="-2.54" y1="0" x2="-2.794" y2="0" width="0.254" layer="21"/>
+<pad name="P$1" x="-3.81" y="0" drill="1.016" diameter="2.032" stop="no"/>
+<pad name="P$2" x="3.81" y="0" drill="1.016" diameter="2.032" stop="no"/>
+<text x="0" y="1.524" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center">&gt;NAME</text>
+<text x="0" y="-1.524" size="0.6096" layer="27" font="vector" ratio="20" align="top-center">&gt;VALUE</text>
+<polygon width="0.127" layer="30">
+<vertex x="3.8201" y="-0.9449" curve="-90"/>
+<vertex x="2.8652" y="-0.0152" curve="-90.011749"/>
+<vertex x="3.8176" y="0.9602" curve="-90"/>
+<vertex x="4.7676" y="-0.0178" curve="-90.024193"/>
+</polygon>
+<polygon width="0.127" layer="29">
+<vertex x="3.8176" y="-0.4369" curve="-90.012891"/>
+<vertex x="3.3731" y="-0.0127" curve="-90"/>
+<vertex x="3.8176" y="0.4546" curve="-90"/>
+<vertex x="4.2595" y="-0.0025" curve="-90.012967"/>
+</polygon>
+<polygon width="0.127" layer="30">
+<vertex x="-3.8075" y="-0.9525" curve="-90"/>
+<vertex x="-4.7624" y="-0.0228" curve="-90.011749"/>
+<vertex x="-3.81" y="0.9526" curve="-90"/>
+<vertex x="-2.86" y="-0.0254" curve="-90.024193"/>
+</polygon>
+<polygon width="0.127" layer="29">
+<vertex x="-3.81" y="-0.4445" curve="-90.012891"/>
+<vertex x="-4.2545" y="-0.0203" curve="-90"/>
+<vertex x="-3.81" y="0.447" curve="-90"/>
+<vertex x="-3.3681" y="-0.0101" curve="-90.012967"/>
+</polygon>
+</package>
 </packages>
 <packages3d>
 <package3d name="0603" urn="urn:adsk.eagle:package:39650/1" type="box" library_version="1">
@@ -6117,6 +6229,14 @@ Commonly used for 1/4W through-hole resistors. 0.1" pitch between holes.
 Warning: This is the KIT version of the AXIAL-0.1 package. This package has a smaller diameter top stop mask, which doesn't cover the diameter of the pad. This means only the bottom side of the pads' copper will be exposed. You'll only be able to solder to the bottom side.</description>
 <packageinstances>
 <packageinstance name="AXIAL-0.1-KIT"/>
+</packageinstances>
+</package3d>
+<package3d name="AXIAL-0.3-KIT" urn="urn:adsk.eagle:package:39661/1" type="box" library_version="1">
+<description>AXIAL-0.3-KIT
+Commonly used for 1/4W through-hole resistors. 0.3" pitch between holes.
+Warning: This is the KIT version of the AXIAL-0.3 package. This package has a smaller diameter top stop mask, which doesn't cover the diameter of the pad. This means only the bottom side of the pads' copper will be exposed. You'll only be able to solder to the bottom side.</description>
+<packageinstances>
+<packageinstance name="AXIAL-0.3-KIT"/>
 </packageinstances>
 </package3d>
 </packages3d>
@@ -6261,6 +6381,165 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 </device>
 </devices>
 </deviceset>
+<deviceset name="1KOHM" urn="urn:adsk.eagle:component:39763/1" prefix="R" library_version="1">
+<description>&lt;h3&gt;1kΩ resistor&lt;/h3&gt;
+&lt;p&gt;A resistor is a passive two-terminal electrical component that implements electrical resistance as a circuit element. Resistors act to reduce current flow, and, at the same time, act to lower voltage levels within circuits. - Wikipedia&lt;/p&gt;</description>
+<gates>
+<gate name="G$1" symbol="RESISTOR" x="0" y="0"/>
+</gates>
+<devices>
+<device name="-HORIZ-1/4W-1%" package="AXIAL-0.3">
+<connects>
+<connect gate="G$1" pin="1" pad="P$1"/>
+<connect gate="G$1" pin="2" pad="P$2"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:39658/1"/>
+</package3dinstances>
+<technologies>
+<technology name="">
+<attribute name="PROD_ID" value="RES-12182"/>
+<attribute name="VALUE" value="1k"/>
+</technology>
+</technologies>
+</device>
+<device name="-VERT-1/4W-1%" package="AXIAL-0.1">
+<connects>
+<connect gate="G$1" pin="1" pad="P$1"/>
+<connect gate="G$1" pin="2" pad="P$2"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:39656/1"/>
+</package3dinstances>
+<technologies>
+<technology name="">
+<attribute name="PROD_ID" value="RES-12182"/>
+<attribute name="VALUE" value="1k"/>
+</technology>
+</technologies>
+</device>
+<device name="-VERT_KIT-1/4W-1%" package="AXIAL-0.1-KIT">
+<connects>
+<connect gate="G$1" pin="1" pad="P$1"/>
+<connect gate="G$1" pin="2" pad="P$2"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:39653/1"/>
+</package3dinstances>
+<technologies>
+<technology name="">
+<attribute name="PROD_ID" value="RES-12182"/>
+<attribute name="VALUE" value="1k"/>
+</technology>
+</technologies>
+</device>
+<device name="-HORIZ_KIT-1/4W-1%" package="AXIAL-0.3-KIT">
+<connects>
+<connect gate="G$1" pin="1" pad="P$1"/>
+<connect gate="G$1" pin="2" pad="P$2"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:39661/1"/>
+</package3dinstances>
+<technologies>
+<technology name="">
+<attribute name="PROD_ID" value="RES-12182"/>
+<attribute name="VALUE" value="1k"/>
+</technology>
+</technologies>
+</device>
+<device name="-VERT-1/4W-5%" package="AXIAL-0.1">
+<connects>
+<connect gate="G$1" pin="1" pad="P$1"/>
+<connect gate="G$1" pin="2" pad="P$2"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:39656/1"/>
+</package3dinstances>
+<technologies>
+<technology name="">
+<attribute name="PROD_ID" value="RES-08380"/>
+<attribute name="VALUE" value="1k"/>
+</technology>
+</technologies>
+</device>
+<device name="-VERT_KIT-1/4W-5%" package="AXIAL-0.1-KIT">
+<connects>
+<connect gate="G$1" pin="1" pad="P$1"/>
+<connect gate="G$1" pin="2" pad="P$2"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:39653/1"/>
+</package3dinstances>
+<technologies>
+<technology name="">
+<attribute name="PROD_ID" value="RES-08380"/>
+<attribute name="VALUE" value="1k"/>
+</technology>
+</technologies>
+</device>
+<device name="-HORIZ-1/4W-5%" package="AXIAL-0.3">
+<connects>
+<connect gate="G$1" pin="1" pad="P$1"/>
+<connect gate="G$1" pin="2" pad="P$2"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:39658/1"/>
+</package3dinstances>
+<technologies>
+<technology name="">
+<attribute name="PROD_ID" value="RES-08380"/>
+<attribute name="VALUE" value="1k"/>
+</technology>
+</technologies>
+</device>
+<device name="-HORIZ_KIT-1/4W-5%" package="AXIAL-0.3-KIT">
+<connects>
+<connect gate="G$1" pin="1" pad="P$1"/>
+<connect gate="G$1" pin="2" pad="P$2"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:39661/1"/>
+</package3dinstances>
+<technologies>
+<technology name="">
+<attribute name="PROD_ID" value="RES-08380"/>
+<attribute name="VALUE" value="1k"/>
+</technology>
+</technologies>
+</device>
+<device name="-VERT-1/6W-5%" package="AXIAL-0.1">
+<connects>
+<connect gate="G$1" pin="1" pad="P$1"/>
+<connect gate="G$1" pin="2" pad="P$2"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:39656/1"/>
+</package3dinstances>
+<technologies>
+<technology name="">
+<attribute name="PROD_ID" value="RES-09769"/>
+<attribute name="VALUE" value="1k"/>
+</technology>
+</technologies>
+</device>
+<device name="-0603-1/10W-1%" package="0603">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+</connects>
+<package3dinstances>
+<package3dinstance package3d_urn="urn:adsk.eagle:package:39650/1"/>
+</package3dinstances>
+<technologies>
+<technology name="">
+<attribute name="PROD_ID" value="RES-07856"/>
+<attribute name="VALUE" value="1k"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
 </devicesets>
 </library>
 </libraries>
@@ -6391,24 +6670,31 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <part name="C15" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="C25" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="POWER_CONN" library="Kirbi_ControlBoard" deviceset="MOLEX_2.54MM_2PIN" device=""/>
-<part name="U$2" library="Kirbi_ControlBoard" deviceset="BEL_FUSE_C1F_3.5" device=""/>
 <part name="C12" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
-<part name="ESC_RX" library="Kirbi_ControlBoard" deviceset="MUX_74LVC1G157GV" device=""/>
-<part name="ESC1" library="Kirbi_ControlBoard" deviceset="MOLEX_1.25MM_3PIN_SMT" device=""/>
-<part name="ESC2" library="Kirbi_ControlBoard" deviceset="MOLEX_1.25MM_3PIN_SMT" device=""/>
-<part name="ESC_TX" library="Kirbi_ControlBoard" deviceset="MUX_74LVC1G157GV" device=""/>
-<part name="+3V16" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
-<part name="+3V17" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
+<part name="ESC" library="Kirbi_ControlBoard" deviceset="MOLEX_1.25MM_3PIN_SMT" device=""/>
 <part name="GND21" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
-<part name="GND27" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
+<part name="F1" library="Kirbi_ControlBoard" deviceset="BEL_FUSE_C1F_3.5" device="" value="3.5"/>
+<part name="R2" library="Kirbi_ControlBoard" deviceset="6.2OHM" device="-0603-1/10W-5%" package3d_urn="urn:adsk.eagle:package:39650/1" value="6.2"/>
+<part name="R3" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k"/>
+<part name="+3V16" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
+<part name="R5" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k"/>
+<part name="+3V17" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
+<part name="R6" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k"/>
+<part name="+3V18" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
+<part name="R7" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k"/>
+<part name="+3V19" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
+<part name="R10" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k"/>
+<part name="+3V22" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
+<part name="R11" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k"/>
+<part name="+3V23" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 </parts>
 <sheets>
 <sheet>
 <plain>
 <wire x1="116.84" y1="127" x2="116.84" y2="261.62" width="1.27" layer="97" style="shortdash"/>
 <wire x1="116.84" y1="261.62" x2="254" y2="261.62" width="1.27" layer="97" style="shortdash"/>
-<wire x1="254" y1="261.62" x2="254" y2="190.5" width="1.27" layer="97" style="shortdash"/>
-<wire x1="254" y1="190.5" x2="254" y2="127" width="1.27" layer="97" style="shortdash"/>
+<wire x1="254" y1="261.62" x2="254" y2="177.8" width="1.27" layer="97" style="shortdash"/>
+<wire x1="254" y1="177.8" x2="254" y2="127" width="1.27" layer="97" style="shortdash"/>
 <wire x1="254" y1="127" x2="190.5" y2="127" width="1.27" layer="97" style="shortdash"/>
 <text x="154.94" y="248.92" size="6.4516" layer="97">Teensy 3.6 Pinout</text>
 <wire x1="190.5" y1="127" x2="116.84" y2="127" width="1.27" layer="97" style="shortdash"/>
@@ -6418,16 +6704,16 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <wire x1="15.24" y1="78.74" x2="172.72" y2="78.74" width="1.27" layer="97" style="shortdash"/>
 <text x="38.1" y="251.46" size="5.08" layer="97">Lidar Connectors</text>
 <wire x1="254" y1="261.62" x2="424.18" y2="261.62" width="1.27" layer="97" style="shortdash"/>
-<wire x1="424.18" y1="261.62" x2="424.18" y2="190.5" width="1.27" layer="97" style="shortdash"/>
-<wire x1="424.18" y1="190.5" x2="335.28" y2="190.5" width="1.27" layer="97" style="shortdash"/>
+<wire x1="424.18" y1="261.62" x2="424.18" y2="177.8" width="1.27" layer="97" style="shortdash"/>
+<wire x1="424.18" y1="177.8" x2="335.28" y2="177.8" width="1.27" layer="97" style="shortdash"/>
 <text x="320.04" y="248.92" size="5.08" layer="97">Multiplexers</text>
-<wire x1="335.28" y1="190.5" x2="254" y2="190.5" width="1.27" layer="97" style="shortdash"/>
+<wire x1="335.28" y1="177.8" x2="254" y2="177.8" width="1.27" layer="97" style="shortdash"/>
 <wire x1="172.72" y1="78.74" x2="190.5" y2="78.74" width="1.27" layer="97" style="shortdash"/>
 <wire x1="190.5" y1="78.74" x2="254" y2="78.74" width="1.27" layer="97" style="shortdash"/>
 <wire x1="254" y1="78.74" x2="254" y2="127" width="1.27" layer="97" style="shortdash"/>
 <wire x1="254" y1="78.74" x2="335.28" y2="78.74" width="1.27" layer="97" style="shortdash"/>
 <wire x1="335.28" y1="78.74" x2="424.18" y2="78.74" width="1.27" layer="97" style="shortdash"/>
-<wire x1="424.18" y1="78.74" x2="424.18" y2="190.5" width="1.27" layer="97" style="shortdash"/>
+<wire x1="424.18" y1="78.74" x2="424.18" y2="177.8" width="1.27" layer="97" style="shortdash"/>
 <text x="40.64" y="116.84" size="5.08" layer="97">Line Sensors</text>
 <wire x1="15.24" y1="78.74" x2="15.24" y2="20.32" width="1.27" layer="97" style="shortdash"/>
 <wire x1="15.24" y1="20.32" x2="172.72" y2="20.32" width="1.27" layer="97" style="shortdash"/>
@@ -6439,7 +6725,7 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <wire x1="322.58" y1="20.32" x2="322.58" y2="45.72" width="1.27" layer="97" style="shortdash"/>
 <wire x1="322.58" y1="45.72" x2="424.18" y2="45.72" width="1.27" layer="97" style="shortdash"/>
 <wire x1="424.18" y1="45.72" x2="424.18" y2="78.74" width="1.27" layer="97" style="shortdash"/>
-<wire x1="335.28" y1="190.5" x2="335.28" y2="127" width="1.27" layer="97" style="shortdash"/>
+<wire x1="335.28" y1="177.8" x2="335.28" y2="127" width="1.27" layer="97" style="shortdash"/>
 <text x="370.84" y="167.64" size="6.4516" layer="97">IMU</text>
 <text x="50.8" y="58.42" size="5.08" layer="97">Voltage Regulators</text>
 <wire x1="335.28" y1="127" x2="335.28" y2="78.74" width="1.27" layer="97" style="shortdash"/>
@@ -6448,8 +6734,10 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <wire x1="254" y1="127" x2="335.28" y2="127" width="1.27" layer="97" style="shortdash"/>
 <text x="185.928" y="68.834" size="5.08" layer="97">Radio Transceiver</text>
 <wire x1="190.5" y1="127" x2="190.5" y2="78.74" width="1.27" layer="97" style="shortdash"/>
-<text x="256.54" y="184.658" size="5.08" layer="97">ESC Connector</text>
+<text x="271.78" y="167.64" size="5.08" layer="97">ESC Connector</text>
 <text x="275.59" y="120.396" size="5.08" layer="97">Power Input</text>
+<text x="20.32" y="134.62" size="1.778" layer="97">*Note: The TX and RX labels refer to the respective Teensy connection 
+(not the sensor pins)</text>
 </plain>
 <instances>
 <instance part="U2" gate="G$1" x="193.04" y="185.42" smashed="yes">
@@ -6865,38 +7153,66 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <attribute name="NAME" x="262.89" y="108.204" size="1.778" layer="95"/>
 <attribute name="VALUE" x="262.636" y="93.98" size="1.778" layer="95"/>
 </instance>
-<instance part="U$2" gate="G$1" x="279.4" y="104.14" smashed="yes"/>
 <instance part="C12" gate="G$1" x="58.42" y="228.6" smashed="yes">
 <attribute name="NAME" x="59.944" y="231.521" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="59.944" y="226.441" size="1.778" layer="96" font="vector"/>
 </instance>
-<instance part="ESC_RX" gate="G$1" x="312.42" y="149.86" smashed="yes">
-<attribute name="NAME" x="314.96" y="162.56" size="2.1844" layer="125"/>
-<attribute name="VALUE" x="304.8" y="129.54" size="2.1844" layer="127"/>
+<instance part="ESC" gate="G$1" x="271.78" y="149.86" smashed="yes">
+<attribute name="VALUE" x="269.24" y="142.494" size="1.778" layer="96" font="vector"/>
+<attribute name="NAME" x="269.24" y="155.448" size="1.778" layer="95" font="vector"/>
 </instance>
-<instance part="ESC1" gate="G$1" x="264.16" y="175.26" smashed="yes">
-<attribute name="VALUE" x="257.556" y="153.67" size="1.778" layer="96" font="vector" rot="R90"/>
-<attribute name="NAME" x="261.62" y="180.848" size="1.778" layer="95" font="vector"/>
+<instance part="GND21" gate="1" x="279.908" y="136.906" smashed="yes">
+<attribute name="VALUE" x="279.908" y="136.652" size="1.778" layer="96" align="top-center"/>
 </instance>
-<instance part="ESC2" gate="G$1" x="304.8" y="175.26" smashed="yes">
-<attribute name="VALUE" x="295.656" y="153.924" size="1.778" layer="96" font="vector" rot="R90"/>
-<attribute name="NAME" x="302.26" y="180.848" size="1.778" layer="95" font="vector"/>
+<instance part="F1" gate="G$1" x="279.4" y="104.14" smashed="yes">
+<attribute name="NAME" x="276.86" y="106.68" size="1.778" layer="95"/>
+<attribute name="VALUE" x="276.86" y="100.33" size="1.778" layer="96"/>
 </instance>
-<instance part="ESC_TX" gate="G$1" x="274.32" y="149.86" smashed="yes">
-<attribute name="NAME" x="276.86" y="162.56" size="2.1844" layer="125"/>
-<attribute name="VALUE" x="266.7" y="129.54" size="2.1844" layer="127"/>
+<instance part="R2" gate="G$1" x="294.894" y="33.02" smashed="yes">
+<attribute name="NAME" x="294.894" y="34.544" size="1.778" layer="95" font="vector" align="bottom-center"/>
+<attribute name="VALUE" x="294.894" y="31.496" size="1.778" layer="96" font="vector" align="top-center"/>
 </instance>
-<instance part="+3V16" gate="G$1" x="274.32" y="170.18" smashed="yes">
-<attribute name="VALUE" x="271.78" y="165.1" size="1.778" layer="96" rot="R90"/>
+<instance part="R3" gate="G$1" x="42.418" y="201.93" smashed="yes" rot="R90">
+<attribute name="NAME" x="40.894" y="201.93" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
+<attribute name="VALUE" x="43.942" y="201.93" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
 </instance>
-<instance part="+3V17" gate="G$1" x="312.42" y="170.434" smashed="yes">
-<attribute name="VALUE" x="309.88" y="165.354" size="1.778" layer="96" rot="R90"/>
+<instance part="+3V16" gate="G$1" x="42.418" y="211.328" smashed="yes">
+<attribute name="VALUE" x="40.894" y="206.502" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="GND21" gate="1" x="279.4" y="170.18" smashed="yes">
-<attribute name="VALUE" x="279.4" y="169.926" size="1.778" layer="96" align="top-center"/>
+<instance part="R5" gate="G$1" x="83.058" y="201.93" smashed="yes" rot="R90">
+<attribute name="NAME" x="81.534" y="201.93" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
+<attribute name="VALUE" x="84.582" y="201.93" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
 </instance>
-<instance part="GND27" gate="1" x="317.5" y="170.18" smashed="yes">
-<attribute name="VALUE" x="317.5" y="169.926" size="1.778" layer="96" align="top-center"/>
+<instance part="+3V17" gate="G$1" x="83.058" y="211.328" smashed="yes">
+<attribute name="VALUE" x="81.534" y="206.502" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="R6" gate="G$1" x="39.878" y="166.37" smashed="yes" rot="R90">
+<attribute name="NAME" x="38.354" y="166.37" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
+<attribute name="VALUE" x="41.402" y="166.37" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
+</instance>
+<instance part="+3V18" gate="G$1" x="39.878" y="175.768" smashed="yes">
+<attribute name="VALUE" x="38.354" y="170.942" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="R7" gate="G$1" x="83.058" y="166.37" smashed="yes" rot="R90">
+<attribute name="NAME" x="81.534" y="166.37" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
+<attribute name="VALUE" x="84.582" y="166.37" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
+</instance>
+<instance part="+3V19" gate="G$1" x="83.058" y="175.768" smashed="yes">
+<attribute name="VALUE" x="81.534" y="170.942" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="R10" gate="G$1" x="373.38" y="229.616" smashed="yes" rot="R90">
+<attribute name="NAME" x="371.856" y="229.616" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
+<attribute name="VALUE" x="374.904" y="229.616" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
+</instance>
+<instance part="+3V22" gate="G$1" x="373.38" y="237.744" smashed="yes">
+<attribute name="VALUE" x="371.856" y="232.918" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="R11" gate="G$1" x="414.02" y="229.87" smashed="yes" rot="R90">
+<attribute name="NAME" x="412.496" y="229.87" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
+<attribute name="VALUE" x="415.544" y="229.87" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
+</instance>
+<instance part="+3V23" gate="G$1" x="414.02" y="237.998" smashed="yes">
+<attribute name="VALUE" x="412.496" y="233.172" size="1.778" layer="96" rot="R90"/>
 </instance>
 </instances>
 <busses>
@@ -7014,14 +7330,34 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <junction x="236.22" y="45.72"/>
 </segment>
 <segment>
+<pinref part="R3" gate="G$1" pin="2"/>
 <pinref part="+3V16" gate="G$1" pin="+3V3"/>
-<pinref part="ESC_TX" gate="G$1" pin="V"/>
-<wire x1="274.32" y1="167.64" x2="274.32" y2="165.1" width="0.1524" layer="91"/>
+<wire x1="42.418" y1="207.01" x2="42.418" y2="208.788" width="0.1524" layer="91"/>
 </segment>
 <segment>
+<pinref part="R5" gate="G$1" pin="2"/>
 <pinref part="+3V17" gate="G$1" pin="+3V3"/>
-<pinref part="ESC_RX" gate="G$1" pin="V"/>
-<wire x1="312.42" y1="167.894" x2="312.42" y2="165.1" width="0.1524" layer="91"/>
+<wire x1="83.058" y1="207.01" x2="83.058" y2="208.788" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="R6" gate="G$1" pin="2"/>
+<pinref part="+3V18" gate="G$1" pin="+3V3"/>
+<wire x1="39.878" y1="171.45" x2="39.878" y2="173.228" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="R7" gate="G$1" pin="2"/>
+<pinref part="+3V19" gate="G$1" pin="+3V3"/>
+<wire x1="83.058" y1="171.45" x2="83.058" y2="173.228" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="R10" gate="G$1" pin="2"/>
+<pinref part="+3V22" gate="G$1" pin="+3V3"/>
+<wire x1="373.38" y1="234.696" x2="373.38" y2="235.204" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="R11" gate="G$1" pin="2"/>
+<pinref part="+3V23" gate="G$1" pin="+3V3"/>
+<wire x1="414.02" y1="234.95" x2="414.02" y2="235.458" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -7266,20 +7602,16 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <junction x="190.5" y="33.02"/>
 </segment>
 <segment>
-<pinref part="D4" gate="G$1" pin="C"/>
 <pinref part="GND28" gate="1" pin="GND"/>
 <wire x1="304.8" y1="30.48" x2="304.8" y2="33.02" width="0.1524" layer="91"/>
-<wire x1="304.8" y1="33.02" x2="279.4" y2="33.02" width="0.1524" layer="91"/>
+<pinref part="R2" gate="G$1" pin="2"/>
+<wire x1="304.8" y1="33.02" x2="299.974" y2="33.02" width="0.1524" layer="91"/>
 </segment>
 <segment>
-<pinref part="ESC1" gate="G$1" pin="1"/>
-<wire x1="271.78" y1="172.72" x2="279.4" y2="172.72" width="0.1524" layer="91"/>
+<pinref part="ESC" gate="G$1" pin="1"/>
 <pinref part="GND21" gate="1" pin="GND"/>
-</segment>
-<segment>
-<pinref part="ESC2" gate="G$1" pin="1"/>
-<wire x1="312.42" y1="172.72" x2="317.5" y2="172.72" width="0.1524" layer="91"/>
-<pinref part="GND27" gate="1" pin="GND"/>
+<wire x1="279.4" y1="147.32" x2="279.908" y2="147.32" width="0.1524" layer="91"/>
+<wire x1="279.908" y1="147.32" x2="279.908" y2="139.446" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="LINE_LF" class="0">
@@ -7598,18 +7930,6 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <wire x1="342.9" y1="72.898" x2="342.9" y2="73.66" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="S1/TX" class="0">
-<segment>
-<pinref part="ESC1" gate="G$1" pin="3"/>
-<wire x1="271.78" y1="177.8" x2="274.32" y2="177.8" width="0.1524" layer="91"/>
-<label x="274.32" y="177.8" size="1.778" layer="95" xref="yes"/>
-</segment>
-<segment>
-<pinref part="ESC_TX" gate="G$1" pin="I0"/>
-<wire x1="261.62" y1="154.94" x2="259.08" y2="154.94" width="0.1524" layer="91"/>
-<label x="259.08" y="154.94" size="1.778" layer="95" rot="R90" xref="yes"/>
-</segment>
-</net>
 <net name="SCL2" class="0">
 <segment>
 <pinref part="R16" gate="G$1" pin="1"/>
@@ -7714,7 +8034,7 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <segment>
 <pinref part="U2" gate="G$1" pin="30/T/PWM"/>
 <wire x1="165.1" y1="160.02" x2="160.02" y2="160.02" width="0.1524" layer="91"/>
-<label x="160.02" y="160.02" size="1.778" layer="95" rot="MR0" xref="yes"/>
+<label x="160.02" y="160.02" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="RADIO_DIO0" class="0">
@@ -7734,6 +8054,10 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <pinref part="DIST_2" gate="G$1" pin="3"/>
 <wire x1="81.28" y1="193.04" x2="83.82" y2="193.04" width="0.1524" layer="91"/>
 <label x="83.82" y="193.04" size="1.778" layer="95" xref="yes"/>
+<pinref part="R5" gate="G$1" pin="1"/>
+<wire x1="83.058" y1="196.85" x2="83.058" y2="193.04" width="0.1524" layer="91"/>
+<wire x1="83.058" y1="193.04" x2="81.28" y2="193.04" width="0.1524" layer="91"/>
+<junction x="81.28" y="193.04"/>
 </segment>
 <segment>
 <pinref part="MUX_TX1" gate="G$1" pin="I1"/>
@@ -7758,6 +8082,10 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <wire x1="38.1" y1="193.04" x2="43.18" y2="193.04" width="0.1524" layer="91"/>
 <pinref part="DIST_1" gate="G$1" pin="3"/>
 <label x="43.18" y="193.04" size="1.778" layer="95" xref="yes"/>
+<pinref part="R3" gate="G$1" pin="1"/>
+<wire x1="42.418" y1="196.85" x2="42.418" y2="193.04" width="0.1524" layer="91"/>
+<wire x1="42.418" y1="193.04" x2="38.1" y2="193.04" width="0.1524" layer="91"/>
+<junction x="38.1" y="193.04"/>
 </segment>
 <segment>
 <pinref part="MUX_TX1" gate="G$1" pin="I0"/>
@@ -7816,11 +8144,14 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <pinref part="MUX_RX1" gate="G$1" pin="Y"/>
 <wire x1="373.38" y1="218.44" x2="375.666" y2="218.44" width="0.1524" layer="91"/>
 <label x="375.666" y="218.44" size="1.778" layer="95" rot="R90" xref="yes"/>
+<pinref part="R10" gate="G$1" pin="1"/>
+<wire x1="373.38" y1="224.536" x2="373.38" y2="218.44" width="0.1524" layer="91"/>
+<junction x="373.38" y="218.44"/>
 </segment>
 <segment>
 <pinref part="U2" gate="G$1" pin="7/RX3/PWM"/>
-<wire x1="165.1" y1="218.44" x2="160.02" y2="218.44" width="0.1524" layer="91"/>
-<label x="160.02" y="218.44" size="1.778" layer="95" rot="MR0" xref="yes"/>
+<wire x1="165.1" y1="218.44" x2="143.002" y2="218.44" width="0.1524" layer="91"/>
+<label x="143.002" y="218.44" size="1.778" layer="95" rot="MR0" xref="yes"/>
 </segment>
 </net>
 <net name="TXD6" class="0">
@@ -7833,6 +8164,10 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <wire x1="81.28" y1="157.48" x2="86.36" y2="157.48" width="0.1524" layer="91"/>
 <pinref part="DIST_6" gate="G$1" pin="3"/>
 <label x="86.36" y="157.48" size="1.778" layer="95" xref="yes"/>
+<pinref part="R7" gate="G$1" pin="1"/>
+<wire x1="83.058" y1="161.29" x2="83.058" y2="157.48" width="0.1524" layer="91"/>
+<wire x1="83.058" y1="157.48" x2="81.28" y2="157.48" width="0.1524" layer="91"/>
+<junction x="81.28" y="157.48"/>
 </segment>
 </net>
 <net name="TXD5" class="0">
@@ -7845,6 +8180,10 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <wire x1="38.1" y1="157.48" x2="43.18" y2="157.48" width="0.1524" layer="91"/>
 <pinref part="DIST_5" gate="G$1" pin="3"/>
 <label x="43.18" y="157.48" size="1.778" layer="95" xref="yes"/>
+<pinref part="R6" gate="G$1" pin="1"/>
+<wire x1="39.878" y1="161.29" x2="39.878" y2="157.48" width="0.1524" layer="91"/>
+<wire x1="39.878" y1="157.48" x2="38.1" y2="157.48" width="0.1524" layer="91"/>
+<junction x="38.1" y="157.48"/>
 </segment>
 </net>
 <net name="TRX2" class="0">
@@ -7852,11 +8191,14 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 <pinref part="MUX_RX2" gate="G$1" pin="Y"/>
 <wire x1="414.02" y1="218.44" x2="416.56" y2="218.948" width="0.1524" layer="91"/>
 <label x="416.56" y="218.948" size="1.778" layer="95" rot="R90" xref="yes"/>
+<pinref part="R11" gate="G$1" pin="1"/>
+<wire x1="414.02" y1="224.79" x2="414.02" y2="218.44" width="0.1524" layer="91"/>
+<junction x="414.02" y="218.44"/>
 </segment>
 <segment>
 <pinref part="U2" gate="G$1" pin="9/RX2/PWM"/>
-<wire x1="165.1" y1="213.36" x2="160.02" y2="213.36" width="0.1524" layer="91"/>
-<label x="160.02" y="213.36" size="1.778" layer="95" rot="MR0" xref="yes"/>
+<wire x1="165.1" y1="213.36" x2="143.764" y2="213.36" width="0.1524" layer="91"/>
+<label x="143.764" y="213.36" size="1.778" layer="95" rot="MR0" xref="yes"/>
 </segment>
 </net>
 <net name="TTX1" class="0">
@@ -7977,95 +8319,49 @@ Warning: This is the KIT version of the AXIAL-0.1 package. This package has a sm
 </net>
 <net name="N$7" class="0">
 <segment>
-<pinref part="U$2" gate="G$1" pin="P$1"/>
 <pinref part="POWER_CONN" gate="G$1" pin="P$1"/>
 <wire x1="274.32" y1="104.14" x2="276.86" y2="104.14" width="0.1524" layer="91"/>
+<pinref part="F1" gate="G$1" pin="P$1"/>
 </segment>
 </net>
 <net name="N$6" class="0">
 <segment>
-<pinref part="U$2" gate="G$1" pin="P$2"/>
 <wire x1="281.94" y1="104.14" x2="284.48" y2="104.14" width="0.1524" layer="91"/>
 <wire x1="284.48" y1="104.14" x2="284.48" y2="110.49" width="0.1524" layer="91"/>
 <pinref part="POWER" gate="G$1" pin="P4"/>
 <wire x1="284.48" y1="110.49" x2="286.512" y2="110.49" width="0.1524" layer="91"/>
+<pinref part="F1" gate="G$1" pin="P$2"/>
 </segment>
 </net>
-<net name="S1/RX" class="0">
-<segment>
-<pinref part="ESC1" gate="G$1" pin="2"/>
-<wire x1="271.78" y1="175.26" x2="274.32" y2="175.26" width="0.1524" layer="91"/>
-<label x="274.32" y="175.26" size="1.778" layer="95" xref="yes"/>
-</segment>
-<segment>
-<pinref part="ESC_RX" gate="G$1" pin="I0"/>
-<wire x1="299.72" y1="154.94" x2="297.18" y2="154.94" width="0.1524" layer="91"/>
-<label x="297.18" y="154.94" size="1.778" layer="95" rot="R90" xref="yes"/>
-</segment>
-</net>
-<net name="S2/TX" class="0">
-<segment>
-<pinref part="ESC_TX" gate="G$1" pin="I1"/>
-<label x="256.54" y="149.86" size="1.778" layer="95" rot="MR270" xref="yes"/>
-<wire x1="256.54" y1="149.86" x2="261.62" y2="149.86" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="ESC2" gate="G$1" pin="3"/>
-<wire x1="312.42" y1="177.8" x2="314.96" y2="177.8" width="0.1524" layer="91"/>
-<label x="314.96" y="177.8" size="1.778" layer="95" xref="yes"/>
-</segment>
-</net>
-<net name="ESC_S" class="0">
-<segment>
-<pinref part="ESC_TX" gate="G$1" pin="S"/>
-<wire x1="261.62" y1="144.78" x2="259.08" y2="144.78" width="0.1524" layer="91"/>
-<label x="259.08" y="144.78" size="1.778" layer="95" rot="MR270" xref="yes"/>
-</segment>
-<segment>
-<pinref part="ESC_RX" gate="G$1" pin="S"/>
-<wire x1="299.72" y1="144.78" x2="297.18" y2="144.78" width="0.1524" layer="91"/>
-<label x="297.18" y="144.78" size="1.778" layer="95" rot="R270" xref="yes"/>
-</segment>
-<segment>
-<pinref part="U2" gate="G$1" pin="36/A17/PWM"/>
-<wire x1="165.1" y1="144.78" x2="160.02" y2="144.78" width="0.1524" layer="91"/>
-<label x="160.02" y="144.78" size="1.778" layer="95" rot="MR0" xref="yes"/>
-</segment>
-</net>
-<net name="ESC_TTX" class="0">
-<segment>
-<pinref part="ESC_TX" gate="G$1" pin="Y"/>
-<wire x1="287.02" y1="149.86" x2="289.56" y2="149.86" width="0.1524" layer="91"/>
-<label x="289.56" y="149.86" size="1.778" layer="95" rot="R90" xref="yes"/>
-</segment>
+<net name="S1/TTX" class="0">
 <segment>
 <pinref part="U2" gate="G$1" pin="33/A14/TX5/CAN1-TX"/>
 <wire x1="165.1" y1="152.4" x2="160.02" y2="152.4" width="0.1524" layer="91"/>
 <label x="160.02" y="152.4" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
-</net>
-<net name="S2/RX" class="0">
 <segment>
-<pinref part="ESC_RX" gate="G$1" pin="I1"/>
-<label x="294.64" y="149.86" size="1.778" layer="95" rot="MR270" xref="yes"/>
-<wire x1="294.64" y1="149.86" x2="299.72" y2="149.86" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="ESC2" gate="G$1" pin="2"/>
-<wire x1="312.42" y1="175.26" x2="314.96" y2="175.26" width="0.1524" layer="91"/>
-<label x="314.96" y="175.26" size="1.778" layer="95" xref="yes"/>
+<pinref part="ESC" gate="G$1" pin="3"/>
+<wire x1="279.4" y1="152.4" x2="281.94" y2="152.4" width="0.1524" layer="91"/>
+<label x="281.94" y="152.4" size="1.778" layer="95" xref="yes"/>
 </segment>
 </net>
-<net name="ESC_TRX" class="0">
-<segment>
-<pinref part="ESC_RX" gate="G$1" pin="Y"/>
-<wire x1="325.12" y1="149.86" x2="327.66" y2="149.86" width="0.1524" layer="91"/>
-<label x="327.66" y="149.86" size="1.778" layer="95" rot="R90" xref="yes"/>
-</segment>
+<net name="S1/TRX" class="0">
 <segment>
 <pinref part="U2" gate="G$1" pin="34/A15/RX5/CAN1-RX"/>
 <wire x1="165.1" y1="149.86" x2="160.02" y2="149.86" width="0.1524" layer="91"/>
 <label x="160.02" y="149.86" size="1.778" layer="95" rot="MR0" xref="yes"/>
+</segment>
+<segment>
+<pinref part="ESC" gate="G$1" pin="2"/>
+<wire x1="279.4" y1="149.86" x2="281.94" y2="149.86" width="0.1524" layer="91"/>
+<label x="281.94" y="149.86" size="1.778" layer="95" xref="yes"/>
+</segment>
+</net>
+<net name="N$9" class="0">
+<segment>
+<pinref part="D4" gate="G$1" pin="C"/>
+<pinref part="R2" gate="G$1" pin="1"/>
+<wire x1="279.4" y1="33.02" x2="289.814" y2="33.02" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
