@@ -875,8 +875,6 @@
 <wire x1="5.607" y1="-5.38" x2="5.607" y2="5.38" width="0.1524" layer="51"/>
 <wire x1="5.607" y1="5.38" x2="-5.607" y2="5.38" width="0.1524" layer="51"/>
 <wire x1="-5.607" y1="5.38" x2="-5.607" y2="-5.38" width="0.1524" layer="51"/>
-<text x="-4.3942" y="-5.461" size="1.27" layer="51" ratio="6" rot="SR0">*</text>
-<text x="-5.6642" y="-8.9154" size="1.27" layer="21" ratio="6" rot="SR0">*</text>
 <text x="6.9548" y="-1.978" size="1.27" layer="27" ratio="6" rot="SR90">&gt;VALUE</text>
 <text x="-6.0166" y="-2.005" size="1.27" layer="25" ratio="6" rot="SR90">&gt;NAME</text>
 </package>
