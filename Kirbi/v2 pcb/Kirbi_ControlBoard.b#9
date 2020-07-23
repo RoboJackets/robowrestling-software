@@ -5501,7 +5501,6 @@ design rules under a new name.</description>
 <wire x1="14.8" y1="26" x2="14.7" y2="25.9" width="0.2" layer="16"/>
 <wire x1="16.123" y1="28" x2="14.8" y2="26.677" width="0.2" layer="16"/>
 <wire x1="14.8" y1="26.677" x2="14.8" y2="26" width="0.2" layer="16"/>
-<wire x1="11.669" y1="24.881" x2="11.775" y2="24.775" width="0.2" layer="1"/>
 <contactref element="R3" pad="2"/>
 <contactref element="R5" pad="2"/>
 <contactref element="R6" pad="2"/>
@@ -5972,10 +5971,10 @@ design rules under a new name.</description>
 <contactref element="MUX_RX2" pad="P$3"/>
 <contactref element="DIST_5" pad="P$4"/>
 <wire x1="43.44829375" y1="12.528403125" x2="43.24829375" y2="12.528403125" width="0.2" layer="1"/>
-<wire x1="43.24829375" y1="12.528403125" x2="41.276696875" y2="14.5" width="0.2" layer="1"/>
-<wire x1="38.325" y1="14.5" x2="37.9125" y2="14.9125" width="0.2" layer="1"/>
-<wire x1="37.9125" y1="14.9125" x2="35.95" y2="16.875" width="0.2" layer="1"/>
-<wire x1="41.276696875" y1="14.5" x2="38.325" y2="14.5" width="0.2" layer="1"/>
+<wire x1="43.24829375" y1="12.528403125" x2="41.176696875" y2="14.6" width="0.2" layer="1"/>
+<wire x1="41.176696875" y1="14.6" x2="38.825" y2="14.6" width="0.2" layer="1"/>
+<wire x1="36.55" y1="16.875" x2="38.825" y2="14.6" width="0.2" layer="1"/>
+<wire x1="35.95" y1="16.875" x2="36.55" y2="16.875" width="0.2" layer="1"/>
 </signal>
 <signal name="RXD6">
 <contactref element="MUX_RX2" pad="P$1"/>
