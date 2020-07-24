@@ -13546,9 +13546,9 @@ Connector</text>
 <label x="87.63" y="191.77" size="1.27" layer="95" xref="yes"/>
 </segment>
 <segment>
-<label x="20.32" y="127" size="1.27" layer="95" rot="R180" xref="yes"/>
-<pinref part="JP1" gate="A" pin="6"/>
-<wire x1="20.32" y1="127" x2="26.67" y2="127" width="0.1524" layer="91"/>
+<label x="20.32" y="134.62" size="1.27" layer="95" rot="R180" xref="yes"/>
+<pinref part="JP1" gate="A" pin="3"/>
+<wire x1="20.32" y1="134.62" x2="26.67" y2="134.62" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="MISO" class="0">
@@ -13558,9 +13558,9 @@ Connector</text>
 <label x="87.63" y="189.23" size="1.27" layer="95" xref="yes"/>
 </segment>
 <segment>
-<label x="20.32" y="129.54" size="1.27" layer="95" rot="R180" xref="yes"/>
-<pinref part="JP1" gate="A" pin="5"/>
-<wire x1="20.32" y1="129.54" x2="26.67" y2="129.54" width="0.1524" layer="91"/>
+<label x="20.32" y="132.08" size="1.27" layer="95" rot="R180" xref="yes"/>
+<pinref part="JP1" gate="A" pin="4"/>
+<wire x1="20.32" y1="132.08" x2="26.67" y2="132.08" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="MOSI" class="0">
@@ -13570,9 +13570,9 @@ Connector</text>
 <label x="87.63" y="186.69" size="1.27" layer="95" xref="yes"/>
 </segment>
 <segment>
-<label x="20.32" y="132.08" size="1.27" layer="95" rot="R180" xref="yes"/>
-<pinref part="JP1" gate="A" pin="4"/>
-<wire x1="20.32" y1="132.08" x2="26.67" y2="132.08" width="0.1524" layer="91"/>
+<label x="20.32" y="129.54" size="1.27" layer="95" rot="R180" xref="yes"/>
+<pinref part="JP1" gate="A" pin="5"/>
+<wire x1="20.32" y1="129.54" x2="26.67" y2="129.54" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="SCLK" class="0">
@@ -13580,11 +13580,6 @@ Connector</text>
 <pinref part="U1" gate="A" pin="SCLK"/>
 <wire x1="85.09" y1="184.15" x2="87.63" y2="184.15" width="0.1524" layer="91"/>
 <label x="87.63" y="184.15" size="1.27" layer="95" xref="yes"/>
-</segment>
-<segment>
-<label x="20.32" y="134.62" size="1.27" layer="95" rot="R180" xref="yes"/>
-<pinref part="JP1" gate="A" pin="3"/>
-<wire x1="20.32" y1="134.62" x2="26.67" y2="134.62" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="!CS!" class="0">
@@ -13837,6 +13832,13 @@ Connector</text>
 <pinref part="R5" gate="G$1" pin="1"/>
 <pinref part="D3" gate="G$1" pin="A"/>
 <wire x1="129.54" y1="80.01" x2="129.54" y2="77.47" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$14" class="0">
+<segment>
+<pinref part="JP1" gate="A" pin="6"/>
+<wire x1="20.32" y1="127" x2="26.67" y2="127" width="0.1524" layer="91"/>
+<label x="20.32" y="127" size="1.27" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 </nets>
