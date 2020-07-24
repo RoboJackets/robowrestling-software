@@ -1492,7 +1492,7 @@ Temp: -40~+85°C</text>
 <pin name="GND" x="-10.16" y="-2.54" length="middle" direction="pas"/>
 <pin name="SHIELD" x="-10.16" y="-7.62" length="middle" direction="pas"/>
 </symbol>
-<symbol name="ATMEGA32U4-AUR">
+<symbol name="ATMEGA32U4-AU">
 <wire x1="-27.94" y1="40.64" x2="27.94" y2="40.64" width="0.1524" layer="94"/>
 <wire x1="27.94" y1="40.64" x2="27.94" y2="-43.18" width="0.1524" layer="94"/>
 <wire x1="27.94" y1="-43.18" x2="-27.94" y2="-43.18" width="0.1524" layer="94"/>
@@ -2044,10 +2044,10 @@ Temp: -40~+85°C</text>
 </device>
 </devices>
 </deviceset>
-<deviceset name="ATMEGA32U4-AUR" prefix="U">
+<deviceset name="ATMEGA32U4-AU" prefix="U">
 <description>ATmega Series 16 MHz 32 KB Flash 2.5 KB SRAM 8-Bit Microcontroller - TQFP-44</description>
 <gates>
-<gate name="G$1" symbol="ATMEGA32U4-AUR" x="0" y="0"/>
+<gate name="G$1" symbol="ATMEGA32U4-AU" x="0" y="0"/>
 </gates>
 <devices>
 <device name="" package="QFP80P1200X1200X120-44N">

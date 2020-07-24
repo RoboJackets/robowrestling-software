@@ -52,7 +52,7 @@
 <layer number="42" name="bRestrict" color="1" fill="10" visible="yes" active="yes"/>
 <layer number="43" name="vRestrict" color="2" fill="10" visible="yes" active="yes"/>
 <layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
-<layer number="45" name="Holes" color="7" fill="1" visible="no" active="yes"/>
+<layer number="45" name="Holes" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
 <layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
 <layer number="48" name="Document" color="7" fill="1" visible="yes" active="yes"/>
@@ -1058,8 +1058,6 @@
 <smd name="S2" x="3.2" y="2.45" dx="1.6" dy="1.4" layer="1"/>
 <smd name="S4" x="-1.2" y="0" dx="1.9" dy="1.9" layer="1"/>
 <smd name="S3" x="1.2" y="0" dx="1.9" dy="1.9" layer="1"/>
-<hole x="-3.3" y="0" drill="0.5"/>
-<hole x="3.3" y="0" drill="0.5"/>
 <pad name="S5" x="-3.3" y="0" drill="0.5" diameter="0.9" shape="long" rot="R90"/>
 <pad name="S6" x="3.3" y="0" drill="0.5" diameter="0.9" shape="long" rot="R90"/>
 </package>
