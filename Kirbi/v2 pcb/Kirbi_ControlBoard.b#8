@@ -3,7 +3,7 @@
 <eagle version="9.5.1">
 <drawing>
 <settings>
-<setting alwaysvectorfont="no"/>
+<setting alwaysvectorfont="yes"/>
 <setting verticaltext="up"/>
 </settings>
 <grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="no" altdistance="0.1" altunitdist="mm" altunit="mm"/>
@@ -5088,7 +5088,7 @@ design rules under a new name.</description>
 <attribute name="VALUE" x="-9.362" y="17" size="0.6096" layer="27" font="vector" ratio="20" rot="R270" align="top-center"/>
 </element>
 <element name="C15" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" package="0603" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF" x="-1.1" y="9" smashed="yes" rot="R315">
-<attribute name="NAME" x="0.238815625" y="8.938809375" size="0.8128" layer="25" font="vector" ratio="20" rot="R315" align="bottom-center"/>
+<attribute name="NAME" x="0.738815625" y="6.538809375" size="0.8128" layer="25" font="vector" ratio="20" rot="R315" align="bottom-center"/>
 <attribute name="PROD_ID" value="CAP-00810" x="-0.392890625" y="8.292890625" size="1.778" layer="27" rot="R315" display="off"/>
 <attribute name="VALUE" x="-1.6388125" y="8.46118125" size="0.6096" layer="27" font="vector" ratio="20" rot="R315" align="top-center"/>
 </element>

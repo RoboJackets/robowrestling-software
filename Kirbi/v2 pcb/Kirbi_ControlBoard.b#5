@@ -170,8 +170,8 @@
 <wire x1="-14" y1="14" x2="0" y2="0" width="0" layer="20"/>
 <wire x1="0" y1="0" x2="38" y2="0" width="0" layer="20"/>
 <wire x1="38" y1="0" x2="52" y2="14" width="0" layer="20"/>
-<text x="3" y="27" size="1.778" layer="21" font="vector">Kirbi Controller Board V1.0</text>
-<text x="32.8" y="31.6" size="1.5" layer="22" font="vector" rot="MR0">Kirbi Controller Board V1.0</text>
+<text x="3" y="27" size="1.778" layer="21" font="vector">Kirbi Controller Board V2.0</text>
+<text x="32.8" y="31.6" size="1.5" layer="22" font="vector" rot="MR0">Kirbi Controller Board V2.0</text>
 <hole x="35" y="23" drill="3.3"/>
 <hole x="3" y="23" drill="3.3"/>
 </plain>
