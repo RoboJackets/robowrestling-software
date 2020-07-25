@@ -1,10 +1,10 @@
-## RoboWrestling Current Competitions
-# auto-sumo
+# RoboWrestling Current Competitions
+## auto-sumo
 autonomous 3kg sumo
 
-## PCB versions
+# PCB versions
 discontinued: Spring 2017-Fall 2018
 
-# currently supporting 
+## currently supporting 
 Gucci v3
 Kirbi v2
