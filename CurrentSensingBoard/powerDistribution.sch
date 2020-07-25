@@ -13065,11 +13065,11 @@ In this library you will find LEDs and other visual output devices.
 <wire x1="273.32" y1="130.08" x2="274.32" y2="210.82" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="274.32" y1="210.82" x2="170.18" y2="210.82" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="170.18" y1="210.82" x2="109.22" y2="210.82" width="0.1524" layer="97" style="shortdash"/>
-<text x="172.72" y="201.168" size="6.35" layer="97" font="vector" ratio="12" distance="12">Hall Effect Current Sensors</text>
-<text x="6.858" y="203.454" size="6.35" layer="97" font="vector" ratio="12" distance="12">12-bit ADC</text>
+<text x="172.72" y="204.978" size="5.08" layer="97" ratio="12">Hall Effect Current Sensors</text>
+<text x="6.858" y="203.454" size="5.08" layer="97" ratio="12">12-bit ADC</text>
 <text x="182.88" y="17.78" size="3.175" layer="94" ratio="12">&gt;TITLE</text>
 <text x="182.88" y="2.54" size="2.286" layer="94" ratio="12">&gt;DATE</text>
-<text x="146.304" y="191.516" size="6.35" layer="97" font="vector" ratio="12" rot="MR0">TEENSY 
+<text x="142.494" y="196.596" size="5.08" layer="97" ratio="12" rot="MR0">TEENSY 
 Connector</text>
 <wire x1="109.22" y1="210.82" x2="5.08" y2="210.82" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="5.08" y1="210.82" x2="5.08" y2="154.94" width="0.1524" layer="97" style="shortdash"/>
@@ -13078,10 +13078,10 @@ Connector</text>
 <wire x1="5.08" y1="2.54" x2="170.18" y2="2.54" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="170.18" y1="2.54" x2="170.18" y2="45.72" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="147.574" y1="165.1" x2="148.082" y2="165.1" width="0.1524" layer="97" style="shortdash"/>
-<text x="8.89" y="85.09" size="5.08" layer="97" font="vector" ratio="12">Voltage Regulators</text>
+<text x="8.89" y="85.09" size="5.08" layer="97" ratio="12">Voltage Regulators</text>
 <wire x1="170.18" y1="45.72" x2="170.18" y2="95.25" width="0.1524" layer="97" style="shortdash"/>
-<text x="100.584" y="147.066" size="6.35" layer="97" font="vector" ratio="12" distance="12" rot="MR0">Motor &amp; Battery Connector</text>
-<text x="148.844" y="147.066" size="6.35" layer="97" font="vector" ratio="12" distance="12" rot="MR0">Status LEDs</text>
+<text x="89.154" y="148.336" size="5.08" layer="97" ratio="12" rot="MR0">Motor &amp; Battery Connector</text>
+<text x="143.764" y="148.336" size="5.08" layer="97" ratio="12" rot="MR0">Status LEDs</text>
 <wire x1="170.18" y1="95.25" x2="170.18" y2="154.94" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="170.18" y1="154.94" x2="170.18" y2="210.82" width="0.1524" layer="97" style="shortdash"/>
 <wire x1="109.22" y1="210.82" x2="109.22" y2="154.94" width="0.1524" layer="97" style="shortdash"/>
