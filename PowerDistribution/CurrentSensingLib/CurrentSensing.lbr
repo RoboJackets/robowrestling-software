@@ -951,12 +951,12 @@
 <wire x1="9.5" y1="17.3" x2="-9.5" y2="17.3" width="0.2" layer="21"/>
 </package>
 <package name="ERB-RE5R00V">
-<smd name="P$1" x="1.27" y="0" dx="1" dy="0.75" layer="1" rot="R90"/>
-<smd name="P$2" x="-1.27" y="0" dx="1" dy="0.75" layer="1" rot="R90"/>
 <wire x1="-2.54" y1="1.27" x2="-2.54" y2="-1.27" width="0.1524" layer="21"/>
 <wire x1="-2.54" y1="-1.27" x2="2.54" y2="-1.27" width="0.1524" layer="21"/>
 <wire x1="2.54" y1="-1.27" x2="2.54" y2="1.27" width="0.1524" layer="21"/>
 <wire x1="2.54" y1="1.27" x2="-2.54" y2="1.27" width="0.1524" layer="21"/>
+<smd name="P$2" x="-1.27" y="0" dx="1.9304" dy="1.1684" layer="1" rot="R90"/>
+<smd name="P$1" x="1.27" y="0" dx="1.9304" dy="1.1684" layer="1" rot="R90"/>
 </package>
 <package name="XT-60">
 <wire x1="-4.064" y1="0.2" x2="-4.064" y2="11.851" width="0.127" layer="21"/>
