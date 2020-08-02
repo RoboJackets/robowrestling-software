@@ -5703,6 +5703,80 @@ In this library you will find switches and other mechanical assisted circuit ele
 </deviceset>
 </devicesets>
 </library>
+<library name="RoboJackets-Discrete">
+<description>&lt;img src="http://www.robojackets.org/wp-content/themes/RoboJackets-3.0/img/banner.png" width="600"&gt;
+&lt;hr&gt;
+&lt;h1&gt;RoboJackets EAGLE Libraries - Discrete&lt;/h1&gt;&lt;/br&gt;
+&lt;p&gt;
+In this library you will find MOSFETs and other circuit elements commonly used for switching signals between HIGH and LOW.
+&lt;/p&gt;</description>
+<packages>
+<package name="SOT-23-3">
+<smd name="3" x="0" y="1.2" dx="1" dy="0.7" layer="1" rot="R90"/>
+<smd name="1" x="-0.95" y="-1.2" dx="1" dy="0.7" layer="1" rot="R90"/>
+<smd name="2" x="0.95" y="-1.2" dx="1" dy="0.7" layer="1" rot="R90"/>
+<wire x1="1.45" y1="0.8" x2="1.45" y2="-0.8" width="0.2" layer="21"/>
+<wire x1="-1.45" y1="-0.8" x2="-1.45" y2="0.8" width="0.2" layer="21"/>
+<wire x1="-1.45" y1="0.8" x2="-0.55" y2="0.8" width="0.2" layer="21"/>
+<wire x1="0.45" y1="-0.8" x2="-0.45" y2="-0.8" width="0.2" layer="21"/>
+<wire x1="0.55" y1="0.8" x2="1.45" y2="0.8" width="0.2" layer="21"/>
+<text x="-2" y="-1" size="1" layer="25" rot="R90">&gt;NAME</text>
+</package>
+</packages>
+<symbols>
+<symbol name="P_MOSFET">
+<wire x1="-1.524" y1="2.159" x2="0" y2="2.159" width="0.1524" layer="94"/>
+<wire x1="-2.54" y1="2.54" x2="-2.54" y2="-2.54" width="0.1524" layer="94"/>
+<wire x1="0" y1="0" x2="0" y2="2.159" width="0.1524" layer="94"/>
+<wire x1="1.397" y1="-0.254" x2="1.397" y2="-3.048" width="0.1524" layer="94"/>
+<wire x1="1.397" y1="-3.048" x2="0" y2="-3.048" width="0.1524" layer="94"/>
+<wire x1="-1.524" y1="-2.159" x2="0" y2="-2.159" width="0.1524" layer="94"/>
+<wire x1="0" y1="-2.159" x2="0" y2="-2.54" width="0.1524" layer="94"/>
+<wire x1="0" y1="3.048" x2="1.397" y2="3.048" width="0.1524" layer="94"/>
+<wire x1="1.397" y1="3.048" x2="1.397" y2="0.762" width="0.1524" layer="94"/>
+<wire x1="0" y1="2.159" x2="0" y2="2.54" width="0.1524" layer="94"/>
+<text x="2.54" y="0" size="1.778" layer="96">&gt;VALUE</text>
+<text x="2.54" y="2.54" size="1.778" layer="95">&gt;NAME</text>
+<rectangle x1="-2.032" y1="-2.921" x2="-1.524" y2="-1.397" layer="94"/>
+<rectangle x1="-2.032" y1="-0.762" x2="-1.524" y2="0.762" layer="94"/>
+<rectangle x1="-2.032" y1="1.397" x2="-1.524" y2="2.921" layer="94"/>
+<rectangle x1="0.762" y1="0.762" x2="2.032" y2="0.889" layer="94"/>
+<pin name="D" x="0" y="-5.08" visible="off" length="short" direction="pas" rot="R90"/>
+<pin name="S" x="0" y="5.08" visible="off" length="short" direction="pas" rot="R270"/>
+<pin name="G" x="-5.08" y="2.54" visible="off" length="short" direction="pas"/>
+<polygon width="0.1016" layer="94">
+<vertex x="0" y="0"/>
+<vertex x="-1.016" y="-0.635"/>
+<vertex x="-1.016" y="0.635"/>
+</polygon>
+<polygon width="0.1016" layer="94">
+<vertex x="1.397" y="0.762"/>
+<vertex x="2.032" y="-0.254"/>
+<vertex x="0.762" y="-0.254"/>
+</polygon>
+<wire x1="-1.524" y1="0" x2="-1.016" y2="0" width="0.1524" layer="94"/>
+</symbol>
+</symbols>
+<devicesets>
+<deviceset name="PMOS" prefix="Q" uservalue="yes">
+<gates>
+<gate name="G$1" symbol="P_MOSFET" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="SOT-23-3">
+<connects>
+<connect gate="G$1" pin="D" pad="3"/>
+<connect gate="G$1" pin="G" pad="1"/>
+<connect gate="G$1" pin="S" pad="2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+</devicesets>
+</library>
 </libraries>
 <attributes>
 </attributes>
@@ -5778,6 +5852,9 @@ In this library you will find switches and other mechanical assisted circuit ele
 <part name="GND9" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="R10" library="SparkFun-Resistors" deviceset="10KOHM-1/10W-1%(0603)" device="0603" value="10K"/>
 <part name="GND10" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="Q1" library="RoboJackets-Discrete" deviceset="PMOS" device=""/>
+<part name="SUPPLY11" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="3.3V" device=""/>
+<part name="R11" library="SparkFun-Resistors" deviceset="10KOHM-1/10W-1%(0603)" device="0603" value="10K"/>
 </parts>
 <sheets>
 <sheet>
@@ -5884,8 +5961,8 @@ for Sumo Bot</text>
 <attribute name="NAME" x="242.57" y="91.44" size="1.778" layer="95" rot="R90"/>
 <attribute name="VALUE" x="255.27" y="91.44" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="SUPPLY5" gate="G$1" x="182.88" y="111.76" smashed="yes">
-<attribute name="VALUE" x="182.88" y="114.554" size="1.778" layer="96" align="bottom-center"/>
+<instance part="SUPPLY5" gate="G$1" x="198.12" y="111.76" smashed="yes">
+<attribute name="VALUE" x="198.12" y="114.554" size="1.778" layer="96" align="bottom-center"/>
 </instance>
 <instance part="SUPPLY6" gate="G$1" x="198.12" y="91.44" smashed="yes">
 <attribute name="VALUE" x="198.12" y="94.234" size="1.778" layer="96" align="bottom-center"/>
@@ -6042,6 +6119,17 @@ for Sumo Bot</text>
 <instance part="GND10" gate="1" x="139.446" y="19.812" smashed="yes">
 <attribute name="VALUE" x="136.906" y="17.272" size="1.778" layer="96"/>
 </instance>
+<instance part="Q1" gate="G$1" x="187.96" y="106.68" smashed="yes" rot="MR180">
+<attribute name="VALUE" x="190.5" y="106.68" size="1.778" layer="96" rot="MR180"/>
+<attribute name="NAME" x="190.5" y="104.14" size="1.778" layer="95" rot="MR180"/>
+</instance>
+<instance part="SUPPLY11" gate="G$1" x="21.082" y="58.42" smashed="yes">
+<attribute name="VALUE" x="21.082" y="61.214" size="1.778" layer="96" align="bottom-center"/>
+</instance>
+<instance part="R11" gate="G$1" x="21.082" y="51.054" smashed="yes" rot="R90">
+<attribute name="NAME" x="19.5834" y="47.244" size="1.778" layer="95" rot="R90"/>
+<attribute name="VALUE" x="24.384" y="47.244" size="1.778" layer="96" rot="R90"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -6091,6 +6179,8 @@ for Sumo Bot</text>
 <pinref part="GND5" gate="1" pin="GND"/>
 <wire x1="175.26" y1="104.14" x2="182.88" y2="104.14" width="0.1524" layer="91"/>
 <wire x1="182.88" y1="104.14" x2="182.88" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="Q1" gate="G$1" pin="G"/>
+<junction x="182.88" y="104.14"/>
 </segment>
 <segment>
 <pinref part="C5" gate="G$1" pin="2"/>
@@ -6332,6 +6422,11 @@ for Sumo Bot</text>
 <wire x1="134.62" y1="195.58" x2="137.077834375" y2="195.58" width="0.1524" layer="91"/>
 <wire x1="137.077834375" y1="195.58" x2="137.077834375" y2="195.59219375" width="0.1524" layer="91"/>
 </segment>
+<segment>
+<pinref part="SUPPLY11" gate="G$1" pin="3.3V"/>
+<pinref part="R11" gate="G$1" pin="2"/>
+<wire x1="21.082" y1="58.42" x2="21.082" y2="56.134" width="0.1524" layer="91"/>
+</segment>
 </net>
 <net name="N$3" class="0">
 <segment>
@@ -6379,8 +6474,11 @@ for Sumo Bot</text>
 <net name="SS3" class="0">
 <segment>
 <pinref part="U1" gate="RFM59HCW" pin="NSS"/>
-<wire x1="50.8" y1="33.02" x2="38.1" y2="33.02" width="0.1524" layer="91"/>
-<label x="38.1" y="33.02" size="1.778" layer="95" rot="R180" xref="yes"/>
+<wire x1="50.8" y1="33.02" x2="21.082" y2="33.02" width="0.1524" layer="91"/>
+<label x="20.32" y="33.02" size="1.778" layer="95" rot="R180" xref="yes"/>
+<pinref part="R11" gate="G$1" pin="1"/>
+<wire x1="21.082" y1="45.974" x2="21.082" y2="33.02" width="0.1524" layer="91"/>
+<wire x1="21.082" y1="33.02" x2="20.32" y2="33.02" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <label x="63.5" y="132.08" size="1.778" layer="95" rot="R180" xref="yes"/>
@@ -6424,27 +6522,29 @@ for Sumo Bot</text>
 </net>
 <net name="9V" class="0">
 <segment>
-<pinref part="P1" gate="G$1" pin="2"/>
-<wire x1="182.88" y1="111.76" x2="182.88" y2="106.68" width="0.1524" layer="91"/>
-<wire x1="182.88" y1="106.68" x2="175.26" y2="106.68" width="0.1524" layer="91"/>
-<pinref part="SUPPLY5" gate="G$1" pin="VCC_2"/>
-</segment>
-<segment>
-<pinref part="U3" gate="G$1" pin="VIN"/>
-<wire x1="210.82" y1="84.328" x2="198.12" y2="84.328" width="0.1524" layer="91"/>
+<wire x1="198.12" y1="81.28" x2="198.12" y2="84.328" width="0.1524" layer="91"/>
+<pinref part="C5" gate="G$1" pin="1"/>
+<pinref part="SUPPLY6" gate="G$1" pin="VCC_2"/>
 <pinref part="U3" gate="G$1" pin="EN"/>
 <wire x1="198.12" y1="84.328" x2="198.12" y2="90.17" width="0.1524" layer="91"/>
 <wire x1="198.12" y1="90.17" x2="198.12" y2="91.44" width="0.1524" layer="91"/>
 <wire x1="210.82" y1="90.17" x2="198.12" y2="90.17" width="0.1524" layer="91"/>
-<pinref part="C5" gate="G$1" pin="1"/>
-<wire x1="198.12" y1="81.28" x2="198.12" y2="84.328" width="0.1524" layer="91"/>
-<pinref part="SUPPLY6" gate="G$1" pin="VCC_2"/>
+<junction x="198.12" y="90.17"/>
+<pinref part="U3" gate="G$1" pin="VIN"/>
+<wire x1="210.82" y1="84.328" x2="198.12" y2="84.328" width="0.1524" layer="91"/>
+<junction x="198.12" y="84.328"/>
 </segment>
 <segment>
 <pinref part="SUPPLY4" gate="G$1" pin="VCC_2"/>
 <wire x1="167.64" y1="88.9" x2="167.64" y2="86.36" width="0.1524" layer="91"/>
 <pinref part="D1" gate="G$1" pin="A"/>
 <wire x1="167.64" y1="86.36" x2="170.18" y2="86.36" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="Q1" gate="G$1" pin="S"/>
+<wire x1="187.96" y1="101.6" x2="198.12" y2="101.6" width="0.1524" layer="91"/>
+<pinref part="SUPPLY5" gate="G$1" pin="VCC_2"/>
+<wire x1="198.12" y1="101.6" x2="198.12" y2="111.76" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="DIFF_N" class="1">
@@ -6659,6 +6759,15 @@ for Sumo Bot</text>
 <wire x1="147.237834375" y1="195.59219375" x2="147.32" y2="195.59219375" width="0.1524" layer="91"/>
 <wire x1="147.32" y1="195.59219375" x2="147.32" y2="177.8" width="0.1524" layer="91"/>
 <junction x="147.237834375" y="195.59219375"/>
+</segment>
+</net>
+<net name="VCC" class="0">
+<segment>
+<pinref part="P1" gate="G$1" pin="2"/>
+<wire x1="182.88" y1="106.68" x2="175.26" y2="106.68" width="0.1524" layer="91"/>
+<pinref part="Q1" gate="G$1" pin="D"/>
+<wire x1="182.88" y1="106.68" x2="182.88" y2="111.76" width="0.1524" layer="91"/>
+<wire x1="182.88" y1="111.76" x2="187.96" y2="111.76" width="0.1524" layer="91"/>
 </segment>
 </net>
 </nets>
