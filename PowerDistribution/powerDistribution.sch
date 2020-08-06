@@ -653,6 +653,14 @@
 <wire x1="-4.064" y1="0.2" x2="-3.864" y2="0" width="0.127" layer="21" curve="90"/>
 <text x="2.54" y="-2.032" size="1" layer="27" font="vector" rot="R180">&gt;VALUE</text>
 </package>
+<package name="TVSDIODE">
+<smd name="P$1" x="-1.9685" y="0" dx="1.6764" dy="1.524" layer="1" rot="R90"/>
+<smd name="P$2" x="1.9685" y="0" dx="1.6764" dy="1.524" layer="1" rot="R90"/>
+<wire x1="-3.048" y1="1.4097" x2="-3.048" y2="-1.4097" width="0.1524" layer="21"/>
+<wire x1="-3.048" y1="-1.4097" x2="3.048" y2="-1.4097" width="0.1524" layer="21"/>
+<wire x1="3.048" y1="-1.4097" x2="3.048" y2="1.4097" width="0.1524" layer="21"/>
+<wire x1="3.048" y1="1.4097" x2="-3.048" y2="1.4097" width="0.1524" layer="21"/>
+</package>
 </packages>
 <symbols>
 <symbol name="CQ2065">
@@ -770,6 +778,19 @@ Diode with low voltage drop</description>
 <text x="-6.35" y="-5.08" size="1.778" layer="96">&gt;VALUE</text>
 <pin name="1" x="-2.54" y="2.54" visible="pad" length="short" direction="pas" function="dot"/>
 <pin name="2" x="-2.54" y="0" visible="pad" length="short" direction="pas" function="dot"/>
+</symbol>
+<symbol name="TVS">
+<wire x1="1.27" y1="-2.54" x2="0" y2="0" width="0.254" layer="94"/>
+<wire x1="0" y1="0" x2="-1.27" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="2.032" y1="0.762" x2="1.27" y2="0" width="0.254" layer="94"/>
+<wire x1="1.27" y1="0" x2="0" y2="0" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="-2.54" x2="1.27" y2="-2.54" width="0.254" layer="94"/>
+<wire x1="0" y1="0" x2="-1.27" y2="0" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="0" x2="-2.032" y2="-0.762" width="0.254" layer="94"/>
+<text x="2.54" y="0" size="1.778" layer="95">&gt;NAME</text>
+<text x="2.54" y="-2.54" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="A" x="0" y="-5.08" visible="off" length="short" direction="pas" rot="R90"/>
+<pin name="C" x="0" y="2.54" visible="off" length="short" direction="pas" rot="R270"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -1023,6 +1044,22 @@ Diode with low voltage drop</description>
 <connects>
 <connect gate="G$1" pin="1" pad="ESC"/>
 <connect gate="G$1" pin="2" pad="GND"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="TVSDIODE">
+<gates>
+<gate name="G$1" symbol="TVS" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="TVSDIODE">
+<connects>
+<connect gate="G$1" pin="A" pad="P$1"/>
+<connect gate="G$1" pin="C" pad="P$2"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -13141,6 +13178,7 @@ by exp-lbrs.ulp</description>
 <part name="P+13" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="J2" library="CurrentSensing" deviceset="CONNECTOR" device="ESC_CONNECTOR" value=""/>
 <part name="J3" library="CurrentSensing" deviceset="CONNECTOR" device="ESC_CONNECTOR" value=""/>
+<part name="D4" library="CurrentSensing" deviceset="TVSDIODE" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -13467,6 +13505,10 @@ Connector</text>
 <attribute name="NAME" x="82.55" y="127.635" size="1.778" layer="95"/>
 <attribute name="VALUE" x="82.55" y="116.84" size="1.778" layer="96"/>
 </instance>
+<instance part="D4" gate="G$1" x="16.51" y="35.56" smashed="yes">
+<attribute name="NAME" x="19.05" y="35.56" size="1.778" layer="95"/>
+<attribute name="VALUE" x="12.7" y="27.94" size="1.778" layer="96" rot="R90"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -13556,6 +13598,9 @@ Connector</text>
 <pinref part="GND9" gate="1" pin="GND"/>
 <wire x1="26.67" y1="21.59" x2="26.67" y2="24.13" width="0.1524" layer="91"/>
 <junction x="26.67" y="24.13"/>
+<pinref part="D4" gate="G$1" pin="A"/>
+<wire x1="16.51" y1="30.48" x2="16.51" y2="24.13" width="0.1524" layer="91"/>
+<wire x1="16.51" y1="24.13" x2="26.67" y2="24.13" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <wire x1="48.26" y1="121.92" x2="48.26" y2="116.84" width="0.1524" layer="91"/>
@@ -13876,6 +13921,9 @@ Connector</text>
 <wire x1="26.67" y1="45.72" x2="26.67" y2="33.02" width="0.1524" layer="91"/>
 <wire x1="26.67" y1="45.72" x2="82.55" y2="45.72" width="0.1524" layer="91"/>
 <junction x="26.67" y="45.72"/>
+<pinref part="D4" gate="G$1" pin="C"/>
+<wire x1="26.67" y1="45.72" x2="16.51" y2="45.72" width="0.1524" layer="91"/>
+<wire x1="16.51" y1="45.72" x2="16.51" y2="38.1" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="P+7" gate="1" pin="+24V"/>

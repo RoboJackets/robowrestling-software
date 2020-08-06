@@ -182,6 +182,7 @@ v1.0</text>
 <text x="23" y="76" size="1" layer="21" font="vector">40A</text>
 <text x="54.9" y="75.6" size="1" layer="21" font="vector">40A</text>
 <rectangle x1="7" y1="0.4" x2="10" y2="3.4" layer="21"/>
+<text x="47" y="77" size="1" layer="21" font="vector">D4</text>
 </plain>
 <libraries>
 <library name="CurrentSensing">
@@ -452,6 +453,14 @@ v1.0</text>
 <dimension x1="-2.35" y1="4.1545" x2="2.35" y2="4.1545" x3="0" y3="-1.6" textsize="0.5" layer="49" dtype="diameter" width="0.01" visible="yes"/>
 <wire x1="-4.064" y1="0.2" x2="-3.864" y2="0" width="0.127" layer="21" curve="90"/>
 <text x="2.54" y="-2.032" size="1" layer="27" font="vector" rot="R180">&gt;VALUE</text>
+</package>
+<package name="TVSDIODE">
+<smd name="P$1" x="-1.9685" y="0" dx="1.6764" dy="1.524" layer="1" rot="R90"/>
+<smd name="P$2" x="1.9685" y="0" dx="1.6764" dy="1.524" layer="1" rot="R90"/>
+<wire x1="-3.048" y1="1.4097" x2="-3.048" y2="-1.4097" width="0.1524" layer="21"/>
+<wire x1="-3.048" y1="-1.4097" x2="3.048" y2="-1.4097" width="0.1524" layer="21"/>
+<wire x1="3.048" y1="-1.4097" x2="3.048" y2="1.4097" width="0.1524" layer="21"/>
+<wire x1="3.048" y1="1.4097" x2="-3.048" y2="1.4097" width="0.1524" layer="21"/>
 </package>
 </packages>
 </library>
@@ -12496,6 +12505,7 @@ Source: &lt;a href=&quot;https://jlcpcb.com/capabilities/Capabilities&quot;&gt;J
 <attribute name="NAME" x="76.83" y="39.51" size="1" layer="25" font="vector"/>
 <attribute name="VALUE" x="72.46" y="41.032" size="1" layer="27" font="vector"/>
 </element>
+<element name="D4" library="CurrentSensing" package="TVSDIODE" value="TVSDIODE" x="45" y="75" smashed="yes" rot="R90"/>
 </elements>
 <signals>
 <signal name="GND">
@@ -12628,6 +12638,10 @@ Source: &lt;a href=&quot;https://jlcpcb.com/capabilities/Capabilities&quot;&gt;J
 <via x="11.5" y="25.6" extent="1-16" drill="0.4"/>
 <contactref element="J2" pad="GND"/>
 <contactref element="J3" pad="GND"/>
+<contactref element="D4" pad="P$1"/>
+<wire x1="45" y1="73.0315" x2="45" y2="72" width="0.8" layer="1"/>
+<wire x1="45" y1="72" x2="46" y2="71" width="0.8" layer="1"/>
+<via x="46" y="71" extent="1-16" drill="0.8"/>
 </signal>
 <signal name="+5V">
 <contactref element="U7" pad="3"/>
@@ -12852,6 +12866,7 @@ Source: &lt;a href=&quot;https://jlcpcb.com/capabilities/Capabilities&quot;&gt;J
 <via x="40" y="34" extent="1-16" drill="0.35"/>
 <contactref element="XF2" pad="2"/>
 <contactref element="XF2" pad="1"/>
+<contactref element="D4" pad="P$2"/>
 </signal>
 <signal name="N$6">
 <contactref element="L1" pad="P$1"/>
