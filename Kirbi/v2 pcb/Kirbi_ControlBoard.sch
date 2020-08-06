@@ -5369,24 +5369,6 @@ by exp-lbrs.ulp</description>
 <text x="-4" y="4" size="1.6" layer="25">&gt;Name</text>
 <text x="-4" y="-4" size="1.6" layer="27">&gt;Value</text>
 </package>
-<package name="ELUMEESAQ7C12">
-<smd name="P3" x="9.93" y="4.42" dx="2.03" dy="2.03" layer="1"/>
-<smd name="P2" x="9.93" y="0" dx="2.03" dy="2.03" layer="1"/>
-<smd name="P1" x="9.93" y="-4.42" dx="2.03" dy="2.03" layer="1"/>
-<smd name="P5" x="-9.93" y="-4.42" dx="2.03" dy="2.03" layer="1"/>
-<smd name="P4" x="-9.93" y="4.42" dx="2.03" dy="2.03" layer="1"/>
-<wire x1="-8.55" y1="5.715" x2="8.55" y2="5.715" width="0.127" layer="21"/>
-<wire x1="-8.55" y1="-5.715" x2="8.55" y2="-5.715" width="0.127" layer="21"/>
-<wire x1="-8.55" y1="5.715" x2="-8.55" y2="2.51" width="0.127" layer="21"/>
-<wire x1="-8.55" y1="2.51" x2="-8.55" y2="-2.51" width="0.127" layer="21"/>
-<wire x1="-8.55" y1="-2.51" x2="-8.55" y2="-5.715" width="0.127" layer="21"/>
-<wire x1="8.55" y1="5.715" x2="8.55" y2="-5.715" width="0.127" layer="21"/>
-<wire x1="-8.55" y1="2.51" x2="-18.47" y2="2.51" width="0.127" layer="21"/>
-<wire x1="-8.55" y1="-2.51" x2="-18.47" y2="-2.51" width="0.127" layer="21"/>
-<wire x1="-18.47" y1="2.51" x2="-18.47" y2="-2.51" width="0.127" layer="21"/>
-<text x="-7" y="6" size="1.27" layer="25">&gt;Name</text>
-<text x="-7" y="-7.3" size="1.27" layer="27">&gt;Value</text>
-</package>
 <package name="MUX_74LVC1G157GV">
 <description>2:1 Multiplexer (74LVC1G157GV)</description>
 <wire x1="-1.55" y1="0.65" x2="1.55" y2="0.65" width="0.127" layer="21"/>
@@ -5492,6 +5474,47 @@ WM7621CT-ND</description>
 <rectangle x1="0.3302" y1="-0.4699" x2="0.8303" y2="0.4801" layer="51"/>
 <rectangle x1="-0.1999" y1="-0.3" x2="0.1999" y2="0.3" layer="35"/>
 </package>
+<package name="DFLS130L-7_30V_1A">
+<description>DFLS130L-7_30V_1A</description>
+<smd name="P$1" x="1.6" y="0" dx="1.4" dy="0.9" layer="1" rot="R90"/>
+<smd name="P$2" x="-0.95" y="0" dx="2.2" dy="1.4" layer="1" rot="R180"/>
+<wire x1="-1.5" y1="0.965" x2="-1.5" y2="-0.965" width="0.1524" layer="21"/>
+<wire x1="-1.5" y1="-0.965" x2="1.5" y2="-0.965" width="0.1524" layer="21"/>
+<wire x1="1.5" y1="-0.965" x2="1.5" y2="0.965" width="0.1524" layer="21"/>
+<wire x1="1.5" y1="0.965" x2="-1.5" y2="0.965" width="0.1524" layer="21"/>
+<text x="-2" y="2" size="1.016" layer="25" font="vector">&gt;NAME</text>
+<text x="-2" y="-2.7" size="1.016" layer="27" font="vector">&gt;VALUE</text>
+</package>
+<package name="GPTS202312B">
+<description>Push Button Power Switch
+GPTS202312B</description>
+<pad name="P$2" x="0" y="0" drill="1.2"/>
+<pad name="P$1" x="0" y="3.5" drill="1.2"/>
+<pad name="P$3" x="0" y="-3.5" drill="1.2"/>
+<wire x1="-3.4" y1="6" x2="-3.4" y2="-6" width="0.1524" layer="21"/>
+<wire x1="-3.4" y1="-6" x2="3.4" y2="-6" width="0.1524" layer="21"/>
+<wire x1="3.4" y1="-6" x2="3.4" y2="6" width="0.1524" layer="21"/>
+<wire x1="3.4" y1="6" x2="-3.4" y2="6" width="0.1524" layer="21"/>
+<text x="-3.81" y="7.62" size="1.778" layer="25" font="vector">&gt;NAME</text>
+<text x="-3.81" y="-8.89" size="1.778" layer="27" font="vector">&gt;VALUE</text>
+</package>
+<package name="AMPHENOL_2X3_2.54MM">
+<description>AMPHENOL_2X3_2.44MM
+Shrouded
+75869-131LF</description>
+<pad name="P$1" x="-2.54" y="1.27" drill="1.02"/>
+<pad name="P$2" x="0" y="1.27" drill="1.02"/>
+<pad name="P$3" x="2.54" y="1.27" drill="1.02"/>
+<pad name="P$4" x="-2.54" y="-1.27" drill="1.02"/>
+<pad name="P$5" x="0" y="-1.27" drill="1.02"/>
+<pad name="P$6" x="2.54" y="-1.27" drill="1.02"/>
+<wire x1="-7.415" y1="4.6" x2="-7.415" y2="-4.6" width="0.1524" layer="21"/>
+<wire x1="-7.415" y1="-4.6" x2="7.415" y2="-4.6" width="0.1524" layer="21"/>
+<wire x1="7.415" y1="-4.6" x2="7.415" y2="4.6" width="0.1524" layer="21"/>
+<wire x1="7.415" y1="4.6" x2="-7.415" y2="4.6" width="0.1524" layer="21"/>
+<text x="-7" y="5" size="1.778" layer="25" font="vector">&gt;NAME</text>
+<text x="-7" y="-7" size="1.778" layer="27" font="vector">&gt;VALUE</text>
+</package>
 </packages>
 <packages3d>
 <package3d name="0603" urn="urn:adsk.eagle:package:39650/1" type="box">
@@ -5519,29 +5542,6 @@ WM7621CT-ND</description>
 <pin name="2" x="5.08" y="0" visible="pad" length="middle" direction="pas" swaplevel="1" rot="R180"/>
 <pin name="3" x="5.08" y="2.54" visible="pad" length="middle" direction="pas" swaplevel="1" rot="R180"/>
 <pin name="4" x="5.08" y="5.08" visible="pad" length="middle" direction="pas" swaplevel="1" rot="R180"/>
-</symbol>
-<symbol name="POWER_SWITCH">
-<pin name="P5" x="-5.08" y="-7.62" length="point" rot="R180"/>
-<pin name="P1" x="7.62" y="-7.62" length="point"/>
-<pin name="P4" x="-10.16" y="5.08" length="point"/>
-<pin name="P3" x="0" y="5.08" length="point" rot="R90"/>
-<pin name="P2" x="10.16" y="5.08" length="point"/>
-<wire x1="0" y1="-5.08" x2="0" y2="-10.16" width="0.254" layer="97"/>
-<wire x1="0" y1="-10.16" x2="2.54" y2="-7.62" width="0.254" layer="97"/>
-<wire x1="2.54" y1="-7.62" x2="0" y2="-5.08" width="0.254" layer="97"/>
-<wire x1="2.54" y1="-5.08" x2="2.54" y2="-10.16" width="0.254" layer="97"/>
-<wire x1="-5.08" y1="-7.62" x2="7.62" y2="-7.62" width="0.254" layer="97"/>
-<wire x1="0" y1="5.08" x2="-10.16" y2="2.54" width="0.254" layer="95"/>
-<circle x="-10.16" y="5.08" radius="0.567959375" width="1.016" layer="94"/>
-<circle x="0" y="5.08" radius="0.567959375" width="1.016" layer="94"/>
-<circle x="10.16" y="5.08" radius="0.567959375" width="1.016" layer="94"/>
-<circle x="-5.08" y="-7.62" radius="0.567959375" width="1.016" layer="94"/>
-<circle x="7.62" y="-7.62" radius="0.567959375" width="1.016" layer="94"/>
-<text x="-2.54" y="0" size="1.27" layer="97">&gt;Name</text>
-<wire x1="-12.7" y1="7.62" x2="-12.7" y2="-10.16" width="0.1524" layer="94"/>
-<wire x1="-12.7" y1="-10.16" x2="15.24" y2="-10.16" width="0.1524" layer="94"/>
-<wire x1="15.24" y1="-10.16" x2="15.24" y2="7.62" width="0.1524" layer="94"/>
-<wire x1="15.24" y1="7.62" x2="-12.7" y2="7.62" width="0.1524" layer="94"/>
 </symbol>
 <symbol name="MUX_74LVC1G157GV">
 <description>2:1 Multiplexer (74LVC1G157GV)</description>
@@ -5643,6 +5643,52 @@ Temp: -40~+85°C</text>
 <pin name="2" x="5.08" y="0" visible="off" length="short" direction="pas" swaplevel="1" rot="R180"/>
 <pin name="1" x="-5.08" y="0" visible="off" length="short" direction="pas" swaplevel="1"/>
 </symbol>
+<symbol name="SCHOTTKY">
+<wire x1="-1.27" y1="-1.27" x2="1.27" y2="0" width="0.254" layer="94"/>
+<wire x1="1.27" y1="0" x2="-1.27" y2="1.27" width="0.254" layer="94"/>
+<wire x1="1.905" y1="1.27" x2="1.27" y2="1.27" width="0.254" layer="94"/>
+<wire x1="1.27" y1="1.27" x2="1.27" y2="0" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="1.27" x2="-1.27" y2="0" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="0" x2="-1.27" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="1.27" y1="0" x2="1.27" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="1.905" y1="1.27" x2="1.905" y2="1.016" width="0.254" layer="94"/>
+<wire x1="1.27" y1="-1.27" x2="0.635" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="0.635" y1="-1.016" x2="0.635" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="0" x2="-2.54" y2="0" width="0.254" layer="94"/>
+<wire x1="1.27" y1="0" x2="2.54" y2="0" width="0.254" layer="94"/>
+<text x="-2.286" y="1.905" size="1.778" layer="95">&gt;NAME</text>
+<text x="-2.286" y="-3.429" size="1.778" layer="96">&gt;VALUE</text>
+<pin name="A" x="-2.54" y="0" visible="off" length="point" direction="pas"/>
+<pin name="C" x="2.54" y="0" visible="off" length="point" direction="pas" rot="R180"/>
+</symbol>
+<symbol name="SPDT">
+<wire x1="-2.54" y1="0" x2="2.54" y2="2.54" width="0.254" layer="94"/>
+<pin name="COMMON" x="-7.62" y="0" visible="pad" length="middle"/>
+<pin name="A" x="7.62" y="2.54" visible="pad" length="middle" rot="R180"/>
+<pin name="B" x="7.62" y="0" visible="pad" length="middle" rot="R180"/>
+<text x="-5.08" y="5.08" size="1.778" layer="95" font="vector">&gt;NAME</text>
+<text x="-5.08" y="-5.08" size="1.778" layer="96" font="vector">&gt;VALUE</text>
+</symbol>
+<symbol name="CONN_06">
+<wire x1="3.81" y1="-5.08" x2="-3.81" y2="-5.08" width="0.4064" layer="94"/>
+<wire x1="-3.81" y1="5.08" x2="-3.81" y2="-5.08" width="0.4064" layer="94"/>
+<wire x1="3.81" y1="-5.08" x2="3.81" y2="5.08" width="0.4064" layer="94"/>
+<wire x1="-3.81" y1="5.08" x2="3.81" y2="5.08" width="0.4064" layer="94"/>
+<wire x1="1.27" y1="2.54" x2="2.54" y2="2.54" width="0.6096" layer="94"/>
+<wire x1="1.27" y1="0" x2="2.54" y2="0" width="0.6096" layer="94"/>
+<wire x1="1.27" y1="-2.54" x2="2.54" y2="-2.54" width="0.6096" layer="94"/>
+<wire x1="-2.54" y1="2.54" x2="-1.27" y2="2.54" width="0.6096" layer="94"/>
+<wire x1="-2.54" y1="0" x2="-1.27" y2="0" width="0.6096" layer="94"/>
+<wire x1="-2.54" y1="-2.54" x2="-1.27" y2="-2.54" width="0.6096" layer="94"/>
+<text x="-3.81" y="-7.62" size="1.778" layer="96">&gt;VALUE</text>
+<text x="-3.81" y="5.842" size="1.778" layer="95">&gt;NAME</text>
+<pin name="1" x="7.62" y="-2.54" visible="pad" length="middle" direction="pas" swaplevel="1" rot="R180"/>
+<pin name="3" x="7.62" y="0" visible="pad" length="middle" direction="pas" swaplevel="1" rot="R180"/>
+<pin name="5" x="7.62" y="2.54" visible="pad" length="middle" direction="pas" swaplevel="1" rot="R180"/>
+<pin name="2" x="-7.62" y="-2.54" visible="pad" length="middle" direction="pas" swaplevel="1"/>
+<pin name="4" x="-7.62" y="0" visible="pad" length="middle" direction="pas" swaplevel="1"/>
+<pin name="6" x="-7.62" y="2.54" visible="pad" length="middle" direction="pas" swaplevel="1"/>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="MOLEX_1.25MM_4PIN_SMT">
@@ -5656,25 +5702,6 @@ Temp: -40~+85°C</text>
 <connect gate="G$1" pin="2" pad="P$4"/>
 <connect gate="G$1" pin="3" pad="P$5"/>
 <connect gate="G$1" pin="4" pad="P$6"/>
-</connects>
-<technologies>
-<technology name=""/>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="POWER_SWITCH">
-<gates>
-<gate name="G$1" symbol="POWER_SWITCH" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="ELUMEESAQ7C12">
-<connects>
-<connect gate="G$1" pin="P1" pad="P1"/>
-<connect gate="G$1" pin="P2" pad="P2"/>
-<connect gate="G$1" pin="P3" pad="P3"/>
-<connect gate="G$1" pin="P4" pad="P4"/>
-<connect gate="G$1" pin="P5" pad="P5"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -5809,6 +5836,63 @@ WM7621CT-ND</description>
 <attribute name="PROD_ID" value="P6.2GCT-ND"/>
 <attribute name="VALUE" value="6.2"/>
 </technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="DFLS130L-7_30V_1A" prefix="D">
+<description>DFLS130L-7_30V_1A</description>
+<gates>
+<gate name="G$1" symbol="SCHOTTKY" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="DFLS130L-7_30V_1A">
+<connects>
+<connect gate="G$1" pin="A" pad="P$2"/>
+<connect gate="G$1" pin="C" pad="P$1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="GPTS202312B">
+<description>SPDT Pushbutton
+GPTS202312B
+CW183-ND</description>
+<gates>
+<gate name="G$1" symbol="SPDT" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="GPTS202312B">
+<connects>
+<connect gate="G$1" pin="A" pad="P$3"/>
+<connect gate="G$1" pin="B" pad="P$1"/>
+<connect gate="G$1" pin="COMMON" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="AMPHENOL_2X3_2.54MM">
+<gates>
+<gate name="G$1" symbol="CONN_06" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="AMPHENOL_2X3_2.54MM">
+<connects>
+<connect gate="G$1" pin="1" pad="P$6"/>
+<connect gate="G$1" pin="2" pad="P$3"/>
+<connect gate="G$1" pin="3" pad="P$5"/>
+<connect gate="G$1" pin="4" pad="P$2"/>
+<connect gate="G$1" pin="5" pad="P$4"/>
+<connect gate="G$1" pin="6" pad="P$1"/>
+</connects>
+<technologies>
+<technology name=""/>
 </technologies>
 </device>
 </devices>
@@ -6633,7 +6717,6 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <part name="GND19" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="DIST_3" library="Kirbi_ControlBoard" deviceset="MOLEX_1.25MM_4PIN_SMT" device=""/>
 <part name="DIST_4" library="Kirbi_ControlBoard" deviceset="MOLEX_1.25MM_4PIN_SMT" device=""/>
-<part name="POWER" library="Kirbi_ControlBoard" deviceset="POWER_SWITCH" device=""/>
 <part name="P+3" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="P+9" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
 <part name="GND4" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
@@ -6650,7 +6733,6 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <part name="LED1" library="adafruit" library_urn="urn:adsk.eagle:library:420" deviceset="WS2812B" device="5050" package3d_urn="urn:adsk.eagle:package:6240942/1"/>
 <part name="GND18" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
 <part name="P+2" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+5V" device=""/>
-<part name="R1" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="100OHM" device="-0603-1/4W-5%" package3d_urn="urn:adsk.eagle:package:39650/1" value="100"/>
 <part name="MUX_TX1" library="Kirbi_ControlBoard" deviceset="MUX_74LVC1G157GV" device=""/>
 <part name="MUX_TX2" library="Kirbi_ControlBoard" deviceset="MUX_74LVC1G157GV" device=""/>
 <part name="MUX_RX1" library="Kirbi_ControlBoard" deviceset="MUX_74LVC1G157GV" device=""/>
@@ -6692,6 +6774,24 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <part name="R11" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k"/>
 <part name="+3V23" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="GND27" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="D5" library="Kirbi_ControlBoard" deviceset="DFLS130L-7_30V_1A" device=""/>
+<part name="D1" library="Kirbi_ControlBoard" deviceset="DFLS130L-7_30V_1A" device=""/>
+<part name="GND29" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
+<part name="+3V20" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
+<part name="R4" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k"/>
+<part name="R8" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k"/>
+<part name="R9" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k"/>
+<part name="R12" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k"/>
+<part name="R18" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k"/>
+<part name="GND30" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
+<part name="GND31" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
+<part name="GND32" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
+<part name="GND33" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
+<part name="POWER_SWITCH" library="Kirbi_ControlBoard" deviceset="GPTS202312B" device=""/>
+<part name="D6" library="SparkFun-LED" deviceset="LED" device="0603" value="5V"/>
+<part name="R1" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="200OHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="200"/>
+<part name="FRAME2" library="RoboJackets-Frames" deviceset="FRAME_B_L" device=""/>
+<part name="PDB_CONN" library="Kirbi_ControlBoard" deviceset="AMPHENOL_2X3_2.54MM" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -6732,7 +6832,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <wire x1="424.18" y1="45.72" x2="424.18" y2="78.74" width="1.27" layer="97" style="shortdash"/>
 <wire x1="335.28" y1="177.8" x2="335.28" y2="127" width="1.27" layer="97" style="shortdash"/>
 <text x="370.84" y="167.64" size="6.4516" layer="97">IMU</text>
-<text x="50.8" y="58.42" size="5.08" layer="97">Voltage Regulators</text>
+<text x="60.96" y="63.5" size="5.08" layer="97">Voltage Regulators</text>
 <wire x1="335.28" y1="127" x2="335.28" y2="78.74" width="1.27" layer="97" style="shortdash"/>
 <wire x1="172.72" y1="78.74" x2="172.72" y2="20.32" width="1.27" layer="97" style="shortdash"/>
 <wire x1="15.24" y1="127" x2="116.84" y2="127" width="1.27" layer="97" style="shortdash"/>
@@ -6897,9 +6997,9 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <instance part="GND8" gate="1" x="101.854" y="221.488" smashed="yes">
 <attribute name="VALUE" x="101.854" y="221.234" size="1.778" layer="96" align="top-center"/>
 </instance>
-<instance part="C8" gate="G$1" x="316.992" y="90.17" smashed="yes">
-<attribute name="NAME" x="318.516" y="93.091" size="1.778" layer="95" font="vector"/>
-<attribute name="VALUE" x="318.516" y="88.011" size="1.778" layer="96" font="vector"/>
+<instance part="C8" gate="G$1" x="319.532" y="90.17" smashed="yes">
+<attribute name="NAME" x="321.056" y="93.091" size="1.778" layer="95" font="vector"/>
+<attribute name="VALUE" x="321.056" y="88.011" size="1.778" layer="96" font="vector"/>
 </instance>
 <instance part="C7" gate="G$1" x="327.152" y="90.17" smashed="yes">
 <attribute name="NAME" x="328.676" y="93.091" size="1.778" layer="95" font="vector"/>
@@ -6908,8 +7008,8 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <instance part="P+14" gate="1" x="403.86" y="71.12" smashed="yes">
 <attribute name="VALUE" x="401.32" y="66.04" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="GND16" gate="1" x="316.992" y="82.55" smashed="yes">
-<attribute name="VALUE" x="316.992" y="82.296" size="1.778" layer="96" align="top-center"/>
+<instance part="GND16" gate="1" x="319.532" y="82.55" smashed="yes">
+<attribute name="VALUE" x="319.532" y="82.296" size="1.778" layer="96" align="top-center"/>
 </instance>
 <instance part="U1" gate="G$1" x="375.92" y="96.52" smashed="yes">
 <attribute name="NAME" x="370.84" y="107.442" size="1.778" layer="95"/>
@@ -7019,11 +7119,8 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <attribute name="VALUE" x="71.374" y="221.742" size="1.778" layer="96" font="vector"/>
 <attribute name="NAME" x="71.374" y="237.236" size="1.778" layer="95" font="vector"/>
 </instance>
-<instance part="POWER" gate="G$1" x="296.672" y="105.41" smashed="yes">
-<attribute name="NAME" x="283.972" y="113.792" size="1.27" layer="97"/>
-</instance>
-<instance part="P+3" gate="1" x="296.672" y="118.11" smashed="yes">
-<attribute name="VALUE" x="294.64" y="114.3" size="1.778" layer="96" rot="R90"/>
+<instance part="P+3" gate="1" x="304.292" y="115.57" smashed="yes">
+<attribute name="VALUE" x="302.26" y="111.76" size="1.778" layer="96" rot="R90"/>
 </instance>
 <instance part="P+9" gate="1" x="101.6" y="205.74" smashed="yes">
 <attribute name="VALUE" x="99.06" y="200.66" size="1.778" layer="96" rot="R90"/>
@@ -7071,10 +7168,6 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 </instance>
 <instance part="P+2" gate="1" x="342.9" y="76.2" smashed="yes">
 <attribute name="VALUE" x="340.36" y="70.358" size="1.778" layer="96" rot="R90"/>
-</instance>
-<instance part="R1" gate="G$1" x="304.292" y="90.17" smashed="yes" rot="R90">
-<attribute name="NAME" x="302.768" y="90.17" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
-<attribute name="VALUE" x="305.816" y="90.17" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
 </instance>
 <instance part="MUX_TX1" gate="G$1" x="279.908" y="218.186" smashed="yes">
 <attribute name="NAME" x="272.288" y="238.506" size="2.1844" layer="125"/>
@@ -7222,6 +7315,64 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <instance part="GND27" gate="1" x="403.86" y="53.086" smashed="yes">
 <attribute name="VALUE" x="401.32" y="51.054" size="1.778" layer="96"/>
 </instance>
+<instance part="D5" gate="G$1" x="121.92" y="53.34" smashed="yes" rot="R180">
+<attribute name="NAME" x="124.206" y="51.435" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="124.206" y="56.769" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="D1" gate="G$1" x="43.18" y="53.34" smashed="yes" rot="R180">
+<attribute name="NAME" x="45.466" y="51.435" size="1.778" layer="95" rot="R180"/>
+<attribute name="VALUE" x="45.466" y="56.769" size="1.778" layer="96" rot="R180"/>
+</instance>
+<instance part="GND29" gate="1" x="185.42" y="50.8" smashed="yes">
+<attribute name="VALUE" x="182.88" y="48.26" size="1.778" layer="96"/>
+</instance>
+<instance part="+3V20" gate="G$1" x="180.34" y="65.024" smashed="yes">
+<attribute name="VALUE" x="184.15" y="59.436" size="1.778" layer="96" rot="R90"/>
+</instance>
+<instance part="R4" gate="G$1" x="180.34" y="54.356" smashed="yes" rot="R90">
+<attribute name="NAME" x="178.816" y="54.356" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
+<attribute name="VALUE" x="181.864" y="54.356" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
+</instance>
+<instance part="R8" gate="G$1" x="266.7" y="204.216" smashed="yes" rot="R90">
+<attribute name="NAME" x="265.176" y="204.216" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
+<attribute name="VALUE" x="268.224" y="204.216" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
+</instance>
+<instance part="R9" gate="G$1" x="307.34" y="204.216" smashed="yes" rot="R90">
+<attribute name="NAME" x="305.816" y="204.216" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
+<attribute name="VALUE" x="308.864" y="204.216" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
+</instance>
+<instance part="R12" gate="G$1" x="347.98" y="204.216" smashed="yes" rot="R90">
+<attribute name="NAME" x="346.456" y="204.216" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
+<attribute name="VALUE" x="349.504" y="204.216" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
+</instance>
+<instance part="R18" gate="G$1" x="388.62" y="204.216" smashed="yes" rot="R90">
+<attribute name="NAME" x="387.096" y="204.216" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
+<attribute name="VALUE" x="390.144" y="204.216" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
+</instance>
+<instance part="GND30" gate="1" x="266.7" y="193.802" smashed="yes">
+<attribute name="VALUE" x="266.7" y="193.548" size="1.778" layer="96" align="top-center"/>
+</instance>
+<instance part="GND31" gate="1" x="307.34" y="194.056" smashed="yes">
+<attribute name="VALUE" x="307.34" y="193.802" size="1.778" layer="96" align="top-center"/>
+</instance>
+<instance part="GND32" gate="1" x="347.98" y="194.31" smashed="yes">
+<attribute name="VALUE" x="347.98" y="194.056" size="1.778" layer="96" align="top-center"/>
+</instance>
+<instance part="GND33" gate="1" x="388.62" y="194.31" smashed="yes">
+<attribute name="VALUE" x="388.62" y="194.056" size="1.778" layer="96" align="top-center"/>
+</instance>
+<instance part="POWER_SWITCH" gate="G$1" x="296.926" y="104.14" smashed="yes" rot="R180">
+<attribute name="NAME" x="302.006" y="99.06" size="1.778" layer="95" font="vector" rot="R180"/>
+<attribute name="VALUE" x="302.006" y="109.22" size="1.778" layer="96" font="vector" rot="R180"/>
+</instance>
+<instance part="D6" gate="G$1" x="307.086" y="97.536" smashed="yes" rot="R90">
+<attribute name="NAME" x="311.658" y="94.107" size="1.778" layer="95" font="vector" rot="R180"/>
+<attribute name="VALUE" x="311.658" y="99.441" size="1.778" layer="96" font="vector" rot="R180" align="top-left"/>
+</instance>
+<instance part="R1" gate="G$1" x="313.69" y="90.17" smashed="yes" rot="R90">
+<attribute name="NAME" x="312.166" y="90.17" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
+<attribute name="VALUE" x="315.214" y="90.17" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -7262,6 +7413,14 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <junction x="83.82" y="40.64"/>
 <pinref part="+3V5" gate="G$1" pin="+3V3"/>
 <wire x1="106.68" y1="45.72" x2="106.68" y2="48.26" width="0.1524" layer="91"/>
+<pinref part="D1" gate="G$1" pin="A"/>
+<wire x1="45.72" y1="53.34" x2="83.82" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="83.82" y1="53.34" x2="83.82" y2="45.72" width="0.1524" layer="91"/>
+<junction x="83.82" y="45.72"/>
+<pinref part="D5" gate="G$1" pin="C"/>
+<wire x1="119.38" y1="53.34" x2="109.22" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="109.22" y1="53.34" x2="109.22" y2="45.72" width="0.1524" layer="91"/>
+<wire x1="109.22" y1="45.72" x2="106.68" y2="45.72" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="+3V7" gate="G$1" pin="+3V3"/>
@@ -7366,6 +7525,11 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <pinref part="R11" gate="G$1" pin="2"/>
 <pinref part="+3V23" gate="G$1" pin="+3V3"/>
 <wire x1="414.02" y1="234.95" x2="414.02" y2="235.458" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="R4" gate="G$1" pin="2"/>
+<pinref part="+3V20" gate="G$1" pin="+3V3"/>
+<wire x1="180.34" y1="59.436" x2="180.34" y2="62.484" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -7478,18 +7642,17 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <pinref part="C7" gate="G$1" pin="2"/>
 <wire x1="327.152" y1="85.09" x2="327.152" y2="87.63" width="0.1524" layer="91"/>
 <pinref part="C8" gate="G$1" pin="2"/>
-<wire x1="316.992" y1="85.09" x2="316.992" y2="87.63" width="0.1524" layer="91"/>
+<wire x1="319.532" y1="85.09" x2="319.532" y2="87.63" width="0.1524" layer="91"/>
 <pinref part="GND16" gate="1" pin="GND"/>
-<wire x1="316.992" y1="85.09" x2="327.152" y2="85.09" width="0.1524" layer="91"/>
-<junction x="316.992" y="85.09"/>
-<junction x="316.992" y="85.09"/>
-<wire x1="316.992" y1="85.09" x2="304.292" y2="85.09" width="0.1524" layer="91"/>
-<pinref part="R1" gate="G$1" pin="1"/>
-<wire x1="304.292" y1="85.09" x2="282.702" y2="85.09" width="0.1524" layer="91"/>
-<junction x="304.292" y="85.09"/>
+<wire x1="319.532" y1="85.09" x2="327.152" y2="85.09" width="0.1524" layer="91"/>
+<junction x="319.532" y="85.09"/>
+<wire x1="319.532" y1="85.09" x2="313.69" y2="85.09" width="0.1524" layer="91"/>
 <pinref part="POWER_CONN" gate="G$1" pin="P$2"/>
+<wire x1="313.69" y1="85.09" x2="282.702" y2="85.09" width="0.1524" layer="91"/>
 <wire x1="274.32" y1="99.06" x2="282.702" y2="99.314" width="0.1524" layer="91"/>
 <wire x1="282.702" y1="99.314" x2="282.702" y2="85.09" width="0.1524" layer="91"/>
+<pinref part="R1" gate="G$1" pin="1"/>
+<junction x="313.69" y="85.09"/>
 </segment>
 <segment>
 <pinref part="LINE_LF" gate="G$1" pin="3"/>
@@ -7585,16 +7748,11 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <pinref part="GND20" gate="1" pin="GND"/>
 </segment>
 <segment>
-<junction x="190.5" y="35.56"/>
 <pinref part="GND13" gate="1" pin="GND"/>
 <wire x1="190.5" y1="30.48" x2="190.5" y2="33.02" width="0.1524" layer="91"/>
 <pinref part="TRANSCEIVER" gate="RFM59HCW" pin="GND@3"/>
 <wire x1="190.5" y1="33.02" x2="190.5" y2="35.56" width="0.1524" layer="91"/>
 <wire x1="200.66" y1="35.56" x2="190.5" y2="35.56" width="0.1524" layer="91"/>
-<pinref part="TRANSCEIVER" gate="RFM59HCW" pin="GND@2"/>
-<wire x1="200.66" y1="53.34" x2="177.8" y2="53.34" width="0.1524" layer="91"/>
-<wire x1="177.8" y1="53.34" x2="177.8" y2="35.56" width="0.1524" layer="91"/>
-<wire x1="177.8" y1="35.56" x2="190.5" y2="35.56" width="0.1524" layer="91"/>
 <pinref part="TRANSCEIVER" gate="RFM59HCW" pin="GND@1"/>
 <pinref part="C4" gate="G$1" pin="2"/>
 <wire x1="236.22" y1="38.1" x2="226.06" y2="38.1" width="0.1524" layer="91"/>
@@ -7621,6 +7779,31 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <pinref part="C11" gate="G$1" pin="2"/>
 <pinref part="GND27" gate="1" pin="GND"/>
 <wire x1="403.86" y1="58.42" x2="403.86" y2="55.626" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="GND29" gate="1" pin="GND"/>
+<pinref part="TRANSCEIVER" gate="RFM59HCW" pin="GND@2"/>
+<wire x1="185.42" y1="53.34" x2="200.66" y2="53.34" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="GND33" gate="1" pin="GND"/>
+<pinref part="R18" gate="G$1" pin="1"/>
+<wire x1="388.62" y1="196.85" x2="388.62" y2="199.136" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="GND32" gate="1" pin="GND"/>
+<pinref part="R12" gate="G$1" pin="1"/>
+<wire x1="347.98" y1="196.85" x2="347.98" y2="199.136" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="GND31" gate="1" pin="GND"/>
+<pinref part="R9" gate="G$1" pin="1"/>
+<wire x1="307.34" y1="196.596" x2="307.34" y2="199.136" width="0.1524" layer="91"/>
+</segment>
+<segment>
+<pinref part="GND30" gate="1" pin="GND"/>
+<pinref part="R8" gate="G$1" pin="1"/>
+<wire x1="266.7" y1="196.342" x2="266.7" y2="199.136" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="LINE_LF" class="0">
@@ -7716,8 +7899,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <pinref part="U6" gate="A" pin="VOUT"/>
 <wire x1="157.48" y1="38.1" x2="160.02" y2="38.1" width="0.1524" layer="91"/>
 <wire x1="160.02" y1="38.1" x2="160.02" y2="40.64" width="0.1524" layer="91"/>
-<wire x1="160.02" y1="40.64" x2="160.02" y2="43.18" width="0.1524" layer="91"/>
-<wire x1="160.02" y1="43.18" x2="160.02" y2="45.72" width="0.1524" layer="91"/>
+<wire x1="160.02" y1="40.64" x2="160.02" y2="45.72" width="0.1524" layer="91"/>
 <wire x1="160.02" y1="45.72" x2="162.56" y2="45.72" width="0.1524" layer="91"/>
 <pinref part="C21" gate="G$1" pin="1"/>
 <wire x1="162.56" y1="45.72" x2="162.56" y2="43.18" width="0.1524" layer="91"/>
@@ -7727,6 +7909,10 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <pinref part="U6" gate="A" pin="EPAD"/>
 <wire x1="157.48" y1="40.64" x2="160.02" y2="40.64" width="0.1524" layer="91"/>
 <junction x="160.02" y="40.64"/>
+<pinref part="D5" gate="G$1" pin="A"/>
+<wire x1="124.46" y1="53.34" x2="160.02" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="160.02" y1="53.34" x2="160.02" y2="45.72" width="0.1524" layer="91"/>
+<junction x="160.02" y="45.72"/>
 </segment>
 <segment>
 <pinref part="IMU" gate="G$1" pin="VDD"/>
@@ -7841,24 +8027,23 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 </segment>
 <segment>
 <pinref part="C8" gate="G$1" pin="1"/>
-<wire x1="316.992" y1="95.25" x2="316.992" y2="97.79" width="0.1524" layer="91"/>
+<wire x1="319.532" y1="95.25" x2="319.532" y2="97.79" width="0.1524" layer="91"/>
 <pinref part="C7" gate="G$1" pin="1"/>
 <wire x1="327.152" y1="95.25" x2="327.152" y2="97.79" width="0.1524" layer="91"/>
-<wire x1="327.152" y1="97.79" x2="316.992" y2="97.79" width="0.1524" layer="91"/>
-<junction x="316.992" y="97.79"/>
-<wire x1="316.992" y1="97.79" x2="314.198" y2="97.79" width="0.1524" layer="91"/>
-<junction x="316.992" y="97.79"/>
+<wire x1="327.152" y1="97.79" x2="319.532" y2="97.79" width="0.1524" layer="91"/>
+<junction x="319.532" y="97.79"/>
+<wire x1="319.532" y1="97.79" x2="319.278" y2="97.79" width="0.1524" layer="91"/>
+<junction x="319.532" y="97.79"/>
 <pinref part="P+3" gate="1" pin="+5V"/>
-<pinref part="POWER" gate="G$1" pin="P3"/>
-<wire x1="296.672" y1="115.57" x2="296.672" y2="110.49" width="0.1524" layer="91"/>
-<wire x1="296.672" y1="110.49" x2="296.672" y2="102.87" width="0.1524" layer="91"/>
-<junction x="296.672" y="110.49"/>
-<junction x="296.672" y="115.57"/>
-<wire x1="314.198" y1="97.79" x2="314.198" y2="115.57" width="0.1524" layer="91"/>
-<wire x1="314.198" y1="115.57" x2="296.672" y2="115.57" width="0.1524" layer="91"/>
-<wire x1="296.672" y1="102.87" x2="291.592" y2="102.87" width="0.1524" layer="91"/>
-<pinref part="POWER" gate="G$1" pin="P5"/>
-<wire x1="291.592" y1="102.87" x2="291.592" y2="97.79" width="0.1524" layer="91"/>
+<wire x1="319.278" y1="97.79" x2="319.278" y2="113.03" width="0.1524" layer="91"/>
+<wire x1="319.278" y1="113.03" x2="304.292" y2="113.03" width="0.1524" layer="91"/>
+<pinref part="POWER_SWITCH" gate="G$1" pin="COMMON"/>
+<wire x1="304.292" y1="113.03" x2="304.546" y2="113.03" width="0.1524" layer="91"/>
+<wire x1="304.546" y1="113.03" x2="304.546" y2="104.14" width="0.1524" layer="91"/>
+<junction x="304.292" y="113.03"/>
+<pinref part="D6" gate="G$1" pin="A"/>
+<wire x1="304.546" y1="104.14" x2="304.546" y2="97.536" width="0.1524" layer="91"/>
+<junction x="304.546" y="104.14"/>
 </segment>
 <segment>
 <pinref part="D2" gate="G$1" pin="A"/>
@@ -7875,6 +8060,10 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <wire x1="30.48" y1="48.26" x2="30.48" y2="45.72" width="0.1524" layer="91"/>
 <junction x="30.48" y="45.72"/>
 <pinref part="P+6" gate="1" pin="+5V"/>
+<wire x1="33.02" y1="45.72" x2="30.48" y2="45.72" width="0.1524" layer="91"/>
+<pinref part="D1" gate="G$1" pin="C"/>
+<wire x1="40.64" y1="53.34" x2="33.02" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="33.02" y1="53.34" x2="33.02" y2="45.72" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="P+12" gate="1" pin="+5V"/>
@@ -7981,21 +8170,14 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 </net>
 <net name="NEO_DI" class="0">
 <segment>
-<label x="160.02" y="175.26" size="1.778" layer="95" rot="R180" xref="yes"/>
-<pinref part="U2" gate="G$1" pin="24"/>
-<wire x1="165.1" y1="175.26" x2="160.02" y2="175.26" width="0.1524" layer="91"/>
+<label x="160.02" y="220.98" size="1.778" layer="95" rot="R180" xref="yes"/>
+<pinref part="U2" gate="G$1" pin="6/PWM"/>
+<wire x1="165.1" y1="220.98" x2="160.02" y2="220.98" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="LED1" gate="G$1" pin="DI"/>
 <wire x1="325.12" y1="55.118" x2="322.58" y2="55.118" width="0.1524" layer="91"/>
 <label x="322.58" y="55.118" size="1.778" layer="95" rot="R180" xref="yes"/>
-</segment>
-</net>
-<net name="N$8" class="0">
-<segment>
-<pinref part="POWER" gate="G$1" pin="P1"/>
-<wire x1="304.292" y1="95.25" x2="304.292" y2="97.79" width="0.1524" layer="91"/>
-<pinref part="R1" gate="G$1" pin="2"/>
 </segment>
 </net>
 <net name="MISO" class="0">
@@ -8037,8 +8219,12 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <net name="RADIO_NSS" class="0">
 <segment>
 <pinref part="TRANSCEIVER" gate="RFM59HCW" pin="NSS"/>
-<wire x1="200.66" y1="43.18" x2="198.12" y2="43.18" width="0.1524" layer="91"/>
-<label x="198.12" y="43.18" size="1.778" layer="95" rot="R180" xref="yes"/>
+<wire x1="200.66" y1="43.18" x2="180.34" y2="43.18" width="0.1524" layer="91"/>
+<label x="175.768" y="43.18" size="1.778" layer="95" rot="R90" xref="yes"/>
+<pinref part="R4" gate="G$1" pin="1"/>
+<wire x1="180.34" y1="43.18" x2="175.768" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="180.34" y1="49.276" x2="180.34" y2="43.18" width="0.1524" layer="91"/>
+<junction x="180.34" y="43.18"/>
 </segment>
 <segment>
 <pinref part="U2" gate="G$1" pin="30/T/PWM"/>
@@ -8053,9 +8239,9 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <label x="228.6" y="48.26" size="1.778" layer="95" rot="R90" xref="yes"/>
 </segment>
 <segment>
-<pinref part="U2" gate="G$1" pin="5/PWM"/>
-<wire x1="165.1" y1="223.52" x2="160.02" y2="223.52" width="0.1524" layer="91"/>
-<label x="160.02" y="223.52" size="1.778" layer="95" rot="R180" xref="yes"/>
+<label x="160.02" y="180.34" size="1.778" layer="95" rot="R180" xref="yes"/>
+<pinref part="U2" gate="G$1" pin="22/A8/T/PWM"/>
+<wire x1="165.1" y1="180.34" x2="160.02" y2="180.34" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="TXD2" class="0">
@@ -8119,11 +8305,18 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <pinref part="MUX_TX1" gate="G$1" pin="S"/>
 <wire x1="267.208" y1="213.106" x2="266.446" y2="213.106" width="0.1524" layer="91"/>
 <label x="266.446" y="213.106" size="1.778" layer="95" rot="MR0" xref="yes"/>
+<pinref part="R8" gate="G$1" pin="2"/>
+<wire x1="266.7" y1="209.296" x2="266.7" y2="213.106" width="0.1524" layer="91"/>
+<wire x1="266.7" y1="213.106" x2="267.208" y2="213.106" width="0.1524" layer="91"/>
+<junction x="267.208" y="213.106"/>
 </segment>
 <segment>
 <pinref part="MUX_RX1" gate="G$1" pin="S"/>
 <wire x1="347.98" y1="213.36" x2="347.472" y2="213.36" width="0.1524" layer="91"/>
 <label x="347.472" y="213.36" size="1.778" layer="95" rot="MR0" xref="yes"/>
+<pinref part="R12" gate="G$1" pin="2"/>
+<wire x1="347.98" y1="209.296" x2="347.98" y2="213.36" width="0.1524" layer="91"/>
+<junction x="347.98" y="213.36"/>
 </segment>
 <segment>
 <pinref part="U2" gate="G$1" pin="2/PWM"/>
@@ -8136,11 +8329,17 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <pinref part="MUX_TX2" gate="G$1" pin="S"/>
 <wire x1="307.34" y1="213.36" x2="306.832" y2="213.868" width="0.1524" layer="91"/>
 <label x="306.832" y="213.868" size="1.778" layer="95" rot="R180" xref="yes"/>
+<pinref part="R9" gate="G$1" pin="2"/>
+<wire x1="307.34" y1="209.296" x2="307.34" y2="213.36" width="0.1524" layer="91"/>
+<junction x="307.34" y="213.36"/>
 </segment>
 <segment>
 <pinref part="MUX_RX2" gate="G$1" pin="S"/>
 <wire x1="388.62" y1="213.36" x2="388.112" y2="213.106" width="0.1524" layer="91"/>
 <label x="388.112" y="213.106" size="1.778" layer="95" rot="MR0" xref="yes"/>
+<pinref part="R18" gate="G$1" pin="2"/>
+<wire x1="388.62" y1="209.296" x2="388.62" y2="213.36" width="0.1524" layer="91"/>
+<junction x="388.62" y="213.36"/>
 </segment>
 <segment>
 <pinref part="U2" gate="G$1" pin="25"/>
@@ -8333,15 +8532,6 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <pinref part="F1" gate="G$1" pin="P$1"/>
 </segment>
 </net>
-<net name="N$6" class="0">
-<segment>
-<wire x1="281.94" y1="104.14" x2="283.464" y2="104.14" width="0.1524" layer="91"/>
-<wire x1="283.464" y1="104.14" x2="283.464" y2="110.49" width="0.1524" layer="91"/>
-<pinref part="POWER" gate="G$1" pin="P4"/>
-<wire x1="283.464" y1="110.49" x2="286.512" y2="110.49" width="0.1524" layer="91"/>
-<pinref part="F1" gate="G$1" pin="P$2"/>
-</segment>
-</net>
 <net name="S1/TTX" class="0">
 <segment>
 <pinref part="U2" gate="G$1" pin="33/A14/TX5/CAN1-TX"/>
@@ -8371,6 +8561,105 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <pinref part="D4" gate="G$1" pin="C"/>
 <pinref part="R2" gate="G$1" pin="1"/>
 <wire x1="279.4" y1="33.02" x2="289.814" y2="33.02" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$6" class="0">
+<segment>
+<pinref part="POWER_SWITCH" gate="G$1" pin="B"/>
+<pinref part="F1" gate="G$1" pin="P$2"/>
+<wire x1="289.306" y1="104.14" x2="281.94" y2="104.14" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="N$8" class="0">
+<segment>
+<pinref part="D6" gate="G$1" pin="C"/>
+<wire x1="312.166" y1="97.536" x2="313.69" y2="97.536" width="0.1524" layer="91"/>
+<wire x1="313.69" y1="97.536" x2="313.69" y2="95.25" width="0.1524" layer="91"/>
+<pinref part="R1" gate="G$1" pin="2"/>
+</segment>
+</net>
+<net name="PDB_MISO" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="5/PWM"/>
+<wire x1="165.1" y1="223.52" x2="160.02" y2="223.52" width="0.1524" layer="91"/>
+<label x="160.02" y="223.52" size="1.778" layer="95" rot="R180" xref="yes"/>
+</segment>
+</net>
+<net name="PDB_MOSI" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="21/A7/PWM"/>
+<wire x1="165.1" y1="182.88" x2="160.02" y2="182.88" width="0.1524" layer="91"/>
+<label x="160.02" y="182.88" size="1.778" layer="95" rot="R180" xref="yes"/>
+</segment>
+</net>
+<net name="PDB_SCLK" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="20/A6/PWM"/>
+<wire x1="165.1" y1="185.42" x2="160.02" y2="185.42" width="0.1524" layer="91"/>
+<label x="160.02" y="185.42" size="1.778" layer="95" rot="R180" xref="yes"/>
+</segment>
+</net>
+</nets>
+</sheet>
+<sheet>
+<plain>
+</plain>
+<instances>
+<instance part="FRAME2" gate="G$1" x="0" y="0" smashed="yes"/>
+<instance part="FRAME2" gate="G$2" x="325.12" y="0" smashed="yes">
+<attribute name="LAST_DATE_TIME" x="337.82" y="1.27" size="2.54" layer="94" font="vector"/>
+<attribute name="SHEET" x="411.48" y="1.27" size="2.54" layer="94" font="vector"/>
+<attribute name="DRAWING_NAME" x="340.36" y="19.05" size="2.54" layer="94" font="vector"/>
+<attribute name="SCH_DESC" x="326.39" y="6.35" size="2.54" layer="94"/>
+</instance>
+<instance part="PDB_CONN" gate="G$1" x="30.48" y="248.92" smashed="yes">
+<attribute name="VALUE" x="26.67" y="241.3" size="1.778" layer="96"/>
+<attribute name="NAME" x="26.67" y="254.762" size="1.778" layer="95"/>
+</instance>
+</instances>
+<busses>
+</busses>
+<nets>
+<net name="PDB_MOSI" class="0">
+<segment>
+<pinref part="PDB_CONN" gate="G$1" pin="5"/>
+<wire x1="38.1" y1="251.46" x2="42.672" y2="251.46" width="0.1524" layer="91"/>
+<label x="42.672" y="251.46" size="1.778" layer="95" rot="R90" xref="yes"/>
+</segment>
+</net>
+<net name="PDB_SCLK" class="0">
+<segment>
+<pinref part="PDB_CONN" gate="G$1" pin="3"/>
+<wire x1="38.1" y1="248.92" x2="46.736" y2="248.92" width="0.1524" layer="91"/>
+<label x="46.736" y="248.92" size="1.778" layer="95" rot="R90" xref="yes"/>
+</segment>
+</net>
+<net name="PDB_!CS!" class="0">
+<segment>
+<pinref part="PDB_CONN" gate="G$1" pin="1"/>
+<wire x1="38.1" y1="246.38" x2="50.292" y2="246.38" width="0.1524" layer="91"/>
+<label x="50.292" y="246.38" size="1.778" layer="95" rot="R90" xref="yes"/>
+</segment>
+</net>
+<net name="PDB_START" class="0">
+<segment>
+<pinref part="PDB_CONN" gate="G$1" pin="6"/>
+<wire x1="22.86" y1="251.46" x2="20.32" y2="251.46" width="0.1524" layer="91"/>
+<label x="20.32" y="251.46" size="1.778" layer="95" rot="R90" xref="yes"/>
+</segment>
+</net>
+<net name="PDB_!EOC!" class="0">
+<segment>
+<pinref part="PDB_CONN" gate="G$1" pin="4"/>
+<label x="16.51" y="248.92" size="1.778" layer="95" rot="R90" xref="yes"/>
+<wire x1="16.51" y1="248.92" x2="22.86" y2="248.92" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="PDB_MISO" class="0">
+<segment>
+<pinref part="PDB_CONN" gate="G$1" pin="2"/>
+<wire x1="22.86" y1="246.38" x2="11.684" y2="246.38" width="0.1524" layer="91"/>
+<label x="11.684" y="246.38" size="1.778" layer="95" rot="R90" xref="yes"/>
 </segment>
 </net>
 </nets>

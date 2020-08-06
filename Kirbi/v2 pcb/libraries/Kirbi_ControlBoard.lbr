@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.5.2">
+<eagle version="9.5.1">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -1368,6 +1368,36 @@ WM7621CT-ND</description>
 <wire x1="1.5" y1="0.965" x2="-1.5" y2="0.965" width="0.1524" layer="21"/>
 <text x="-2" y="2" size="1.016" layer="25" font="vector">&gt;NAME</text>
 <text x="-2" y="-2.7" size="1.016" layer="27" font="vector">&gt;VALUE</text>
+</package>
+<package name="GPTS202312B">
+<description>Push Button Power Switch
+GPTS202312B</description>
+<pad name="P$2" x="0" y="0" drill="1.2"/>
+<pad name="P$1" x="0" y="3.5" drill="1.2"/>
+<pad name="P$3" x="0" y="-3.5" drill="1.2"/>
+<wire x1="-3.4" y1="6" x2="-3.4" y2="-6" width="0.1524" layer="21"/>
+<wire x1="-3.4" y1="-6" x2="3.4" y2="-6" width="0.1524" layer="21"/>
+<wire x1="3.4" y1="-6" x2="3.4" y2="6" width="0.1524" layer="21"/>
+<wire x1="3.4" y1="6" x2="-3.4" y2="6" width="0.1524" layer="21"/>
+<text x="-3.81" y="7.62" size="1.778" layer="25" font="vector">&gt;NAME</text>
+<text x="-3.81" y="-8.89" size="1.778" layer="27" font="vector">&gt;VALUE</text>
+</package>
+<package name="AMPHENOL_2X3_2.54MM">
+<description>AMPHENOL_2X3_2.44MM
+Shrouded
+75869-131LF</description>
+<pad name="P$1" x="-2.54" y="1.27" drill="1.02"/>
+<pad name="P$2" x="0" y="1.27" drill="1.02"/>
+<pad name="P$3" x="2.54" y="1.27" drill="1.02"/>
+<pad name="P$4" x="-2.54" y="-1.27" drill="1.02"/>
+<pad name="P$5" x="0" y="-1.27" drill="1.02"/>
+<pad name="P$6" x="2.54" y="-1.27" drill="1.02"/>
+<wire x1="-7.415" y1="4.6" x2="-7.415" y2="-4.6" width="0.1524" layer="21"/>
+<wire x1="-7.415" y1="-4.6" x2="7.415" y2="-4.6" width="0.1524" layer="21"/>
+<wire x1="7.415" y1="-4.6" x2="7.415" y2="4.6" width="0.1524" layer="21"/>
+<wire x1="7.415" y1="4.6" x2="-7.415" y2="4.6" width="0.1524" layer="21"/>
+<text x="-7" y="5" size="1.778" layer="25" font="vector">&gt;NAME</text>
+<text x="-7" y="-7" size="1.778" layer="27" font="vector">&gt;VALUE</text>
 </package>
 </packages>
 <packages3d>
@@ -5076,6 +5106,14 @@ Temp: -40~+85°C</text>
 <pin name="A" x="-2.54" y="0" visible="off" length="point" direction="pas"/>
 <pin name="C" x="2.54" y="0" visible="off" length="point" direction="pas" rot="R180"/>
 </symbol>
+<symbol name="SPDT">
+<wire x1="-2.54" y1="0" x2="2.54" y2="2.54" width="0.254" layer="94"/>
+<pin name="COMMON" x="-7.62" y="0" visible="pad" length="middle"/>
+<pin name="A" x="7.62" y="2.54" visible="pad" length="middle" rot="R180"/>
+<pin name="B" x="7.62" y="0" visible="pad" length="middle" rot="R180"/>
+<text x="-5.08" y="5.08" size="1.778" layer="95" font="vector">&gt;NAME</text>
+<text x="-5.08" y="-5.08" size="1.778" layer="96" font="vector">&gt;VALUE</text>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="AP2114H-1.8TRG1" prefix="U">
@@ -6022,6 +6060,46 @@ WM7621CT-ND</description>
 <connects>
 <connect gate="G$1" pin="A" pad="P$2"/>
 <connect gate="G$1" pin="C" pad="P$1"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="GPTS202312B">
+<description>SPDT Pushbutton
+GPTS202312B
+CW183-ND</description>
+<gates>
+<gate name="G$1" symbol="SPDT" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="GPTS202312B">
+<connects>
+<connect gate="G$1" pin="A" pad="P$3"/>
+<connect gate="G$1" pin="B" pad="P$1"/>
+<connect gate="G$1" pin="COMMON" pad="P$2"/>
+</connects>
+<technologies>
+<technology name=""/>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="AMPHENOL_2X3_2.54MM">
+<gates>
+<gate name="G$1" symbol="CONN_06" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="AMPHENOL_2X3_2.54MM">
+<connects>
+<connect gate="G$1" pin="1" pad="P$6"/>
+<connect gate="G$1" pin="2" pad="P$3"/>
+<connect gate="G$1" pin="3" pad="P$5"/>
+<connect gate="G$1" pin="4" pad="P$2"/>
+<connect gate="G$1" pin="5" pad="P$4"/>
+<connect gate="G$1" pin="6" pad="P$1"/>
 </connects>
 <technologies>
 <technology name=""/>
