@@ -6788,7 +6788,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <part name="GND32" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="GND33" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="POWER_SWITCH" library="Kirbi_ControlBoard" deviceset="GPTS202312B" device=""/>
-<part name="D6" library="SparkFun-LED" deviceset="LED" device="0603" value="5V"/>
+<part name="5V" library="SparkFun-LED" deviceset="LED" device="0603" value="5V"/>
 <part name="R1" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="200OHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="200"/>
 <part name="FRAME2" library="RoboJackets-Frames" deviceset="FRAME_B_L" device=""/>
 <part name="PDB_CONN" library="Kirbi_ControlBoard" deviceset="AMPHENOL_2X3_2.54MM" device=""/>
@@ -7365,7 +7365,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <attribute name="NAME" x="302.006" y="99.06" size="1.778" layer="95" font="vector" rot="R180"/>
 <attribute name="VALUE" x="302.006" y="109.22" size="1.778" layer="96" font="vector" rot="R180"/>
 </instance>
-<instance part="D6" gate="G$1" x="307.086" y="97.536" smashed="yes" rot="R90">
+<instance part="5V" gate="G$1" x="307.086" y="97.536" smashed="yes" rot="R90">
 <attribute name="NAME" x="311.658" y="94.107" size="1.778" layer="95" font="vector" rot="R180"/>
 <attribute name="VALUE" x="311.658" y="99.441" size="1.778" layer="96" font="vector" rot="R180" align="top-left"/>
 </instance>
@@ -8041,7 +8041,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <wire x1="304.292" y1="113.03" x2="304.546" y2="113.03" width="0.1524" layer="91"/>
 <wire x1="304.546" y1="113.03" x2="304.546" y2="104.14" width="0.1524" layer="91"/>
 <junction x="304.292" y="113.03"/>
-<pinref part="D6" gate="G$1" pin="A"/>
+<pinref part="5V" gate="G$1" pin="A"/>
 <wire x1="304.546" y1="104.14" x2="304.546" y2="97.536" width="0.1524" layer="91"/>
 <junction x="304.546" y="104.14"/>
 </segment>
@@ -8572,7 +8572,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 </net>
 <net name="N$8" class="0">
 <segment>
-<pinref part="D6" gate="G$1" pin="C"/>
+<pinref part="5V" gate="G$1" pin="C"/>
 <wire x1="312.166" y1="97.536" x2="313.69" y2="97.536" width="0.1524" layer="91"/>
 <wire x1="313.69" y1="97.536" x2="313.69" y2="95.25" width="0.1524" layer="91"/>
 <pinref part="R1" gate="G$1" pin="2"/>

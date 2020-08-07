@@ -6807,7 +6807,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <part name="GND38" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="POWER_SWITCH" library="Kirbi_ControlBoard" deviceset="GPTS202312B" device=""/>
 <part name="R1" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="200OHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="200"/>
-<part name="D6" library="SparkFun-LED" deviceset="LED" device="0603" value="5V"/>
+<part name="5V" library="SparkFun-LED" deviceset="LED" device="0603" value="5V"/>
 <part name="FRAME2" library="RoboJackets-Frames" deviceset="FRAME_B_L" device=""/>
 <part name="PDB_CONN" library="Kirbi_ControlBoard" deviceset="AMPHENOL_2X3_2.54MM" device=""/>
 </parts>
@@ -7451,7 +7451,7 @@ connection (not the ESC pins)</text>
 <attribute name="NAME" x="316.484" y="91.44" size="1.778" layer="95" font="vector" rot="R270" align="bottom-center"/>
 <attribute name="VALUE" x="313.436" y="91.44" size="1.778" layer="96" font="vector" rot="R270" align="top-center"/>
 </instance>
-<instance part="D6" gate="G$1" x="307.34" y="96.52" smashed="yes" rot="R90">
+<instance part="5V" gate="G$1" x="307.34" y="96.52" smashed="yes" rot="R90">
 <attribute name="NAME" x="309.372" y="93.091" size="1.778" layer="95" font="vector" rot="R180"/>
 <attribute name="VALUE" x="309.372" y="98.425" size="1.778" layer="96" font="vector" rot="R180" align="top-left"/>
 </instance>
@@ -8172,7 +8172,7 @@ connection (not the ESC pins)</text>
 <wire x1="306.832" y1="115.57" x2="306.832" y2="104.14" width="0.1524" layer="91"/>
 <wire x1="306.832" y1="104.14" x2="304.8" y2="104.14" width="0.1524" layer="91"/>
 <junction x="306.832" y="115.57"/>
-<pinref part="D6" gate="G$1" pin="A"/>
+<pinref part="5V" gate="G$1" pin="A"/>
 <wire x1="304.8" y1="104.14" x2="304.8" y2="96.52" width="0.1524" layer="91"/>
 <junction x="304.8" y="104.14"/>
 </segment>
@@ -8783,7 +8783,7 @@ connection (not the ESC pins)</text>
 </net>
 <net name="N$8" class="0">
 <segment>
-<pinref part="D6" gate="G$1" pin="C"/>
+<pinref part="5V" gate="G$1" pin="C"/>
 <pinref part="R1" gate="G$1" pin="1"/>
 <wire x1="314.96" y1="96.52" x2="312.42" y2="96.52" width="0.1524" layer="91"/>
 </segment>
