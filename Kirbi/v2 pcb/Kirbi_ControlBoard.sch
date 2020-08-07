@@ -8599,6 +8599,27 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <label x="160.02" y="185.42" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
+<net name="PDB_!CS!" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="17/A3/T/PWM"/>
+<wire x1="165.1" y1="193.04" x2="160.02" y2="193.04" width="0.1524" layer="91"/>
+<label x="160.02" y="193.04" size="1.778" layer="95" rot="R180" xref="yes"/>
+</segment>
+</net>
+<net name="PDB_!EOC!" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="18/A4/T/SDA0"/>
+<wire x1="165.1" y1="190.5" x2="160.02" y2="190.5" width="0.1524" layer="91"/>
+<label x="160.02" y="190.5" size="1.778" layer="95" rot="R180" xref="yes"/>
+</segment>
+</net>
+<net name="PDB_START" class="0">
+<segment>
+<pinref part="U2" gate="G$1" pin="19/A5/T/SCL0"/>
+<wire x1="165.1" y1="187.96" x2="160.02" y2="187.96" width="0.1524" layer="91"/>
+<label x="160.02" y="187.96" size="1.778" layer="95" rot="R180" xref="yes"/>
+</segment>
+</net>
 </nets>
 </sheet>
 <sheet>
