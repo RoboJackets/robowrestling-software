@@ -1,12 +1,12 @@
 #include "basicrobot.h"
 
 BasicRobot::BasicRobot(double x, double y, double angle) {
-	this.x_pos = x;
-	this.y_pos = y;
-	this.angle= angle;
+	x_pos = x;
+	y_pos = y;
+	angle = angle;
 
-	this.width = 30;
-	this.length = 30;
+	width = 30;
+	length = 30;
 
-	this.velocity = 5;
-};
+	velocity = 5;
+}
