@@ -10,9 +10,10 @@ class Robot { //abstract class of a robot
 		double width; //width of robot used for collision and ring out calculations
 		double length; //length of robot used for collision and ring out calculations
 		
-		double velocity; //robot's current velocity used for collision calculations. m/s?
-
-		//virtual void drive(int left, int right) = 0; //used to update position of robot in a similar way to that of the physical bots
-		//virtual void get_sensor_data() = 0; //retrieve "sensor" data for use in strategy
+		double wheel_radius; //radius of wheel in m. used to convert angular velocity to distance traveled and angle change
+		double left_wheel_velocity; //robot's left wheel's current velocity used for collision calculations. radians/s?
+		double right_wheel_velocity; //robot's right wheel's current velocity used for collision calculations. radians/s?
+		double max_wheel_velocity; //maximum velocity the robot's wheels can achieve
+		double wheel_acceleration; //rate at which the robot's wheels accelerates in radians/s^2
 };
 #endif
