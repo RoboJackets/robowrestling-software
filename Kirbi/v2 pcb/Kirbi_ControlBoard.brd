@@ -3,7 +3,7 @@
 <eagle version="9.5.1">
 <drawing>
 <settings>
-<setting alwaysvectorfont="yes"/>
+<setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
 <grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="no" altdistance="0.1" altunitdist="mm" altunit="mm"/>
@@ -5428,9 +5428,10 @@ Source: &lt;a href=&quot;https://jlcpcb.com/capabilities/Capabilities&quot;&gt;J
 <via x="1" y="35" extent="1-16" drill="0.4"/>
 <wire x1="27.1" y1="4.8" x2="29.2" y2="4.8" width="0.2" layer="16"/>
 <wire x1="29.2" y1="4.8" x2="30.8" y2="3.2" width="0.2" layer="16"/>
-<wire x1="8.3" y1="5.05" x2="8.3" y2="3.3" width="0.2" layer="16"/>
-<wire x1="8.3" y1="3.3" x2="8" y2="3" width="0.2" layer="16"/>
-<via x="8" y="3" extent="1-16" drill="0.4"/>
+<wire x1="8.3" y1="5.05" x2="8.3" y2="4.5" width="0.2" layer="16"/>
+<wire x1="8.3" y1="4.5" x2="7.7" y2="3.9" width="0.2" layer="16"/>
+<wire x1="7.7" y1="3.9" x2="7.7" y2="2.3" width="0.2" layer="16"/>
+<via x="7.7" y="2.3" extent="1-16" drill="0.4"/>
 <wire x1="12.85" y1="28" x2="13.8" y2="27.05" width="0.2" layer="16"/>
 <wire x1="13.8" y1="27.05" x2="13.8" y2="26.3" width="0.2" layer="16"/>
 <via x="13.8" y="26.3" extent="1-16" drill="0.4"/>
@@ -5440,10 +5441,18 @@ Source: &lt;a href=&quot;https://jlcpcb.com/capabilities/Capabilities&quot;&gt;J
 <wire x1="30.85" y1="28" x2="31.6698" y2="28" width="0.2" layer="16"/>
 <wire x1="31.6698" y1="28" x2="32.3" y2="28.6302" width="0.2" layer="16"/>
 <via x="32.3" y="28.6302" extent="1-16" drill="0.4"/>
-<wire x1="27.95" y1="19.9" x2="27.1" y2="18.8" width="0" layer="19" extent="1-16"/>
-<wire x1="10.9" y1="6.8" x2="10.85" y2="5.1" width="0" layer="19" extent="1-16"/>
-<wire x1="-2" y1="22.15" x2="-4.4" y2="23.65" width="0" layer="19" extent="1-16"/>
-<wire x1="16.45" y1="21.95" x2="17" y2="17.45" width="0" layer="19" extent="1-16"/>
+<wire x1="10.9" y1="6.8" x2="12.9" y2="6.8" width="0.2" layer="16"/>
+<wire x1="12.9" y1="6.8" x2="14.1" y2="5.6" width="0.2" layer="16"/>
+<via x="14.1" y="5.6" extent="1-16" drill="0.4"/>
+<wire x1="-2" y1="22.15" x2="-4.75" y2="22.15" width="0.2" layer="16"/>
+<wire x1="-4.75" y1="22.15" x2="-6.6" y2="24" width="0.2" layer="16"/>
+<via x="-6.6" y="24" extent="1-16" drill="0.4"/>
+<wire x1="27.1" y1="18.8" x2="25.7" y2="18.8" width="0.2" layer="16"/>
+<wire x1="25.7" y1="18.8" x2="25.5" y2="18.6" width="0.2" layer="16"/>
+<via x="25.5" y="18.6" extent="1-16" drill="0.4"/>
+<wire x1="16.45" y1="21.95" x2="15.0698" y2="20.5698" width="0.2" layer="16"/>
+<wire x1="15.0698" y1="20.5698" x2="15" y2="20.5698" width="0.2" layer="16"/>
+<via x="15" y="20.5698" extent="1-16" drill="0.4"/>
 </signal>
 <signal name="+5V">
 <contactref element="C6" pad="1"/>
@@ -5451,32 +5460,6 @@ Source: &lt;a href=&quot;https://jlcpcb.com/capabilities/Capabilities&quot;&gt;J
 <contactref element="D2" pad="A"/>
 <contactref element="U7" pad="3"/>
 <contactref element="C24" pad="1"/>
-<polygon width="0.2" layer="15" isolate="0.1524" orphans="yes" thermals="no">
-<vertex x="-14" y="56"/>
-<vertex x="-14" y="28"/>
-<vertex x="52" y="28"/>
-<vertex x="52" y="56"/>
-</polygon>
-<polygon width="0.2" layer="15" isolate="0.1524" thermals="no">
-<vertex x="-14" y="28"/>
-<vertex x="-14" y="14"/>
-<vertex x="0" y="0"/>
-<vertex x="12" y="0"/>
-<vertex x="12" y="6"/>
-<vertex x="4" y="6"/>
-<vertex x="-5" y="15"/>
-<vertex x="-5" y="28"/>
-</polygon>
-<polygon width="0.2" layer="15" isolate="0.1524" thermals="no">
-<vertex x="52" y="28"/>
-<vertex x="52" y="14"/>
-<vertex x="38" y="0"/>
-<vertex x="26" y="0"/>
-<vertex x="26" y="6"/>
-<vertex x="34" y="6"/>
-<vertex x="43" y="15"/>
-<vertex x="43" y="28"/>
-</polygon>
 <contactref element="C8" pad="1"/>
 <contactref element="C7" pad="1"/>
 <contactref element="C11" pad="1"/>
@@ -5523,16 +5506,12 @@ Source: &lt;a href=&quot;https://jlcpcb.com/capabilities/Capabilities&quot;&gt;J
 <wire x1="34.375" y1="5" x2="34.375" y2="3.087" width="0.2" layer="1"/>
 <wire x1="34.375" y1="3.087" x2="34.462" y2="3" width="0.2" layer="1"/>
 <via x="34.462" y="3" extent="1-16" drill="0.4"/>
-<wire x1="-9.1" y1="20.125" x2="-8.6" y2="19.625" width="0.2" layer="1"/>
-<wire x1="-8.6" y1="19.625" x2="-8.6" y2="17.85" width="0.2" layer="1"/>
 <wire x1="-9.1" y1="20.125" x2="-10.525" y2="20.125" width="0.2" layer="1"/>
 <wire x1="-10.525" y1="20.125" x2="-10.6" y2="20.2" width="0.2" layer="1"/>
 <via x="-10.6" y="20.2" extent="1-16" drill="0.4"/>
 <wire x1="21.35" y1="25.25" x2="22.75" y2="25.25" width="0.2" layer="16"/>
 <wire x1="22.75" y1="25.25" x2="23" y2="25" width="0.2" layer="16"/>
 <via x="23" y="25" extent="1-16" drill="0.4"/>
-<wire x1="25.9" y1="32.95" x2="26.288" y2="32.95" width="0.2" layer="1"/>
-<wire x1="26.288" y1="32.95" x2="27.238" y2="33.9" width="0.2" layer="1"/>
 <via x="27.238" y="33.9" extent="1-16" drill="0.4"/>
 <wire x1="25.9" y1="39.25" x2="29.9802" y2="39.25" width="0.2" layer="1"/>
 <wire x1="29.9802" y1="39.25" x2="31.8" y2="37.4302" width="0.2" layer="1"/>
@@ -5552,11 +5531,31 @@ Source: &lt;a href=&quot;https://jlcpcb.com/capabilities/Capabilities&quot;&gt;J
 <wire x1="15.4" y1="40.205" x2="15.4" y2="41.6287625" width="0.2" layer="1"/>
 <wire x1="15.4" y1="41.6287625" x2="16.23561875" y2="42.46438125" width="0.2" layer="1"/>
 <via x="16.23561875" y="42.46438125" extent="1-16" drill="0.4"/>
-<wire x1="25.9" y1="32.95" x2="23" y2="25" width="0" layer="19" extent="1-1"/>
-<wire x1="-3.6340125" y1="10.771853125" x2="-8.6" y2="17.85" width="0" layer="19" extent="1-1"/>
-<wire x1="-1.701040625" y1="9.601040625" x2="-3.6340125" y2="10.771853125" width="0" layer="19" extent="1-1"/>
-<wire x1="7.475" y1="5" x2="-1.701040625" y2="9.601040625" width="0" layer="19" extent="1-1"/>
-<wire x1="9.15" y1="5.1" x2="7.475" y2="5" width="0" layer="19" extent="1-1"/>
+<wire x1="25.9" y1="32.95" x2="26.85" y2="33.9" width="0.2" layer="1"/>
+<wire x1="26.85" y1="33.9" x2="27.238" y2="33.9" width="0.2" layer="1"/>
+<wire x1="7.475" y1="5" x2="7.475" y2="3.81831875" width="0.2" layer="1"/>
+<wire x1="7.475" y1="3.81831875" x2="7.0552" y2="3.39851875" width="0.2" layer="1"/>
+<via x="7.0552" y="3.39851875" extent="1-16" drill="0.4"/>
+<wire x1="9.15" y1="5.1" x2="8.394" y2="4.344" width="0.2" layer="1"/>
+<wire x1="8.394" y1="4.344" x2="8.394" y2="3.4" width="0.2" layer="1"/>
+<via x="8.394" y="3.4" extent="1-16" drill="0.4"/>
+<wire x1="-3.6340125" y1="10.771853125" x2="-4.405865625" y2="10" width="0.2" layer="1"/>
+<wire x1="-4.405865625" y1="10" x2="-5" y2="10" width="0.2" layer="1"/>
+<via x="-5" y="10" extent="1-16" drill="0.4"/>
+<wire x1="-1.701040625" y1="9.601040625" x2="-2.26450625" y2="9.037575" width="0.2" layer="1"/>
+<wire x1="-2.26450625" y1="9.037575" x2="-4.0386375" y2="9.037575" width="0.2" layer="1"/>
+<via x="-4.0386375" y="9.037575" extent="1-16" drill="0.4"/>
+<wire x1="-8.6" y1="17.85" x2="-6.55" y2="17.85" width="0.2" layer="1"/>
+<wire x1="-6.55" y1="17.85" x2="-6.5" y2="17.9" width="0.2" layer="1"/>
+<via x="-6.5" y="17.9" extent="1-16" drill="0.4"/>
+<polygon width="0.2" layer="15">
+<vertex x="-14" y="56"/>
+<vertex x="52" y="56"/>
+<vertex x="52" y="14"/>
+<vertex x="38" y="0"/>
+<vertex x="0" y="0"/>
+<vertex x="-14" y="14"/>
+</polygon>
 </signal>
 <signal name="+3.3V">
 <contactref element="C18" pad="1"/>
