@@ -5,7 +5,7 @@ class Robot { //abstract class of a robot
 	public:
 		double x_pos; //x position relative to the center of the dohyo
 		double y_pos; //y position relative to the center of the dohyo
-		double angle; //how much the robot is rotated from 0-359 with 0 being "north"
+		double angle; //how much the robot is rotated from 0-2pi with 0 being "north"
 		
 		double width; //width of robot used for collision and ring out calculations
 		double length; //length of robot used for collision and ring out calculations
