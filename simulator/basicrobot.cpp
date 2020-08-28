@@ -1,4 +1,5 @@
 #include "basicrobot.h"
+#include "drawable_robot.h"
 
 BasicRobot::BasicRobot(double x, double y, double angle) {
 	x_pos = x;

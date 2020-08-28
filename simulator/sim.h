@@ -1,5 +1,5 @@
-#ifndef game_h
-#define game_h
+#ifndef sim_h
+#define sim_h
 
 #include "robot.h"
 #include "basicrobot.h"
