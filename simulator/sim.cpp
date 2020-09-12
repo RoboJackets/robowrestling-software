@@ -27,10 +27,14 @@ void update() {
 	sf::Event event;
     while (window->pollEvent(event)) {
         // "close requested" event: we close the window
-        if (event.type == sf::Event::Closed)
+        if (event.type == sf::Event::Closed) {
             window->close();
+        } 
     }
+    // window->clear();
 
+    // need to redraw things
+    
     window->display();
 }
 
