@@ -276,16 +276,14 @@
 <wire x1="1.778" y1="-1.524" x2="-1.778" y2="-1.524" width="0.2" layer="21"/>
 <text x="-2.318" y="1.778" size="1" layer="25" font="vector">&gt;NAME</text>
 <text x="-2.445" y="-1.856" size="1" layer="27" font="vector" align="top-left">&gt;VALUE</text>
-<circle x="-0.3" y="1" radius="0.2" width="0" layer="21"/>
+<circle x="-2.3" y="1" radius="0.2" width="0" layer="21"/>
 </package>
-<package name="IND_1255AY-3R9N=P3">
+<package name="1255AY-3R9N=P3">
 <description>&lt;a href="https://search.murata.co.jp/Ceramy/image/img/P02/J(E)TE243B-0037_DG6045C_reference.pdf"&gt;Datasheet&lt;/a&gt;</description>
 <wire x1="-3.3" y1="3" x2="3.3" y2="3" width="0.2" layer="51"/>
 <wire x1="3.3" y1="3" x2="3.3" y2="-3" width="0.2" layer="51"/>
 <wire x1="3.3" y1="-3" x2="-3.3" y2="-3" width="0.2" layer="51"/>
 <wire x1="-3.3" y1="-3" x2="-3.3" y2="3" width="0.2" layer="51"/>
-<circle x="-4" y="0" radius="0.1" width="0.2" layer="21"/>
-<circle x="-4" y="0" radius="0.1" width="0.2" layer="51"/>
 <text x="-3.81" y="3.51" size="1" layer="25" font="vector">&gt;NAME</text>
 <text x="-3.81" y="-3.48" size="1" layer="27" font="vector" align="top-left">&gt;VALUE</text>
 <smd name="1" x="-2.35" y="0" dx="5.7" dy="1.6" layer="1" rot="R90"/>
@@ -558,7 +556,7 @@ Temp: -40~+85°C</text>
 <pin name="GND" x="10.16" y="-7.62" length="middle" direction="pas" rot="R180"/>
 <pin name="SHIELD" x="-10.16" y="-2.54" length="middle" direction="pas"/>
 </symbol>
-<symbol name="ATMEGA32U4-AU">
+<symbol name="ATMEGA32U4-AUR">
 <wire x1="-27.94" y1="40.64" x2="27.94" y2="40.64" width="0.254" layer="94"/>
 <wire x1="27.94" y1="40.64" x2="27.94" y2="-43.18" width="0.254" layer="94"/>
 <wire x1="27.94" y1="-43.18" x2="-27.94" y2="-43.18" width="0.254" layer="94"/>
@@ -697,9 +695,7 @@ Temp: -40~+85°C</text>
 <package3dinstance package3d_urn="urn:adsk.eagle:package:22477/2"/>
 </package3dinstances>
 <technologies>
-<technology name="">
-<attribute name="POPULARITY" value="0" constant="no"/>
-</technology>
+<technology name=""/>
 </technologies>
 </device>
 </devices>
@@ -734,7 +730,7 @@ Temp: -40~+85°C</text>
 <gate name="G$1" symbol="1255AY-3R9N=P3" x="0" y="-2.54"/>
 </gates>
 <devices>
-<device name="" package="IND_1255AY-3R9N=P3">
+<device name="" package="1255AY-3R9N=P3">
 <connects>
 <connect gate="G$1" pin="1" pad="1"/>
 <connect gate="G$1" pin="2" pad="2"/>
@@ -767,21 +763,16 @@ Temp: -40~+85°C</text>
 </connects>
 <technologies>
 <technology name="">
-<attribute name="DESCRIPTION" value=" USB - micro B USB 2.0 Receptacle Connector 5 Position Surface Mount, Right Angle; Through Hole "/>
-<attribute name="DIGIKEY-PURCHASE-URL" value="https://snapeda.com/shop?store=DigiKey&amp;id=4800618"/>
 <attribute name="DKPN" value="609-4616-1-ND" constant="no"/>
-<attribute name="MF" value="Amphenol ICC (FCI)"/>
-<attribute name="MP" value="10118193-0001LF"/>
-<attribute name="PACKAGE" value="None"/>
 </technology>
 </technologies>
 </device>
 </devices>
 </deviceset>
-<deviceset name="ATMEGA32U4-AU" prefix="U">
+<deviceset name="ATMEGA32U4-AUR" prefix="U">
 <description>ATmega Series 16 MHz 32 KB Flash 2.5 KB SRAM 8-Bit Microcontroller - TQFP-44</description>
 <gates>
-<gate name="G$1" symbol="ATMEGA32U4-AU" x="0" y="0"/>
+<gate name="G$1" symbol="ATMEGA32U4-AUR" x="0" y="0"/>
 </gates>
 <devices>
 <device name="" package="44-TQFP(10X10)">
@@ -828,12 +819,8 @@ Temp: -40~+85°C</text>
 </connects>
 <technologies>
 <technology name="">
-<attribute name="DESCRIPTION" value=" AVR AVR® ATmega Microcontroller IC 8-Bit 16MHz 32KB (16K x 16) FLASH 44-TQFP (10x10) "/>
 <attribute name="DKPN" value="ATMEGA32U4-AURDKR-ND	
 " constant="no"/>
-<attribute name="MF" value="Microchip"/>
-<attribute name="MP" value="ATMEGA32U4-AUR"/>
-<attribute name="PACKAGE" value="TQFP-44 Microchip"/>
 </technology>
 </technologies>
 </device>
@@ -852,14 +839,7 @@ Temp: -40~+85°C</text>
 </connects>
 <technologies>
 <technology name="">
-<attribute name="ARROW_AMERICAS-PURCHASE-URL" value="https://snapeda.com/shop?store=Arrow+Americas&amp;id=470513"/>
-<attribute name="DESCRIPTION" value=" 8MHz ±30ppm Crystal 18pF 60 Ohms HC-49/US "/>
-<attribute name="DIGI-KEY_PART_NUMBER" value="XC1271CT-ND"/>
-<attribute name="DIGIKEY-PURCHASE-URL" value="https://snapeda.com/shop?store=DigiKey&amp;id=470513"/>
-<attribute name="MF" value="ECS Inc."/>
-<attribute name="MOUSER-PURCHASE-URL" value="https://snapeda.com/shop?store=Mouser&amp;id=470513"/>
-<attribute name="MP" value="ECS-80-18-5PX-TR"/>
-<attribute name="PACKAGE" value="HC49/US ECS International"/>
+<attribute name="DKPN" value="XC1271CT-ND"/>
 <attribute name="VALUE" value="8.000 MHz" constant="no"/>
 </technology>
 </technologies>
@@ -897,11 +877,7 @@ Temp: -40~+85°C</text>
 </connects>
 <technologies>
 <technology name="">
-<attribute name="DESCRIPTION" value=" Connector Header Surface Mount, Right Angle 2 position 0.079 (2.00mm) "/>
 <attribute name="DIGI-KEY_PART_NUMBER" value="455-1749-1-ND"/>
-<attribute name="MF" value="JST Sales"/>
-<attribute name="MP" value="S2B-PH-SM4-TB(LF)(SN)"/>
-<attribute name="PACKAGE" value="None"/>
 </technology>
 </technologies>
 </device>
