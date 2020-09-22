@@ -22,9 +22,9 @@ void update() {
     window->clear(sf::Color::White); // clear the window with white color
     while (window->pollEvent(event)) {
         // "close requested" event: we close the window
-        if (event.type == sf::Event::Closed)
+        if (event.type == sf::Event::Closed) {
             window->close();
-        delete window;
+        }
     }
     draw_field();
     draw_robot(robot1);
@@ -52,6 +52,6 @@ int main() {
         }
 		update();
 	}
-    delete robot1, robot2, physics_updater;
+    delete robot1, robot2, physics_updater, window;
 	return 0;
 }
