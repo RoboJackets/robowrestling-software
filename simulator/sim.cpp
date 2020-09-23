@@ -29,6 +29,7 @@ void update() {
     draw_field();
     draw_robot(robot1);
     draw_robot(robot2);
+
     window->display();
 }
 
