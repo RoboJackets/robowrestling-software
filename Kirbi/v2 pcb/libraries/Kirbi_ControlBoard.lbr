@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="1" unitdist="mm" unit="mm" style="lines" multiple="1" display="yes" altdistance="0.1" altunitdist="mm" altunit="mm"/>
+<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="yes" active="yes"/>
@@ -166,8 +166,8 @@
 by exp-lbrs.ulp</description>
 <packages>
 <package name="QFN40P300X300X105-25N">
+<description>&lt;a href = "https://www.digikey.com/product-detail/en/tdk-invensense/ICM-20948/1428-1123-1-ND/7062698"&gt;Datasheet&lt;\a&gt;</description>
 <circle x="-2.4" y="1" radius="0.1" width="0.2" layer="21"/>
-<circle x="-1.2" y="1.1" radius="0.1" width="0.2" layer="51"/>
 <wire x1="-1.55" y1="1.55" x2="1.55" y2="1.55" width="0.127" layer="51"/>
 <wire x1="1.55" y1="1.55" x2="1.55" y2="-1.55" width="0.127" layer="51"/>
 <wire x1="1.55" y1="-1.55" x2="-1.55" y2="-1.55" width="0.127" layer="51"/>
@@ -208,8 +208,9 @@ by exp-lbrs.ulp</description>
 <smd name="22" x="-0.2" y="1.545" dx="0.64" dy="0.22" layer="1" roundness="25" rot="R270"/>
 <smd name="23" x="-0.6" y="1.545" dx="0.64" dy="0.22" layer="1" roundness="25" rot="R270"/>
 <smd name="24" x="-1" y="1.545" dx="0.64" dy="0.22" layer="1" roundness="25" rot="R270"/>
-<text x="-2.543359375" y="2.543359375" size="1.27168125" layer="25">&gt;NAME</text>
-<text x="-2.541740625" y="-3.812609375" size="1.27086875" layer="27">&gt;VALUE</text>
+<text x="-3" y="3" size="1" layer="25" font="vector">&gt;NAME</text>
+<text x="-3" y="-3" size="1" layer="27" font="vector" align="top-left">&gt;VALUE</text>
+<rectangle x1="-2.1" y1="-2.1" x2="2.1" y2="2.2" layer="39"/>
 </package>
 <package name="0402">
 <description>&lt;p&gt;&lt;b&gt;Generic 1005 (0402) package&lt;/b&gt;&lt;/p&gt;
@@ -387,18 +388,18 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 </polygon>
 </package>
 <package name="TEENSY_3.6_DIL">
-<wire x1="-8.89" y1="29.21" x2="8.89" y2="29.21" width="0.127" layer="51"/>
+<wire x1="-8.89" y1="29.21" x2="8.89" y2="29.21" width="0.2" layer="51"/>
 <wire x1="8.89" y1="29.21" x2="8.89" y2="-31.75" width="0.127" layer="51"/>
 <wire x1="8.89" y1="-31.75" x2="-8.89" y2="-31.75" width="0.127" layer="51"/>
 <wire x1="-8.89" y1="-31.75" x2="-8.89" y2="29.21" width="0.127" layer="51"/>
-<wire x1="-3.81" y1="30.48" x2="3.81" y2="30.48" width="0.2032" layer="21"/>
-<wire x1="3.81" y1="30.48" x2="3.81" y2="29.21" width="0.2032" layer="21"/>
-<wire x1="3.81" y1="29.21" x2="8.89" y2="29.21" width="0.2032" layer="21"/>
-<wire x1="8.89" y1="29.21" x2="8.89" y2="-31.75" width="0.2032" layer="21"/>
-<wire x1="8.89" y1="-31.75" x2="-8.89" y2="-31.75" width="0.2032" layer="21"/>
-<wire x1="-8.89" y1="-31.75" x2="-8.89" y2="29.21" width="0.2032" layer="21"/>
-<wire x1="-8.89" y1="29.21" x2="-3.81" y2="29.21" width="0.2032" layer="21"/>
-<wire x1="-3.81" y1="29.21" x2="-3.81" y2="30.48" width="0.2032" layer="21"/>
+<wire x1="-3.81" y1="30.48" x2="3.81" y2="30.48" width="0.2" layer="21"/>
+<wire x1="3.81" y1="30.48" x2="3.81" y2="29.21" width="0.2" layer="21"/>
+<wire x1="3.81" y1="29.21" x2="8.89" y2="29.21" width="0.2" layer="21"/>
+<wire x1="8.89" y1="29.21" x2="8.89" y2="-31.75" width="0.2" layer="21"/>
+<wire x1="8.89" y1="-31.75" x2="-8.89" y2="-31.75" width="0.2" layer="21"/>
+<wire x1="-8.89" y1="-31.75" x2="-8.89" y2="29.21" width="0.2" layer="21"/>
+<wire x1="-8.89" y1="29.21" x2="-3.81" y2="29.21" width="0.2" layer="21"/>
+<wire x1="-3.81" y1="29.21" x2="-3.81" y2="30.48" width="0.2" layer="21"/>
 <pad name="0" x="-7.62" y="25.4" drill="0.9652"/>
 <pad name="1" x="-7.62" y="22.86" drill="0.9652"/>
 <pad name="2" x="-7.62" y="20.32" drill="0.9652"/>
@@ -447,51 +448,55 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 <pad name="GND" x="-7.62" y="27.94" drill="0.9652"/>
 <pad name="GND1" x="7.62" y="-7.62" drill="0.9652"/>
 <pad name="VIN" x="7.62" y="27.94" drill="0.9652"/>
-<text x="-3.175" y="31.115" size="1.27" layer="25" font="vector">&gt;NAME</text>
-<text x="1.27" y="-13.97" size="1.27" layer="27" font="vector" rot="R90">&gt;VALUE</text>
+<text x="-3.175" y="31.115" size="1" layer="25" font="vector">&gt;NAME</text>
+<text x="1.27" y="-13.97" size="1" layer="27" font="vector" rot="R90">&gt;VALUE</text>
 </package>
-<package name="MOLEX_1.25MM_4PIN_SMT">
-<description>MOLEX CONNECTOR</description>
-<smd name="P$1" x="-4.425" y="0" dx="2.1" dy="3" layer="1"/>
-<smd name="P$2" x="4.425" y="0" dx="2.1" dy="3" layer="1"/>
-<smd name="P$3" x="-1.875" y="2.9" dx="1.6" dy="0.8" layer="1" rot="R90"/>
-<smd name="P$4" x="0.625" y="2.9" dx="1.6" dy="0.8" layer="1" rot="R90"/>
-<smd name="P$5" x="-0.625" y="2.9" dx="1.6" dy="0.8" layer="1" rot="R90"/>
-<smd name="P$6" x="1.875" y="2.9" dx="1.6" dy="0.8" layer="1" rot="R90"/>
-<wire x1="-3.375" y1="2.1" x2="-3.375" y2="-2.1" width="0.1524" layer="21"/>
-<wire x1="-3.375" y1="-2.1" x2="3.375" y2="-2.1" width="0.1524" layer="21"/>
-<wire x1="3.375" y1="-2.1" x2="3.375" y2="2.1" width="0.1524" layer="21"/>
-<wire x1="3.375" y1="2.1" x2="-3.375" y2="2.1" width="0.1524" layer="21"/>
-<text x="-4" y="4" size="1.6" layer="25">&gt;Name</text>
-<text x="-4" y="-4" size="1.6" layer="27">&gt;Value</text>
+<package name="0532610471">
+<description>&lt;a href = "https://www.molex.com/pdm_docs/sd/532610471_sd.pdf"&gt;Datasheet&lt;\a&gt;</description>
+<smd name="1" x="-4.425" y="0" dx="2.1" dy="3" layer="1"/>
+<smd name="2" x="4.425" y="0" dx="2.1" dy="3" layer="1"/>
+<smd name="3" x="-1.875" y="2.9" dx="1.6" dy="0.8" layer="1" rot="R90"/>
+<smd name="4" x="0.625" y="2.9" dx="1.6" dy="0.8" layer="1" rot="R90"/>
+<smd name="5" x="-0.625" y="2.9" dx="1.6" dy="0.8" layer="1" rot="R90"/>
+<smd name="6" x="1.875" y="2.9" dx="1.6" dy="0.8" layer="1" rot="R90"/>
+<wire x1="-3.175" y1="1.9" x2="-3.175" y2="-2.1" width="0.2" layer="21"/>
+<wire x1="-3.175" y1="-2.1" x2="3.175" y2="-2.1" width="0.2" layer="21"/>
+<wire x1="3.175" y1="-2.1" x2="3.175" y2="1.9" width="0.2" layer="21"/>
+<wire x1="3.175" y1="1.9" x2="-3.175" y2="1.9" width="0.2" layer="21"/>
+<text x="-4" y="4" size="1" layer="25" font="vector">&gt;Name</text>
+<text x="-4" y="-3" size="1" layer="27" font="vector" align="top-left">&gt;Value</text>
+<rectangle x1="-3.3" y1="-2.2" x2="3.3" y2="2" layer="39"/>
 </package>
-<package name="MUX_74LVC1G157GV">
-<description>2:1 Multiplexer (74LVC1G157GV)</description>
-<wire x1="-1.55" y1="0.65" x2="1.55" y2="0.65" width="0.127" layer="21"/>
-<wire x1="1.55" y1="0.65" x2="1.55" y2="-0.65" width="0.127" layer="21"/>
-<wire x1="1.55" y1="-0.65" x2="-1.55" y2="-0.65" width="0.127" layer="21"/>
-<wire x1="-1.55" y1="-0.65" x2="-1.55" y2="0.65" width="0.127" layer="21"/>
-<smd name="P$5" x="0" y="1.125" dx="0.6" dy="0.95" layer="1" rot="R180"/>
-<smd name="P$2" x="0" y="-1.125" dx="0.6" dy="0.95" layer="1" rot="R180"/>
-<smd name="P$6" x="-0.95" y="1.125" dx="0.6" dy="0.95" layer="1" rot="R180"/>
-<smd name="P$3" x="0.95" y="-1.125" dx="0.6" dy="0.95" layer="1" rot="R180"/>
-<smd name="P$1" x="-0.95" y="-1.125" dx="0.6" dy="0.95" layer="1" rot="R180"/>
-<smd name="P$4" x="0.95" y="1.125" dx="0.6" dy="0.95" layer="1" rot="R180"/>
-<text x="-1.524" y="2.032" size="0.6096" layer="25">&gt;Name</text>
-<text x="-1.651" y="-2.413" size="0.6096" layer="27">&gt;Value</text>
+<package name="SOT363">
+<description>&lt;a href = "https://assets.nexperia.com/documents/data-sheet/74LVC1G157.pdf"&gt;Datasheet&lt;\a&gt;</description>
+<wire x1="-1.55" y1="0.65" x2="1.55" y2="0.65" width="0.2" layer="21"/>
+<wire x1="1.55" y1="0.65" x2="1.55" y2="-0.65" width="0.2" layer="21"/>
+<wire x1="1.55" y1="-0.65" x2="-1.55" y2="-0.65" width="0.2" layer="21"/>
+<wire x1="-1.55" y1="-0.65" x2="-1.55" y2="0.65" width="0.2" layer="21"/>
+<smd name="5" x="0" y="1.125" dx="0.6" dy="0.95" layer="1" rot="R180"/>
+<smd name="2" x="0" y="-1.125" dx="0.6" dy="0.95" layer="1" rot="R180"/>
+<smd name="6" x="-0.95" y="1.125" dx="0.6" dy="0.95" layer="1" rot="R180"/>
+<smd name="3" x="0.95" y="-1.125" dx="0.6" dy="0.95" layer="1" rot="R180"/>
+<smd name="1" x="-0.95" y="-1.125" dx="0.6" dy="0.95" layer="1" rot="R180"/>
+<smd name="4" x="0.95" y="1.125" dx="0.6" dy="0.95" layer="1" rot="R180"/>
+<text x="-2" y="2" size="1" layer="25" font="vector">&gt;Name</text>
+<text x="-2" y="-2" size="1" layer="27" font="vector" align="top-left">&gt;Value</text>
+<rectangle x1="-1.651" y1="-0.762" x2="1.651" y2="0.762" layer="39"/>
+<circle x="-1.778" y="-1.27" radius="0.127" width="0.1524" layer="21"/>
 </package>
 <package name="RFMHCW_SMT">
-<circle x="8.83" y="-8.27" radius="0.3" width="0.6096" layer="21"/>
-<wire x1="-8" y1="8" x2="8" y2="8" width="0.127" layer="51"/>
-<wire x1="8" y1="8" x2="8" y2="-8" width="0.127" layer="51"/>
-<wire x1="8" y1="-8" x2="-8" y2="-8" width="0.127" layer="51"/>
-<wire x1="-8" y1="-8" x2="-8" y2="8" width="0.127" layer="51"/>
-<wire x1="-8.1" y1="7.7" x2="-8.1" y2="8.1" width="0.127" layer="21"/>
-<wire x1="-8.1" y1="8.1" x2="8.1" y2="8.1" width="0.127" layer="21"/>
-<wire x1="8.1" y1="8.1" x2="8.1" y2="7.7" width="0.127" layer="21"/>
-<wire x1="-8.1" y1="-7.7" x2="-8.1" y2="-8.1" width="0.127" layer="21"/>
-<wire x1="-8.1" y1="-8.1" x2="8.1" y2="-8.1" width="0.127" layer="21"/>
-<wire x1="8.1" y1="-8.1" x2="8.1" y2="-7.7" width="0.127" layer="21"/>
+<description>&lt;a href = "https://cdn.sparkfun.com/datasheets/Wireless/General/RFM69HCW-V1.1.pdf"&gt;Datasheet&lt;\a&gt;</description>
+<circle x="8.83" y="-8.67" radius="0.3" width="0.6096" layer="21"/>
+<wire x1="-7" y1="8" x2="7" y2="8" width="0.127" layer="51"/>
+<wire x1="7" y1="8" x2="7" y2="-8" width="0.2" layer="51"/>
+<wire x1="7" y1="-8" x2="-7" y2="-8" width="0.2" layer="51"/>
+<wire x1="-7" y1="-8" x2="-7" y2="8" width="0.2" layer="51"/>
+<wire x1="-7.1" y1="7.7" x2="-7.1" y2="8.1" width="0.127" layer="21"/>
+<wire x1="-7.1" y1="8.1" x2="7.1" y2="8.1" width="0.2" layer="21"/>
+<wire x1="7.1" y1="8.1" x2="7.1" y2="7.7" width="0.127" layer="21"/>
+<wire x1="-7.1" y1="-7.7" x2="-7.1" y2="-8.1" width="0.127" layer="21"/>
+<wire x1="-7.1" y1="-8.1" x2="7.1" y2="-8.1" width="0.127" layer="21"/>
+<wire x1="7.1" y1="-8.1" x2="7.1" y2="-7.7" width="0.127" layer="21"/>
 <smd name="1P" x="8.1" y="-7" dx="2" dy="0.8" layer="1" rot="R180"/>
 <smd name="2P" x="8.1" y="-5" dx="2" dy="0.8" layer="1" rot="R180"/>
 <smd name="3P" x="8.1" y="-3" dx="2" dy="0.8" layer="1" rot="R180"/>
@@ -508,8 +513,9 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 <smd name="14P" x="-8.1" y="-3" dx="2" dy="0.8" layer="1"/>
 <smd name="15P" x="-8.1" y="-5" dx="2" dy="0.8" layer="1"/>
 <smd name="16P" x="-8.1" y="-7" dx="2" dy="0.8" layer="1"/>
-<text x="-8" y="8.5" size="0.8128" layer="25" ratio="18">&gt;NAME</text>
-<text x="-8.1" y="-8.7" size="0.4064" layer="25" ratio="10">&gt;VALUE</text>
+<text x="-8" y="9" size="1" layer="25" font="vector">&gt;NAME</text>
+<text x="-8" y="-9" size="1" layer="25" font="vector" align="top-left">&gt;VALUE</text>
+<rectangle x1="-7" y1="-8" x2="6.9" y2="8" layer="39"/>
 </package>
 <package name="1719770002">
 <description>&lt;a href = "https://www.digikey.com/product-detail/en/molex/1719770002/WM22676-ND/9564259"&gt;Datasheet&lt;\a&gt;</description>
@@ -535,8 +541,9 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 <wire x1="2.94" y1="1.27" x2="-2.94" y2="1.27" width="0.2" layer="21"/>
 <text x="-3" y="2" size="1" layer="25" font="vector">&gt;NAME</text>
 <text x="-3" y="-2" size="1" layer="27" font="vector" align="top-left">&gt;VALUE</text>
+<rectangle x1="-3.048" y1="-1.397" x2="3.048" y2="1.397" layer="39"/>
 </package>
-<package name="MOLEX_1.25MM_3PIN_SMT">
+<package name="0532610371">
 <description>&lt;a href = "https://www.molex.com/pdm_docs/sd/1719770002_sd.pdf"&gt;Datasheet&lt;\a&gt;</description>
 <smd name="4" x="-3.8" y="-1.5" dx="2.1" dy="3" layer="1"/>
 <smd name="2" x="0" y="1.4" dx="1.6" dy="0.8" layer="1" rot="R90"/>
@@ -1188,17 +1195,17 @@ Temp: -40~+85°C</text>
 </device>
 </devices>
 </deviceset>
-<deviceset name="MOLEX_1.25MM_4PIN_SMT">
+<deviceset name="0532610471">
 <gates>
 <gate name="G$1" symbol="CONN_04" x="2.54" y="-2.54"/>
 </gates>
 <devices>
-<device name="" package="MOLEX_1.25MM_4PIN_SMT">
+<device name="" package="0532610471">
 <connects>
-<connect gate="G$1" pin="1" pad="P$3"/>
-<connect gate="G$1" pin="2" pad="P$4"/>
-<connect gate="G$1" pin="3" pad="P$5"/>
-<connect gate="G$1" pin="4" pad="P$6"/>
+<connect gate="G$1" pin="1" pad="3"/>
+<connect gate="G$1" pin="2" pad="4"/>
+<connect gate="G$1" pin="3" pad="5"/>
+<connect gate="G$1" pin="4" pad="6"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -1212,14 +1219,14 @@ Temp: -40~+85°C</text>
 <gate name="G$1" symbol="MUX_74LVC1G157GV" x="0" y="0"/>
 </gates>
 <devices>
-<device name="" package="MUX_74LVC1G157GV">
+<device name="" package="SOT363">
 <connects>
-<connect gate="G$1" pin="GND" pad="P$2"/>
-<connect gate="G$1" pin="I0" pad="P$3"/>
-<connect gate="G$1" pin="I1" pad="P$1"/>
-<connect gate="G$1" pin="S" pad="P$6"/>
-<connect gate="G$1" pin="V" pad="P$5"/>
-<connect gate="G$1" pin="Y" pad="P$4"/>
+<connect gate="G$1" pin="GND" pad="2"/>
+<connect gate="G$1" pin="I0" pad="3"/>
+<connect gate="G$1" pin="I1" pad="1"/>
+<connect gate="G$1" pin="S" pad="6"/>
+<connect gate="G$1" pin="V" pad="5"/>
+<connect gate="G$1" pin="Y" pad="4"/>
 </connects>
 <technologies>
 <technology name=""/>
@@ -1227,8 +1234,9 @@ Temp: -40~+85°C</text>
 </device>
 </devices>
 </deviceset>
-<deviceset name="RFM69HCW" prefix="U" uservalue="yes">
-<description>&lt;p&gt;&lt;b&gt;RFM69HCW - ISM Band RF Transceiver&lt;/b&gt;&lt;/p&gt;</description>
+<deviceset name="RFM69HCW" prefix="U">
+<description>&lt;p&gt;&lt;b&gt;RFM69HCW - ISM Band RF Transceiver&lt;/b&gt;&lt;/p&gt;
+&lt;a href = "https://www.digikey.com/products/en?mpart=COM-13909&amp;v=1568"&gt;Datasheet&lt;\a&gt;</description>
 <gates>
 <gate name="RFM59HCW" symbol="RFM69HCW" x="0" y="0"/>
 </gates>
@@ -1253,13 +1261,16 @@ Temp: -40~+85°C</text>
 <connect gate="RFM59HCW" pin="VDD" pad="5P"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="DKPN" value="1568-1394-ND" constant="no"/>
+</technology>
 </technologies>
 </device>
 </devices>
 </deviceset>
-<deviceset name="MOLEX_2.54MM_2PIN">
-<description>MOLEX_2.54MM_2PIN 1719770002 DigiKey: WM22676-ND</description>
+<deviceset name="MOLEX_2.54MM_2PIN" prefix="J">
+<description>MOLEX_2.54MM_2PIN &lt;br&gt;
+&lt;a href = "https://www.digikey.com/product-detail/en/molex/1719770002/WM22676-ND/9564259"&gt;Datasheet&lt;\a&gt;</description>
 <gates>
 <gate name="G$1" symbol="CONN_02" x="0" y="0"/>
 </gates>
@@ -1270,7 +1281,9 @@ Temp: -40~+85°C</text>
 <connect gate="G$1" pin="P$2" pad="1"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="DKPN" value="WM22676-ND" constant="no"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -1293,7 +1306,7 @@ Temp: -40~+85°C</text>
 </device>
 </devices>
 </deviceset>
-<deviceset name="MOLEX_1.25MM_3PIN_SMT">
+<deviceset name="0532610371">
 <description>MOLEX_1.25MM_3PIN_SMT
 0532610371
 WM7621CT-ND</description>
@@ -1301,7 +1314,7 @@ WM7621CT-ND</description>
 <gate name="G$1" symbol="CONN_03" x="0" y="0"/>
 </gates>
 <devices>
-<device name="" package="MOLEX_1.25MM_3PIN_SMT">
+<device name="" package="0532610371">
 <connects>
 <connect gate="G$1" pin="1" pad="3"/>
 <connect gate="G$1" pin="2" pad="2"/>
