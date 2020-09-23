@@ -3,6 +3,7 @@
 
 #include "robot.h"
 #include "basicrobot.h"
+#include "robotphysicsupdater.h"
 #include <SFML/Graphics.hpp>
 
 #define WINDOW_HEIGHT 600
@@ -10,17 +11,18 @@
 
 int radius; //radius of the dohyo
 
-std::unique_ptr<Robot> robot1; //robot object that stores information about a robot
-std::unique_ptr<Robot> robot2; //see above
+Robot* robot1; //robot object that stores information about a robot
+Robot* robot2; //see above
 
-std::unique_ptr<sf::RectangleShape> robot_rectangle1;
-std::unique_ptr<sf::RectangleShape> robot_rectangle2;
+sf::RenderWindow* window;
 
-std::unique_ptr<sf::RenderWindow> window;
+RobotPhysicsUpdater* physics_updater;
 
 void update(); //performs one update of the game state
 
-void initialize(); //initialize with 2 robots
+void draw_field(); //draws the field
+
+void draw_robot(Robot* robot); //draws the robots
 
 int main(); //main method that has the game loop
 #endif
