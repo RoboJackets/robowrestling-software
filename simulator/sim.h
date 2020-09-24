@@ -5,24 +5,25 @@
 #include "basicrobot.h"
 #include "robotphysicsupdater.h"
 #include <SFML/Graphics.hpp>
+#include <memory>
 
 #define WINDOW_HEIGHT 600
 #define WINDOW_WIDTH 800
 
 int radius; //radius of the dohyo
 
-Robot* robot1; //robot object that stores information about a robot
-Robot* robot2; //see above
+std::shared_ptr<Robot> robot1; //robot object that stores information about a robot
+std::shared_ptr<Robot> robot2; //see above
 
-sf::RenderWindow* window;
+std::shared_ptr<sf::RenderWindow> window;
 
-RobotPhysicsUpdater* physics_updater;
+std::shared_ptr<RobotPhysicsUpdater> physics_updater;
 
 void update(); //performs one update of the game state
 
 void draw_field(); //draws the field
 
-void draw_robot(Robot* robot); //draws the robots
+void draw_robot(std::shared_ptr<Robot> robot); //draws the robots
 
 int main(); //main method that has the game loop
 #endif

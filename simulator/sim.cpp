@@ -10,7 +10,7 @@ void draw_field() {
     window->draw(dohyo);
 }
 
-void draw_robot(Robot* robot) {
+void draw_robot(std::shared_ptr<Robot> robot) {
     sf::RectangleShape rectangle(sf::Vector2f(robot->width, robot->length));
     rectangle.setFillColor(sf::Color(50, 50, 50));
     rectangle.setPosition(robot->x_pos - robot->width/2, robot->y_pos - robot->length/2);
@@ -34,11 +34,11 @@ void update() {
 
 int main() {
 	/* code */
-	robot1 = new BasicRobot((WINDOW_WIDTH/2)-65, WINDOW_HEIGHT/2, 90);
-	robot2 = new BasicRobot((WINDOW_WIDTH/2)+65, WINDOW_HEIGHT/2, 270);
-    physics_updater = new RobotPhysicsUpdater();
+	robot1 = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)-65, WINDOW_HEIGHT/2, 90);
+	robot2 = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)+65, WINDOW_HEIGHT/2, 270);
+    physics_updater = std::make_shared<RobotPhysicsUpdater>();
     
-    window = new sf::RenderWindow(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "My window");
+    window = std::make_shared<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "My window");
     window->clear(sf::Color::White); // clear the window with white color
 
 
@@ -52,6 +52,5 @@ int main() {
         }
 		update();
 	}
-    delete robot1, robot2, physics_updater, window;
 	return 0;
 }

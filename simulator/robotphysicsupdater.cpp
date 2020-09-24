@@ -4,7 +4,7 @@ RobotPhysicsUpdater::RobotPhysicsUpdater() {
 
 }
 
-void RobotPhysicsUpdater::move_robot(Robot* r, double left_wheel, double right_wheel, double duration) {
+void RobotPhysicsUpdater::move_robot(std::shared_ptr<Robot> r, double left_wheel, double right_wheel, double duration) {
 	//calculate how fast the right wheel moves
 	double right_velocity_increase = duration * r->wheel_acceleration * (right_wheel/100);
 	double right_new_velocity = r->right_wheel_velocity + right_velocity_increase;
