@@ -1,3 +1,9 @@
+# ignore compiled o files
 *.o
+
+# ignore the simulator's executable
+sim
+
+# ignore OS files
 .DS_Store
 .DS_Store?
