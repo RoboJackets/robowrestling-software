@@ -6837,7 +6837,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <wire x1="172.72" y1="78.74" x2="172.72" y2="20.32" width="1.27" layer="97" style="shortdash"/>
 <wire x1="15.24" y1="127" x2="116.84" y2="127" width="1.27" layer="97" style="shortdash"/>
 <wire x1="254" y1="127" x2="335.28" y2="127" width="1.27" layer="97" style="shortdash"/>
-<text x="185.928" y="68.834" size="5.08" layer="97">Radio Transceiver</text>
+<text x="178.308" y="68.834" size="5.08" layer="97">Radio Transceiver</text>
 <wire x1="190.5" y1="127" x2="190.5" y2="78.74" width="1.27" layer="97" style="shortdash"/>
 <text x="271.78" y="167.64" size="5.08" layer="97">ESC Connector</text>
 <text x="275.59" y="120.396" size="5.08" layer="97">Power Input</text>
@@ -7323,15 +7323,15 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <attribute name="NAME" x="45.466" y="51.435" size="1.778" layer="95" rot="R180"/>
 <attribute name="VALUE" x="45.466" y="56.769" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="GND29" gate="1" x="185.42" y="50.8" smashed="yes">
-<attribute name="VALUE" x="182.88" y="48.26" size="1.778" layer="96"/>
+<instance part="GND29" gate="1" x="190.5" y="55.88" smashed="yes" rot="R180">
+<attribute name="VALUE" x="193.04" y="58.42" size="1.778" layer="96" rot="R180"/>
 </instance>
-<instance part="+3V20" gate="G$1" x="180.34" y="65.024" smashed="yes">
-<attribute name="VALUE" x="184.15" y="59.436" size="1.778" layer="96" rot="R90"/>
+<instance part="+3V20" gate="G$1" x="181.864" y="65.278" smashed="yes">
+<attribute name="VALUE" x="185.674" y="59.69" size="1.778" layer="96" rot="R90"/>
 </instance>
-<instance part="R4" gate="G$1" x="180.34" y="54.356" smashed="yes" rot="R90">
-<attribute name="NAME" x="178.816" y="54.356" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
-<attribute name="VALUE" x="181.864" y="54.356" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
+<instance part="R4" gate="G$1" x="181.61" y="54.356" smashed="yes" rot="R90">
+<attribute name="NAME" x="180.086" y="54.356" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
+<attribute name="VALUE" x="183.134" y="54.356" size="1.778" layer="96" font="vector" rot="R90" align="top-center"/>
 </instance>
 <instance part="R8" gate="G$1" x="266.7" y="204.216" smashed="yes" rot="R90">
 <attribute name="NAME" x="265.176" y="204.216" size="1.778" layer="95" font="vector" rot="R90" align="bottom-center"/>
@@ -7529,7 +7529,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <segment>
 <pinref part="R4" gate="G$1" pin="2"/>
 <pinref part="+3V20" gate="G$1" pin="+3V3"/>
-<wire x1="180.34" y1="59.436" x2="180.34" y2="62.484" width="0.1524" layer="91"/>
+<wire x1="181.61" y1="59.436" x2="181.864" y2="62.738" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="GND" class="0">
@@ -7783,7 +7783,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <segment>
 <pinref part="GND29" gate="1" pin="GND"/>
 <pinref part="U4" gate="RFM59HCW" pin="GND@2"/>
-<wire x1="185.42" y1="53.34" x2="200.66" y2="53.34" width="0.1524" layer="91"/>
+<wire x1="190.5" y1="53.34" x2="200.66" y2="53.34" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="GND33" gate="1" pin="GND"/>
@@ -8207,12 +8207,12 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <net name="RADIO_NSS" class="0">
 <segment>
 <pinref part="U4" gate="RFM59HCW" pin="NSS"/>
-<wire x1="200.66" y1="43.18" x2="180.34" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="200.66" y1="43.18" x2="181.864" y2="43.18" width="0.1524" layer="91"/>
 <label x="175.768" y="43.18" size="1.778" layer="95" rot="R90" xref="yes"/>
 <pinref part="R4" gate="G$1" pin="1"/>
-<wire x1="180.34" y1="43.18" x2="175.768" y2="43.18" width="0.1524" layer="91"/>
-<wire x1="180.34" y1="49.276" x2="180.34" y2="43.18" width="0.1524" layer="91"/>
-<junction x="180.34" y="43.18"/>
+<wire x1="181.864" y1="43.18" x2="175.768" y2="43.18" width="0.1524" layer="91"/>
+<wire x1="181.61" y1="49.276" x2="181.864" y2="43.18" width="0.1524" layer="91"/>
+<junction x="181.864" y="43.18"/>
 </segment>
 <segment>
 <pinref part="U1" gate="G$1" pin="30/T/PWM"/>

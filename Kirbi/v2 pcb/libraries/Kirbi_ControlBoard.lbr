@@ -6,7 +6,7 @@
 <setting alwaysvectorfont="no"/>
 <setting verticaltext="up"/>
 </settings>
-<grid distance="0.1" unitdist="inch" unit="inch" style="lines" multiple="1" display="yes" altdistance="0.01" altunitdist="inch" altunit="inch"/>
+<grid distance="50" unitdist="mil" unit="mil" style="lines" multiple="1" display="yes" altdistance="5" altunitdist="mil" altunit="mil"/>
 <layers>
 <layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="2" name="Route2" color="16" fill="1" visible="yes" active="yes"/>
@@ -212,23 +212,6 @@ by exp-lbrs.ulp</description>
 <text x="-3" y="-3" size="1" layer="27" font="vector" align="top-left">&gt;VALUE</text>
 <rectangle x1="-2.1" y1="-2.1" x2="2.1" y2="2.2" layer="39"/>
 </package>
-<package name="0402">
-<description>&lt;p&gt;&lt;b&gt;Generic 1005 (0402) package&lt;/b&gt;&lt;/p&gt;
-&lt;p&gt;0.2mm courtyard excess rounded to nearest 0.05mm.&lt;/p&gt;</description>
-<wire x1="-0.2704" y1="0.2286" x2="0.2704" y2="0.2286" width="0.1524" layer="51"/>
-<wire x1="0.2704" y1="-0.2286" x2="-0.2704" y2="-0.2286" width="0.1524" layer="51"/>
-<wire x1="-1.2" y1="0.65" x2="1.2" y2="0.65" width="0.0508" layer="39"/>
-<wire x1="1.2" y1="0.65" x2="1.2" y2="-0.65" width="0.0508" layer="39"/>
-<wire x1="1.2" y1="-0.65" x2="-1.2" y2="-0.65" width="0.0508" layer="39"/>
-<wire x1="-1.2" y1="-0.65" x2="-1.2" y2="0.65" width="0.0508" layer="39"/>
-<rectangle x1="-0.554" y1="-0.3048" x2="-0.254" y2="0.3048" layer="51"/>
-<rectangle x1="0.2588" y1="-0.3048" x2="0.5588" y2="0.3048" layer="51"/>
-<rectangle x1="-0.1999" y1="-0.3" x2="0.1999" y2="0.3" layer="35"/>
-<smd name="1" x="-0.58" y="0" dx="0.85" dy="0.9" layer="1"/>
-<smd name="2" x="0.58" y="0" dx="0.85" dy="0.9" layer="1"/>
-<text x="0" y="0.762" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center">&gt;NAME</text>
-<text x="0" y="-0.762" size="0.6096" layer="27" font="vector" ratio="20" align="top-center">&gt;VALUE</text>
-</package>
 <package name="0603" urn="urn:adsk.eagle:footprint:39615/1">
 <description>&lt;p&gt;&lt;b&gt;Generic 1608 (0603) package&lt;/b&gt;&lt;/p&gt;
 &lt;p&gt;0.2mm courtyard excess rounded to nearest 0.05mm.&lt;/p&gt;</description>
@@ -281,110 +264,6 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 <vertex x="0.95" y="-0.0153" curve="-90"/>
 <vertex x="1.3945" y="0.452" curve="-90"/>
 <vertex x="1.8364" y="-0.0051" curve="-90.012967"/>
-</polygon>
-</package>
-<package name="0603:1">
-<description>&lt;p&gt;&lt;b&gt;Generic 1608 (0603) package&lt;/b&gt;&lt;/p&gt;
-&lt;p&gt;0.2mm courtyard excess rounded to nearest 0.05mm.&lt;/p&gt;</description>
-<wire x1="-1.6" y1="0.7" x2="1.6" y2="0.7" width="0.0508" layer="39"/>
-<wire x1="1.6" y1="0.7" x2="1.6" y2="-0.7" width="0.0508" layer="39"/>
-<wire x1="1.6" y1="-0.7" x2="-1.6" y2="-0.7" width="0.0508" layer="39"/>
-<wire x1="-1.6" y1="-0.7" x2="-1.6" y2="0.7" width="0.0508" layer="39"/>
-<wire x1="-0.356" y1="0.432" x2="0.356" y2="0.432" width="0.1016" layer="51"/>
-<wire x1="-0.356" y1="-0.419" x2="0.356" y2="-0.419" width="0.1016" layer="51"/>
-<rectangle x1="-0.8382" y1="-0.4699" x2="-0.3381" y2="0.4801" layer="51"/>
-<rectangle x1="0.3302" y1="-0.4699" x2="0.8303" y2="0.4801" layer="51"/>
-<rectangle x1="-0.1999" y1="-0.3" x2="0.1999" y2="0.3" layer="35"/>
-<smd name="1" x="-0.85" y="0" dx="1.1" dy="1" layer="1"/>
-<smd name="2" x="0.85" y="0" dx="1.1" dy="1" layer="1"/>
-<text x="0" y="0.762" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center">&gt;NAME</text>
-<text x="0" y="-0.762" size="0.6096" layer="27" font="vector" ratio="20" align="top-center">&gt;VALUE</text>
-</package>
-<package name="AXIAL-0.1">
-<description>&lt;h3&gt;AXIAL-0.1&lt;/h3&gt;
-&lt;p&gt;Commonly used for 1/4W through-hole resistors. 0.1" pitch between holes.&lt;/p&gt;</description>
-<wire x1="0" y1="-0.762" x2="0" y2="0" width="0.2032" layer="21"/>
-<wire x1="0" y1="0" x2="0" y2="0.762" width="0.2032" layer="21"/>
-<wire x1="0.254" y1="0" x2="0" y2="0" width="0.2032" layer="21"/>
-<wire x1="0" y1="0" x2="-0.254" y2="0" width="0.2032" layer="21"/>
-<pad name="P$1" x="-1.27" y="0" drill="0.9" diameter="1.8796"/>
-<pad name="P$2" x="1.27" y="0" drill="0.9" diameter="1.8796"/>
-<text x="0" y="1.143" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center">&gt;Name</text>
-<text x="0" y="-1.143" size="0.6096" layer="21" font="vector" ratio="20" align="top-center">&gt;Value</text>
-</package>
-<package name="AXIAL-0.1-KIT">
-<description>&lt;h3&gt;AXIAL-0.1-KIT&lt;/h3&gt;
-&lt;p&gt;Commonly used for 1/4W through-hole resistors. 0.1" pitch between holes.&lt;/p&gt;
-&lt;p&gt;&lt;b&gt;Warning:&lt;/b&gt; This is the KIT version of the AXIAL-0.1 package. This package has a smaller diameter top stop mask, which doesn't cover the diameter of the pad. This means only the bottom side of the pads' copper will be exposed. You'll only be able to solder to the bottom side.&lt;/p&gt;</description>
-<circle x="-1.27" y="0" radius="0.4572" width="0" layer="29"/>
-<circle x="-1.27" y="0" radius="1.016" width="0" layer="30"/>
-<circle x="1.27" y="0" radius="1.016" width="0" layer="30"/>
-<circle x="-1.27" y="0" radius="0.4572" width="0" layer="29"/>
-<circle x="1.27" y="0" radius="0.4572" width="0" layer="29"/>
-<wire x1="0" y1="-0.762" x2="0" y2="0" width="0.2032" layer="21"/>
-<wire x1="0" y1="0" x2="0" y2="0.762" width="0.2032" layer="21"/>
-<wire x1="0.254" y1="0" x2="0" y2="0" width="0.2032" layer="21"/>
-<wire x1="0" y1="0" x2="-0.254" y2="0" width="0.2032" layer="21"/>
-<pad name="P$1" x="-1.27" y="0" drill="0.9" diameter="1.8796" stop="no"/>
-<pad name="P$2" x="1.27" y="0" drill="0.9" diameter="1.8796" stop="no"/>
-<text x="0" y="1.143" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center">&gt;Name</text>
-<text x="0" y="-1.143" size="0.6096" layer="27" font="vector" ratio="20" align="top-center">&gt;Value</text>
-</package>
-<package name="AXIAL-0.3">
-<description>&lt;h3&gt;AXIAL-0.3&lt;/h3&gt;
-&lt;p&gt;Commonly used for 1/4W through-hole resistors. 0.3" pitch between holes.&lt;/p&gt;</description>
-<wire x1="-2.54" y1="0.762" x2="2.54" y2="0.762" width="0.2032" layer="21"/>
-<wire x1="2.54" y1="0.762" x2="2.54" y2="0" width="0.2032" layer="21"/>
-<wire x1="2.54" y1="0" x2="2.54" y2="-0.762" width="0.2032" layer="21"/>
-<wire x1="2.54" y1="-0.762" x2="-2.54" y2="-0.762" width="0.2032" layer="21"/>
-<wire x1="-2.54" y1="-0.762" x2="-2.54" y2="0" width="0.2032" layer="21"/>
-<wire x1="-2.54" y1="0" x2="-2.54" y2="0.762" width="0.2032" layer="21"/>
-<wire x1="2.54" y1="0" x2="2.794" y2="0" width="0.2032" layer="21"/>
-<wire x1="-2.54" y1="0" x2="-2.794" y2="0" width="0.2032" layer="21"/>
-<pad name="P$1" x="-3.81" y="0" drill="0.9" diameter="1.8796"/>
-<pad name="P$2" x="3.81" y="0" drill="0.9" diameter="1.8796"/>
-<text x="0" y="1.016" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center">&gt;Name</text>
-<text x="0" y="-1.016" size="0.6096" layer="27" font="vector" ratio="20" align="top-center">&gt;Value</text>
-</package>
-<package name="AXIAL-0.3-KIT">
-<description>&lt;h3&gt;AXIAL-0.3-KIT&lt;/h3&gt;
-&lt;p&gt;Commonly used for 1/4W through-hole resistors. 0.3" pitch between holes.&lt;/p&gt;
-&lt;p&gt;&lt;b&gt;Warning:&lt;/b&gt; This is the KIT version of the AXIAL-0.3 package. This package has a smaller diameter top stop mask, which doesn't cover the diameter of the pad. This means only the bottom side of the pads' copper will be exposed. You'll only be able to solder to the bottom side.&lt;/p&gt;</description>
-<wire x1="-2.54" y1="1.27" x2="2.54" y2="1.27" width="0.254" layer="21"/>
-<wire x1="2.54" y1="1.27" x2="2.54" y2="0" width="0.254" layer="21"/>
-<wire x1="2.54" y1="0" x2="2.54" y2="-1.27" width="0.254" layer="21"/>
-<wire x1="2.54" y1="-1.27" x2="-2.54" y2="-1.27" width="0.254" layer="21"/>
-<wire x1="-2.54" y1="-1.27" x2="-2.54" y2="0" width="0.254" layer="21"/>
-<wire x1="-2.54" y1="0" x2="-2.54" y2="1.27" width="0.254" layer="21"/>
-<wire x1="2.54" y1="0" x2="2.794" y2="0" width="0.254" layer="21"/>
-<wire x1="-2.54" y1="0" x2="-2.794" y2="0" width="0.254" layer="21"/>
-<pad name="P$1" x="-3.81" y="0" drill="1.016" diameter="2.032" stop="no"/>
-<pad name="P$2" x="3.81" y="0" drill="1.016" diameter="2.032" stop="no"/>
-<text x="0" y="1.524" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center">&gt;NAME</text>
-<text x="0" y="-1.524" size="0.6096" layer="27" font="vector" ratio="20" align="top-center">&gt;VALUE</text>
-<polygon width="0.127" layer="30">
-<vertex x="3.8201" y="-0.9449" curve="-90"/>
-<vertex x="2.8652" y="-0.0152" curve="-90.011749"/>
-<vertex x="3.8176" y="0.9602" curve="-90"/>
-<vertex x="4.7676" y="-0.0178" curve="-90.024193"/>
-</polygon>
-<polygon width="0.127" layer="29">
-<vertex x="3.8176" y="-0.4369" curve="-90.012891"/>
-<vertex x="3.3731" y="-0.0127" curve="-90"/>
-<vertex x="3.8176" y="0.4546" curve="-90"/>
-<vertex x="4.2595" y="-0.0025" curve="-90.012967"/>
-</polygon>
-<polygon width="0.127" layer="30">
-<vertex x="-3.8075" y="-0.9525" curve="-90"/>
-<vertex x="-4.7624" y="-0.0228" curve="-90.011749"/>
-<vertex x="-3.81" y="0.9526" curve="-90"/>
-<vertex x="-2.86" y="-0.0254" curve="-90.024193"/>
-</polygon>
-<polygon width="0.127" layer="29">
-<vertex x="-3.81" y="-0.4445" curve="-90.012891"/>
-<vertex x="-4.2545" y="-0.0203" curve="-90"/>
-<vertex x="-3.81" y="0.447" curve="-90"/>
-<vertex x="-3.3681" y="-0.0101" curve="-90.012967"/>
 </polygon>
 </package>
 <package name="TEENSY_3.6_DIL">
@@ -467,22 +346,22 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 <text x="-4" y="-3" size="1" layer="27" font="vector" align="top-left">&gt;Value</text>
 <rectangle x1="-3.3" y1="-2.2" x2="3.3" y2="2" layer="39"/>
 </package>
-<package name="SOT363">
+<package name="TSSOP6">
 <description>&lt;a href = "https://assets.nexperia.com/documents/data-sheet/74LVC1G157.pdf"&gt;Datasheet&lt;\a&gt;</description>
-<wire x1="-1.55" y1="0.65" x2="1.55" y2="0.65" width="0.2" layer="21"/>
-<wire x1="1.55" y1="0.65" x2="1.55" y2="-0.65" width="0.2" layer="21"/>
-<wire x1="1.55" y1="-0.65" x2="-1.55" y2="-0.65" width="0.2" layer="21"/>
-<wire x1="-1.55" y1="-0.65" x2="-1.55" y2="0.65" width="0.2" layer="21"/>
-<smd name="5" x="0" y="1.125" dx="0.6" dy="0.95" layer="1" rot="R180"/>
-<smd name="2" x="0" y="-1.125" dx="0.6" dy="0.95" layer="1" rot="R180"/>
-<smd name="6" x="-0.95" y="1.125" dx="0.6" dy="0.95" layer="1" rot="R180"/>
-<smd name="3" x="0.95" y="-1.125" dx="0.6" dy="0.95" layer="1" rot="R180"/>
-<smd name="1" x="-0.95" y="-1.125" dx="0.6" dy="0.95" layer="1" rot="R180"/>
-<smd name="4" x="0.95" y="1.125" dx="0.6" dy="0.95" layer="1" rot="R180"/>
+<wire x1="-1.275" y1="1.398" x2="1.275" y2="1.398" width="0.2" layer="21"/>
+<wire x1="1.275" y1="1.398" x2="1.275" y2="-1.398" width="0.2" layer="21"/>
+<wire x1="1.275" y1="-1.398" x2="-1.275" y2="-1.398" width="0.2" layer="21"/>
+<wire x1="-1.275" y1="-1.398" x2="-1.275" y2="1.398" width="0.2" layer="21"/>
+<smd name="5" x="0" y="0.9" dx="0.4" dy="0.6" layer="1" rot="R180"/>
+<smd name="2" x="0" y="-0.9" dx="0.4" dy="0.6" layer="1" rot="R180"/>
+<smd name="6" x="-0.75" y="0.9" dx="0.6" dy="0.6" layer="1" rot="R180"/>
+<smd name="3" x="0.75" y="-0.9" dx="0.6" dy="0.6" layer="1" rot="R180"/>
+<smd name="1" x="-0.75" y="-0.9" dx="0.6" dy="0.6" layer="1" rot="R180"/>
+<smd name="4" x="0.75" y="0.9" dx="0.6" dy="0.6" layer="1" rot="R180"/>
 <text x="-2" y="2" size="1" layer="25" font="vector">&gt;Name</text>
 <text x="-2" y="-2" size="1" layer="27" font="vector" align="top-left">&gt;Value</text>
-<rectangle x1="-1.651" y1="-0.762" x2="1.651" y2="0.762" layer="39"/>
-<circle x="-1.778" y="-1.27" radius="0.127" width="0.1524" layer="21"/>
+<circle x="-1.678" y="-1.07" radius="0.127" width="0.1524" layer="21"/>
+<rectangle x1="-1.27" y1="-1.397" x2="1.27" y2="1.397" layer="39"/>
 </package>
 <package name="RFMHCW_SMT">
 <description>&lt;a href = "https://cdn.sparkfun.com/datasheets/Wireless/General/RFM69HCW-V1.1.pdf"&gt;Datasheet&lt;\a&gt;</description>
@@ -637,16 +516,6 @@ Commonly used for small ceramic capacitors. Like our 0.1uF (http://www.sparkfun.
 <pin name="VDDIO" x="20.32" y="12.7" length="middle" direction="pas" rot="R180"/>
 <text x="-15.24" y="20.32" size="1.778" layer="95">&gt;NAME</text>
 <text x="-15.24" y="-20.32" size="1.778" layer="96">&gt;VALUE</text>
-</symbol>
-<symbol name="CAP">
-<rectangle x1="-2.032" y1="0.508" x2="2.032" y2="1.016" layer="94"/>
-<rectangle x1="-2.032" y1="1.524" x2="2.032" y2="2.032" layer="94"/>
-<wire x1="0" y1="2.54" x2="0" y2="2.032" width="0.1524" layer="94"/>
-<wire x1="0" y1="0" x2="0" y2="0.508" width="0.1524" layer="94"/>
-<pin name="1" x="0" y="5.08" visible="off" length="short" direction="pas" swaplevel="1" rot="R270"/>
-<pin name="2" x="0" y="-2.54" visible="off" length="short" direction="pas" swaplevel="1" rot="R90"/>
-<text x="2.54" y="2.54" size="1.778" layer="95">&gt;NAME</text>
-<text x="2.54" y="-2.54" size="1.778" layer="96" align="top-left">&gt;VALUE</text>
 </symbol>
 <symbol name="LED">
 <description>&lt;h3&gt;LED&lt;/h3&gt;
@@ -893,7 +762,9 @@ Temp: -40~+85°C</text>
 </symbols>
 <devicesets>
 <deviceset name="ICM-20948" prefix="U">
-<description>Axis=3 Axis Gyro+3 Axis Accel+Compass. Pin For Pin With m</description>
+<description>ICM-20948&lt;br&gt;
+Axis=3 Axis Gyro+3 Axis Accel+Compass. Pin For Pin With m &lt;br&gt;
+&lt;a href = "https://invensense.tdk.com/wp-content/uploads/2016/06/DS-000189-ICM-20948-v1.3.pdf?ref_disty=digikey"&gt;Datasheet&lt;\a&gt;</description>
 <gates>
 <gate name="G$1" symbol="ICM-20948" x="0" y="0"/>
 </gates>
@@ -917,8 +788,8 @@ Temp: -40~+85°C</text>
 <technologies>
 <technology name="">
 <attribute name="DESCRIPTION" value=" 9 Axis=3 Axis Gyro+3 Axis Accel+Compass. Pin For Pin With m "/>
-<attribute name="DIGI-KEY_PART_NUMBER" value="1428-1123-1-ND"/>
 <attribute name="DIGI-KEY_PURCHASE_URL" value="https://www.digikey.com/product-detail/en/tdk-invensense/ICM-20948/1428-1123-1-ND/7062698?utm_source=snapeda&amp;utm_medium=aggregator&amp;utm_campaign=symbol"/>
+<attribute name="DKPN" value="1428-1123-1-ND" constant="no"/>
 <attribute name="MF" value="TDK InvenSense"/>
 <attribute name="MP" value="ICM-20948"/>
 <attribute name="PACKAGE" value="QFN-24 InvenSense"/>
@@ -927,215 +798,10 @@ Temp: -40~+85°C</text>
 </device>
 </devices>
 </deviceset>
-<deviceset name="0.1UF" prefix="C">
-<description>&lt;h3&gt;0.1µF ceramic capacitors&lt;/h3&gt;
-&lt;p&gt;A capacitor is a passive two-terminal electrical component used to store electrical energy temporarily in an electric field.&lt;/p&gt;</description>
-<gates>
-<gate name="G$1" symbol="CAP" x="0" y="0"/>
-</gates>
-<devices>
-<device name="-0402-16V-10%" package="0402">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="CAP-12416"/>
-<attribute name="VALUE" value="0.1uF"/>
-</technology>
-</technologies>
-</device>
-<device name="-0603-25V-(+80/-20%)" package="0603">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<package3dinstances>
-<package3dinstance package3d_urn="urn:adsk.eagle:package:39650/1"/>
-</package3dinstances>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="CAP-00810"/>
-<attribute name="VALUE" value="0.1uF"/>
-</technology>
-</technologies>
-</device>
-<device name="-0603-25V-5%" package="0603">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<package3dinstances>
-<package3dinstance package3d_urn="urn:adsk.eagle:package:39650/1"/>
-</package3dinstances>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="CAP-08604"/>
-<attribute name="VALUE" value="0.1uF"/>
-</technology>
-</technologies>
-</device>
-<device name="-0603-100V-10%" package="0603">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<package3dinstances>
-<package3dinstance package3d_urn="urn:adsk.eagle:package:39650/1"/>
-</package3dinstances>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="CAP-08390"/>
-<attribute name="VALUE" value="0.1uF"/>
-</technology>
-</technologies>
-</device>
-<device name="-KIT-EZ-50V-20%" package="CAP-PTH-SMALL-KIT">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="CAP-08370"/>
-<attribute name="VALUE" value="0.1uF"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="1KOHM" prefix="R">
-<description>&lt;h3&gt;1kΩ resistor&lt;/h3&gt;
-&lt;p&gt;A resistor is a passive two-terminal electrical component that implements electrical resistance as a circuit element. Resistors act to reduce current flow, and, at the same time, act to lower voltage levels within circuits. - Wikipedia&lt;/p&gt;</description>
-<gates>
-<gate name="G$1" symbol="RESISTOR" x="0" y="0"/>
-</gates>
-<devices>
-<device name="-0603-1/10W-1%" package="0603:1">
-<connects>
-<connect gate="G$1" pin="1" pad="1"/>
-<connect gate="G$1" pin="2" pad="2"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="RES-07856"/>
-<attribute name="VALUE" value="1k"/>
-</technology>
-</technologies>
-</device>
-<device name="-HORIZ-1/4W-1%" package="AXIAL-0.3">
-<connects>
-<connect gate="G$1" pin="1" pad="P$1"/>
-<connect gate="G$1" pin="2" pad="P$2"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="RES-12182"/>
-<attribute name="VALUE" value="1k"/>
-</technology>
-</technologies>
-</device>
-<device name="-HORIZ-1/4W-5%" package="AXIAL-0.3">
-<connects>
-<connect gate="G$1" pin="1" pad="P$1"/>
-<connect gate="G$1" pin="2" pad="P$2"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="RES-08380"/>
-<attribute name="VALUE" value="1k"/>
-</technology>
-</technologies>
-</device>
-<device name="-HORIZ_KIT-1/4W-1%" package="AXIAL-0.3-KIT">
-<connects>
-<connect gate="G$1" pin="1" pad="P$1"/>
-<connect gate="G$1" pin="2" pad="P$2"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="RES-12182"/>
-<attribute name="VALUE" value="1k"/>
-</technology>
-</technologies>
-</device>
-<device name="-HORIZ_KIT-1/4W-5%" package="AXIAL-0.3-KIT">
-<connects>
-<connect gate="G$1" pin="1" pad="P$1"/>
-<connect gate="G$1" pin="2" pad="P$2"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="RES-08380"/>
-<attribute name="VALUE" value="1k"/>
-</technology>
-</technologies>
-</device>
-<device name="-VERT-1/4W-1%" package="AXIAL-0.1">
-<connects>
-<connect gate="G$1" pin="1" pad="P$1"/>
-<connect gate="G$1" pin="2" pad="P$2"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="RES-12182"/>
-<attribute name="VALUE" value="1k"/>
-</technology>
-</technologies>
-</device>
-<device name="-VERT-1/4W-5%" package="AXIAL-0.1">
-<connects>
-<connect gate="G$1" pin="1" pad="P$1"/>
-<connect gate="G$1" pin="2" pad="P$2"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="RES-08380"/>
-<attribute name="VALUE" value="1k"/>
-</technology>
-</technologies>
-</device>
-<device name="-VERT-1/6W-5%" package="AXIAL-0.1">
-<connects>
-<connect gate="G$1" pin="1" pad="P$1"/>
-<connect gate="G$1" pin="2" pad="P$2"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="RES-09769"/>
-<attribute name="VALUE" value="1k"/>
-</technology>
-</technologies>
-</device>
-<device name="-VERT_KIT-1/4W-1%" package="AXIAL-0.1-KIT">
-<connects>
-<connect gate="G$1" pin="1" pad="P$1"/>
-<connect gate="G$1" pin="2" pad="P$2"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="RES-12182"/>
-<attribute name="VALUE" value="1k"/>
-</technology>
-</technologies>
-</device>
-<device name="-VERT_KIT-1/4W-5%" package="AXIAL-0.1-KIT">
-<connects>
-<connect gate="G$1" pin="1" pad="P$1"/>
-<connect gate="G$1" pin="2" pad="P$2"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="PROD_ID" value="RES-08380"/>
-<attribute name="VALUE" value="1k"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="TEENSY_3.6_DIL">
-<description>Teensy 3.6 DIL Package</description>
+<deviceset name="DEV-14057" prefix="U">
+<description>DEV-14057 &lt;br&gt;
+Teensy 3.6 DIL Package &lt;br&gt;
+&lt;a href = "https://media.digikey.com/pdf/Data%20Sheets/Sparkfun%20PDFs/Teensy3.6_FrontSidePinAssignment.pdf"&gt;Datasheet&lt;\a&gt;</description>
 <gates>
 <gate name="G$1" symbol="TEENSY_3.6_DIL" x="0" y="0"/>
 </gates>
@@ -1190,12 +856,17 @@ Temp: -40~+85°C</text>
 <connect gate="G$1" pin="VIN" pad="VIN"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="DKPN" value="1568-1442-ND" constant="no"/>
+</technology>
 </technologies>
 </device>
 </devices>
 </deviceset>
-<deviceset name="0532610471">
+<deviceset name="0532610471" prefix="J">
+<description>0532610471 &lt;br&gt;
+Molex 1x4 1.25mm SMT &lt;br&gt;
+&lt;a href = "https://www.digikey.com/product-detail/en/molex/0532610471/WM7622CT-ND/699109"&gt;Datasheet&lt;\a&gt;</description>
 <gates>
 <gate name="G$1" symbol="CONN_04" x="2.54" y="-2.54"/>
 </gates>
@@ -1208,18 +879,22 @@ Temp: -40~+85°C</text>
 <connect gate="G$1" pin="4" pad="6"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="DKPN" value="WM7622CT-ND" constant="no"/>
+</technology>
 </technologies>
 </device>
 </devices>
 </deviceset>
-<deviceset name="MUX_74LVC1G157GV">
-<description>MUX_74LVC1G157GV</description>
+<deviceset name="74LVC1G157GW,125" prefix="U">
+<description>74LVC1G157GW,125 &lt;br&gt;
+2:1 MUX_74LVC1G157GV &lt;br&gt;
+&lt;a href = "https://assets.nexperia.com/documents/data-sheet/74LVC1G157.pdf"&gt;Datasheet&lt;\a&gt;</description>
 <gates>
 <gate name="G$1" symbol="MUX_74LVC1G157GV" x="0" y="0"/>
 </gates>
 <devices>
-<device name="" package="SOT363">
+<device name="" package="TSSOP6">
 <connects>
 <connect gate="G$1" pin="GND" pad="2"/>
 <connect gate="G$1" pin="I0" pad="3"/>
@@ -1229,14 +904,17 @@ Temp: -40~+85°C</text>
 <connect gate="G$1" pin="Y" pad="4"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="DKPN" value="1727-3491-1-ND" constant="no"/>
+</technology>
 </technologies>
 </device>
 </devices>
 </deviceset>
 <deviceset name="RFM69HCW" prefix="U">
-<description>&lt;p&gt;&lt;b&gt;RFM69HCW - ISM Band RF Transceiver&lt;/b&gt;&lt;/p&gt;
-&lt;a href = "https://www.digikey.com/products/en?mpart=COM-13909&amp;v=1568"&gt;Datasheet&lt;\a&gt;</description>
+<description>COM-13909 &lt;br&gt;
+RFM69HCW - ISM Band RF Transceiver &lt;br&gt;
+&lt;a href = "https://cdn.sparkfun.com/datasheets/Wireless/General/RFM69HCW-V1.1.pdf"&gt;Datasheet&lt;\a&gt;</description>
 <gates>
 <gate name="RFM59HCW" symbol="RFM69HCW" x="0" y="0"/>
 </gates>
@@ -1268,8 +946,9 @@ Temp: -40~+85°C</text>
 </device>
 </devices>
 </deviceset>
-<deviceset name="MOLEX_2.54MM_2PIN" prefix="J">
-<description>MOLEX_2.54MM_2PIN &lt;br&gt;
+<deviceset name="1719770002" prefix="J">
+<description>1719770002 &lt;br&gt;
+Molex 1x2 1.25mm SMT&lt;br&gt;
 &lt;a href = "https://www.digikey.com/product-detail/en/molex/1719770002/WM22676-ND/9564259"&gt;Datasheet&lt;\a&gt;</description>
 <gates>
 <gate name="G$1" symbol="CONN_02" x="0" y="0"/>
@@ -1288,7 +967,9 @@ Temp: -40~+85°C</text>
 </device>
 </devices>
 </deviceset>
-<deviceset name="BEL_FUSE_C1F_3.5">
+<deviceset name="C1F3.5" prefix="XF" uservalue="yes">
+<description>C1F 3.5 &lt;br&gt;
+&lt;a href = "https://belfuse.com/resources/datasheets/circuitprotection/ds-cp-c1f-series.pdf"&gt;Datasheet&lt;\a&gt;</description>
 <gates>
 <gate name="G$1" symbol="FUSE" x="0" y="0"/>
 </gates>
@@ -1300,16 +981,17 @@ Temp: -40~+85°C</text>
 </connects>
 <technologies>
 <technology name="">
+<attribute name="DKPN" value="507-1884-1-ND" constant="no"/>
 <attribute name="VALUE" value="3.5"/>
 </technology>
 </technologies>
 </device>
 </devices>
 </deviceset>
-<deviceset name="0532610371">
-<description>MOLEX_1.25MM_3PIN_SMT
-0532610371
-WM7621CT-ND</description>
+<deviceset name="0532610371" prefix="J">
+<description>0532610371 &lt;br&gt;
+Molex 1x3 1.25mm SMT &lt;br&gt;
+&lt;a href = "https://www.digikey.com/product-detail/en/molex/0532610371/WM7621CT-ND/699108"&gt;Datasheet&lt;\a&gt;</description>
 <gates>
 <gate name="G$1" symbol="CONN_03" x="0" y="0"/>
 </gates>
@@ -1321,7 +1003,9 @@ WM7621CT-ND</description>
 <connect gate="G$1" pin="3" pad="1"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="DKPN" value="WM7621CT-ND" constant="no"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -1350,8 +1034,9 @@ WM7621CT-ND</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="DFLS130L-7_30V_1A" prefix="D">
-<description>DFLS130L-7_30V_1A</description>
+<deviceset name="DFLS130L-7" prefix="D" uservalue="yes">
+<description>DFLS130L-7 &lt;br&gt;
+&lt;a href = "https://www.diodes.com/assets/Datasheets/ds30492.pdf"&gt;Datasheet&lt;\a&gt;</description>
 <gates>
 <gate name="G$1" symbol="SCHOTTKY" x="0" y="0"/>
 </gates>
@@ -1362,15 +1047,17 @@ WM7621CT-ND</description>
 <connect gate="G$1" pin="C" pad="1"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="DKPN" value="DFLS130LDICT-ND" constant="no"/>
+<attribute name="VALUE" value="30" constant="no"/>
+</technology>
 </technologies>
 </device>
 </devices>
 </deviceset>
-<deviceset name="GPTS202312B">
-<description>SPDT Pushbutton
-GPTS202312B
-CW183-ND</description>
+<deviceset name="GPTS202312B" prefix="SW">
+<description>GPTS202312B &lt;br&gt;
+&lt;a href = "http://switches-connectors-custom.cwind.com/Asset/GPTS203312BR2.pdf"&gt;Datasheet&lt;\a&gt;</description>
 <gates>
 <gate name="G$1" symbol="SPDT" x="0" y="0"/>
 </gates>
@@ -1382,12 +1069,17 @@ CW183-ND</description>
 <connect gate="G$1" pin="COMMON" pad="P"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="DKPN" value="CW183-ND" constant="no"/>
+</technology>
 </technologies>
 </device>
 </devices>
 </deviceset>
-<deviceset name="AMPHENOL_2X3_2.54MM">
+<deviceset name="71600-006LF" prefix="J">
+<description>71600-006LF &lt;br&gt;
+Amphenol 2x3 1.25mm &lt;br&gt;
+&lt;a href = "https://cdn.amphenol-icc.com/media/wysiwyg/files/drawing/75869.pdf"&gt;Datasheet&lt;\a&gt;</description>
 <gates>
 <gate name="G$1" symbol="CONN_06" x="0" y="0"/>
 </gates>
@@ -1402,7 +1094,9 @@ CW183-ND</description>
 <connect gate="G$1" pin="6" pad="1"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="DKPN" value="609-2841-ND" constant="no"/>
+</technology>
 </technologies>
 </device>
 </devices>
