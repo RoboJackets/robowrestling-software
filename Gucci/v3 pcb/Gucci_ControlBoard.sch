@@ -5180,16 +5180,17 @@ by exp-lbrs.ulp</description>
 <rectangle x1="0.3302" y1="-0.4699" x2="0.8303" y2="0.4801" layer="51"/>
 <rectangle x1="-0.1999" y1="-0.3" x2="0.1999" y2="0.3" layer="35"/>
 </package>
-<package name="DFLS130L-7_30V_1A">
-<description>DFLS130L-7_30V_1A</description>
-<smd name="P$1" x="1.6" y="0" dx="1.4" dy="0.9" layer="1" rot="R90"/>
-<smd name="P$2" x="-0.95" y="0" dx="2.2" dy="1.4" layer="1" rot="R180"/>
-<wire x1="-1.5" y1="0.965" x2="-1.5" y2="-0.965" width="0.1524" layer="21"/>
-<wire x1="-1.5" y1="-0.965" x2="1.5" y2="-0.965" width="0.1524" layer="21"/>
-<wire x1="1.5" y1="-0.965" x2="1.5" y2="0.965" width="0.1524" layer="21"/>
-<wire x1="1.5" y1="0.965" x2="-1.5" y2="0.965" width="0.1524" layer="21"/>
-<text x="-2" y="2" size="1.016" layer="25" font="vector">&gt;NAME</text>
-<text x="-2" y="-2.7" size="1.016" layer="27" font="vector">&gt;VALUE</text>
+<package name="DFLS130L-7">
+<description>&lt;a href  = "https://www.diodes.com/assets/Datasheets/ds30492.pdf"&gt;Datasheet&lt;\a&gt;</description>
+<smd name="1" x="1.6" y="0" dx="1.4" dy="0.9" layer="1" rot="R90"/>
+<smd name="2" x="-0.95" y="0" dx="2.2" dy="1.4" layer="1" rot="R180"/>
+<wire x1="-1.5" y1="0.965" x2="-1.5" y2="-0.965" width="0.2" layer="21"/>
+<wire x1="-1.5" y1="-0.965" x2="1.5" y2="-0.965" width="0.2" layer="21"/>
+<wire x1="1.5" y1="-0.965" x2="1.5" y2="0.965" width="0.2" layer="21"/>
+<wire x1="1.5" y1="0.965" x2="-1.5" y2="0.965" width="0.2" layer="21"/>
+<text x="-2" y="2" size="1" layer="25" font="vector">&gt;NAME</text>
+<text x="-2" y="-2.7" size="1" layer="27" font="vector" align="top-left">&gt;VALUE</text>
+<rectangle x1="-1.6" y1="-1.1" x2="1.6" y2="1.1" layer="39"/>
 </package>
 <package name="GPTS202312B">
 <description>&lt;a href = "http://switches-connectors-custom.cwind.com/Asset/GPTS203312BR2.pdf"&gt;Datasheet&lt;\a&gt;</description>
@@ -5352,8 +5353,8 @@ Temp: -40~+85°C</text>
 <wire x1="0.635" y1="-1.016" x2="0.635" y2="-1.27" width="0.254" layer="94"/>
 <wire x1="-1.27" y1="0" x2="-2.54" y2="0" width="0.254" layer="94"/>
 <wire x1="1.27" y1="0" x2="2.54" y2="0" width="0.254" layer="94"/>
-<text x="-2.286" y="1.905" size="1.778" layer="95">&gt;NAME</text>
-<text x="-2.286" y="-3.429" size="1.778" layer="96">&gt;VALUE</text>
+<text x="-2.54" y="2.54" size="1.778" layer="95">&gt;NAME</text>
+<text x="-2.54" y="-2.54" size="1.778" layer="96" align="top-left">&gt;VALUE</text>
 <pin name="A" x="-2.54" y="0" visible="off" length="point" direction="pas"/>
 <pin name="C" x="2.54" y="0" visible="off" length="point" direction="pas" rot="R180"/>
 </symbol>
@@ -5558,19 +5559,23 @@ Molex 1x3 1.25mm SMT &lt;br&gt;
 </device>
 </devices>
 </deviceset>
-<deviceset name="DFLS130L-7_30V_1A" prefix="D">
-<description>DFLS130L-7_30V_1A</description>
+<deviceset name="DFLS130L-7" prefix="D" uservalue="yes">
+<description>DFLS130L-7 &lt;br&gt;
+&lt;a href = "https://www.diodes.com/assets/Datasheets/ds30492.pdf"&gt;Datasheet&lt;\a&gt;</description>
 <gates>
 <gate name="G$1" symbol="SCHOTTKY" x="0" y="0"/>
 </gates>
 <devices>
-<device name="" package="DFLS130L-7_30V_1A">
+<device name="" package="DFLS130L-7">
 <connects>
-<connect gate="G$1" pin="A" pad="P$2"/>
-<connect gate="G$1" pin="C" pad="P$1"/>
+<connect gate="G$1" pin="A" pad="2"/>
+<connect gate="G$1" pin="C" pad="1"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="DKPN" value="DFLS130LDICT-ND" constant="no"/>
+<attribute name="VALUE" value="30" constant="no"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -6511,8 +6516,8 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <part name="R11" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k"/>
 <part name="+3V26" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="GND31" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
-<part name="D1" library="Kirbi_ControlBoard" deviceset="DFLS130L-7_30V_1A" device=""/>
-<part name="D5" library="Kirbi_ControlBoard" deviceset="DFLS130L-7_30V_1A" device=""/>
+<part name="D1" library="Kirbi_ControlBoard" deviceset="DFLS130L-7" device="" value="30"/>
+<part name="D5" library="Kirbi_ControlBoard" deviceset="DFLS130L-7" device="" value="30"/>
 <part name="R12" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k"/>
 <part name="GND32" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="R18" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k"/>
@@ -7010,9 +7015,9 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <attribute name="NAME" x="276.86" y="106.68" size="1.778" layer="95"/>
 <attribute name="VALUE" x="276.86" y="100.33" size="1.778" layer="96"/>
 </instance>
-<instance part="R2" gate="G$1" x="292.1" y="33.02" smashed="yes">
-<attribute name="NAME" x="292.1" y="34.544" size="1.778" layer="95" font="vector" align="bottom-center"/>
-<attribute name="VALUE" x="292.1" y="31.496" size="1.778" layer="96" font="vector" align="top-center"/>
+<instance part="R2" gate="G$1" x="294.64" y="33.02" smashed="yes">
+<attribute name="NAME" x="294.64" y="34.544" size="1.778" layer="95" font="vector" align="bottom-center"/>
+<attribute name="VALUE" x="294.64" y="31.496" size="1.778" layer="96" font="vector" align="top-center"/>
 </instance>
 <instance part="GND29" gate="1" x="274.32" y="137.16" smashed="yes">
 <attribute name="VALUE" x="277.368" y="139.954" size="1.778" layer="96" align="top-center"/>
@@ -7584,7 +7589,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <pinref part="GND28" gate="1" pin="GND"/>
 <wire x1="304.8" y1="30.48" x2="304.8" y2="33.02" width="0.1524" layer="91"/>
 <pinref part="R2" gate="G$1" pin="2"/>
-<wire x1="304.8" y1="33.02" x2="297.18" y2="33.02" width="0.1524" layer="91"/>
+<wire x1="304.8" y1="33.02" x2="299.72" y2="33.02" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="MUX_RX3" gate="G$1" pin="GND"/>
@@ -8361,7 +8366,7 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <segment>
 <pinref part="R2" gate="G$1" pin="1"/>
 <pinref part="D4" gate="G$1" pin="C"/>
-<wire x1="287.02" y1="33.02" x2="279.4" y2="33.02" width="0.1524" layer="91"/>
+<wire x1="289.56" y1="33.02" x2="279.4" y2="33.02" width="0.1524" layer="91"/>
 </segment>
 </net>
 <net name="N$6" class="0">
