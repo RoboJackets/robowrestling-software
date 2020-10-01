@@ -1,6 +1,6 @@
-#include "abstract_sensor.h"
+#include "abstract_distance_sensor.h"
 
-class DistanceSensor : public AbstractSensor {
+class DistanceSensor : AbstractDistanceSensor{
     public: 
         int read() {
             return 0;
