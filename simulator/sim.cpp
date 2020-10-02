@@ -14,6 +14,7 @@ void draw_robot(std::shared_ptr<Robot> robot) {
     sf::RectangleShape rectangle(sf::Vector2f(robot->width, robot->length));
     rectangle.setFillColor(sf::Color(50, 50, 50));
     rectangle.setPosition(robot->x_pos - robot->width/2, robot->y_pos - robot->length/2);
+    rectangle.setRotation(robot->angle);
     window->draw(rectangle);
 }	
 
@@ -48,7 +49,8 @@ int main() {
     int i = 0;
 	while (window->isOpen()) {
         if (i < 5) {
-            physics_updater->move_robot(robot1, 100, 100, 1);
+            physics_updater->move_robot(robot1, 50, 100, 1);
+            i++;
         }
 		update();
 	}

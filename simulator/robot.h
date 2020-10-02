@@ -7,7 +7,7 @@ class Robot { //abstract class of a robot
 		double y_pos; //y position relative to the center of the dohyo
 		double angle; //how much the robot is rotated from 0-2pi with 0 being "north"
 		
-		double width; //width of robot used for collision and ring out calculations
+		double width; //width of robot used for collision and ring out calculations. used as distance between wheels
 		double length; //length of robot used for collision and ring out calculations
 		
 		double wheel_radius; //radius of wheel in m. used to convert angular velocity to distance traveled and angle change

@@ -9,7 +9,7 @@ BasicRobot::BasicRobot(double x, double y, double angle) {
 	width = 30;
 	length = 30;
 
-	wheel_radius = 0.05;
+	wheel_radius = 0.5;
 	left_wheel_velocity = 0;
 	right_wheel_velocity = 0;
 	max_wheel_velocity = 8;
