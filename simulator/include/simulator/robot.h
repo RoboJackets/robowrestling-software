@@ -1,6 +1,8 @@
 #ifndef robot_h
 #define robot_h
 
+#include <vector>
+
 class Robot { //abstract class of a robot
 	public:
 		double x_pos; //x position relative to the top left corner of the window. +x is to the right

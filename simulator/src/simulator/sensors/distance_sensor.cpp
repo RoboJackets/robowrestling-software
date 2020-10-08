@@ -1,6 +1,6 @@
 #include <simulator/sensors/abstract_sensor.h>
 
-class DistanceSensor : AbstractDistanceSensor{
+class DistanceSensor : public AbstractDistanceSensor{
     public: 
         int read() {
             return 0;
