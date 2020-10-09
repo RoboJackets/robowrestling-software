@@ -9,6 +9,13 @@
 #include <cmath>
 #include <simulator/abstract_distance_sensor.h>
 #include <simulator/abstract_line_sensor.h">
+#include "robot.h"
+#include "basicrobot.h"
+#include "robotphysicsupdater.h"
+#include "abstract_distance_sensor.h"
+#include "abstract_line_sensor.h"
+#include "distance_sensor.h"
+
 #include <SFML/Graphics.hpp>
 #include <vector>
 

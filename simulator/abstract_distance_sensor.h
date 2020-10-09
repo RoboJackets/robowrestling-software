@@ -5,31 +5,34 @@
 
 class AbstractDistanceSensor {
     public:
-        double d_x_;
-        double d_y_;
-        double d_angle_;
-        Robot* robot_; // robot this sensor is on
-        AbstractDistanceSensor() {};
+        double _d_x;
+        double _d_y;
+        double _d_angle;
+        Robot* _robot; // robot this sensor is on
+        double _cone_angle;
+        double _cone_length;
     
-    public: 
-        double read(Robot* target) {
-            return 0;
-        }
+        double read(Robot* target);
 
         void setSensorPosition(double d_x, double d_y, double d_angle) {
-            d_x_ = d_x;
-            d_y_ = d_y;
-            d_angle_ = d_angle;
+            _d_x = d_x;
+            _d_y = d_y;
+            _d_angle = d_angle;
         };
+
+        void setConeData(double cone_angle, double cone_length) {
+            _cone_angle = cone_angle;
+            _cone_length = cone_length;
+        }
         
         void setRobot(Robot* robot) {
-            robot_ = robot;
+            _robot = robot;
         }
 
-        double getX() {return d_x_;};
-        double getY() {return d_y_;};
-        double getAngle() {return d_angle_;};
-        Robot* getRobot() {return robot_;};
+        double getX() {return _d_x;};
+        double getY() {return _d_y;};
+        double getAngle() {return _d_angle;};
+        Robot* getRobot() {return _robot;};
 };
 
 #endif
