@@ -6,6 +6,7 @@
 #include "robotphysicsupdater.h"
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include <cmath>
 
 #define WINDOW_HEIGHT 600
 #define WINDOW_WIDTH 800
