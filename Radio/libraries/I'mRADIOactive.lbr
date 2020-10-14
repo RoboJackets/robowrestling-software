@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.5.1">
+<eagle version="9.6.2">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -564,12 +564,12 @@ Temp: -40~+85°C</text>
 <text x="-27.94" y="41.402" size="1.778" layer="95">&gt;NAME</text>
 <text x="-27.94" y="-43.18" size="1.778" layer="96" align="top-left">&gt;VALUE</text>
 <pin name="PE6(INT6/AIN0)" x="33.02" y="-10.16" length="middle" direction="pas" rot="R180"/>
-<pin name="UVCC" x="-33.02" y="33.02" length="middle" direction="pas"/>
+<pin name="UVCC" x="33.02" y="33.02" length="middle" direction="pas" rot="R180"/>
 <pin name="D-" x="33.02" y="15.24" length="middle" direction="pas" rot="R180"/>
 <pin name="UGND" x="33.02" y="-38.1" length="middle" direction="pas" rot="R180"/>
 <pin name="D+" x="33.02" y="12.7" length="middle" direction="pas" rot="R180"/>
-<pin name="UCAP" x="-33.02" y="30.48" length="middle" direction="pas"/>
-<pin name="VBUS" x="-33.02" y="27.94" length="middle" direction="pas"/>
+<pin name="UCAP" x="33.02" y="30.48" length="middle" direction="pas" rot="R180"/>
+<pin name="VBUS" x="33.02" y="27.94" length="middle" direction="pas" rot="R180"/>
 <pin name="PB0(SS/PCINT0)" x="-33.02" y="7.62" length="middle" direction="pas"/>
 <pin name="PB1(PCINT1/SCLK)" x="-33.02" y="5.08" length="middle" direction="pas"/>
 <pin name="PB2(PDI/PCINT2/MOSI)" x="-33.02" y="2.54" length="middle" direction="pas"/>
@@ -577,7 +577,7 @@ Temp: -40~+85°C</text>
 <pin name="PB7(PCINT7/OC0A/OC1C/!RTS!)" x="-33.02" y="-10.16" length="middle" direction="pas"/>
 <pin name="!RESET" x="-33.02" y="22.86" length="middle" direction="pas"/>
 <pin name="GND" x="33.02" y="-40.64" length="middle" direction="pas" rot="R180"/>
-<pin name="VCC" x="-33.02" y="38.1" length="middle" direction="pas"/>
+<pin name="VCC" x="33.02" y="38.1" length="middle" direction="pas" rot="R180"/>
 <pin name="XTAL2" x="-33.02" y="12.7" length="middle" direction="pas"/>
 <pin name="XTAL1" x="-33.02" y="15.24" length="middle" direction="pas"/>
 <pin name="PD0(OC0B/SCL/INT0)" x="-33.02" y="-15.24" length="middle" direction="pas"/>
@@ -585,7 +585,7 @@ Temp: -40~+85°C</text>
 <pin name="PD2(RXD1/INT2)" x="-33.02" y="-20.32" length="middle" direction="pas"/>
 <pin name="PD3(TXD1/INT3)" x="-33.02" y="-22.86" length="middle" direction="pas"/>
 <pin name="PD5(XCK1/!CTS!)" x="-33.02" y="-27.94" length="middle" direction="pas"/>
-<pin name="AVCC" x="-33.02" y="35.56" length="middle" direction="pas"/>
+<pin name="AVCC" x="33.02" y="35.56" length="middle" direction="pas" rot="R180"/>
 <pin name="PD6(T1/!OC4D!/ADC9)" x="-33.02" y="-30.48" length="middle" direction="pas"/>
 <pin name="PD4(ICP1/ADC8)" x="-33.02" y="-25.4" length="middle" direction="pas"/>
 <pin name="PD7(T0/OC4D/ADC10)" x="-33.02" y="-33.02" length="middle" direction="pas"/>
@@ -717,8 +717,7 @@ Temp: -40~+85°C</text>
 </connects>
 <technologies>
 <technology name="">
-<attribute name="DKPN" value="AP63203WU-7DICT-ND	
-" constant="no"/>
+<attribute name="DKPN" value="AP63203WU-7DICT-ND  " constant="no"/>
 </technology>
 </technologies>
 </device>
@@ -819,8 +818,7 @@ Temp: -40~+85°C</text>
 </connects>
 <technologies>
 <technology name="">
-<attribute name="DKPN" value="ATMEGA32U4-AURDKR-ND	
-" constant="no"/>
+<attribute name="DKPN" value="ATMEGA32U4-AURDKR-ND  " constant="no"/>
 </technology>
 </technologies>
 </device>
