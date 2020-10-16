@@ -48,3 +48,5 @@ cmake-build-debug
 *.out
 *.app
 
+# Arbitrary file extension for compiled C++
+*.sw

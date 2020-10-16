@@ -2,7 +2,7 @@
 #define robotphysicsupdater_h
 
 #include <cmath>
-#include "../../robot.h"
+#include <simulator/robot.h>
 
 class RobotPhysicsUpdater {
 	public: RobotPhysicsUpdater();

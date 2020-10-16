@@ -1,4 +1,4 @@
-#include "robotphysicsupdater.h"
+#include <simulator/physics/robotphysicsupdater.h>
 
 RobotPhysicsUpdater::RobotPhysicsUpdater() {
 

@@ -1,1 +1,1 @@
-add_executable(slammywhammy slammywhammy.cpp)
+add_executable(slammywhammy.sw slammywhammy.cpp)
