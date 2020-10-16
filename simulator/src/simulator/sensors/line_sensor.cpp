@@ -1,6 +1,6 @@
-#include "../../../include/simulator/sensors/abstract_sensor.h"
+#include <simulator/sensors/abstract_sensor.h>
 
-class LineSensor : public AbstractSensor {
+class LineSensor : public AbstractLineSensor {
     public:
         int read() {
             return 0;

@@ -1,8 +1,9 @@
 #ifndef sim_h
 #define sim_h
 
-#include "simulator/robot.h"
-#include "basicrobot.h"
+#include <simulator/robot.h>
+#include <simulator/basicrobot.h>
+#include <simulator/physics/robotphysicsupdater.h>
 #include <SFML/Graphics.hpp>
 
 #define WINDOW_HEIGHT 600

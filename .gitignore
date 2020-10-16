@@ -50,3 +50,7 @@ cmake-build-debug
 
 # Arbitrary file extension for compiled C++
 *.sw
+
+# ignore OS files
+.DS_Store
+.DS_Store
