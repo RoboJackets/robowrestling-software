@@ -1,4 +1,3 @@
-<<<<<<< HEAD:simulator/src/simulator/sim.cpp
 #include <simulator/sim.h>
 
 
