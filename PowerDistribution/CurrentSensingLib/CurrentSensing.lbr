@@ -1324,95 +1324,8 @@ Diode with low voltage drop</description>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="MAX11634EEE+T" prefix="U">
-<gates>
-<gate name="A" symbol="MAX11634EEE+T" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="21-0055H_16">
-<connects>
-<connect gate="A" pin="!CNVST" pad="8"/>
-<connect gate="A" pin="!CS" pad="12"/>
-<connect gate="A" pin="!EOC" pad="16"/>
-<connect gate="A" pin="AIN0" pad="1"/>
-<connect gate="A" pin="AIN1" pad="2"/>
-<connect gate="A" pin="AIN2" pad="3"/>
-<connect gate="A" pin="AIN3" pad="4"/>
-<connect gate="A" pin="DIN" pad="14"/>
-<connect gate="A" pin="DOUT" pad="15"/>
-<connect gate="A" pin="GND" pad="10"/>
-<connect gate="A" pin="NC" pad="6"/>
-<connect gate="A" pin="NC_2" pad="5"/>
-<connect gate="A" pin="REF+" pad="9"/>
-<connect gate="A" pin="REF-" pad="7"/>
-<connect gate="A" pin="SCLK" pad="13"/>
-<connect gate="A" pin="VDD" pad="11"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="BUILT_BY" value="EMA_UL_Team" constant="no"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="MAX11634EEE+T" constant="no"/>
-<attribute name="VENDOR" value="Maxim Integrated Products" constant="no"/>
-</technology>
-</technologies>
-</device>
-<device name="21-0055H_16-M" package="21-0055H_16-M">
-<connects>
-<connect gate="A" pin="!CNVST" pad="8"/>
-<connect gate="A" pin="!CS" pad="12"/>
-<connect gate="A" pin="!EOC" pad="16"/>
-<connect gate="A" pin="AIN0" pad="1"/>
-<connect gate="A" pin="AIN1" pad="2"/>
-<connect gate="A" pin="AIN2" pad="3"/>
-<connect gate="A" pin="AIN3" pad="4"/>
-<connect gate="A" pin="DIN" pad="14"/>
-<connect gate="A" pin="DOUT" pad="15"/>
-<connect gate="A" pin="GND" pad="10"/>
-<connect gate="A" pin="NC" pad="6"/>
-<connect gate="A" pin="NC_2" pad="5"/>
-<connect gate="A" pin="REF+" pad="9"/>
-<connect gate="A" pin="REF-" pad="7"/>
-<connect gate="A" pin="SCLK" pad="13"/>
-<connect gate="A" pin="VDD" pad="11"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="BUILT_BY" value="EMA_UL_Team" constant="no"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="MAX11634EEE+T" constant="no"/>
-<attribute name="VENDOR" value="Maxim Integrated Products" constant="no"/>
-</technology>
-</technologies>
-</device>
-<device name="21-0055H_16-L" package="21-0055H_16-L">
-<connects>
-<connect gate="A" pin="!CNVST" pad="8"/>
-<connect gate="A" pin="!CS" pad="12"/>
-<connect gate="A" pin="!EOC" pad="16"/>
-<connect gate="A" pin="AIN0" pad="1"/>
-<connect gate="A" pin="AIN1" pad="2"/>
-<connect gate="A" pin="AIN2" pad="3"/>
-<connect gate="A" pin="AIN3" pad="4"/>
-<connect gate="A" pin="DIN" pad="14"/>
-<connect gate="A" pin="DOUT" pad="15"/>
-<connect gate="A" pin="GND" pad="10"/>
-<connect gate="A" pin="NC" pad="6"/>
-<connect gate="A" pin="NC_2" pad="5"/>
-<connect gate="A" pin="REF+" pad="9"/>
-<connect gate="A" pin="REF-" pad="7"/>
-<connect gate="A" pin="SCLK" pad="13"/>
-<connect gate="A" pin="VDD" pad="11"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="BUILT_BY" value="EMA_UL_Team" constant="no"/>
-<attribute name="MANUFACTURER_PART_NUMBER" value="MAX11634EEE+T" constant="no"/>
-<attribute name="VENDOR" value="Maxim Integrated Products" constant="no"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
 <deviceset name="CQ2065">
+<description>current sensor</description>
 <gates>
 <gate name="G$1" symbol="CQ2065" x="0" y="0"/>
 </gates>
@@ -1458,6 +1371,7 @@ Diode with low voltage drop</description>
 </devices>
 </deviceset>
 <deviceset name="MAX11635EEE+" prefix="U">
+<description>12bit ADC</description>
 <gates>
 <gate name="A" symbol="MAX11635EEE+" x="-33.02" y="7.62"/>
 </gates>
@@ -1549,6 +1463,7 @@ Diode with low voltage drop</description>
 </devices>
 </deviceset>
 <deviceset name="LM2678SX-5.0/NOPB" prefix="U">
+<description>24-5v regulator</description>
 <gates>
 <gate name="G$1" symbol="LM2678SX-5.0/NOPB" x="0" y="0"/>
 </gates>
@@ -1569,6 +1484,7 @@ Diode with low voltage drop</description>
 </devices>
 </deviceset>
 <deviceset name="7447709220">
+<description>22uH Inductor</description>
 <gates>
 <gate name="G$1" symbol="7447709220" x="0" y="0"/>
 </gates>
@@ -1585,6 +1501,7 @@ Diode with low voltage drop</description>
 </devices>
 </deviceset>
 <deviceset name="TR3E156M050C0300" prefix="C" uservalue="yes">
+<description>4.7uF tantalum capacitor</description>
 <gates>
 <gate name="G$1" symbol="CPOL-US" x="0" y="0"/>
 </gates>
@@ -1603,6 +1520,7 @@ Diode with low voltage drop</description>
 </devices>
 </deviceset>
 <deviceset name="860010373009" prefix="C" uservalue="yes">
+<description>180uF electrolytic capacitor</description>
 <gates>
 <gate name="G$1" symbol="CPOL-US" x="0" y="0"/>
 </gates>
@@ -1621,6 +1539,7 @@ Diode with low voltage drop</description>
 </devices>
 </deviceset>
 <deviceset name="SD2114S040S8R0">
+<description>Diode Schottky 5A</description>
 <gates>
 <gate name="G$1" symbol="DIODE-SCHOTTKY" x="0" y="0"/>
 </gates>
@@ -1637,6 +1556,8 @@ Diode with low voltage drop</description>
 </devices>
 </deviceset>
 <deviceset name="3550(2)">
+<description>&lt;p&gt;30A Fuse holder that requires 2 3550s&lt;/p&gt;
+&lt;a href="https://www.keyelco.com/userAssets/file/M65p41.pdf"&gt;Datasheet&lt;/a&gt;</description>
 <gates>
 <gate name="G$1" symbol="3550" x="0" y="0"/>
 </gates>
@@ -1653,6 +1574,7 @@ Diode with low voltage drop</description>
 </devices>
 </deviceset>
 <deviceset name="ERB-RE5R00V">
+<description>5A fuse</description>
 <gates>
 <gate name="G$1" symbol="3550" x="0" y="0"/>
 </gates>
@@ -1669,6 +1591,7 @@ Diode with low voltage drop</description>
 </devices>
 </deviceset>
 <deviceset name="PRT-10474">
+<description>power connector</description>
 <gates>
 <gate name="G$1" symbol="PINHD2" x="5.08" y="0"/>
 </gates>
@@ -1694,6 +1617,7 @@ Diode with low voltage drop</description>
 </devices>
 </deviceset>
 <deviceset name="SMAJ26A-13-F">
+<description>TVS diode</description>
 <gates>
 <gate name="G$1" symbol="TVS" x="0" y="0"/>
 </gates>
@@ -1727,6 +1651,7 @@ Diode with low voltage drop</description>
 </devices>
 </deviceset>
 <deviceset name="AMPHENOL_2X3_2.54MM">
+<description>2x3 Connector</description>
 <gates>
 <gate name="G$1" symbol="CONN_06" x="0" y="0"/>
 </gates>
