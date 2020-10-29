@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.5.2">
+<eagle version="9.5.1">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -12930,45 +12930,57 @@ In this library you will find LEDs and other visual output devices.
 <description>Generated from &lt;b&gt;Kirbi_ControlBoard.sch&lt;/b&gt;&lt;p&gt;
 by exp-lbrs.ulp</description>
 <packages>
-<package name="DFLS130L-7_30V_1A">
-<description>DFLS130L-7_30V_1A</description>
-<smd name="P$1" x="1.6" y="0" dx="1.4" dy="0.9" layer="1" rot="R90"/>
-<smd name="P$2" x="-0.95" y="0" dx="2.2" dy="1.4" layer="1" rot="R180"/>
-<wire x1="-1.5" y1="0.965" x2="-1.5" y2="-0.965" width="0.1524" layer="21"/>
-<wire x1="-1.5" y1="-0.965" x2="1.5" y2="-0.965" width="0.1524" layer="21"/>
-<wire x1="1.5" y1="-0.965" x2="1.5" y2="0.965" width="0.1524" layer="21"/>
-<wire x1="1.5" y1="0.965" x2="-1.5" y2="0.965" width="0.1524" layer="21"/>
-<text x="-2" y="2" size="1.016" layer="25" font="vector">&gt;NAME</text>
-<text x="-2" y="-2.7" size="1.016" layer="27" font="vector">&gt;VALUE</text>
+<package name="DFLS130L-7">
+<description>&lt;a href  = "https://www.diodes.com/assets/Datasheets/ds30492.pdf"&gt;Datasheet&lt;\a&gt;</description>
+<smd name="1" x="1.6" y="0" dx="1.4" dy="0.9" layer="1" rot="R90"/>
+<smd name="2" x="-0.95" y="0" dx="2.2" dy="1.4" layer="1" rot="R180"/>
+<wire x1="-1.5" y1="0.965" x2="-1.5" y2="-0.965" width="0.2" layer="21"/>
+<wire x1="-1.5" y1="-0.965" x2="1.5" y2="-0.965" width="0.2" layer="21"/>
+<wire x1="1.5" y1="-0.965" x2="1.5" y2="0.965" width="0.2" layer="21"/>
+<wire x1="1.5" y1="0.965" x2="-1.5" y2="0.965" width="0.2" layer="21"/>
+<text x="-2" y="2" size="1" layer="25" font="vector">&gt;NAME</text>
+<text x="-2" y="-2.7" size="1" layer="27" font="vector" align="top-left">&gt;VALUE</text>
+<rectangle x1="-1.6" y1="-1.1" x2="1.6" y2="1.1" layer="39"/>
 </package>
 </packages>
 <symbols>
-<symbol name="DIODE">
+<symbol name="SCHOTTKY">
 <wire x1="-1.27" y1="-1.27" x2="1.27" y2="0" width="0.254" layer="94"/>
 <wire x1="1.27" y1="0" x2="-1.27" y2="1.27" width="0.254" layer="94"/>
+<wire x1="1.905" y1="1.27" x2="1.27" y2="1.27" width="0.254" layer="94"/>
 <wire x1="1.27" y1="1.27" x2="1.27" y2="0" width="0.254" layer="94"/>
-<wire x1="-1.27" y1="1.27" x2="-1.27" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="1.27" x2="-1.27" y2="0" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="0" x2="-1.27" y2="-1.27" width="0.254" layer="94"/>
 <wire x1="1.27" y1="0" x2="1.27" y2="-1.27" width="0.254" layer="94"/>
-<text x="-2.54" y="2.54" size="1.27" layer="95">&gt;NAME</text>
-<text x="-2.54" y="-3.81" size="1.27" layer="96">&gt;VALUE</text>
-<pin name="A" x="-2.54" y="0" visible="off" length="short" direction="pas"/>
-<pin name="C" x="2.54" y="0" visible="off" length="short" direction="pas" rot="R180"/>
+<wire x1="1.905" y1="1.27" x2="1.905" y2="1.016" width="0.254" layer="94"/>
+<wire x1="1.27" y1="-1.27" x2="0.635" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="0.635" y1="-1.016" x2="0.635" y2="-1.27" width="0.254" layer="94"/>
+<wire x1="-1.27" y1="0" x2="-2.54" y2="0" width="0.254" layer="94"/>
+<wire x1="1.27" y1="0" x2="2.54" y2="0" width="0.254" layer="94"/>
+<text x="-2.54" y="2.54" size="1.778" layer="95">&gt;NAME</text>
+<text x="-2.54" y="-2.54" size="1.778" layer="96" align="top-left">&gt;VALUE</text>
+<pin name="A" x="-2.54" y="0" visible="off" length="point" direction="pas"/>
+<pin name="C" x="2.54" y="0" visible="off" length="point" direction="pas" rot="R180"/>
 </symbol>
 </symbols>
 <devicesets>
-<deviceset name="DFLS130L-7_30V_1A">
-<description>DFLS130L-7_30V_1A</description>
+<deviceset name="DFLS130L-7" prefix="D" uservalue="yes">
+<description>DFLS130L-7 &lt;br&gt;
+&lt;a href = "https://www.diodes.com/assets/Datasheets/ds30492.pdf"&gt;Datasheet&lt;\a&gt;</description>
 <gates>
-<gate name="G$1" symbol="DIODE" x="0" y="0"/>
+<gate name="G$1" symbol="SCHOTTKY" x="0" y="0"/>
 </gates>
 <devices>
-<device name="" package="DFLS130L-7_30V_1A">
+<device name="" package="DFLS130L-7">
 <connects>
-<connect gate="G$1" pin="A" pad="P$2"/>
-<connect gate="G$1" pin="C" pad="P$1"/>
+<connect gate="G$1" pin="A" pad="1"/>
+<connect gate="G$1" pin="C" pad="2"/>
 </connects>
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="DKPN" value="DFLS130LDICT-ND" constant="no"/>
+<attribute name="VALUE" value="30" constant="no"/>
+</technology>
 </technologies>
 </device>
 </devices>
@@ -13050,8 +13062,8 @@ by exp-lbrs.ulp</description>
 <part name="D1" library="CurrentSensing" deviceset="SD2114S040S8R0" device=""/>
 <part name="XF1" library="CurrentSensing" deviceset="3550(2)" device="" value="40A"/>
 <part name="F1" library="CurrentSensing" deviceset="ERB-RE5R00V" device="" value="5A"/>
-<part name="D2" library="Kirbi_ControlBoard" deviceset="DFLS130L-7_30V_1A" device=""/>
-<part name="D3" library="Kirbi_ControlBoard" deviceset="DFLS130L-7_30V_1A" device=""/>
+<part name="D2" library="Kirbi_ControlBoard" deviceset="DFLS130L-7" device="" value="30"/>
+<part name="D3" library="Kirbi_ControlBoard" deviceset="DFLS130L-7" device="" value="30"/>
 <part name="R6" library="rcl" library_urn="urn:adsk.eagle:library:334" deviceset="R-US_" device="R0603" package3d_urn="urn:adsk.eagle:package:23555/3" value="1k"/>
 <part name="+3V3" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="+3V3" device=""/>
 <part name="GND16" library="supply1" library_urn="urn:adsk.eagle:library:371" deviceset="GND" device=""/>
@@ -13322,7 +13334,7 @@ Connector</text>
 <attribute name="VALUE" x="82.55" y="44.45" size="1.27" layer="96" rot="R180"/>
 </instance>
 <instance part="D3" gate="G$1" x="85.09" y="78.74" smashed="yes" rot="R180">
-<attribute name="NAME" x="91.44" y="77.47" size="1.27" layer="95" rot="R180"/>
+<attribute name="NAME" x="86.36" y="82.55" size="1.27" layer="95" rot="R180"/>
 <attribute name="VALUE" x="86.36" y="76.2" size="1.27" layer="96" rot="R180"/>
 </instance>
 <instance part="R6" gate="G$1" x="97.79" y="189.23" smashed="yes" rot="R90">

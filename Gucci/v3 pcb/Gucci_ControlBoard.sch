@@ -5568,8 +5568,8 @@ Molex 1x3 1.25mm SMT &lt;br&gt;
 <devices>
 <device name="" package="DFLS130L-7">
 <connects>
-<connect gate="G$1" pin="A" pad="2"/>
-<connect gate="G$1" pin="C" pad="1"/>
+<connect gate="G$1" pin="A" pad="1"/>
+<connect gate="G$1" pin="C" pad="2"/>
 </connects>
 <technologies>
 <technology name="">
