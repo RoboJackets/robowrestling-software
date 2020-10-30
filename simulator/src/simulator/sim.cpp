@@ -56,7 +56,9 @@ int main() {
     int i = 0;
 	while (window->isOpen()) {
         if (i < 5) {
-            physics_updater->move_robot(robot1, 100, 99, 1);
+            auto dummy_vector = std::vector<double>();
+            std::vector<int> r1_drive = robot1->strat_->next_action(dummy_vector);
+            physics_updater->move_robot(robot1, r1_drive[0], r1_drive[1], 1);
             physics_updater->move_robot(robot2, 100, 99, 1);
             // std::cout << robot1->x_pos << ", " << robot1->y_pos << std::endl;
             // std::cout << robot2->x_pos << ", " << robot2->y_pos << std::endl;

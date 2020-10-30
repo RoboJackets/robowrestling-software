@@ -1,6 +1,10 @@
 #include <strategy/slammywhammy.h>
 #include <iostream>
 
-int main() {
-  std::cout << "hello world" << std::endl;
+SlammyWhammy::SlammyWhammy() {
+    state_ = 0;
+}
+
+std::vector<int> SlammyWhammy::next_action(std::vector<double> inputs) {
+    return std::vector<int>(2, 90);
 }

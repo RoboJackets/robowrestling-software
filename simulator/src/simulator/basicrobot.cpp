@@ -13,4 +13,6 @@ BasicRobot::BasicRobot(double x, double y, double a) {
 	right_wheel_velocity = 0;
 	max_wheel_velocity = 8;
 	wheel_acceleration = 1;
+
+	strat_ = std::make_unique<SlammyWhammy>();
 }

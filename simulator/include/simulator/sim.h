@@ -1,7 +1,6 @@
 #ifndef sim_h
 #define sim_h
 
-
 #include <simulator/robot.h>
 #include <simulator/basicrobot.h>
 #include <simulator/physics/robotphysicsupdater.h>

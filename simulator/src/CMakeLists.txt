@@ -8,4 +8,4 @@
 
 
 add_executable(sim.sw simulator/sim.cpp simulator/basicrobot.cpp simulator/physics/robotphysicsupdater.cpp)
-target_link_libraries(sim.sw ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
+target_link_libraries(sim.sw LINK_PUBLIC Strategies ${SFML_LIBRARIES} ${SFML_DEPENDENCIES})
