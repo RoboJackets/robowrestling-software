@@ -2,6 +2,7 @@
 #define robot_h
 
 #include <vector>
+#include <memory>
 
 class Robot { //abstract class of a robot
 	public:

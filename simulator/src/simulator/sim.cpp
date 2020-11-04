@@ -43,19 +43,17 @@ void update() {
 
 int main() {
 	/* code */
-<<<<<<< HEAD:simulator/src/simulator/sim.cpp
 	robot1 = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)-65, WINDOW_HEIGHT/2, 0);
 	robot2 = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)+65, WINDOW_HEIGHT/2, M_PI);
     physics_updater = std::make_shared<RobotPhysicsUpdater>();
-=======
-	robot1 = new BasicRobot((WINDOW_WIDTH/2)-65, WINDOW_HEIGHT/2, 90);
-	robot2 = new BasicRobot((WINDOW_WIDTH/2)+65, WINDOW_HEIGHT/2, 270);
-    physics_updater = new RobotPhysicsUpdater();
 
-    DistanceSensor* test_distance_sensor = new DistanceSensor(robot1, 10, 10, 0, M_PI/16, 200);
-    std::cout << test_distance_sensor->read(robot2) << std::endl;
-    distance_sensor_vec.push_back(test_distance_sensor);
->>>>>>> add test distance sensor w/ read to sim::main():simulator/sim.cpp
+    DistanceSensor* test_distance_sensor = new DistanceSensor(robot1, 0, 0, 0, M_PI/16, 200);
+    std::cout << robot1->x_pos << " " <<robot1->y_pos << std::endl;
+
+    std::cout << robot1->x_pos+test_distance_sensor->_d_x << " " <<robot1->y_pos+test_distance_sensor -> _d_y << std::endl;
+    test_distance_sensor->read(robot2);
+
+    // distance_sensor_vec.push_back(test_distance_sensor);
     
     window = std::make_shared<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "My window");
     window->clear(sf::Color::White); // clear the window with white color
@@ -67,8 +65,8 @@ int main() {
     int i = 0;
 	while (window->isOpen()) {
         if (i < 5) {
-            physics_updater->move_robot(robot1, 100, 99, 1);
-            physics_updater->move_robot(robot2, 100, 99, 1);
+            // physics_updater->move_robot(robot1, 100, 99, 1);
+            // physics_updater->move_robot(robot2, 100, 99, 1);
             // std::cout << robot1->x_pos << ", " << robot1->y_pos << std::endl;
             // std::cout << robot2->x_pos << ", " << robot2->y_pos << std::endl;
             // i++;

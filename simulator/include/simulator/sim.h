@@ -1,13 +1,19 @@
 #ifndef sim_h
 #define sim_h
 
+#include <SFML/Graphics.hpp>
+#include <memory>
+#include <cmath>
+#include <vector>
 
 #include <simulator/robot.h>
 #include <simulator/basicrobot.h>
 #include <simulator/physics/robotphysicsupdater.h>
-#include <SFML/Graphics.hpp>
-#include <memory>
-#include <cmath>
+
+#include <simulator/abstract_distance_sensor.h>
+#include <simulator/abstract_line_sensor.h>
+#include <simulator/distance_sensor.h>
+
 
 #define WINDOW_HEIGHT 600
 #define WINDOW_WIDTH 800
@@ -18,6 +24,8 @@ std::shared_ptr<Robot> robot1; //robot object that stores information about a ro
 std::shared_ptr<Robot> robot2; //see above
 
 std::shared_ptr<sf::RenderWindow> window;
+std::vector<AbstractDistanceSensor*> distance_sensor_vec;
+std::vector<AbstractLineSensor*> line_sensor_vec;
 
 std::shared_ptr<RobotPhysicsUpdater> physics_updater;
 

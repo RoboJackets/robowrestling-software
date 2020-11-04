@@ -1,18 +1,18 @@
 #ifndef abstract_distance_sensor_h
 #define abstract_distance_sensor_h
 
-#include "robot.h"
+#include <simulator/robot.h>
 
 class AbstractDistanceSensor {
     public:
         double _d_x;
         double _d_y;
         double _d_angle;
-        Robot* _robot; // robot this sensor is on
+        std::shared_ptr<Robot> _robot; // robot this sensor is on
         double _cone_angle;
         double _cone_length;
     
-        double read(Robot* target);
+        double read(std::shared_ptr<Robot> target);
 
         void setSensorPosition(double d_x, double d_y, double d_angle) {
             _d_x = d_x;
@@ -25,14 +25,14 @@ class AbstractDistanceSensor {
             _cone_length = cone_length;
         }
         
-        void setRobot(Robot* robot) {
+        void setRobot(std::shared_ptr<Robot> robot) {
             _robot = robot;
         }
 
         double getX() {return _d_x;};
         double getY() {return _d_y;};
         double getAngle() {return _d_angle;};
-        Robot* getRobot() {return _robot;};
+        std::shared_ptr<Robot> getRobot() {return _robot;};
 };
 
 #endif
