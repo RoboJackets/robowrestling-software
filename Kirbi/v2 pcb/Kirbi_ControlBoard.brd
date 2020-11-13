@@ -310,6 +310,70 @@
 <text x="-2" y="3" size="1" layer="25" font="vector" ratio="10">&gt;NAME</text>
 <text x="-2" y="-3" size="1" layer="27" font="vector" ratio="10" align="top-left">&gt;VALUE</text>
 </package>
+<package name="TEENSY_3.6">
+<wire x1="-8.89" y1="29.21" x2="8.89" y2="29.21" width="0.127" layer="51"/>
+<wire x1="8.89" y1="29.21" x2="8.89" y2="-31.75" width="0.127" layer="51"/>
+<wire x1="8.89" y1="-31.75" x2="-8.89" y2="-31.75" width="0.127" layer="51"/>
+<wire x1="-8.89" y1="-31.75" x2="-8.89" y2="29.21" width="0.127" layer="51"/>
+<wire x1="-3.81" y1="30.48" x2="3.81" y2="30.48" width="0.2032" layer="21"/>
+<wire x1="3.81" y1="30.48" x2="3.81" y2="29.21" width="0.2032" layer="21"/>
+<wire x1="3.81" y1="29.21" x2="8.89" y2="29.21" width="0.2032" layer="21"/>
+<wire x1="8.89" y1="29.21" x2="8.89" y2="-31.75" width="0.2032" layer="21"/>
+<wire x1="8.89" y1="-31.75" x2="-8.89" y2="-31.75" width="0.2032" layer="21"/>
+<wire x1="-8.89" y1="-31.75" x2="-8.89" y2="29.21" width="0.2032" layer="21"/>
+<wire x1="-8.89" y1="29.21" x2="-3.81" y2="29.21" width="0.2032" layer="21"/>
+<wire x1="-3.81" y1="29.21" x2="-3.81" y2="30.48" width="0.2032" layer="21"/>
+<pad name="0" x="-7.62" y="25.4" drill="0.9652"/>
+<pad name="1" x="-7.62" y="22.86" drill="0.9652"/>
+<pad name="2" x="-7.62" y="20.32" drill="0.9652"/>
+<pad name="3" x="-7.62" y="17.78" drill="0.9652"/>
+<pad name="3.3V" x="7.62" y="22.86" drill="0.9652"/>
+<pad name="3.3V3" x="-7.62" y="-7.62" drill="0.9652"/>
+<pad name="4" x="-7.62" y="15.24" drill="0.9652"/>
+<pad name="5" x="-7.62" y="12.7" drill="0.9652"/>
+<pad name="6" x="-7.62" y="10.16" drill="0.9652"/>
+<pad name="7" x="-7.62" y="7.62" drill="0.9652"/>
+<pad name="8" x="-7.62" y="5.08" drill="0.9652"/>
+<pad name="9" x="-7.62" y="2.54" drill="0.9652"/>
+<pad name="10" x="-7.62" y="0" drill="0.9652"/>
+<pad name="11" x="-7.62" y="-2.54" drill="0.9652"/>
+<pad name="12" x="-7.62" y="-5.08" drill="0.9652"/>
+<pad name="13" x="7.62" y="-5.08" drill="0.9652"/>
+<pad name="14/A0" x="7.62" y="-2.54" drill="0.9652"/>
+<pad name="15/A1" x="7.62" y="0" drill="0.9652"/>
+<pad name="16/A2" x="7.62" y="2.54" drill="0.9652"/>
+<pad name="17/A3" x="7.62" y="5.08" drill="0.9652"/>
+<pad name="18/A4" x="7.62" y="7.62" drill="0.9652"/>
+<pad name="19/A5" x="7.62" y="10.16" drill="0.9652"/>
+<pad name="20/A6" x="7.62" y="12.7" drill="0.9652"/>
+<pad name="21/A7" x="7.62" y="15.24" drill="0.9652"/>
+<pad name="22/A8" x="7.62" y="17.78" drill="0.9652"/>
+<pad name="23/A9" x="7.62" y="20.32" drill="0.9652"/>
+<pad name="24" x="-7.62" y="-10.16" drill="0.9652"/>
+<pad name="25" x="-7.62" y="-12.7" drill="0.9652"/>
+<pad name="26" x="-7.62" y="-15.24" drill="0.9652"/>
+<pad name="27" x="-7.62" y="-17.78" drill="0.9652"/>
+<pad name="28" x="-7.62" y="-20.32" drill="0.9652"/>
+<pad name="29" x="-7.62" y="-22.86" drill="0.9652"/>
+<pad name="30" x="-7.62" y="-25.4" drill="0.9652"/>
+<pad name="31/A12" x="-7.62" y="-27.94" drill="0.9652"/>
+<pad name="32/A13" x="-7.62" y="-30.48" drill="0.9652"/>
+<pad name="33/A14" x="7.62" y="-30.48" drill="0.9652"/>
+<pad name="34/A15" x="7.62" y="-27.94" drill="0.9652"/>
+<pad name="35/A16" x="7.62" y="-25.4" drill="0.9652"/>
+<pad name="36/A17" x="7.62" y="-22.86" drill="0.9652"/>
+<pad name="37/A18" x="7.62" y="-20.32" drill="0.9652"/>
+<pad name="38/A19" x="7.62" y="-17.78" drill="0.9652"/>
+<pad name="39/A20" x="7.62" y="-15.24" drill="0.9652"/>
+<pad name="A21" x="7.62" y="-12.7" drill="0.9652"/>
+<pad name="A22" x="7.62" y="-10.16" drill="0.9652"/>
+<pad name="AGND" x="7.62" y="25.4" drill="0.9652"/>
+<pad name="GND" x="-7.62" y="27.94" drill="0.9652"/>
+<pad name="GND1" x="7.62" y="-7.62" drill="0.9652"/>
+<pad name="VIN" x="7.62" y="27.94" drill="0.9652"/>
+<text x="-3.175" y="31.115" size="1.27" layer="25" font="vector">&gt;NAME</text>
+<text x="1.27" y="-13.97" size="1.27" layer="27" font="vector" rot="R90">&gt;VALUE</text>
+</package>
 </packages>
 </library>
 <library name="SparkFun-Resistors">
@@ -4403,70 +4467,6 @@ by exp-lbrs.ulp</description>
 <text x="-7" y="-6" size="1" layer="27" font="vector" align="top-left">&gt;VALUE</text>
 <rectangle x1="-7.62" y1="-4.699" x2="7.62" y2="4.826" layer="39"/>
 </package>
-<package name="TEENSY_3.6_DIL">
-<wire x1="-8.89" y1="29.21" x2="8.89" y2="29.21" width="0.2" layer="51"/>
-<wire x1="8.89" y1="29.21" x2="8.89" y2="-31.75" width="0.127" layer="51"/>
-<wire x1="8.89" y1="-31.75" x2="-8.89" y2="-31.75" width="0.127" layer="51"/>
-<wire x1="-8.89" y1="-31.75" x2="-8.89" y2="29.21" width="0.127" layer="51"/>
-<wire x1="-3.81" y1="30.48" x2="3.81" y2="30.48" width="0.2" layer="21"/>
-<wire x1="3.81" y1="30.48" x2="3.81" y2="29.21" width="0.2" layer="21"/>
-<wire x1="3.81" y1="29.21" x2="8.89" y2="29.21" width="0.2" layer="21"/>
-<wire x1="8.89" y1="29.21" x2="8.89" y2="-31.75" width="0.2" layer="21"/>
-<wire x1="8.89" y1="-31.75" x2="-8.89" y2="-31.75" width="0.2" layer="21"/>
-<wire x1="-8.89" y1="-31.75" x2="-8.89" y2="29.21" width="0.2" layer="21"/>
-<wire x1="-8.89" y1="29.21" x2="-3.81" y2="29.21" width="0.2" layer="21"/>
-<wire x1="-3.81" y1="29.21" x2="-3.81" y2="30.48" width="0.2" layer="21"/>
-<pad name="0" x="-7.62" y="25.4" drill="0.9652"/>
-<pad name="1" x="-7.62" y="22.86" drill="0.9652"/>
-<pad name="2" x="-7.62" y="20.32" drill="0.9652"/>
-<pad name="3" x="-7.62" y="17.78" drill="0.9652"/>
-<pad name="3.3V" x="7.62" y="22.86" drill="0.9652"/>
-<pad name="3.3V3" x="-7.62" y="-7.62" drill="0.9652"/>
-<pad name="4" x="-7.62" y="15.24" drill="0.9652"/>
-<pad name="5" x="-7.62" y="12.7" drill="0.9652"/>
-<pad name="6" x="-7.62" y="10.16" drill="0.9652"/>
-<pad name="7" x="-7.62" y="7.62" drill="0.9652"/>
-<pad name="8" x="-7.62" y="5.08" drill="0.9652"/>
-<pad name="9" x="-7.62" y="2.54" drill="0.9652"/>
-<pad name="10" x="-7.62" y="0" drill="0.9652"/>
-<pad name="11" x="-7.62" y="-2.54" drill="0.9652"/>
-<pad name="12" x="-7.62" y="-5.08" drill="0.9652"/>
-<pad name="13" x="7.62" y="-5.08" drill="0.9652"/>
-<pad name="14/A0" x="7.62" y="-2.54" drill="0.9652"/>
-<pad name="15/A1" x="7.62" y="0" drill="0.9652"/>
-<pad name="16/A2" x="7.62" y="2.54" drill="0.9652"/>
-<pad name="17/A3" x="7.62" y="5.08" drill="0.9652"/>
-<pad name="18/A4" x="7.62" y="7.62" drill="0.9652"/>
-<pad name="19/A5" x="7.62" y="10.16" drill="0.9652"/>
-<pad name="20/A6" x="7.62" y="12.7" drill="0.9652"/>
-<pad name="21/A7" x="7.62" y="15.24" drill="0.9652"/>
-<pad name="22/A8" x="7.62" y="17.78" drill="0.9652"/>
-<pad name="23/A9" x="7.62" y="20.32" drill="0.9652"/>
-<pad name="24" x="-7.62" y="-10.16" drill="0.9652"/>
-<pad name="25" x="-7.62" y="-12.7" drill="0.9652"/>
-<pad name="26" x="-7.62" y="-15.24" drill="0.9652"/>
-<pad name="27" x="-7.62" y="-17.78" drill="0.9652"/>
-<pad name="28" x="-7.62" y="-20.32" drill="0.9652"/>
-<pad name="29" x="-7.62" y="-22.86" drill="0.9652"/>
-<pad name="30" x="-7.62" y="-25.4" drill="0.9652"/>
-<pad name="31/A12" x="-7.62" y="-27.94" drill="0.9652"/>
-<pad name="32/A13" x="-7.62" y="-30.48" drill="0.9652"/>
-<pad name="33/A14" x="7.62" y="-30.48" drill="0.9652"/>
-<pad name="34/A15" x="7.62" y="-27.94" drill="0.9652"/>
-<pad name="35/A16" x="7.62" y="-25.4" drill="0.9652"/>
-<pad name="36/A17" x="7.62" y="-22.86" drill="0.9652"/>
-<pad name="37/A18" x="7.62" y="-20.32" drill="0.9652"/>
-<pad name="38/A19" x="7.62" y="-17.78" drill="0.9652"/>
-<pad name="39/A20" x="7.62" y="-15.24" drill="0.9652"/>
-<pad name="A21" x="7.62" y="-12.7" drill="0.9652"/>
-<pad name="A22" x="7.62" y="-10.16" drill="0.9652"/>
-<pad name="AGND" x="7.62" y="25.4" drill="0.9652"/>
-<pad name="GND" x="-7.62" y="27.94" drill="0.9652"/>
-<pad name="GND1" x="7.62" y="-7.62" drill="0.9652"/>
-<pad name="VIN" x="7.62" y="27.94" drill="0.9652"/>
-<text x="-3.175" y="31.115" size="1" layer="25" font="vector">&gt;NAME</text>
-<text x="1.27" y="-13.97" size="1" layer="27" font="vector" rot="R90">&gt;VALUE</text>
-</package>
 </packages>
 <packages3d>
 <package3d name="0603" urn="urn:adsk.eagle:package:39650/1" type="box">
@@ -4765,7 +4765,7 @@ Source: &lt;a href=&quot;https://jlcpcb.com/capabilities/Capabilities&quot;&gt;J
 </pass>
 </autorouter>
 <elements>
-<element name="U1" library="Kirbi_ControlBoard" package="TEENSY_3.6_DIL" value="DEV-14057" x="18" y="38" smashed="yes" rot="R90">
+<element name="U1" library="Gucci_ControlBoard" package="TEENSY_3.6" value="TEENSY_3.6" x="18" y="38" smashed="yes" rot="R90">
 <attribute name="DKPN" value="1568-1442-ND" x="18" y="38" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="NAME" x="47.275" y="43.985" size="1.6764" layer="25" font="vector" rot="R180"/>
 </element>
