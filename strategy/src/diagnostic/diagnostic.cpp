@@ -1,1 +1,3 @@
-c
+void checkMotor() {
+    
+}
