@@ -5,6 +5,31 @@ RobotPhysicsUpdater::RobotPhysicsUpdater() {
 
 }
 
+void update(std::shared_ptr<Robot> r1, std::vector<double> r1_update, std::shared_ptr<Robot> r2, std::vector<double> r2_update) {
+	RobotPhysicsUpdater::move_robot(r1, r1_update[0], r1_update[1], r1_update[2]);
+	RobotPhysicsUpdater::move_robot(r2, r2_update[0], r2_update[1], r2_update[2]);
+
+	auto r1_corners = r1->corners();
+	auto r2_corners = r2->corners();
+	if (r1->x_pos_ < r2->x_pos_) { //r1 is left of r2
+		if (r1->y_pos_ < r2->y_pos_) {
+			std::pair<double, double> left = r2_corners[0];
+			std::pair<double, double> lower = r2_corners[0];
+			for (int i = 1; i < 3; i++) {
+
+			}
+		} else {
+
+		}
+	} else { //r2 is left of r1
+		if (r1->y_pos_ < r2->y_pos_) {
+
+		} else {
+			
+		}
+	}
+}
+
 void RobotPhysicsUpdater::move_robot(std::shared_ptr<Robot> r, double left_wheel, double right_wheel, double duration) {
 	//calculate how fast the right wheel moves
 	// std::cout << r->angle << std::endl;
