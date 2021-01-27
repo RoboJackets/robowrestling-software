@@ -28,14 +28,26 @@ double DistanceSensor::read(std::shared_ptr<Robot> target) {
         {center[0] - w_vec[0] - l_vec[0], center[1] - w_vec[1] - l_vec[1]}
     };
 
+    if (_d_angle == target -> angle || fmod(abs(_d_angle - target->angle), M_PI/2) < 0.1) {
+        // sensor perpendicular or parallel to the target, shortest distance will be to an edge not a corner
+        double m = (corners[0][0]-corners[1][0])/(corners[0][1]-corners[1][1]);
+        double c = -m*corners[0][0];
+        double dist1 = abs(m*corners[0][0]-corners[0][1]+c)/sqrt(m*m + 1);
+
+        m = (corners[1][0]-corners[2][0])/(corners[1][1]-corners[2][1]);
+        c = -m*corners[1][0];
+        double dist2 = abs(m*corners[0][0]-corners[0][1]+c)/sqrt(m*m + 1);
+        return dist1 < dist2 ? dist1 : dist2;
+    } 
+
     double sensor_x = _d_x + _robot->x_pos;
     double sensor_y = _d_y + _robot->y_pos;
 
     std::vector<double> corner_dists = {
-        {pow(corners[0][0]-sensor_x, 2.0) + pow(corners[0][1]-sensor_y, 2.0)},
-        {pow(corners[1][0]-sensor_x, 2.0) + pow(corners[1][1]-sensor_y, 2.0)},
-        {pow(corners[2][0]-sensor_x, 2.0) + pow(corners[2][1]-sensor_y, 2.0)},
-        {pow(corners[3][0]-sensor_x, 2.0) + pow(corners[3][1]-sensor_y, 2.0)}
+        pow(corners[0][0]-sensor_x, 2.0) + pow(corners[0][1]-sensor_y, 2.0),
+        pow(corners[1][0]-sensor_x, 2.0) + pow(corners[1][1]-sensor_y, 2.0),
+        pow(corners[2][0]-sensor_x, 2.0) + pow(corners[2][1]-sensor_y, 2.0),
+        pow(corners[3][0]-sensor_x, 2.0) + pow(corners[3][1]-sensor_y, 2.0)
     };
     
     double min_dist = *std::min_element(std::begin(corner_dists), std::end(corner_dists));

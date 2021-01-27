@@ -48,12 +48,8 @@ int main() {
     physics_updater = std::make_shared<RobotPhysicsUpdater>();
 
     DistanceSensor* test_distance_sensor = new DistanceSensor(robot1, 0, 0, 0, M_PI/16, 200);
-    std::cout << robot1->x_pos << " " <<robot1->y_pos << std::endl;
 
-    std::cout << robot1->x_pos+test_distance_sensor->_d_x << " " <<robot1->y_pos+test_distance_sensor -> _d_y << std::endl;
-    test_distance_sensor->read(robot2);
-
-    // distance_sensor_vec.push_back(test_distance_sensor);
+    test_distance_sensor->read(robot2); // double value of distance from test_distance_sensor to robot 2
     
     window = std::make_shared<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "My window");
     window->clear(sf::Color::White); // clear the window with white color
