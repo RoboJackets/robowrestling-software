@@ -10,5 +10,5 @@ void check_motor() {
 }
 
 void check_line_sensor() {
-
+	get_line_flag();
 }
