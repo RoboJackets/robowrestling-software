@@ -1,16 +1,18 @@
 #include <simulator/basicrobot.h>
 
-BasicRobot::BasicRobot(double x, double y, double a) {
-	x_pos = x;
-	y_pos = y;
-	angle = a;
+BasicRobot::BasicRobot(double x_pos, double y_pos, double angle) {
+	x_pos_ = x_pos;
+	y_pos_ = y_pos;
+	angle_ = angle;
 
-	width = 30;
-	length = 30;
+	width_ = 30;
+	length_ = 30;
 
-	wheel_radius = 1;
-	left_wheel_velocity = 0;
-	right_wheel_velocity = 0;
-	max_wheel_velocity = 8;
-	wheel_acceleration = 1;
+	wheel_radius_ = 1;
+	left_wheel_velocity_ = 0;
+	right_wheel_velocity_ = 0;
+	max_wheel_velocity_ = 8;
+	wheel_acceleration_ = 1;
+
+	strat_ = std::make_unique<SlammyWhammy>();
 }
