@@ -1,6 +1,7 @@
 #ifndef robot_h
 #define robot_h
 
+#include <vector>
 #include <strategy/strategy.h>
 #include <memory>
 
