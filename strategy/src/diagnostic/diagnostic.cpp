@@ -1,3 +1,5 @@
+#include diagnostic.h
+
 void check_motor() {
     drive(127,255);
     delay(1000);
