@@ -1,4 +1,4 @@
-void checkMotor() {
+void check_motor() {
     int init_right = right_encoder;
     int init_left = left_encoder;
     drive(127,255);

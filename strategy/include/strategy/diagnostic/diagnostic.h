@@ -1,1 +1,1 @@
-void checkMotor();
+void check_motor();
