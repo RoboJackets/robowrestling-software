@@ -19,12 +19,6 @@
 #define MAX_DIST 150 //Whatever the lidar returns when it doesn't see anything
 #define CLOSE_DIST 100
 
-/* Definitions for pin numbers or Omron sensors */
-#define DIST_L 30
-#define DIST_L_45 28
-#define DIST_R 2
-#define DIST_R_45 3
-
 #define IMU_ADDRESS_PIN 9
 #define IMU_SDA 8
 #define IMU_SCL 7
