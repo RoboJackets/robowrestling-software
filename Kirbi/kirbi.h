@@ -5,8 +5,10 @@
 #include "Arduino.h"
 #include "math.h"
 
-#define LEFT_LIDAR_SERIAL Serial4
-#define RIGHT_LIDAR_SERIAL Serial1
+#define LIDAR4_SERIAL Serial4
+#define LIDAR3_SERIAL Serial1
+#define LIDAR12_SERIAL Serial3
+#define LIDAR56_SERIAL Serial2
 #define LEFT_LIDAR 4 // for use in read lidar methods
 #define RIGHT_LIDAR 1
 
@@ -23,16 +25,21 @@
 #define DIST_R 2
 #define DIST_R_45 3
 
-#define LEFT_CURRENT A21
-#define RIGHT_CURRENT A0
-
 #define IMU_ADDRESS_PIN 9
 #define IMU_SDA 8
 #define IMU_SCL 7
 
 #define LINE_REF A22
-#define RIGHT_INT_LINE 19
-#define LEFT_INT_LINE 18
+#define RIGHT_INT_LINE 23
+#define LEFT_INT_LINE 35
+
+#define RADIO_RESET 29
+#define RADIO_NSS 30
+#define RADIO_DIC0 22
+#define MOSI 11
+#define MISO 12
+
+#define LED 6
 
 #define LINE_THRES 190
 
@@ -47,9 +54,6 @@
 
 /* set motor speed */
 void drive(int left, int right);
-
-/* state machine */
-State state_machine();
 
 /* interrupt methods */
 void left_on_line_int();
@@ -75,7 +79,6 @@ void get_gyro();
 void get_distances();
 int read_lidar(int serial_port);
 void get_current();
-Location get_opponent();
 
 
 
