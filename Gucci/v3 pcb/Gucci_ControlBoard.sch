@@ -8425,18 +8425,11 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <label x="160.02" y="149.86" size="1.778" layer="95" rot="MR0" xref="yes"/>
 </segment>
 </net>
-<net name="ESC_TX4" class="0">
+<net name="ESC_RX4" class="0">
 <segment>
 <pinref part="U1" gate="G$1" pin="31/A12/RX4"/>
 <wire x1="165.1" y1="157.48" x2="160.02" y2="157.48" width="0.1524" layer="91"/>
 <label x="160.02" y="157.48" size="1.778" layer="95" rot="R180" xref="yes"/>
-</segment>
-</net>
-<net name="ESC_RX4" class="0">
-<segment>
-<pinref part="U1" gate="G$1" pin="32/A13/TX4"/>
-<wire x1="165.1" y1="154.94" x2="160.02" y2="154.94" width="0.1524" layer="91"/>
-<label x="160.02" y="154.94" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 <net name="TRX3" class="0">
@@ -8485,6 +8478,13 @@ Warning: This is the KIT version of the AXIAL-0.3 package. This package has a sm
 <label x="160.02" y="165.1" size="1.778" layer="95" rot="MR0" xref="yes"/>
 <pinref part="U1" gate="G$1" pin="28"/>
 <wire x1="165.1" y1="165.1" x2="160.02" y2="165.1" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="ESC_TX4" class="0">
+<segment>
+<pinref part="U1" gate="G$1" pin="32/A13/TX4"/>
+<wire x1="165.1" y1="154.94" x2="160.02" y2="154.94" width="0.1524" layer="91"/>
+<label x="160.02" y="154.94" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
 </net>
 </nets>
@@ -8598,14 +8598,14 @@ Teensy connection (not the ESC pins)</text>
 <label x="58.166" y="203.454" size="1.778" layer="95" rot="R90" xref="yes"/>
 </segment>
 </net>
-<net name="ESC_TX4" class="0">
+<net name="ESC_RX4" class="0">
 <segment>
 <pinref part="ESC1" gate="G$1" pin="3"/>
 <wire x1="20.32" y1="203.2" x2="27.94" y2="203.2" width="0.1524" layer="91"/>
 <label x="27.94" y="203.2" size="1.778" layer="95" rot="R90" xref="yes"/>
 </segment>
 </net>
-<net name="ESC_RX4" class="0">
+<net name="ESC_TX4" class="0">
 <segment>
 <pinref part="ESC1" gate="G$1" pin="2"/>
 <wire x1="20.32" y1="200.66" x2="33.528" y2="200.66" width="0.1524" layer="91"/>
