@@ -30,8 +30,8 @@
 #define RADIO_RESET 29
 #define RADIO_NSS 30
 #define RADIO_DIC0 22
-#define MOSI 11
-#define MISO 12
+#define RADIO_MOSI 11
+#define RADIO_MISO 12
 
 #define LED 6
 
