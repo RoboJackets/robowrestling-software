@@ -13,10 +13,10 @@ DistanceSensor::DistanceSensor(std::shared_ptr<Robot> robot, double x, double y,
 DistanceSensor::DistanceSensor(){};
 
 double DistanceSensor::read(std::shared_ptr<Robot> target) {
-    double width = target->width;
-    double length = target->length;
+    double width = target->width_;
+    double length = target->length_;
 
-    std::vector<double> center = {target->x_pos, target->y_pos};
+    std::vector<double> center = {target->x_pos_, target->y_pos_};
     
     std::vector<double> w_vec = {cos(_d_angle)*width/2, sin(_d_angle)*width/2};
     std::vector<double> l_vec = {-sin(_d_angle)*length/2, cos(_d_angle)*length/2};
@@ -28,7 +28,7 @@ double DistanceSensor::read(std::shared_ptr<Robot> target) {
         {center[0] - w_vec[0] - l_vec[0], center[1] - w_vec[1] - l_vec[1]}
     };
 
-    if (_d_angle == target -> angle || fmod(abs(_d_angle - target->angle), M_PI/2) < 0.1) {
+    if (_d_angle == target -> angle_ || fmod(abs(_d_angle - target->angle_), M_PI/2) < 0.1) {
         // sensor perpendicular or parallel to the target, shortest distance will be to an edge not a corner
         double m = (corners[0][0]-corners[1][0])/(corners[0][1]-corners[1][1]);
         double c = -m*corners[0][0];
@@ -40,8 +40,8 @@ double DistanceSensor::read(std::shared_ptr<Robot> target) {
         return dist1 < dist2 ? dist1 : dist2;
     } 
 
-    double sensor_x = _d_x + _robot->x_pos;
-    double sensor_y = _d_y + _robot->y_pos;
+    double sensor_x = _d_x + _robot->x_pos_;
+    double sensor_y = _d_y + _robot->y_pos_;
 
     std::vector<double> corner_dists = {
         pow(corners[0][0]-sensor_x, 2.0) + pow(corners[0][1]-sensor_y, 2.0),
