@@ -3,6 +3,7 @@
 
 #include <strategy/strategy.h>
 #include <memory>
+#include <cmath>
 
 class Robot { //abstract class of a robot
 	public:

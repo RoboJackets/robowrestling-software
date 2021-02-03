@@ -19,11 +19,11 @@ BasicRobot::BasicRobot(double x_pos, double y_pos, double angle) {
 
 std::vector<std::pair<double, double>> BasicRobot::corners() {
 	auto ret = std::vector<std::pair<double, double>>();
-	double shift_magnitude = sqrt(pow(this.width_/2, 2) + pow(this.length_/2, 2)); //distace from the center of the robot to a corner
+	double shift_magnitude = sqrt(pow(this->width_/2, 2) + pow(this->length_/2, 2)); //distace from the center of the robot to a corner
 	for (double i = 1; i < 7; i+=2) {
-		double x = this.x_pos_ + shift_magnitude*cos(robo.angle_ + i/4 * M_PI);
-		double y = this.y_pos_ + shift_magnitude*sin(robo.angle_ + i/4 * M_PI);
-		ret.push_back(std::pair<int, int>(x, y));
+		double x = this->x_pos_ + shift_magnitude*cos(this->angle_ + i/4 * M_PI);
+		double y = this->y_pos_ + shift_magnitude*sin(this->angle_ + i/4 * M_PI);
+		ret.push_back(std::make_pair(x, y));
 	}
 
 	return ret;

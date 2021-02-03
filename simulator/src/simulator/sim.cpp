@@ -58,8 +58,7 @@ int main() {
         if (i < 5) {
             auto dummy_vector = std::vector<double>();
             std::vector<int> r1_drive = robot1_->strat_->next_action(dummy_vector);
-            physics_updater_->move_robot(robot1_, r1_drive[0], r1_drive[1], 1);
-            physics_updater_->move_robot(robot2_, 100, 50, 2);
+            physics_updater_->update(robot1_, r1_drive, robot2_, r1_drive, 1);
             // std::cout << robot1->x_pos << ", " << robot1->y_pos << std::endl;
             // std::cout << robot2->x_pos << ", " << robot2->y_pos << std::endl;
             // i++;
