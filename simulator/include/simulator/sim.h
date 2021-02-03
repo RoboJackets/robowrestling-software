@@ -23,7 +23,7 @@ int radius_; //radius of the dohyo
 std::shared_ptr<Robot> robot1_; //robot object that stores information about a robot
 std::shared_ptr<Robot> robot2_; //see above
 
-std::shared_ptr<sf::RenderWindow> window;
+std::shared_ptr<sf::RenderWindow> window_;
 std::vector<AbstractDistanceSensor*> distance_sensor_vec;
 std::vector<AbstractLineSensor*> line_sensor_vec;
 
