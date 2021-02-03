@@ -43,11 +43,11 @@ void update() {
 
 int main() {
 	/* code */
-	robot1 = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)-65, WINDOW_HEIGHT/2, 0);
-	robot2 = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)+65, WINDOW_HEIGHT/2, M_PI);
-    physics_updater = std::make_shared<RobotPhysicsUpdater>();
+	robot1_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)-65, WINDOW_HEIGHT/2, 0);
+	robot2_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)+65, WINDOW_HEIGHT/2, M_PI);
+    physics_updater_ = std::make_shared<RobotPhysicsUpdater>();
 
-    DistanceSensor* test_distance_sensor = new DistanceSensor(robot1, 0, 0, 0, M_PI/16, 200);
+    DistanceSensor* test_distance_sensor = new DistanceSensor(robot1_, 0, 0, 0, M_PI/16, 200);
 
     test_distance_sensor->read(robot2_); // double value of distance from test_distance_sensor to robot 2
     
