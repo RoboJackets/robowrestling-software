@@ -9,6 +9,10 @@
 #define LIDAR3_SERIAL Serial1
 #define LIDAR12_SERIAL Serial3
 #define LIDAR56_SERIAL Serial2
+#define LIDAR_4 4
+#define LIDAR_3 1
+#define LIDAR_12 3
+#define LIDAR_56 2
 
 #define ESC_SERIAL Serial5
 #define ESC_ADDRESS ((unsigned int) 128)
@@ -66,8 +70,6 @@ sensor read methods
 void update buffers with new data
  */
 bool get_line_flag();
-void get_accel();
-void get_gyro();
 void get_distances();
 int read_lidar(int serial_port);
 void get_current();
