@@ -1,4 +1,4 @@
-#include <simulator/sensors/abstract_sensor.h>
+#include <simulator/abstract_sensor.h>
 
 class LineSensor : public AbstractLineSensor {
     public:
