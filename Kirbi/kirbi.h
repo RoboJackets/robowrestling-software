@@ -70,8 +70,6 @@ sensor read methods
 void update buffers with new data
  */
 bool get_line_flag();
-void get_accel();
-void get_gyro();
 void get_distances();
 int read_lidar(int serial_port);
 void get_current();
