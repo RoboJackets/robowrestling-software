@@ -35,13 +35,13 @@ bool RobotPhysicsUpdater::check_collision(std::shared_ptr<Robot> r1, std::shared
 	// 		closest_corner_to_r2 = r1_corners[i];
 	// 	}
 	// }
-	// double axis1_slope = (r1_corners[0].second - r1_corners[1].second) / (r1_corners[0].first - r1_corners[1].first); //https://gamedev.stackexchange.com/questions/25397/obb-vs-obb-collision-detection
-	// bool overlap1 = false;
-	// for (int i = 0; i < 3; i++) {
-	// 	double offset = (-1/axis1_slope) * r2_corners[i].first - r2_corners[i].second;
-	// }
+	double axis1_slope = (r1_corners[0].second - r1_corners[1].second) / (r1_corners[0].first - r1_corners[1].first); //https://gamedev.stackexchange.com/questions/25397/obb-vs-obb-collision-detection
+	bool overlap1 = false;
+	for (int i = 0; i < 3; i++) {
+		double offset = (-1/axis1_slope) * r2_corners[i].first - r2_corners[i].second;
+	}
 
-	// double axis2_slope = (r1_corners[1].second - r1_corners[2].second) / (r1_corners[1].first - r1_corners[2].first);
+	double axis2_slope = (r1_corners[1].second - r1_corners[2].second) / (r1_corners[1].first - r1_corners[2].first);
 	// if (r1->x_pos_ < r2->x_pos_) { //r1 is left of r2
 	// 	if (r1->y_pos_ < r2->y_pos_) {
 	// 		auto right = r1_corners[0];

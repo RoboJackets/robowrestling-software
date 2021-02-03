@@ -25,3 +25,4 @@ class Robot { //abstract class of a robot
 		virtual std::vector<std::pair<double, double>> corners() = 0;	//returns the corners in x, y pairs in order selecting them
 																//counter clockwise from the middle of the face of the robot
 };
+#endif

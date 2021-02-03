@@ -49,7 +49,7 @@ int main() {
 
     DistanceSensor* test_distance_sensor = new DistanceSensor(robot1, 0, 0, 0, M_PI/16, 200);
 
-    test_distance_sensor->read(robot2); // double value of distance from test_distance_sensor to robot 2
+    test_distance_sensor->read(robot2_); // double value of distance from test_distance_sensor to robot 2
     
     window_ = std::make_shared<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "My window");
     window_->clear(sf::Color::White); // clear the window with white color
