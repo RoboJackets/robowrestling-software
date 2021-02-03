@@ -21,145 +21,41 @@ bool RobotPhysicsUpdater::check_collision(std::shared_ptr<Robot> r1, std::shared
 
 	auto r1_corners = r1->corners(); //std vector of std pairs representing the 4 corners of the robot
 	auto r2_corners = r2->corners(); 
-	// auto closest_corner_to_r1 = r2_corners[0];
-	// double dist_to_r1 = sqrt(pow(closest_corner_to_r1.first - r1.x_pos_, 2) + pow(closest_corner_to_r1.second - r1.y_pos_, 2));
-	// auto closest_corner_to_r2 = r1_corners[0];
-	// double dist_to_r2 = sqrt(pow(closest_corner_to_r2.first - r2.x_pos_, 2) + pow(closest_corner_to_r2.second - r2.y_pos_, 2));
-	// for (int i = 1; i < 3; i++) {
-	// 	double new_r1_dist = sqrt(pow(r1_corners[i].first - r1.x_pos_, 2) + pow(r1_corners[i].second - r1.y_pos_, 2));
-	// 	double new_r2_dist = sqrt(pow(r2_corners[i].first - r2.x_pos_, 2) + pow(r2_corners[i].second - r2.y_pos_, 2));
-	// 	if (new_r1_dist < dist_to_r1) {
-	// 		closest_corner_to_r1 = r2_corners[i];
-	// 	}
-	// 	if (new_r2_dist < dist_to_r2) {
-	// 		closest_corner_to_r2 = r1_corners[i];
-	// 	}
-	// }
 	double axis1_slope = (r1_corners[0].second - r1_corners[1].second) / (r1_corners[0].first - r1_corners[1].first); //https://gamedev.stackexchange.com/questions/25397/obb-vs-obb-collision-detection
+	double axis1_offset = axis1_slope*r1_corners[0].first + r1_corners[0].second;
 	bool overlap1 = false;
 	for (int i = 0; i < 3; i++) {
 		double offset = (-1/axis1_slope) * r2_corners[i].first - r2_corners[i].second;
+		double projection_x = offset/(1/axis1_slope + axis1_slope);
+		double projection_y = axis1_offset + axis1_slope*projection_x;
+		if (r1_corners[0].second > r1_corners[1].second) {
+			if (projection_y < r1_corners[0].second && projection_y > r1_corners[1].second) {
+				overlap1 = true;
+			}
+		} else if (projection_y > r1_corners[0].second && projection_y < r1_corners[1].second) {
+			overlap1 = true;
+		}
 	}
-
 	double axis2_slope = (r1_corners[1].second - r1_corners[2].second) / (r1_corners[1].first - r1_corners[2].first);
-	// if (r1->x_pos_ < r2->x_pos_) { //r1 is left of r2
-	// 	if (r1->y_pos_ < r2->y_pos_) {
-	// 		auto right = r1_corners[0];
-	// 		auto upper = r1_corners[0];
-	// 		auto left = r2_corners[0];
-	// 		auto lower = r2_corners[0];
-	// 		for (int i = 1; i < 3; i++) {
-	// 			if (r1_corners[i].first > right.first) {
-	// 				right = r1_corners[i];
-	// 			}
-	// 			if (r1_corners[i].second > upper.second) {
-	// 				upper = r1_corners[i];
-	// 			}
-	// 			if (r2_corners[i].first < left.first) {
-	// 				left = r2_corners[i];
-	// 			}
-	// 			if (r2_corners[i].second < lower.second) {
-	// 				lower = r2_corners[i];
-	// 			}
-	// 		}
-	// 		double slope = (right.second - upper.second) / (right.first - upper.first);
-	// 		double left_relative_y = slope*(left.first - right.first) + right.second;
-	// 		if (left_relative_y < left.second) {
-	// 			return true;
-	// 		}
-	// 		double lower_relative_y = slope*(lower.first - right.first) + right.second;
-	// 		if (lower_relative_y < lower.second) {
-	// 			return true;
-	// 		}
-	// 	} else {
-	// 		auto right = r1_corners[0];
-	// 		auto lower = r1_corners[0];
-	// 		auto left = r2_corners[0];
-	// 		auto upper = r2_corners[0];
-	// 		for (int i = 1; i < 3; i++) {
-	// 			if (r1_corners[i].first > right.first) {
-	// 				right = r1_corners[i];
-	// 			}
-	// 			if (r1_corners[i].second < lower.second) {
-	// 				lower = r1_corners[i];
-	// 			}
-	// 			if (r2_corners[i].first < left.first) {
-	// 				left = r2_corners[i];
-	// 			}
-	// 			if (r2_corners[i].second > upper.second) {
-	// 				upper = r2_corners[i];
-	// 			}
-	// 		}
-	// 		double slope = (right.second - lower.second) / (right.first - lower.first);
-	// 		double left_relative_y = slope*(left.first - right.first) + right.second;
-	// 		if (left_relative_y < left.second) {
-	// 			return true;
-	// 		}
-	// 		double upper_relative_y = slope*(upper.first - right.first) + right.second;
-	// 		if (upper_relative_y > upper.second) {
-	// 			return true;
-	// 		}
-	// 	}
-	// } else { //r2 is left of r1
-	// 	if (r1->y_pos_ < r2->y_pos_) {
-	// 		auto left = r1_corners[0];
-	// 		auto upper = r1_corners[0];
-	// 		auto right = r2_corners[0];
-	// 		auto lower = r2_corners[0];
-	// 		for (int i = 1; i < 3; i++) {
-	// 			if (r1_corners[i].first < left.first) {
-	// 				left = r1_corners[i];
-	// 			}
-	// 			if (r1_corners[i].second > upper.second) {
-	// 				upper = r1_corners[i];
-	// 			}
-	// 			if (r2_corners[i].first > right.first) {
-	// 				right = r2_corners[i];
-	// 			}
-	// 			if (r2_corners[i].second < lower.second) {
-	// 				lower = r2_corners[i];
-	// 			}
-	// 		}
-	// 		double slope = (left.second - upper.second) / (left.first - upper.first);
-	// 		double right_relative_y = slope*(right.first - left.first) + left.second;
-	// 		if (right_relative_y > right.second) {
-	// 			return true;
-	// 		}
-	// 		double lower_relative_y = slope*(lower.first - left.first) + left.second;
-	// 		if (lower_relative_y < lower.second) {
-	// 			return true;
-	// 		}
-	// 	} else {
-	// 		auto left = r1_corners[0];
-	// 		auto lower = r1_corners[0];
-	// 		auto right = r2_corners[0];
-	// 		auto upper = r2_corners[0];
-	// 		for (int i = 1; i < 3; i++) {
-	// 			if (r1_corners[i].first < left.first) {
-	// 				left = r1_corners[i];
-	// 			}
-	// 			if (r1_corners[i].second < lower.second) {
-	// 				lower = r1_corners[i];
-	// 			}
-	// 			if (r2_corners[i].first > right.first) {
-	// 				right = r2_corners[i];
-	// 			}
-	// 			if (r2_corners[i].second > upper.second) {
-	// 				upper = r2_corners[i];
-	// 			}
-	// 		}
-	// 		double slope = (left.second - lower.second) / (left.first - lower.first);
-	// 		double right_relative_y = slope*(right.first - left.first) + left.second;
-	// 		if (right_relative_y > right.second) {
-	// 			return true;
-	// 		}
-	// 		double upper_relative_y = slope*(upper.first - left.first) + left.second;
-	// 		if (upper_relative_y > upper.second) {
-	// 			return true;
-	// 		}
-	// 	}
-	// }
-	return false;
+	double axis2_offset = axis2_slope*r1_corners[1].first + r1_corners[1].second;
+	bool overlap2 = false;
+	for (int i = 0; i < 3; i++) {
+		double offset = (-1/axis2_slope) * r2_corners[i].first - r2_corners[i].second;
+		double projection_x = offset/(1/axis2_slope + axis2_slope);
+		double projection_y = axis2_offset + axis2_slope*projection_x;
+		if (r1_corners[1].second > r1_corners[2].second) {
+			if (projection_y < r1_corners[1].second && projection_y > r1_corners[2].second) {
+				overlap2 = true;
+			}
+		} else if (projection_y > r1_corners[1].second && projection_y < r1_corners[2].second) {
+			overlap2 = true;
+		}
+	}
+	if (overlap1 && overlap2) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 void RobotPhysicsUpdater::move_robot(std::shared_ptr<Robot> r, double left_wheel, double right_wheel, double duration) {
