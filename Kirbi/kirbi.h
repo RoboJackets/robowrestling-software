@@ -9,8 +9,6 @@
 #define LIDAR3_SERIAL Serial1
 #define LIDAR12_SERIAL Serial3
 #define LIDAR56_SERIAL Serial2
-#define LEFT_LIDAR 4 // for use in read lidar methods
-#define RIGHT_LIDAR 1
 
 #define ESC_SERIAL Serial5
 #define ESC_ADDRESS ((unsigned int) 128)
