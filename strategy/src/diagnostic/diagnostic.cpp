@@ -1,4 +1,4 @@
-#include diagnostic.h
+#include <strategy/diagnostic/diagnostic.h>
 
 void check_motor() {
     drive(127,255);

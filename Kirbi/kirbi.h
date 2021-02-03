@@ -5,13 +5,13 @@
 #include "Arduino.h"
 #include "math.h"
 
-#define LIDAR4_SERIAL Serial4
-#define LIDAR3_SERIAL Serial1
 #define LIDAR12_SERIAL Serial3
+#define LIDAR3_SERIAL Serial1
+#define LIDAR4_SERIAL Serial4
 #define LIDAR56_SERIAL Serial2
-#define LIDAR_4 4
-#define LIDAR_3 1
 #define LIDAR_12 3
+#define LIDAR_3 1
+#define LIDAR_4 4
 #define LIDAR_56 2
 
 #define ESC_SERIAL Serial5
