@@ -12,7 +12,8 @@ void check_motor() {
 }
 
 void check_line_sensor() {
-	get_line_flag();
+	left_line_hit = !digitalReadFast(LEFT_INT_LINE);
+    right_line_hit = !digitalReadFast(RIGHT_INT_LINE);
 }
 
 void check_lidar() {
