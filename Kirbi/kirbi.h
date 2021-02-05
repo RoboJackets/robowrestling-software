@@ -15,7 +15,7 @@
 #define LIDAR_56 2
 
 #define ESC_SERIAL Serial5
-#define ESC_ADDRESS ((unsigned int) 128)
+#define ESC_ADDRESS ((unsigned int) 128) //depends on a manual setting
 #define ESC_CHECKSUM ((unsigned int) 0b01111111)
 
 #define MAX_DIST 150 //Whatever the lidar returns when it doesn't see anything
