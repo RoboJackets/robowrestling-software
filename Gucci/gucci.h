@@ -18,12 +18,12 @@
 #define LIDAR56_TX 10
 #define LIDAR56_MUX 25
 
-#define ESC_1_SERIAL Serial4
-#define ESC_1_RX 31
-#define ESC_1_TX 32
-#define ESC_1_SERIAL Serial5
-#define ESC_1_RX 34
-#define ESC_1_TX 33
+#define ESC_L_SERIAL Serial4 //Verify This is the Left Motor
+#define ESC_L_RX 31
+#define ESC_L_TX 32
+#define ESC_R_SERIAL Serial5
+#define ESC_R_RX 34
+#define ESC_R_TX 33
 #define ESC_ADDRESS 128 //Verify this address
 
 #define MAX_DIST 1500 //Max distance we care about
@@ -32,9 +32,9 @@
 #define IMU_SDA 4
 #define IMU_SCL 3
 
-#define LINE_REF A22 //Verify this assignment
 #define LEFT_INT_LINE 15
 #define RIGHT_INT_LINE 16
+#define LINE_REF A22
 #define THRES_LINE 190
 #define LINE_COOLDOWN 100
 

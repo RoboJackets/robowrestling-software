@@ -36,8 +36,8 @@ void read_lidar(auto LIDAR) {
     Serial.println(LIDAR);
     if (LIDAR) {
         LIDAR.readBytes(byteArray, 9); // write output of read to an array of length 9
-        Serial.println("Distance: " + byteArray[3] + byteArray[2]);
-        Serial.println("Strength: " + byteArray[5] + byteArray[4]);
+        Serial.println("Distance: " + (byteArray[3] << 8) | (byteArray[2] << 0));
+        Serial.println("Strength: " + (byteArray[5] << 8) | (byteArray[4] << 0));
     }
 }
 // Byte0 Byte 1 Byte2 Byte3  Byte4      Byte5      Byte6  Byte7  Byte8
