@@ -14,8 +14,8 @@ void drive(int left, int right) {
      if (left == 0 && right == 0) {
          ESC_SERIAL.write(0);
      } else {
-        right = 64 - right;
-        left = 192 - left;
+        right = 64 + right;
+        left = 192 + left;
 
         // 0: both motor stop
         // 1-63: motor 1 reverse, 64: motor 1 stop, 65-127: motor 1 forward
@@ -26,6 +26,37 @@ void drive(int left, int right) {
 }
 
 void loop() {
-  
-  drive(-50, 50);
+  //-63 to +63 range
+  Serial.print("Ramping both motors forwards...");
+  for (int i = 0; i < 63; i++){
+    drive(i,i);
+    delay(8);
+  }
+  Serial.print("Waiting 2 seconds");
+  drive(0,0);
+  delay(2000);
+  Serial.print("Ramping both motors backwards...");
+  for (int i = 0; i < 63; i++){
+    drive(-i,-i);
+    delay(8);
+  }
+  Serial.print("Waiting 2 seconds");
+  drive(0,0);
+  delay(2000);
+  Serial.print("Ramping left forwards and right backwards...");
+  for (int i = 0; i < 63; i++){
+    drive(i,-i);
+    delay(8);
+  }
+  Serial.print("Waiting 2 seconds");
+  drive(0,0);
+  delay(2000);
+  Serial.print("Ramping left backwards and right forwards...");
+  for (int i = 0; i < 63; i++){
+    drive(-i,i);
+    delay(8);
+  }
+  Serial.print("Waiting 5 seconds");
+  drive(0,0);
+  delay(5000);
 }
