@@ -6,14 +6,9 @@ RobotPhysicsUpdater::RobotPhysicsUpdater() {
 }
 
 void RobotPhysicsUpdater::update(std::shared_ptr<Robot> r1, std::vector<int> r1_update, std::shared_ptr<Robot> r2, std::vector<int> r2_update, double duration) {
-	this->move_robot(r1, r1_update[0], r1_update[1], duration);
-	this->move_robot(r2, r2_update[0], r2_update[1], duration);
-	if (this->check_collision(r1, r2)) {
-		std::cout << "four" << std::endl;
-	} else {
-		std::cout << "five" << std::endl;
-	}
-
+	//this->move_robot(r1, r1_update[0], r1_update[1], duration);
+	//this->move_robot(r2, r2_update[0], r2_update[1], duration);
+	std::cout << this->check_collision(r1, r2) << std::endl;
 	
 }
 
@@ -22,35 +17,80 @@ bool RobotPhysicsUpdater::check_collision(std::shared_ptr<Robot> r1, std::shared
 	auto r1_corners = r1->corners(); //std vector of std pairs representing the 4 corners of the robot
 	auto r2_corners = r2->corners(); 
 	double axis1_slope = (r1_corners[0].second - r1_corners[1].second) / (r1_corners[0].first - r1_corners[1].first); //https://gamedev.stackexchange.com/questions/25397/obb-vs-obb-collision-detection
-	double axis1_offset = axis1_slope*r1_corners[0].first + r1_corners[0].second;
+	double axis1_offset = -1*axis1_slope*r1_corners[0].first + r1_corners[0].second;
 	bool overlap1 = false;
-	for (int i = 0; i < 3; i++) {
-		double offset = (-1/axis1_slope) * r2_corners[i].first - r2_corners[i].second;
-		double projection_x = offset/(1/axis1_slope + axis1_slope);
-		double projection_y = axis1_offset + axis1_slope*projection_x;
-		if (r1_corners[0].second > r1_corners[1].second) {
-			if (projection_y < r1_corners[0].second && projection_y > r1_corners[1].second) {
+	double axis2_slope = (r1_corners[1].second - r1_corners[2].second) / (r1_corners[1].first - r1_corners[2].first);
+	double axis2_offset = -1*axis2_slope*r1_corners[1].first + r1_corners[1].second;
+	bool overlap2 = false;
+	if (axis1_slope == 0) {
+		for (int i = 0; i < 3; i++) {
+			if (r1_corners[0].first > r1_corners[1].first) {
+				if (r2_corners[i].first <= r1_corners[0].first && r2_corners[i].first >= r1_corners[1].first) {
+					overlap1 = true;
+				}
+			} else {
+				if (r2_corners[i].first >= r1_corners[0].first && r2_corners[i].first <= r1_corners[1].first) {
+					overlap1 = true;
+				}
+			}
+			if (r1_corners[1].second > r1_corners[2].second) {
+				if (r2_corners[i].second <= r1_corners[1].second && r2_corners[i].second >= r1_corners[2].second) {
+					overlap2 = true;
+				}
+			} else {
+				if (r2_corners[i].second >= r1_corners[1].second && r2_corners[i].second <= r1_corners[2].second) {
+					overlap2 = true;
+				}
+			}
+		}
+	} else if (axis2_slope == 0) {
+		for (int i = 0; i < 3; i++) {
+			if (r1_corners[0].second > r1_corners[1].second) {
+				if (r2_corners[i].second <= r1_corners[0].second && r2_corners[i].second >= r1_corners[1].second) {
+					overlap1 = true;
+				}
+			} else {
+				if (r2_corners[i].second >= r1_corners[0].second && r2_corners[i].second <= r1_corners[1].second) {
+					overlap1 = true;
+				}
+			}
+			if (r1_corners[1].first > r1_corners[2].first) {
+				if (r2_corners[i].first <= r1_corners[1].first && r2_corners[i].first >= r1_corners[2].first) {
+					overlap2 = true;
+				}
+			} else {
+				if (r2_corners[i].first >= r1_corners[1].first && r2_corners[i].first <= r1_corners[2].first) {
+					overlap2 = true;
+				}
+			}
+		}
+	} else {
+		for (int i = 0; i < 3; i++) {
+			double offset = (1/axis1_slope) * r2_corners[i].first - r2_corners[i].second;
+			double projection_x = offset/(1/axis1_slope + axis1_slope);
+			double projection_y = axis1_offset + axis1_slope*projection_x;
+			if (r1_corners[0].second > r1_corners[1].second) {
+				if (projection_y <= r1_corners[0].second && projection_y >= r1_corners[1].second) {
+					overlap1 = true;
+				}
+			} else if (projection_y >= r1_corners[0].second && projection_y <= r1_corners[1].second) {
 				overlap1 = true;
 			}
-		} else if (projection_y > r1_corners[0].second && projection_y < r1_corners[1].second) {
-			overlap1 = true;
 		}
-	}
-	double axis2_slope = (r1_corners[1].second - r1_corners[2].second) / (r1_corners[1].first - r1_corners[2].first);
-	double axis2_offset = axis2_slope*r1_corners[1].first + r1_corners[1].second;
-	bool overlap2 = false;
-	for (int i = 0; i < 3; i++) {
-		double offset = (-1/axis2_slope) * r2_corners[i].first - r2_corners[i].second;
-		double projection_x = offset/(1/axis2_slope + axis2_slope);
-		double projection_y = axis2_offset + axis2_slope*projection_x;
-		if (r1_corners[1].second > r1_corners[2].second) {
-			if (projection_y < r1_corners[1].second && projection_y > r1_corners[2].second) {
+		for (int i = 0; i < 3; i++) {
+			double offset = (1/axis2_slope) * r2_corners[i].first - r2_corners[i].second;
+			double projection_x = offset/(1/axis2_slope + axis2_slope);
+			double projection_y = axis2_offset + axis2_slope*projection_x;
+			if (r1_corners[1].second > r1_corners[2].second) {
+				if (projection_y <= r1_corners[1].second && projection_y >= r1_corners[2].second) {
+					overlap2 = true;
+				}
+			} else if (projection_y >= r1_corners[1].second && projection_y <= r1_corners[2].second) {
 				overlap2 = true;
 			}
-		} else if (projection_y > r1_corners[1].second && projection_y < r1_corners[2].second) {
-			overlap2 = true;
 		}
 	}
+	
 	if (overlap1 && overlap2) {
 		return true;
 	} else {

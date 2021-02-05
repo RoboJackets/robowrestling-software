@@ -19,7 +19,7 @@ void draw_robot(std::shared_ptr<Robot> robot) {
     double homogenous_x = robot->x_pos_ + shift_magnitude*cos(robot->angle_ - .75 * M_PI);
     double homogenous_y = robot->y_pos_ + shift_magnitude*sin(robot->angle_ - .75 * M_PI);
     rectangle.setPosition(homogenous_x, homogenous_y);
-    rectangle.setRotation(robot->angle_*180/M_PI + 90);
+    rectangle.setRotation(robot->angle_*180/M_PI);
     window_->draw(rectangle);
 }	
 
@@ -43,13 +43,13 @@ void update() {
 
 int main() {
 	/* code */
-	robot1_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)-65, WINDOW_HEIGHT/2, 0);
-	robot2_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)+65, WINDOW_HEIGHT/2, M_PI);
+	robot1_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)-10, WINDOW_HEIGHT/2, M_PI/4);
+	robot2_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)+10, WINDOW_HEIGHT/2, 0);
     physics_updater_ = std::make_shared<RobotPhysicsUpdater>();
 
-    DistanceSensor* test_distance_sensor = new DistanceSensor(robot1_, 0, 0, 0, M_PI/16, 200);
+    // DistanceSensor* test_distance_sensor = new DistanceSensor(robot1_, 0, 0, 0, M_PI/16, 200);
 
-    test_distance_sensor->read(robot2_); // double value of distance from test_distance_sensor to robot 2
+    // test_distance_sensor->read(robot2_); // double value of distance from test_distance_sensor to robot 2
     
     window_ = std::make_shared<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "My window");
     window_->clear(sf::Color::White); // clear the window with white color
