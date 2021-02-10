@@ -199,13 +199,6 @@ void setup_current() {
     ESC_SERIAL.begin(38400);
  }
 
- void setup_encoders(){
-    pinMode(LEFT_A_ENCODER, INPUT);
-    pinMode(RIGHT_A_ENCODER, INPUT);
-
-    attachInterrupt(digitalPinToInterrupt(LEFT_A_ENCODER), increment_encoder_left, RISING);
-    attachInterrupt(digitalPinToInterrupt(RIGHT_A_ENCODER), increment_encoder_right, RISING);
-}
 
 void setup_line(){
     left_line_hit = 0;
@@ -232,6 +225,13 @@ bool get_line_flag() {
   return (left_line_hit || right_line_hit);
 }
 
+void get_accel() {
+//    x_accel.add(icm.getAccelX_mss());
+//    y_accel.add(icm.getAccelY_mss());
+}
+void get_gyro() {
+    //TODO: implement?
+}
 void get_distances() {
     dist[0] = digitalReadFast(DIST_L);
     dist[1] = digitalReadFast(DIST_L_45);
