@@ -1,8 +1,8 @@
 #include <simulator/distance_sensor.h>
 
 #include <iostream>
-#include <math.h>
 #include <vector>
+#include <algorithm>
 
 DistanceSensor::DistanceSensor(std::shared_ptr<Robot> robot, double x, double y, double angle, double cone_angle, double cone_length) {
     setRobot(robot);
