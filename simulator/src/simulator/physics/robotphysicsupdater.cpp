@@ -13,7 +13,6 @@ void RobotPhysicsUpdater::update(std::shared_ptr<Robot> r1, std::vector<int> r1_
 }
 
 bool RobotPhysicsUpdater::check_collision(std::shared_ptr<Robot> r1, std::shared_ptr<Robot> r2) {
-
 	auto r1_corners = r1->corners(); //std vector of std pairs representing the 4 corners of the robot
 	auto r2_corners = r2->corners(); 
 	double axis1_slope = (r1_corners[0].second - r1_corners[1].second) / (r1_corners[0].first - r1_corners[1].first); //https://gamedev.stackexchange.com/questions/25397/obb-vs-obb-collision-detection
