@@ -43,8 +43,8 @@ void update() {
 
 int main() {
 	/* code */
-	robot1_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)-10, WINDOW_HEIGHT/2, M_PI/4);
-	robot2_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)+10, WINDOW_HEIGHT/2, 0);
+	robot1_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)-50, WINDOW_HEIGHT/2, M_PI/16);
+	robot2_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)+50, WINDOW_HEIGHT/2, 17*M_PI/16);
     physics_updater_ = std::make_shared<RobotPhysicsUpdater>();
 
     // DistanceSensor* test_distance_sensor = new DistanceSensor(robot1_, 0, 0, 0, M_PI/16, 200);
