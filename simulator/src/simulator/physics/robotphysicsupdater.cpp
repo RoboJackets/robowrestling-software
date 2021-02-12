@@ -8,6 +8,9 @@ RobotPhysicsUpdater::RobotPhysicsUpdater() {
 void RobotPhysicsUpdater::update(std::shared_ptr<Robot> r1, std::vector<int> r1_update, std::shared_ptr<Robot> r2, std::vector<int> r2_update, double duration) {
 	this->move_robot(r1, r1_update[0], r1_update[1], duration);
 	this->move_robot(r2, r2_update[0], r2_update[1], duration);
+	if (this->check_collision(r1, r2)) {
+		this->collision_handler(r1, r2);
+	}
 	
 }
 
@@ -92,6 +95,40 @@ bool RobotPhysicsUpdater::check_collision(std::shared_ptr<Robot> r1, std::shared
 		return true;
 	} else {
 		return false;
+	}
+}
+
+void RobotPhysicsUpdater::collision_handler(std::shared_ptr<Robot> r1, std::shared_ptr<Robot> r2) {
+	double r2_x_to_r1 = r2->x_pos_ - r1->x_pos_; //shift using r1 as the origin
+	double r2_y_to_r1 = r2->y_pos_ - r1->y_pos_;
+	r2_x_to_r1 = r2_x_to_r1*cos(-1*r1->angle_) - r2_y_to_r1*sin(-1*r1->angle_); //rotate axis so r1 is origin
+	r2_y_to_r1 = r2_x_to_r1*sin(-1*r1->angle_) + r2_y_to_r1*cos(-1*r1->angle_);
+	double angle_r1_to_r2 = atan2(r2_y_to_r1, r2_x_to_r1); //inverse tangent to get the angle of r2 relative to where r1 is pointing
+
+	double r1_x_to_r2 = r1->x_pos_ - r2->x_pos_; //shift using r2 as the origin
+	double r1_y_to_r2 = r1->y_pos_ - r2->y_pos_;
+	r1_x_to_r2 = r1_x_to_r2*cos(-1*r2->angle_) - r1_y_to_r2*sin(-1*r2->angle_); //rotate axis so r2 is origin
+	r1_y_to_r2 = r1_x_to_r2*sin(-1*r2->angle_) + r1_y_to_r2*cos(-1*r2->angle_);
+	double angle_r2_to_r1 = atan2(r1_y_to_r2, r1_x_to_r2); //inverse tangent to get the angle of r1 relative to where r2 is pointing
+	// std::cout << angle_r1_to_r2 << ", " << angle_r2_to_r1 << std::endl;
+	if (angle_r1_to_r2 <= M_PI/4 && angle_r1_to_r2 >= -M_PI/4) {
+		if (angle_r2_to_r1 <= M_PI/4 && angle_r2_to_r1 >= -M_PI/4) {
+			std::cout << "Head on" << std::endl;
+			auto temp_l = r1->left_wheel_velocity_;
+			auto temp_r = r1->right_wheel_velocity_;
+			r1->left_wheel_velocity_ -= r2->left_wheel_velocity_;
+			r1->right_wheel_velocity_ -= r2->right_wheel_velocity_;
+			r2->left_wheel_velocity_ -= temp_l;
+			r2->right_wheel_velocity_ -= temp_r;
+		} else {
+			std::cout << "R1 hit R2" << std::endl;
+			r2->x_pos_ += 300*(r1->left_wheel_velocity_ + r1->right_wheel_velocity_)/2/r1->max_wheel_velocity_*cos(r1->angle_);
+			r2->y_pos_ += 300*(r1->left_wheel_velocity_ + r1->right_wheel_velocity_)/2/r1->max_wheel_velocity_*sin(r1->angle_);
+		}
+	} else if (angle_r2_to_r1 <= M_PI/4 && angle_r2_to_r1 >= -M_PI/4) {
+		std::cout << "R2 hit R1" << std::endl;
+		r1->x_pos_ += 300*(r2->left_wheel_velocity_ + r2->right_wheel_velocity_)/2/r2->max_wheel_velocity_*cos(r2->angle_);
+		r1->y_pos_ += 300*(r2->left_wheel_velocity_ + r2->right_wheel_velocity_)/2/r2->max_wheel_velocity_*sin(r2->angle_);
 	}
 }
 
