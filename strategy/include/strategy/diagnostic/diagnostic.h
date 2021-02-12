@@ -5,6 +5,8 @@
 
 void check_motor();
 void check_line_sensor();
+void check_accel();
+void check_gyro();
 void check_lidar();
 void read_lidar(String);
 

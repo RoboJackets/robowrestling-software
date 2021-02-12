@@ -3,6 +3,7 @@
 
 #include "Arduino.h"
 #include "math.h"
+#include <lib/ICM20948.h>
 
 
 #define LIDAR12_SERIAL Serial3 //Test which is what direction
@@ -55,6 +56,9 @@
 #define DIST_RIGHT_CENTER dist[3]
 #define DIST_RIGHT_CORNER dist[4]
 #define DIST_RIGHT_SIDE   dist[5]
+
+#define ACCEL_X accel[0]
+#define ACCEL_Y accel[1]
 
 
 /* set motor speed */

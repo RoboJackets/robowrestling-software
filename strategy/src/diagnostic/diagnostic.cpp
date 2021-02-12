@@ -16,6 +16,17 @@ void check_line_sensor() {
     right_line_hit = !digitalReadFast(RIGHT_INT_LINE);
 }
 
+void check_accel() {
+    imu.readSensor();
+    Serial.println("Accel_X: " + imu.getAccelX_mss());
+    Serial.println("Accel_Y: " + imu.getAccelY_mss());
+}
+
+void check_gyro() {
+    imu.readSensor();
+    Serial.println("Gyro_Z: " + imu.getGyroZ_rads());
+}
+
 void check_lidar() {
     digitalWrite(LIDAR12_MUX, LOW);
     read_lidar(LIDAR12_SERIAL);
