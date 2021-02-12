@@ -43,8 +43,8 @@ void update() {
 
 int main() {
 	/* code */
-	robot1_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)-50, WINDOW_HEIGHT/2, M_PI/16);
-	robot2_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)+50, WINDOW_HEIGHT/2, 17*M_PI/16);
+	robot1_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)-100, WINDOW_HEIGHT/2, M_PI/16);
+	robot2_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)+100, WINDOW_HEIGHT/2, 17*M_PI/16);
     physics_updater_ = std::make_shared<RobotPhysicsUpdater>();
 
     // DistanceSensor* test_distance_sensor = new DistanceSensor(robot1_, 0, 0, 0, M_PI/16, 200);
@@ -65,7 +65,7 @@ int main() {
             // physics_updater->move_robot(robot2, 100, 99, 1);
             auto dummy_vector = std::vector<double>();
             std::vector<int> r1_drive = robot1_->strat_->next_action(dummy_vector);
-            physics_updater_->update(robot1_, r1_drive, robot2_, r1_drive, 1);
+            physics_updater_->update(robot1_, r1_drive, robot2_, r1_drive, .1);
             // std::cout << robot1->x_pos << ", " << robot1->y_pos << std::endl;
             // std::cout << robot2->x_pos << ", " << robot2->y_pos << std::endl;
             // i++;
