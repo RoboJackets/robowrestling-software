@@ -8,12 +8,6 @@ RobotPhysicsUpdater::RobotPhysicsUpdater() {
 void RobotPhysicsUpdater::update(std::shared_ptr<Robot> r1, std::vector<int> r1_update, std::shared_ptr<Robot> r2, std::vector<int> r2_update, double duration) {
 	this->move_robot(r1, r1_update[0], r1_update[1], duration);
 	this->move_robot(r2, r2_update[0], r2_update[1], duration);
-	if (this->check_collision(r1, r2)) {
-		std::cout << "four" << std::endl;
-	} else {
-		std::cout << "five" << std::endl;
-	}
-
 	
 }
 
@@ -21,33 +15,77 @@ bool RobotPhysicsUpdater::check_collision(std::shared_ptr<Robot> r1, std::shared
 	auto r1_corners = r1->corners(); //std vector of std pairs representing the 4 corners of the robot
 	auto r2_corners = r2->corners(); 
 	double axis1_slope = (r1_corners[0].second - r1_corners[1].second) / (r1_corners[0].first - r1_corners[1].first); //https://gamedev.stackexchange.com/questions/25397/obb-vs-obb-collision-detection
-	double axis1_offset = axis1_slope*r1_corners[0].first + r1_corners[0].second;
+	double axis1_offset = -1*axis1_slope*r1_corners[0].first + r1_corners[0].second;
 	bool overlap1 = false;
-	for (int i = 0; i < 3; i++) {
-		double offset = (-1/axis1_slope) * r2_corners[i].first - r2_corners[i].second;
-		double projection_x = offset/(1/axis1_slope + axis1_slope);
-		double projection_y = axis1_offset + axis1_slope*projection_x;
-		if (r1_corners[0].second > r1_corners[1].second) {
-			if (projection_y < r1_corners[0].second && projection_y > r1_corners[1].second) {
+	double axis2_slope = (r1_corners[1].second - r1_corners[2].second) / (r1_corners[1].first - r1_corners[2].first);
+	double axis2_offset = -1*axis2_slope*r1_corners[1].first + r1_corners[1].second;
+	bool overlap2 = false;
+	if (axis1_slope == 0) {
+		for (int i = 0; i < 4; i++) {
+			if (r1_corners[0].first > r1_corners[1].first) {
+				if (r2_corners[i].first <= r1_corners[0].first && r2_corners[i].first >= r1_corners[1].first) {
+					overlap1 = true;
+				}
+			} else {
+				if (r2_corners[i].first >= r1_corners[0].first && r2_corners[i].first <= r1_corners[1].first) {
+					overlap1 = true;
+				}
+			}
+			if (r1_corners[1].second > r1_corners[2].second) {
+				if (r2_corners[i].second <= r1_corners[1].second && r2_corners[i].second >= r1_corners[2].second) {
+					overlap2 = true;
+				}
+			} else {
+				if (r2_corners[i].second >= r1_corners[1].second && r2_corners[i].second <= r1_corners[2].second) {
+					overlap2 = true;
+				}
+			}
+		}
+	} else if (axis2_slope == 0) {
+		for (int i = 0; i < 4; i++) {
+			if (r1_corners[0].second > r1_corners[1].second) {
+				if (r2_corners[i].second <= r1_corners[0].second && r2_corners[i].second >= r1_corners[1].second) {
+					overlap1 = true;
+				}
+			} else {
+				if (r2_corners[i].second >= r1_corners[0].second && r2_corners[i].second <= r1_corners[1].second) {
+					overlap1 = true;
+				}
+			}
+			if (r1_corners[1].first > r1_corners[2].first) {
+				if (r2_corners[i].first <= r1_corners[1].first && r2_corners[i].first >= r1_corners[2].first) {
+					overlap2 = true;
+				}
+			} else {
+				if (r2_corners[i].first >= r1_corners[1].first && r2_corners[i].first <= r1_corners[2].first) {
+					overlap2 = true;
+				}
+			}
+		}
+	} else {
+		for (int i = 0; i < 4; i++) {
+			double offset = ((1/axis1_slope) * r2_corners[i].first) + r2_corners[i].second;
+			double projection_x = (offset-axis1_offset)/(1/axis1_slope + axis1_slope);
+			double projection_y = axis1_offset + axis1_slope*projection_x;
+			if (r1_corners[0].second > r1_corners[1].second) {
+				if (projection_y <= r1_corners[0].second && projection_y >= r1_corners[1].second) {
+					overlap1 = true;
+				}
+			} else if (projection_y >= r1_corners[0].second && projection_y <= r1_corners[1].second) {
 				overlap1 = true;
 			}
-		} else if (projection_y > r1_corners[0].second && projection_y < r1_corners[1].second) {
-			overlap1 = true;
 		}
-	}
-	double axis2_slope = (r1_corners[1].second - r1_corners[2].second) / (r1_corners[1].first - r1_corners[2].first);
-	double axis2_offset = axis2_slope*r1_corners[1].first + r1_corners[1].second;
-	bool overlap2 = false;
-	for (int i = 0; i < 3; i++) {
-		double offset = (-1/axis2_slope) * r2_corners[i].first - r2_corners[i].second;
-		double projection_x = offset/(1/axis2_slope + axis2_slope);
-		double projection_y = axis2_offset + axis2_slope*projection_x;
-		if (r1_corners[1].second > r1_corners[2].second) {
-			if (projection_y < r1_corners[1].second && projection_y > r1_corners[2].second) {
+		for (int i = 0; i < 4; i++) {
+			double offset = ((1/axis2_slope) * r2_corners[i].first) + r2_corners[i].second;
+			double projection_x = (offset-axis2_offset)/(1/axis2_slope + axis2_slope);
+			double projection_y = axis2_offset + axis2_slope*projection_x;
+			if (r1_corners[1].second > r1_corners[2].second) {
+				if (projection_y <= r1_corners[1].second && projection_y >= r1_corners[2].second) {
+					overlap2 = true;
+				}
+			} else if (projection_y >= r1_corners[1].second && projection_y <= r1_corners[2].second) {
 				overlap2 = true;
 			}
-		} else if (projection_y > r1_corners[1].second && projection_y < r1_corners[2].second) {
-			overlap2 = true;
 		}
 	}
 	if (overlap1 && overlap2) {
@@ -60,7 +98,9 @@ bool RobotPhysicsUpdater::check_collision(std::shared_ptr<Robot> r1, std::shared
 void RobotPhysicsUpdater::move_robot(std::shared_ptr<Robot> r, double left_wheel, double right_wheel, double duration) {
 	//calculate how fast the right wheel moves
 	// std::cout << r->angle << std::endl;
+	// std::cout << left_wheel << ", " << right_wheel << std::endl;
 	double desired_right_velocity = (right_wheel/100.0)*r->max_wheel_velocity_;
+	// std::cout << desired_right_velocity << std::endl;
 	double right_new_velocity = desired_right_velocity;
 	if (r->right_wheel_velocity_ < desired_right_velocity) {
 		double right_velocity_increase = duration * r->wheel_acceleration_;
@@ -79,6 +119,7 @@ void RobotPhysicsUpdater::move_robot(std::shared_ptr<Robot> r, double left_wheel
 	r->right_wheel_velocity_ = right_new_velocity;
 	//calculate how fast the left wheel moves
 	double desired_left_velocity = (left_wheel/100.0)*r->max_wheel_velocity_;
+	// std::cout << desired_left_velocity << std::endl;
 	double left_new_velocity = desired_left_velocity;
 	if (r->left_wheel_velocity_ < desired_left_velocity) {
 		double left_velocity_increase = duration * r->wheel_acceleration_;
@@ -115,15 +156,18 @@ void RobotPhysicsUpdater::move_robot(std::shared_ptr<Robot> r, double left_wheel
 		if (average_left_velocity == 0 || average_right_velocity == 0) {
 			curvature_radius = r->width_/2;
 		} else {
-			curvature_radius = ((average_left_velocity + average_right_velocity)/(average_right_velocity - average_left_velocity))/2;
+			curvature_radius = r->width_*((average_left_velocity + average_right_velocity)/(average_right_velocity - average_left_velocity))/2;
 		}
 		// std::cout << curvature_radius << std::endl;
 		double angle_change = rotational_velocity * duration;
 		// std::cout << angle_change << std::endl;
 		double icc_x = r->x_pos_ - curvature_radius * sin(r->angle_);
+		// std::cout << icc_x << std::endl;
 		double icc_y = r->y_pos_ + curvature_radius * cos(r->angle_);
+		// std::cout << icc_y << std::endl;
 		double new_x = ((r->x_pos_ - icc_x) * cos(angle_change)) + ((r->y_pos_ - icc_y) * -sin(angle_change)) + icc_x;
 		double new_y = ((r->x_pos_ - icc_x) * sin(angle_change)) + ((r->y_pos_ - icc_y) * cos(angle_change)) + icc_y;
+		// std::cout << new_x << ", " << new_y << std::endl;
 		r->x_pos_ = new_x;
 		r->y_pos_ = new_y;
 		r->angle_ += angle_change;
