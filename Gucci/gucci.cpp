@@ -1,18 +1,18 @@
 #include "gucci.h"
 
 
-ICM20948 icm(Wire2, (uint8_t)0x68); //PURPOSE?
-
 /* line sensor */
 volatile bool line_hit;
 
 /* distance sensors */
 int dist[6];
 
-/* acceleration timing variables */ //TODO RESEARCH ON IMU
-int curr_time;
+/* imu variables */ 
+ICM20948 imu(Wire, (uint8_t)0x69);
+int curr_time; //Do we want to implement this
 int prev_time_accel;
-int check_accel;
+int accel[2];
+int gyro_z;
 
 /* motor power multipliers */
 double left_multi;
@@ -86,16 +86,14 @@ void do_startup_action() {
 /**
  * SETUP METHODS
 **/
- void setup_imu() { //TODO RESEARCH
-    pinMode(IMU_ADDRESS_PIN, OUTPUT);
-    digitalWrite(IMU_ADDRESS_PIN, LOW); //Don't ever set this high
-    Wire2.begin();
-    Wire2.setSDA(IMU_SDA);
-    Wire2.setSCL(IMU_SCL);
-    icm.begin();
-    icm.disableDataReadyInterrupt();
-    icm.configAccel(ICM20948::ACCEL_RANGE_2G, ICM20948::ACCEL_DLPF_BANDWIDTH_6HZ);
-    icm.configGyro(ICM20948::GYRO_RANGE_250DPS, ICM20948::GYRO_DLPF_BANDWIDTH_6HZ);
+ void setup_imu() {
+    Wire.begin();
+    Wire.setSDA(IMU_SDA);
+    Wire.setSCL(IMU_SCL);
+    imu.begin();
+    imu.disableDataReadyInterrupt();
+    imu.configAccel(ICM20948::ACCEL_RANGE_2G, ICM20948::ACCEL_DLPF_BANDWIDTH_6HZ);
+    imu.configGyro(ICM20948::GYRO_RANGE_250DPS, ICM20948::GYRO_DLPF_BANDWIDTH_6HZ);
  }
 
  void setup_distance() {
@@ -152,12 +150,14 @@ bool get_line_flag() {
 }
 
 void get_accel() {
-//    x_accel.add(icm.getAccelX_mss());
-//    y_accel.add(icm.getAccelY_mss());
+    imu.readSensor();
+    accel[0] = imu.getAccelX_mss();
+    accel[1] = imu.getAccelY_mss();
 }
 
 void get_gyro() {
-    //TODO: implement?
+    imu.readSensor();
+    gyro_z = imu.getGyroZ_rads();
 }
 
 void get_distances() {
