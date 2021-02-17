@@ -2,6 +2,52 @@
 
 #include <string>
 
+void setup_radio() {
+    RFM69 radio;
+    radio.initialize(FREQUENCY, MYNODEID, NETWORKID);
+    radio.setHighPower();
+}
+
+void send_data(byte[] input) {
+
+    static char sendbuffer[62];
+    static int sendlength = 0;
+
+    if (Serial.available() > 0)
+  {
+    
+    if (input != '\r') // not a carriage return
+    {
+      sendbuffer[sendlength] = input[i];
+      sendlength++;
+    }
+
+    // If the input is a carriage return, or the buffer is full:
+    
+    if ((input == '\r') || (sendlength == 61)) // CR or buffer full
+    {
+      // Send the packet
+      
+    radio.sendWithRetry(TONODEID, sendbuffer, sendlength);
+    sendlength = 0;
+    }
+  }
+}
+
+void recieve_data() {
+    if (radio.receiveDone())
+  {
+    radio.sendACK();
+  }
+  //run a test
+  if (radio.DATA[0] = 0){
+      check_motor();
+  } else if (radio.DATA[0] = 1) {
+      check_line_sensor();
+  } else {
+      check_lidar();
+}
+
 void check_motor() {
     drive(127,255);
     delay(1000);
