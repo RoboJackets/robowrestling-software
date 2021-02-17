@@ -16,7 +16,7 @@ class RobotPhysicsUpdater {
 
         bool check_collision(std::shared_ptr<Robot> r1, std::shared_ptr<Robot> r2); //uses given information to check if the robots will collide using Seperating Axis Theorem
 
-        void collision(); //updates the position and velocities of the robots using collision logic
+        void collision_handler(std::shared_ptr<Robot> r1, std::shared_ptr<Robot> r2); //updates the position and velocities of the robots using collision logic
 };
 
 #endif
