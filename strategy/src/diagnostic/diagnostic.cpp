@@ -59,7 +59,9 @@ void check_motor() {
 
 void check_line_sensor() {
 	left_line_hit = !digitalReadFast(LEFT_INT_LINE);
+    Serial.println(left_line_hit);
     right_line_hit = !digitalReadFast(RIGHT_INT_LINE);
+    Serial.println(right_line_hit);
 }
 
 void check_accel() {
