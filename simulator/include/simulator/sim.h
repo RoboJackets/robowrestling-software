@@ -13,6 +13,7 @@
 #include <simulator/abstract_distance_sensor.h>
 #include <simulator/abstract_line_sensor.h>
 #include <simulator/distance_sensor.h>
+#include <simulator/imu.h>
 
 
 #define WINDOW_HEIGHT 600
