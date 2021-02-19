@@ -1,8 +1,8 @@
 #ifndef diagnostic_h
 #define diagnostic_h
 
-#include <RFM69.h>
-#include <SPI.h>
+//#include <RFM69.h>
+//#include <SPI.h>
 #include <gucci.h>
 
 #define NETWORKID 0
