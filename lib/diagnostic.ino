@@ -1,4 +1,4 @@
-#include <strategy/diagnostic/diagnostic.h>
+#include "diagnostic.h"
 
 byte check = 11;
 

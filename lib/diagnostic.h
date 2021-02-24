@@ -3,7 +3,7 @@
 
 //#include <RFM69.h>
 //#include <SPI.h>
-#include <gucci.h>
+#include <../Gucci/gucci.h>
 
 #define NETWORKID 0
 #define MYNODEID 1

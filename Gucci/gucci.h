@@ -3,7 +3,7 @@
 
 #include "Arduino.h"
 #include "math.h"
-#include <lib/ICM20948.h>
+#include <../lib/ICM20948.h>
 
 
 #define LIDAR12_SERIAL Serial3 //Test which is what direction
