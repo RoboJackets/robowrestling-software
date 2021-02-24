@@ -3,7 +3,6 @@
 #include <string>
 
 void setup_radio() {
-    RFM69 radio;
     radio.initialize(FREQUENCY, MYNODEID, NETWORKID);
     radio.setHighPower();
 }
