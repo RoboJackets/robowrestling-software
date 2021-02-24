@@ -1,8 +1,7 @@
 #include "diagnostic.h"
 
-#include <string>
-
-void setup_radio() {
+/*void setup_radio() {
+    RFM69 radio;
     radio.initialize(FREQUENCY, MYNODEID, NETWORKID);
     radio.setHighPower();
 }
@@ -45,7 +44,7 @@ void recieve_data() {
       check_line_sensor();
   } else {
       check_lidar();
-}
+} */
 
 void check_motor() {
     drive(127,255);
@@ -57,19 +56,19 @@ void check_motor() {
 }
 
 void check_line_sensor() {
-	left_line_hit = !digitalReadFast(LEFT_INT_LINE);
-    right_line_hit = !digitalReadFast(RIGHT_INT_LINE);
+	Serial.println(!digitalReadFast(LEFT_INT_LINE));
+    Serial.println(!digitalReadFast(RIGHT_INT_LINE));
 }
 
 void check_accel() {
     imu.readSensor();
-    Serial.println("Accel_X: " + imu.getAccelX_mss());
-    Serial.println("Accel_Y: " + imu.getAccelY_mss());
+    Serial.printf("Accel_X: %f\n", imu.getAccelX_mss());
+    Serial.printf("Accel_Y: %f\n", imu.getAccelY_mss());
 }
 
 void check_gyro() {
     imu.readSensor();
-    Serial.println("Gyro_Z: " + imu.getGyroZ_rads());
+    Serial.printf("Gyro_Z: %f\n", imu.getGyroZ_rads());
 }
 
 void check_lidar() {
@@ -88,12 +87,11 @@ void check_lidar() {
 }
 
 void read_lidar(auto LIDAR) {
-    byte byteArray [9];
     Serial.println(LIDAR);
     if (LIDAR) {
         LIDAR.readBytes(byteArray, 9); // write output of read to an array of length 9
-        Serial.println("Distance: " + (byteArray[3] << 8) | (byteArray[2] << 0));
-        Serial.println("Strength: " + (byteArray[5] << 8) | (byteArray[4] << 0));
+        Serial.println("Distance: " + ((byteArray[3] << 8) | (byteArray[2] << 0)));
+        Serial.println("Strength: " + ((byteArray[5] << 8) | (byteArray[4] << 0)));
     }
 }
 // Byte0 Byte 1 Byte2 Byte3  Byte4      Byte5      Byte6  Byte7  Byte8

@@ -3,9 +3,9 @@
 
 #include "Arduino.h"
 #include "math.h"
-#include <../lib/ICM20948.h>
+#include "../lib/ICM20948.h"
 
-
+byte byteArray [9];
 #define LIDAR12_SERIAL Serial3 //Test which is what direction
 #define LIDAR12_RX 7
 #define LIDAR12_TX 8
@@ -30,6 +30,7 @@
 #define MAX_DIST 1500 //Max distance we care about
 #define CLOSE_DIST 500
 
+ICM20948 imu(Wire, (uint8_t)0x69);
 #define IMU_SDA 4
 #define IMU_SCL 3
 
@@ -84,5 +85,6 @@ bool get_line_flag();
 void get_accel();
 void get_gyro();
 void get_distances();
+int read_tfmini(auto);
 
 #endif

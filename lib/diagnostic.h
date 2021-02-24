@@ -3,7 +3,7 @@
 
 //#include <RFM69.h>
 //#include <SPI.h>
-#include <../Gucci/gucci.h>
+#include "../Gucci/gucci.h"
 
 #define NETWORKID 0
 #define MYNODEID 1
@@ -11,7 +11,6 @@
 #define FREQUENCY RF69_915MHZ
 #define USEACK true
 
-//RFM69 radio;
 
 void setup_radio();
 void send_data();
@@ -21,6 +20,6 @@ void check_line_sensor();
 void check_accel();
 void check_gyro();
 void check_lidar();
-void read_lidar(String);
+void read_lidar(auto);
 
 #endif

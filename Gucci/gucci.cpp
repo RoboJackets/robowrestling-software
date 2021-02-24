@@ -8,7 +8,6 @@ volatile bool line_hit;
 int dist[6];
 
 /* imu variables */ 
-ICM20948 imu(Wire, (uint8_t)0x69);
 int curr_time; //Do we want to implement this
 int prev_time_accel;
 int accel[2];
@@ -162,20 +161,20 @@ void get_gyro() {
 
 void get_distances() {
     digitalWrite(LIDAR12_MUX, LOW);
-    dist[0] = read_lidar(LIDAR12_SERIAL);
+    dist[0] = read_tfmini(LIDAR12_SERIAL);
     digitalWrite(LIDAR12_MUX, HIGH);
-    dist[1] = read_lidar(LIDAR12_SERIAL);
+    dist[1] = read_tfmini(LIDAR12_SERIAL);
     digitalWrite(LIDAR34_MUX, LOW);
-    dist[2] = read_lidar(LIDAR34_SERIAL);
+    dist[2] = read_tfmini(LIDAR34_SERIAL);
     digitalWrite(LIDAR34_MUX, HIGH);
-    dist[3] = read_lidar(LIDAR34_SERIAL);
+    dist[3] = read_tfmini(LIDAR34_SERIAL);
     digitalWrite(LIDAR56_MUX, LOW);
-    dist[4] = read_lidar(LIDAR56_SERIAL);
+    dist[4] = read_tfmini(LIDAR56_SERIAL);
     digitalWrite(LIDAR56_MUX, HIGH);
-    dist[5] = read_lidar(LIDAR56_SERIAL);
+    dist[5] = read_tfmini(LIDAR56_SERIAL);
 }
 
-int read_lidar(auto LIDAR) {
+int read_tfmini(auto LIDAR) {
     int dist;
     byte byteArray [9];
     if (LIDAR) {
