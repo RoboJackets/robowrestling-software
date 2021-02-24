@@ -6,5 +6,6 @@ SlammyWhammy::SlammyWhammy() {
 }
 
 std::vector<int> SlammyWhammy::next_action(std::vector<double> inputs) {
-    return std::vector<int>(2, 90);
+    int output[] = {5, 5};
+    return std::vector<int>(output, output + sizeof(output)/sizeof(int));
 }

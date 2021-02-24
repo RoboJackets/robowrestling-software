@@ -1,4 +1,5 @@
 #include <simulator/sim.h>
+
 #include <iostream>
 
 void draw_field() {
@@ -18,7 +19,7 @@ void draw_robot(std::shared_ptr<Robot> robot) {
     double homogenous_x = robot->x_pos_ + shift_magnitude*cos(robot->angle_ - .75 * M_PI);
     double homogenous_y = robot->y_pos_ + shift_magnitude*sin(robot->angle_ - .75 * M_PI);
     rectangle.setPosition(homogenous_x, homogenous_y);
-    rectangle.setRotation(robot->angle_*180/M_PI + 90);
+    rectangle.setRotation(robot->angle_*180/M_PI);
     window_->draw(rectangle);
 }	
 
@@ -42,9 +43,13 @@ void update() {
 
 int main() {
 	/* code */
-	robot1_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)-65, WINDOW_HEIGHT/2, 0);
-	robot2_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)+65, WINDOW_HEIGHT/2, M_PI);
+	robot1_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)-25, WINDOW_HEIGHT/2-25, M_PI/4);
+	robot2_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2), WINDOW_HEIGHT/2+25, M_PI);
     physics_updater_ = std::make_shared<RobotPhysicsUpdater>();
+
+    // DistanceSensor* test_distance_sensor = new DistanceSensor(robot1_, 0, 0, 0, M_PI/16, 200);
+
+    // test_distance_sensor->read(robot2_); // double value of distance from test_distance_sensor to robot 2
     
     window_ = std::make_shared<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "My window");
     window_->clear(sf::Color::White); // clear the window with white color
@@ -56,10 +61,11 @@ int main() {
     int i = 0;
 	while (window_->isOpen()) {
         if (i < 5) {
+            // physics_updater->move_robot(robot1, 100, 99, 1);
+            // physics_updater->move_robot(robot2, 100, 99, 1);
             auto dummy_vector = std::vector<double>();
             std::vector<int> r1_drive = robot1_->strat_->next_action(dummy_vector);
-            physics_updater_->move_robot(robot1_, r1_drive[0], r1_drive[1], 1);
-            physics_updater_->move_robot(robot2_, 100, 50, 2);
+            physics_updater_->update(robot1_, r1_drive, robot2_, r1_drive, .01);
             // std::cout << robot1->x_pos << ", " << robot1->y_pos << std::endl;
             // std::cout << robot2->x_pos << ", " << robot2->y_pos << std::endl;
             // i++;
