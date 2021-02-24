@@ -11,7 +11,7 @@
 #define FREQUENCY RF69_915MHZ
 #define USEACK true
 
-
+//RFM69 radio;
 
 void setup_radio();
 void send_data();
