@@ -1,8 +1,8 @@
 #ifndef distance_sensor_h
 #define distance_sensor_h
 
-#include <simulator/robot.h>
-#include <simulator/abstract_distance_sensor.h>
+#include <simulator/robots/robot.h>
+#include <simulator/sensors/abstract_distance_sensor.h>
 #include <math.h>
 
 class DistanceSensor : public AbstractDistanceSensor {

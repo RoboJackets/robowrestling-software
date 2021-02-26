@@ -6,9 +6,9 @@
 #include <cmath>
 #include <vector>
 
-#include <simulator/robot.h>
-#include <simulator/basicrobot.h>
-#include <simulator/basicrobot_handler.h>
+#include <simulator/robots/robot.h>
+#include <simulator/robots/basicrobot.h>
+#include <simulator/sensors/basicrobot_handler.h>
 
 #include <simulator/physics/robotphysicsupdater.h>
 

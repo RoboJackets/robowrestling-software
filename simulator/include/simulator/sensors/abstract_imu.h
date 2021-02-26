@@ -2,7 +2,7 @@
 #define abstract_imu_h
 
 #include <memory>
-#include <simulator/robot.h>
+#include <simulator/robots/robot.h>
 
 class AbstractIMU {
     public:

@@ -1,4 +1,4 @@
-#include <simulator/basicrobot_handler.h>
+#include <simulator/sensors/basicrobot_handler.h>
 
 BasicRobotHandler::BasicRobotHandler(std::shared_ptr<Robot> r) {
     robot_ = r;

@@ -1,7 +1,7 @@
 #ifndef imu_h
 #define imu_h
 
-#include <simulator/abstract_imu.h>
+#include <simulator/sensors/abstract_imu.h>
 
 class IMU : public AbstractIMU {
     public:
