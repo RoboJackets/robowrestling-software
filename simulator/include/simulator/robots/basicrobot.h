@@ -1,7 +1,7 @@
 #ifndef basicrobot_h
 #define basicrobot_h
 
-#include <simulator/robot.h>
+#include <simulator/robots/robot.h>
 #include <strategy/slammywhammy.h>
 
 class BasicRobot: public Robot { //basic robot for testing purposes

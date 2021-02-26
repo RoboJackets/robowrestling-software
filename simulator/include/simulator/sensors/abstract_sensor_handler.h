@@ -1,7 +1,7 @@
 #ifndef abstract_sensor_handler_h
 #define abstract_sensor_handler_h
 
-#include <simulator/robot.h>
+#include <simulator/robots/robot.h>
 
 class AbstractSensorHandler {
     public:

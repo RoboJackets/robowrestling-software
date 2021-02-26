@@ -1,10 +1,10 @@
 #ifndef basicrobot_handler_h
 #define basicrobot_handler_h
 
-#include <simulator/abstract_sensor_handler.h>
+#include <simulator/sensors/abstract_sensor_handler.h>
 
-#include <simulator/distance_sensor.h>
-#include <simulator/imu.h>
+#include <simulator/sensors/distance_sensor.h>
+#include <simulator/sensors/imu.h>
 
 class BasicRobotHandler : public AbstractSensorHandler {
     public:

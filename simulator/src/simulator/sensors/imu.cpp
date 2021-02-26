@@ -1,4 +1,4 @@
-#include <simulator/imu.h>
+#include <simulator/sensors/imu.h>
 
 IMU::IMU(std::shared_ptr<Robot> r) {
     robot_ = r;
