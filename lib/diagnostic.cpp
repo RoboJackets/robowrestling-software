@@ -1,50 +1,21 @@
 #include "diagnostic.h"
 
-/*void setup_radio() {
-    RFM69 radio;
+void setup_radio() {
     radio.initialize(FREQUENCY, MYNODEID, NETWORKID);
     radio.setHighPower();
 }
 
-void send_data(byte[] input) {
-
-    static char sendbuffer[62];
-    static int sendlength = 0;
-
-    if (Serial.available() > 0)
-  {
-    
-    if (input != '\r') // not a carriage return
-    {
-      sendbuffer[sendlength] = input[i];
-      sendlength++;
-    }
-
-    // If the input is a carriage return, or the buffer is full:
-    
-    if ((input == '\r') || (sendlength == 61)) // CR or buffer full
-    {
-      // Send the packet
-      
-    radio.sendWithRetry(TONODEID, sendbuffer, sendlength);
-    sendlength = 0;
-    }
-  }
+void send_data(byte input[]) {
+    radio.sendWithRetry(TONODEID, input, sizeof(input)/sizeof(input[0]));
 }
+
 
 void recieve_data() {
     if (radio.receiveDone())
   {
     radio.sendACK();
   }
-  //run a test
-  if (radio.DATA[0] = 0){
-      check_motor();
-  } else if (radio.DATA[0] = 1) {
-      check_line_sensor();
-  } else {
-      check_lidar();
-} */
+}
 
 void check_motor() {
     drive(127,255);
@@ -56,19 +27,29 @@ void check_motor() {
 }
 
 void check_line_sensor() {
+    byte readings;
 	Serial.println(!digitalReadFast(LEFT_INT_LINE));
     Serial.println(!digitalReadFast(RIGHT_INT_LINE));
+    reading = !digitalReadFast(LEFT_INT_LINE) << 1 | !digitalReadFast(RIGHT_INT_LINE) << 0;
+    //return reading;
 }
 
-void check_accel() {
-    imu.readSensor();
+void check_accelX() {
+    imu.readSensor(); 
     Serial.printf("Accel_X: %f\n", imu.getAccelX_mss());
+    //return imu.getAccelX_mss();
+}
+
+void check_accelY() {
+    imu.readSensor(); 
     Serial.printf("Accel_Y: %f\n", imu.getAccelY_mss());
+    //return imu.getAccelY_mss();
 }
 
 void check_gyro() {
     imu.readSensor();
     Serial.printf("Gyro_Z: %f\n", imu.getGyroZ_rads());
+    //return imu.GetgyroZ_rads();
 }
 
 void check_lidar() {

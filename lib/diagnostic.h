@@ -1,8 +1,8 @@
 #ifndef diagnostic_h
 #define diagnostic_h
 
-//#include <RFM69.h>
-//#include <SPI.h>
+#include <RFM69.h>
+#include <SPI.h>
 #include "../Gucci/gucci.h"
 
 #define NETWORKID 0
@@ -11,6 +11,14 @@
 #define FREQUENCY RF69_915MHZ
 #define USEACK true
 
+union floatsplit {
+    float val;
+    byte bytes[4];
+}
+
+floatsplit packet;
+
+RFM69 radio;
 
 void setup_radio();
 void send_data();
