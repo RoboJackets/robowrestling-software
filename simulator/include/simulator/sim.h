@@ -6,14 +6,11 @@
 #include <cmath>
 #include <vector>
 
-#include <simulator/robot.h>
-#include <simulator/basicrobot.h>
+#include <simulator/robots/robot.h>
+#include <simulator/robots/basicrobot.h>
+#include <simulator/sensors/basicrobot_handler.h>
+
 #include <simulator/physics/robotphysicsupdater.h>
-
-#include <simulator/abstract_distance_sensor.h>
-#include <simulator/abstract_line_sensor.h>
-#include <simulator/distance_sensor.h>
-
 
 #define WINDOW_HEIGHT 600
 #define WINDOW_WIDTH 800
@@ -24,8 +21,6 @@ std::shared_ptr<Robot> robot1_; //robot object that stores information about a r
 std::shared_ptr<Robot> robot2_; //see above
 
 std::shared_ptr<sf::RenderWindow> window_;
-std::vector<AbstractDistanceSensor*> distance_sensor_vec;
-std::vector<AbstractLineSensor*> line_sensor_vec;
 
 std::shared_ptr<RobotPhysicsUpdater> physics_updater_;
 

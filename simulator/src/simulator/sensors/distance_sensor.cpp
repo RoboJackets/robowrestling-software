@@ -1,4 +1,4 @@
-#include <simulator/distance_sensor.h>
+#include <simulator/sensors/distance_sensor.h>
 
 #include <iostream>
 #include <vector>

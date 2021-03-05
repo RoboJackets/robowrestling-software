@@ -44,12 +44,9 @@ void update() {
 int main() {
 	/* code */
 	robot1_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)-25, WINDOW_HEIGHT/2-25, M_PI/4);
+    BasicRobotHandler test_handler = BasicRobotHandler(robot1_);
 	robot2_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2), WINDOW_HEIGHT/2+25, M_PI);
     physics_updater_ = std::make_shared<RobotPhysicsUpdater>();
-
-    // DistanceSensor* test_distance_sensor = new DistanceSensor(robot1_, 0, 0, 0, M_PI/16, 200);
-
-    // test_distance_sensor->read(robot2_); // double value of distance from test_distance_sensor to robot 2
     
     window_ = std::make_shared<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "My window");
     window_->clear(sf::Color::White); // clear the window with white color
@@ -66,6 +63,8 @@ int main() {
             auto dummy_vector = std::vector<double>();
             std::vector<int> r1_drive = robot1_->strat_->next_action(dummy_vector);
             physics_updater_->update(robot1_, r1_drive, robot2_, r1_drive, .01);
+            auto readings = test_handler.read(.01, robot2_);
+            std::cout << readings[0] << ", " << readings[1] << ", " << readings[2] << ", " << readings[3] << std::endl;
             // std::cout << robot1->x_pos << ", " << robot1->y_pos << std::endl;
             // std::cout << robot2->x_pos << ", " << robot2->y_pos << std::endl;
             // i++;

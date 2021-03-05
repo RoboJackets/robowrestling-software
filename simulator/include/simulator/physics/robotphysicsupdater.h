@@ -3,7 +3,7 @@
 
 #include <cmath>
 #include <memory>
-#include <simulator/robot.h>
+#include <simulator/robots/robot.h>
 
 class RobotPhysicsUpdater {
 	public: 

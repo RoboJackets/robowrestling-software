@@ -1,4 +1,4 @@
-#include <simulator/basicrobot.h>
+#include <simulator/robots/basicrobot.h>
 
 BasicRobot::BasicRobot(double x_pos, double y_pos, double angle) {
 	x_pos_ = x_pos;
