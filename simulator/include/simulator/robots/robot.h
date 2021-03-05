@@ -19,6 +19,8 @@ class Robot { //abstract class of a robot
 		double right_wheel_velocity_; //robot's right wheel's current velocity used for collision calculations. radians/s
 		double max_wheel_velocity_; //maximum velocity the robot's wheels can achieve
 		double wheel_acceleration_; //rate at which the robot's wheels accelerates in radians/s^2
+		double linear_velocity_; //linear velocity of the robot (for when it's being pushed) cm(window units)/s
+		double velocity_dir_; //direction of robot's linear velocity. 0-2pi with 0 being "east"
 
 		std::unique_ptr<Strategy> strat_;
 
