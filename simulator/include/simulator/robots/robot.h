@@ -15,8 +15,8 @@ class Robot { //abstract class of a robot
 		double length_; //length of robot used for collision and ring out calculations
 		
 		double wheel_radius_; //radius of wheel in m. used to convert angular velocity to distance traveled and angle change
-		double left_wheel_velocity_; //robot's left wheel's current velocity used for collision calculations. radians/s?
-		double right_wheel_velocity_; //robot's right wheel's current velocity used for collision calculations. radians/s?
+		double left_wheel_velocity_; //robot's left wheel's current velocity used for collision calculations. radians/s
+		double right_wheel_velocity_; //robot's right wheel's current velocity used for collision calculations. radians/s
 		double max_wheel_velocity_; //maximum velocity the robot's wheels can achieve
 		double wheel_acceleration_; //rate at which the robot's wheels accelerates in radians/s^2
 
