@@ -1,5 +1,6 @@
 #include <strategy/sensor_strategy.h>
 
+
 SensorStrategy::SensorStrategy() {
     state_ = 0;
 }
