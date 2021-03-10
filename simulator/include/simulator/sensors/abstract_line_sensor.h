@@ -13,7 +13,7 @@ class AbstractLineSensor {
         double line_y_; // y pos of sensor with respect to robot center facing east
 
         virtual int read() = 0; //255 is active, 0 is inactive
-        virtual double get_distance() = 0; //use robot_->x_pos_, robot_->y_pos_, robot_->angle_
+        virtual double get_distance() = 0;
 };
 
 #endif
