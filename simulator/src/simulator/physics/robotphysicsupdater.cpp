@@ -101,10 +101,9 @@ bool RobotPhysicsUpdater::check_collision(std::shared_ptr<Robot> r1, std::shared
 void RobotPhysicsUpdater::collision_handler(std::shared_ptr<Robot> r1, std::shared_ptr<Robot> r2) {
 	double r2_x_to_r1 = r2->x_pos_ - r1->x_pos_; //shift using r1 as the origin
 	double r2_y_to_r1 = r2->y_pos_ - r1->y_pos_;
-	r2_x_to_r1 = r2_x_to_r1*cos(-1*r1->angle_) - r2_y_to_r1*sin(-1*r1->angle_); //rotate axis so r1 is origin
-	r2_y_to_r1 = r2_x_to_r1*sin(-1*r1->angle_) + r2_y_to_r1*cos(-1*r1->angle_);
-	double angle_r1_to_r2 = atan2(r2_y_to_r1, r2_x_to_r1); //inverse tangent to get the angle of r2 relative to where r1 is pointing
-
+	relative_x = r2_x_to_r1*cos(-1*r1->angle_) - r2_y_to_r1*sin(-1*r1->angle_); //rotate axis so r1 is origin
+	relative_y = r2_x_to_r1*sin(-1*r1->angle_) + r2_y_to_r1*cos(-1*r1->angle_);
+	double angle_r1_to_r2 = atan2(relative_y, relative_x); //inverse tangent to get the angle of r2 relative to where r1 is pointing
 	double r1_x_to_r2 = r1->x_pos_ - r2->x_pos_; //shift using r2 as the origin
 	double r1_y_to_r2 = r1->y_pos_ - r2->y_pos_;
 	r1_x_to_r2 = r1_x_to_r2*cos(-1*r2->angle_) - r1_y_to_r2*sin(-1*r2->angle_); //rotate axis so r2 is origin
