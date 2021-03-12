@@ -18,7 +18,7 @@ int LineSensor::read() {
 }
 
 double LineSensor::get_distance() {
-    double dist_x = (cos(robot_->angle_) * line_x_) + robot_->x_pos_ - center_x_;
-    double dist_y = (sin(robot_->angle_) * line_y_) + robot_->y_pos_ - center_y_;
+    double dist_x = (cos(robot_->angle_) * line_x_ - sin(robot_->angle_) * line_y_) + robot_->x_pos_ - center_x_;
+    double dist_y = (cos(robot_->angle_) * line_x_ + sin(robot_->angle_) * line_y_) + robot_->y_pos_ - center_y_;
     return sqrt(pow(dist_x, 2) + pow(dist_y, 2));
 }
