@@ -54,3 +54,6 @@ cmake-build-debug
 # ignore OS files
 .DS_Store
 .DS_Store
+
+# ignore vscode files
+.vscode/

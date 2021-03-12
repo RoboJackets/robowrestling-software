@@ -41,11 +41,32 @@ void update() {
     window_->display();
 }
 
-int main() {
+int main(int argc, char *argv[]) {
 	/* code */
-	robot1_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)-25, WINDOW_HEIGHT/2-25, M_PI/4);
+    if (argc == 7) {
+        std::istringstream iss(std::string(argv[1])+" "+std::string(argv[2])+" "+std::string(argv[3])+" "+std::string(argv[4])+" "+std::string(argv[5])+" "+std::string(argv[6]));
+        double r1_x = 0.0;
+        iss >> r1_x;
+        double r1_y = 0.0;
+        iss >> r1_y;
+        double r1_a = 0.0;
+        iss >> r1_a;
+        r1_a = r1_a * M_PI;
+        double r2_x = 0.0;
+        iss >> r2_x;
+        double r2_y = 0.0;
+        iss >> r2_y;
+        double r2_a = 0.0;
+        iss >> r2_a;
+        r1_a = r2_a * M_PI;
+        robot1_ = std::make_shared<BasicRobot>(r1_x, r1_y, r1_a);
+        robot2_ = std::make_shared<BasicRobot>(r2_x, r2_y, r2_a);
+    } else {
+        robot1_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)-25, WINDOW_HEIGHT/2-25, M_PI/4);
+        robot2_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2), WINDOW_HEIGHT/2+25, M_PI);
+    }
+	
     BasicRobotHandler test_handler = BasicRobotHandler(robot1_);
-	robot2_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2), WINDOW_HEIGHT/2+25, M_PI);
     physics_updater_ = std::make_shared<RobotPhysicsUpdater>();
     
     window_ = std::make_shared<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "My window");

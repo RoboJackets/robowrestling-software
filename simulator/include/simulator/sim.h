@@ -5,6 +5,7 @@
 #include <memory>
 #include <cmath>
 #include <vector>
+#include <sstream>
 
 #include <simulator/robots/robot.h>
 #include <simulator/robots/basicrobot.h>
@@ -30,5 +31,5 @@ void draw_field(); //draws the field
 
 void draw_robot(std::shared_ptr<Robot> robot); //draws the robots
 
-int main(); //main method that has the game loop
+int main(int argc, char *argv[]); //main method that has the game loop
 #endif
