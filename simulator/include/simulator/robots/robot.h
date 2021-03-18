@@ -22,6 +22,10 @@ class Robot { //abstract class of a robot
 		double linear_velocity_; //linear velocity of the robot (for when it's being pushed) cm(window units)/s
 		double velocity_dir_; //direction of robot's linear velocity. 0-2pi with 0 being "east"
 
+		double static_friction_; //coefficient of friction for when the robot is static (in the direction of the force)
+		double rolling_friction_; //coefficient of friction for when the robot is rolling (in the direction of the force)
+		double sliding_friction_; //coefficient of friction for when the robot is sliding (in the direction of the force)
+
 		std::unique_ptr<Strategy> strat_;
 
 		virtual std::vector<std::pair<double, double>> corners() = 0;	//returns the corners in x, y pairs in order selecting them
