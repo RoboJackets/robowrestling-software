@@ -13,6 +13,7 @@ class Robot { //abstract class of a robot
 		
 		double width_; //width of robot used for collision and ring out calculations. used as distance between wheels
 		double length_; //length of robot used for collision and ring out calculations
+		int plow_angle_; //angle of the plow in radians with 0 being flat
 		
 		double wheel_radius_; //radius of wheel in m. used to convert angular velocity to distance traveled and angle change
 		double left_wheel_velocity_; //robot's left wheel's current velocity used for collision calculations. radians/s
