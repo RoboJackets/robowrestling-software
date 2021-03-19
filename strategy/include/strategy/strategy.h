@@ -1,6 +1,7 @@
 #ifndef strategy_h
 #define strategy_h
 #include <vector> 
+#include <sensor_struct.h>
 
 // stub class for strategy
 // every new strategy we create must include strategy_h so since we call upon standardized methods 
