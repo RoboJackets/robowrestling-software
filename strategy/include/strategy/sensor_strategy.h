@@ -1,6 +1,5 @@
 #include <strategy/strategy.h>
 
-
 class SensorStrategy: public Strategy {
     public:
         SensorStrategy();
