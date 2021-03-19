@@ -24,6 +24,3 @@ if(SFML_FOUND)
   include_directories(simulator/include)
   add_subdirectory(simulator)
 endif()
-
-
-
