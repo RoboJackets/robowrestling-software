@@ -38,7 +38,7 @@ double DistanceSensorJ::read(std::shared_ptr<Robot> target) {
     double average;
     int total_rays = 5; // Keep odd
 
-    for (int i = -total_rays / 2; i <= total_rays / 2; i) {
+    for (int i = -total_rays / 2; i <= total_rays / 2; i++) {
         sensor_origin.first = (cos(robot_->angle_) * sens_x_ - sin(robot_->angle_) * sens_y_) + robot_->x_pos_;
         sensor_origin.second = (cos(robot_->angle_) * sens_x_ + sin(robot_->angle_) * sens_y_) + robot_->y_pos_;
         sensor_max.first = sensor_origin.first + (cos(robot_->angle_ + sens_angle_ + i * cone_angle_ / (total_rays / 2)) * cone_length_);

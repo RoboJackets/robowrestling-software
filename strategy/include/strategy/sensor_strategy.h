@@ -1,7 +1,4 @@
 #include <strategy/strategy.h>
-#include <simulator/sensors/encoder.h>
-#include <simulator/sensors/imu.h>
-#include <simulator/sensors/line_sensor.h>
 
 class SensorStrategy: public Strategy {
     public:
