@@ -5,8 +5,14 @@ SensorStrategy::SensorStrategy() {
     state_ = 0;
 }
 
-std::vector<int> SensorStrategy::next_action(std::vector<double> inputs) {
-    int output[] = {50, 100};
-    return std::vector<int>(output, output + sizeof(output)/sizeof(int));
+std::vector<int> SensorStrategy::next_action(DistanceBuffer d, LineBuffer l, EncoderBuffer e, ImuData i) {
+    std::vector<int> ret;
+    for (int i : l.buffer) {
+        if (i == 255) {
+            ret = {25, 0}
+        }
+    }
+    
+    return ret;
 }
 
