@@ -13,4 +13,6 @@ class DistanceSensorJ : public AbstractDistanceSensorJ {
         double get_distance(pdd corner);
 };
 
+pdd lineLineIntersection(pdd A, pdd B, pdd C, pdd D);
+
 #endif
