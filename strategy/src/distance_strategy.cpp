@@ -5,6 +5,6 @@ DistanceStrat::DistanceStrat() {
     state_ = State.IDLE;
 }
 
-std::vector<int> DistanceStrat::next_action(std::vector<double> distances) {
+std::vector<int> DistanceStrat::next_action(SensorData input) {
     return std::vector<int>(2, 90);
 }

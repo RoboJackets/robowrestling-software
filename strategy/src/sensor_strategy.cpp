@@ -5,7 +5,7 @@ SensorStrategy::SensorStrategy() {
     state_ = 0;
 }
 
-std::vector<int> SensorStrategy::next_action(LineBuffer l, ImuData i) {
+std::vector<int> SensorStrategy::next_action(SensorData input) {
     int output[] = {50,50};
     for (int b : l.buffer) {
         if (b == 255) {

@@ -5,7 +5,7 @@ AvoidStrategy::AvoidStrategy() {
     state_ = IDLE;
 }
 
-std::vector<int> AvoidStrategy::next_action(LineBuffer lines, DistanceBuffer dists) {
+std::vector<int> AvoidStrategy::next_action(SensorData input) {
     int output[] = {0, 0};
     state_ = update_state();
     switch (state_) {
