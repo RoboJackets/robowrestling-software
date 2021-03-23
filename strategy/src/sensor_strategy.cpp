@@ -9,7 +9,7 @@ std::vector<int> SensorStrategy::next_action(DistanceBuffer d, LineBuffer l, Enc
     std::vector<int> ret;
     for (int i : l.buffer) {
         if (i == 255) {
-            ret = {25, 0}
+            ret = {25, 0};
         }
     }
     
