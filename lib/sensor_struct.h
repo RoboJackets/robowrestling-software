@@ -3,26 +3,17 @@
 
 #include <vector>
 
-struct EncoderBuffer
+struct SensorData
 {
-    std::vector<int> buffer;
-} typedef EncoderBuffer;
+    std::vector<int> encoder_buffer_;
 
-struct ImuData 
-{
     double x_accel_;
     double y_accel_;
     double z_gyro_;
-} typedef ImuData;
 
-struct LineBuffer
-{
-    std::vector<int> buffer;
-} typedef LineBuffer;
+    std::vector<int> line_buffer_;
 
-struct DistanceBuffer 
-{
-    std::vector<double> buffer;
-} typedef DistanceBuffer;
+    std::vector<double> dist_buffer_;
+} typedef SensorData;
 
 #endif

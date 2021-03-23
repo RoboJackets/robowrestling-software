@@ -5,7 +5,7 @@
 class SlammyWhammy: public Strategy {
     public:
         SlammyWhammy();
-        std::vector<int> next_action(std::vector<double> inputs);
+        std::vector<int> next_action(SensorData input);
         int state_;
 };
 

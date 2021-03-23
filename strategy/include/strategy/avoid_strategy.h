@@ -5,7 +5,7 @@
 class AvoidStrategy: public Strategy {
     public:
         AvoidStrategy();
-        std::vector<int> next_action(LineBuffer lines, DistanceBuffer dists);
+        std::vector<int> next_action(SensorData input);
 
         enum State {
             IDLE,
