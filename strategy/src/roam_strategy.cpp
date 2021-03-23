@@ -5,7 +5,7 @@ RoamStrategy::RoamStrategy() {
     cycle_ = 0;
 }
 
-std::vector<int> RoamStrategy::next_action(LineBuffer lines) {
+std::vector<int> RoamStrategy::next_action(SensorData input) {
     int output[] = {60, 40};
     if (check_lines(lines)) {
         output[0] = -50;
