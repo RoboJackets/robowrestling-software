@@ -16,6 +16,8 @@ BasicRobot::BasicRobot(double x_pos, double y_pos, double angle) {
 	linear_velocity_ = 0;
 	velocity_dir_ = 0;
 
+	rolling_friction_ = 0.05;
+
 	strat_ = std::make_unique<SlammyWhammy>();
 }
 
