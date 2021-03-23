@@ -5,14 +5,19 @@ SensorStrategy::SensorStrategy() {
     state_ = 0;
 }
 
-std::vector<int> SensorStrategy::next_action(DistanceBuffer d, LineBuffer l, EncoderBuffer e, ImuData i) {
-    std::vector<int> ret;
-    for (int i : l.buffer) {
-        if (i == 255) {
-            ret = {25, 0}
+std::vector<int> SensorStrategy::next_action(LineBuffer l, ImuData i) {
+    int output[] = {50,50};
+    for (int b : l.buffer) {
+        if (b == 255) {
+            if (i.z_gyro_ <= 0) {
+                output[0] = 0;
+                output[1] = 50;
+            } else {
+                output[0] = 50;
+                output[0] = 0;
+            }
         }
-    }
-    
-    return ret;
+    } 
+    return std::vector<int>(output, output + sizeof(output)/sizeof(int));
 }
 

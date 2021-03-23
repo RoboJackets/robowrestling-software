@@ -3,6 +3,6 @@
 class SensorStrategy: public Strategy {
     public:
         SensorStrategy();
-        std::vector<int> next_action(DistanceBuffer d, LineBuffer l, EncoderBuffer e, ImuData i);
+        std::vector<int> next_action(LineBuffer l, ImuData i);
         int state_;
 };
