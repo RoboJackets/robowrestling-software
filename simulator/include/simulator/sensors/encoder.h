@@ -7,7 +7,7 @@
 class Encoder : public AbstractEncoder {
     public:
         Encoder(std::shared_ptr<Robot> robot, int tick_total, bool motor_side); // motor_side = true:left, false:right
-        bool motor_side_;
+        bool motor_side_; //true is left side
 
         int get_tick(double duration);
         int read(double duration);

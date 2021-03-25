@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
         robot2_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2), WINDOW_HEIGHT/2+25, M_PI);
     }
 	
-    BasicRobotHandler test_handler = BasicRobotHandler(robot1_);
+    BasicRobotHandler test_handler = BasicRobotHandler(robot1_, robot2_);
     physics_updater_ = std::make_shared<RobotPhysicsUpdater>();
     
     window_ = std::make_shared<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "My window");
@@ -84,8 +84,7 @@ int main(int argc, char *argv[]) {
             auto dummy_vector = std::vector<double>();
             std::vector<int> r1_drive = {0, 0};
             physics_updater_->update(robot1_, r1_drive, robot2_, r1_drive, .01);
-            auto readings = test_handler.read(.01, robot2_);
-            std::cout << readings[0] << ", " << readings[1] << ", " << readings[2] << ", " << readings[3] << std::endl;
+            auto readings = test_handler.read(.01);
             // std::cout << robot1->x_pos << ", " << robot1->y_pos << std::endl;
             // std::cout << robot2->x_pos << ", " << robot2->y_pos << std::endl;
             // i++;
