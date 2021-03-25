@@ -7,7 +7,7 @@ RoamStrategy::RoamStrategy() {
 
 std::vector<int> RoamStrategy::next_action(SensorData input) {
     int output[] = {60, 40};
-    if (check_lines(lines)) {
+    if (check_lines(input.line_buffer_)) {
         output[0] = -50;
         output[1] = 0;
         cycle_ = 10;
@@ -20,8 +20,8 @@ std::vector<int> RoamStrategy::next_action(SensorData input) {
     return std::vector<int>(output, output + sizeof(output)/sizeof(int));
 }
 
-bool check_lines(LineBuffer lines) {
-    for (int l: lines.buffer) {
+bool check_lines(std::vector<int> lines) {
+    for (int l: lines) {
         if (l >= 190) return true;
     }
     return false;
