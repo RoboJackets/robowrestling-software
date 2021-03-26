@@ -28,6 +28,9 @@ class Robot { //abstract class of a robot
 		double rolling_friction_; //coefficient of friction for when the robot is rolling (in the direction of the force)
 		double sliding_friction_; //coefficient of friction for when the robot is sliding (in the direction of the force)
 
+		double mass_; //mass of the robot
+		double magnet_weight_; //effective weight added by magnets in normal situations
+
 		std::unique_ptr<Strategy> strat_;
 
 		virtual std::vector<std::pair<double, double>> corners() = 0;	//returns the corners in x, y pairs in order selecting them

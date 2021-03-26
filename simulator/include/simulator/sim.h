@@ -31,5 +31,5 @@ void draw_field(); //draws the field
 
 void draw_robot(std::shared_ptr<Robot> robot); //draws the robots
 
-int main(int argc, char *argv[]); //main method that has the game loop
+int main(int argc, char *argv[]); //main method that has the game loop. Arguments can be entered 
 #endif

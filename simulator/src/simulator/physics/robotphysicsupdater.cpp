@@ -110,8 +110,8 @@ void RobotPhysicsUpdater::collision_handler(std::shared_ptr<Robot> r1, std::shar
 	relative_y = r1_x_to_r2*sin(-1*r2->angle_) + r1_y_to_r2*cos(-1*r2->angle_);
 	double angle_r2_to_r1 = atan2(relative_y, relative_x); //inverse tangent to get the angle of r1 relative to where r2 is pointing
 	// std::cout << angle_r1_to_r2 << ", " << angle_r2_to_r1 << std::endl;
-	if (angle_r1_to_r2 <= M_PI/4 && angle_r1_to_r2 >= -M_PI/4) {
-		if (angle_r2_to_r1 <= M_PI/4 && angle_r2_to_r1 >= -M_PI/4) {
+	if (angle_r1_to_r2 <= M_PI/4 && angle_r1_to_r2 >= -M_PI/4) { //is robot 1 facing robot 2?
+		if (angle_r2_to_r1 <= M_PI/4 && angle_r2_to_r1 >= -M_PI/4) { //is robot 2 facing robot 1?
 			std::cout << "Head on" << std::endl;
 			auto temp_l = r1->left_wheel_velocity_;
 			auto temp_r = r1->right_wheel_velocity_;
@@ -124,7 +124,7 @@ void RobotPhysicsUpdater::collision_handler(std::shared_ptr<Robot> r1, std::shar
 			r2->x_pos_ += 300*(r1->left_wheel_velocity_ + r1->right_wheel_velocity_)/2/r1->max_wheel_velocity_*cos(r1->angle_);
 			r2->y_pos_ += 300*(r1->left_wheel_velocity_ + r1->right_wheel_velocity_)/2/r1->max_wheel_velocity_*sin(r1->angle_);
 		}
-	} else if (angle_r2_to_r1 <= M_PI/4 && angle_r2_to_r1 >= -M_PI/4) {
+	} else if (angle_r2_to_r1 <= M_PI/4 && angle_r2_to_r1 >= -M_PI/4) { //is robot 2 facing robot 1?
 		std::cout << "R2 hit R1" << std::endl;
 		r1->x_pos_ += 300*(r2->left_wheel_velocity_ + r2->right_wheel_velocity_)/2/r2->max_wheel_velocity_*cos(r2->angle_);
 		r1->y_pos_ += 300*(r2->left_wheel_velocity_ + r2->right_wheel_velocity_)/2/r2->max_wheel_velocity_*sin(r2->angle_);
