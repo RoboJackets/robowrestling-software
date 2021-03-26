@@ -7,7 +7,6 @@ class RoamStrategy: public Strategy {
         RoamStrategy();
         std::vector<int> next_action(SensorData input);
         int cycle_;
-        bool check_lines(std::vector<int> lines);
 };
 
 #endif

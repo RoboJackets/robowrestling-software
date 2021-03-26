@@ -11,10 +11,18 @@
 #include <simulator/robots/basicrobot.h>
 #include <simulator/sensors/basicrobot_handler.h>
 
+#include <strategy/roam_strategy.h>
+#include <strategy/avoid_strategy.h>
+#include <strategy/basic_dist.h>
+#include <strategy/idle_strategy.h>
+
 #include <simulator/physics/robotphysicsupdater.h>
 
 #define WINDOW_HEIGHT 600
 #define WINDOW_WIDTH 800
+
+#define STRATEGY_1 AvoidStrategy // Edit to change Robot 1's strategy. Remember to include
+#define STRATEGY_2 IdleStrategy
 
 int radius_; //radius of the dohyo
 
