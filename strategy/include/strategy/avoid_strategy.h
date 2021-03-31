@@ -16,7 +16,7 @@ class AvoidStrategy: public Strategy {
         };
 
         State state_;
-        State update_state();
+        State update_state(SensorData input);
 };
 
 #endif
