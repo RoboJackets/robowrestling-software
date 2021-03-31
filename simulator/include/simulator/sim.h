@@ -16,14 +16,15 @@
 #include <strategy/basic_dist.h>
 #include <strategy/idle_strategy.h>
 #include <strategy/loop_strategy.h>
+#include <strategy/sensor_strategy.h>
 
 #include <simulator/physics/robotphysicsupdater.h>
 
 #define WINDOW_HEIGHT 600
 #define WINDOW_WIDTH 800
 
-#define STRATEGY_1 LoopStrategy // Edit to change Robot 1's strategy. Remember to include
-#define STRATEGY_2 IdleStrategy
+#define STRATEGY_1 BasicDist // Edit to change Robot 1's strategy. Remember to include
+#define STRATEGY_2 SensorStrategy
 
 int radius_; //radius of the dohyo
 
