@@ -27,6 +27,7 @@ class Robot { //abstract class of a robot
 		double static_friction_; //coefficient of friction for when the robot is static (in the direction of the force)
 		double rolling_friction_; //coefficient of friction for when the robot is rolling (in the direction of the force)
 		double sliding_friction_; //coefficient of friction for when the robot is sliding (in the direction of the force)
+		bool sliding_; //is the robot currently sliding?
 
 		double mass_; //mass of the robot
 		double magnet_weight_; //effective weight added by magnets in normal situations
