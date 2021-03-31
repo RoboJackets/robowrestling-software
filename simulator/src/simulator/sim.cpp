@@ -3,13 +3,25 @@
 #include <iostream>
 
 void draw_field() {
-    
-    sf::CircleShape dohyo(150.f); //create the circle that represents the dohyo. Input is radius
+    sf::RectangleShape background(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
+    background.setFillColor(sf::Color(255, 0, 0));
+    background.setPosition(0, 0);
+    window_->draw(background);
+    sf::CircleShape dohyo; //create the circle that represents the dohyo. Input is radius
+    dohyo.setRadius(75.f);
     dohyo.setFillColor(sf::Color(0, 0, 0)); //color the dohyo black
-    dohyo.setOutlineThickness(10.f); //give dohyo an outline
+    dohyo.setOutlineThickness(2.f); //give dohyo an outline
     dohyo.setOutlineColor(sf::Color(250, 250, 250)); //make the outline white
-    dohyo.setPosition((WINDOW_WIDTH/2)-150, (WINDOW_HEIGHT/2)-150);
+    dohyo.setPosition((WINDOW_WIDTH/2)-75, (WINDOW_HEIGHT/2)-75);
     window_->draw(dohyo);
+    sf::RectangleShape start_line1(sf::Vector2f(5, 50));
+    start_line1.setFillColor(sf::Color(255, 69, 0));
+    start_line1.setPosition(WINDOW_WIDTH/2 - 20, WINDOW_HEIGHT/2 - 25);
+    window_->draw(start_line1);
+    sf::RectangleShape start_line2(sf::Vector2f(5, 50));
+    start_line2.setFillColor(sf::Color(255, 69, 0));
+    start_line2.setPosition(WINDOW_WIDTH/2 + 20, WINDOW_HEIGHT/2 - 25);
+    window_->draw(start_line2);
 }
 
 void draw_robot(std::shared_ptr<Robot> robot) {
@@ -17,7 +29,7 @@ void draw_robot(std::shared_ptr<Robot> robot) {
     rectangle.setFillColor(sf::Color(50, 50, 50));
     double shift_magnitude = sqrt(pow(robot->width_/2, 2) + pow(robot->length_/2, 2));
     double homogenous_x = robot->x_pos_ + shift_magnitude*cos(robot->angle_ - .75 * M_PI);
-    double homogenous_y = robot->y_pos_ + shift_magnitude*sin(robot->angle_ - .75 * M_PI);
+    double homogenous_y = WINDOW_HEIGHT - robot->y_pos_ + shift_magnitude*sin(robot->angle_ - .75 * M_PI);
     rectangle.setPosition(homogenous_x, homogenous_y);
     rectangle.setRotation(robot->angle_*180/M_PI);
     window_->draw(rectangle);
