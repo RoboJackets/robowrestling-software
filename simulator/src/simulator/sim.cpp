@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
         iss >> r2_y;
         double r2_a = 0.0;
         iss >> r2_a;
-        r1_a = r2_a * M_PI;
+        r2_a = r2_a * M_PI;
         robot1_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)-r1_x, (WINDOW_HEIGHT/2)-r1_y, r1_a);
         robot2_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)+r2_x, (WINDOW_HEIGHT/2)+r2_y, M_PI+r2_a);
     } else {
