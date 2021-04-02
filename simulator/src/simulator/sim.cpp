@@ -4,23 +4,23 @@
 
 void draw_field() {
     sf::RectangleShape background(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
-    background.setFillColor(sf::Color(255, 0, 0));
+    background.setFillColor(sf::Color(141, 158, 196));
     background.setPosition(0, 0);
     window_->draw(background);
     sf::CircleShape dohyo; //create the circle that represents the dohyo. Input is radius
-    dohyo.setRadius(75.f);
+    dohyo.setRadius(77.f);
     dohyo.setFillColor(sf::Color(0, 0, 0)); //color the dohyo black
     dohyo.setOutlineThickness(2.f); //give dohyo an outline
     dohyo.setOutlineColor(sf::Color(250, 250, 250)); //make the outline white
     dohyo.setPosition((WINDOW_WIDTH/2)-75, (WINDOW_HEIGHT/2)-75);
     window_->draw(dohyo);
-    sf::RectangleShape start_line1(sf::Vector2f(5, 50));
+    sf::RectangleShape start_line1(sf::Vector2f(2, 20));
     start_line1.setFillColor(sf::Color(255, 69, 0));
-    start_line1.setPosition(WINDOW_WIDTH/2 - 20, WINDOW_HEIGHT/2 - 25);
+    start_line1.setPosition(WINDOW_WIDTH/2 - 10, WINDOW_HEIGHT/2 - 10);
     window_->draw(start_line1);
-    sf::RectangleShape start_line2(sf::Vector2f(5, 50));
+    sf::RectangleShape start_line2(sf::Vector2f(2, 20));
     start_line2.setFillColor(sf::Color(255, 69, 0));
-    start_line2.setPosition(WINDOW_WIDTH/2 + 20, WINDOW_HEIGHT/2 - 25);
+    start_line2.setPosition(WINDOW_WIDTH/2 + 10, WINDOW_HEIGHT/2 - 10);
     window_->draw(start_line2);
 }
 
@@ -102,7 +102,7 @@ int main(int argc, char *argv[]) {
             r1_data = r1_handler.read(.01);
             r2_data = r2_handler.read(.01);
 
-            physics_updater_->update(robot1_, r1_drive.next_action(r1_data), robot2_, r2_drive.next_action(r2_data), .01);
+            physics_updater_->update(robot1_, r1_drive.next_action(r1_data), robot2_, r2_drive.next_action(r2_data), .1);
             auto readings = test_handler.read(.01);
             
             // std::cout << robot1->x_pos << ", " << robot1->y_pos << std::endl;
