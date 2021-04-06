@@ -25,14 +25,14 @@ void draw_field() {
 }
 
 void draw_robot(std::shared_ptr<Robot> robot) {
-    sf::RectangleShape rectangle(sf::Vector2f(robot->width_, robot->length_));
-    rectangle.setFillColor(sf::Color(50, 50, 50));
+    sf::Sprite sprite(robot_texture);
+    sprite.setScale(robot->width_/50.0, robot->length_/50.0);
     double shift_magnitude = sqrt(pow(robot->width_/2, 2) + pow(robot->length_/2, 2));
     double homogenous_x = robot->x_pos_ + shift_magnitude*cos(robot->angle_ - .75 * M_PI);
     double homogenous_y = robot->y_pos_ + shift_magnitude*sin(robot->angle_ - .75 * M_PI);
-    rectangle.setPosition(homogenous_x, homogenous_y);
-    rectangle.setRotation(robot->angle_*180/M_PI);
-    window_->draw(rectangle);
+    sprite.setPosition(homogenous_x, homogenous_y);
+    sprite.setRotation(robot->angle_*180/M_PI);
+    window_->draw(sprite);
 }	
 
 void update() {
@@ -54,6 +54,7 @@ void update() {
 }
 
 int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (r1 angle in rad cw) (r2 x right of 0) (r2 y down of 0) (r2 angle in rad cw) (duration for sim: 0 = realtime elapsed)
+    robot_texture.loadFromFile("../res/robot_sprite.png");
 	/* code */
     if (argc == 8) {
         std::istringstream iss(std::string(argv[1])+" "+std::string(argv[2])+" "+std::string(argv[3])+" "+std::string(argv[4])+" "+std::string(argv[5])+" "+std::string(argv[6])+" "+std::string(argv[7]));
