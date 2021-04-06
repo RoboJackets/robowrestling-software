@@ -13,14 +13,14 @@ void draw_field() {
 }
 
 void draw_robot(std::shared_ptr<Robot> robot) {
-    sf::RectangleShape rectangle(sf::Vector2f(robot->width_, robot->length_));
-    rectangle.setFillColor(sf::Color(50, 50, 50));
+    sf::Sprite sprite(robot_texture);
+    sprite.setScale(robot->width_/50.0, robot->length_/50.0);
     double shift_magnitude = sqrt(pow(robot->width_/2, 2) + pow(robot->length_/2, 2));
     double homogenous_x = robot->x_pos_ + shift_magnitude*cos(robot->angle_ - .75 * M_PI);
     double homogenous_y = robot->y_pos_ + shift_magnitude*sin(robot->angle_ - .75 * M_PI);
-    rectangle.setPosition(homogenous_x, homogenous_y);
-    rectangle.setRotation(robot->angle_*180/M_PI);
-    window_->draw(rectangle);
+    sprite.setPosition(homogenous_x, homogenous_y);
+    sprite.setRotation(robot->angle_*180/M_PI);
+    window_->draw(sprite);
 }	
 
 void update() {
@@ -42,6 +42,7 @@ void update() {
 }
 
 int main(int argc, char *argv[]) {
+    robot_texture.loadFromFile("../res/robot_sprite.png");
 	/* code */
     if (argc == 7) {
         std::istringstream iss(std::string(argv[1])+" "+std::string(argv[2])+" "+std::string(argv[3])+" "+std::string(argv[4])+" "+std::string(argv[5])+" "+std::string(argv[6]));
@@ -80,8 +81,9 @@ int main(int argc, char *argv[]) {
 	while (window_->isOpen()) {
         if (i < 5) {
             auto dummy_vector = std::vector<double>();
-            std::vector<int> r1_drive = robot1_->strat_->next_action();
-            physics_updater_->update(robot1_, r1_drive, robot2_, r1_drive, .01);
+            std::vector<int> r1_drive = {20, 60};
+            std::cout << r1_drive[0] << ", " << r1_drive[1] << std::endl;
+            physics_updater_->update(robot1_, r1_drive, robot2_, {0, 0}, .01);
             auto readings = test_handler.read(.01, robot2_);
             // std::cout << robot1->x_pos << ", " << robot1->y_pos << std::endl;
             // std::cout << robot2->x_pos << ", " << robot2->y_pos << std::endl;
