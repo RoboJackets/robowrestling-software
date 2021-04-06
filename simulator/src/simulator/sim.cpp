@@ -29,7 +29,7 @@ void draw_robot(std::shared_ptr<Robot> robot) {
     rectangle.setFillColor(sf::Color(50, 50, 50));
     double shift_magnitude = sqrt(pow(robot->width_/2, 2) + pow(robot->length_/2, 2));
     double homogenous_x = robot->x_pos_ + shift_magnitude*cos(robot->angle_ - .75 * M_PI);
-    double homogenous_y = WINDOW_HEIGHT - robot->y_pos_ + shift_magnitude*sin(robot->angle_ - .75 * M_PI);
+    double homogenous_y = robot->y_pos_ + shift_magnitude*sin(robot->angle_ - .75 * M_PI);
     rectangle.setPosition(homogenous_x, homogenous_y);
     rectangle.setRotation(robot->angle_*180/M_PI);
     window_->draw(rectangle);
@@ -53,7 +53,7 @@ void update() {
     window_->display();
 }
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (r1 angle in rad cw) (r2 x right of 0) (r2 y down of 0) (r2 angle in rad cw)
 	/* code */
     if (argc == 7) {
         std::istringstream iss(std::string(argv[1])+" "+std::string(argv[2])+" "+std::string(argv[3])+" "+std::string(argv[4])+" "+std::string(argv[5])+" "+std::string(argv[6]));
@@ -102,7 +102,7 @@ int main(int argc, char *argv[]) {
             r1_data = r1_handler.read(.01);
             r2_data = r2_handler.read(.01);
 
-            physics_updater_->update(robot1_, r1_drive.next_action(r1_data), robot2_, r2_drive.next_action(r2_data), .1);
+            physics_updater_->update(robot1_, r1_drive.next_action(r1_data), robot2_, r2_drive.next_action(r2_data), .01);
             auto readings = test_handler.read(.01);
             
             // std::cout << robot1->x_pos << ", " << robot1->y_pos << std::endl;
