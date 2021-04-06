@@ -121,13 +121,13 @@ void RobotPhysicsUpdater::collision_handler(std::shared_ptr<Robot> r1, std::shar
 			r2->right_wheel_velocity_ -= temp_r;
 		} else {
 			std::cout << "R1 hit R2" << std::endl;
-			r2->x_pos_ += 300*(r1->left_wheel_velocity_ + r1->right_wheel_velocity_)/2/r1->max_wheel_velocity_*cos(r1->angle_);
-			r2->y_pos_ += 300*(r1->left_wheel_velocity_ + r1->right_wheel_velocity_)/2/r1->max_wheel_velocity_*sin(r1->angle_);
+			r2->x_pos_ += (r1->left_wheel_velocity_ + r1->right_wheel_velocity_)*cos(r1->angle_)*.01;
+			r2->y_pos_ += (r1->left_wheel_velocity_ + r1->right_wheel_velocity_)*sin(r1->angle_)*.01;
 		}
 	} else if (angle_r2_to_r1 <= M_PI/4 && angle_r2_to_r1 >= -M_PI/4) {
 		std::cout << "R2 hit R1" << std::endl;
-		r1->x_pos_ += 300*(r2->left_wheel_velocity_ + r2->right_wheel_velocity_)/2/r2->max_wheel_velocity_*cos(r2->angle_);
-		r1->y_pos_ += 300*(r2->left_wheel_velocity_ + r2->right_wheel_velocity_)/2/r2->max_wheel_velocity_*sin(r2->angle_);
+		r1->x_pos_ += (r2->left_wheel_velocity_ + r2->right_wheel_velocity_)*cos(r2->angle_)*.01;
+		r1->y_pos_ += (r2->left_wheel_velocity_ + r2->right_wheel_velocity_)*sin(r2->angle_)*.01;
 	}
 }
 

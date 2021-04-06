@@ -82,10 +82,11 @@ int main(int argc, char *argv[]) {
             // physics_updater->move_robot(robot1, 100, 99, 1);
             // physics_updater->move_robot(robot2, 100, 99, 1);
             auto dummy_vector = std::vector<double>();
-            std::vector<int> r1_drive = robot1_->strat_->next_action();
-            physics_updater_->update(robot1_, r1_drive, robot2_, r1_drive, .01);
+            std::vector<int> r1_drive = {20, 60};
+            std::cout << r1_drive[0] << ", " << r1_drive[1] << std::endl;
+            physics_updater_->update(robot1_, r1_drive, robot2_, {0, 0}, .01);
             auto readings = test_handler.read(.01, robot2_);
-            std::cout << readings[0] << ", " << readings[1] << ", " << readings[2] << ", " << readings[3] << std::endl;
+            // std::cout << readings[0] << ", " << readings[1] << ", " << readings[2] << ", " << readings[3] << std::endl;
             // std::cout << robot1->x_pos << ", " << robot1->y_pos << std::endl;
             // std::cout << robot2->x_pos << ", " << robot2->y_pos << std::endl;
             // i++;
