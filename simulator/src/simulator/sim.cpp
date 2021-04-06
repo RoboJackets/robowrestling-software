@@ -53,10 +53,10 @@ void update() {
     window_->display();
 }
 
-int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (r1 angle in rad cw) (r2 x right of 0) (r2 y down of 0) (r2 angle in rad cw)
+int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (r1 angle in rad cw) (r2 x right of 0) (r2 y down of 0) (r2 angle in rad cw) (duration for sim: 0 = realtime elapsed)
 	/* code */
-    if (argc == 7) {
-        std::istringstream iss(std::string(argv[1])+" "+std::string(argv[2])+" "+std::string(argv[3])+" "+std::string(argv[4])+" "+std::string(argv[5])+" "+std::string(argv[6]));
+    if (argc == 8) {
+        std::istringstream iss(std::string(argv[1])+" "+std::string(argv[2])+" "+std::string(argv[3])+" "+std::string(argv[4])+" "+std::string(argv[5])+" "+std::string(argv[6])+" "+std::string(argv[7]));
         double r1_x = 0.0;
         iss >> r1_x;
         double r1_y = 0.0;
@@ -71,9 +71,11 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
         double r2_a = 0.0;
         iss >> r2_a;
         r2_a = r2_a * M_PI;
+        iss >> sim_duration;
         robot1_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)-r1_x, (WINDOW_HEIGHT/2)-r1_y, r1_a);
         robot2_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)+r2_x, (WINDOW_HEIGHT/2)+r2_y, M_PI+r2_a);
     } else {
+        sim_duration = 0.01;
         robot1_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)-25, WINDOW_HEIGHT/2-25, M_PI/4);
         robot2_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2), WINDOW_HEIGHT/2+25, M_PI);
     }
@@ -97,28 +99,40 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
     int i = 0;
     double elapsed_time;
     clock_t past_time = clock();
-	while (window_->isOpen()) {
-        if (i < 5) {
-            auto dummy_vector = std::vector<double>();
-
-            std::cout << clock() << std::endl;
-
+    if (sim_duration == 0) {
+        while (window_->isOpen()) {
             elapsed_time = (clock() - past_time) / 1000.0;
 
-            r1_data = r1_handler.read(elapsed_time);
-            r2_data = r2_handler.read(elapsed_time);
+            if (elapsed_time > 0) {
+                r1_data = r1_handler.read(elapsed_time);
+                r2_data = r2_handler.read(elapsed_time);
 
-            physics_updater_->update(robot1_, r1_drive.next_action(r1_data), robot2_, r2_drive.next_action(r2_data), elapsed_time);
-            auto readings = test_handler.read(elapsed_time);
+                physics_updater_->update(robot1_, r1_drive.next_action(r1_data), robot2_, r2_drive.next_action(r2_data), elapsed_time);
+            }
+
             past_time = clock();
             
-            std::cout << past_time << std::endl;
             std::cout << elapsed_time << std::endl;
-            // std::cout << robot1->x_pos << ", " << robot1->y_pos << std::endl;
-            // std::cout << robot2->x_pos << ", " << robot2->y_pos << std::endl;
-            // i++;
+
+            update();
         }
-		update();
-	}
+    } else {
+        while (window_->isOpen()) {
+            if (i < 5) {
+                auto dummy_vector = std::vector<double>();
+
+                r1_data = r1_handler.read(sim_duration);
+                r2_data = r2_handler.read(sim_duration);
+
+                physics_updater_->update(robot1_, r1_drive.next_action(r1_data), robot2_, r2_drive.next_action(r2_data), sim_duration);
+                auto readings = test_handler.read(sim_duration);
+                
+                // std::cout << robot1->x_pos << ", " << robot1->y_pos << std::endl;
+                // std::cout << robot2->x_pos << ", " << robot2->y_pos << std::endl;
+                // i++;
+            }
+            update();
+        }
+    }
 	return 0;
 }
