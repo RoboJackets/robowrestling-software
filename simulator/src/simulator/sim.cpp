@@ -95,16 +95,25 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
     draw_robot(robot1_);
     draw_robot(robot2_);
     int i = 0;
+    double elapsed_time;
+    clock_t past_time = clock();
 	while (window_->isOpen()) {
         if (i < 5) {
             auto dummy_vector = std::vector<double>();
 
-            r1_data = r1_handler.read(.01);
-            r2_data = r2_handler.read(.01);
+            std::cout << clock() << std::endl;
 
-            physics_updater_->update(robot1_, r1_drive.next_action(r1_data), robot2_, r2_drive.next_action(r2_data), .01);
-            auto readings = test_handler.read(.01);
+            elapsed_time = (clock() - past_time) / 1000.0;
+
+            r1_data = r1_handler.read(elapsed_time);
+            r2_data = r2_handler.read(elapsed_time);
+
+            physics_updater_->update(robot1_, r1_drive.next_action(r1_data), robot2_, r2_drive.next_action(r2_data), elapsed_time);
+            auto readings = test_handler.read(elapsed_time);
+            past_time = clock();
             
+            std::cout << past_time << std::endl;
+            std::cout << elapsed_time << std::endl;
             // std::cout << robot1->x_pos << ", " << robot1->y_pos << std::endl;
             // std::cout << robot2->x_pos << ", " << robot2->y_pos << std::endl;
             // i++;
