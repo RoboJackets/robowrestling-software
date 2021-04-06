@@ -29,7 +29,7 @@ void draw_robot(std::shared_ptr<Robot> robot) {
     rectangle.setFillColor(sf::Color(50, 50, 50));
     double shift_magnitude = sqrt(pow(robot->width_/2, 2) + pow(robot->length_/2, 2));
     double homogenous_x = robot->x_pos_ + shift_magnitude*cos(robot->angle_ - .75 * M_PI);
-    double homogenous_y = WINDOW_HEIGHT - robot->y_pos_ + shift_magnitude*sin(robot->angle_ - .75 * M_PI);
+    double homogenous_y = robot->y_pos_ + shift_magnitude*sin(robot->angle_ - .75 * M_PI);
     rectangle.setPosition(homogenous_x, homogenous_y);
     rectangle.setRotation(robot->angle_*180/M_PI);
     window_->draw(rectangle);
@@ -102,7 +102,7 @@ int main(int argc, char *argv[]) {
             r1_data = r1_handler.read(.01);
             r2_data = r2_handler.read(.01);
 
-            physics_updater_->update(robot1_, r1_drive.next_action(r1_data), robot2_, r2_drive.next_action(r2_data), .1);
+            physics_updater_->update(robot1_, r1_drive.next_action(r1_data), robot2_, r2_drive.next_action(r2_data), .01);
             auto readings = test_handler.read(.01);
             
             // std::cout << robot1->x_pos << ", " << robot1->y_pos << std::endl;
