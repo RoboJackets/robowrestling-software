@@ -80,8 +80,6 @@ int main(int argc, char *argv[]) {
     int i = 0;
 	while (window_->isOpen()) {
         if (i < 5) {
-            physics_updater_->move_robot(robot1_, 10, 5, 1); // spin my head right round, right round 
-            physics_updater_->move_robot(robot2_, 10, 5, 1);
             auto dummy_vector = std::vector<double>();
             std::vector<int> r1_drive = {20, 60};
             std::cout << r1_drive[0] << ", " << r1_drive[1] << std::endl;
