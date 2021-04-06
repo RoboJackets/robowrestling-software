@@ -25,6 +25,8 @@ std::shared_ptr<sf::RenderWindow> window_;
 
 std::shared_ptr<RobotPhysicsUpdater> physics_updater_;
 
+sf::Texture robot_texture;
+
 void update(); //performs one update of the game state
 
 void draw_field(); //draws the field
