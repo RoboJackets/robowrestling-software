@@ -54,7 +54,7 @@ void update() {
 }
 
 int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (r1 angle in rad cw) (r2 x right of 0) (r2 y down of 0) (r2 angle in rad cw) (duration for sim: 0 = realtime elapsed)
-    robot_texture.loadFromFile("../res/robot_sprite.png");
+    robot_texture.loadFromFile("simulator/res/robot_sprite.png");
 	/* code */
     if (argc == 8) {
         std::istringstream iss(std::string(argv[1])+" "+std::string(argv[2])+" "+std::string(argv[3])+" "+std::string(argv[4])+" "+std::string(argv[5])+" "+std::string(argv[6])+" "+std::string(argv[7]));
