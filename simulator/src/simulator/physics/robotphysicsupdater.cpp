@@ -124,7 +124,7 @@ void RobotPhysicsUpdater::collision_handler(std::shared_ptr<Robot> r1, std::shar
 
 				//determine opposing frictional force
 
-				
+				//inertia?
 			}
 		} else if (angle_r2_to_r1 <= M_PI/4 && angle_r2_to_r1 >= -M_PI/4) { //is robot 2 facing robot 1?
 			//r2 pushing against r1
