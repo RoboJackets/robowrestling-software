@@ -8,9 +8,9 @@ void draw_field() {
     background.setPosition(0, 0);
     window_->draw(background);
     sf::CircleShape dohyo; //create the circle that represents the dohyo. Input is radius
-    dohyo.setRadius(vis_scale*77.f);
+    dohyo.setRadius(vis_scale*75.f);
     dohyo.setFillColor(sf::Color(0, 0, 0)); //color the dohyo black
-    dohyo.setOutlineThickness(2*2.f); //give dohyo an outline
+    dohyo.setOutlineThickness(vis_scale*2.f); //give dohyo an outline
     dohyo.setOutlineColor(sf::Color(250, 250, 250)); //make the outline white
     dohyo.setPosition((WINDOW_WIDTH/2)-vis_scale*75, (WINDOW_HEIGHT/2)-vis_scale*75);
     window_->draw(dohyo);
