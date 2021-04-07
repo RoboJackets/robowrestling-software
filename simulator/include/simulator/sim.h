@@ -28,6 +28,7 @@
 
 int radius_; //radius of the dohyo
 double sim_duration;
+double vis_scale = 2.0;
 
 std::shared_ptr<Robot> robot1_; //robot object that stores information about a robot
 std::shared_ptr<Robot> robot2_; //see above

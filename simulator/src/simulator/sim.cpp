@@ -8,28 +8,30 @@ void draw_field() {
     background.setPosition(0, 0);
     window_->draw(background);
     sf::CircleShape dohyo; //create the circle that represents the dohyo. Input is radius
-    dohyo.setRadius(77.f);
+    dohyo.setRadius(vis_scale*77.f);
     dohyo.setFillColor(sf::Color(0, 0, 0)); //color the dohyo black
-    dohyo.setOutlineThickness(2.f); //give dohyo an outline
+    dohyo.setOutlineThickness(2*2.f); //give dohyo an outline
     dohyo.setOutlineColor(sf::Color(250, 250, 250)); //make the outline white
-    dohyo.setPosition((WINDOW_WIDTH/2)-75, (WINDOW_HEIGHT/2)-75);
+    dohyo.setPosition((WINDOW_WIDTH/2)-vis_scale*75, (WINDOW_HEIGHT/2)-vis_scale*75);
     window_->draw(dohyo);
-    sf::RectangleShape start_line1(sf::Vector2f(2, 20));
+    sf::RectangleShape start_line1(sf::Vector2f(vis_scale*2, vis_scale*20));
     start_line1.setFillColor(sf::Color(255, 69, 0));
-    start_line1.setPosition(WINDOW_WIDTH/2 - 10, WINDOW_HEIGHT/2 - 10);
+    start_line1.setPosition(WINDOW_WIDTH/2 - vis_scale*10, WINDOW_HEIGHT/2 - vis_scale*10);
     window_->draw(start_line1);
-    sf::RectangleShape start_line2(sf::Vector2f(2, 20));
+    sf::RectangleShape start_line2(sf::Vector2f(vis_scale*2, vis_scale*20));
     start_line2.setFillColor(sf::Color(255, 69, 0));
-    start_line2.setPosition(WINDOW_WIDTH/2 + 10, WINDOW_HEIGHT/2 - 10);
+    start_line2.setPosition(WINDOW_WIDTH/2 + vis_scale*10, WINDOW_HEIGHT/2 - vis_scale*10);
     window_->draw(start_line2);
 }
 
 void draw_robot(std::shared_ptr<Robot> robot) {
     sf::Sprite sprite(robot_texture);
-    sprite.setScale(robot->width_/50.0, robot->length_/50.0);
-    double shift_magnitude = sqrt(pow(robot->width_/2, 2) + pow(robot->length_/2, 2));
-    double homogenous_x = robot->x_pos_ + shift_magnitude*cos(robot->angle_ - .75 * M_PI);
-    double homogenous_y = robot->y_pos_ + shift_magnitude*sin(robot->angle_ - .75 * M_PI);
+    sprite.setScale(vis_scale*robot->width_/50.0, vis_scale*robot->length_/50.0);
+    double shift_magnitude = vis_scale*sqrt(pow(robot->width_/2, 2) + pow(robot->length_/2, 2));
+    //double homogenous_x = robot->x_pos_ + shift_magnitude*cos(robot->angle_ - .75 * M_PI);
+    double homogenous_x = vis_scale*(robot->x_pos_ - WINDOW_WIDTH/2) + WINDOW_WIDTH/2 + shift_magnitude*cos(robot->angle_ - .75 * M_PI);
+    //double homogenous_y = robot->y_pos_ + shift_magnitude*sin(robot->angle_ - .75 * M_PI);
+    double homogenous_y = vis_scale*(robot->y_pos_ - WINDOW_HEIGHT/2) + WINDOW_HEIGHT/2 + shift_magnitude*sin(robot->angle_ - .75 * M_PI);
     sprite.setPosition(homogenous_x, homogenous_y);
     sprite.setRotation(robot->angle_*180/M_PI);
     window_->draw(sprite);
