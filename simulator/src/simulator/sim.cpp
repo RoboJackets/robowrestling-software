@@ -1,6 +1,7 @@
 #include <simulator/sim.h>
 
 #include <iostream>
+#include <string>
 
 void draw_field() {
     sf::RectangleShape background(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
@@ -22,6 +23,12 @@ void draw_field() {
     start_line2.setFillColor(sf::Color(255, 69, 0));
     start_line2.setPosition(WINDOW_WIDTH/2 + vis_scale*10, WINDOW_HEIGHT/2 - vis_scale*10);
     window_->draw(start_line2);
+    /*sf::Text timer;
+    timer.setFont();
+    timer.setString("Elapsed: " + to_string(elapsed_total) + " secs");
+    timer.setFillColor(sf::Color::Red);
+    timer.setPosition();
+    window_->draw(timer);*/
 }
 
 void draw_robot(std::shared_ptr<Robot> robot) {
@@ -114,8 +121,7 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
             }
 
             past_time = clock();
-            
-            std::cout << elapsed_time << std::endl;
+            elapsed_total = past_time;
 
             update();
         }
@@ -134,6 +140,9 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
                 // std::cout << robot2->x_pos << ", " << robot2->y_pos << std::endl;
                 // i++;
             }
+
+            elapsed_total += sim_duration;
+
             update();
         }
     }
