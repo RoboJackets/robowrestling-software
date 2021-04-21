@@ -3,7 +3,7 @@
 #include <iostream>
 
 void draw_field() {
-    sf::RectangleShape background(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
+    sf::RectangleShape background(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT)); //make a rectangle to add background color
     background.setFillColor(sf::Color(141, 158, 196));
     background.setPosition(0, 0);
     window_->draw(background);
@@ -57,8 +57,8 @@ void update() {
 
 int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (r1 angle in rad cw) (r2 x right of 0) (r2 y down of 0) (r2 angle in rad cw) (duration for sim: 0 = realtime elapsed)
     robot_texture.loadFromFile("simulator/res/robot_sprite.png");
-	/* code */
     if (argc == 8) {
+        //stores string inputs from terminal and outputs while casting
         std::istringstream iss(std::string(argv[1])+" "+std::string(argv[2])+" "+std::string(argv[3])+" "+std::string(argv[4])+" "+std::string(argv[5])+" "+std::string(argv[6])+" "+std::string(argv[7]));
         double r1_x = 0.0;
         iss >> r1_x;
