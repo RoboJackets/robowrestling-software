@@ -3,6 +3,10 @@
 #include <iostream>
 #include <string>
 
+#include <chrono>
+#define duration(a) std::chrono::duration_cast<std::chrono::nanoseconds>(a).count()
+#define timeNow() std::chrono::high_resolution_clock::now()
+
 void draw_field() {
     sf::RectangleShape background(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT)); //make a rectangle to add background color
     background.setFillColor(sf::Color(141, 158, 196));
@@ -91,7 +95,7 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
     }
 	
     BasicRobotHandler test_handler = BasicRobotHandler(robot1_, robot2_);
-    physics_updater_ = std::make_shared<RobotPhysicsUpdater>();
+    physics_updater_ = std::make_shared<TestPhysicsUpdater>(); //Default RobotPhysicsUpdater
     
     window_ = std::make_shared<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "My window");
     window_->clear(sf::Color::White); // clear the window with white color
@@ -106,40 +110,55 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
     draw_field();
     draw_robot(robot1_);
     draw_robot(robot2_);
+
+
     int i = 0;
     double elapsed_time;
-    clock_t past_time = clock();
+    //clock_t past_time = clock();
+    
+    auto start_time = timeNow();
+    auto past_time = timeNow();
+
+
     if (sim_duration == 0) {
-        while (window_->isOpen()) {
-            elapsed_time = (clock() - past_time) / 1000.0;
+        while (window_->isOpen() && duration(timeNow() - start_time) <= 1000000000) {
+            //elapsed_time = (clock() - past_time) / 1000.0;
+            elapsed_time = duration(timeNow() - past_time) / 1000000000.0;
+
+            std::cout << elapsed_time << std::endl;
 
             if (elapsed_time > 0) {
+                //past_time = clock();
+                past_time = timeNow();
+
+
                 r1_data = r1_handler.read(elapsed_time);
                 r2_data = r2_handler.read(elapsed_time);
 
                 physics_updater_->update(robot1_, r1_drive.next_action(r1_data), robot2_, r2_drive.next_action(r2_data), elapsed_time);
             }
 
-            past_time = clock();
-            elapsed_total = past_time;
+            //elapsed_total = past_time;
 
             update();
+
+            i++;
         }
+
+        std::cout << duration(timeNow() - start_time) / 1000000000 << std::endl;
     } else {
         while (window_->isOpen()) {
-            if (i < 5) {
-                auto dummy_vector = std::vector<double>();
+            auto dummy_vector = std::vector<double>();
 
-                r1_data = r1_handler.read(sim_duration);
-                r2_data = r2_handler.read(sim_duration);
+            r1_data = r1_handler.read(sim_duration);
+            r2_data = r2_handler.read(sim_duration);
 
-                physics_updater_->update(robot1_, r1_drive.next_action(r1_data), robot2_, r2_drive.next_action(r2_data), sim_duration);
-                auto readings = test_handler.read(sim_duration);
-                
-                // std::cout << robot1->x_pos << ", " << robot1->y_pos << std::endl;
-                // std::cout << robot2->x_pos << ", " << robot2->y_pos << std::endl;
-                // i++;
-            }
+            physics_updater_->update(robot1_, r1_drive.next_action(r1_data), robot2_, r2_drive.next_action(r2_data), sim_duration);
+            auto readings = test_handler.read(sim_duration);
+            
+            // std::cout << robot1->x_pos << ", " << robot1->y_pos << std::endl;
+            // std::cout << robot2->x_pos << ", " << robot2->y_pos << std::endl;
+
 
             elapsed_total += sim_duration;
 

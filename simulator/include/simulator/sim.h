@@ -17,14 +17,15 @@
 #include <strategy/idle_strategy.h>
 #include <strategy/loop_strategy.h>
 #include <strategy/sensor_strategy.h>
+#include <strategy/slammywhammy.h>
 
-#include <simulator/physics/robotphysicsupdater.h>
+#include <simulator/physics/testphysicsupdater.h>
 
 #define WINDOW_HEIGHT (vis_scale*170)
 #define WINDOW_WIDTH (vis_scale*170)
 
-#define STRATEGY_1 LoopStrategy // Edit to change Robot 1's strategy. Remember to include
-#define STRATEGY_2 LoopStrategy
+#define STRATEGY_1 SlammyWhammy // Edit to change Robot 1's strategy. Remember to include
+#define STRATEGY_2 SlammyWhammy
 
 int radius_; //radius of the dohyo
 double elapsed_total;
@@ -36,7 +37,7 @@ std::shared_ptr<Robot> robot2_; //see above
 
 std::shared_ptr<sf::RenderWindow> window_;
 
-std::shared_ptr<RobotPhysicsUpdater> physics_updater_;
+std::shared_ptr<TestPhysicsUpdater> physics_updater_;
 
 sf::Texture robot_texture;
 
