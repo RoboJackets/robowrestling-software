@@ -125,7 +125,7 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
             //elapsed_time = (clock() - past_time) / 1000.0;
             elapsed_time = duration(timeNow() - past_time) / 1000000000.0;
 
-            std::cout << elapsed_time << std::endl;
+            //std::cout << elapsed_time << std::endl;
 
             if (elapsed_time > 0) {
                 //past_time = clock();

@@ -25,7 +25,7 @@
 #define WINDOW_WIDTH (vis_scale*170)
 
 #define STRATEGY_1 IdleStrategy // Edit to change Robot 1's strategy. Remember to include
-#define STRATEGY_2 LoopStrategy
+#define STRATEGY_2 SlammyWhammy
 
 int radius_; //radius of the dohyo
 double elapsed_total;

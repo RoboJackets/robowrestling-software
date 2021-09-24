@@ -98,7 +98,9 @@ bool RobotPhysicsUpdater::check_collision(std::shared_ptr<Robot> r1, std::shared
 	}
 }
 
+int temp_count = 0;
 void RobotPhysicsUpdater::collision_handler(std::shared_ptr<Robot> r1, std::shared_ptr<Robot> r2) {
+
 	double r2_x_to_r1 = r2->x_pos_ - r1->x_pos_; //shift using r1 as the origin
 	double r2_y_to_r1 = r2->y_pos_ - r1->y_pos_;
 	double relative_x = r2_x_to_r1*cos(-1*r1->angle_) - r2_y_to_r1*sin(-1*r1->angle_); //rotate axis so r1 is origin
@@ -112,13 +114,28 @@ void RobotPhysicsUpdater::collision_handler(std::shared_ptr<Robot> r1, std::shar
 	// std::cout << angle_r1_to_r2 << ", " << angle_r2_to_r1 << std::endl;
 	if (angle_r1_to_r2 <= M_PI/4 && angle_r1_to_r2 >= -M_PI/4) {
 		if (angle_r2_to_r1 <= M_PI/4 && angle_r2_to_r1 >= -M_PI/4) {
-			std::cout << "Head on" << std::endl;
-			auto temp_l = r1->left_wheel_velocity_;
-			auto temp_r = r1->right_wheel_velocity_;
-			r1->left_wheel_velocity_ -= r2->left_wheel_velocity_;
-			r1->right_wheel_velocity_ -= r2->right_wheel_velocity_;
-			r2->left_wheel_velocity_ -= temp_l;
-			r2->right_wheel_velocity_ -= temp_r;
+			//std::cout << "Head on" << std::endl;
+			temp_count++;
+			//std::cout << "\nHead on: " << temp_count << std::endl;
+
+			if (temp_count < 5) {
+				std::cout << "R1 Before\nLeft: " << r1->left_wheel_velocity_ << "\nRight: " << r1->right_wheel_velocity_ << std::endl;
+				std::cout << "R2 Before\nLeft: " << r2->left_wheel_velocity_ << "\nRight: " << r2->right_wheel_velocity_ << std::endl;
+			}
+
+			auto r1_avg_velocity = (r1->left_wheel_velocity_ + r1->right_wheel_velocity_) / 2.0;
+			auto r2_avg_velocity = (r2->left_wheel_velocity_ + r2->right_wheel_velocity_) / 2.0;
+			auto total_velocity = (r1_avg_velocity + r2_avg_velocity) * 0.75;
+			r1->left_wheel_velocity_ -= total_velocity / 2.0;
+			r1->right_wheel_velocity_ -= total_velocity / 2.0;
+			r2->left_wheel_velocity_ -= total_velocity / 2.0;
+			r2->right_wheel_velocity_ -= total_velocity / 2.0;
+
+			if (temp_count < 5) {
+				std::cout << "R1 After\nLeft: " << r1->left_wheel_velocity_ << "\nRight: " << r1->right_wheel_velocity_ << std::endl;
+				std::cout << "R2 After\nLeft: " << r2->left_wheel_velocity_ << "\nRight: " << r2->right_wheel_velocity_ << std::endl;
+			}
+
 		} else {
 			std::cout << "R1 hit R2" << std::endl;
 			r2->x_pos_ += (r1->left_wheel_velocity_ + r1->right_wheel_velocity_)*cos(r1->angle_)*.01;
@@ -136,7 +153,7 @@ void RobotPhysicsUpdater::move_robot(std::shared_ptr<Robot> r, double left_wheel
 	double desired_right_velocity = (right_wheel/100.0)*r->max_wheel_velocity_;
 	double right_new_velocity = desired_right_velocity;
 	if (r->right_wheel_velocity_ < desired_right_velocity) {
-		double right_velocity_increase = duration * r->wheel_acceleration_;
+		double right_velocity_increase = duration * r->wheel_acceleration_ * (right_wheel/100.0);
 		right_new_velocity = r->right_wheel_velocity_ + right_velocity_increase;
 		if (right_new_velocity > desired_right_velocity) {
 			right_new_velocity = desired_right_velocity;
@@ -154,7 +171,7 @@ void RobotPhysicsUpdater::move_robot(std::shared_ptr<Robot> r, double left_wheel
 	double desired_left_velocity = (left_wheel/100.0)*r->max_wheel_velocity_;
 	double left_new_velocity = desired_left_velocity;
 	if (r->left_wheel_velocity_ < desired_left_velocity) {
-		double left_velocity_increase = duration * r->wheel_acceleration_;
+		double left_velocity_increase = duration * r->wheel_acceleration_ * (left_wheel/100.0);
 		left_new_velocity = r->left_wheel_velocity_ + left_velocity_increase;
 		if (left_new_velocity > desired_left_velocity) {
 			left_new_velocity = desired_left_velocity;
