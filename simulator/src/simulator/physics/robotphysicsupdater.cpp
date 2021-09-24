@@ -181,6 +181,8 @@ void RobotPhysicsUpdater::move_robot(std::shared_ptr<Robot> r, double left_wheel
 		r->angle_ += angle_change;
 	} else {
 		//Kinematics brought to you by http://www.cs.columbia.edu/~allen/F15/NOTES/icckinematics.pdf
+		average_left_velocity = average_left_velocity * r->wheel_radius_;
+		average_right_velocity = average_right_velocity * r->wheel_radius_;
 		double rotational_velocity = (average_right_velocity - average_left_velocity)/(r->width_);
 		double curvature_radius = 0;
 		if (average_left_velocity == 0 || average_right_velocity == 0) {

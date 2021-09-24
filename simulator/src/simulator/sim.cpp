@@ -95,7 +95,7 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
     }
 	
     BasicRobotHandler test_handler = BasicRobotHandler(robot1_, robot2_);
-    physics_updater_ = std::make_shared<TestPhysicsUpdater>(); //Default RobotPhysicsUpdater
+    physics_updater_ = std::make_shared<RobotPhysicsUpdater>(); //Default RobotPhysicsUpdater
     
     window_ = std::make_shared<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "My window");
     window_->clear(sf::Color::White); // clear the window with white color
@@ -121,7 +121,7 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
 
 
     if (sim_duration == 0) {
-        while (window_->isOpen() && duration(timeNow() - start_time) <= 1000000000) {
+        while (window_->isOpen() && duration(timeNow() - start_time) <= 60000000000) {
             //elapsed_time = (clock() - past_time) / 1000.0;
             elapsed_time = duration(timeNow() - past_time) / 1000000000.0;
 
