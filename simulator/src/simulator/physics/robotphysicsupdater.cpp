@@ -112,36 +112,42 @@ void RobotPhysicsUpdater::collision_handler(std::shared_ptr<Robot> r1, std::shar
 	relative_y = r1_x_to_r2*sin(-1*r2->angle_) + r1_y_to_r2*cos(-1*r2->angle_);
 	double angle_r2_to_r1 = atan2(relative_y, relative_x); //inverse tangent to get the angle of r1 relative to where r2 is pointing
 	// std::cout << angle_r1_to_r2 << ", " << angle_r2_to_r1 << std::endl;
-	if (angle_r1_to_r2 <= M_PI/4 && angle_r1_to_r2 >= -M_PI/4) {
-		if (angle_r2_to_r1 <= M_PI/4 && angle_r2_to_r1 >= -M_PI/4) {
-			//std::cout << "Head on" << std::endl;
-			temp_count++;
-			//std::cout << "\nHead on: " << temp_count << std::endl;
 
-			if (temp_count < 5) {
-				std::cout << "R1 Before\nLeft: " << r1->left_wheel_velocity_ << "\nRight: " << r1->right_wheel_velocity_ << std::endl;
-				std::cout << "R2 Before\nLeft: " << r2->left_wheel_velocity_ << "\nRight: " << r2->right_wheel_velocity_ << std::endl;
-			}
+	if (angle_r1_to_r2 <= M_PI/4 && angle_r1_to_r2 >= -M_PI/4) { //r1 faces r2
+		if (angle_r2_to_r1 <= M_PI/4 && angle_r2_to_r1 >= -M_PI/4) { //r2 faces r1 aka Head on collision
+			// std::cout << "Head On" << std::endl;
 
 			auto r1_avg_velocity = (r1->left_wheel_velocity_ + r1->right_wheel_velocity_) / 2.0;
 			auto r2_avg_velocity = (r2->left_wheel_velocity_ + r2->right_wheel_velocity_) / 2.0;
-			auto total_velocity = (r1_avg_velocity + r2_avg_velocity) * 0.75;
-			r1->left_wheel_velocity_ -= total_velocity / 2.0;
-			r1->right_wheel_velocity_ -= total_velocity / 2.0;
-			r2->left_wheel_velocity_ -= total_velocity / 2.0;
-			r2->right_wheel_velocity_ -= total_velocity / 2.0;
+			auto total_velocity = (r1_avg_velocity + r2_avg_velocity) * 0.75; //total velocity in the system
 
-			if (temp_count < 5) {
-				std::cout << "R1 After\nLeft: " << r1->left_wheel_velocity_ << "\nRight: " << r1->right_wheel_velocity_ << std::endl;
-				std::cout << "R2 After\nLeft: " << r2->left_wheel_velocity_ << "\nRight: " << r2->right_wheel_velocity_ << std::endl;
+			if (angle_r1_to_r2 < 0.05 && angle_r1_to_r2 > -0.05) {
+				std::cout << "R1 Straight" << std::endl;
+				r1->left_wheel_velocity_ -= total_velocity / 2.0; //inelastic collision everything moves as a group 
+				r1->right_wheel_velocity_ -= total_velocity / 2.0;
+			} else {
+				std::cout << "R1 Turn" << std::endl;
+				r1->left_wheel_velocity_ -= total_velocity / 2.0;
+				r1->right_wheel_velocity_ -= total_velocity / 2.0;
+				r1->angle_ += angle_r1_to_r2 * (total_velocity / (r1->max_wheel_velocity_ * 1.25));
+			}
+			if (angle_r2_to_r1 < 0.05 && angle_r2_to_r1 > -0.05) {
+				std::cout << "R2 Straight" << std::endl;
+				r2->left_wheel_velocity_ -= total_velocity / 2.0;
+				r2->right_wheel_velocity_ -= total_velocity / 2.0;
+			} else {
+				std::cout << "R2 Turn" << std::endl;
+				r2->left_wheel_velocity_ -= total_velocity / 2.0;
+				r2->right_wheel_velocity_ -= total_velocity / 2.0;
+				r2->angle_ += angle_r2_to_r1 * (total_velocity / (r2->max_wheel_velocity_ * 1.25));
 			}
 
-		} else {
+		} else { //r1 hits r2
 			std::cout << "R1 hit R2" << std::endl;
 			r2->x_pos_ += (r1->left_wheel_velocity_ + r1->right_wheel_velocity_)*cos(r1->angle_)*.01;
 			r2->y_pos_ += (r1->left_wheel_velocity_ + r1->right_wheel_velocity_)*sin(r1->angle_)*.01;
 		}
-	} else if (angle_r2_to_r1 <= M_PI/4 && angle_r2_to_r1 >= -M_PI/4) {
+	} else if (angle_r2_to_r1 <= M_PI/4 && angle_r2_to_r1 >= -M_PI/4) { //r2 hits r1
 		std::cout << "R2 hit R1" << std::endl;
 		r1->x_pos_ += (r2->left_wheel_velocity_ + r2->right_wheel_velocity_)*cos(r2->angle_)*.01;
 		r1->y_pos_ += (r2->left_wheel_velocity_ + r2->right_wheel_velocity_)*sin(r2->angle_)*.01;
