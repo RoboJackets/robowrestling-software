@@ -5,6 +5,8 @@
 #include <memory>
 #include <simulator/robots/robot.h>
 
+#define pdd std::pair<double,double>
+
 class RobotPhysicsUpdater {
 	public: 
         RobotPhysicsUpdater();
@@ -17,6 +19,16 @@ class RobotPhysicsUpdater {
         bool check_collision(std::shared_ptr<Robot> r1, std::shared_ptr<Robot> r2); //uses given information to check if the robots will collide using Seperating Axis Theorem
 
         void collision_handler(std::shared_ptr<Robot> r1, std::shared_ptr<Robot> r2); //updates the position and velocities of the robots using collision logic
+
+        private:
+        void sat_test(pdd normal_axis, std::vector<pdd> corners, double& min_along, double& max_along); //performs the sat_test for overlaps
+
+        double dot_product(pdd first, pdd second); //computes dot product between to coordinates
+
+        bool overlaps(double min_1, double max_1, double min_2, double max_2);
+
+        bool is_between_ordered(double val, double lower_bound, double upper_bound);
+
 };
 
 #endif
