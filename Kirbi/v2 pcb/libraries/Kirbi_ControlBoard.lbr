@@ -722,8 +722,6 @@ Temp: -40~+85°C</text>
 <text x="-5.08" y="5.08" size="1.778" layer="95">&gt;NAME</text>
 <text x="-5.08" y="-5.08" size="1.778" layer="96">&gt;VALUE</text>
 </symbol>
-<symbol name="TEST">
-</symbol>
 </symbols>
 <devicesets>
 <deviceset name="0532610471" prefix="J">
