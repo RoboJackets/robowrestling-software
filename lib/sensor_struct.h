@@ -5,6 +5,7 @@
 
 struct SensorData
 {
+    //all data is placed in vectors from left to right
     std::vector<int> encoder_buffer_;
 
     double x_accel_;

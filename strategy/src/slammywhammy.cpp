@@ -6,6 +6,6 @@ SlammyWhammy::SlammyWhammy() {
 }
 
 std::vector<int> SlammyWhammy::next_action(SensorData input) {
-    int output[] = {50, 100};
+    int output[] = {100, 100};
     return std::vector<int>(output, output + sizeof(output)/sizeof(int));
 }

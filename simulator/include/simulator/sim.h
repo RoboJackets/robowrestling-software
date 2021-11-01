@@ -17,18 +17,20 @@
 #include <strategy/idle_strategy.h>
 #include <strategy/loop_strategy.h>
 #include <strategy/sensor_strategy.h>
+#include <strategy/slammywhammy.h>
 
 #include <simulator/physics/robotphysicsupdater.h>
 
-#define WINDOW_HEIGHT 600
-#define WINDOW_WIDTH 800
+#define WINDOW_HEIGHT (vis_scale*170)
+#define WINDOW_WIDTH (vis_scale*170)
 
 #define STRATEGY_1 IdleStrategy // Edit to change Robot 1's strategy. Remember to include
-#define STRATEGY_2 IdleStrategy
+#define STRATEGY_2 SlammyWhammy
 
 int radius_; //radius of the dohyo
+double elapsed_total;
 double sim_duration;
-double vis_scale = 2.0;
+double vis_scale = 2.5;
 
 std::shared_ptr<Robot> robot1_; //robot object that stores information about a robot
 std::shared_ptr<Robot> robot2_; //see above
