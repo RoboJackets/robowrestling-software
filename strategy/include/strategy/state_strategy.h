@@ -11,7 +11,7 @@ class StateStrategy: public Strategy {
         };
 
         StateStrategy();
-        std::vector<int> next_action();
+        std::vector<int> next_action(SensorData input);
         void update_state(SensorData input);
 
         State state_;

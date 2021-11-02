@@ -23,7 +23,8 @@ void StateStrategy::update_state(SensorData input) {
     }
 }
 
-std::vector<int> StateStrategy::next_action() {
+std::vector<int> StateStrategy::next_action(SensorData input) {
+    update_state(input);
     std::vector<int> ret = std::vector<int>(2, 0);
 
     switch(state_) {
