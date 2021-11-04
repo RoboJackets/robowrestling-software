@@ -1,13 +1,13 @@
-#ifndef testphysicsupdater_h
-#define testphysicsupdater_h
+#ifndef oldphysicsupdater_h
+#define oldphysicsupdater_h
 
 #include <cmath>
 #include <memory>
 #include <simulator/robots/robot.h>
 
-class TestPhysicsUpdater {
+class OldPhysicsUpdater {
 	public: 
-        TestPhysicsUpdater();
+        OldPhysicsUpdater();
 	   
         void update(std::shared_ptr<Robot> r1, std::vector<int> r1_update, std::shared_ptr<Robot> r2, std::vector<int> r2_update, double duration); //overall update method that takes in the two robots and necessary information in the form of vectors
                                                                                                                                          //vectors contain in order left_wheel, right_wheel, other robot specific update information (may be none)

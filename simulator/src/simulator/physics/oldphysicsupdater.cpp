@@ -1,44 +1,21 @@
-/*
-Velocity Calculations
-    Read Control Power
-    Apply respective force to motor sides
-    Maintain an ongoing variable of active net forces
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*/
-
-#include <simulator/physics/testphysicsupdater.h>
+#include <simulator/physics/oldphysicsupdater.h>
 #include <iostream>
 
-TestPhysicsUpdater::TestPhysicsUpdater() {
+OldPhysicsUpdater::OldPhysicsUpdater() {
 
 }
 
-
-void TestPhysicsUpdater::update(std::shared_ptr<Robot> r1, std::vector<int> r1_update, std::shared_ptr<Robot> r2, std::vector<int> r2_update, double duration) {
+void OldPhysicsUpdater::update(std::shared_ptr<Robot> r1, std::vector<int> r1_update, std::shared_ptr<Robot> r2, std::vector<int> r2_update, double duration) {
 	this->move_robot(r1, r1_update[0], r1_update[1], duration);
 	this->move_robot(r2, r2_update[0], r2_update[1], duration);
 	if (this->check_collision(r1, r2)) {
+		std::cout << "Hit" << std::endl;
 		this->collision_handler(r1, r2);
 	}
 	
 }
 
-bool TestPhysicsUpdater::check_collision(std::shared_ptr<Robot> r1, std::shared_ptr<Robot> r2) {
+bool OldPhysicsUpdater::check_collision(std::shared_ptr<Robot> r1, std::shared_ptr<Robot> r2) {
 	auto r1_corners = r1->corners(); //std vector of std pairs representing the 4 corners of the robot
 	auto r2_corners = r2->corners(); 
 	double axis1_slope = (r1_corners[0].second - r1_corners[1].second) / (r1_corners[0].first - r1_corners[1].first); //https://gamedev.stackexchange.com/questions/25397/obb-vs-obb-collision-detection
@@ -122,7 +99,7 @@ bool TestPhysicsUpdater::check_collision(std::shared_ptr<Robot> r1, std::shared_
 	}
 }
 
-void TestPhysicsUpdater::collision_handler(std::shared_ptr<Robot> r1, std::shared_ptr<Robot> r2) {
+void OldPhysicsUpdater::collision_handler(std::shared_ptr<Robot> r1, std::shared_ptr<Robot> r2) {
 	double r2_x_to_r1 = r2->x_pos_ - r1->x_pos_; //shift using r1 as the origin
 	double r2_y_to_r1 = r2->y_pos_ - r1->y_pos_;
 	double relative_x = r2_x_to_r1*cos(-1*r1->angle_) - r2_y_to_r1*sin(-1*r1->angle_); //rotate axis so r1 is origin
@@ -134,33 +111,43 @@ void TestPhysicsUpdater::collision_handler(std::shared_ptr<Robot> r1, std::share
 	relative_y = r1_x_to_r2*sin(-1*r2->angle_) + r1_y_to_r2*cos(-1*r2->angle_);
 	double angle_r2_to_r1 = atan2(relative_y, relative_x); //inverse tangent to get the angle of r1 relative to where r2 is pointing
 	// std::cout << angle_r1_to_r2 << ", " << angle_r2_to_r1 << std::endl;
-	if (angle_r1_to_r2 <= M_PI/4 && angle_r1_to_r2 >= -M_PI/4) {
-		if (angle_r2_to_r1 <= M_PI/4 && angle_r2_to_r1 >= -M_PI/4) {
-			std::cout << "Head on" << std::endl;
-			auto temp_l = r1->left_wheel_velocity_;
-			auto temp_r = r1->right_wheel_velocity_;
-			r1->left_wheel_velocity_ -= r2->left_wheel_velocity_;
-			r1->right_wheel_velocity_ -= r2->right_wheel_velocity_;
-			r2->left_wheel_velocity_ -= temp_l;
-			r2->right_wheel_velocity_ -= temp_r;
-		} else {
+
+	if (angle_r1_to_r2 <= M_PI/4 && angle_r1_to_r2 >= -M_PI/4) { //r1 faces r2
+		if (angle_r2_to_r1 <= M_PI/4 && angle_r2_to_r1 >= -M_PI/4) { //r2 faces r1 aka Head on collision
+			// std::cout << "Head On" << std::endl;
+
+			auto r1_avg_velocity = (r1->left_wheel_velocity_ + r1->right_wheel_velocity_) / 2.0;
+			auto r2_avg_velocity = (r2->left_wheel_velocity_ + r2->right_wheel_velocity_) / 2.0;
+			auto total_velocity = (r1_avg_velocity + r2_avg_velocity) * 0.75; //total velocity in the system
+
+			auto r1_balance = (angle_r1_to_r2 / (M_PI / 4)) / 2 + .50; // %balance to the right side
+			auto r2_balance = (angle_r2_to_r1 / (M_PI / 4)) / 2 + .50;
+
+			std::cout << r1_balance << " " << angle_r1_to_r2 << std::endl;
+
+			r1->right_wheel_velocity_ -= total_velocity * r1_balance; //inelastic collision everything moves as a group 
+			r1->left_wheel_velocity_ -= total_velocity * (1 - r1_balance);
+			r2->right_wheel_velocity_ -= total_velocity * r2_balance;
+			r2->left_wheel_velocity_ -= total_velocity * (1 - r2_balance);
+
+		} else { //r1 hits r2
 			std::cout << "R1 hit R2" << std::endl;
 			r2->x_pos_ += (r1->left_wheel_velocity_ + r1->right_wheel_velocity_)*cos(r1->angle_)*.01;
 			r2->y_pos_ += (r1->left_wheel_velocity_ + r1->right_wheel_velocity_)*sin(r1->angle_)*.01;
 		}
-	} else if (angle_r2_to_r1 <= M_PI/4 && angle_r2_to_r1 >= -M_PI/4) {
+	} else if (angle_r2_to_r1 <= M_PI/4 && angle_r2_to_r1 >= -M_PI/4) { //r2 hits r1
 		std::cout << "R2 hit R1" << std::endl;
 		r1->x_pos_ += (r2->left_wheel_velocity_ + r2->right_wheel_velocity_)*cos(r2->angle_)*.01;
 		r1->y_pos_ += (r2->left_wheel_velocity_ + r2->right_wheel_velocity_)*sin(r2->angle_)*.01;
 	}
 }
 
-void TestPhysicsUpdater::move_robot(std::shared_ptr<Robot> r, double left_wheel, double right_wheel, double duration) {
+void OldPhysicsUpdater::move_robot(std::shared_ptr<Robot> r, double left_wheel, double right_wheel, double duration) {
 	//calculate how fast the right wheel moves
 	double desired_right_velocity = (right_wheel/100.0)*r->max_wheel_velocity_;
 	double right_new_velocity = desired_right_velocity;
 	if (r->right_wheel_velocity_ < desired_right_velocity) {
-		double right_velocity_increase = duration * r->wheel_acceleration_;
+		double right_velocity_increase = duration * r->wheel_acceleration_ * (right_wheel/100.0);
 		right_new_velocity = r->right_wheel_velocity_ + right_velocity_increase;
 		if (right_new_velocity > desired_right_velocity) {
 			right_new_velocity = desired_right_velocity;
@@ -178,7 +165,7 @@ void TestPhysicsUpdater::move_robot(std::shared_ptr<Robot> r, double left_wheel,
 	double desired_left_velocity = (left_wheel/100.0)*r->max_wheel_velocity_;
 	double left_new_velocity = desired_left_velocity;
 	if (r->left_wheel_velocity_ < desired_left_velocity) {
-		double left_velocity_increase = duration * r->wheel_acceleration_;
+		double left_velocity_increase = duration * r->wheel_acceleration_ * (left_wheel/100.0);
 		left_new_velocity = r->left_wheel_velocity_ + left_velocity_increase;
 		if (left_new_velocity > desired_left_velocity) {
 			left_new_velocity = desired_left_velocity;
@@ -205,6 +192,8 @@ void TestPhysicsUpdater::move_robot(std::shared_ptr<Robot> r, double left_wheel,
 		r->angle_ += angle_change;
 	} else {
 		//Kinematics brought to you by http://www.cs.columbia.edu/~allen/F15/NOTES/icckinematics.pdf
+		average_left_velocity = average_left_velocity * r->wheel_radius_;
+		average_right_velocity = average_right_velocity * r->wheel_radius_;
 		double rotational_velocity = (average_right_velocity - average_left_velocity)/(r->width_);
 		double curvature_radius = 0;
 		if (average_left_velocity == 0 || average_right_velocity == 0) {
