@@ -4,14 +4,14 @@ BasicDist::BasicDist() {
 
 }
 
-std::vector<int> BasicDist::next_action(std::vector<double> inputs) {
+std::vector<int> BasicDist::next_action(SensorData input) {
     auto ret = std::vector<int>(2, 0);
-    auto hit_far_l = inputs[0] > 0;
-    auto hit_mid_l = inputs[1] > 0;
-    auto hit_c_l = inputs[2] > 0;
-    auto hit_c_r = inputs[3] > 0;
-    auto hit_mid_r = inputs[4] > 0;
-    auto hit_far_r = inputs[5] > 0;
+    auto hit_far_l = input.dist_buffer_[0] > 0;
+    auto hit_mid_l = input.dist_buffer_[1] > 0;
+    auto hit_c_l = input.dist_buffer_[2] > 0;
+    auto hit_c_r = input.dist_buffer_[3] > 0;
+    auto hit_mid_r = input.dist_buffer_[4] > 0;
+    auto hit_far_r = input.dist_buffer_[5] > 0;
 
     if (hit_c_r && hit_c_l) {
         ret[0] = 100;
