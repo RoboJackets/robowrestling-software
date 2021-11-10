@@ -9,108 +9,25 @@ void RobotPhysicsUpdater::update(std::shared_ptr<Robot> r1, std::vector<int> r1_
 	this->move_robot(r1, r1_update[0], r1_update[1], duration);
 	this->move_robot(r2, r2_update[0], r2_update[1], duration);
 	if (this->check_collision(r1, r2)) {
-		std::cout << "Hit" << std::endl;
 		this->collision_handler(r1, r2);
-	}
-	
+	}	
 }
 
 bool RobotPhysicsUpdater::check_collision(std::shared_ptr<Robot> r1, std::shared_ptr<Robot> r2) {
-	// auto r1_corners = r1->corners(); //std vector of std pairs representing the 4 corners of the robot
-	// auto r2_corners = r2->corners(); 
-	// double axis1_slope = (r1_corners[0].second - r1_corners[1].second) / (r1_corners[0].first - r1_corners[1].first); //https://gamedev.stackexchange.com/questions/25397/obb-vs-obb-collision-detection
-	// double axis1_offset = -1*axis1_slope*r1_corners[0].first + r1_corners[0].second;
-	// bool overlap1 = false;
-	// double axis2_slope = (r1_corners[1].second - r1_corners[2].second) / (r1_corners[1].first - r1_corners[2].first);
-	// double axis2_offset = -1*axis2_slope*r1_corners[1].first + r1_corners[1].second;
-	// bool overlap2 = false;
-	// if (axis1_slope == 0) {
-	// 	for (int i = 0; i < 4; i++) {
-	// 		if (r1_corners[0].first > r1_corners[1].first) {
-	// 			if (r2_corners[i].first <= r1_corners[0].first && r2_corners[i].first >= r1_corners[1].first) {
-	// 				overlap1 = true;
-	// 			}
-	// 		} else {
-	// 			if (r2_corners[i].first >= r1_corners[0].first && r2_corners[i].first <= r1_corners[1].first) {
-	// 				overlap1 = true;
-	// 			}
-	// 		}
-	// 		if (r1_corners[1].second > r1_corners[2].second) {
-	// 			if (r2_corners[i].second <= r1_corners[1].second && r2_corners[i].second >= r1_corners[2].second) {
-	// 				overlap2 = true;
-	// 			}
-	// 		} else {
-	// 			if (r2_corners[i].second >= r1_corners[1].second && r2_corners[i].second <= r1_corners[2].second) {
-	// 				overlap2 = true;
-	// 			}
-	// 		}
-	// 	}
-	// } else if (axis2_slope == 0) {
-	// 	for (int i = 0; i < 4; i++) {
-	// 		if (r1_corners[0].second > r1_corners[1].second) {
-	// 			if (r2_corners[i].second <= r1_corners[0].second && r2_corners[i].second >= r1_corners[1].second) {
-	// 				overlap1 = true;
-	// 			}
-	// 		} else {
-	// 			if (r2_corners[i].second >= r1_corners[0].second && r2_corners[i].second <= r1_corners[1].second) {
-	// 				overlap1 = true;
-	// 			}
-	// 		}
-	// 		if (r1_corners[1].first > r1_corners[2].first) {
-	// 			if (r2_corners[i].first <= r1_corners[1].first && r2_corners[i].first >= r1_corners[2].first) {
-	// 				overlap2 = true;
-	// 			}
-	// 		} else {
-	// 			if (r2_corners[i].first >= r1_corners[1].first && r2_corners[i].first <= r1_corners[2].first) {
-	// 				overlap2 = true;
-	// 			}
-	// 		}
-	// 	}
-	// } else {
-	// 	for (int i = 0; i < 4; i++) {
-	// 		double offset = ((1/axis1_slope) * r2_corners[i].first) + r2_corners[i].second;
-	// 		double projection_x = (offset-axis1_offset)/(1/axis1_slope + axis1_slope);
-	// 		double projection_y = axis1_offset + axis1_slope*projection_x;
-	// 		if (r1_corners[0].second > r1_corners[1].second) {
-	// 			if (projection_y <= r1_corners[0].second && projection_y >= r1_corners[1].second) {
-	// 				overlap1 = true;
-	// 			}
-	// 		} else if (projection_y >= r1_corners[0].second && projection_y <= r1_corners[1].second) {
-	// 			overlap1 = true;
-	// 		}
-	// 	}
-	// 	for (int i = 0; i < 4; i++) {
-	// 		double offset = ((1/axis2_slope) * r2_corners[i].first) + r2_corners[i].second;
-	// 		double projection_x = (offset-axis2_offset)/(1/axis2_slope + axis2_slope);
-	// 		double projection_y = axis2_offset + axis2_slope*projection_x;
-	// 		if (r1_corners[1].second > r1_corners[2].second) {
-	// 			if (projection_y <= r1_corners[1].second && projection_y >= r1_corners[2].second) {
-	// 				overlap2 = true;
-	// 			}
-	// 		} else if (projection_y >= r1_corners[1].second && projection_y <= r1_corners[2].second) {
-	// 			overlap2 = true;
-	// 		}
-	// 	}
-	// }
-	// if (overlap1 && overlap2) {
-	// 	return true;
-	// } else {
-	// 	return false;
-	// }
-
 	auto r1_corners = r1->corners(); //std vector of std pairs representing the 4 corners of the robot
 	auto r2_corners = r2->corners();
+
 	std::vector<pdd> normal_axis;
 	normal_axis.push_back(pdd(-(r1_corners[1].second - r1_corners[0].second), (r1_corners[1].first - r1_corners[0].first)));
 	normal_axis.push_back(pdd(-(r1_corners[2].second - r1_corners[1].second), (r1_corners[2].first - r1_corners[1].first)));
 	normal_axis.push_back(pdd(-(r2_corners[1].second - r2_corners[0].second), (r2_corners[1].first - r2_corners[0].first)));
 	normal_axis.push_back(pdd(-(r2_corners[2].second - r2_corners[1].second), (r2_corners[2].first - r2_corners[1].first)));
 
-	for (int i = 0; i < normal_axis.size(); i++) {
+	for (u_int8_t i = 0; i < normal_axis.size(); i++) {
 		double r1_min_along, r1_max_along, r2_min_along, r2_max_along;
-		sat_test(normal_axis[0], r1_corners, r1_min_along, r1_max_along);
-		sat_test(normal_axis[0], r2_corners, r2_min_along, r2_max_along);
-		if (overlaps(r1_min_along, r1_max_along, r2_min_along, r2_max_along)) {
+		sat_test(normal_axis[i], r1_corners, r1_min_along, r1_max_along);
+		sat_test(normal_axis[i], r2_corners, r2_min_along, r2_max_along);
+		if (!overlaps(r1_min_along, r1_max_along, r2_min_along, r2_max_along)) {
 			return false;
 		}
 	}
@@ -120,7 +37,7 @@ bool RobotPhysicsUpdater::check_collision(std::shared_ptr<Robot> r1, std::shared
 void RobotPhysicsUpdater::sat_test(pdd normal_axis, std::vector<pdd> corners, double& min_along, double& max_along) {
 	min_along = INT16_MAX;
 	max_along = INT16_MIN;
-  	for (int i = 0; i < corners.size(); i++ ) {
+  	for (u_int8_t i = 0; i < corners.size(); i++ ) {
 		double dotVal = dot_product(corners[i], normal_axis) ;
 		if (dotVal < min_along) {
 			min_along = dotVal;
@@ -135,17 +52,15 @@ double RobotPhysicsUpdater::dot_product(pdd first, pdd second) {
 	return first.first * second.first + first.second * second.second;
 }
 
-bool RobotPhysicsUpdater::overlaps(double min_1, double max_1, double min_2, double max_2 ) {
-  return is_between_ordered( min_2, min_1, max_1 ) || is_between_ordered( min_1, min_2, max_2 ) ;
+bool RobotPhysicsUpdater::overlaps(double min_1, double max_1, double min_2, double max_2) {
+  return is_between_ordered(min_2, min_1, max_1) || is_between_ordered(min_1, min_2, max_2) ;
 }
 
-bool RobotPhysicsUpdater::is_between_ordered(double val, double lower_bound, double upper_bound ) {
+bool RobotPhysicsUpdater::is_between_ordered(double val, double lower_bound, double upper_bound) {
   return lower_bound <= val && val <= upper_bound ;
 }
 
-int temp_count = 0;
 void RobotPhysicsUpdater::collision_handler(std::shared_ptr<Robot> r1, std::shared_ptr<Robot> r2) {
-
 	double r2_x_to_r1 = r2->x_pos_ - r1->x_pos_; //shift using r1 as the origin
 	double r2_y_to_r1 = r2->y_pos_ - r1->y_pos_;
 	double relative_x = r2_x_to_r1*cos(-1*r1->angle_) - r2_y_to_r1*sin(-1*r1->angle_); //rotate axis so r1 is origin
@@ -165,17 +80,6 @@ void RobotPhysicsUpdater::collision_handler(std::shared_ptr<Robot> r1, std::shar
 			auto r1_avg_velocity = (r1->left_wheel_velocity_ + r1->right_wheel_velocity_) / 2.0;
 			auto r2_avg_velocity = (r2->left_wheel_velocity_ + r2->right_wheel_velocity_) / 2.0;
 			auto total_velocity = (r1_avg_velocity + r2_avg_velocity) * 0.75; //total velocity in the system
-
-			// auto r1_balance = (angle_r1_to_r2 / (M_PI / 4)) / 2 + .50; // %balance to the right side
-			// auto r2_balance = (angle_r2_to_r1 / (M_PI / 4)) / 2 + .50;
-
-			// std::cout << r1_balance << " " << angle_r1_to_r2 << std::endl;
-
-			// r1->right_wheel_velocity_ -= total_velocity * r1_balance; //inelastic collision everything moves as a group 
-			// r1->left_wheel_velocity_ -= total_velocity * (1 - r1_balance);
-			// r2->right_wheel_velocity_ -= total_velocity * r2_balance;
-			// r2->left_wheel_velocity_ -= total_velocity * (1 - r2_balance);
-
 
 			if (angle_r1_to_r2 < 0.05 && angle_r1_to_r2 > -0.05) {
 				r1->left_wheel_velocity_ -= total_velocity / 2.0; //inelastic collision everything moves as a group 
