@@ -11,8 +11,9 @@ class DistanceStrat: public Strategy {
             IDLE,
             APPROACH,
             TURN_RIGHT,
-            TURN_LEFT;
-        }
+            TURN_LEFT
+        };
 
-        State state_;
-}
+        State state;
+};
+#endif

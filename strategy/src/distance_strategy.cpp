@@ -1,5 +1,5 @@
-#include <iostream>
 #include <strategy/distance_strategy.h>
+#include <iostream>
 
 DistanceStrat::DistanceStrat() {
     state_ = State.IDLE;
