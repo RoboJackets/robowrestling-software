@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="9.5.1">
+<eagle version="9.6.2">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -476,6 +476,25 @@ by exp-lbrs.ulp</description>
 <text x="-6.985" y="-3.81" size="1.27" layer="25" ratio="10" rot="R90">&gt;NAME</text>
 <text x="8.255" y="-3.81" size="1.27" layer="27" rot="R90">&gt;VALUE</text>
 </package>
+<package name="PINHD-2X5_SMD">
+<description>https://www.oupiin.com/download.html?act=gTData&amp;dID=3813</description>
+<smd name="P$8" x="0" y="2.35" dx="3.2" dy="1" layer="1" rot="R90"/>
+<smd name="P$9" x="-2.54" y="2.35" dx="3.2" dy="1" layer="1" rot="R90"/>
+<smd name="P$10" x="-5.08" y="2.35" dx="3.2" dy="1" layer="1" rot="R90"/>
+<smd name="P$7" x="2.54" y="2.35" dx="3.2" dy="1" layer="1" rot="R90"/>
+<smd name="P$6" x="5.08" y="2.35" dx="3.2" dy="1" layer="1" rot="R90"/>
+<smd name="P$3" x="0" y="-2.35" dx="3.2" dy="1" layer="1" rot="R90"/>
+<smd name="P$2" x="-2.54" y="-2.35" dx="3.2" dy="1" layer="1" rot="R90"/>
+<smd name="P$1" x="-5.08" y="-2.35" dx="3.2" dy="1" layer="1" rot="R90"/>
+<smd name="P$4" x="2.54" y="-2.35" dx="3.2" dy="1" layer="1" rot="R90"/>
+<smd name="P$5" x="5.08" y="-2.35" dx="3.2" dy="1" layer="1" rot="R90"/>
+<wire x1="-6" y1="-2.5" x2="6" y2="-2.5" width="0.2" layer="21"/>
+<wire x1="6" y1="-2.5" x2="6" y2="2.5" width="0.2" layer="21"/>
+<wire x1="6" y1="2.5" x2="-6" y2="2.5" width="0.2" layer="21"/>
+<wire x1="-6" y1="2.5" x2="-6" y2="-2.5" width="0.2" layer="21"/>
+<text x="-8" y="5" size="1.778" layer="25">&gt;NAME</text>
+<text x="-8" y="-7" size="1.778" layer="27">&gt;VALUE</text>
+</package>
 </packages>
 <symbols>
 <symbol name="AP2114H-*TRG1">
@@ -670,6 +689,24 @@ by exp-lbrs.ulp</description>
 <pin name="10" x="3.81" y="-5.08" visible="pad" length="short" direction="pas" function="dot" rot="R180"/>
 <text x="-7.62" y="8.255" size="1.778" layer="95">&gt;NAME</text>
 <text x="-7.62" y="-10.16" size="1.778" layer="96">&gt;VALUE</text>
+</symbol>
+<symbol name="PINHD-2X5_SMD">
+<wire x1="-7.62" y1="15.24" x2="7.62" y2="15.24" width="0.254" layer="94"/>
+<wire x1="7.62" y1="15.24" x2="7.62" y2="-15.24" width="0.254" layer="94"/>
+<wire x1="7.62" y1="-15.24" x2="-7.62" y2="-15.24" width="0.254" layer="94"/>
+<wire x1="-7.62" y1="-15.24" x2="-7.62" y2="15.24" width="0.254" layer="94"/>
+<pin name="P$1" x="-12.7" y="10.16" length="middle"/>
+<pin name="P$2" x="-12.7" y="5.08" length="middle"/>
+<pin name="P$3" x="-12.7" y="0" length="middle"/>
+<pin name="P$4" x="-12.7" y="-5.08" length="middle"/>
+<pin name="P$5" x="-12.7" y="-10.16" length="middle"/>
+<pin name="P$6" x="12.7" y="-10.16" length="middle" rot="R180"/>
+<pin name="P$7" x="12.7" y="-5.08" length="middle" rot="R180"/>
+<pin name="P$8" x="12.7" y="0" length="middle" rot="R180"/>
+<pin name="P$9" x="12.7" y="5.08" length="middle" rot="R180"/>
+<pin name="P$10" x="12.7" y="10.16" length="middle" rot="R180"/>
+<text x="-12.7" y="17.78" size="1.778" layer="95">&gt;NAME</text>
+<text x="-12.7" y="-20.32" size="1.778" layer="96">&gt;VALUE</text>
 </symbol>
 </symbols>
 <devicesets>
@@ -899,27 +936,20 @@ https://lsicsi.com/datasheets/LS7183N_LS7184N.pdf</description>
 </device>
 </devices>
 </deviceset>
-<deviceset name="PINHD-2X5" prefix="JP" uservalue="yes">
-<description>&lt;b&gt;PIN HEADER&lt;/b&gt;</description>
+<deviceset name="PINHD-2X5_SMD" prefix="J">
+<description>2 by 5 surface mount pin header
+Datasheet link:
+https://www.oupiin.com/download.html?act=gTData&amp;dID=3813</description>
 <gates>
-<gate name="A" symbol="PINH2X5" x="0" y="0"/>
+<gate name="G$1" symbol="PINHD-2X5_SMD" x="0" y="0"/>
 </gates>
 <devices>
-<device name="" package="2X05">
-<connects>
-<connect gate="A" pin="1" pad="1"/>
-<connect gate="A" pin="10" pad="10"/>
-<connect gate="A" pin="2" pad="2"/>
-<connect gate="A" pin="3" pad="3"/>
-<connect gate="A" pin="4" pad="4"/>
-<connect gate="A" pin="5" pad="5"/>
-<connect gate="A" pin="6" pad="6"/>
-<connect gate="A" pin="7" pad="7"/>
-<connect gate="A" pin="8" pad="8"/>
-<connect gate="A" pin="9" pad="9"/>
-</connects>
+<device name="" package="PINHD-2X5_SMD">
 <technologies>
-<technology name=""/>
+<technology name="">
+<attribute name="DKPN" value="	
+2553-2015-2X05G01DB-ND" constant="no"/>
+</technology>
 </technologies>
 </device>
 </devices>
