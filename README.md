@@ -4,9 +4,6 @@
 
 ### C++ Setup
 
-1. For Mac
-    1. Install XCode
-
 1. For Windows
     1. Install Linux Terminal: [Guide](https://www.windowscentral.com/install-windows-subsystem-linux-windows-10)
     2. Use your preferred code editor
@@ -21,7 +18,10 @@
         ```
     
     2. Use your preferred code editor
-  
+ 
+1. For Mac
+    1. Install XCode
+ 
 ### Git/Github Setup
   
 1. Linking Accounts
@@ -44,14 +44,25 @@
     1. Open a terminal and run the following commands:
     
         ```
-        <sudo apt-get update>
-        <sudo apt-get install cmake libsfml-dev>
+        sudo apt-get update
+        sudo apt-get install cmake libsfml-dev
         ```
     
     2. (Windows Only) Install Xming: [Download](https://sourceforge.net/projects/xming/)
 
 2. For Mac
-    1. Install XCode extensions for Cmake and SFML
+    1. Open a terminal and run the following commands:
+        1. Install Homebrew
+
+            ```
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            ```
+            
+        2. Install Dependencies
+            ```
+            brew install cmake
+            brew install sfml
+            ```
 
 ### Arduino IDE Setup
 
@@ -61,39 +72,37 @@
 
 ## Running the Simulator
 
-1. For Linux
-    1. Open a terminal and locate the head of the repo: 
-    
-        `user:~/.../robowrestling-software/`
-    
-    2. Build Cmake (First Time Only): 
-    
-        ```
-        cmake .
-        ```
-    
-    3. Compile the Source Code:
-    
-        ```
-        make
-        ```
-    
-    4. (Windows Only) Connect to Xming Display (Run each time a terminal is opened):
-    
-        ```
-        export DISPLAY=:0
-        ```
-    
-    5. Run the Simulator:
-    
-        ```
-        ./simulator/src/sim.sw 50 0 0 50 0 0 0
-        ```
-    
-2. For Mac
-    1. **TODO**
+1. Open a terminal and locate the head of the repo: 
+
+    `user:~/.../robowrestling-software/`
+
+2. Build Cmake (First Time Only): 
+
+    ```
+    cmake .
+    ```
+
+3. Compile the Source Code:
+
+    ```
+    make
+    ```
+
+4. (Windows Only) Connect to Xming Display (Run each time a terminal is opened):
+
+    ```
+    export DISPLAY=:0
+    ```
+
+5. Run the Simulator:
+
+    ```
+    ./simulator/src/sim.sw 50 0 0 50 0 0 0
+    ```
 
 ### Changing Configuration
+
+
 
 ## Strategies
 
@@ -206,3 +215,11 @@
         ```
         
     3. Change a Robot's selection `<#define STRATEGY_1 **STRATEGY_NAME_HERE**>`
+
+## Useful Resources
+
+1. Competition Rules: [All Japan Sumo](https://www.fsi.co.jp/sumo/robot/en/rule.html)
+2. Arduino Code Library Documentation: [Reference Page](https://www.arduino.cc/reference/en/)
+3. Serial Communication: [Teensy 3.6](https://www.pjrc.com/teensy/td_uart.html)
+4. Teensy 3.6 Documentation: [Teensy 3.6](https://www.pjrc.com/store/teensy36.html)
+5. Teensy Pinout: [Google Drive](https://drive.google.com/drive/folders/1ci8a4ckSqtLVcKN8qR22PUycx4mC5XRj)
