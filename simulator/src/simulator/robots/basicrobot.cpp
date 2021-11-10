@@ -5,14 +5,14 @@ BasicRobot::BasicRobot(double x_pos, double y_pos, double angle) {
 	y_pos_ = y_pos;
 	angle_ = angle;
 
-	width_ = 30;
-	length_ = 30;
+	width_ = 20;
+	length_ = 20;
 
-	wheel_radius_ = 20;
+	wheel_radius_ = 5;
 	left_wheel_velocity_ = 0;
 	right_wheel_velocity_ = 0;
-	max_wheel_velocity_ = 8;
-	wheel_acceleration_ = 1;
+	max_wheel_velocity_ = 300 / wheel_radius_; // Max speed of 3 m/s
+	wheel_acceleration_ = 100;
 	linear_velocity_ = 0;
 	velocity_dir_ = 0;
 

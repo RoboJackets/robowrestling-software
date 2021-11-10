@@ -5,14 +5,15 @@
 class DistanceStrat: public Strategy {
     public:
         DistanceStrat();
-        std::vector<int> next_action(std::vector<double> distances);
+        std::vector<int> next_action(SensorData input);
         
         enum State {
             IDLE,
             APPROACH,
             TURN_RIGHT,
-            TURN_LEFT;
-        }
+            TURN_LEFT
+        };
 
-        State state_;
-}
+        State state;
+};
+#endif

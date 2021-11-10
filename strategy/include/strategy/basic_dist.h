@@ -5,7 +5,7 @@
 class BasicDist: public Strategy {
     public:
         BasicDist();
-        std::vector<int> next_action(std::vector<double> inputs);
+        std::vector<int> next_action(SensorData input);
 };
 
 #endif //basic_dist_h
