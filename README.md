@@ -72,7 +72,7 @@
 
 ## [Simulator Documentation](simulator/SIMULATOR.md)
 
-## [Strategy Documentation](strategies/strategy.md)
+## [Strategy Documentation](strategy/strategy.md)
 
 ## Useful Resources
 
