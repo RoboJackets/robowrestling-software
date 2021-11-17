@@ -108,3 +108,13 @@
         #include <strategy/**STRATEGY_NAME_HERE**.h>
         ```
     3. Change a Robot's selection `<#define STRATEGY_1 **STRATEGY_NAME_HERE**>`
+
+### File Structure
+
+1. `./diagrams/` : Storage for Strategy State Machine Diagrams
+2. `./include/strategy/` : Header Files for Strategies
+3. `./src/` : Source Files for Strategies
+
+
+
+
