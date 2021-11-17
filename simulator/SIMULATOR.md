@@ -43,3 +43,12 @@ Execute Command: `./sim.sw r1x r1y r1a r2x r2y r2a dt`
 7. dt: Simulator Timestep - 0 = Realtime Elapsed, >0 Set timestep in seconds
 
 Default Parameters: `./sim.sw 25 25 0.25 0 25 0 0.01`
+
+### File Structure
+
+1. `./include/simulator/` : Header files for the Simulator
+2. `./res/`
+3. `./src/`
+
+
+
