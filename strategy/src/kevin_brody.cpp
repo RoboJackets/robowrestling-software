@@ -38,7 +38,7 @@ std::vector<int> KevinBrodyStrategy::next_action(SensorData input) {
         break;
     }
 
-    return std::vector<int>(output[0], output[1]);
+    return std::vector<int>(output, output + sizeof(output)/sizeof(int));
 }
 
 KevinBrodyStrategy::State KevinBrodyStrategy::update_state(SensorData input) {
@@ -53,5 +53,5 @@ KevinBrodyStrategy::State KevinBrodyStrategy::update_state(SensorData input) {
     // } else {
     //     return TURN_RIGHT;
     // }
-    return TURN_RIGHT;
+    return FORWARD;
 }
