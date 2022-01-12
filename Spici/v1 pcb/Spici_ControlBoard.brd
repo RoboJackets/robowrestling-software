@@ -5237,53 +5237,51 @@ Source: &lt;a href=&quot;https://jlcpcb.com/capabilities/Capabilities&quot;&gt;J
 <attribute name="NAME" x="10.7" y="34.5" size="1" layer="25" font="vector" ratio="10"/>
 <attribute name="VALUE" x="10.5" y="35.3" size="1" layer="27" font="vector" ratio="10" align="top-left"/>
 </element>
-<element name="U8" library="Spici_ControlBoard" package="8-SOIC" value="LS7184N-S" x="-21" y="2" smashed="yes">
-<attribute name="NAME" x="-23" y="5" size="1" layer="25" font="vector" ratio="10"/>
-<attribute name="VALUE" x="-23" y="-1" size="1" layer="27" font="vector" ratio="10" align="top-left"/>
+<element name="U8" library="Spici_ControlBoard" package="8-SOIC" value="LS7184N-S" x="37" y="60" smashed="yes">
+<attribute name="NAME" x="35" y="63" size="1" layer="25" font="vector" ratio="10"/>
+<attribute name="VALUE" x="35" y="57" size="1" layer="27" font="vector" ratio="10" align="top-left"/>
 </element>
-<element name="J1" library="Spici_ControlBoard" package="PINHD-2X5_SMD" value="PINHD-2X5_SMD" x="45" y="52" smashed="yes">
-<attribute name="DKPN" value="  2553-2015-2X05G01DB-ND" x="45" y="52" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="37" y="57" size="1.778" layer="25"/>
-<attribute name="VALUE" x="37" y="45" size="1.778" layer="27"/>
+<element name="J1" library="Spici_ControlBoard" package="PINHD-2X5_SMD" value="PINHD-2X5_SMD" x="45" y="52" smashed="yes" rot="MR0">
+<attribute name="DKPN" value="  2553-2015-2X05G01DB-ND" x="45" y="52" size="1.778" layer="28" rot="MR0" display="off"/>
+<attribute name="NAME" x="53" y="57" size="1.778" layer="26" rot="MR0"/>
+<attribute name="VALUE" x="53" y="45" size="1.778" layer="28" rot="MR0"/>
 </element>
-<element name="R21" library="Spici_ControlBoard" package="0603" package3d_urn="urn:adsk.eagle:package:39650/1" value="100K" x="-37" y="-5" smashed="yes">
-<attribute name="NAME" x="-37" y="-4.238" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center"/>
-<attribute name="PROD_ID" value="P6.2GCT-ND" x="-37" y="-5" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="-37" y="-5.762" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
+<element name="R21" library="Spici_ControlBoard" package="0603" package3d_urn="urn:adsk.eagle:package:39650/1" value="100K" x="17" y="62" smashed="yes">
+<attribute name="NAME" x="17" y="62.762" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center"/>
+<attribute name="PROD_ID" value="P6.2GCT-ND" x="17" y="62" size="1.778" layer="27" display="off"/>
+<attribute name="VALUE" x="17" y="61.238" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
 </element>
-<element name="U9" library="Spici_ControlBoard" package="8-SOIC" value="LS7184N-S" x="-35" y="-12" smashed="yes">
-<attribute name="NAME" x="-37" y="-9" size="1" layer="25" font="vector" ratio="10"/>
-<attribute name="VALUE" x="-37" y="-15" size="1" layer="27" font="vector" ratio="10" align="top-left"/>
+<element name="U9" library="Spici_ControlBoard" package="8-SOIC" value="LS7184N-S" x="26" y="60" smashed="yes">
+<attribute name="NAME" x="24" y="63" size="1" layer="25" font="vector" ratio="10"/>
+<attribute name="VALUE" x="24" y="57" size="1" layer="27" font="vector" ratio="10" align="top-left"/>
 </element>
-<element name="R22" library="Spici_ControlBoard" package="0603" package3d_urn="urn:adsk.eagle:package:39650/1" value="100K" x="-37" y="-18" smashed="yes">
-<attribute name="NAME" x="-37" y="-17.238" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center"/>
-<attribute name="PROD_ID" value="P6.2GCT-ND" x="-45" y="-9" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="-37" y="-18.762" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
+<element name="R22" library="Spici_ControlBoard" package="0603" package3d_urn="urn:adsk.eagle:package:39650/1" value="100K" x="17" y="59" smashed="yes">
+<attribute name="NAME" x="17" y="59.762" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center"/>
+<attribute name="PROD_ID" value="P6.2GCT-ND" x="9" y="68" size="1.778" layer="27" display="off"/>
+<attribute name="VALUE" x="17" y="58.238" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
 </element>
-<element name="J2" library="Spici_ControlBoard" package="PINHD-2X5_SMD" value="PINHD-2X5_SMD" x="-31" y="-28" smashed="yes">
-<attribute name="DKPN" value="  2553-2015-2X05G01DB-ND" x="-46" y="-11" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="-39" y="-23" size="1.778" layer="25"/>
-<attribute name="VALUE" x="-39" y="-35" size="1.778" layer="27"/>
+<element name="J2" library="Spici_ControlBoard" package="PINHD-2X5_SMD" value="PINHD-2X5_SMD" x="45" y="52" smashed="yes" rot="R180">
+<attribute name="DKPN" value="  2553-2015-2X05G01DB-ND" x="60" y="35" size="1.778" layer="27" rot="R180" display="off"/>
+<attribute name="NAME" x="53" y="47" size="1.778" layer="25" rot="R180"/>
+<attribute name="VALUE" x="53" y="59" size="1.778" layer="27" rot="R180"/>
 </element>
-<element name="R23" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" package="0603" package3d_urn="urn:adsk.eagle:package:39650/1" value="2k" x="-37" y="-38" smashed="yes">
-<attribute name="NAME" x="-37" y="-37.238" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center"/>
-<attribute name="PROD_ID" value="RES-07856" x="-37" y="-38" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="-37" y="-38.762" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
+<element name="R23" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" package="0603" package3d_urn="urn:adsk.eagle:package:39650/1" value="2k" x="51" y="62" smashed="yes" rot="R270">
+<attribute name="PROD_ID" value="RES-07856" x="51" y="62" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="VALUE" x="50.238" y="62" size="0.6096" layer="27" font="vector" ratio="20" rot="R270" align="top-center"/>
 </element>
-<element name="R26" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" package="0603" package3d_urn="urn:adsk.eagle:package:39650/1" value="3k" x="-37" y="-42" smashed="yes">
-<attribute name="NAME" x="-37" y="-41.238" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center"/>
-<attribute name="PROD_ID" value="RES-07856" x="-37" y="-42" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="-37" y="-42.762" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
+<element name="R26" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" package="0603" package3d_urn="urn:adsk.eagle:package:39650/1" value="3k" x="49" y="62" smashed="yes" rot="R90">
+<attribute name="NAME" x="47.238" y="63" size="0.6096" layer="25" font="vector" ratio="20" rot="R90" align="bottom-center"/>
+<attribute name="PROD_ID" value="RES-07856" x="49" y="62" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="VALUE" x="49.762" y="62" size="0.6096" layer="27" font="vector" ratio="20" rot="R90" align="top-center"/>
 </element>
-<element name="R27" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" package="0603" package3d_urn="urn:adsk.eagle:package:39650/1" value="2k" x="-37" y="-46" smashed="yes">
-<attribute name="NAME" x="-37" y="-45.238" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center"/>
-<attribute name="PROD_ID" value="RES-07856" x="-37" y="-46" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="-37" y="-46.762" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
+<element name="R27" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" package="0603" package3d_urn="urn:adsk.eagle:package:39650/1" value="2k" x="47" y="62" smashed="yes" rot="R90">
+<attribute name="NAME" x="46.238" y="62" size="0.6096" layer="25" font="vector" ratio="20" rot="R90" align="bottom-center"/>
+<attribute name="PROD_ID" value="RES-07856" x="47" y="62" size="1.778" layer="27" rot="R90" display="off"/>
+<attribute name="VALUE" x="47.762" y="62" size="0.6096" layer="27" font="vector" ratio="20" rot="R90" align="top-center"/>
 </element>
-<element name="R28" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" package="0603" package3d_urn="urn:adsk.eagle:package:39650/1" value="3k" x="-37" y="-50" smashed="yes">
-<attribute name="NAME" x="-37" y="-49.238" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center"/>
-<attribute name="PROD_ID" value="RES-07856" x="-37" y="-50" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="-37" y="-50.762" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
+<element name="R28" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" package="0603" package3d_urn="urn:adsk.eagle:package:39650/1" value="3k" x="45" y="62" smashed="yes" rot="R270">
+<attribute name="PROD_ID" value="RES-07856" x="45" y="62" size="1.778" layer="27" rot="R270" display="off"/>
+<attribute name="VALUE" x="44.238" y="62" size="0.6096" layer="27" font="vector" ratio="20" rot="R270" align="top-center"/>
 </element>
 </elements>
 <signals>
@@ -5531,7 +5529,7 @@ Source: &lt;a href=&quot;https://jlcpcb.com/capabilities/Capabilities&quot;&gt;J
 <contactref element="J2" pad="P$2"/>
 <contactref element="R26" pad="1"/>
 <contactref element="R28" pad="1"/>
-<wire x1="47" y1="36.75" x2="42.46" y2="49.65" width="0" layer="19" extent="1-16"/>
+<wire x1="47" y1="36.75" x2="47.54" y2="49.65" width="0" layer="19" extent="1-16"/>
 <wire x1="48.2" y1="28.5" x2="46.9" y2="35.6" width="0" layer="19" extent="1-1"/>
 <wire x1="47.1" y1="20.125" x2="47.007415625" y2="27.149965625" width="0" layer="19" extent="1-1"/>
 <wire x1="47.6" y1="17.1" x2="47" y2="19" width="0" layer="19" extent="1-1"/>
@@ -5589,13 +5587,13 @@ Source: &lt;a href=&quot;https://jlcpcb.com/capabilities/Capabilities&quot;&gt;J
 <wire x1="9.8" y1="36.395" x2="18" y2="34" width="0" layer="19" extent="1-1"/>
 <wire x1="8.45" y1="42.3" x2="9.8" y2="36.395" width="0" layer="19" extent="1-1"/>
 <wire x1="11.862" y1="43.6" x2="8.45" y2="42.3" width="0" layer="19" extent="1-1"/>
-<wire x1="-23.7" y1="1.365" x2="-10" y2="16" width="0" layer="19" extent="1-1"/>
-<wire x1="-37.85" y1="-5" x2="-23.7" y2="1.365" width="0" layer="19" extent="1-1"/>
-<wire x1="-37.7" y1="-12.635" x2="-37.85" y2="-5" width="0" layer="19" extent="1-1"/>
-<wire x1="-37.85" y1="-18" x2="-37.7" y2="-12.635" width="0" layer="19" extent="1-1"/>
-<wire x1="-33.54" y1="-30.35" x2="-37.85" y2="-18" width="0" layer="19" extent="1-1"/>
-<wire x1="-37.85" y1="-42" x2="-33.54" y2="-30.35" width="0" layer="19" extent="1-1"/>
-<wire x1="-37.85" y1="-50" x2="-37.85" y2="-42" width="0" layer="19" extent="1-1"/>
+<wire x1="34.3" y1="59.365" x2="-10" y2="16" width="0" layer="19" extent="1-1"/>
+<wire x1="16.15" y1="62" x2="34.3" y2="59.365" width="0" layer="19" extent="1-1"/>
+<wire x1="23.3" y1="59.365" x2="16.15" y2="62" width="0" layer="19" extent="1-1"/>
+<wire x1="16.15" y1="59" x2="23.3" y2="59.365" width="0" layer="19" extent="1-1"/>
+<wire x1="47.54" y1="54.35" x2="16.15" y2="59" width="0" layer="19" extent="1-1"/>
+<wire x1="49" y1="61.15" x2="47.54" y2="54.35" width="0" layer="19" extent="1-1"/>
+<wire x1="45" y1="62.85" x2="49" y2="61.15" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="+5V">
 <contactref element="C6" pad="1"/>
@@ -5704,7 +5702,7 @@ Source: &lt;a href=&quot;https://jlcpcb.com/capabilities/Capabilities&quot;&gt;J
 <contactref element="U9" pad="2"/>
 <contactref element="J1" pad="P$10"/>
 <contactref element="J2" pad="P$10"/>
-<wire x1="32.5" y1="42.6" x2="39.92" y2="54.35" width="0" layer="19" extent="1-1"/>
+<wire x1="32.5" y1="42.6" x2="50.08" y2="54.35" width="0" layer="19" extent="1-1"/>
 <wire x1="29.7" y1="36.1698" x2="30.45" y2="42" width="0" layer="19" extent="1-1"/>
 <wire x1="27.2" y1="36.1698" x2="28.4" y2="36.45" width="0" layer="19" extent="1-1"/>
 <wire x1="23.3" y1="35.975" x2="25.9" y2="36.45" width="0" layer="19" extent="1-1"/>
@@ -5722,9 +5720,9 @@ Source: &lt;a href=&quot;https://jlcpcb.com/capabilities/Capabilities&quot;&gt;J
 <wire x1="-8.2" y1="40.6" x2="-6.6" y2="40.6" width="0" layer="19" extent="1-1"/>
 <wire x1="-9.94" y1="45.62" x2="-6.45" y2="42.3" width="0" layer="19" extent="1-1"/>
 <wire x1="-6" y1="52.6" x2="-10.477" y2="48" width="0" layer="19" extent="1-1"/>
-<wire x1="-23.7" y1="2.635" x2="-5" y2="10" width="0" layer="19" extent="1-1"/>
-<wire x1="-37.7" y1="-11.365" x2="-23.7" y2="2.635" width="0" layer="19" extent="1-1"/>
-<wire x1="-36.08" y1="-25.65" x2="-37.7" y2="-11.365" width="0" layer="19" extent="1-1"/>
+<wire x1="34.3" y1="60.635" x2="-5" y2="10" width="0" layer="19" extent="1-1"/>
+<wire x1="23.3" y1="60.635" x2="34.3" y2="60.635" width="0" layer="19" extent="1-1"/>
+<wire x1="50.08" y1="49.65" x2="23.3" y2="60.635" width="0" layer="19" extent="1-1"/>
 <wire x1="46.99258125" y1="25.45003125" x2="29.7" y2="36.1698" width="0" layer="19" extent="1-1"/>
 <wire x1="49" y1="23.6" x2="49" y2="24.794" width="0" layer="19" extent="1-1"/>
 <wire x1="45.39895625" y1="14.99895625" x2="47.1" y2="23.875" width="0" layer="19" extent="1-1"/>
@@ -6530,86 +6528,86 @@ Source: &lt;a href=&quot;https://jlcpcb.com/capabilities/Capabilities&quot;&gt;J
 <signal name="DECUPDN">
 <contactref element="U1" pad="26"/>
 <contactref element="U8" pad="7"/>
-<wire x1="-18.3" y1="2.635" x2="33.24" y2="30.38" width="0" layer="19" extent="1-1"/>
+<wire x1="39.7" y1="60.635" x2="33.24" y2="30.38" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="DECMODE">
 <contactref element="U1" pad="27"/>
 <contactref element="U8" pad="6"/>
-<wire x1="-18.3" y1="1.365" x2="35.78" y2="30.38" width="0" layer="19" extent="1-1"/>
+<wire x1="39.7" y1="59.365" x2="35.78" y2="30.38" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="DECCLK">
 <contactref element="U1" pad="36/A17"/>
 <contactref element="U8" pad="8"/>
-<wire x1="-18.3" y1="3.905" x2="40.86" y2="45.62" width="0" layer="19" extent="1-1"/>
+<wire x1="39.7" y1="61.905" x2="40.86" y2="45.62" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$13">
 <contactref element="U8" pad="1"/>
 <contactref element="R21" pad="2"/>
-<wire x1="-23.7" y1="3.905" x2="-36.15" y2="-5" width="0" layer="19" extent="1-1"/>
+<wire x1="34.3" y1="61.905" x2="17.85" y2="62" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="ENCA">
 <contactref element="U8" pad="4"/>
 <contactref element="J1" pad="P$8"/>
-<wire x1="-23.7" y1="0.095" x2="45" y2="54.35" width="0" layer="19" extent="1-1"/>
+<wire x1="34.3" y1="58.095" x2="45" y2="54.35" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="ENCB">
 <contactref element="U8" pad="5"/>
 <contactref element="J1" pad="P$7"/>
-<wire x1="-18.3" y1="0.095" x2="47.54" y2="54.35" width="0" layer="19" extent="1-1"/>
+<wire x1="39.7" y1="58.095" x2="42.46" y2="54.35" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="ENCINDEX">
 <contactref element="U1" pad="28"/>
 <contactref element="R23" pad="1"/>
 <contactref element="R26" pad="2"/>
-<wire x1="-37.85" y1="-38" x2="-36.15" y2="-42" width="0" layer="19" extent="1-1"/>
-<wire x1="38.32" y1="30.38" x2="-37.85" y2="-38" width="0" layer="19" extent="1-1"/>
+<wire x1="51" y1="62.85" x2="49" y2="62.85" width="0" layer="19" extent="1-1"/>
+<wire x1="38.32" y1="30.38" x2="51" y2="62.85" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$10">
 <contactref element="U9" pad="1"/>
 <contactref element="R22" pad="2"/>
-<wire x1="-37.7" y1="-10.095" x2="-36.15" y2="-18" width="0" layer="19" extent="1-1"/>
+<wire x1="23.3" y1="61.905" x2="17.85" y2="59" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="ENCA2">
 <contactref element="U9" pad="4"/>
 <contactref element="J2" pad="P$8"/>
-<wire x1="-37.7" y1="-13.905" x2="-31" y2="-25.65" width="0" layer="19" extent="1-1"/>
+<wire x1="23.3" y1="58.095" x2="45" y2="49.65" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="ENCB2">
 <contactref element="U9" pad="5"/>
 <contactref element="J2" pad="P$7"/>
-<wire x1="-32.3" y1="-13.905" x2="-28.46" y2="-25.65" width="0" layer="19" extent="1-1"/>
+<wire x1="28.7" y1="58.095" x2="42.46" y2="49.65" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="DECMODE2">
 <contactref element="U9" pad="6"/>
 <contactref element="U1" pad="24"/>
-<wire x1="-32.3" y1="-12.635" x2="28.16" y2="30.38" width="0" layer="19" extent="1-1"/>
+<wire x1="28.7" y1="59.365" x2="28.16" y2="30.38" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="DECCLK2">
 <contactref element="U9" pad="8"/>
 <contactref element="U1" pad="5"/>
-<wire x1="5.3" y1="30.38" x2="-32.3" y2="-10.095" width="0" layer="19" extent="1-1"/>
+<wire x1="5.3" y1="30.38" x2="28.7" y2="61.905" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="DECUPDN2">
 <contactref element="U9" pad="7"/>
 <contactref element="U1" pad="39/A20"/>
-<wire x1="-32.3" y1="-11.365" x2="33.24" y2="45.62" width="0" layer="19" extent="1-1"/>
+<wire x1="28.7" y1="60.635" x2="33.24" y2="45.62" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="ENCINDEX2">
 <contactref element="U1" pad="20/A6"/>
 <contactref element="R27" pad="1"/>
 <contactref element="R28" pad="2"/>
-<wire x1="-37.85" y1="-46" x2="-36.15" y2="-50" width="0" layer="19" extent="1-1"/>
-<wire x1="5.3" y1="45.62" x2="-37.85" y2="-46" width="0" layer="19" extent="1-1"/>
+<wire x1="45" y1="61.15" x2="47" y2="61.15" width="0" layer="19" extent="1-1"/>
+<wire x1="5.3" y1="45.62" x2="45" y2="61.15" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$12">
 <contactref element="J2" pad="P$6"/>
 <contactref element="R27" pad="2"/>
-<wire x1="-25.92" y1="-25.65" x2="-36.15" y2="-46" width="0" layer="19" extent="1-1"/>
+<wire x1="39.92" y1="49.65" x2="47" y2="62.85" width="0" layer="19" extent="1-1"/>
 </signal>
 <signal name="N$14">
 <contactref element="J1" pad="P$6"/>
 <contactref element="R23" pad="2"/>
-<wire x1="-36.15" y1="-38" x2="50.08" y2="54.35" width="0" layer="19" extent="1-1"/>
+<wire x1="51" y1="61.15" x2="39.92" y2="54.35" width="0" layer="19" extent="1-1"/>
 </signal>
 </signals>
 <mfgpreviewcolors>
