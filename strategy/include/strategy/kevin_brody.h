@@ -17,7 +17,7 @@ class KevinBrodyStrategy: public Strategy {
             STOP,
             SEARCH
         } state;
-      
+    
 };
 
 #endif
