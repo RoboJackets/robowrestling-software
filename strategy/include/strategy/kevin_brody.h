@@ -7,7 +7,6 @@ class KevinBrodyStrategy: public Strategy {
         KevinBrodyStrategy();
         std::vector<int> next_action(SensorData input);
 
-        State update_state(SensorData input);
         enum State {
             IDLE,
             FORWARD,
@@ -16,8 +15,9 @@ class KevinBrodyStrategy: public Strategy {
             TURN_RIGHT,
             STOP,
             SEARCH
-        } state;
-    
+        };
+        State state;
+        State update_state(SensorData input);
 };
 
 #endif
