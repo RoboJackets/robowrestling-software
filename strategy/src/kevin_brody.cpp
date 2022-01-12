@@ -8,7 +8,7 @@ KevinBrodyStrategy::KevinBrodyStrategy() {
 // remember to use IMU sensor somehow
 std::vector<int> KevinBrodyStrategy::next_action(SensorData input) {
     int output[] = {0, 0};
-    state_ = update_state(input);
+    state = update_state(input);
     switch (state) {
     case FORWARD:
         output[0] = 100;

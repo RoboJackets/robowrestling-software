@@ -16,8 +16,7 @@ class KevinBrodyStrategy: public Strategy {
             TURN_RIGHT,
             STOP,
             SEARCH
-        };
-        state;
+        } state;
       
 };
 
