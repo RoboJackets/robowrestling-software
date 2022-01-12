@@ -1,6 +1,6 @@
 #ifndef KEVIN_BRODY_H
 #define KEVIN_BRODY_H
-#include <strategy/strategy.h>
+#include <strategy/strategy.h> 
 
 class KevinBrodyStrategy: public Strategy {
     public:

@@ -1,4 +1,4 @@
-#include <strategy/kevin_body.h>
+#include <strategy/kevin_brody.h>
 #include <iostream>
 
 KevinBrodyStrategy::KevinBrodyStrategy() {

@@ -18,13 +18,14 @@
 #include <strategy/loop_strategy.h>
 #include <strategy/sensor_strategy.h>
 #include <strategy/slammywhammy.h>
+#include <strategy/kevin_brody.h>
 
 #include <simulator/physics/robotphysicsupdater.h>
 
 #define WINDOW_HEIGHT (vis_scale*170)
 #define WINDOW_WIDTH (vis_scale*170)
 
-#define STRATEGY_1 IdleStrategy // Edit to change Robot 1's strategy. Remember to include
+#define STRATEGY_1 KevinBrodyStrategy // Edit to change Robot 1's strategy. Remember to include
 #define STRATEGY_2 SlammyWhammy
 
 int radius_; //radius of the dohyo
