@@ -53,5 +53,5 @@ KevinBrodyStrategy::State KevinBrodyStrategy::update_state(SensorData input) {
     // } else {
     //     return TURN_RIGHT;
     // }
-    return FORWARD;
+    return TURN_LEFT;
 }
