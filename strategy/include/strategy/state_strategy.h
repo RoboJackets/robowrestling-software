@@ -1,5 +1,8 @@
-
+#ifndef STATE_STRATEGY_H
+#define STATE_STRATEGY_H
 #include <strategy/strategy.h>
+#include <iostream>
+#define MAX_DIST 150
 
 class StateStrategy: public Strategy {
     public:
@@ -7,7 +10,8 @@ class StateStrategy: public Strategy {
             SEARCH,
             TURN_LEFT,
             TURN_RIGHT,
-            FORWARD 
+            FORWARD,
+            STOP
         };
 
         StateStrategy();
@@ -16,3 +20,5 @@ class StateStrategy: public Strategy {
 
         State state_;
 };
+
+#endif
