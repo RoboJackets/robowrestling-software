@@ -23,11 +23,6 @@ std::vector<int> KevinBrodyStrategy::next_action(SensorData input) {
         output[0] = 0;
         output[1] = 100;
         break;
-    // turns in place
-    // case TURN_LEFT:
-    //     output[0] = -50;
-    //     output[1] = 50;
-    //     break;
     case TURN_RIGHT:
         output[0] = 100;
         output[1] = 0;
@@ -36,6 +31,7 @@ std::vector<int> KevinBrodyStrategy::next_action(SensorData input) {
         output[0] = 0;
         output[1] = 0;
         break;
+    // turns in place
     case SEARCH:
         output[0] = 50;
         output[1] = -50;
