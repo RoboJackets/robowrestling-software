@@ -48,6 +48,9 @@ KevinBrodyStrategy::State KevinBrodyStrategy::update_state(SensorData input) {
     // input.dist_buffer_[2] and 3 are the front ones
     // 0 and 1 are left
     // 4 and 5 are right
+    // units are in centimeters
+    // 1.5 meter
+    
     if (input.dist_buffer_[2] < 30 || input.dist_buffer_[3] < 30) { //front ones
         return FORWARD;
     } else if (input.dist_buffer_[2] < 150 || input.dist_buffer_[3] < 150) {
@@ -57,6 +60,6 @@ KevinBrodyStrategy::State KevinBrodyStrategy::update_state(SensorData input) {
          && (input.dist_buffer_[4] < 150 || input.dist_buffer_[5] < 150)) { // right
          return BACK;
     } else {
-         return FORWARD;
+         return SEARCH;
     }
 }
