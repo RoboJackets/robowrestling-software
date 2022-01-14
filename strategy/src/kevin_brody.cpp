@@ -50,16 +50,24 @@ KevinBrodyStrategy::State KevinBrodyStrategy::update_state(SensorData input) {
     // 4 and 5 are right
     // units are in centimeters
     // 1.5 meter
+    // front left front right for the line sensors [0] [1]
+    // left to right
     
-    if (input.dist_buffer_[2] < 30 || input.dist_buffer_[3] < 30) { //front ones
+    if (input.dist_buffer_[2] < 1000 || input.dist_buffer_[3] < 1000) { //front ones
         return FORWARD;
-    } else if (input.dist_buffer_[2] < 150 || input.dist_buffer_[3] < 150) {
-         return TURN_LEFT;
-    } else if ((input.line_buffer_[1] > 190 || input.line_buffer_[1] > 190)
-         && (input.dist_buffer_[0] < 150 || input.dist_buffer_[1] < 150) // left
-         && (input.dist_buffer_[4] < 150 || input.dist_buffer_[5] < 150)) { // right
-         return BACK;
-    } else {
-         return SEARCH;
+    } else if ((input.line_buffer_[0] < 10 || input.line_buffer_[1] < 10)) 
+    {
+       return BACK;
+    } //else if (input.dist_buffer_[0] < 100 || input.dist_buffer_[0] < 100)
+    
+    // else if (input.dist_buffer_[2] < 150 || input.dist_buffer_[3] < 150) {
+        
+    // } else if ((input.line_buffer_[1] > 190 || input.line_buffer_[1] > 190)
+    //      && (input.dist_buffer_[0] < 150 || input.dist_buffer_[1] < 150) // left
+    //      && (input.dist_buffer_[4] < 150 || input.dist_buffer_[5] < 150)) { // right
+    //      return BACK;
+    // } 
+    else {
+        return SEARCH;
     }
 }
