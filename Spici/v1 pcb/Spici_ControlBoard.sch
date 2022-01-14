@@ -5153,21 +5153,6 @@ by exp-lbrs.ulp</description>
 <hole x="2.67" y="0" drill="3.4"/>
 <rectangle x1="-5.2" y1="-2.1" x2="5.3" y2="14.2" layer="39"/>
 </package>
-<package name="0532610371">
-<description>&lt;a href = "https://www.molex.com/pdm_docs/sd/1719770002_sd.pdf"&gt;Datasheet&lt;\a&gt;</description>
-<smd name="4" x="-3.8" y="-1.5" dx="2.1" dy="3" layer="1"/>
-<smd name="2" x="0" y="1.4" dx="1.6" dy="0.8" layer="1" rot="R90"/>
-<smd name="5" x="3.8" y="-1.5" dx="2.1" dy="3" layer="1"/>
-<smd name="1" x="-1.25" y="1.4" dx="1.6" dy="0.8" layer="1" rot="R90"/>
-<smd name="3" x="1.25" y="1.4" dx="1.6" dy="0.8" layer="1" rot="R90"/>
-<wire x1="-2.55" y1="0.4" x2="-2.55" y2="-3.6" width="0.2" layer="21"/>
-<wire x1="-2.55" y1="-3.6" x2="2.55" y2="-3.6" width="0.2" layer="21"/>
-<wire x1="2.55" y1="-3.6" x2="2.55" y2="0.4" width="0.1524" layer="21"/>
-<wire x1="2.55" y1="0.4" x2="-2.55" y2="0.4" width="0.2" layer="21"/>
-<text x="-5" y="3" size="1" layer="25" font="vector">&gt;Name</text>
-<text x="-5" y="-5" size="1" layer="27" font="vector" align="top-left">&gt;Value</text>
-<rectangle x1="-2.6" y1="-3.6" x2="2.6" y2="0.5" layer="39"/>
-</package>
 <package name="C1F">
 <description>&lt;a href = "https://cdn.amphenol-icc.com/media/wysiwyg/files/drawing/71600.pdf?__cf_chl_jschl_tk__=c077a2b0d405632c5cc75a59452b70f1e7b891a8-1600383503-0-AdsOCIGWubV6F82KEZAXb8ntYBsU1Kbc1NU6DoePEsAHI3diJrolGE1Zp7Hdy_ZJqxX4TvSrsAMIWT5Xwhbu4pDVgGF-IdlBz677ToNQoh0pGVLj6hgfcn2XkZo4yWTSy5zUIMR6DZbp_su-6dVvMAK6KJXyizSfVBSoSfqemmhHmU_0B2jpnLIWShvUuI6zH5llQPME4Wzw0hnOZV0-HjR_4Uo9v4sl-DMeFzD6LK2uvFJlA02YJ_xR0ST7XuUhxsO_DJFIeC365uVIGgwiQp_yVaiY6NGPlDhRFd93gSFiMcqS5bhFsEWvZHdEvcsK4FWdQtCRtZObsT0PKC5WcVXt1VEUofx3rVxelcjB6KrvggtJ2PNbFKsfgzbu59lJfA"&gt; Datasheet&lt;\a&gt;</description>
 <smd name="1" x="-2.09" y="0" dx="1.78" dy="1.14" layer="1" rot="R90"/>
@@ -5318,21 +5303,6 @@ Temp: -40~+85°C</text>
 <wire x1="1.27" y1="-2.54" x2="2.54" y2="-2.54" width="0.6096" layer="94"/>
 <text x="-5.08" y="7.62" size="1.778" layer="95">&gt;NAME</text>
 <text x="-5.08" y="-7.62" size="1.778" layer="95" align="top-left">&gt;VALUE</text>
-</symbol>
-<symbol name="CONN_03">
-<description>&lt;h3&gt;3 Pin Connection&lt;/h3&gt;</description>
-<wire x1="3.81" y1="-5.08" x2="-2.54" y2="-5.08" width="0.254" layer="94"/>
-<wire x1="1.27" y1="2.54" x2="2.54" y2="2.54" width="0.6096" layer="94"/>
-<wire x1="1.27" y1="0" x2="2.54" y2="0" width="0.6096" layer="94"/>
-<wire x1="1.27" y1="-2.54" x2="2.54" y2="-2.54" width="0.6096" layer="94"/>
-<wire x1="-2.54" y1="5.08" x2="-2.54" y2="-5.08" width="0.254" layer="94"/>
-<wire x1="3.81" y1="-5.08" x2="3.81" y2="5.08" width="0.254" layer="94"/>
-<wire x1="-2.54" y1="5.08" x2="3.81" y2="5.08" width="0.254" layer="94"/>
-<pin name="1" x="7.62" y="-2.54" visible="pad" length="middle" direction="pas" swaplevel="1" rot="R180"/>
-<pin name="2" x="7.62" y="0" visible="pad" length="middle" direction="pas" swaplevel="1" rot="R180"/>
-<pin name="3" x="7.62" y="2.54" visible="pad" length="middle" direction="pas" swaplevel="1" rot="R180"/>
-<text x="-2.54" y="-7.62" size="1.778" layer="96" align="top-left">&gt;VALUE</text>
-<text x="-2.54" y="7.62" size="1.778" layer="95">&gt;NAME</text>
 </symbol>
 <symbol name="FUSE">
 <pin name="P$1" x="-2.54" y="0" visible="off" length="point"/>
@@ -5504,28 +5474,6 @@ Molex 1x2 1.25mm SMT&lt;br&gt;
 <technologies>
 <technology name="">
 <attribute name="DKPN" value="WM22676-ND" constant="no"/>
-</technology>
-</technologies>
-</device>
-</devices>
-</deviceset>
-<deviceset name="0532610371" prefix="J">
-<description>0532610371 &lt;br&gt;
-Molex 1x3 1.25mm SMT &lt;br&gt;
-&lt;a href = "https://www.digikey.com/product-detail/en/molex/0532610371/WM7621CT-ND/699108"&gt;Datasheet&lt;\a&gt;</description>
-<gates>
-<gate name="G$1" symbol="CONN_03" x="0" y="0"/>
-</gates>
-<devices>
-<device name="" package="0532610371">
-<connects>
-<connect gate="G$1" pin="1" pad="3"/>
-<connect gate="G$1" pin="2" pad="2"/>
-<connect gate="G$1" pin="3" pad="1"/>
-</connects>
-<technologies>
-<technology name="">
-<attribute name="DKPN" value="WM7621CT-ND" constant="no"/>
 </technology>
 </technologies>
 </device>
@@ -6701,8 +6649,6 @@ Datasheet Link: https://industrial.panasonic.com/ww/products/pt/general-purpose-
 <part name="C25" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
 <part name="POWER_CONN" library="Kirbi_ControlBoard" deviceset="1719770002" device=""/>
 <part name="C12" library="SparkFun-Capacitors" library_urn="urn:adsk.eagle:library:510" deviceset="0.1UF" device="-0603-25V-(+80/-20%)" package3d_urn="urn:adsk.eagle:package:37414/1" value="0.1uF"/>
-<part name="ESC" library="Kirbi_ControlBoard" deviceset="0532610371" device=""/>
-<part name="GND21" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 <part name="F1" library="Kirbi_ControlBoard" deviceset="C1F3.5" device="" value="3.5"/>
 <part name="R2" library="Kirbi_ControlBoard" deviceset="6.2OHM" device="-0603-1/10W-5%" package3d_urn="urn:adsk.eagle:package:39650/1" value="6.2"/>
 <part name="R3" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="1k"/>
@@ -7216,13 +7162,6 @@ Datasheet Link: https://industrial.panasonic.com/ww/products/pt/general-purpose-
 <attribute name="NAME" x="59.944" y="231.521" size="1.778" layer="95" font="vector"/>
 <attribute name="VALUE" x="59.944" y="226.441" size="1.778" layer="96" font="vector"/>
 </instance>
-<instance part="ESC" gate="G$1" x="271.78" y="149.86" smashed="yes">
-<attribute name="VALUE" x="269.24" y="142.494" size="1.778" layer="96" font="vector"/>
-<attribute name="NAME" x="269.24" y="155.448" size="1.778" layer="95" font="vector"/>
-</instance>
-<instance part="GND21" gate="1" x="279.908" y="136.906" smashed="yes">
-<attribute name="VALUE" x="279.908" y="136.652" size="1.778" layer="96" align="top-center"/>
-</instance>
 <instance part="F1" gate="G$1" x="279.4" y="104.14" smashed="yes">
 <attribute name="NAME" x="276.86" y="106.68" size="1.778" layer="95"/>
 <attribute name="VALUE" x="276.86" y="100.33" size="1.778" layer="96"/>
@@ -7732,12 +7671,6 @@ Datasheet Link: https://industrial.panasonic.com/ww/products/pt/general-purpose-
 <wire x1="304.8" y1="30.48" x2="304.8" y2="33.02" width="0.1524" layer="91"/>
 <pinref part="R2" gate="G$1" pin="2"/>
 <wire x1="304.8" y1="33.02" x2="299.974" y2="33.02" width="0.1524" layer="91"/>
-</segment>
-<segment>
-<pinref part="ESC" gate="G$1" pin="1"/>
-<pinref part="GND21" gate="1" pin="GND"/>
-<wire x1="279.4" y1="147.32" x2="279.908" y2="147.32" width="0.1524" layer="91"/>
-<wire x1="279.908" y1="147.32" x2="279.908" y2="139.446" width="0.1524" layer="91"/>
 </segment>
 <segment>
 <pinref part="C11" gate="G$1" pin="2"/>
@@ -8491,22 +8424,12 @@ Datasheet Link: https://industrial.panasonic.com/ww/products/pt/general-purpose-
 <wire x1="165.1" y1="152.4" x2="160.02" y2="152.4" width="0.1524" layer="91"/>
 <label x="160.02" y="152.4" size="1.778" layer="95" rot="R180" xref="yes"/>
 </segment>
-<segment>
-<pinref part="ESC" gate="G$1" pin="3"/>
-<wire x1="279.4" y1="152.4" x2="284.48" y2="152.4" width="0.1524" layer="91"/>
-<label x="284.48" y="152.4" size="1.778" layer="95" rot="R90" xref="yes"/>
-</segment>
 </net>
 <net name="S1/TRX" class="0">
 <segment>
 <pinref part="U1" gate="G$1" pin="34/A15/RX5/CAN1-RX"/>
 <wire x1="165.1" y1="149.86" x2="160.02" y2="149.86" width="0.1524" layer="91"/>
 <label x="160.02" y="149.86" size="1.778" layer="95" rot="MR0" xref="yes"/>
-</segment>
-<segment>
-<pinref part="ESC" gate="G$1" pin="2"/>
-<wire x1="279.4" y1="149.86" x2="289.56" y2="149.86" width="0.1524" layer="91"/>
-<label x="289.56" y="149.86" size="1.778" layer="95" rot="R90" xref="yes"/>
 </segment>
 </net>
 <net name="N$9" class="0">
@@ -8980,17 +8903,6 @@ Datasheet Link: https://industrial.panasonic.com/ww/products/pt/general-purpose-
 </nets>
 </sheet>
 </sheets>
-<errors>
-<approved hash="104,1,218.44,236.22,U1,VIN,5V,,,"/>
-<approved hash="104,1,218.44,193.04,U1,AGND,GND,,,"/>
-<approved hash="104,1,396.24,137.16,U4,VDDIO,1.8V,,,"/>
-<approved hash="104,1,396.24,139.7,U4,VDD,1.8V,,,"/>
-<approved hash="202,1,355.6,127,U4,AUX_DA,,,,"/>
-<approved hash="202,1,355.6,129.54,U4,AUX_CL,,,,"/>
-<approved hash="208,1,157.48,38.1,1.8V,out,,,,"/>
-<approved hash="208,1,398.78,149.86,1.8V,sup,,,,"/>
-<approved hash="208,1,132.08,246.38,1.8V,sup,,,,"/>
-</errors>
 </schematic>
 </drawing>
 <compatibility>
