@@ -11,8 +11,8 @@ std::vector<int> KevinBrodyStrategy::next_action(SensorData input) {
     state = update_state(input);
     switch (state) {
     case FORWARD:
-        output[0] = 100;
-        output[1] = 100;
+        output[0] = 50;
+        output[1] = 50;
         break;
     case BACK:
         output[0] = -100;
@@ -33,8 +33,8 @@ std::vector<int> KevinBrodyStrategy::next_action(SensorData input) {
         break;
     // turns in place
     case SEARCH:
-        output[0] = 50;
-        output[1] = -50;
+        output[0] = 100;
+        output[1] = -100;
         break;
     default:
         break;
@@ -52,13 +52,30 @@ KevinBrodyStrategy::State KevinBrodyStrategy::update_state(SensorData input) {
     // 1.5 meter
     // front left front right for the line sensors [0] [1]
     // left to right
+<<<<<<< HEAD
     std::cout  << input.line_buffer_[0] << "\n";
     if (input.dist_buffer_[2] < 1000 || input.dist_buffer_[3] < 1000) { //front ones
         return FORWARD;
     } else if ((input.line_buffer_[0] < 10 || input.line_buffer_[1] < 10)) 
+=======
+    
+     if ((input.line_buffer_[0] < 100 || input.line_buffer_[1] < 100)) 
+>>>>>>> 561e90963a078c1564bd22778513957e6fcfc6ff
     {
        return BACK;
     } //else if (input.dist_buffer_[0] < 100 || input.dist_buffer_[0] < 100)
+    else if (input.dist_buffer_[2] < 160 || input.dist_buffer_[3] < 160) { //front ones
+         std::cout << "front " << input.dist_buffer_[2] << " " << input.dist_buffer_[3] << std::endl;
+         return FORWARD;
+
+    }
+    else if (input.dist_buffer_[0] < 50 || input.dist_buffer_[1] < 50) { //left ones
+        std::cout << "left " << std::endl;
+        return TURN_LEFT;
+    }
+    else if (input.dist_buffer_[4] < 50 || input.dist_buffer_[5] < 50) { //right ones
+        return TURN_RIGHT;
+    }
     
     // else if (input.dist_buffer_[2] < 150 || input.dist_buffer_[3] < 150) {
         
@@ -68,6 +85,9 @@ KevinBrodyStrategy::State KevinBrodyStrategy::update_state(SensorData input) {
     //      return BACK;
     // } 
     else {
-        return SEARCH;
+          std::cout << "STOP " << input.dist_buffer_[2] << " " << input.dist_buffer_[3] << std::endl;
+        return STOP;
+        
+        //return FORWARD;
     }
 }
