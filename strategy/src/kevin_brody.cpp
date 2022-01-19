@@ -52,7 +52,7 @@ KevinBrodyStrategy::State KevinBrodyStrategy::update_state(SensorData input) {
     // 1.5 meter
     // front left front right for the line sensors [0] [1]
     // left to right
-    
+    std::cout  << input.line_buffer_[0] << "\n";
     if (input.dist_buffer_[2] < 1000 || input.dist_buffer_[3] < 1000) { //front ones
         return FORWARD;
     } else if ((input.line_buffer_[0] < 10 || input.line_buffer_[1] < 10)) 
