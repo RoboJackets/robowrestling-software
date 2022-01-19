@@ -57,10 +57,13 @@ KevinBrodyStrategy::State KevinBrodyStrategy::update_state(SensorData input) {
     {
        return BACK;
     } //else if (input.dist_buffer_[0] < 100 || input.dist_buffer_[0] < 100)
-    else if (input.dist_buffer_[2] < 150 || input.dist_buffer_[3] < 150) { //front ones
+    else if (input.dist_buffer_[2] < 160 || input.dist_buffer_[3] < 160) { //front ones
+         std::cout << "front " << input.dist_buffer_[2] << " " << input.dist_buffer_[3] << std::endl;
          return FORWARD;
+
     }
     else if (input.dist_buffer_[0] < 50 || input.dist_buffer_[1] < 50) { //left ones
+        std::cout << "left " << std::endl;
         return TURN_LEFT;
     }
     else if (input.dist_buffer_[4] < 50 || input.dist_buffer_[5] < 50) { //right ones
@@ -75,7 +78,8 @@ KevinBrodyStrategy::State KevinBrodyStrategy::update_state(SensorData input) {
     //      return BACK;
     // } 
     else {
-        return SEARCH;
+          std::cout << "STOP " << input.dist_buffer_[2] << " " << input.dist_buffer_[3] << std::endl;
+        return STOP;
         
         //return FORWARD;
     }
