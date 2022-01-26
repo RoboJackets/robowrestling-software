@@ -18,7 +18,8 @@ class SearchStrat: public Strategy  {
             IDLE,
             APPROACH,
             TURN_RIGHT,
-            TURN_LEFT
+            TURN_LEFT,
+            BACK
         };
         State state;
         

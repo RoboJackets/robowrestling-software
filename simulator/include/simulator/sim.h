@@ -20,19 +20,16 @@
 #include <strategy/slammywhammy.h>
 #include <strategy/kevin_brody.h>
 #include <strategy/kevin_brody_enemy.h>
+#include <strategy/search_strategy.h>
+
 
 #include <simulator/physics/robotphysicsupdater.h>
 
 #define WINDOW_HEIGHT (vis_scale*170)
 #define WINDOW_WIDTH (vis_scale*170)
 
-<<<<<<< HEAD
-#define STRATEGY_1 KevinBrodyStrategyEnemy // Edit to change Robot 1's strategy. Remember to include
-#define STRATEGY_2 KevinBrodyStrategy
-=======
-#define STRATEGY_1 KevinBrodyStrategy // Edit to change Robot 1's strategy. Remember to include
+#define STRATEGY_1 SearchStrat // Edit to change Robot 1's strategy. Remember to include
 #define STRATEGY_2 IdleStrategy // Edit to change Robot 2's strategy. Remember to include
->>>>>>> 561e90963a078c1564bd22778513957e6fcfc6ff
 
 int radius_; //radius of the dohyo
 double elapsed_total;
