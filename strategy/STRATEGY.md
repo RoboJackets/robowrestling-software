@@ -80,7 +80,7 @@
                 break;
             }
 
-            return std::vector<int>(output[0], output + sizeof(output)/sizeof(int));
+            return std::vector<int>(output, output + sizeof(output)/sizeof(int));
         }
 
         // Checks sensors and returns the appropriate state of action
