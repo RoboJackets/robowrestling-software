@@ -102,6 +102,7 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
 
     STRATEGY_1 r1_drive = STRATEGY_1();
     STRATEGY_2 r2_drive = STRATEGY_2();
+    STRATEGY_3 r3_drive = STRATEGY_3();
     BasicRobotHandler r1_handler = BasicRobotHandler(robot1_, robot2_);
     BasicRobotHandler r2_handler = BasicRobotHandler(robot2_, robot1_);
     SensorData r1_data;
@@ -112,14 +113,33 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
     draw_robot(robot2_);
 
 
-    int i = 0;
+    // int i = 0;
     double elapsed_time;
     //clock_t past_time = clock();
     
     auto start_time = timeNow();
     auto past_time = timeNow();
+    
+    OPENING_1 r1_opening = OPENING_1();
+    //opening loop
+    while (window_->isOpen() && !r1_opening.stop) {
+            elapsed_time = duration(timeNow() - past_time) / 1000000000.0;
+
+            if (elapsed_time > 0) {
+                //past_time = clock();
+                past_time = timeNow();
+
+                r1_data = r1_handler.read(elapsed_time);
+                r2_data = r2_handler.read(elapsed_time);
+
+                physics_updater_->update(robot1_, r1_opening.execute(r1_data), robot2_, r1_opening.execute(r2_data), elapsed_time);
+            }
+            update();
+    }
 
 
+    // sim_duration: how long to run simulator for. Otherwise use real time.
+    // opening code goes somewhere as the first action in a while loop
     if (sim_duration == 0) {
         while (window_->isOpen() && duration(timeNow() - start_time) <= 60000000000) {
             //elapsed_time = (clock() - past_time) / 1000.0;
@@ -131,29 +151,27 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
                 //past_time = clock();
                 past_time = timeNow();
 
-
                 r1_data = r1_handler.read(elapsed_time);
                 r2_data = r2_handler.read(elapsed_time);
 
-                physics_updater_->update(robot1_, r1_drive.next_action(r1_data), robot2_, r2_drive.next_action(r2_data), elapsed_time);
+                physics_updater_->update(robot1_, r3_drive.next_action(r1_data), robot2_, r3_drive.next_action(r2_data), elapsed_time);
             }
 
             //elapsed_total = past_time;
 
             update();
 
-            i++;
+            // i++;
         }
 
         std::cout << duration(timeNow() - start_time) / 1000000000 << std::endl;
     } else {
         while (window_->isOpen()) {
-            auto dummy_vector = std::vector<double>();
 
             r1_data = r1_handler.read(sim_duration);
             r2_data = r2_handler.read(sim_duration);
 
-            physics_updater_->update(robot1_, r1_drive.next_action(r1_data), robot2_, r2_drive.next_action(r2_data), sim_duration);
+            physics_updater_->update(robot1_, r3_drive.next_action(r1_data), robot2_, r3_drive.next_action(r2_data), sim_duration);
             auto readings = test_handler.read(sim_duration);
             
             // std::cout << robot1->x_pos << ", " << robot1->y_pos << std::endl;
@@ -167,3 +185,5 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
     }
 	return 0;
 }
+
+

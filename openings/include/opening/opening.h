@@ -9,11 +9,8 @@
 class Opening {
     public: 
         // returns vector with left and right motor output percentages.
-        virtual std::vector<int> execute() = 0;
-        virtual void set_up_path() = 0;
-    private: 
-        // motor params to pass into execute accordingly
-        std::vector<int> steps[];
+        virtual std::vector<int> execute(SensorData input) = 0;
+    protected:
         int step; // which step the opening is in.
 };
 

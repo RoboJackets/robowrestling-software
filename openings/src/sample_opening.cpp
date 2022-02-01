@@ -1,10 +1,21 @@
-#include <strategy/sample_opening.h>
+#include <opening/sample_opening.h>
 
 SampleOpening::SampleOpening() {
+    step = 0;
+    end = 300;
+    stop = false;
 }
 
-std::vector<int> SampleOpening::next_action(SensorData input) {
+// turn out of the opponents way.
+std::vector<int> SampleOpening::execute(SensorData input) {
+    int output[] = {40, 60};
+    if (step < end) {
+        step++;
+        return std::vector<int>(output, output + sizeof(output)/sizeof(int));
+    } else {
+        stop = true;
+    }
+    return std::vector<int>(output, output + sizeof(output)/sizeof(int));
 
-    return std::vector<int>(1, 1);
 }
 

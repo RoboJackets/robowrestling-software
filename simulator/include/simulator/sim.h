@@ -19,6 +19,9 @@
 #include <strategy/sensor_strategy.h>
 #include <strategy/slammywhammy.h>
 
+#include <opening/sample_opening.h>
+#define OPENING_1 SampleOpening
+
 #include <simulator/physics/robotphysicsupdater.h>
 
 #define WINDOW_HEIGHT (vis_scale*170)
@@ -26,6 +29,7 @@
 
 #define STRATEGY_1 IdleStrategy // Edit to change Robot 1's strategy. Remember to include
 #define STRATEGY_2 SlammyWhammy
+#define STRATEGY_3 LoopStrategy
 
 int radius_; //radius of the dohyo
 double elapsed_total;
