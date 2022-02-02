@@ -122,18 +122,18 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
     
     OPENING_1 r1_opening = OPENING_1();
     //opening loop
-    while (window_->isOpen() && !r1_opening.stop) {
-            elapsed_time = duration(timeNow() - past_time) / 1000000000.0;
+    while (window_->isOpen() && !r1_opening.done) {
+        
+        elapsed_time = duration(timeNow() - past_time) / 1000000000.0;
+        if (elapsed_time > 0)
+        {
+            past_time = timeNow();
 
-            if (elapsed_time > 0) {
-                //past_time = clock();
-                past_time = timeNow();
+            r1_data = r1_handler.read(elapsed_time);
+            r2_data = r2_handler.read(elapsed_time);
 
-                r1_data = r1_handler.read(elapsed_time);
-                r2_data = r2_handler.read(elapsed_time);
-
-                physics_updater_->update(robot1_, r1_opening.execute(r1_data), robot2_, r1_opening.execute(r2_data), elapsed_time);
-            }
+            physics_updater_->update(robot1_, r1_opening.execute(r1_data), robot2_, r1_drive.next_action(r2_data), elapsed_time);
+        }
             update();
     }
 

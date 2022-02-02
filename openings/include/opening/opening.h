@@ -10,8 +10,6 @@ class Opening {
     public: 
         // returns vector with left and right motor output percentages.
         virtual std::vector<int> execute(SensorData input) = 0;
-    protected:
-        int step; // which step the opening is in.
 };
 
 #endif

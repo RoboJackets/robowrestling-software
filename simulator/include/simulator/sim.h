@@ -19,8 +19,8 @@
 #include <strategy/sensor_strategy.h>
 #include <strategy/slammywhammy.h>
 
-#include <opening/sample_opening.h>
-#define OPENING_1 SampleOpening
+#include <opening/timed_opening.h>
+#define OPENING_1 TimedOpening
 
 #include <simulator/physics/robotphysicsupdater.h>
 
