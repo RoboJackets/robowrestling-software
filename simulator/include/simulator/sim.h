@@ -18,6 +18,9 @@
 #include <strategy/loop_strategy.h>
 #include <strategy/sensor_strategy.h>
 #include <strategy/slammywhammy.h>
+#include <strategy/kevin_brody.h>
+#include <strategy/antiaim.h>
+#include <strategy/kevin_brody_enemy.h>
 
 #include <simulator/physics/robotphysicsupdater.h>
 
@@ -25,7 +28,7 @@
 #define WINDOW_WIDTH (vis_scale*200)
 
 #define STRATEGY_1 IdleStrategy // Edit to change Robot 1's strategy. Remember to include
-#define STRATEGY_2 IdleStrategy
+#define STRATEGY_2 IdleStrategy // Edit to change Robot 2's strategy. Remember to include
 
 int radius_; //radius of the dohyo
 double elapsed_total;
