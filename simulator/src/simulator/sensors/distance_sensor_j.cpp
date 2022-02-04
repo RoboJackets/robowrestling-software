@@ -10,7 +10,7 @@ DistanceSensorJ::DistanceSensorJ(std::shared_ptr<Robot> robot, double sens_x, do
 }
 
 /*
-    Find closest corner to center ray
+    Find closest corner to robot
         edge parallel
     Find lines adjecent to corner
         keeping the line function within its limits
@@ -21,7 +21,7 @@ DistanceSensorJ::DistanceSensorJ(std::shared_ptr<Robot> robot, double sens_x, do
 */
 double DistanceSensorJ::read(std::shared_ptr<Robot> target) {
     std::vector<pdd> corners = target->corners(); // Vectors[], Pairs .first .second for fields
-    int minCorner = 0; // Use (minCorner +- 1) % 4 to find adjacents
+    int minCorner = 0; // Use (minCorner +- 1) % 4 to find adjascents
     double distCorner = get_distance(corners[0]);
     for (int i = 1; i < 4; i++) { // Finds clostest corner to the sensor
         if (get_distance(corners[i]) < distCorner) {
@@ -36,44 +36,60 @@ double DistanceSensorJ::read(std::shared_ptr<Robot> target) {
     bool is_on_robot_1 = false;
     bool is_on_robot_2 = false;
     double average;
-    int total_rays = 5; // Keep odd
+    int total_rays = 7; // Keep odd
+    double weights[] = {.05, .10, .20, .30, .20, .10, .05}; // Change based on #rays
+
+    sensor_origin.first = (cos(robot_->angle_) * sens_x_ - sin(robot_->angle_) * sens_y_) + robot_->x_pos_;
+    sensor_origin.second = (cos(robot_->angle_) * sens_y_ + sin(robot_->angle_) * sens_x_) + robot_->y_pos_;
 
     for (int i = -total_rays / 2; i <= total_rays / 2; i++) {
+        is_on_robot_1 = false;
+        is_on_robot_2 = false;
         sensor_origin.first = (cos(robot_->angle_) * sens_x_ - sin(robot_->angle_) * sens_y_) + robot_->x_pos_;
-        sensor_origin.second = (cos(robot_->angle_) * sens_x_ + sin(robot_->angle_) * sens_y_) + robot_->y_pos_;
-        sensor_max.first = sensor_origin.first + (cos(robot_->angle_ + sens_angle_ + i * cone_angle_ / (total_rays / 2)) * cone_length_);
-        sensor_max.second = sensor_origin.second + (sin(robot_->angle_ + sens_angle_ + i * cone_angle_ / (total_rays / 2)) * cone_length_);
+        sensor_origin.second = (cos(robot_->angle_) * sens_y_ + sin(robot_->angle_) * sens_x_) + robot_->y_pos_;
+        sensor_max.first = sensor_origin.first + cone_length_ * (cos(robot_->angle_ + sens_angle_ + i * cone_angle_ / (total_rays - 1)));
+        sensor_max.second = sensor_origin.second + cone_length_ * (sin(robot_->angle_ + sens_angle_ + i * cone_angle_ / (total_rays - 1)));
+
         
         intersection = lineLineIntersection(sensor_origin, sensor_max, corners[minCorner], corners[(minCorner + 1) % 4]);
+        if (intersection.first >= std::min(sensor_origin.first, sensor_max.first)
+            && intersection.first <= std::max(sensor_origin.first, sensor_max.first)) {
 
-        is_on_robot_1 = std::min(corners[minCorner].first, corners[(minCorner + 1) % 4].first) <= intersection.first 
-            && intersection.first <= std::max(corners[minCorner].first, corners[(minCorner + 1) % 4].first)
-            && std::min(corners[minCorner].second, corners[(minCorner + 1) % 4].second) <= intersection.second 
-            && intersection.second <= std::max(corners[minCorner].second, corners[(minCorner + 1) % 4].second);
+            is_on_robot_1 = std::min(corners[minCorner].first, corners[(minCorner + 1) % 4].first) <= intersection.first 
+                && intersection.first <= std::max(corners[minCorner].first, corners[(minCorner + 1) % 4].first)
+                && std::min(corners[minCorner].second, corners[(minCorner + 1) % 4].second) <= intersection.second 
+                && intersection.second <= std::max(corners[minCorner].second, corners[(minCorner + 1) % 4].second);
 
-        if (is_on_robot_1) {
-            average += get_distance(intersection);
+            if (is_on_robot_1) {
+                average += get_distance(intersection) * weights[i + total_rays/2];
+            }
         }
-        
+
         intersection = lineLineIntersection(sensor_origin, sensor_max, corners[minCorner], corners[(minCorner - 1) % 4]);
+        if (intersection.first >= std::min(sensor_origin.first, sensor_max.first)
+            && intersection.first <= std::max(sensor_origin.first, sensor_max.first)) {
 
-        is_on_robot_2 = std::min(corners[minCorner].first, corners[(minCorner - 1) % 4].first) <= intersection.first 
-            && intersection.first <= std::max(corners[minCorner].first, corners[(minCorner - 1) % 4].first)
-            && std::min(corners[minCorner].second, corners[(minCorner - 1) % 4].second) <= intersection.second 
-            && intersection.second <= std::max(corners[minCorner].second, corners[(minCorner - 1) % 4].second);
+            is_on_robot_2 = std::min(corners[minCorner].first, corners[(minCorner - 1) % 4].first) <= intersection.first 
+                && intersection.first <= std::max(corners[minCorner].first, corners[(minCorner - 1) % 4].first)
+                && std::min(corners[minCorner].second, corners[(minCorner - 1) % 4].second) <= intersection.second 
+                && intersection.second <= std::max(corners[minCorner].second, corners[(minCorner - 1) % 4].second);
 
-        if (is_on_robot_2 && !is_on_robot_1) {
-            average += get_distance(intersection);
-        } else if (!is_on_robot_1) {
-            average += cone_length_;
+            if (is_on_robot_2 && !is_on_robot_1) {
+                average += get_distance(intersection) * weights[i + total_rays/2];
+            }
+        }
+
+        if (!is_on_robot_1 && !is_on_robot_2) {
+            average += cone_length_ * weights[i + total_rays/2];
         }
     }
-    return average / total_rays;
+
+    return average;
 }
 
 double DistanceSensorJ::get_distance(pdd point) {
     double dist_x = point.first - ((cos(robot_->angle_) * sens_x_ - sin(robot_->angle_) * sens_y_) + robot_->x_pos_);
-    double dist_y = point.second - ((cos(robot_->angle_) * sens_x_ + sin(robot_->angle_) * sens_y_) + robot_->y_pos_);
+    double dist_y = point.second - ((cos(robot_->angle_) * sens_y_ + sin(robot_->angle_) * sens_x_) + robot_->y_pos_);
     return sqrt(pow(dist_x, 2) + pow(dist_y, 2));
 }
 
