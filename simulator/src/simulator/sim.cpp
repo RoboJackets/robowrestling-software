@@ -48,6 +48,30 @@ void draw_robot(std::shared_ptr<Robot> robot) {
     window_->draw(sprite);
 }	
 
+void draw_bottom_bar() {
+    // add a button
+    // display a timer of sorts
+
+    sf::RectangleShape foundation(sf::Vector2f(WINDOW_WIDTH/3, WINDOW_HEIGHT/4));
+    foundation.setFillColor(sf::Color(200, 200, 210));
+    foundation.setPosition(0, WINDOW_HEIGHT * .75); // position it in the bottom left corner ideally
+    window_->draw(foundation);
+
+    sf::RectangleShape time_label(sf::Vector2f(WINDOW_WIDTH/4, WINDOW_HEIGHT/12));
+    time_label.setFillColor(sf::Color(250, 250, 210));
+    time_label.setPosition(10, WINDOW_HEIGHT * .75 + 10);
+    window_->draw(time_label);
+
+    sf::Text timer;
+    //timer.setString("Time: " + to_string(elapsed_time) + "s");
+    timer.setFont(default_font);
+    timer.setCharacterSize(13);
+    timer.setString("Time: " + std::__cxx11::to_string(elapsed_total) + "s");
+    timer.setFillColor(sf::Color::Black);
+    timer.setPosition(15,  WINDOW_HEIGHT * .75 + 18);
+    window_->draw(timer);
+}
+
 void update() {
 	sf::Event event;
     window_->clear(sf::Color::White); // clear the window with white color
@@ -58,9 +82,9 @@ void update() {
         } 
     }
     // window->clear();
-
     // need to redraw things
     draw_field();
+    draw_bottom_bar();
     draw_robot(robot1_);
     draw_robot(robot2_);
     window_->display();
@@ -68,6 +92,7 @@ void update() {
 
 int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (r1 angle in rad cw) (r2 x right of 0) (r2 y down of 0) (r2 angle in rad cw) (duration for sim: 0 = realtime elapsed)
     robot_texture.loadFromFile("simulator/res/robot_sprite.png");
+    default_font.loadFromFile("simulator/res/arial.ttf");
     if (argc == 8) {
         //stores string inputs from terminal and outputs while casting
         std::istringstream iss(std::string(argv[1])+" "+std::string(argv[2])+" "+std::string(argv[3])+" "+std::string(argv[4])+" "+std::string(argv[5])+" "+std::string(argv[6])+" "+std::string(argv[7]));
@@ -108,8 +133,11 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
     SensorData r2_data;
 
     draw_field();
+    draw_bottom_bar();
     draw_robot(robot1_);
     draw_robot(robot2_);
+
+
 
 
     int i = 0;
@@ -124,7 +152,7 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
         while (window_->isOpen() && duration(timeNow() - start_time) <= 60000000000) {
             //elapsed_time = (clock() - past_time) / 1000.0;
             elapsed_time = duration(timeNow() - past_time) / 1000000000.0;
-
+            elapsed_total = duration(timeNow() - start_time) / 1000000000.0;
             //std::cout << elapsed_time << std::endl;
 
             if (elapsed_time > 0) {
@@ -149,7 +177,7 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
     } else {
         while (window_->isOpen()) {
             auto dummy_vector = std::vector<double>();
-
+            
             r1_data = r1_handler.read(sim_duration);
             r2_data = r2_handler.read(sim_duration);
 
