@@ -13,8 +13,8 @@
     1. Open a terminal and run the following commands:
 
         ```
-        <sudo apt-get update>
-        <sudo apt-get install c++>
+        <sudo apt update>
+        <sudo apt install c++>
         ```
     
     2. Use your preferred code editor
@@ -44,8 +44,8 @@
     1. Open a terminal and run the following commands:
     
         ```
-        sudo apt-get update
-        sudo apt-get install cmake libsfml-dev
+        sudo apt update
+        sudo apt install cmake libsfml-dev
         ```
     
     2. (Windows Only) Install Xming: [Download](https://sourceforge.net/projects/xming/)
@@ -73,6 +73,8 @@
 ## [Simulator Documentation](simulator/SIMULATOR.md)
 
 ## [Strategy Documentation](strategy/STRATEGY.md)
+
+## [Sensor Documentation](SENSORS.md)
 
 ## Useful Resources
 
