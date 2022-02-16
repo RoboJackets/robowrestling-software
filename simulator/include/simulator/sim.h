@@ -27,7 +27,7 @@
 #define WINDOW_HEIGHT (vis_scale*200)
 #define WINDOW_WIDTH (vis_scale*200)
 
-#define STRATEGY_1 IdleStrategy // Edit to change Robot 1's strategy. Remember to include
+#define STRATEGY_1 KevinBrodyStrategyEnemy // Edit to change Robot 1's strategy. Remember to include
 #define STRATEGY_2 IdleStrategy // Edit to change Robot 2's strategy. Remember to include
 
 int radius_; //radius of the dohyo

@@ -11,12 +11,12 @@ std::vector<int> KevinBrodyStrategyEnemy::next_action(SensorData input) {
     state = update_state(input);
     switch (state) {
     case FORWARD:
-        output[0] = 100;
-        output[1] = 100;
+        output[0] = 50;
+        output[1] = 50;
         break;
     case BACK:
-        output[0] = -50;
-        output[1] = -50;
+        output[0] = -100;
+        output[1] = -100;
         break;
     // fast af turn
     case TURN_LEFT:
@@ -53,19 +53,20 @@ KevinBrodyStrategyEnemy::State KevinBrodyStrategyEnemy::update_state(SensorData 
     // front left front right for the line sensors [0] [1]
     // left to right
     
-    std::cout << input.line_buffer_[0] << "\n";
+    std::cout << input.dist_buffer_[2] << "\n";
     
-   /* line sensor hit
-   if (input.line_buffer_[0] < 255 || input.line_buffer_[1] < 255){
-        std::cout << "Line Sensor Hit\n";
+   //line sensor hit
+   if (input.line_buffer_[0] > 0 && input.line_buffer_[1] > 0){
         return BACK;
-        } */
+        } 
+    //left line sensor hit
+    
     // Sensor center left or right hit
     else if (input.dist_buffer_[2] < 176 || input.dist_buffer_[3] < 176) { //front ones
-        //std::cout << "Sensor center left or right hit\n";
+        std::cout << "Sensor center left or right hit\n";
         return FORWARD;
         } 
-    Sensor far or mid left hit - close dist
+    // Sensor far or mid left hit - close dist
     else if (input.dist_buffer_[0] < 150 || input.dist_buffer_[1] < 150){
         std::cout << "Sensor far or mid left hit - close dist\n";
         std::cout << "Left: " << input.dist_buffer_[0] << ", Right: " << input.dist_buffer_[1] << "\n";
@@ -85,10 +86,11 @@ KevinBrodyStrategyEnemy::State KevinBrodyStrategyEnemy::update_state(SensorData 
     else if (input.dist_buffer_[4] < 150 || input.dist_buffer_[5] < 150){
         std::cout << "Sensor far or mid right hit - far dist\n";
         return TURN_RIGHT;
-        } */
+        } 
     // No sensor input
     else {
         std::cout << "No sensor input\n";
-        return SEARCH;
+        return STOP;
     }
 }
+
