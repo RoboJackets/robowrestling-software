@@ -16,34 +16,46 @@ std::vector<int> SearchStrat::next_action(SensorData input) {
         output[0] = 0;
         output[1] = 0;
         break;
+    
     case APPROACH:
-        output[0] = 80;
-        output[1] = 80;
+        output[0] = 20;
+        output[1] = 20;
         break;
     case TURN_LEFT:
-        output[0] = -50;
-        output[1] = 50;
-        break;
-    case TURN_RIGHT:
         output[0] = 50;
         output[1] = -50;
         break;
+    case TURN_RIGHT:
+        output[0] = -50;
+        output[1] = 50;
+        break;
+    case BACK:
+        output[0] = -1;
+        output[1] = -1;
+
     default:
         break;
     }
 
-    return std::vector<int>(output[0], output + sizeof(output)/sizeof(int));
+    return std::vector<int>(output, output + sizeof(output)/sizeof(int));
 }
 
 // Checks sensors and returns the appropriate state of action
 SearchStrat::State SearchStrat::update_state(SensorData input) {
-    if () {
+    if ((input.line_buffer_[0] < 10 || input.line_buffer_[1] < 10)) {
+        std::cout << "Line Sensor Hit\n";
         return APPROACH;
-    } else if ()
-        return TURN_RIGHT;
-    } else if () {
-        return TURN_LEFT;
-    } else {
-        return IDLE;
     }
+    else if ((input.line_buffer_[2] > 180 || input.line_buffer_[3] > 180)) {
+        return BACK;
+    } else if (input.dist_buffer_[4] < 75 || input.dist_buffer_[5] < 75) {
+        return TURN_RIGHT;
+    } else if (input.dist_buffer_[0] < 75 || input.dist_buffer_[1] < 75) {
+        return TURN_LEFT;
+    } else  if (input.dist_buffer_[2] < 20 || input.dist_buffer_[3] < 20) {
+        return APPROACH;
+    } else {
+        return APPROACH;
+    }
+    //i like feet
 }
