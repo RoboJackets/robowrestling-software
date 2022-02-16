@@ -18,8 +18,8 @@ std::vector<int> SearchStrat::next_action(SensorData input) {
         break;
     
     case APPROACH:
-        output[0] = 20;
-        output[1] = 20;
+        output[0] = 30;
+        output[1] = 30;
         break;
     case TURN_LEFT:
         output[0] = 50;
@@ -42,9 +42,9 @@ std::vector<int> SearchStrat::next_action(SensorData input) {
 
 // Checks sensors and returns the appropriate state of action
 SearchStrat::State SearchStrat::update_state(SensorData input) {
-    if ((input.line_buffer_[0] < 10 || input.line_buffer_[1] < 10)) {
+    if ((input.line_buffer_[0] > 0 || input.line_buffer_[1] > 0)) {
         std::cout << "Line Sensor Hit\n";
-        return APPROACH;
+        return BACK;
     }
     else if ((input.line_buffer_[2] > 180 || input.line_buffer_[3] > 180)) {
         return BACK;
@@ -57,5 +57,4 @@ SearchStrat::State SearchStrat::update_state(SensorData input) {
     } else {
         return APPROACH;
     }
-    //i like feet
 }
