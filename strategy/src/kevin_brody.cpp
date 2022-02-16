@@ -53,26 +53,26 @@ KevinBrodyStrategy::State KevinBrodyStrategy::update_state(SensorData input) {
     // front left front right for the line sensors [0] [1]
     // left to right
     
-    if ((input.line_buffer_[0] < 10 || input.line_buffer_[1] < 10)) 
+    if ((input.line_buffer_[0] > 0 || input.line_buffer_[1] > 0)) 
     {
         std::cout << "line " << input.dist_buffer_[0] << " " << input.dist_buffer_[1] << std::endl;
        return BACK;
     }
-    else if ((input.line_buffer_[0] < 100 || input.line_buffer_[1] < 100)) 
-    {
-        std::cout << "slow down " << input.dist_buffer_[0] << " " << input.dist_buffer_[1] << std::endl;
-       return BACK;
-    }
-    else if (input.dist_buffer_[2] < 176 || input.dist_buffer_[3] < 176) { //front ones
+    // else if ((input.line_buffer_[0] < 100 || input.line_buffer_[1] < 100)) 
+    // {
+    //     std::cout << "slow down " << input.dist_buffer_[0] << " " << input.dist_buffer_[1] << std::endl;
+    //    return BACK;
+    // }
+    else if (input.dist_buffer_[2] <125 || input.dist_buffer_[3] < 125) { //front ones // change too 100 for awesome juke
          std::cout << "front " << input.dist_buffer_[2] << " " << input.dist_buffer_[3] << std::endl;
          return FORWARD;
 
     }
-    else if (input.dist_buffer_[0] < 100 || input.dist_buffer_[1] < 100) { //left ones
+    else if (input.dist_buffer_[0] > 255 || input.dist_buffer_[1] > 255) { //left ones
         std::cout << "left " << std::endl;
         return TURN_LEFT;
     }
-    else if (input.dist_buffer_[4] < 100 || input.dist_buffer_[5] < 100) { //right ones
+    else if (input.dist_buffer_[4] > 255 || input.dist_buffer_[5] > 255) { //right ones
         std::cout << "right " << std::endl;
         return TURN_RIGHT;
     }else {
