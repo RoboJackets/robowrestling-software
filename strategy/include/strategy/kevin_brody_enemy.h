@@ -13,6 +13,8 @@ class KevinBrodyStrategyEnemy: public Strategy {
             BACK,
             TURN_LEFT,
             TURN_RIGHT,
+            LEFT_BACK,
+            RIGHT_BACK,
             STOP,
             SEARCH
         };
