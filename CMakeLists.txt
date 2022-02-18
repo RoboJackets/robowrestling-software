@@ -16,6 +16,9 @@ set(CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" "${CMAKE_CURRENT_SOURCE_DIR}/cmake"
 include_directories(strategy/include)
 add_subdirectory(strategy)
 
+include_directories(openings/include)
+add_subdirectory(openings)
+
 find_package(SFML 2 COMPONENTS graphics window system REQUIRED)
 if(SFML_FOUND)
   message(${SFML_INCLUDE_DIR})
