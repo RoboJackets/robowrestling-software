@@ -11,11 +11,8 @@
 #include <simulator/robots/basicrobot.h>
 #include <simulator/sensors/basicrobot_handler.h>
 
-#include <strategy/roam_strategy.h>
-#include <strategy/avoid_strategy.h>
 #include <strategy/basic_dist.h>
 #include <strategy/idle_strategy.h>
-#include <strategy/loop_strategy.h>
 #include <strategy/sensor_strategy.h>
 #include <strategy/slammywhammy.h>
 #include <strategy/kevin_brody.h>
