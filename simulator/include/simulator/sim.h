@@ -1,16 +1,23 @@
 #ifndef sim_h
 #define sim_h
 
+
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <cmath>
 #include <vector>
 #include <sstream>
 
+// Robot Includes
 #include <simulator/robots/robot.h>
 #include <simulator/robots/basicrobot.h>
 #include <simulator/sensors/basicrobot_handler.h>
 
+// Opening Includes
+#include <opening/timed_opening.h>
+#include <opening/no_opening.h>
+
+// Strategy Includes
 #include <strategy/roam_strategy.h>
 #include <strategy/avoid_strategy.h>
 #include <strategy/basic_dist.h>
@@ -19,17 +26,19 @@
 #include <strategy/sensor_strategy.h>
 #include <strategy/slammywhammy.h>
 
-#include <opening/timed_opening.h>
-#define OPENING_1 TimedOpening
 
 #include <simulator/physics/robotphysicsupdater.h>
+
 
 #define WINDOW_HEIGHT (vis_scale*170)
 #define WINDOW_WIDTH (vis_scale*170)
 
+#define OPENING_1 TimedOpening // Edit to change Robot 1's opening. Remember to include
+#define OPENING_2 NoOpening
+
 #define STRATEGY_1 IdleStrategy // Edit to change Robot 1's strategy. Remember to include
 #define STRATEGY_2 SlammyWhammy
-#define STRATEGY_3 LoopStrategy
+
 
 int radius_; //radius of the dohyo
 double elapsed_total;

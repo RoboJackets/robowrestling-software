@@ -27,21 +27,13 @@ void draw_field() {
     start_line2.setFillColor(sf::Color(255, 69, 0));
     start_line2.setPosition(WINDOW_WIDTH/2 + vis_scale*10, WINDOW_HEIGHT/2 - vis_scale*10);
     window_->draw(start_line2);
-    /*sf::Text timer;
-    timer.setFont();
-    timer.setString("Elapsed: " + to_string(elapsed_total) + " secs");
-    timer.setFillColor(sf::Color::Red);
-    timer.setPosition();
-    window_->draw(timer);*/
 }
 
 void draw_robot(std::shared_ptr<Robot> robot) {
     sf::Sprite sprite(robot_texture);
     sprite.setScale(vis_scale*robot->width_/50.0, vis_scale*robot->length_/50.0);
     double shift_magnitude = vis_scale*sqrt(pow(robot->width_/2, 2) + pow(robot->length_/2, 2));
-    //double homogenous_x = robot->x_pos_ + shift_magnitude*cos(robot->angle_ - .75 * M_PI);
     double homogenous_x = vis_scale*(robot->x_pos_ - WINDOW_WIDTH/2) + WINDOW_WIDTH/2 + shift_magnitude*cos(robot->angle_ - .75 * M_PI);
-    //double homogenous_y = robot->y_pos_ + shift_magnitude*sin(robot->angle_ - .75 * M_PI);
     double homogenous_y = vis_scale*(robot->y_pos_ - WINDOW_HEIGHT/2) + WINDOW_HEIGHT/2 + shift_magnitude*sin(robot->angle_ - .75 * M_PI);
     sprite.setPosition(homogenous_x, homogenous_y);
     sprite.setRotation(robot->angle_*180/M_PI);
@@ -57,7 +49,6 @@ void update() {
             window_->close();
         } 
     }
-    // window->clear();
 
     // need to redraw things
     draw_field();
@@ -93,75 +84,62 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
         robot1_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)-25, WINDOW_HEIGHT/2-25, M_PI/4);
         robot2_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2), WINDOW_HEIGHT/2+25, M_PI);
     }
-	
-    BasicRobotHandler test_handler = BasicRobotHandler(robot1_, robot2_);
+
+    
     physics_updater_ = std::make_shared<RobotPhysicsUpdater>(); //Default RobotPhysicsUpdater
     
     window_ = std::make_shared<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "My window");
     window_->clear(sf::Color::White); // clear the window with white color
 
+    OPENING_1 r1_opening = OPENING_1();
+    OPENING_2 r2_opening = OPENING_2();
     STRATEGY_1 r1_drive = STRATEGY_1();
     STRATEGY_2 r2_drive = STRATEGY_2();
-    STRATEGY_3 r3_drive = STRATEGY_3();
     BasicRobotHandler r1_handler = BasicRobotHandler(robot1_, robot2_);
     BasicRobotHandler r2_handler = BasicRobotHandler(robot2_, robot1_);
+
     SensorData r1_data;
     SensorData r2_data;
+    std::vector<int> r1_action;
+    std::vector<int> r2_action;
 
     draw_field();
     draw_robot(robot1_);
     draw_robot(robot2_);
 
-
-    // int i = 0;
     double elapsed_time;
-    //clock_t past_time = clock();
-    
     auto start_time = timeNow();
     auto past_time = timeNow();
-    
-    OPENING_1 r1_opening = OPENING_1();
-    //opening loop
-    while (window_->isOpen() && !r1_opening.done) {
-        
-        elapsed_time = duration(timeNow() - past_time) / 1000000000.0;
-        if (elapsed_time > 0)
-        {
-            past_time = timeNow();
-
-            r1_data = r1_handler.read(elapsed_time);
-            r2_data = r2_handler.read(elapsed_time);
-
-            physics_updater_->update(robot1_, r1_opening.execute(r1_data), robot2_, r1_drive.next_action(r2_data), elapsed_time);
-        }
-            update();
-    }
 
 
     // sim_duration: how long to run simulator for. Otherwise use real time.
-    // opening code goes somewhere as the first action in a while loop
+    // Opening code goes somewhere as the first action in a while loop. Does not work in simulated time cases
     if (sim_duration == 0) {
         while (window_->isOpen() && duration(timeNow() - start_time) <= 60000000000) {
-            //elapsed_time = (clock() - past_time) / 1000.0;
+
             elapsed_time = duration(timeNow() - past_time) / 1000000000.0;
 
-            //std::cout << elapsed_time << std::endl;
-
             if (elapsed_time > 0) {
-                //past_time = clock();
                 past_time = timeNow();
 
                 r1_data = r1_handler.read(elapsed_time);
                 r2_data = r2_handler.read(elapsed_time);
 
-                physics_updater_->update(robot1_, r3_drive.next_action(r1_data), robot2_, r3_drive.next_action(r2_data), elapsed_time);
+                if (r1_opening.done) {
+                    r1_action = r1_drive.next_action(r1_data);
+                } else {
+                    r1_action = r1_opening.execute(r1_data);
+                }
+                if (r2_opening.done) {
+                    r2_action = r2_drive.next_action(r2_data);
+                } else {
+                    r2_action = r2_opening.execute(r2_data);
+                }
+
+                physics_updater_->update(robot1_, r1_action, robot2_, r2_action, elapsed_time);
             }
 
-            //elapsed_total = past_time;
-
             update();
-
-            // i++;
         }
 
         std::cout << duration(timeNow() - start_time) / 1000000000 << std::endl;
@@ -171,17 +149,14 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
             r1_data = r1_handler.read(sim_duration);
             r2_data = r2_handler.read(sim_duration);
 
-            physics_updater_->update(robot1_, r3_drive.next_action(r1_data), robot2_, r3_drive.next_action(r2_data), sim_duration);
-            auto readings = test_handler.read(sim_duration);
-            
-            // std::cout << robot1->x_pos << ", " << robot1->y_pos << std::endl;
-            // std::cout << robot2->x_pos << ", " << robot2->y_pos << std::endl;
-
+            physics_updater_->update(robot1_, r1_drive.next_action(r1_data), robot2_, r2_drive.next_action(r2_data), sim_duration);
 
             elapsed_total += sim_duration;
 
             update();
         }
+
+        std::cout << "Match Time: " << elapsed_total << std::endl;
     }
 	return 0;
 }

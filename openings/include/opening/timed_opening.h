@@ -7,9 +7,9 @@ using namespace std::literals;
 
 class TimedOpening: public Opening {
     public:
+        TimedOpening();
         std::chrono::time_point<std::chrono::system_clock> start_time;
         std::chrono::seconds time_limit{1};
-        TimedOpening();
         std::vector<int> execute(SensorData input);
         bool done = false;
 };
