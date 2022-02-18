@@ -3,14 +3,14 @@
 LineSensor::LineSensor(std::shared_ptr<Robot> robot, double radius, double center_x, double center_y, double line_x, double line_y) {
     robot_ = robot;
     radius_ = radius;
-    center_x_ = center_x;
-    center_y_ = center_y;
+    center_x_ = center_x * 2.5 / 2;
+    center_y_ = center_y * 2.5 / 2;
     line_x_ = line_x;
     line_y_ = line_y;
 }
 
 int LineSensor::read() {
-    if (get_distance() >= radius_) {
+    if (get_distance() >= (radius_ - 2)) {
         return 255;
     } else {
         return 0;
@@ -19,6 +19,6 @@ int LineSensor::read() {
 
 double LineSensor::get_distance() {
     double dist_x = (cos(robot_->angle_) * line_x_ - sin(robot_->angle_) * line_y_) + robot_->x_pos_ - center_x_;
-    double dist_y = (cos(robot_->angle_) * line_x_ + sin(robot_->angle_) * line_y_) + robot_->y_pos_ - center_y_;
+    double dist_y = (cos(robot_->angle_) * line_y_ + sin(robot_->angle_) * line_x_) + robot_->y_pos_ - center_y_;
     return sqrt(pow(dist_x, 2) + pow(dist_y, 2));
 }

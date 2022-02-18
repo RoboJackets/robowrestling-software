@@ -18,11 +18,8 @@
 #include <opening/no_opening.h>
 
 // Strategy Includes
-#include <strategy/roam_strategy.h>
-#include <strategy/avoid_strategy.h>
 #include <strategy/basic_dist.h>
 #include <strategy/idle_strategy.h>
-#include <strategy/loop_strategy.h>
 #include <strategy/sensor_strategy.h>
 #include <strategy/slammywhammy.h>
 
