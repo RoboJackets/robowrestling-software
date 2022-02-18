@@ -24,6 +24,7 @@ public:
 
   // Returns the next state
   State update_state(SensorData input);
+  
 };
 
 #endif
