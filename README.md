@@ -14,7 +14,7 @@
 
         ```
         <sudo apt update>
-        <sudo apt install c++>
+        <sudo apt install gcc>
         ```
     
     2. Use your preferred code editor
