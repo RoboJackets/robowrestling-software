@@ -79,7 +79,7 @@ KevinBrodyStrategyEnemy::State KevinBrodyStrategyEnemy::update_state(SensorData 
     Mid right and right sensors(far) = turn right
     */
     
-    std::cout << input.dist_buffer_[4] << "\n";
+    std::cout << "( " << input.dist_buffer_[0] << ", " << input.dist_buffer_[1] <<  ", " << input.dist_buffer_[2] << ", " <<  input.dist_buffer_[3] << ", " <<  input.dist_buffer[4] << ", " <<  input.dist_buffer_[5] << " )\n";
    // both line sensor hit
    if (input.line_buffer_[0] > 0 || input.line_buffer_[1] > 0){
         return BACK;
