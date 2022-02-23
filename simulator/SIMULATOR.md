@@ -40,15 +40,18 @@ Execute Command: `./sim.sw r1x r1y r1a r2x r2y r2a dt`
 4. r2x: Robot 2 X - Distance left from Origin for Robot 2 in centimeters
 5. r2y: Robot 2 Y - Distance up from Origin for Robot 2 in centimeters
 6. r2a: Robot 2 Angle - Angle clockwise from PI radians in PI radians
-7. dt: Simulator Timestep - 0 = Realtime Elapsed, >0 Set timestep in seconds
+7. dt: Simulator Timestep - 0 = Realtime Elapsed, >0 = Set timestep in seconds
 
 Default Parameters: `./sim.sw 25 25 0.25 0 25 0 0.01`
 
 ### File Structure
 
 1. `./include/simulator/` : Header files for the Simulator
-2. `./res/`
-3. `./src/`
+2. `./res/` : Resource files for the Simulator
+3. `./src/` : Source files for the Simulator
+4. `./src/simulator/physics/` : Handlers for the physics and collision calculations
+5. `./src/simulator/robots/` : Sensor configurations of robots
+6. `./src/simulator/sensors/` : Data implementations for sensors
 
 
 

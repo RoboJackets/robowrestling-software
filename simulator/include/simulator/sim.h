@@ -1,36 +1,47 @@
 #ifndef sim_h
 #define sim_h
 
+
 #include <SFML/Graphics.hpp>
 #include <memory>
 #include <cmath>
 #include <vector>
 #include <sstream>
 
+// Robot Includes
 #include <simulator/robots/robot.h>
 #include <simulator/robots/basicrobot.h>
 #include <simulator/sensors/basicrobot_handler.h>
 
-#include <strategy/roam_strategy.h>
-#include <strategy/avoid_strategy.h>
+// Opening Includes
+#include <opening/timed_opening.h>
+#include <opening/no_opening.h>
+
+// Strategy Includes
 #include <strategy/basic_dist.h>
 #include <strategy/idle_strategy.h>
-#include <strategy/loop_strategy.h>
 #include <strategy/sensor_strategy.h>
 #include <strategy/slammywhammy.h>
+
 #include <strategy/kevin_brody.h>
 #include <strategy/antiaim.h>
 #include <strategy/kevin_brody_enemy.h>
 #include <strategy/search_strategy.h>
-
+#include <strategy/Dodge.h>
 
 #include <simulator/physics/robotphysicsupdater.h>
+
+
 
 #define WINDOW_HEIGHT (vis_scale*200)
 #define WINDOW_WIDTH (vis_scale*200)
 
-#define STRATEGY_1 KevinBrodyStrategy // Edit to change Robot 1's strategy. Remember to include
-#define STRATEGY_2 IdleStrategy // Edit to change Robot 2's strategy. Remember to include
+#define OPENING_1 NoOpening // Edit to change Robot 1's opening. Remember to include
+#define OPENING_2 NoOpening
+
+#define STRATEGY_1 IdleStrategy // Edit to change Robot 1's strategy. Remember to include
+#define STRATEGY_2 KevinBrodyStrategyEnemy
+
 
 int radius_; //radius of the dohyo
 double elapsed_total;
