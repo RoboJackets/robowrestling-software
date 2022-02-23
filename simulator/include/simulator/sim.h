@@ -21,6 +21,8 @@
 
 #include <simulator/physics/robotphysicsupdater.h>
 
+#include "ui/startmenu.h"
+
 #define WINDOW_HEIGHT (vis_scale*170)
 #define WINDOW_WIDTH (vis_scale*170)
 
