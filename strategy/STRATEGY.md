@@ -27,16 +27,17 @@
                 // Returns vector of size 2 containing ints [-100, 100] to indicate left and right motor output % respectively
                 std::vector<int> next_action(SensorData input);
 
-                // Returns the next state
-                State update_state(SensorData input);
-
                 // States of robot action
                 enum State {
                     IDLE,
                     APPROACH,
                     TURN_RIGHT,
                     TURN_LEFT
-                } state;
+                };
+                State state;
+                
+                // Returns the next state
+                State update_state(SensorData input);
         };
 
         #endif
@@ -79,7 +80,7 @@
                 break;
             }
 
-            return std::vector<int>(output[0], output[1]);
+            return std::vector<int>(output[0], output + sizeof(output)/sizeof(int));
         }
 
         // Checks sensors and returns the appropriate state of action

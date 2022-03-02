@@ -11,8 +11,8 @@ std::vector<int> KevinBrodyStrategyEnemy::next_action(SensorData input) {
     state = update_state(input);
     switch (state) {
     case FORWARD:
-        output[0] = 50;
-        output[1] = 50;
+        output[0] = 100;
+        output[1] = 100;
         break;
     case BACK:
         output[0] = -100;
@@ -27,14 +27,22 @@ std::vector<int> KevinBrodyStrategyEnemy::next_action(SensorData input) {
         output[0] = 100;
         output[1] = 0;
         break;
+    case LEFT_BACK:
+        output[0] = -50;
+        output[1] = -100;
+        break;
+    case RIGHT_BACK:
+        output[0] = -100;
+        output[1] = -50;
+        break;
     case STOP:
         output[0] = 0;
         output[1] = 0;
         break;
     // turns in place
     case SEARCH:
-        output[0] = 50;
-        output[1] = -50;
+        output[0] = 25;
+        output[1] = -25;
         break;
     default:
         break;
@@ -52,45 +60,65 @@ KevinBrodyStrategyEnemy::State KevinBrodyStrategyEnemy::update_state(SensorData 
     // 1.5 meter
     // front left front right for the line sensors [0] [1]
     // left to right
+
+    /* 
+    LINE SENSORS
+    both sensors = back
+    left sensor = right back
+    right sensor = left back
     
-    std::cout << input.dist_buffer_[2] << "\n";
+    DISTANCE SENSORS
+    Both front sensors = forward
+    Left front sensor
+    Both left sensors(close) = forward
+    Both left sensors(far) = turn left
+    Both right sensors(close) = forward
+    Both right sensors(far) = turn left
+    Mid left and left right sensors(close) = left forward
+    Mid left and left right sensors(far) = turn left
+    Mid right and right sensors(close) = right forward
+    Mid right and right sensors(far) = turn right
+    */
     
-   //line sensor hit
-   if (input.line_buffer_[0] > 0 && input.line_buffer_[1] > 0){
+    std::cout << "( " << input.dist_buffer_[4] << ", " << input.dist_buffer_[5] << " )\n";
+   // both line sensor hit
+   if (input.line_buffer_[0] > 0 || input.line_buffer_[1] > 0){
         return BACK;
         } 
     //left line sensor hit
-    
+    else if(input.line_buffer_[0] > 0) {
+        return RIGHT_BACK;
+    }
+    //right line sensor hit
+    else if(input.line_buffer_[1] > 0) {
+        return LEFT_BACK;
+    }
     // Sensor center left or right hit
-    else if (input.dist_buffer_[2] < 176 || input.dist_buffer_[3] < 176) { //front ones
-        std::cout << "Sensor center left or right hit\n";
+    else if ((input.dist_buffer_[2] < 150 && input.dist_buffer_[3] < 150)) { //front ones
         return FORWARD;
         } 
+    else if ((input.dist_buffer_[3] < 40) && input.dist_buffer_[4] < 40) {
+        return RIGHT_BACK;
+    }
     // Sensor far or mid left hit - close dist
-    else if (input.dist_buffer_[0] < 150 || input.dist_buffer_[1] < 150){
-        std::cout << "Sensor far or mid left hit - close dist\n";
-        std::cout << "Left: " << input.dist_buffer_[0] << ", Right: " << input.dist_buffer_[1] << "\n";
-        return FORWARD;
+    else if (input.dist_buffer_[0] < 40 || input.dist_buffer_[1] <= 40){
+        return TURN_LEFT;
         }
     // Sensor far or mid right hit - close dist
-    else if (input.dist_buffer_[4] < 150 || input.dist_buffer_[5] < 150){
-        std::cout << "Sensor far or mid right hit - close dist\n";
-        return FORWARD;
+    else if (input.dist_buffer_[4] < 40 || input.dist_buffer_[5] < 40){
+        return TURN_RIGHT;
         }
     // Sensor far or mid left hit - far dist
     else if (input.dist_buffer_[0] < 150 || input.dist_buffer_[1] < 150){
-        std::cout << "Sensor far or mid left hit - far dist\n";
         return TURN_LEFT;
         }
     // Sensor far or mid right hit - far dist
     else if (input.dist_buffer_[4] < 150 || input.dist_buffer_[5] < 150){
-        std::cout << "Sensor far or mid right hit - far dist\n";
         return TURN_RIGHT;
-        } 
+        }
     // No sensor input
     else {
-        std::cout << "No sensor input\n";
-        return STOP;
+        return SEARCH;
     }
 }
 
