@@ -30,8 +30,8 @@ std::vector<int> SearchStrat::next_action(SensorData input) {
         output[1] = 50;
         break;
     case BACK:
-        output[0] = -1;
-        output[1] = -1;
+        output[0] = -100;
+        output[1] = -100;
 
     default:
         break;
@@ -47,7 +47,7 @@ SearchStrat::State SearchStrat::update_state(SensorData input) {
         return BACK;
     }
     else if ((input.line_buffer_[2] > 180 || input.line_buffer_[3] > 180)) {
-        return BACK;
+        return APPROACH;
     } else if (input.dist_buffer_[4] < 75 || input.dist_buffer_[5] < 75) {
         return TURN_RIGHT;
     } else if (input.dist_buffer_[0] < 75 || input.dist_buffer_[1] < 75) {
