@@ -39,7 +39,7 @@ std::vector<int> SearchStrat::next_action(SensorData input) {
 
     return std::vector<int>(output, output + sizeof(output)/sizeof(int));
 }
-
+//maybe
 // Checks sensors and returns the appropriate state of action
 SearchStrat::State SearchStrat::update_state(SensorData input) {
     if ((input.line_buffer_[0] > 0 || input.line_buffer_[1] > 0)) {
