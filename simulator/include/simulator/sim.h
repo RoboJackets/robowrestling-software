@@ -30,6 +30,7 @@
 #include <strategy/Dodge.h>
 
 #include <simulator/physics/robotphysicsupdater.h>
+#include <simulator/physics/robotphysicsupdaterDEBUG.h>
 
 
 
@@ -53,7 +54,7 @@ std::shared_ptr<Robot> robot2_; //see above
 
 std::shared_ptr<sf::RenderWindow> window_;
 
-std::shared_ptr<RobotPhysicsUpdater> physics_updater_;
+std::shared_ptr<RobotPhysicsUpdaterDEBUG> physics_updater_;
 
 sf::Texture robot_texture;
 

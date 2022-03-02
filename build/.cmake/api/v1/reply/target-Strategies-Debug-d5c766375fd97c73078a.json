@@ -87,8 +87,7 @@
 				6,
 				7,
 				8,
-				9,
-				10
+				9
 			]
 		}
 	],
@@ -115,8 +114,7 @@
 				6,
 				7,
 				8,
-				9,
-				10
+				9
 			]
 		}
 	],
@@ -143,25 +141,7 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "strategy/src/roam_strategy.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "strategy/src/avoid_strategy.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
 			"path" : "strategy/src/idle_strategy.cpp",
-			"sourceGroupIndex" : 0
-		},
-		{
-			"backtrace" : 1,
-			"compileGroupIndex" : 0,
-			"path" : "strategy/src/loop_strategy.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
@@ -180,6 +160,18 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "strategy/src/search_strategy.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "strategy/src/Dodge.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "strategy/src/state_strategy.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{

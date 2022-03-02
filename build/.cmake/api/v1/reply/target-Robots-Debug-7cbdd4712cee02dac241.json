@@ -43,7 +43,13 @@
 			{
 				"command" : 1,
 				"file" : 1,
-				"line" : 24,
+				"line" : 19,
+				"parent" : 2
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 27,
 				"parent" : 2
 			},
 			{
@@ -74,14 +80,18 @@
 				},
 				{
 					"backtrace" : 4,
+					"path" : "/home/jnickles/robowrestling-software/openings/include"
+				},
+				{
+					"backtrace" : 5,
 					"path" : "/home/jnickles/robowrestling-software/simulator/include"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 6,
 					"path" : "/home/jnickles/robowrestling-software/simulator/src/simulator/robots"
 				},
 				{
-					"backtrace" : 5,
+					"backtrace" : 6,
 					"path" : "/home/jnickles/robowrestling-software/lib"
 				}
 			],

@@ -48,7 +48,13 @@
 			{
 				"command" : 2,
 				"file" : 1,
-				"line" : 24,
+				"line" : 19,
+				"parent" : 3
+			},
+			{
+				"command" : 2,
+				"file" : 1,
+				"line" : 27,
 				"parent" : 3
 			}
 		]
@@ -73,6 +79,10 @@
 				},
 				{
 					"backtrace" : 5,
+					"path" : "/home/jnickles/robowrestling-software/openings/include"
+				},
+				{
+					"backtrace" : 6,
 					"path" : "/home/jnickles/robowrestling-software/simulator/include"
 				},
 				{
@@ -90,6 +100,10 @@
 				{
 					"backtrace" : 2,
 					"path" : "/home/jnickles/robowrestling-software/strategy"
+				},
+				{
+					"backtrace" : 2,
+					"path" : "/home/jnickles/robowrestling-software/openings"
 				}
 			],
 			"language" : "CXX",
@@ -97,7 +111,8 @@
 			[
 				0,
 				1,
-				2
+				2,
+				3
 			]
 		}
 	],
@@ -106,6 +121,10 @@
 		{
 			"backtrace" : 2,
 			"id" : "Strategies::@241ee8dc02c6c148167d"
+		},
+		{
+			"backtrace" : 2,
+			"id" : "Openings::@b7f98ef68e7e1a6afe38"
 		},
 		{
 			"backtrace" : 2,
@@ -145,6 +164,11 @@
 				"role" : "libraries"
 			},
 			{
+				"backtrace" : 2,
+				"fragment" : "../../openings/libOpenings.a",
+				"role" : "libraries"
+			},
+			{
 				"fragment" : "/usr/lib/x86_64-linux-gnu/libsfml-graphics.so",
 				"role" : "libraries"
 			},
@@ -174,7 +198,8 @@
 			[
 				0,
 				1,
-				2
+				2,
+				3
 			]
 		}
 	],
@@ -196,6 +221,12 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "simulator/src/simulator/physics/robotphysicsupdater.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "simulator/src/simulator/physics/robotphysicsupdaterDEBUG.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],
