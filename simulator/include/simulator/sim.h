@@ -40,7 +40,7 @@
 #define OPENING_2 NoOpening
 
 #define STRATEGY_1 KevinBrodyStrategyEnemy // Edit to change Robot 1's strategy. Remember to include
-#define STRATEGY_2 slammywhammy
+#define STRATEGY_2 IdleStrategy
 
 
 int radius_; //radius of the dohyo
