@@ -94,9 +94,11 @@ void update() {
 
 int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (r1 angle in rad cw) (r2 x right of 0) (r2 y down of 0) (r2 angle in rad cw) (duration for sim: 0 = realtime elapsed)
     int screen = 0;
-    StartMenu s_menu = StartMenu();
+    StartMenu s_menu = StartMenu(window_);
     while (screen >= 0) {
-        screen = s_menu.Update(window_);
+        s_menu.ProcessInput();
+        screen = s_menu.Update();
+        s_menu.Draw();
     }
     robot_texture.loadFromFile("simulator/res/robot_sprite.png");
     default_font.loadFromFile("simulator/res/arial.ttf");

@@ -2,8 +2,9 @@
 
 class Screen {
     public:
+        Screen();
         virtual void Init();
 		virtual void Draw();
         virtual void ProcessInput();
-        virtual void Update();
+        virtual int Update();
 };
