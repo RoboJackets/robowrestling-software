@@ -1,0 +1,123 @@
+{
+	"archive" : {},
+	"artifacts" : 
+	[
+		{
+			"path" : "simulator/src/simulator/robots/libRobots.a"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"include_directories",
+			"target_include_directories"
+		],
+		"files" : 
+		[
+			"simulator/src/simulator/robots/CMakeLists.txt",
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 1,
+				"parent" : 0
+			},
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 16,
+				"parent" : 2
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 24,
+				"parent" : 2
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 2,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : " -Wuninitialized -Wall -g  "
+				},
+				{
+					"fragment" : "-std=gnu++14"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 3,
+					"path" : "/home/jnickles/robowrestling-software/strategy/include"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "/home/jnickles/robowrestling-software/simulator/include"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "/home/jnickles/robowrestling-software/simulator/src/simulator/robots"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "/home/jnickles/robowrestling-software/lib"
+				}
+			],
+			"language" : "CXX",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"id" : "Robots::@48dda866fbf559114580",
+	"name" : "Robots",
+	"nameOnDisk" : "libRobots.a",
+	"paths" : 
+	{
+		"build" : "simulator/src/simulator/robots",
+		"source" : "simulator/src/simulator/robots"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "simulator/src/simulator/robots/basicrobot.cpp",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "STATIC_LIBRARY"
+}

@@ -1,0 +1,163 @@
+{
+	"archive" : {},
+	"artifacts" : 
+	[
+		{
+			"path" : "simulator/src/simulator/sensors/libSensors.a"
+		}
+	],
+	"backtrace" : 1,
+	"backtraceGraph" : 
+	{
+		"commands" : 
+		[
+			"add_library",
+			"include_directories",
+			"target_include_directories"
+		],
+		"files" : 
+		[
+			"simulator/src/simulator/sensors/CMakeLists.txt",
+			"CMakeLists.txt"
+		],
+		"nodes" : 
+		[
+			{
+				"file" : 0
+			},
+			{
+				"command" : 0,
+				"file" : 0,
+				"line" : 1,
+				"parent" : 0
+			},
+			{
+				"file" : 1
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 16,
+				"parent" : 2
+			},
+			{
+				"command" : 1,
+				"file" : 1,
+				"line" : 24,
+				"parent" : 2
+			},
+			{
+				"command" : 2,
+				"file" : 0,
+				"line" : 2,
+				"parent" : 0
+			}
+		]
+	},
+	"compileGroups" : 
+	[
+		{
+			"compileCommandFragments" : 
+			[
+				{
+					"fragment" : " -Wuninitialized -Wall -g  "
+				},
+				{
+					"fragment" : "-std=gnu++14"
+				}
+			],
+			"includes" : 
+			[
+				{
+					"backtrace" : 3,
+					"path" : "/home/jnickles/robowrestling-software/strategy/include"
+				},
+				{
+					"backtrace" : 4,
+					"path" : "/home/jnickles/robowrestling-software/simulator/include"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "/home/jnickles/robowrestling-software/simulator/src/simulator/sensors"
+				},
+				{
+					"backtrace" : 5,
+					"path" : "/home/jnickles/robowrestling-software/lib"
+				}
+			],
+			"language" : "CXX",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			]
+		}
+	],
+	"id" : "Sensors::@ec0cddbe16ef72c6bf75",
+	"name" : "Sensors",
+	"nameOnDisk" : "libSensors.a",
+	"paths" : 
+	{
+		"build" : "simulator/src/simulator/sensors",
+		"source" : "simulator/src/simulator/sensors"
+	},
+	"sourceGroups" : 
+	[
+		{
+			"name" : "Source Files",
+			"sourceIndexes" : 
+			[
+				0,
+				1,
+				2,
+				3,
+				4,
+				5
+			]
+		}
+	],
+	"sources" : 
+	[
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "simulator/src/simulator/sensors/basicrobot_handler.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "simulator/src/simulator/sensors/distance_sensor.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "simulator/src/simulator/sensors/imu.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "simulator/src/simulator/sensors/encoder.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "simulator/src/simulator/sensors/line_sensor.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "simulator/src/simulator/sensors/distance_sensor_j.cpp",
+			"sourceGroupIndex" : 0
+		}
+	],
+	"type" : "STATIC_LIBRARY"
+}

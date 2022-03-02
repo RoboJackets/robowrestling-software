@@ -11,8 +11,8 @@ std::vector<int> KevinBrodyStrategyEnemy::next_action(SensorData input) {
     state = update_state(input);
     switch (state) {
     case FORWARD:
-        output[0] = 5;
-        output[1] = 5;
+        output[0] = 100;
+        output[1] = 100;
         break;
     case BACK:
         output[0] = -100;
@@ -69,6 +69,7 @@ KevinBrodyStrategyEnemy::State KevinBrodyStrategyEnemy::update_state(SensorData 
     
     DISTANCE SENSORS
     Both front sensors = forward
+    Left front sensor
     Both left sensors(close) = forward
     Both left sensors(far) = turn left
     Both right sensors(close) = forward
@@ -79,12 +80,12 @@ KevinBrodyStrategyEnemy::State KevinBrodyStrategyEnemy::update_state(SensorData 
     Mid right and right sensors(far) = turn right
     */
     
-    std::cout << input.dist_buffer_[4] << "\n";
+    std::cout << "( " << input.dist_buffer_[4] << ", " << input.dist_buffer_[5] << " )\n";
    // both line sensor hit
    if (input.line_buffer_[0] > 0 || input.line_buffer_[1] > 0){
         return BACK;
         } 
-    left line sensor hit
+    //left line sensor hit
     else if(input.line_buffer_[0] > 0) {
         return RIGHT_BACK;
     }
@@ -93,16 +94,19 @@ KevinBrodyStrategyEnemy::State KevinBrodyStrategyEnemy::update_state(SensorData 
         return LEFT_BACK;
     }
     // Sensor center left or right hit
-    else if ((input.dist_buffer_[2] < 150 || input.dist_buffer_[3] < 150)) { //front ones
+    else if ((input.dist_buffer_[2] < 150 && input.dist_buffer_[3] < 150)) { //front ones
         return FORWARD;
         } 
+    else if ((input.dist_buffer_[3] < 40) && input.dist_buffer_[4] < 40) {
+        return RIGHT_BACK;
+    }
     // Sensor far or mid left hit - close dist
     else if (input.dist_buffer_[0] < 40 || input.dist_buffer_[1] <= 40){
-        return FORWARD;
+        return TURN_LEFT;
         }
     // Sensor far or mid right hit - close dist
     else if (input.dist_buffer_[4] < 40 || input.dist_buffer_[5] < 40){
-        return FORWARD;
+        return TURN_RIGHT;
         }
     // Sensor far or mid left hit - far dist
     else if (input.dist_buffer_[0] < 150 || input.dist_buffer_[1] < 150){
@@ -114,7 +118,7 @@ KevinBrodyStrategyEnemy::State KevinBrodyStrategyEnemy::update_state(SensorData 
         }
     // No sensor input
     else {
-        return FORWARD;
+        return SEARCH;
     }
 }
 
