@@ -24,6 +24,8 @@
 #define WINDOW_HEIGHT (vis_scale*170)
 #define WINDOW_WIDTH (vis_scale*170)
 
+#define FULL_HEIGHT WINDOW_HEIGHT * 1.25
+
 #define STRATEGY_1 IdleStrategy // Edit to change Robot 1's strategy. Remember to include
 #define STRATEGY_2 SlammyWhammy
 
