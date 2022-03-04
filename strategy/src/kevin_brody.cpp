@@ -11,12 +11,14 @@ std::vector<int> KevinBrodyStrategy::next_action(SensorData input) {
     state = update_state(input);
     switch (state) {
     case FORWARD:
-        output[0] = 50;
-        output[1] = 50;
+        output[0] = 100;
+        output[1] = 100;
+        //        std::cout << "FORWARD" << std::endl;
+
         break;
     case BACK:
-        output[0] = -75;
-        output[1] = -75;
+        output[0] = -100;
+        output[1] = -100;
         break;
     // fast af turn
     case TURN_LEFT:
@@ -33,8 +35,8 @@ std::vector<int> KevinBrodyStrategy::next_action(SensorData input) {
         break;
     // turns in place
     case SEARCH:
-        output[0] = 100;
-        output[1] = -100;
+        output[0] = 50;
+        output[1] = -50;
         break;
     default:
         break;
@@ -63,20 +65,21 @@ KevinBrodyStrategy::State KevinBrodyStrategy::update_state(SensorData input) {
     //     std::cout << "slow down " << input.dist_buffer_[0] << " " << input.dist_buffer_[1] << std::endl;
     //    return BACK;
     // }
-    else if (input.dist_buffer_[2] <125 || input.dist_buffer_[3] < 125) { //front ones // change too 100 for awesome juke
+    else if (input.dist_buffer_[2] < 150 || input.dist_buffer_[3] < 150) { //front ones // change too 100 for awesome juke
          std::cout << "front " << input.dist_buffer_[2] << " " << input.dist_buffer_[3] << std::endl;
          return FORWARD;
 
     }
-    else if (input.dist_buffer_[0] > 255 || input.dist_buffer_[1] > 255) { //left ones
-        std::cout << "left " << std::endl;
-        return TURN_LEFT;
+    else if (input.dist_buffer_[0] < 150 || input.dist_buffer_[1] < 150){
+        std::cout << "left " << input.dist_buffer_[0] << " " << input.dist_buffer_[1] << std::endl;
+    return TURN_LEFT;
     }
-    else if (input.dist_buffer_[4] > 255 || input.dist_buffer_[5] > 255) { //right ones
-        std::cout << "right " << std::endl;
+    // Sensor far or mid right hit - far dist
+    else if (input.dist_buffer_[4] < 150 || input.dist_buffer_[5] < 150){
+        std::cout << "right " << input.dist_buffer_[4] << " " << input.dist_buffer_[5] << std::endl;
         return TURN_RIGHT;
-    }else {
-          std::cout << "STOP " << input.dist_buffer_[2] << " " << input.dist_buffer_[3] << std::endl;
+    } else {
+          std::cout << "SEARCH " << input.dist_buffer_[2] << " " << input.dist_buffer_[3] << std::endl;
         return SEARCH;
         
         //return FORWARD;
