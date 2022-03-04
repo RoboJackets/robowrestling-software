@@ -41,8 +41,8 @@
 #define OPENING_1 NoOpening // Edit to change Robot 1's opening. Remember to include
 #define OPENING_2 NoOpening
 
-#define STRATEGY_1 SideSwipe // Edit to change Robot 1's strategy. Remember to include
-#define STRATEGY_2 SideSwipe
+#define STRATEGY_1 KevinBrodyStrategyEnemy // Edit to change Robot 1's strategy. Remember to include
+#define STRATEGY_2 IdleStrategy
 
 
 int radius_; //radius of the dohyo
