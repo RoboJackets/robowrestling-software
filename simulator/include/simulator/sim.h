@@ -29,6 +29,8 @@
 #include <strategy/search_strategy.h>
 #include <strategy/Dodge.h>
 
+#include <strategy/side_swipe.h>
+
 #include <simulator/physics/robotphysicsupdater.h>
 
 
@@ -39,8 +41,8 @@
 #define OPENING_1 NoOpening // Edit to change Robot 1's opening. Remember to include
 #define OPENING_2 NoOpening
 
-#define STRATEGY_1 KevinBrodyStrategyEnemy // Edit to change Robot 1's strategy. Remember to include
-#define STRATEGY_2 slammywhammy
+#define STRATEGY_1 SideSwipe // Edit to change Robot 1's strategy. Remember to include
+#define STRATEGY_2 SideSwipe
 
 
 int radius_; //radius of the dohyo
