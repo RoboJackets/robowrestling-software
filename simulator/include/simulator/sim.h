@@ -36,11 +36,12 @@
 #define WINDOW_HEIGHT (vis_scale*170)
 #define WINDOW_WIDTH (vis_scale*170)
 
-#define OPENING_1 TimedOpening // Edit to change Robot 1's opening. Remember to include
+#define OPENING_1 NoOpening // Edit to change Robot 1's opening. Remember to include
 #define OPENING_2 NoOpening
 
-#define STRATEGY_1 IdleStrategy // Edit to change Robot 1's strategy. Remember to include
+#define STRATEGY_1 Dodge // Edit to change Robot 1's strategy. Remember to include
 #define STRATEGY_2 SlammyWhammy
+//#define STRATEGY_2 IdleStrategy
 
 
 int radius_; //radius of the dohyo
