@@ -23,6 +23,7 @@ void setup() {
 
 void loop() {
   if (HWSERIAL) {
+    //HWSERIAL.write(configUART, 5);
     HWSERIAL.readBytes(byteArray, 9); // write output of read to an array of length 9
     for (int i =0;i<9;i++){
       Serial.print(String(byteArray[i])+ " ");  
