@@ -71,7 +71,7 @@
 <layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
 <layer number="91" name="Nets" color="2" fill="1" visible="no" active="yes"/>
 <layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
-<layer number="93" name="Pins" color="2" fill="1" visible="no" active="yes"/>
+<layer number="93" name="Pins" color="2" fill="1" visible="yes" active="yes"/>
 <layer number="94" name="Symbols" color="4" fill="1" visible="yes" active="yes"/>
 <layer number="95" name="Names" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="96" name="Values" color="7" fill="1" visible="yes" active="yes"/>
@@ -433,6 +433,44 @@ by exp-lbrs.ulp</description>
 <text x="-7" y="-6" size="1" layer="27" font="vector" align="top-left">&gt;VALUE</text>
 <rectangle x1="-7.62" y1="-4.699" x2="7.62" y2="4.826" layer="39"/>
 </package>
+<package name="MCP23017">
+<description>https://www.mouser.com/datasheet/2/268/20001952C-1129816.pdf</description>
+<wire x1="-5.1" y1="-2.75" x2="5.1" y2="-2.75" width="0.2" layer="21"/>
+<wire x1="5.1" y1="-2.75" x2="5.1" y2="2.75" width="0.2" layer="21"/>
+<wire x1="-5.1" y1="-2.75" x2="-5.1" y2="2.75" width="0.2" layer="21"/>
+<wire x1="-5.1" y1="2.75" x2="5.1" y2="2.75" width="0.2" layer="21"/>
+<smd name="21" x="0.325" y="3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="20" x="0.975" y="3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="19" x="1.625" y="3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="18" x="2.275" y="3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="17" x="2.925" y="3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="16" x="3.575" y="3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="15" x="4.225" y="3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="22" x="-0.325" y="3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="23" x="-0.975" y="3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="25" x="-2.275" y="3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="24" x="-1.625" y="3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="26" x="-2.925" y="3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="27" x="-3.575" y="3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="28" x="-4.225" y="3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="8" x="0.325" y="-3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="9" x="0.975" y="-3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="10" x="1.625" y="-3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="11" x="2.275" y="-3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="12" x="2.925" y="-3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="13" x="3.575" y="-3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="14" x="4.225" y="-3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="7" x="-0.325" y="-3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="6" x="-0.975" y="-3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="5" x="-1.625" y="-3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="4" x="-2.275" y="-3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="3" x="-2.925" y="-3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="2" x="-3.575" y="-3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<smd name="1" x="-4.225" y="-3.375" dx="1.25" dy="0.42" layer="1" rot="R90"/>
+<rectangle x1="-5.2" y1="-4.2" x2="5.2" y2="4.2" layer="39"/>
+<text x="-5" y="5" size="1" layer="25" font="vector" ratio="10">&gt;NAME</text>
+<text x="-5" y="-6" size="1" layer="27" font="vector" ratio="10">&gt;VALUE</text>
+</package>
 </packages>
 <packages3d>
 <package3d name="0603" urn="urn:adsk.eagle:package:39650/1" type="box">
@@ -722,6 +760,42 @@ Temp: -40~+85°C</text>
 <text x="-5.08" y="5.08" size="1.778" layer="95">&gt;NAME</text>
 <text x="-5.08" y="-5.08" size="1.778" layer="96">&gt;VALUE</text>
 </symbol>
+<symbol name="MCP23017T-E/SS">
+<wire x1="-12.7" y1="22.86" x2="12.7" y2="22.86" width="0.254" layer="94"/>
+<wire x1="12.7" y1="22.86" x2="12.7" y2="-22.86" width="0.254" layer="94"/>
+<wire x1="12.7" y1="-22.86" x2="-12.7" y2="-22.86" width="0.254" layer="94"/>
+<wire x1="-12.7" y1="-22.86" x2="-12.7" y2="22.86" width="0.254" layer="94"/>
+<pin name="VDD" x="-17.78" y="20.32" length="middle" direction="pas"/>
+<pin name="VSS" x="17.78" y="-20.32" length="middle" direction="pas" rot="R180"/>
+<pin name="NC1" x="-17.78" y="17.78" length="middle" direction="pas"/>
+<pin name="NC2" x="-17.78" y="15.24" length="middle" direction="pas"/>
+<pin name="SCK" x="-17.78" y="12.7" length="middle" direction="pas"/>
+<pin name="SDA" x="-17.78" y="10.16" length="middle" direction="pas"/>
+<pin name="A2" x="-17.78" y="7.62" length="middle" direction="pas"/>
+<pin name="A1" x="-17.78" y="5.08" length="middle" direction="pas"/>
+<pin name="A0" x="-17.78" y="2.54" length="middle" direction="pas"/>
+<pin name="/RESET" x="-17.78" y="0" length="middle" direction="pas"/>
+<pin name="INTA" x="-17.78" y="-2.54" length="middle" direction="pas"/>
+<pin name="INTB" x="-17.78" y="-5.08" length="middle" direction="pas"/>
+<pin name="GPB7" x="17.78" y="20.32" length="middle" direction="pas" rot="R180"/>
+<pin name="GPB6" x="17.78" y="17.78" length="middle" direction="pas" rot="R180"/>
+<pin name="GPB5" x="17.78" y="15.24" length="middle" direction="pas" rot="R180"/>
+<pin name="GPB4" x="17.78" y="12.7" length="middle" direction="pas" rot="R180"/>
+<pin name="GPB3" x="17.78" y="10.16" length="middle" direction="pas" rot="R180"/>
+<pin name="GPB2" x="17.78" y="7.62" length="middle" direction="pas" rot="R180"/>
+<pin name="GPB1" x="17.78" y="5.08" length="middle" direction="pas" rot="R180"/>
+<pin name="GPB0" x="17.78" y="2.54" length="middle" direction="pas" rot="R180"/>
+<pin name="GPA5" x="17.78" y="-5.08" length="middle" direction="pas" rot="R180"/>
+<pin name="GPA4" x="17.78" y="-7.62" length="middle" direction="pas" rot="R180"/>
+<pin name="GPA3" x="17.78" y="-10.16" length="middle" direction="pas" rot="R180"/>
+<pin name="GPA2" x="17.78" y="-12.7" length="middle" direction="pas" rot="R180"/>
+<pin name="GPA1" x="17.78" y="-15.24" length="middle" direction="pas" rot="R180"/>
+<pin name="GPA7" x="17.78" y="0" length="middle" direction="pas" rot="R180"/>
+<pin name="GPA6" x="17.78" y="-2.54" length="middle" direction="pas" rot="R180"/>
+<pin name="GPA0" x="17.78" y="-17.78" length="middle" direction="pas" rot="R180"/>
+<text x="-12.7" y="25.4" size="1.778" layer="95">&gt;NAME</text>
+<text x="-12.7" y="-25.4" size="1.778" layer="96" align="top-left">&gt;VALUE</text>
+</symbol>
 </symbols>
 <devicesets>
 <deviceset name="0532610471" prefix="J">
@@ -958,6 +1032,50 @@ Amphenol 2x3 1.25mm &lt;br&gt;
 <technology name="">
 <attribute name="DKPN" value="609-2841-ND" constant="no"/>
 </technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="MCP23017T-E/SS" prefix="U">
+<description>16 pin I2C IO Expander
+https://www.mouser.com/datasheet/2/268/20001952C-1129816.pdf</description>
+<gates>
+<gate name="G$1" symbol="MCP23017T-E/SS" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="MCP23017">
+<connects>
+<connect gate="G$1" pin="/RESET" pad="18"/>
+<connect gate="G$1" pin="A0" pad="15"/>
+<connect gate="G$1" pin="A1" pad="16"/>
+<connect gate="G$1" pin="A2" pad="17"/>
+<connect gate="G$1" pin="GPA0" pad="21"/>
+<connect gate="G$1" pin="GPA1" pad="22"/>
+<connect gate="G$1" pin="GPA2" pad="23"/>
+<connect gate="G$1" pin="GPA3" pad="24"/>
+<connect gate="G$1" pin="GPA4" pad="25"/>
+<connect gate="G$1" pin="GPA5" pad="26"/>
+<connect gate="G$1" pin="GPA6" pad="27"/>
+<connect gate="G$1" pin="GPA7" pad="28"/>
+<connect gate="G$1" pin="GPB0" pad="1"/>
+<connect gate="G$1" pin="GPB1" pad="2"/>
+<connect gate="G$1" pin="GPB2" pad="3"/>
+<connect gate="G$1" pin="GPB3" pad="4"/>
+<connect gate="G$1" pin="GPB4" pad="5"/>
+<connect gate="G$1" pin="GPB5" pad="6"/>
+<connect gate="G$1" pin="GPB6" pad="7"/>
+<connect gate="G$1" pin="GPB7" pad="8"/>
+<connect gate="G$1" pin="INTA" pad="19"/>
+<connect gate="G$1" pin="INTB" pad="20"/>
+<connect gate="G$1" pin="NC1" pad="11"/>
+<connect gate="G$1" pin="NC2" pad="14"/>
+<connect gate="G$1" pin="SCK" pad="12"/>
+<connect gate="G$1" pin="SDA" pad="13"/>
+<connect gate="G$1" pin="VDD" pad="9"/>
+<connect gate="G$1" pin="VSS" pad="10"/>
+</connects>
+<technologies>
+<technology name=""/>
 </technologies>
 </device>
 </devices>
