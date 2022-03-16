@@ -4,6 +4,7 @@
 #include <simulator/sensors/abstract_sensor_handler.h>
 
 #include <simulator/sensors/distance_sensor_j.h>
+#include <simulator/sensors/gps_sensor.h>
 #include <simulator/sensors/imu.h>
 #include <simulator/sensors/line_sensor.h>
 #include <simulator/sensors/encoder.h>

@@ -4,12 +4,23 @@ BasicRobotHandler::BasicRobotHandler(std::shared_ptr<Robot> r, std::shared_ptr<R
     robot_ = r;
     opponent_ = o;
     dist_ = std::vector<std::shared_ptr<DistanceSensorJ>>();
-    dist_.push_back(std::make_shared<DistanceSensorJ>(r, r->width_/2 - 3, r->length_/2, -10*M_PI/180, 3.6*M_PI/180, 150));
-    dist_.push_back(std::make_shared<DistanceSensorJ>(r, r->width_/2 - 3, r->length_/4, -5*M_PI/180, 3.6*M_PI/180, 150));
-    dist_.push_back(std::make_shared<DistanceSensorJ>(r, r->width_/2 - 3, r->length_/8, 0, 3.6*M_PI/180, 150));
-    dist_.push_back(std::make_shared<DistanceSensorJ>(r, r->width_/2 - 3, -r->length_/8, 0, 3.6*M_PI/180, 150));
-    dist_.push_back(std::make_shared<DistanceSensorJ>(r, r->width_/2 - 3, -r->length_/4, 5*M_PI/180, 3.6*M_PI/180, 150));
-    dist_.push_back(std::make_shared<DistanceSensorJ>(r, r->width_/2 - 3, -r->length_/2, 10*M_PI/180, 3.6*M_PI/180, 150));
+
+    // these should be the right positions but i havent done the cones yet
+    dist_.push_back(std::make_shared<DistanceSensorJ>(r, r->width_/2, 0, -10*M_PI/180, 3.6*M_PI/180, 150));
+    dist_.push_back(std::make_shared<DistanceSensorJ>(r, r->width_/2, r->length_, -10*M_PI/180, 3.6*M_PI/180, 150));
+    dist_.push_back(std::make_shared<DistanceSensorJ>(r, 0, r->length_/2, -10*M_PI/180, 3.6*M_PI/180, 150));
+    dist_.push_back(std::make_shared<DistanceSensorJ>(r, r->width_, r->length_/2, -10*M_PI/180, 3.6*M_PI/180, 150));
+
+    // i dont think we need the extra parameters, just leave it liek this for now in case stuff breaks
+    dist_.push_back(std::make_shared<GPSSensor>(r, r->width_/2, r->length_/2, -10*M_PI/180, 3.6*M_PI/180, 150));
+
+
+    // dist_.push_back(std::make_shared<DistanceSensorJ>(r, r->width_/2 - 3, r->length_/2, -10*M_PI/180, 3.6*M_PI/180, 150));
+    // dist_.push_back(std::make_shared<DistanceSensorJ>(r, r->width_/2 - 3, r->length_/4, -5*M_PI/180, 3.6*M_PI/180, 150));
+    // dist_.push_back(std::make_shared<DistanceSensorJ>(r, r->width_/2 - 3, r->length_/8, 0, 3.6*M_PI/180, 150));
+    // dist_.push_back(std::make_shared<DistanceSensorJ>(r, r->width_/2 - 3, -r->length_/8, 0, 3.6*M_PI/180, 150));
+    // dist_.push_back(std::make_shared<DistanceSensorJ>(r, r->width_/2 - 3, -r->length_/4, 5*M_PI/180, 3.6*M_PI/180, 150));
+    // dist_.push_back(std::make_shared<DistanceSensorJ>(r, r->width_/2 - 3, -r->length_/2, 10*M_PI/180, 3.6*M_PI/180, 150));
     imu_ = std::make_shared<IMU>(r);
     line_ = std::vector<std::shared_ptr<LineSensor>>();
     line_.push_back(std::make_shared<LineSensor>(r, 75, 200, 200, r->width_/2, r->length_/2));

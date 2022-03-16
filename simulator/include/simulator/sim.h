@@ -41,7 +41,7 @@
 #define OPENING_1 NoOpening // Edit to change Robot 1's opening. Remember to include
 #define OPENING_2 NoOpening
 
-#define STRATEGY_1 SlammyWhammy // Edit to change Robot 1's strategy. Remember to include
+#define STRATEGY_1 IdleStrategy // Edit to change Robot 1's strategy. Remember to include
 #define STRATEGY_2 IdleStrategy
 
 
