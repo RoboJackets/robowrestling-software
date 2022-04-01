@@ -8,11 +8,11 @@
 
 class GPSSensor : public AbstractGPSSensor {
     public: 
-        AbstractGPSSensor(std::shared_ptr<Robot> robot, double sens_x, double sens_y, double sens_angle, double cone_angle, double cone_length);
-        double read(std::shared_ptr<Robot> target);
-        double get_distance(pdd corner);
+        GPSSensor(std::shared_ptr<Robot> robot, double sens_x, double sens_y);
+        // double read(std::shared_ptr<Robot> robot); //read it's own data
+        // double get_distance(pdd corner); // not sure if we really need to get distance, we need to get values 
+        double get_y_pos();
+        double get_x_pos();
 };
-
-pdd lineLineIntersection(pdd A, pdd B, pdd C, pdd D);
 
 #endif

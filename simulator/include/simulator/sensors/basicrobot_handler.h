@@ -4,6 +4,8 @@
 #include <simulator/sensors/abstract_sensor_handler.h>
 
 #include <simulator/sensors/distance_sensor_j.h>
+
+// gps pagchomp
 #include <simulator/sensors/gps_sensor.h>
 #include <simulator/sensors/imu.h>
 #include <simulator/sensors/line_sensor.h>
@@ -19,6 +21,7 @@ class BasicRobotHandler : public AbstractSensorHandler {
         std::shared_ptr<IMU> imu_;
         std::vector<std::shared_ptr<LineSensor>> line_;
         std::vector<std::shared_ptr<Encoder>> enc_;
+        std::vector<std::shared_ptr<GPSSensor>> gps_;
 
 };
 
