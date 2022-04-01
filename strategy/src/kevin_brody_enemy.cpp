@@ -79,46 +79,29 @@ KevinBrodyStrategyEnemy::State KevinBrodyStrategyEnemy::update_state(SensorData 
     Mid right and right sensors(close) = right forward
     Mid right and right sensors(far) = turn right
     */
-    
-    std::cout << "( " << input.dist_buffer_[4] << ", " << input.dist_buffer_[5] << " )\n";
-   // both line sensor hit
-   if (input.line_buffer_[0] > 0 || input.line_buffer_[1] > 0){
-        return BACK;
-        } 
-    //left line sensor hit
-    else if(input.line_buffer_[0] > 0) {
-        return RIGHT_BACK;
-    }
-    //right line sensor hit
-    else if(input.line_buffer_[1] > 0) {
-        return LEFT_BACK;
-    }
-    // Sensor center left or right hit
-    else if ((input.dist_buffer_[2] < 150 && input.dist_buffer_[3] < 150)) { //front ones
-        return FORWARD;
-        } 
-    else if ((input.dist_buffer_[3] < 40) && input.dist_buffer_[4] < 40) {
-        return RIGHT_BACK;
-    }
-    // Sensor far or mid left hit - close dist
-    else if (input.dist_buffer_[0] < 40 || input.dist_buffer_[1] <= 40){
-        return TURN_LEFT;
-        }
-    // Sensor far or mid right hit - close dist
-    else if (input.dist_buffer_[4] < 40 || input.dist_buffer_[5] < 40){
-        return TURN_RIGHT;
-        }
-    // Sensor far or mid left hit - far dist
-    else if (input.dist_buffer_[0] < 150 || input.dist_buffer_[1] < 150){
-        return TURN_LEFT;
-        }
-    // Sensor far or mid right hit - far dist
-    else if (input.dist_buffer_[4] < 150 || input.dist_buffer_[5] < 150){
-        return TURN_RIGHT;
-        }
-    // No sensor input
-    else {
-        return SEARCH;
+    std::cout << "( " << input.dist_buffer_[0] << ", " << input.dist_buffer_[1] << ", " 
+    << input.dist_buffer_[2] << ", " << input.dist_buffer_[3] << ", " 
+    << input.dist_buffer_[4] <<", " << input.dist_buffer_[5] << " )\n";
+   if(input.line_buffer_[0] > 150 && input.line_buffer_[1] > 150) {
+       return BACK;
+   }
+   else if(input.line_buffer_[0] > 150) {
+       return RIGHT_BACK;
+   }
+   else if(input.line_buffer_[1] > 150) {
+       return LEFT_BACK;
+   }
+   else if(input.dist_buffer_[2] < 150 && input.dist_buffer_[3] < 150) {
+       return FORWARD;
+   }
+   else if(input.dist_buffer_[0] < 100 && input.dist_buffer_[1] < 100) {
+       return TURN_LEFT;
+   }
+   else if(input.dist_buffer_[4] < 100 && input.dist_buffer_[5] < 100) {
+       return TURN_RIGHT;
+   }
+    else{ 
+        return STOP;
     }
 }
 
