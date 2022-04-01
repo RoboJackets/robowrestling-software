@@ -41,15 +41,9 @@
 #define OPENING_1 NoOpening // Edit to change Robot 1's opening. Remember to include
 #define OPENING_2 NoOpening
 
-<<<<<<< HEAD
 #define STRATEGY_1 SlammyWhammy // Edit to change Robot 1's strategy. Remember to include
 #define STRATEGY_2 IdleStrategy
 
-=======
-#define STRATEGY_1 Dodge // Edit to change Robot 1's strategy. Remember to include
-#define STRATEGY_2 SlammyWhammy
-//#define STRATEGY_2 IdleStrategy
->>>>>>> 0da45a7956c1d5e252ef35e32b657ec09f2b354e
 
 int radius_; //radius of the dohyo
 double elapsed_total;
