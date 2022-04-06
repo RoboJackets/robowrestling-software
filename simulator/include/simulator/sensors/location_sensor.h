@@ -5,10 +5,10 @@
 
 class LocactionSensor : public AbstractLocaitonSensor {
     public:
-        LocactionSensor(std::shared_ptr<Robot> robot, double d_x, double d_y);
+        LocactionSensor(std::shared_ptr<Robot> robot);
         double read();
         double getX();
         double getY();
-}
+};
 
 #endif
