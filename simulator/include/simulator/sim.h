@@ -12,6 +12,7 @@
 #include <simulator/robots/robot.h>
 #include <simulator/robots/basicrobot.h>
 #include <simulator/sensors/basicrobot_handler.h>
+#include <simulator/sensors/brodyrobot_handler.h>
 
 // Opening Includes
 #include <opening/timed_opening.h>

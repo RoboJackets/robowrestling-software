@@ -5,10 +5,12 @@
 
 class AbstractLocaitonSensor {
     public:
-        std::shared_ptr<Robot> _robot;
-        double _d_x;
-        double _d_y;
-        virtual double read() = 0;
-}
+        std::shared_ptr<Robot> robot_;
+        double sens_x_;
+        double sens_y_;
+        virtual std::vector<double> read() = 0;
+        double get_x();
+        double get_y();
+};
 
 #endif

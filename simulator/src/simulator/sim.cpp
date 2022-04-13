@@ -95,8 +95,8 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
     OPENING_2 r2_opening = OPENING_2();
     STRATEGY_1 r1_drive = STRATEGY_1();
     STRATEGY_2 r2_drive = STRATEGY_2();
-    BasicRobotHandler r1_handler = BasicRobotHandler(robot1_, robot2_);
-    BasicRobotHandler r2_handler = BasicRobotHandler(robot2_, robot1_);
+    BrodyRobotHandler r1_handler = BrodyRobotHandler(robot1_, robot2_);
+    BrodyRobotHandler r2_handler = BrodyRobotHandler(robot2_, robot1_);
 
     SensorData r1_data;
     SensorData r2_data;

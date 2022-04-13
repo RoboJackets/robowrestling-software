@@ -3,12 +3,12 @@
 
 #include <simulator/sensors/abstract_location_sensor.h>
 
-class LocactionSensor : public AbstractLocaitonSensor {
+class LocationSensor : public AbstractLocaitonSensor {
     public:
-        LocactionSensor(std::shared_ptr<Robot> robot);
-        double read();
-        double getX();
-        double getY();
+        LocationSensor(std::shared_ptr<Robot> robot, double sens_x, double sens_y);
+        std::vector<double> read();
+        double get_x();
+        double get_y();
 };
 
 #endif
