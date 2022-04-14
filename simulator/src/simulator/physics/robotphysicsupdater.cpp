@@ -116,10 +116,10 @@ void RobotPhysicsUpdater::collision_handler(std::shared_ptr<Robot> r1, std::shar
  * @param wheel_ds the percentage the motor is powered at
  * @param current_vel current velocity for that side of the robot
  * @param robot the robot
- * @param duration idk
+ * @param duration simulator elapsed time
  * @return double -- the new velocity 
  */
-double RobotPhysicsUpdater::compute_wheel_velocity(double wheel_ds, double current_vel, std::shared_ptr<Robot> robot, double duration) {
+double RobotPhysicsUpdater::compute_wheel_velocity(std::shared_ptr<Robot> robot, double wheel_ds, double current_vel, double duration) {
 	double desired_velocity = (wheel_ds/100.0) * robot->max_wheel_velocity_;
 	double new_velocity = desired_velocity; 
 	if (current_vel < desired_velocity) {
@@ -142,12 +142,12 @@ double RobotPhysicsUpdater::compute_wheel_velocity(double wheel_ds, double curre
 
 void RobotPhysicsUpdater::move_robot(std::shared_ptr<Robot> r, double left_wheel, double right_wheel, double duration) {
 	//calculate how fast the right wheel moves
-	double right_new_velocity = compute_wheel_velocity(right_wheel, r->right_wheel_velocity_, r, duration);
+	double right_new_velocity = compute_wheel_velocity(r, right_wheel, r->right_wheel_velocity_, duration);
 	double average_right_velocity = (right_new_velocity + r->right_wheel_velocity_) / 2;
 	r->right_wheel_velocity_ = right_new_velocity;
 	
 	//calculate how fast the left wheel moves
-	double left_new_velocity = compute_wheel_velocity(left_wheel, r->left_wheel_velocity_, r, duration);
+	double left_new_velocity = compute_wheel_velocity(r, left_wheel, r->left_wheel_velocity_, duration);
 	double average_left_velocity = (left_new_velocity + r->left_wheel_velocity_) / 2;
 	r->left_wheel_velocity_ = left_new_velocity;
 
@@ -159,19 +159,21 @@ void RobotPhysicsUpdater::move_robot(std::shared_ptr<Robot> r, double left_wheel
 		r->x_pos_ += x_change;
 		r->y_pos_ += y_change;
 	} else if (average_left_velocity == -average_right_velocity) {
-		double rotational_velocity = (r->wheel_radius_ * (average_right_velocity - average_left_velocity))/(r->width_);
+		double rotational_velocity = (average_left_velocity - average_right_velocity)/(r->width_) * r->wheel_radius_; 
 		double angle_change = rotational_velocity * duration;
-		r->angle_ += angle_change;
+		r->angle_ -= angle_change;
 	} else {
 		//Kinematics brought to you by http://www.cs.columbia.edu/~allen/F15/NOTES/icckinematics.pdf
 		average_left_velocity = average_left_velocity * r->wheel_radius_;
 		average_right_velocity = average_right_velocity * r->wheel_radius_;
-		double rotational_velocity = (average_right_velocity - average_left_velocity)/(r->width_);
+		double rotational_velocity = (average_left_velocity - average_right_velocity)/(r->width_);
 		double curvature_radius = 0;
-		if (average_left_velocity == 0 || average_right_velocity == 0) {
+		if (average_left_velocity == 0) {
+			curvature_radius = -r->width_/2;
+		} else if (average_right_velocity == 0) {
 			curvature_radius = r->width_/2;
 		} else {
-			curvature_radius = r->width_*((average_left_velocity + average_right_velocity)/(average_right_velocity - average_left_velocity))/2;
+			curvature_radius = r->width_*((average_left_velocity + average_right_velocity)/(average_left_velocity - average_right_velocity))/2;
 		}
 		double angle_change = rotational_velocity * duration;
 		double icc_x = r->x_pos_ - curvature_radius * sin(r->angle_);
@@ -180,6 +182,6 @@ void RobotPhysicsUpdater::move_robot(std::shared_ptr<Robot> r, double left_wheel
 		double new_y = ((r->x_pos_ - icc_x) * sin(angle_change)) + ((r->y_pos_ - icc_y) * cos(angle_change)) + icc_y;
 		r->x_pos_ = new_x;
 		r->y_pos_ = new_y;
-		r->angle_ += angle_change;
+		r->angle_ -= angle_change;
 	}
 }

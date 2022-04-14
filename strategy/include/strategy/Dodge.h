@@ -18,7 +18,12 @@ public:
     IDLE,
     APPROACH,
     TURN_RIGHT,
-    TURN_LEFT
+    TURN_LEFT,
+    //Added
+    FORWARD,
+    RIGHT,
+    LEFT,
+    SNEAKING
   };
   State state;
 

@@ -30,7 +30,7 @@ class RobotPhysicsUpdater {
         bool is_between_ordered(double val, double lower_bound, double upper_bound);
 
         private: 
-        double compute_wheel_velocity(double wheel_ds, double current_vel, std::shared_ptr<Robot> robot, double duration); 
+        double compute_wheel_velocity(std::shared_ptr<Robot> robot, double wheel_ds, double current_vel, double duration); 
 
 };
 
