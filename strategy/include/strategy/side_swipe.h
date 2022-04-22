@@ -5,7 +5,7 @@
 #include <strategy/strategy.h>
 #include <iostream>
 #include <chrono>
-#include <math.h>
+#include <cmath>
 #define duration(a) std::chrono::duration_cast<std::chrono::nanoseconds>(a).count()
 #define timeNow() std::chrono::high_resolution_clock::now()
 

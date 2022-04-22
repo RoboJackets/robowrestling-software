@@ -18,17 +18,17 @@ std::vector<int> SideSwipe::next_action(SensorData input) {
     /* compute angle */
     double elapsedTime = duration(timeNow() - lastTime) / 1000000000.0;
     currentAngle += input.z_gyro_ * elapsedTime;
-    if (currentAngle > 6.28) {
+    
+    /*if (currentAngle > 6.28) {
         currentAngle -= 6.28;
     } else if (currentAngle < -6.28) {
         currentAngle += 6.28;
-    }
+    }*/
 
-    if (currentAngle < 3.10) {
-        output[0] = -5;
-        output[1] = 5;
+    if (currentAngle < 3.14) {
+        output[0] = -2;
+        output[1] = 2;
     } else {
-        std::cout << "stop" << std::endl;
         output[0] = 0;
         output[1] = 0;
     }
