@@ -6381,6 +6381,32 @@ by exp-lbrs.ulp</description>
 <rectangle x1="0.3302" y1="-0.4699" x2="0.8303" y2="0.4801" layer="51"/>
 <rectangle x1="-0.1999" y1="-0.3" x2="0.1999" y2="0.3" layer="35"/>
 </package>
+<package name="0532610671">
+<description>https://www.molex.com/pdm_docs/sd/532610671_sd.pdf</description>
+<rectangle x1="-3.6012" y1="1.5238" x2="-2.6488" y2="3.2762" layer="29"/>
+<rectangle x1="4.5488" y1="-2.0762" x2="6.8012" y2="1.0762" layer="29"/>
+<rectangle x1="-6.8012" y1="-2.0762" x2="-4.5488" y2="1.0762" layer="29"/>
+<rectangle x1="-2.3512" y1="1.5238" x2="-1.3988" y2="3.2762" layer="29"/>
+<rectangle x1="-1.1012" y1="1.5238" x2="-0.1488" y2="3.2762" layer="29"/>
+<rectangle x1="0.1488" y1="1.5238" x2="1.1012" y2="3.2762" layer="29"/>
+<rectangle x1="1.3988" y1="1.5238" x2="2.3512" y2="3.2762" layer="29"/>
+<rectangle x1="2.6488" y1="1.5238" x2="3.6012" y2="3.2762" layer="29"/>
+<smd name="1" x="-3.125" y="2.4" dx="0.8" dy="1.6" layer="1" stop="no"/>
+<smd name="M2" x="5.675" y="-0.5" dx="2.1" dy="3" layer="1" stop="no"/>
+<smd name="2" x="-1.875" y="2.4" dx="0.8" dy="1.6" layer="1" stop="no"/>
+<smd name="3" x="-0.625" y="2.4" dx="0.8" dy="1.6" layer="1" stop="no"/>
+<smd name="4" x="0.625" y="2.4" dx="0.8" dy="1.6" layer="1" stop="no"/>
+<smd name="5" x="1.875" y="2.4" dx="0.8" dy="1.6" layer="1" stop="no"/>
+<smd name="6" x="3.125" y="2.4" dx="0.8" dy="1.6" layer="1" stop="no"/>
+<smd name="M1" x="-5.675" y="-0.5" dx="2.1" dy="3" layer="1" stop="no"/>
+<wire x1="-4.4742" y1="1.4258" x2="4.4742" y2="1.4258" width="0.2" layer="21"/>
+<wire x1="4.4742" y1="1.4258" x2="4.4742" y2="-2.44" width="0.1524" layer="21"/>
+<wire x1="4.4742" y1="-2.44" x2="-4.4742" y2="-2.44" width="0.1524" layer="21"/>
+<wire x1="-4.4742" y1="-2.44" x2="-4.4742" y2="1.4258" width="0.1524" layer="21"/>
+<rectangle x1="-4.525" y1="-2.44" x2="4.525" y2="1.502" layer="39"/>
+<text x="-5.27" y="4" size="1" layer="25" font="vector" ratio="10">&gt;Name</text>
+<text x="-5.27" y="-4.27" size="1" layer="27" font="vector" ratio="10" align="top-left">&gt;Value</text>
+</package>
 </packages>
 <packages3d>
 <package3d name="0603" urn="urn:adsk.eagle:package:39650/1" type="box">
@@ -6440,6 +6466,26 @@ by exp-lbrs.ulp</description>
 <text x="0" y="-1.524" size="1.778" layer="96" font="vector" align="top-center">&gt;VALUE</text>
 <pin name="2" x="5.08" y="0" visible="off" length="short" direction="pas" swaplevel="1" rot="R180"/>
 <pin name="1" x="-5.08" y="0" visible="off" length="short" direction="pas" swaplevel="1"/>
+</symbol>
+<symbol name="CONN_06">
+<wire x1="3.81" y1="-5.08" x2="-3.81" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="-3.81" y1="5.08" x2="-3.81" y2="-5.08" width="0.254" layer="94"/>
+<wire x1="3.81" y1="-5.08" x2="3.81" y2="5.08" width="0.254" layer="94"/>
+<wire x1="-3.81" y1="5.08" x2="3.81" y2="5.08" width="0.254" layer="94"/>
+<wire x1="1.27" y1="2.54" x2="2.54" y2="2.54" width="0.6096" layer="94"/>
+<wire x1="1.27" y1="0" x2="2.54" y2="0" width="0.6096" layer="94"/>
+<wire x1="1.27" y1="-2.54" x2="2.54" y2="-2.54" width="0.6096" layer="94"/>
+<wire x1="-2.54" y1="2.54" x2="-1.27" y2="2.54" width="0.6096" layer="94"/>
+<wire x1="-2.54" y1="0" x2="-1.27" y2="0" width="0.6096" layer="94"/>
+<wire x1="-2.54" y1="-2.54" x2="-1.27" y2="-2.54" width="0.6096" layer="94"/>
+<text x="-2.54" y="-7.62" size="1.778" layer="96" align="top-left">&gt;VALUE</text>
+<text x="-2.54" y="7.62" size="1.778" layer="95">&gt;NAME</text>
+<pin name="1" x="7.62" y="-2.54" visible="pad" length="middle" direction="pas" swaplevel="1" rot="R180"/>
+<pin name="3" x="7.62" y="0" visible="pad" length="middle" direction="pas" swaplevel="1" rot="R180"/>
+<pin name="5" x="7.62" y="2.54" visible="pad" length="middle" direction="pas" swaplevel="1" rot="R180"/>
+<pin name="2" x="-7.62" y="-2.54" visible="pad" length="middle" direction="pas" swaplevel="1"/>
+<pin name="4" x="-7.62" y="0" visible="pad" length="middle" direction="pas" swaplevel="1"/>
+<pin name="6" x="-7.62" y="2.54" visible="pad" length="middle" direction="pas" swaplevel="1"/>
 </symbol>
 </symbols>
 <devicesets>
@@ -6516,6 +6562,31 @@ Datasheet Link: https://industrial.panasonic.com/ww/products/pt/general-purpose-
 <technology name="">
 <attribute name="PROD_ID" value="P6.2GCT-ND"/>
 <attribute name="VALUE" value="100K"/>
+</technology>
+</technologies>
+</device>
+</devices>
+</deviceset>
+<deviceset name="0532610671">
+<description>0532610671 &lt;br&gt;
+Molex 6POS 1.25MM SMD &lt;br&gt; 
+&lt;a href = "https://www.molex.com/pdm_docs/sd/532610671_sd.pdf"&gt;Datasheet&lt;\a&gt;</description>
+<gates>
+<gate name="G$1" symbol="CONN_06" x="0" y="0"/>
+</gates>
+<devices>
+<device name="" package="0532610671">
+<connects>
+<connect gate="G$1" pin="1" pad="1"/>
+<connect gate="G$1" pin="2" pad="2"/>
+<connect gate="G$1" pin="3" pad="3"/>
+<connect gate="G$1" pin="4" pad="4"/>
+<connect gate="G$1" pin="5" pad="5"/>
+<connect gate="G$1" pin="6" pad="6"/>
+</connects>
+<technologies>
+<technology name="">
+<attribute name="DKPN" value="WM7624TR-ND" constant="no"/>
 </technology>
 </technologies>
 </device>
@@ -6703,6 +6774,7 @@ Datasheet Link: https://industrial.panasonic.com/ww/products/pt/general-purpose-
 <part name="R27" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="2k"/>
 <part name="R28" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" deviceset="1KOHM" device="-0603-1/10W-1%" package3d_urn="urn:adsk.eagle:package:39650/1" value="3k"/>
 <part name="GND39" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
+<part name="U$2" library="Spici_ControlBoard" deviceset="0532610671" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -8547,6 +8619,7 @@ Datasheet Link: https://industrial.panasonic.com/ww/products/pt/general-purpose-
 <sheet>
 <plain>
 <text x="10.16" y="231.14" size="6.4516" layer="97">Quadrature Encoder/Decoder</text>
+<text x="58.42" y="266.7" size="6.4516" layer="97">Connectors (to PDB)</text>
 </plain>
 <instances>
 <instance part="FRAME2" gate="G$1" x="0" y="0" smashed="yes"/>
@@ -8629,6 +8702,10 @@ Datasheet Link: https://industrial.panasonic.com/ww/products/pt/general-purpose-
 </instance>
 <instance part="GND39" gate="1" x="160.02" y="128.016" smashed="yes">
 <attribute name="VALUE" x="160.02" y="127.762" size="1.778" layer="96" align="top-center"/>
+</instance>
+<instance part="U$2" gate="G$1" x="91.44" y="251.46" smashed="yes">
+<attribute name="VALUE" x="88.9" y="243.84" size="1.778" layer="96" align="top-left"/>
+<attribute name="NAME" x="88.9" y="259.08" size="1.778" layer="95"/>
 </instance>
 </instances>
 <busses>

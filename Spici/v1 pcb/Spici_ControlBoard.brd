@@ -4642,6 +4642,32 @@ by exp-lbrs.ulp</description>
 <rectangle x1="0.3302" y1="-0.4699" x2="0.8303" y2="0.4801" layer="51"/>
 <rectangle x1="-0.1999" y1="-0.3" x2="0.1999" y2="0.3" layer="35"/>
 </package>
+<package name="0532610671">
+<description>https://www.molex.com/pdm_docs/sd/532610671_sd.pdf</description>
+<rectangle x1="-3.6012" y1="1.5238" x2="-2.6488" y2="3.2762" layer="29"/>
+<rectangle x1="4.5488" y1="-2.0762" x2="6.8012" y2="1.0762" layer="29"/>
+<rectangle x1="-6.8012" y1="-2.0762" x2="-4.5488" y2="1.0762" layer="29"/>
+<rectangle x1="-2.3512" y1="1.5238" x2="-1.3988" y2="3.2762" layer="29"/>
+<rectangle x1="-1.1012" y1="1.5238" x2="-0.1488" y2="3.2762" layer="29"/>
+<rectangle x1="0.1488" y1="1.5238" x2="1.1012" y2="3.2762" layer="29"/>
+<rectangle x1="1.3988" y1="1.5238" x2="2.3512" y2="3.2762" layer="29"/>
+<rectangle x1="2.6488" y1="1.5238" x2="3.6012" y2="3.2762" layer="29"/>
+<smd name="1" x="-3.125" y="2.4" dx="0.8" dy="1.6" layer="1" stop="no"/>
+<smd name="M2" x="5.675" y="-0.5" dx="2.1" dy="3" layer="1" stop="no"/>
+<smd name="2" x="-1.875" y="2.4" dx="0.8" dy="1.6" layer="1" stop="no"/>
+<smd name="3" x="-0.625" y="2.4" dx="0.8" dy="1.6" layer="1" stop="no"/>
+<smd name="4" x="0.625" y="2.4" dx="0.8" dy="1.6" layer="1" stop="no"/>
+<smd name="5" x="1.875" y="2.4" dx="0.8" dy="1.6" layer="1" stop="no"/>
+<smd name="6" x="3.125" y="2.4" dx="0.8" dy="1.6" layer="1" stop="no"/>
+<smd name="M1" x="-5.675" y="-0.5" dx="2.1" dy="3" layer="1" stop="no"/>
+<wire x1="-4.4742" y1="1.4258" x2="4.4742" y2="1.4258" width="0.2" layer="21"/>
+<wire x1="4.4742" y1="1.4258" x2="4.4742" y2="-2.44" width="0.1524" layer="21"/>
+<wire x1="4.4742" y1="-2.44" x2="-4.4742" y2="-2.44" width="0.1524" layer="21"/>
+<wire x1="-4.4742" y1="-2.44" x2="-4.4742" y2="1.4258" width="0.1524" layer="21"/>
+<rectangle x1="-4.525" y1="-2.44" x2="4.525" y2="1.502" layer="39"/>
+<text x="-5.27" y="4" size="1" layer="25" font="vector" ratio="10">&gt;Name</text>
+<text x="-5.27" y="-4.27" size="1" layer="27" font="vector" ratio="10" align="top-left">&gt;Value</text>
+</package>
 </packages>
 <packages3d>
 <package3d name="0603" urn="urn:adsk.eagle:package:39650/1" type="box">
@@ -5262,6 +5288,11 @@ Source: &lt;a href=&quot;https://jlcpcb.com/capabilities/Capabilities&quot;&gt;J
 <element name="R28" library="SparkFun-Resistors" library_urn="urn:adsk.eagle:library:532" package="0603" package3d_urn="urn:adsk.eagle:package:39650/1" value="3k" x="43.8" y="60" smashed="yes" rot="R90">
 <attribute name="PROD_ID" value="RES-07856" x="43.8" y="60" size="1.778" layer="27" rot="R90" display="off"/>
 <attribute name="VALUE" x="44.562" y="60" size="0.6096" layer="27" font="vector" ratio="20" rot="R90" align="top-center"/>
+</element>
+<element name="U$2" library="Spici_ControlBoard" package="0532610671" value="0532610671" x="-9" y="-8" smashed="yes">
+<attribute name="DKPN" value="WM7624TR-ND" x="-9" y="-8" size="1.778" layer="27" display="off"/>
+<attribute name="NAME" x="-14.27" y="-4" size="1" layer="25" font="vector" ratio="10"/>
+<attribute name="VALUE" x="-14.27" y="-12.27" size="1" layer="27" font="vector" ratio="10" align="top-left"/>
 </element>
 </elements>
 <signals>
