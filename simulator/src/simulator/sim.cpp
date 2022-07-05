@@ -16,19 +16,23 @@ void draw_field() {
     background.setPosition(0, 0);
     window_->draw(background);
     sf::CircleShape dohyo; //create the circle that represents the dohyo. Input is radius
-    dohyo.setRadius(vis_scale*75.f);
+    float dohyoRadius = vis_scale * 75.f; 
+    dohyo.setRadius(dohyoRadius);
     dohyo.setFillColor(sf::Color(0, 0, 0)); //color the dohyo black
     dohyo.setOutlineThickness(vis_scale*2.f); //give dohyo an outline
     dohyo.setOutlineColor(sf::Color(250, 250, 250)); //make the outline white
-    dohyo.setPosition((EFFECTIVE_CENTER_X)-vis_scale*75, (EFFECTIVE_CENTER_Y)-vis_scale*75);
+    dohyo.setPosition((EFFECTIVE_CENTER_X)-dohyoRadius, (EFFECTIVE_CENTER_Y)-dohyoRadius);
     window_->draw(dohyo);
-    sf::RectangleShape start_line1(sf::Vector2f(vis_scale*2, vis_scale*20));
+    float lineWidth = 2 * vis_scale; 
+    float lineHeight = 20 * vis_scale; 
+    float spacing = 10 * vis_scale; 
+    sf::RectangleShape start_line1(sf::Vector2f(lineWidth, lineHeight));
     start_line1.setFillColor(sf::Color(255, 69, 0));
-    start_line1.setPosition(EFFECTIVE_CENTER_X - vis_scale*12, EFFECTIVE_CENTER_Y - vis_scale*10);
+    start_line1.setPosition(EFFECTIVE_CENTER_X - spacing - lineWidth, EFFECTIVE_CENTER_Y - lineHeight / 2);
     window_->draw(start_line1);
-    sf::RectangleShape start_line2(sf::Vector2f(vis_scale*2, vis_scale*20));
+    sf::RectangleShape start_line2(sf::Vector2f(lineWidth, lineHeight));
     start_line2.setFillColor(sf::Color(255, 69, 0));
-    start_line2.setPosition(EFFECTIVE_CENTER_X + vis_scale*10, EFFECTIVE_CENTER_Y - vis_scale*10);
+    start_line2.setPosition(EFFECTIVE_CENTER_X + spacing, EFFECTIVE_CENTER_Y - lineHeight / 2);
     window_->draw(start_line2);
 }
 
