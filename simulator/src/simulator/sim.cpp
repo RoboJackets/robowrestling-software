@@ -20,15 +20,15 @@ void draw_field() {
     dohyo.setFillColor(sf::Color(0, 0, 0)); //color the dohyo black
     dohyo.setOutlineThickness(vis_scale*2.f); //give dohyo an outline
     dohyo.setOutlineColor(sf::Color(250, 250, 250)); //make the outline white
-    dohyo.setPosition((WINDOW_WIDTH/2)-vis_scale*75, (WINDOW_HEIGHT/2)-vis_scale*75);
+    dohyo.setPosition((EFFECTIVE_CENTER_X)-vis_scale*75, (EFFECTIVE_CENTER_Y)-vis_scale*75);
     window_->draw(dohyo);
     sf::RectangleShape start_line1(sf::Vector2f(vis_scale*2, vis_scale*20));
     start_line1.setFillColor(sf::Color(255, 69, 0));
-    start_line1.setPosition(WINDOW_WIDTH/2 - vis_scale*10, WINDOW_HEIGHT/2 - vis_scale*10);
+    start_line1.setPosition(EFFECTIVE_CENTER_X - vis_scale*12, EFFECTIVE_CENTER_Y - vis_scale*10);
     window_->draw(start_line1);
     sf::RectangleShape start_line2(sf::Vector2f(vis_scale*2, vis_scale*20));
     start_line2.setFillColor(sf::Color(255, 69, 0));
-    start_line2.setPosition(WINDOW_WIDTH/2 + vis_scale*10, WINDOW_HEIGHT/2 - vis_scale*10);
+    start_line2.setPosition(EFFECTIVE_CENTER_X + vis_scale*10, EFFECTIVE_CENTER_Y - vis_scale*10);
     window_->draw(start_line2);
 }
 
@@ -61,23 +61,46 @@ void update() {
 }
 
 int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (r1 angle in rad cw) (r2 x right of 0) (r2 y down of 0) (r2 angle in rad cw) (duration for sim: 0 = realtime elapsed)
+    sf::Vertex xAxis[] = {
+        sf::Vertex(sf::Vector2f(0,EFFECTIVE_CENTER_Y)),
+        sf::Vertex(sf::Vector2f(WINDOW_WIDTH, EFFECTIVE_CENTER_Y))
+    };
+
+    sf::Vertex yAxis[] = {
+        sf::Vertex(sf::Vector2f(EFFECTIVE_CENTER_X, 0)),
+        sf::Vertex(sf::Vector2f(EFFECTIVE_CENTER_X, WINDOW_HEIGHT))
+    };
+    
     window_ = std::make_shared<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Sim");
     _manager = std::make_shared<ImguiManager>(window_, 2);
-    _fpsPane = std::make_shared<Pane>(1120*vis_scale, 0, 100*vis_scale, 25*vis_scale, "FPS");
+    _fpsPane = std::make_shared<Pane>(1180*vis_scale, 0, 100*vis_scale, 25*vis_scale, "FPS");
     _bottomPane = std::make_shared<Pane>(300 * vis_scale, 420 * vis_scale, 980 * vis_scale, 300 * vis_scale, "Logs");
     _leftPane = std::make_shared<Pane>(0, 0, 300*vis_scale, 720 * vis_scale, "Test");
     _fpsPane->SetOpacity(0.35);
     _fpsPane->SetFlags(ImGuiWindowFlags_NoDecoration);
     _fpsWidget = std::make_shared<FPSWidget>();
+    _qWidget = std::make_shared<QuickWidget>(); 
+    _qWidget->SetRenderCallback([](){
+        ImVec2 pos = ImGui::GetIO().MousePos;
+        ImGui::Text("Mouse: (%.2f, %.2f)", pos.x, pos.y);
+    });
+    _qWidget->SetGetNameCallback([](){
+        return "Mouse Pos";
+    });
+    _qWidget->SetActivatedCallback([](){
+        return true; 
+    });
     _manager->AddPane(_fpsPane);
     _manager->AddPane(_leftPane);
     _manager->AddPane(_bottomPane);
+    _leftPane->AddWidget(_qWidget);
     _fpsPane->AddWidget(_fpsWidget);
     window_->setFramerateLimit(60);
 
     sf::Clock clock;
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
+    shape.setPosition(EFFECTIVE_CENTER_X - 100, EFFECTIVE_CENTER_Y - 100);
     while (window_->isOpen()) {
         sf::Event event;
         while (window_->pollEvent(event)) {
@@ -89,7 +112,9 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
 
         
         window_->clear();
-        window_->draw(shape);
+        draw_field();
+        window_->draw(yAxis, 2, sf::Lines);
+        window_->draw(xAxis, 2, sf::Lines);
         _manager->Render(clock);
         window_->display();
     }

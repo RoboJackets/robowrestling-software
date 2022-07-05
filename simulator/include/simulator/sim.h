@@ -14,6 +14,8 @@
 #include <graphics/widgets/ImguiManager.h>
 #include <graphics/widgets/Pane.h>
 #include <graphics/widgets/FPSWidget.h>
+#include <graphics/widgets/QuickWidget.h>
+
 // Robot Includes
 #include <simulator/robots/robot.h>
 #include <simulator/robots/basicrobot.h>
@@ -36,6 +38,15 @@
 #define WINDOW_HEIGHT (vis_scale*720)
 #define WINDOW_WIDTH (vis_scale*1280)
 
+
+
+#define EFFECTIVE_ZERO_X (300*vis_scale)
+#define EFFECTIVE_ZERO_Y (0)
+#define EFFECTIVE_WIDTH (WINDOW_WIDTH - EFFECTIVE_ZERO_X)
+#define EFFECTIVE_HEIGHT (WINDOW_HEIGHT - 300*vis_scale)
+#define EFFECTIVE_CENTER_X ((EFFECTIVE_WIDTH / 2) + EFFECTIVE_ZERO_X)
+#define EFFECTIVE_CENTER_Y (EFFECTIVE_HEIGHT / 2) 
+
 #define OPENING_1 TimedOpening // Edit to change Robot 1's opening. Remember to include
 #define OPENING_2 NoOpening
 
@@ -46,7 +57,7 @@
 int radius_; //radius of the dohyo
 double elapsed_total;
 double sim_duration;
-double vis_scale = 2.5;
+float vis_scale = 2;
 
 std::shared_ptr<Robot> robot1_; //robot object that stores information about a robot
 std::shared_ptr<Robot> robot2_; //see above
@@ -59,6 +70,7 @@ std::shared_ptr<sf::RenderWindow> window_;
 
 // widgets
 std::shared_ptr<FPSWidget> _fpsWidget; 
+std::shared_ptr<QuickWidget> _qWidget; 
 
 std::shared_ptr<RobotPhysicsUpdater> physics_updater_;
 
