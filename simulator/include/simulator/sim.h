@@ -8,6 +8,12 @@
 #include <vector>
 #include <sstream>
 
+
+// Gui Includes
+
+#include <graphics/widgets/ImguiManager.h>
+#include <graphics/widgets/Pane.h>
+#include <graphics/widgets/FPSWidget.h>
 // Robot Includes
 #include <simulator/robots/robot.h>
 #include <simulator/robots/basicrobot.h>
@@ -45,7 +51,14 @@ double vis_scale = 2.5;
 std::shared_ptr<Robot> robot1_; //robot object that stores information about a robot
 std::shared_ptr<Robot> robot2_; //see above
 
+std::shared_ptr<ImguiManager> _manager; 
+std::shared_ptr<Pane> _leftPane; 
+std::shared_ptr<Pane> _bottomPane; 
+std::shared_ptr<Pane> _fpsPane; 
 std::shared_ptr<sf::RenderWindow> window_;
+
+// widgets
+std::shared_ptr<FPSWidget> _fpsWidget; 
 
 std::shared_ptr<RobotPhysicsUpdater> physics_updater_;
 

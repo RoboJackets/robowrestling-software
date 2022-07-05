@@ -31,3 +31,4 @@ endif()
 find_package(OpenGL REQUIRED)
 
 add_subdirectory(imgui)
+add_subdirectory(graphics)

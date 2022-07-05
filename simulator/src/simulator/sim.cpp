@@ -3,7 +3,7 @@
 #include <iostream>
 #include <string>
 #include "imgui.h"
-#include "imgui-SFML.h"
+
 
 
 #include <chrono>
@@ -61,41 +61,39 @@ void update() {
 }
 
 int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (r1 angle in rad cw) (r2 x right of 0) (r2 y down of 0) (r2 angle in rad cw) (duration for sim: 0 = realtime elapsed)
-    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "ImGui + SFML = <3");
-    sf::View view1(sf::Vector2f(100, 100), sf::Vector2f(1280.f, 720.f));
-    view1.zoom(0.5); 
-    window.setView(view1); 
-    window.setFramerateLimit(60);
-    ImGui::SFML::Init(window);
+    window_ = std::make_shared<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Sim");
+    _manager = std::make_shared<ImguiManager>(window_, 2);
+    _fpsPane = std::make_shared<Pane>(1120*vis_scale, 0, 100*vis_scale, 25*vis_scale, "FPS");
+    _bottomPane = std::make_shared<Pane>(300 * vis_scale, 420 * vis_scale, 980 * vis_scale, 300 * vis_scale, "Logs");
+    _leftPane = std::make_shared<Pane>(0, 0, 300*vis_scale, 720 * vis_scale, "Test");
+    _fpsPane->SetOpacity(0.35);
+    _fpsPane->SetFlags(ImGuiWindowFlags_NoDecoration);
+    _fpsWidget = std::make_shared<FPSWidget>();
+    _manager->AddPane(_fpsPane);
+    _manager->AddPane(_leftPane);
+    _manager->AddPane(_bottomPane);
+    _fpsPane->AddWidget(_fpsWidget);
+    window_->setFramerateLimit(60);
 
+    sf::Clock clock;
     sf::CircleShape shape(100.f);
     shape.setFillColor(sf::Color::Green);
-    ImGui::GetStyle().ScaleAllSizes(2);
-    ImGui::GetIO().FontGlobalScale = 2;
-    sf::Clock deltaClock;
-    while (window.isOpen()) {
+    while (window_->isOpen()) {
         sf::Event event;
-        while (window.pollEvent(event)) {
-            ImGui::SFML::ProcessEvent(window, event);
-
+        while (window_->pollEvent(event)) {
+            _manager->ProcessEvent(event); 
             if (event.type == sf::Event::Closed) {
-                window.close();
+                window_->close();
             }
         }
 
-        ImGui::SFML::Update(window, deltaClock.restart());
-
-        ImGui::Begin("Hello, world!");
-        ImGui::Button("Look at this pretty button");
-        ImGui::End();
-
-        window.clear();
-        window.draw(shape);
-        ImGui::SFML::Render(window);
-        window.display();
+        
+        window_->clear();
+        window_->draw(shape);
+        _manager->Render(clock);
+        window_->display();
     }
 
-    ImGui::SFML::Shutdown();
 
 	return 0;
 }
