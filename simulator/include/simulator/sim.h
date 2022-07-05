@@ -27,8 +27,8 @@
 #include <simulator/physics/robotphysicsupdater.h>
 
 
-#define WINDOW_HEIGHT (vis_scale*170)
-#define WINDOW_WIDTH (vis_scale*170)
+#define WINDOW_HEIGHT (vis_scale*720)
+#define WINDOW_WIDTH (vis_scale*1280)
 
 #define OPENING_1 TimedOpening // Edit to change Robot 1's opening. Remember to include
 #define OPENING_2 NoOpening

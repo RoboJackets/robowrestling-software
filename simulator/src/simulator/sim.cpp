@@ -2,6 +2,9 @@
 
 #include <iostream>
 #include <string>
+#include "imgui.h"
+#include "imgui-SFML.h"
+
 
 #include <chrono>
 #define duration(a) std::chrono::duration_cast<std::chrono::nanoseconds>(a).count()
@@ -58,106 +61,42 @@ void update() {
 }
 
 int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (r1 angle in rad cw) (r2 x right of 0) (r2 y down of 0) (r2 angle in rad cw) (duration for sim: 0 = realtime elapsed)
-    robot_texture.loadFromFile("simulator/res/robot_sprite.png");
-    if (argc == 8) {
-        //stores string inputs from terminal and outputs while casting
-        std::istringstream iss(std::string(argv[1])+" "+std::string(argv[2])+" "+std::string(argv[3])+" "+std::string(argv[4])+" "+std::string(argv[5])+" "+std::string(argv[6])+" "+std::string(argv[7]));
-        double r1_x = 0.0;
-        iss >> r1_x;
-        double r1_y = 0.0;
-        iss >> r1_y;
-        double r1_a = 0.0;
-        iss >> r1_a;
-        r1_a = r1_a * M_PI;
-        double r2_x = 0.0;
-        iss >> r2_x;
-        double r2_y = 0.0;
-        iss >> r2_y;
-        double r2_a = 0.0;
-        iss >> r2_a;
-        r2_a = r2_a * M_PI;
-        iss >> sim_duration;
-        robot1_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)-r1_x, (WINDOW_HEIGHT/2)-r1_y, r1_a);
-        robot2_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)+r2_x, (WINDOW_HEIGHT/2)+r2_y, M_PI+r2_a);
-    } else {
-        sim_duration = 0.01;
-        robot1_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2)-25, WINDOW_HEIGHT/2-25, M_PI/4);
-        robot2_ = std::make_shared<BasicRobot>((WINDOW_WIDTH/2), WINDOW_HEIGHT/2+25, M_PI);
-    }
+    sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "ImGui + SFML = <3");
+    sf::View view1(sf::Vector2f(100, 100), sf::Vector2f(1280.f, 720.f));
+    view1.zoom(0.5); 
+    window.setView(view1); 
+    window.setFramerateLimit(60);
+    ImGui::SFML::Init(window);
 
-    
-    physics_updater_ = std::make_shared<RobotPhysicsUpdater>(); //Default RobotPhysicsUpdater
-    
-    window_ = std::make_shared<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "My window");
-    window_->clear(sf::Color::White); // clear the window with white color
+    sf::CircleShape shape(100.f);
+    shape.setFillColor(sf::Color::Green);
+    ImGui::GetStyle().ScaleAllSizes(2);
+    ImGui::GetIO().FontGlobalScale = 2;
+    sf::Clock deltaClock;
+    while (window.isOpen()) {
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            ImGui::SFML::ProcessEvent(window, event);
 
-    OPENING_1 r1_opening = OPENING_1();
-    OPENING_2 r2_opening = OPENING_2();
-    STRATEGY_1 r1_drive = STRATEGY_1();
-    STRATEGY_2 r2_drive = STRATEGY_2();
-    BasicRobotHandler r1_handler = BasicRobotHandler(robot1_, robot2_);
-    BasicRobotHandler r2_handler = BasicRobotHandler(robot2_, robot1_);
-
-    SensorData r1_data;
-    SensorData r2_data;
-    std::vector<int> r1_action;
-    std::vector<int> r2_action;
-
-    draw_field();
-    draw_robot(robot1_);
-    draw_robot(robot2_);
-
-    double elapsed_time;
-    auto start_time = timeNow();
-    auto past_time = timeNow();
-
-
-    // sim_duration: how long to run simulator for. Otherwise use real time.
-    // Opening code goes somewhere as the first action in a while loop. Does not work in simulated time cases
-    if (sim_duration == 0) {
-        while (window_->isOpen() && duration(timeNow() - start_time) <= 60000000000) {
-
-            elapsed_time = duration(timeNow() - past_time) / 1000000000.0;
-
-            if (elapsed_time > 0) {
-                past_time = timeNow();
-
-                r1_data = r1_handler.read(elapsed_time);
-                r2_data = r2_handler.read(elapsed_time);
-
-                if (r1_opening.done) {
-                    r1_action = r1_drive.next_action(r1_data);
-                } else {
-                    r1_action = r1_opening.execute(r1_data);
-                }
-                if (r2_opening.done) {
-                    r2_action = r2_drive.next_action(r2_data);
-                } else {
-                    r2_action = r2_opening.execute(r2_data);
-                }
-
-                physics_updater_->update(robot1_, r1_action, robot2_, r2_action, elapsed_time);
+            if (event.type == sf::Event::Closed) {
+                window.close();
             }
-
-            update();
         }
 
-        std::cout << duration(timeNow() - start_time) / 1000000000 << std::endl;
-    } else {
-        while (window_->isOpen()) {
+        ImGui::SFML::Update(window, deltaClock.restart());
 
-            r1_data = r1_handler.read(sim_duration);
-            r2_data = r2_handler.read(sim_duration);
+        ImGui::Begin("Hello, world!");
+        ImGui::Button("Look at this pretty button");
+        ImGui::End();
 
-            physics_updater_->update(robot1_, r1_drive.next_action(r1_data), robot2_, r2_drive.next_action(r2_data), sim_duration);
-
-            elapsed_total += sim_duration;
-
-            update();
-        }
-
-        std::cout << "Match Time: " << elapsed_total << std::endl;
+        window.clear();
+        window.draw(shape);
+        ImGui::SFML::Render(window);
+        window.display();
     }
+
+    ImGui::SFML::Shutdown();
+
 	return 0;
 }
 

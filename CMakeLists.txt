@@ -19,6 +19,7 @@ add_subdirectory(strategy)
 include_directories(openings/include)
 add_subdirectory(openings)
 
+
 find_package(SFML 2 COMPONENTS graphics window system REQUIRED)
 if(SFML_FOUND)
   message(${SFML_INCLUDE_DIR})
@@ -27,3 +28,6 @@ if(SFML_FOUND)
   include_directories(simulator/include)
   add_subdirectory(simulator)
 endif()
+find_package(OpenGL REQUIRED)
+
+add_subdirectory(imgui)
