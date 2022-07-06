@@ -14,6 +14,9 @@ _deps
 cmake-build-debug
 .idea
 
+*_include.cmake 
+*_tests.cmake
+
 ### C++ template
 # Prerequisites
 *.d
@@ -60,3 +63,7 @@ cmake-build-debug
 
 # imgui file 
 imgui.ini
+
+#Executables
+
+simulator/src/simtest

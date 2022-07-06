@@ -10,13 +10,14 @@
 #define duration(a) std::chrono::duration_cast<std::chrono::nanoseconds>(a).count()
 #define timeNow() std::chrono::high_resolution_clock::now()
 
+
 void draw_field() {
     sf::RectangleShape background(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT)); //make a rectangle to add background color
     background.setFillColor(sf::Color(141, 158, 196));
     background.setPosition(0, 0);
     window_->draw(background);
     sf::CircleShape dohyo; //create the circle that represents the dohyo. Input is radius
-    float dohyoRadius = vis_scale * 75.f; 
+    dohyoRadius = vis_scale * 75.f; 
     dohyo.setRadius(dohyoRadius);
     dohyo.setFillColor(sf::Color(0, 0, 0)); //color the dohyo black
     dohyo.setOutlineThickness(vis_scale*2.f); //give dohyo an outline

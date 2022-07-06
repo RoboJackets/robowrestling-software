@@ -38,12 +38,12 @@
 #define WINDOW_HEIGHT (vis_scale*720)
 #define WINDOW_WIDTH (vis_scale*1280)
 
-
-
-#define EFFECTIVE_ZERO_X (300*vis_scale)
+#define LEFT_PANEL_WIDTH 300
+#define BOTTOM_PANEL_HEIGHT 300
+#define EFFECTIVE_ZERO_X (LEFT_PANEL_WIDTH*vis_scale)
 #define EFFECTIVE_ZERO_Y (0)
 #define EFFECTIVE_WIDTH (WINDOW_WIDTH - EFFECTIVE_ZERO_X)
-#define EFFECTIVE_HEIGHT (WINDOW_HEIGHT - 300*vis_scale)
+#define EFFECTIVE_HEIGHT (WINDOW_HEIGHT - BOTTOM_PANEL_HEIGHT*vis_scale)
 #define EFFECTIVE_CENTER_X ((EFFECTIVE_WIDTH / 2) + EFFECTIVE_ZERO_X)
 #define EFFECTIVE_CENTER_Y (EFFECTIVE_HEIGHT / 2) 
 
@@ -54,7 +54,7 @@
 #define STRATEGY_2 SlammyWhammy
 
 
-int radius_; //radius of the dohyo
+float dohyoRadius; //radius of the dohyo
 double elapsed_total;
 double sim_duration;
 float vis_scale = 2;
@@ -81,6 +81,10 @@ void update(); //performs one update of the game state
 void draw_field(); //draws the field
 
 void draw_robot(std::shared_ptr<Robot> robot); //draws the robots
+
+float CMToPixel(float cm) {
+    return (cm * (dohyoRadius / (154.f / 2)));
+}
 
 int main(int argc, char *argv[]); //main method that has the game loop
 #endif
