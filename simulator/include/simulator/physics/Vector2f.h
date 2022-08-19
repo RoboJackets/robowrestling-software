@@ -24,6 +24,9 @@ struct Vector2f {
         static double CrossProduct(const Vector2f &u, const Vector2f &v); 
 
 
+
+        static double DotProduct(const Vector2f &u, const Vector2f &v); 
+        
         /**
          * @brief scales the current vector by some factor 
          *
@@ -33,7 +36,26 @@ struct Vector2f {
         Vector2f Scale(const double factor);
         
 
+        /**
+         * @brief computes to magnitude of the vector 
+         *
+         * @return the magnitude of the vector 
+         **/ 
         double Norm(); 
+
+        /**
+         * @brief computes the unit vector of the current vector. 
+         *
+         * @return the unit vector of the current vector 
+         **/
+        Vector2f Normalize(); 
+
+        /**
+         * @brief computes a vector that is perpendicular to the current vector. 
+         *
+         * @return the perpendicular vector 
+         **/
+        Vector2f Perp(); 
 
 
         /**

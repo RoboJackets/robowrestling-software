@@ -6,7 +6,7 @@ add_executable(sim.sw simulator/sim.cpp simulator/physics/oldphysicsupdater.cpp 
 
 
 add_executable(simtest simulator/tests/simtest.cpp simulator/physics/oldphysicsupdater.cpp simulator/physics/robotphysicsupdater.cpp) 
-add_executable(phystest simulator/tests/physicstest.cpp simulator/physics/Vector2f.cpp simulator/physics/RigidBody2d.cpp)
+add_executable(phystest simulator/tests/physicstest.cpp simulator/physics/Vector2f.cpp simulator/physics/RigidBody2d.cpp simulator/physics/SATCollisionDetector.cpp)
 
 target_include_directories(sim.sw PUBLIC ${OPENGL_INCLUDE_DIR})
 target_link_libraries(sim.sw LINK_PUBLIC Robots Sensors Strategies Openings imgui widgets ${SFML_LIBRARIES} ${SFML_DEPENDENCIES} ${OPENGL_LIBRARIES})

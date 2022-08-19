@@ -6,8 +6,13 @@ Vector2f::Vector2f(double x, double y): x(x), y(y) {}
 
 
 
-double Vector2f::Norm() {
-    return std::sqrt(std::pow(x,2) + std::pow(y,2)); 
+double Vector2f::CrossProduct(const Vector2f &u, const Vector2f &v) {
+    
+    return u.x * v.y - u.y * v.x; 
+}
+
+double Vector2f::DotProduct(const Vector2f &u, const Vector2f &v) {
+    return u.x * v.x + u.y * v.y; 
 }
 
 
@@ -15,8 +20,17 @@ Vector2f Vector2f::Scale(const double factor) {
     return Vector2f(x * factor, y * factor);  
 }
 
-double Vector2f::CrossProduct(const Vector2f &u, const Vector2f &v) {
-    return u.x * v.y - u.y * v.x; 
+double Vector2f::Norm() {
+    return std::sqrt(std::pow(x,2) + std::pow(y,2)); 
+}
+
+Vector2f Vector2f::Normalize() {
+    double mag = Norm(); 
+    return Vector2f(x / mag, y / mag); 
+}
+
+Vector2f Vector2f::Perp() {
+    return Vector2f(y, -x); 
 }
 
 

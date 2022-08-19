@@ -23,6 +23,32 @@ void RigidBody2d::ApplyForce(Vector2f &v, Vector2f &r) {
    _torque += Vector2f::CrossProduct(r, v);
 }
 
+std::array<Vector2f, 4> RigidBody2d::GetCorners() {
+    std::array<Vector2f, 4> corners;
+    
+    double width = _shape.width; 
+    double height = _shape.height;
+    
+    /* starting at the top right corner and going counter clockwise */
+    /* these are relative to the body */
+
+    corners[0] = Vector2f(width / 2, height / 2); 
+    corners[1] = Vector2f(-width / 2, height / 2); 
+    corners[2] = Vector2f(-width / 2, -height / 2); 
+    corners[3] = Vector2f(width / 2, -height /2); 
+
+
+    /* translate and rotate to world coords */
+    for (int i = 0; i < corners.size(); i++) {
+        Vector2f rotatedBodyCorner = corners[i].Rotate(_angle); 
+        Vector2f worldVector = rotatedBodyCorner + _pos; 
+
+        corners[i] = worldVector;
+    }
+
+    return corners; 
+} 
+
 void RigidBody2d::Update(duration delta) {
    
     while (!_forces.empty()) {

@@ -1,6 +1,8 @@
 #pragma once 
 #include <chrono> 
 #include <stack> 
+#include <array> 
+
 #include "simulator/physics/Vector2f.h"
 
 using duration = std::chrono::duration<double>;
@@ -58,7 +60,14 @@ class RigidBody2d {
          */
         void Update(duration delta);
 
-
+        /**
+         * @brief computes and returns the corners of the rigidbody in world
+         * coords. 
+         *
+         * @return the corners of the body
+         *
+         **/
+        std::array<Vector2f, 4> GetCorners(); 
         double GetAngle();
         double GetTorque(); 
         Vector2f GetPos();

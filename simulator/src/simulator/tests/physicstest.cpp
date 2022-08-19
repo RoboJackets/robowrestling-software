@@ -5,7 +5,7 @@
 
 #include <chrono> 
 #include <iostream>
-
+#include <memory> 
 
 using ::testing::Not;
 using ::testing::DoubleEq;
@@ -27,6 +27,33 @@ namespace PhysicsTests {
         EXPECT_FLOAT_EQ(y, v->y);
     }
 
+    TEST(PhysTest, TestVectorDotProduct) {
+        Vector2f u(2,2); 
+
+        double dot = Vector2f::DotProduct(u,u); 
+        double mag = u.Norm();
+
+        EXPECT_DOUBLE_EQ(dot, mag * mag); 
+    }
+
+    TEST(PhysTest, TestVectorNormalize) {
+        Vector2f u(2,2); 
+
+        Vector2f unit = u.Normalize(); 
+
+        double mag = unit.Norm(); 
+        EXPECT_DOUBLE_EQ(1, mag);
+    }
+
+    TEST(PhysTest, TestVectorPerp) {
+        Vector2f u(2,2); 
+
+        Vector2f perp = u.Perp(); 
+
+        double dot = Vector2f::DotProduct(u, perp); 
+
+        EXPECT_DOUBLE_EQ(dot, 0);
+    }
 
     TEST(PhysTest, TestVectorScale) {
         Vector2f u(10, 10); 
@@ -79,108 +106,102 @@ namespace PhysicsTests {
         EXPECT_FLOAT_EQ(u.y, 25) ;
     }
 
+    TEST(PhysTest, TestVectorStructuredBinding) {
+        Vector2f u(5,5); 
 
-    TEST(PhysTest, TestRigidBodyInit) {
-        BoxShape shape; 
-        shape.width = 10; 
-        shape.height = 10; 
-        shape.mass = 1; 
-        shape.momentOfInertia = 0; 
+        auto [x, y] = u; 
 
-        RigidBody2d body(shape); 
+        EXPECT_DOUBLE_EQ(x, 5); 
+        EXPECT_DOUBLE_EQ(y, 5); 
+    }
+    
 
-        Vector2f pos = body.GetPos(); 
-        double angle = body.GetAngle();
+
+    class RigidBodyTest : public ::testing::Test {
+        protected: 
+            std::unique_ptr<RigidBody2d> body; 
+
+            void SetUp() override {
+                BoxShape shape; 
+                shape.width = 10; 
+                shape.height = 10; 
+                shape.mass = 1; 
+
+                body = std::make_unique<RigidBody2d>(shape); 
+                
+            }
+
+
+            
+
+    };
+
+    TEST_F(RigidBodyTest, TestRigidBodyInit) {
+        Vector2f pos = body->GetPos(); 
+        double angle = body->GetAngle();
 
         EXPECT_FLOAT_EQ(0, pos.x); 
         EXPECT_FLOAT_EQ(0, pos.y); 
         EXPECT_FLOAT_EQ(0, angle); 
         double moi = (double)200/12; 
-        EXPECT_DOUBLE_EQ(moi, body.GetShape().momentOfInertia);
+        EXPECT_DOUBLE_EQ(moi, body->GetShape().momentOfInertia);
     }
 
-    TEST(PhysTest, TestRigidBodyLinearUpdate){
-        BoxShape shape; 
-        shape.width = 10; 
-        shape.height = 10; 
-        shape.mass = 1; 
-        shape.momentOfInertia = 0; 
-
-        RigidBody2d body(shape);
+    TEST_F(RigidBodyTest, TestRigidBodyLinearUpdate){ 
         Vector2f f(0,1); 
         Vector2f r(0,5); 
         for (double i = 0; i < 5; i+=0.016) {
             
-            body.ApplyForce(f, r); 
-            body.Update(duration(0.016));
+            body->ApplyForce(f, r); 
+            body->Update(duration(0.016));
 
         }
         
-        Vector2f pos = body.GetPos(); 
+        Vector2f pos = body->GetPos(); 
         EXPECT_NEAR(12.5, pos.y, 0.09); 
     }
 
-    TEST(PhysTest, TestRigidBodyMultipleForces) {
-        BoxShape shape; 
-        shape.width = 10; 
-        shape.height = 10; 
-        shape.mass = 1; 
-        shape.momentOfInertia = 0; 
-        RigidBody2d body(shape); 
+    TEST_F(RigidBodyTest, TestRigidBodyMultipleForces) {
         Vector2f f(0,0.5); 
         Vector2f r(5,5);
         Vector2f r2(-5,5); 
 
         for (double i = 0; i < 5; i+=0.016) {
-            body.ApplyForce(f, r); 
-            body.ApplyForce(f, r2); 
-            body.Update(duration(0.016));
+            body->ApplyForce(f, r); 
+            body->ApplyForce(f, r2); 
+            body->Update(duration(0.016));
         }
 
-        Vector2f pos = body.GetPos(); 
+        Vector2f pos = body->GetPos(); 
         EXPECT_NEAR(12.5, pos.y, 0.09);
-        EXPECT_NEAR(0, body.GetAngle(), 0.001); 
+        EXPECT_NEAR(0, body->GetAngle(), 0.001); 
 
     } 
 
-    TEST(PhysTest, TestRigidBodyCCWAngularUpdate) {
-        BoxShape shape; 
-        shape.width = 10; 
-        shape.height = 10; 
-        shape.mass = 1; 
-        shape.momentOfInertia = 0; 
-        RigidBody2d body(shape); 
+    TEST_F(RigidBodyTest, TestRigidBodyCCWAngularUpdate) {
         Vector2f f(0,1); 
         Vector2f r(5,5); 
 
         for (double i = 0; i < 5; i+=0.016) {
-            body.ApplyForce(f, r); 
-            body.Update(duration(0.016)); 
+            body->ApplyForce(f, r); 
+            body->Update(duration(0.016)); 
         }
 
-        std::cout << body.GetAngle() << std::endl; 
 
-        EXPECT_GT(body.GetAngle(), 0); 
+        EXPECT_GT(body->GetAngle(), 0); 
     }
 
-    TEST(PhysTest, TestRigidBodyCWAngularUpdate) {
-        BoxShape shape; 
-        shape.width = 10; 
-        shape.height = 10; 
-        shape.mass = 1; 
-        shape.momentOfInertia = 0; 
-        RigidBody2d body(shape); 
+    TEST_F(RigidBodyTest, TestRigidBodyCWAngularUpdate) {
         Vector2f f(0,1); 
         Vector2f r(-5,5); 
 
         for (double i = 0; i < 5; i+=0.016) {
-            body.ApplyForce(f, r); 
-            body.Update(duration(0.016)); 
+            body->ApplyForce(f, r); 
+            body->Update(duration(0.016)); 
         }
 
-        std::cout << body.GetAngle() << std::endl; 
 
-        EXPECT_LT(body.GetAngle(), 0); 
+        EXPECT_LT(body->GetAngle(), 0); 
 
     }
 
@@ -190,27 +211,38 @@ namespace PhysicsTests {
      * should rotate and alse end up at a non-zero position
      *
      * */
-    TEST(PhysTest, TestRigidBodySingleForce) {
-        BoxShape shape; 
-        shape.width = 10; 
-        shape.height = 10; 
-        shape.mass = 1; 
-        shape.momentOfInertia = 0; 
-        RigidBody2d body(shape); 
+    TEST_F(RigidBodyTest, TestRigidBodySingleForce) {
         Vector2f f(0,1); 
         Vector2f r(5,-5); 
 
         for (double i = 0; i < 5; i += 0.016) {
-            body.ApplyForce(f, r); 
-            body.Update(duration(0.016)); 
+            body->ApplyForce(f, r); 
+            body->Update(duration(0.016)); 
         }
 
-        double y = body.GetPos().y; 
-        double x = body.GetPos().x;
-        std::cout << "x: " << x << ", y: " << y << std::endl; 
+        double y = body->GetPos().y; 
+        double x = body->GetPos().x;
+        EXPECT_THAT(y, Not(DoubleEq(0))); 
         EXPECT_THAT(x, Not(DoubleEq(0)));
 
         
+    }
+
+    
+
+
+    TEST_F(RigidBodyTest, TestRigidBodyGetCorners) {
+        auto corners = body -> GetCorners(); 
+
+        EXPECT_DOUBLE_EQ(5, corners[0].x); 
+        EXPECT_DOUBLE_EQ(5, corners[0].y); 
+        EXPECT_DOUBLE_EQ(-5, corners[1].x); 
+        EXPECT_DOUBLE_EQ(5, corners[1].y); 
+        EXPECT_DOUBLE_EQ(-5, corners[2].x);
+        EXPECT_DOUBLE_EQ(-5, corners[2].y);
+        EXPECT_DOUBLE_EQ(5, corners[3].x); 
+        EXPECT_DOUBLE_EQ(-5, corners[3].y); 
+
     }
 
 } 
