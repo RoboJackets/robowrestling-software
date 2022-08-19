@@ -65,5 +65,5 @@ cmake-build-debug
 imgui.ini
 
 #Executables
-
+simulator/src/phystest
 simulator/src/simtest
