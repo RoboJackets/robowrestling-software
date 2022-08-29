@@ -31,8 +31,13 @@
 #include <strategy/sensor_strategy.h>
 #include <strategy/slammywhammy.h>
 
+#include <simulator/Dohyo.h> 
 
 #include <simulator/physics/robotphysicsupdater.h>
+
+// Physics Includes 
+#include <simulator/physics/RigidBody2d.h> 
+#include <simulator/physics/SATCollisionDetector.h> 
 
 
 #define WINDOW_HEIGHT (vis_scale*720)

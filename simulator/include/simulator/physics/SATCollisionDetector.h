@@ -23,7 +23,7 @@ class SATCollisionDetector : public CollisionDetector {
      *
      * @return an array that contains the unique normal axes. 
      **/
-    std::array<Vector2f, 4> GetAxes(RigidBody2d body1, RigidBody2d body2);
+    std::array<Vector2f, 4> GetAxes(RigidBody2d& body1, RigidBody2d& body2);
     
     /**
      * @brief gets the sides of a rigidbody by using its corner vectors. 
@@ -34,7 +34,7 @@ class SATCollisionDetector : public CollisionDetector {
      *
      * @return an array of the sides of the rigidbody. 
      **/
-    std::array<Vector2f, 2> GetBodySides(RigidBody2d body);
+    std::array<Vector2f, 2> GetBodySides(RigidBody2d& body);
     
     /**
      * @brief gets the minimum and maximum projections of a rigidbody on a 
@@ -45,7 +45,7 @@ class SATCollisionDetector : public CollisionDetector {
      *
      * @return the minimum and maximum of body over the axis. 
      **/
-    std::pair<double, double> GetBounds(Vector2f axis, RigidBody2d body); 
+    std::pair<double, double> GetBounds(Vector2f axis, RigidBody2d& body); 
     
     public: 
         ~SATCollisionDetector() {}
@@ -58,5 +58,5 @@ class SATCollisionDetector : public CollisionDetector {
          *
          * @return whether or not bodies have collided 
          **/
-        bool CheckCollision(RigidBody2d body1, RigidBody2d body2) override; 
+        bool CheckCollision(RigidBody2d& body1, RigidBody2d& body2) override; 
 };

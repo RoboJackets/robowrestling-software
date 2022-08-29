@@ -1,6 +1,6 @@
 #include "simulator/physics/SATCollisionDetector.h" 
 
-bool SATCollisionDetector::CheckCollision(RigidBody2d body1, RigidBody2d body2) {
+bool SATCollisionDetector::CheckCollision(RigidBody2d& body1, RigidBody2d& body2) {
     auto axes = GetAxes(body1, body2); 
 
     for (auto& axis : axes) {
@@ -20,7 +20,7 @@ bool SATCollisionDetector::CheckCollision(RigidBody2d body1, RigidBody2d body2) 
     return true; 
 }
 
-std::array<Vector2f, 4> SATCollisionDetector::GetAxes(RigidBody2d body1, RigidBody2d body2) {
+std::array<Vector2f, 4> SATCollisionDetector::GetAxes(RigidBody2d& body1, RigidBody2d& body2) {
     std::array<Vector2f, 4> axes; 
 
     std::array<Vector2f, 2> body1Sides = GetBodySides(body1); 
@@ -44,7 +44,7 @@ std::array<Vector2f, 4> SATCollisionDetector::GetAxes(RigidBody2d body1, RigidBo
 }
 
 
-std::array<Vector2f, 2> SATCollisionDetector::GetBodySides(RigidBody2d body) {
+std::array<Vector2f, 2> SATCollisionDetector::GetBodySides(RigidBody2d& body) {
     std::array<Vector2f, 2> sides; 
     auto corners = body.GetCorners(); 
 
@@ -60,7 +60,7 @@ std::array<Vector2f, 2> SATCollisionDetector::GetBodySides(RigidBody2d body) {
 
 
 std::pair<double, double> SATCollisionDetector::GetBounds(
-        Vector2f axis, RigidBody2d body) {
+        Vector2f axis, RigidBody2d& body) {
 
     auto corners = body.GetCorners();
     double max = std::numeric_limits<double>::lowest(); 

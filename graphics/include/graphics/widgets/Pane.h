@@ -7,6 +7,7 @@
 #include <graphics/widgets/Widget.h> 
 
 
+class Window; 
 
 /**
  * Manages and renders widgets onto panes on the screen. 
@@ -25,7 +26,7 @@ class Pane {
         std::vector<std::shared_ptr<Widget>> _widgets; 
         ImGuiWindowFlags _flags; 
 
-
+        friend class Window; 
 
 
     public: 

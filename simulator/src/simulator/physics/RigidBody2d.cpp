@@ -94,3 +94,12 @@ BoxShape RigidBody2d::GetShape() {
 double RigidBody2d::GetTorque() {
     return _torque; 
 }
+
+
+RigidBody2d RigidBody2d::CreateRobotBody(double x, double y) {
+    BoxShape shape = BoxShape::CreateRobotShape(); 
+     
+    RigidBody2d body(x, y, shape); 
+
+    return body; 
+}

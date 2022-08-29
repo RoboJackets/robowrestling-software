@@ -17,16 +17,16 @@ void draw_field() {
     background.setPosition(0, 0);
     window_->draw(background);
     sf::CircleShape dohyo; //create the circle that represents the dohyo. Input is radius
-    dohyoRadius = vis_scale * 75.f; 
-    dohyo.setRadius(dohyoRadius);
+    dohyoRadius = 75 * vis_scale; 
+    dohyo.setRadius(CMToPixel(dohyoRadius));
     dohyo.setFillColor(sf::Color(0, 0, 0)); //color the dohyo black
     dohyo.setOutlineThickness(vis_scale*2.f); //give dohyo an outline
     dohyo.setOutlineColor(sf::Color(250, 250, 250)); //make the outline white
-    dohyo.setPosition((EFFECTIVE_CENTER_X)-dohyoRadius, (EFFECTIVE_CENTER_Y)-dohyoRadius);
+    dohyo.setPosition((EFFECTIVE_CENTER_X)-CMToPixel(dohyoRadius), (EFFECTIVE_CENTER_Y)-CMToPixel(dohyoRadius));
     window_->draw(dohyo);
-    float lineWidth = 2 * vis_scale; 
-    float lineHeight = 20 * vis_scale; 
-    float spacing = 10 * vis_scale; 
+    float lineWidth = CMToPixel(2) * vis_scale; 
+    float lineHeight = CMToPixel(20) * vis_scale; 
+    float spacing = CMToPixel(10) * vis_scale; 
     sf::RectangleShape start_line1(sf::Vector2f(lineWidth, lineHeight));
     start_line1.setFillColor(sf::Color(255, 69, 0));
     start_line1.setPosition(EFFECTIVE_CENTER_X - spacing - lineWidth, EFFECTIVE_CENTER_Y - lineHeight / 2);
@@ -65,6 +65,17 @@ void update() {
     window_->display();
 }
 
+void DrawRigidBody(RigidBody2d &body) {
+    BoxShape shape = body.GetShape();
+    double width = CMToPixel(shape.width * 100.0) * vis_scale; 
+    double height = CMToPixel(shape.height * 100.0) * vis_scale;
+    auto [x, y] = body.GetPos(); 
+    sf::RectangleShape rect(sf::Vector2f(width, height));
+    rect.setPosition(sf::Vector2f((x + EFFECTIVE_ZERO_X) - (width / 2),(EFFECTIVE_HEIGHT - y) - (height / 2))); 
+    rect.setFillColor(sf::Color::Green); 
+    window_->draw(rect); 
+}
+
 int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (r1 angle in rad cw) (r2 x right of 0) (r2 y down of 0) (r2 angle in rad cw) (duration for sim: 0 = realtime elapsed)
     sf::Vertex xAxis[] = {
         sf::Vertex(sf::Vector2f(0,EFFECTIVE_CENTER_Y)),
@@ -77,7 +88,7 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
     };
     
     window_ = std::make_shared<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Sim");
-    _manager = std::make_shared<ImguiManager>(window_, 2);
+    _manager = std::make_shared<ImguiManager>(2);
     _fpsPane = std::make_shared<Pane>(1180*vis_scale, 0, 100*vis_scale, 25*vis_scale, "FPS");
     _bottomPane = std::make_shared<Pane>(300 * vis_scale, 420 * vis_scale, 980 * vis_scale, 300 * vis_scale, "Logs");
     _leftPane = std::make_shared<Pane>(0, 0, 300*vis_scale, 720 * vis_scale, "Test");
@@ -104,6 +115,17 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
 
     sf::Clock clock;
     sf::CircleShape shape(100.f);
+
+    BoxShape boxShape; 
+    boxShape.width = 0.2; 
+    boxShape.height = 0.2; 
+    boxShape.mass = 1; 
+    boxShape.momentOfInertia = 0;
+
+    RigidBody2d body(100 * vis_scale, 100 * vis_scale, boxShape);
+
+    Dohyo dohyo(790 - 200 , 10, 200); 
+
     shape.setFillColor(sf::Color::Green);
     shape.setPosition(EFFECTIVE_CENTER_X - 100, EFFECTIVE_CENTER_Y - 100);
     while (window_->isOpen()) {
@@ -117,10 +139,15 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
 
         
         window_->clear();
-        draw_field();
+        sf::RectangleShape background(sf::Vector2f(WINDOW_WIDTH, WINDOW_HEIGHT));
+        background.setFillColor(sf::Color(141, 158, 196));
+        background.setPosition(0, 0);
+        window_->draw(background); 
+        dohyo.Render(*window_, vis_scale);  
         window_->draw(yAxis, 2, sf::Lines);
         window_->draw(xAxis, 2, sf::Lines);
-        _manager->Render(clock);
+
+        _manager->Render(clock, *window_);
         window_->display();
     }
 

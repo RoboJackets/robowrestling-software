@@ -11,14 +11,14 @@ class ImguiManager {
 
     private: 
         std::vector<std::shared_ptr<Pane>> _panes; 
-        std::shared_ptr<sf::RenderWindow> _window; 
-        ImGuiIO* _io; 
+        double _scale;  
+        bool _hasInitialized; 
 
     public: 
-        ImguiManager(std::shared_ptr<sf::RenderWindow> window, float scale);
+        ImguiManager(double scale = 1);
         ~ImguiManager(); 
 
         void AddPane(std::shared_ptr<Pane> pane); 
-        void Render(sf::Clock &clock);
+        void Render(sf::Clock &clock, sf::RenderWindow& window);
         void ProcessEvent(sf::Event &event); 
 };

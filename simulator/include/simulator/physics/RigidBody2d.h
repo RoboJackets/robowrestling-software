@@ -2,7 +2,7 @@
 #include <chrono> 
 #include <stack> 
 #include <array> 
-
+#include <memory> 
 #include "simulator/physics/Vector2f.h"
 
 using duration = std::chrono::duration<double>;
@@ -16,7 +16,17 @@ struct BoxShape {
     double width; 
     double height; 
     double mass; 
-    double momentOfInertia; 
+    double momentOfInertia;
+
+    static BoxShape CreateRobotShape() {
+        BoxShape shape; 
+        shape.width = 0.2; 
+        shape.height = 0.2; 
+        shape.mass = 3; 
+        shape.momentOfInertia = 0; 
+
+        return shape; 
+    }
 }; 
 
 
@@ -75,6 +85,8 @@ class RigidBody2d {
 
 
 
+        /* static factories */
 
+        static RigidBody2d CreateRobotBody(double x = 0, double y = 0); 
 
 };

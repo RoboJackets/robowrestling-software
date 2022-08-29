@@ -7,5 +7,5 @@ class CollisionDetector {
     
     public: 
         virtual ~CollisionDetector() {} 
-        virtual bool CheckCollision(RigidBody2d body1, RigidBody2d body2) = 0;        
+        virtual bool CheckCollision(RigidBody2d& body1, RigidBody2d& body2) = 0;        
 };
