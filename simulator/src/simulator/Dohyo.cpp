@@ -13,8 +13,9 @@ Dohyo::Dohyo(int x, int y, int radius):_x(x), _y(y), _radius(radius) {
 }
 
 
-void Dohyo::Render(sf::RenderWindow& window, double scale) {
+void Dohyo::Render(sf::RenderWindow& window, const RenderPoint& point) {
     
+    double scale = point.scale;
 
     sf::CircleShape dohyo; 
     dohyo.setRadius(_radius * scale); 

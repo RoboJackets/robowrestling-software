@@ -143,7 +143,7 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
         background.setFillColor(sf::Color(141, 158, 196));
         background.setPosition(0, 0);
         window_->draw(background); 
-        dohyo.Render(*window_, vis_scale);  
+        dohyo.Render(*window_, {0,0, vis_scale});  
         window_->draw(yAxis, 2, sf::Lines);
         window_->draw(xAxis, 2, sf::Lines);
 
