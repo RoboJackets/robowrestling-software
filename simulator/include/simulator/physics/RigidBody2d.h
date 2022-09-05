@@ -38,7 +38,8 @@ struct BoxShape {
 class RigidBody2d {
     private: 
         Vector2f _pos; 
-        Vector2f _vel; 
+        Vector2f _vel;
+        Vector2f _force; 
         std::stack<AppliedForce> _forces; 
 
         double _angle;
@@ -50,6 +51,7 @@ class RigidBody2d {
     public: 
         RigidBody2d(BoxShape shape); 
         RigidBody2d(double x, double y, BoxShape shape);
+        RigidBody2d(double x, double y, double angle, BoxShape shape); 
 
         /**
          * @brief applys a force at some vector r away from the center of the 
@@ -61,7 +63,6 @@ class RigidBody2d {
          */
         void ApplyForce(Vector2f &v, Vector2f &r);
         
-
         /**
          * @brief Updates the body with the applied forces. 
          * The forces are cleared every update 
@@ -69,6 +70,16 @@ class RigidBody2d {
          * @param delta the amount of time that has elapsed since the last update.
          */
         void Update(duration delta);
+
+
+        /**
+         * @brief moves the body by some amount, only use as a last resort. 
+         *
+         * @param x the amount in the x direction to move it.
+         * @param y the amount in the y direction to move it. 
+         *
+         **/
+        void Move(double x, double y); 
 
         /**
          * @brief computes and returns the corners of the rigidbody in world
@@ -81,12 +92,15 @@ class RigidBody2d {
         double GetAngle();
         double GetTorque(); 
         Vector2f GetPos();
+        Vector2f GetVel();
+        void SetVel(Vector2f& vel); 
+        Vector2f GetForce(); 
         BoxShape GetShape(); 
 
 
 
         /* static factories */
 
-        static RigidBody2d CreateRobotBody(double x = 0, double y = 0); 
+        static RigidBody2d CreateRobotBody(double x = 0, double y = 0, double angle = 0); 
 
 };

@@ -8,19 +8,27 @@ RigidBody2d::RigidBody2d(BoxShape shape) : _pos(Vector2f(0, 0)) {
         _shape.mass * (_shape.width * _shape.width +
          _shape.height * _shape.height) / 12;
 
-    _vel = Vector2f(0,0); 
+    _vel = Vector2f(0,0);
+    _force = Vector2f(0,0); 
 }
 
 RigidBody2d::RigidBody2d(double x, double y, BoxShape shape): RigidBody2d(shape) {
     _pos = Vector2f(x,y); 
 }
 
+RigidBody2d::RigidBody2d(double x, double y, double angle, BoxShape shape): RigidBody2d(x, y, shape) {
+    _angle = angle; 
+}
+
 void RigidBody2d::ApplyForce(Vector2f &v, Vector2f &r) {
-   AppliedForce af; 
-   af.force = v; 
-   af.forcePos = r; 
+   
+
+    AppliedForce af;
+    _force += v.Rotate(_angle); 
+    af.force = v; 
+    af.forcePos = r; 
     _forces.push(af);
-   _torque += Vector2f::CrossProduct(r, v);
+    _torque += Vector2f::CrossProduct(r, v);
 }
 
 std::array<Vector2f, 4> RigidBody2d::GetCorners() {
@@ -53,8 +61,8 @@ void RigidBody2d::Update(duration delta) {
    
     while (!_forces.empty()) {
         AppliedForce af = _forces.top(); 
-        _forces.pop(); 
-        
+        _forces.pop();
+
         /* compute accel relative to the body */
         Vector2f linAccel = 
             Vector2f(af.force.x / _shape.mass, af.force.y / _shape.mass);
@@ -74,9 +82,13 @@ void RigidBody2d::Update(duration delta) {
     _angularVelocity += angularAccel * delta.count(); 
     _angle += _angularVelocity * delta.count();
 
-    _torque = 0.0; 
+    _torque = 0.0;
+    _force = Vector2f(0,0);
 }
 
+void RigidBody2d::Move(double x, double y) {
+    _pos += Vector2f(x,y); 
+}
 
 double RigidBody2d::GetAngle() {
     return _angle; 
@@ -85,6 +97,18 @@ double RigidBody2d::GetAngle() {
 
 Vector2f RigidBody2d::GetPos() {
     return _pos; 
+}
+
+Vector2f RigidBody2d::GetVel() {
+    return _vel; 
+}
+
+void RigidBody2d::SetVel(Vector2f& vel) {
+    _vel = vel; 
+}
+
+Vector2f RigidBody2d::GetForce() {
+    return _force; 
 }
 
 BoxShape RigidBody2d::GetShape() {
@@ -96,10 +120,10 @@ double RigidBody2d::GetTorque() {
 }
 
 
-RigidBody2d RigidBody2d::CreateRobotBody(double x, double y) {
+RigidBody2d RigidBody2d::CreateRobotBody(double x, double y, double angle) {
     BoxShape shape = BoxShape::CreateRobotShape(); 
      
-    RigidBody2d body(x, y, shape); 
+    RigidBody2d body(x, y, angle, shape); 
 
     return body; 
 }

@@ -35,9 +35,9 @@ namespace {
             bodyOne -> ApplyForce(f, r); 
             bodyOne -> Update(duration(0.016)); 
 
-            collided = detector.CheckCollision(*bodyOne, *bodyTwo);
-            auto [x, y] = bodyOne -> GetPos(); 
-            std::cout << "x: " << x << std::endl; 
+            auto[hasCollided, mtv] = detector.CheckCollision(*bodyOne, *bodyTwo);
+            collided = hasCollided;
+            std::cout << "x: " << mtv.x << ", y: " << mtv.y << std::endl; 
             if (collided) 
                 break; 
         }
@@ -57,13 +57,40 @@ namespace {
             bodyOne -> ApplyForce(f, r); 
             bodyOne -> Update(duration(0.016)); 
 
-            collided = detector.CheckCollision(*bodyOne, *bodyTwo);
+            auto [hasCollided, mtv] = detector.CheckCollision(*bodyOne, *bodyTwo);
+            collided = hasCollided;
             auto [x, y] = bodyOne -> GetPos(); 
-            std::cout << "x: " << x << std::endl; 
+            std::cout << "x: " << mtv.x << ", y: " << mtv.y << std::endl; 
+
             if (collided) 
                 break; 
         }
-
+        
         EXPECT_EQ(collided, true);
+    }
+
+    TEST_F(SATCollisionTest, TestAngledCollisionX) {
+        bodyTwo = std::make_unique<RigidBody2d>(RigidBody2d::CreateRobotBody(3, 0, 3.14 / 4));
+        
+
+        Vector2f f(1,0); 
+        Vector2f r(0.2, 0); 
+
+        bool collided = false; 
+        for (double i = 0; i < 6.0; i += 0.016) {
+            bodyOne -> ApplyForce(f, r); 
+            bodyOne -> Update(duration(0.016)); 
+
+            auto [hasCollided, mtv] = detector.CheckCollision(*bodyOne, *bodyTwo);
+            collided = hasCollided;
+            auto [x, y] = bodyOne -> GetPos(); 
+            std::cout << "x: " << mtv.x << ", y: " << mtv.y << std::endl; 
+
+            if (collided) 
+                break; 
+        }
+        
+        EXPECT_EQ(collided, true);
+
     }
 }

@@ -25,7 +25,10 @@ double Vector2f::Norm() {
 }
 
 Vector2f Vector2f::Normalize() {
-    double mag = Norm(); 
+    double mag = Norm();
+    if (mag == 0) {
+        return Vector2f(0, 0); 
+    }
     return Vector2f(x / mag, y / mag); 
 }
 

@@ -56,7 +56,7 @@ class SATCollisionDetector : public CollisionDetector {
          * @param body1 a rigidbody 
          * @param body2 a rigidbody to check against body1 
          *
-         * @return whether or not bodies have collided 
+         * @return whether or not bodies have collided
          **/
-        bool CheckCollision(RigidBody2d& body1, RigidBody2d& body2) override; 
+        std::pair<bool, Vector2f> CheckCollision(RigidBody2d& body1, RigidBody2d& body2) override; 
 };

@@ -1,8 +1,9 @@
 #include "simulator/physics/SATCollisionDetector.h" 
 
-bool SATCollisionDetector::CheckCollision(RigidBody2d& body1, RigidBody2d& body2) {
+std::pair<bool, Vector2f> SATCollisionDetector::CheckCollision(
+        RigidBody2d& body1, RigidBody2d& body2) {
     auto axes = GetAxes(body1, body2); 
-
+    std::vector<Vector2f> mtvs; 
     for (auto& axis : axes) {
         auto [body1Max, body1Min] = GetBounds(axis, body1); 
         auto [body2Max, body2Min] = GetBounds(axis, body2); 
@@ -13,11 +14,23 @@ bool SATCollisionDetector::CheckCollision(RigidBody2d& body1, RigidBody2d& body2
 
         if (!(isBetweenBounds(body1Min, body2Min, body2Max) || 
                     isBetweenBounds(body2Min, body1Min, body1Max))) {
-            return false;
+            return std::make_pair(false, Vector2f(0,0));
         }
+
+        /* compute overlap */
+        double start = (body1Min > body2Min) ? body1Min : body2Min; 
+        double end = (body1Max < body2Max) ? body1Max : body2Max; 
+
+        double overlap = end - start; 
+
+        mtvs.push_back(axis.Scale(overlap)); 
     }
+
+    std::sort(mtvs.begin(), mtvs.end(), [](Vector2f& a, Vector2f& b) {
+        return std::fabs(a.Norm()) < std::fabs(b.Norm()); 
+    });
     
-    return true; 
+    return std::pair(true, mtvs[0]); 
 }
 
 std::array<Vector2f, 4> SATCollisionDetector::GetAxes(RigidBody2d& body1, RigidBody2d& body2) {
@@ -50,10 +63,10 @@ std::array<Vector2f, 2> SATCollisionDetector::GetBodySides(RigidBody2d& body) {
 
     Vector2f topRightPoint    = corners[0];
     Vector2f topLeftPoint     = corners[1]; 
-    Vector2f bottomRightPoint = corners[3];
+    Vector2f bottomLeftPoint = corners[2];
 
     sides[0] = topLeftPoint - topRightPoint; 
-    sides[1] = bottomRightPoint - topRightPoint; 
+    sides[1] = bottomLeftPoint - topLeftPoint; 
 
     return sides; 
 }
