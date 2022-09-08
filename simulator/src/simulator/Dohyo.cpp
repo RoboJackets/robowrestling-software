@@ -6,7 +6,7 @@ Dohyo::Dohyo(int x, int y, int radius):_x(x), _y(y), _radius(radius) {
     _cmToPixel = (_radius / (154.0 / 2));
     
     _bodies[0] = std::make_unique<RigidBody2d>(
-            RigidBody2d::CreateRobotBody(0.77 - 0.22,(1.54 / 2) - 0.15)); 
+            RigidBody2d::CreateRobotBody(0.77 - 0.22,(1.54 / 2))); 
     _bodies[1] = std::make_unique<RigidBody2d>(
         RigidBody2d::CreateRobotBody(0.77 + 0.22, (1.54 / 2))); 
 
@@ -52,9 +52,9 @@ void Dohyo::Render(sf::RenderWindow& window, const RenderPoint& point) {
     window.draw(startLineOne); 
     window.draw(startLineTwo);
 
-    Vector2f f = Vector2f(0.2,0);
+    Vector2f f = Vector2f(10,0);
     Vector2f r = Vector2f(0.1, 0);
-    Vector2f f2(-0.2, 0); 
+    Vector2f f2(-0, 0); 
     Vector2f r2(-0.1, 0); 
 
     auto now = std::chrono::system_clock::now(); 
@@ -82,7 +82,7 @@ void Dohyo::Render(sf::RenderWindow& window, const RenderPoint& point) {
         sf::RectangleShape robot(sf::Vector2f(
                     width * scale, height * scale));
 
-        robot.setFillColor(sf::Color(255, 255 * i, 0)); 
+        robot.setFillColor(sf::Color(89, 86, 78)); 
         robot.setOrigin((width * scale) / 2, (height * scale / 2));
         robot.setPosition((x + _x) * scale, ((_radius * 2) - y + _y) * scale);
         robot.setRotation(-(180 / 3.14159) * _bodies[i] -> GetAngle());
@@ -91,10 +91,10 @@ void Dohyo::Render(sf::RenderWindow& window, const RenderPoint& point) {
         auto corners = _bodies[i]->GetCorners();
         for (auto& corner : corners) {
             sf::CircleShape cornerShape; 
-            cornerShape.setRadius(10); 
+            cornerShape.setRadius(5); 
             cornerShape.setFillColor(sf::Color(255,255,255));
-            cornerShape.setOrigin(5,5); 
-            cornerShape.setPosition((corner.x * 100 * _cmToPixel + _x) * scale - 5, ((_radius * 2) - corner.y * 100 * _cmToPixel + _y) * scale - 5); 
+            cornerShape.setOrigin(2,2); 
+            cornerShape.setPosition((corner.x * 100 * _cmToPixel + _x) * scale - 2, ((_radius * 2) - corner.y * 100 * _cmToPixel + _y) * scale - 2); 
 
             window.draw(cornerShape); 
         }

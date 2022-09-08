@@ -1,6 +1,7 @@
 #pragma once 
 
-#include <SFML/Graphics.hpp> 
+#include <SFML/Graphics.hpp>
+
 #include <graphics/Renderable.h> 
 
 #include <array> 
