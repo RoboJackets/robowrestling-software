@@ -62,7 +62,7 @@
 float dohyoRadius; //radius of the dohyo
 double elapsed_total;
 double sim_duration;
-float vis_scale = 2;
+float vis_scale = 1;
 
 std::shared_ptr<Robot> robot1_; //robot object that stores information about a robot
 std::shared_ptr<Robot> robot2_; //see above

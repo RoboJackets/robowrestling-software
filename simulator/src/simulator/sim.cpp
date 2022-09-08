@@ -88,7 +88,7 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
     };
     
     window_ = std::make_shared<sf::RenderWindow>(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Sim");
-    _manager = std::make_shared<ImguiManager>(2);
+    _manager = std::make_shared<ImguiManager>(vis_scale);
     _fpsPane = std::make_shared<Pane>(1180*vis_scale, 0, 100*vis_scale, 25*vis_scale, "FPS");
     _bottomPane = std::make_shared<Pane>(300 * vis_scale, 420 * vis_scale, 980 * vis_scale, 300 * vis_scale, "Logs");
     _leftPane = std::make_shared<Pane>(0, 0, 300*vis_scale, 720 * vis_scale, "Test");

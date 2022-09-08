@@ -24,18 +24,22 @@ void ImguiManager::Render(sf::Clock &clock, sf::RenderWindow& window) {
         ImGui::GetIO().FontGlobalScale = _scale; 
     
         _hasInitialized = true; 
-    }
+    } else {
+      ImGui::SFML::Update(window, clock.restart());
+      for (auto pane : _panes) {
+          pane->Render();
+      }
 
-    ImGui::SFML::Update(window, clock.restart());
-    for (auto pane : _panes) {
-        pane->Render();
+      ImGui::SFML::Render(window); 
+    
     }
-
-    ImGui::SFML::Render(window);
 }
 
 void ImguiManager::ProcessEvent(sf::Event &event) {
-    ImGui::SFML::ProcessEvent(event);
+    /* check that imgui is ready to render */
+    if (_hasInitialized) {
+        ImGui::SFML::ProcessEvent(event);
+    }
 }
 
 

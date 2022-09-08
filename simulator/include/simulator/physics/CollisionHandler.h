@@ -3,6 +3,8 @@
 #include "simulator/physics/CollisionDetector.h"
 #include "simulator/physics/RigidBody2d.h" 
 #include <iostream> 
+#include <algorithm> 
+
 
 template <class CD> 
 class CollisionHandler {
@@ -105,13 +107,7 @@ class CollisionHandler {
             contactManifold.insert(contactManifold.end(), body1ToBody2.begin(), body1ToBody2.end()); 
             contactManifold.insert(contactManifold.end(), body2ToBody1.begin(), body2ToBody1.end()); 
 
-            for (auto v : contactManifold) {
-            
-            }
-
-            std::cout << "\n" << std::endl; 
-
-           // an vertex is primary contact point, no need to distribute force
+           // a vertex is primary contact point, no need to distribute force
            // if (body1ToBody2.size() == 1 || body1ToBody2.size() == 1) { 
            //     Vector2f r = body1ToBody2[0] - body2Pos; 
            //     body2.ApplyForce(body1Force, r); 
