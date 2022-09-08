@@ -86,15 +86,15 @@ void Dohyo::Render(sf::RenderWindow& window, const RenderPoint& point) {
         robot.setOrigin((width * scale) / 2, (height * scale / 2));
         robot.setPosition((x + _x) * scale, ((_radius * 2) - y + _y) * scale);
         robot.setRotation(-(180 / 3.14159) * _bodies[i] -> GetAngle());
-
         /* draw corners */
         auto corners = _bodies[i]->GetCorners();
         for (auto& corner : corners) {
-            sf::CircleShape cornerShape; 
-            cornerShape.setRadius(5); 
+           sf::CircleShape cornerShape;
+            int radius = 5 * scale;  
+            cornerShape.setRadius(radius); 
             cornerShape.setFillColor(sf::Color(255,255,255));
-            cornerShape.setOrigin(2,2); 
-            cornerShape.setPosition((corner.x * 100 * _cmToPixel + _x) * scale - 2, ((_radius * 2) - corner.y * 100 * _cmToPixel + _y) * scale - 2); 
+            cornerShape.setOrigin(radius/2,radius/2); 
+            cornerShape.setPosition((corner.x * 100 * _cmToPixel + _x) * scale - radius/2, ((_radius * 2) - corner.y * 100 * _cmToPixel + _y) * scale - radius/2); 
 
             window.draw(cornerShape); 
         }

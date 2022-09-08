@@ -7,7 +7,7 @@ RigidBody2d::RigidBody2d(BoxShape shape) : _pos(Vector2f(0, 0)) {
     _shape.momentOfInertia = 
         _shape.mass * (_shape.width * _shape.width +
          _shape.height * _shape.height) / 12;
-
+    _angularVelocity = 0.0; 
     _vel = Vector2f(0,0);
     _force = Vector2f(0,0); 
 }
@@ -70,14 +70,13 @@ void RigidBody2d::Update(duration delta) {
         /* rotate the accel to make it relative to world */
         Vector2f accel = linAccel.Rotate(_angle); 
         Vector2f dv = accel.Scale(delta.count()); 
-
         _vel += dv;
 
          
     }
     Vector2f ds = _vel.Scale(delta.count());     
     _pos += ds; 
-
+    
     double angularAccel = _torque / _shape.momentOfInertia;
     _angularVelocity += angularAccel * delta.count(); 
     _angle += _angularVelocity * delta.count();
