@@ -91,10 +91,11 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
     _manager = std::make_shared<ImguiManager>(vis_scale);
     _fpsPane = std::make_shared<Pane>(1180*vis_scale, 0, 100*vis_scale, 25*vis_scale, "FPS");
     _bottomPane = std::make_shared<Pane>(300 * vis_scale, 420 * vis_scale, 980 * vis_scale, 300 * vis_scale, "Logs");
-    _leftPane = std::make_shared<Pane>(0, 0, 300*vis_scale, 720 * vis_scale, "Test");
+    _leftPane = std::make_shared<Pane>(0, 0, 300*vis_scale, 720 * vis_scale, "Telemetry");
     _fpsPane->SetOpacity(0.35);
     _fpsPane->SetFlags(ImGuiWindowFlags_NoDecoration);
     _fpsWidget = std::make_shared<FPSWidget>();
+    _ppWidget = std::make_shared<PlayPauseWidget>(); 
     _qWidget = std::make_shared<QuickWidget>(); 
     _qWidget->SetRenderCallback([](){
         ImVec2 pos = ImGui::GetIO().MousePos;
@@ -110,6 +111,7 @@ int main(int argc, char *argv[]) { // ./sim.sw (r1 x left of 0) (r1 y up of 0) (
     _manager->AddPane(_leftPane);
     _manager->AddPane(_bottomPane);
     _leftPane->AddWidget(_qWidget);
+    _leftPane->AddWidget(_ppWidget); 
     _fpsPane->AddWidget(_fpsWidget);
     window_->setFramerateLimit(60);
 

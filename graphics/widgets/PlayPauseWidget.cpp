@@ -1,7 +1,9 @@
 #include "graphics/widgets/PlayPauseWidget.h" 
 
 
-PlayPauseWidget::PlayPauseWidget() {}
+PlayPauseWidget::PlayPauseWidget() {
+
+}
 
 
 void PlayPauseWidget::Render() {
@@ -14,7 +16,7 @@ bool PlayPauseWidget::Activated() {
     return true; 
 }
 
-std::stirng PlayPauseWidget::GetName() {
+std::string PlayPauseWidget::GetName() {
     return "Play/Pause"; 
 }
 

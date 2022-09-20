@@ -1,7 +1,7 @@
 #pragma once 
 
 
-#include "graphics/widget/Widget.h" 
+#include "graphics/widgets/Widget.h" 
 
 
 
@@ -19,4 +19,4 @@ class PlayPauseWidget : public Widget {
 
 
 
-} 
+}; 
