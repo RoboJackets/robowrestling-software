@@ -1,4 +1,4 @@
-#include <simulator/include/simulator/robots/newRobot.h>
+#include <simulator/robots/newRobot.h>
 #include <strategy/slammywhammy.h>
 
 NewRobot::NewRobot(double x, double y, double angle, int dohyoRadius) {
