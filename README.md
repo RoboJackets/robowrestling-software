@@ -15,12 +15,28 @@
         ```
         <sudo apt-get update>
         <sudo apt-get install c++>
+        
+        curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg \
+        && sudo chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg \
+        && echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" |
+        sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null \
+        && sudo apt update \
+        && sudo apt install gh -y
+
         ```
     
     2. Use your preferred code editor
  
 1. For Mac
-    1. Install XCode
+    1. Install Homebrew
+
+            ```
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            ```
+    2. Install github cli
+            ```
+            brew install gh
+            ```
  
 ### Git/Github Setup
   
@@ -38,6 +54,12 @@
 
 5. Clone the robowrestling-software repository: [repo](https://github.com/RoboJackets/robowrestling-software)
 
+6. If you did not install the Github Desktop App, authenticate with Github cli:
+    1. run `gh auth login`
+    2. pick the non-enterprise option 
+    3. use https as preferred method (unless you want to make a ssh-key) 
+    4. follow steps to login to github 
+
 ### Dependencies Installation
 
 1. For Linux/Windows
@@ -52,23 +74,20 @@
 
 2. For Mac
     1. Open a terminal and run the following commands:
-        1. Install Homebrew
-
-            ```
-            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-            ```
             
-        2. Install Dependencies
+        1. Install Dependencies
             ```
             brew install cmake
             brew install sfml
             ```
 
-### Arduino IDE Setup
+### Platform IO Setup
 
-1. Install Arduino IDE: [Download](https://www.arduino.cc/en/software)
+1. Install VSCode: [Download](https://code.visualstudio.com/)
 
-2. Install Teensyduino: [Download](https://www.pjrc.com/teensy/td_download.html)
+2. Install PlatformIO: [PlatformIO](https://platformio.org/) 
+    1. Go to the extension tab in VSCode 
+    2. Search for PlatformIO as install it
 
 ## [Simulator Documentation](simulator/SIMULATOR.md)
 
