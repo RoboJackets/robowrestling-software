@@ -16,7 +16,7 @@ class NewRobot : public Renderable { //abstract class of a robot
 		//double width_; //width of robot used for collision and ring out calculations. used as distance between wheels
 		//double length_; //length of robot used for collision and ring out calculations
 
-        RigidBody2d body_;
+        std::unique_ptr<RigidBody2d> body_;
 
         double _cmToPixel;
         double _radius;

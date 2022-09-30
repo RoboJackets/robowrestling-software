@@ -17,7 +17,7 @@ Dohyo::Dohyo(int x, int y, int radius):_x(x), _y(y), _radius(radius) {
         NewRobot(0.77 - 0.22, (1.54 / 2), 0.0, radius)
     );
     _bodies[1] = std::make_unique<NewRobot>(
-        NewRobot(0.77 - 0.22, (1.54 / 2), 0.0, radius)
+        NewRobot(0.77 + 0.22, (1.54 / 2), 0.0, radius)
     );
 
     lastTime = std::chrono::system_clock::now();
@@ -62,23 +62,23 @@ void Dohyo::Render(sf::RenderWindow& window, const RenderPoint& point) {
     window.draw(startLineOne);
     window.draw(startLineTwo);
 
-    Vector2f f = Vector2f(10,0);
+    Vector2f f = Vector2f(0.2,0);
     Vector2f r = Vector2f(0.1, 0);
     Vector2f f2(-0.2, 0);
     Vector2f r2(-0.1, 0);
 
     auto now = std::chrono::system_clock::now();
-    _bodies[0]-> body_.ApplyForce(f,r);
-    _bodies[1]-> body_.ApplyForce(f2,r2);
-    _ch.HandleCollision(_bodies[0] -> body_, _bodies[1] -> body_);
-    _bodies[0]-> body_.Update(now - lastTime);
-    _bodies[1]-> body_.Update(now - lastTime);
+    _bodies[0]->body_->ApplyForce(f,r);
+    _bodies[1]->body_->ApplyForce(f2,r2);
+    _ch.HandleCollision( *(_bodies[0] -> body_), *(_bodies[1] -> body_));
+    _bodies[0]-> body_->Update(now - lastTime);
+    _bodies[1]-> body_->Update(now - lastTime);
     lastTime = now;
 
 
 
     for (int i = 0; i < _bodies.size(); i++) {
-        _bodies[i] -> Render(window, point);
+        _bodies[i] -> Render(window, *(new RenderPoint(_x, _y, point.scale)));
         /*
         auto shape = _bodies[i] -> GetShape();
         double width  = (shape.width * 100.0) * _cmToPixel;

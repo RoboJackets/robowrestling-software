@@ -17,10 +17,10 @@ NewRobot::NewRobot(double x, double y, double angle, int dohyoRadius) {
 void NewRobot::Render(sf::RenderWindow& window, const RenderPoint& point) {
     double scale = point.scale;
 
-    auto shape = body_.GetShape();
+    auto shape = body_->GetShape();
     double width  = (shape.width * 100.0) * _cmToPixel;
     double height = (shape.height * 100.0) * _cmToPixel;
-    auto [x, y] = body_.GetPos();
+    auto [x, y] = body_->GetPos();
     x  = (x * 100.0) * _cmToPixel;
     y  = (y * 100.0) * _cmToPixel;
 
@@ -31,23 +31,31 @@ void NewRobot::Render(sf::RenderWindow& window, const RenderPoint& point) {
     sf::RectangleShape robot(sf::Vector2f(
                 width * scale, height * scale));
 
-    robot.setFillColor(sf::Color(255, 255, 0));
+    robot.setFillColor(sf::Color(89, 86, 78));
     robot.setOrigin((width * scale) / 2, (height * scale / 2));
-    robot.setPosition((x + body_.GetPos().x) * scale, ((_radius * 2) - y + body_.GetPos().y) * scale);
-    robot.setRotation(-(180 / 3.14159) * body_. GetAngle());
+    robot.setPosition((x + point.x) * scale, ((_radius * 2) - y + point.y) * scale);
+    robot.setRotation(-(180 / 3.14159) * body_-> GetAngle());
+
+    window.draw(robot);
+    
     /* draw corners */
-    auto corners = body_.GetCorners();
+    auto corners = body_->GetCorners();
     for (auto& corner : corners) {
         sf::CircleShape cornerShape;
         int radius = 5 * scale;
         cornerShape.setRadius(radius);
         cornerShape.setFillColor(sf::Color(255,255,255));
         cornerShape.setOrigin(radius/2,radius/2);
-        cornerShape.setPosition((corner.x * 100 * _cmToPixel + body_.GetPos().x) * scale - radius/2, ((_radius * 2) - corner.y * 100 * _cmToPixel + body_.GetPos().y) * scale - radius/2);
+        cornerShape.setPosition((corner.x * 100 * _cmToPixel + point.x) * scale - radius/2, ((_radius * 2) - corner.y * 100 * _cmToPixel + point.y) * scale - radius/2);
 
         window.draw(cornerShape);
     }
 
-    window.draw(robot);
+    sf::CircleShape center;
+    center.setRadius(10);
+    center.setOrigin(5,5);
+    center.setPosition((x + point.x) * scale - 5, ((_radius * 2) - y + point.y) * scale - 5);
+    center.setFillColor(sf::Color(255, 0, 255));
+    window.draw(center);
 }
 
