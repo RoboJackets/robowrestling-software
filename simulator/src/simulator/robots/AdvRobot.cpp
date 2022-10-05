@@ -1,7 +1,7 @@
-#include <simulator/robots/newRobot.h>
+#include <simulator/robots/AdvRobot.h>
 #include <strategy/slammywhammy.h>
 
-NewRobot::NewRobot(double x, double y, double angle, int dohyoRadius) {
+AdvRobot::AdvRobot(double x, double y, double angle, int dohyoRadius) {
 
     body_ = std::make_unique<RigidBody2d>(
             RigidBody2d::CreateRobotBody(x, y, angle)
@@ -14,7 +14,7 @@ NewRobot::NewRobot(double x, double y, double angle, int dohyoRadius) {
 	strat_ = std::make_unique<SlammyWhammy>();
 }
 
-void NewRobot::Render(sf::RenderWindow& window, const RenderPoint& point) {
+void AdvRobot::Render(sf::RenderWindow& window, const RenderPoint& point) {
     double scale = point.scale;
 
     auto shape = body_->GetShape();

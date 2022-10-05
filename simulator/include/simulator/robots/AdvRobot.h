@@ -1,5 +1,5 @@
-#ifndef newRobot_h
-#define newRobot_h
+#ifndef AdvRobot_h
+#define AdvRobot_h
 
 #include <graphics/Renderable.h>
 #include <strategy/strategy.h>
@@ -7,7 +7,7 @@
 #include <memory>
 #include <cmath>
 
-class NewRobot : public Renderable { //abstract class of a robot
+class AdvRobot : public Renderable { //abstract class of a robot
 	public:
 		//double x_pos_; //x position of the center of the robot relative to the top left corner of the window. +x is to the right
 		//double y_pos_; //y position of the center of the robot relative to the top left corner of the window. +y is down
@@ -30,7 +30,7 @@ class NewRobot : public Renderable { //abstract class of a robot
 
 		std::unique_ptr<Strategy> strat_;
 
-        NewRobot(double x, double y, double angle, int dohyoRadius);
+        AdvRobot(double x, double y, double angle, int dohyoRadius);
         void Render(sf::RenderWindow& window, const RenderPoint& point) override;
 
 		//virtual std::vector<std::pair<double, double>> corners() = 0;	//returns the corners in x, y pairs in order selecting them

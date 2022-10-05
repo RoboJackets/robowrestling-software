@@ -1,15 +1,12 @@
 #include <simulator/Dohyo.h>
-#include <simulator/robots/newRobot.h>
 
 Dohyo::Dohyo(int x, int y, int radius) : _x(x), _y(y), _radius(radius)
 {
 
     _cmToPixel = (_radius / (154.0 / 2));
 
-    _bodies[0] = std::make_unique<NewRobot>(
-        NewRobot(0.77 - 0.22, (1.54 / 2), 0.0, radius));
-    _bodies[1] = std::make_unique<NewRobot>(
-        NewRobot(0.77 + 0.22, (1.54 / 2), 0.0, radius));
+    _bodies[0] = std::make_unique<AdvRobot>(0.77 - 0.22, (1.54 / 2), 0.0, radius);
+    _bodies[1] = std::make_unique<AdvRobot>(0.77 + 0.22, (1.54 / 2), 0.0, radius);
 
     lastTime = std::chrono::system_clock::now();
 }

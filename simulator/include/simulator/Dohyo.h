@@ -8,7 +8,7 @@
 #include <iostream>
 #include <chrono>
 
-#include <simulator/robots/newRobot.h>
+#include <simulator/robots/AdvRobot.h>
 #include <simulator/physics/SATCollisionDetector.h>
 #include <simulator/physics/CollisionHandler.h>
 
@@ -18,7 +18,7 @@ class Dohyo : public Renderable {
         int _y;
         int _radius;
         double _cmToPixel;
-        std::array<std::unique_ptr<NewRobot>, 2> _bodies;
+        std::array<std::unique_ptr<AdvRobot>, 2> _bodies;
         CollisionHandler<SATCollisionDetector> _ch;
         std::chrono::time_point<std::chrono::system_clock> lastTime;
 
