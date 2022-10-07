@@ -1,7 +1,7 @@
 #include <Sensor.h>
 
 class DistanceSensor : Sensor {
-  double getInfo() {
+  double getInfo(std::pair<double,double> robotPos) {
     //custom logic :)
   }
   double angle; //0 to 2pi, 0 is forward from the robot, counterclockwise like a unit circle
