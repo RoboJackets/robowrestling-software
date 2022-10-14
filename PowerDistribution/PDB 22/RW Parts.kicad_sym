@@ -21,11 +21,11 @@
     (symbol "2 Pos_1_1"
       (pin input line (at -2.54 -5.08 90) (length 2.54)
         (name "1" (effects (font (size 1.778 1.778))))
-        (number "" (effects (font (size 1.778 1.778))))
+        (number "1" (effects (font (size 1.778 1.778))))
       )
       (pin input line (at 2.54 -5.08 90) (length 2.54)
         (name "2" (effects (font (size 1.778 1.778))))
-        (number "" (effects (font (size 1.778 1.778))))
+        (number "2" (effects (font (size 1.778 1.778))))
       )
     )
   )
