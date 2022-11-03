@@ -2,7 +2,7 @@
 #include <memory>
 
 #include "Sensors/SerialSensor.h"
-#include "TFMini/TFMini.h"
+#include <TFMPlus.h>
 
 
 SerialSensor sensor{&Serial1, 9};
