@@ -1,10 +1,11 @@
 #ifndef SERIALSENSOR_H
 #define SERIALSENSOR_H
 #include "Sensor.h"
+#include <Stream.h>
 
 class SerialSensor : public Sensor {
 public: 
-    SerialSensor(HardwareSerial* serial, int numBytes) 
+    SerialSensor(Stream* serial, int numBytes) 
         : Sensor(0, 0), _numBytes(numBytes) {
         
         _serial = serial; 
@@ -16,7 +17,7 @@ public:
     }
 
     bool Poll() override {
-        if (_serial -> available() > 0) {
+        if (_serial -> available() >= _numBytes) {
             _serial -> readBytes(_bytes, _numBytes);
         }
 
@@ -29,7 +30,7 @@ public:
 protected: 
     byte* _bytes; 
     int _numBytes; 
-    HardwareSerial* _serial; 
+    Stream* _serial; 
     
 
     
