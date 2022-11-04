@@ -2,8 +2,8 @@
 #define SLAMMY_WHAMMY_H
 #include "Behaviors/Nodes/SequenceNode.h"
 
-template<typename T>
-class SlammyWhammy : public BT::SequenceNode<T> {
+template<typename T, typename U>
+class SlammyWhammy : public BT::SequenceNode<T, U> {
 public:
     SlammyWhammy(int turnSpeed, int slamSpeed) : turnSpeed(turnSpeed), slamSpeed(slamSpeed), SequenceNode() {
         

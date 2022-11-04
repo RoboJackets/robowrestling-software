@@ -4,8 +4,8 @@
 #include "Nodes/Node.h"
 #include "MotorController/MotorController.h"
 
-template<typename T>
-class Slam : public BT::Node<T> {
+template<typename T, typename U>
+class Slam : public BT::Node<T, U> {
 public:
     Slam(int speed) : speed(speed){
         
