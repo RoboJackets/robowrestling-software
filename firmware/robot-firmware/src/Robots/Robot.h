@@ -4,16 +4,25 @@
 #include <Sensors/Sensor.h>
 #include "Robots/RobotState.h"
 #include <vector>
+#include <memory> 
 
 class Robot {
     protected: 
-    std::vector<Sensor> _sensors; 
+    std::vector<Sensor*> _sensors; 
     RobotState _state; 
 
     public: 
     Robot() {}
 
-    bool UpdateSensors() {}
+    virtual void UpdateState() = 0;
+
+    bool UpdateSensors() {
+        for (Sensor* sensor : _sensors) {
+            sensor -> Poll(); 
+        }
+
+        UpdateState(); 
+    }
 
 
     const RobotState& GetCurrentState() {

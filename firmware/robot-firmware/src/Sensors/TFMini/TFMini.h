@@ -7,7 +7,7 @@
 #include <memory> 
 #include <TFMPlus.h>
 
-class TFMini : DistanceSensor<int>, Sensor {
+class TFMini : public Sensor, DistanceSensor<int> {
 private: 
     std::unique_ptr<SoftwareSerial> _serial; 
     TFMPlus tfm; 
@@ -27,9 +27,15 @@ public:
         return true; 
     }
 
+    byte* GetBytes() override {
+        return 0; 
+    }
+
     int GetDistance() override {
         return _dist; 
     }
+
+    ~TFMini() {}
 };
 
 
