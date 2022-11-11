@@ -2,7 +2,6 @@
 #define SEARCH_H
 
 #include "Nodes/Node.h"
-#include "MotorController/MotorController.h"
 
 template<typename T, typename U>
 class Search : public BT::Node<T, U> {
@@ -11,36 +10,41 @@ public:
         SEARCH,
         TURN_LEFT,
         TURN_RIGHT
-    }
+    };
 
-    Search(int turnSpeed) : turnSpeed(turnSpeed), state(SEARCH){
+    Search(int turnSpeed) : BT::Node<T, U>(0, 0), turnSpeed(turnSpeed), state(SEARCH) {
         
     }
 
     U Run(T inputs) override {
-        _finished = inputs.lidar[2] < 1000 && inputs.lidars[3] < 1000; // both lidars see something
+        this->_finished = inputs.lidars[2] < 1000 && inputs.lidars[3] < 1000; // both lidars see something
+
+        updateState(inputs);
 
         U out;
         switch (state) {
         case SEARCH:
             out.motor1 = turnSpeed;
             out.motor2 = -turnSpeed;
-        }
+            break;
         case TURN_LEFT:
             out.motor1 = -turnSpeed;
             out.motor2 = turnSpeed;
+            break;
         case TURN_RIGHT:
             out.motor1 = turnSpeed;
             out.motor2 = -turnSpeed;
+            break;
+        }
         return out;
     }
 
     void updateState(T inputs) {
         int minLidar = 1000;
         int minLidarIndex = -1;
-        for (int i = 0; i < inputs.lidar.size(); i++) {
-            if (inputs.lidar[i] < minLidar) {
-                minLidar = inputs.lidar[i];
+        for (int i = 0; i < 6; i++) {
+            if (inputs.lidars[i] < minLidar) {
+                minLidar = inputs.lidars[i];
                 minLidarIndex = i;
             }
         }

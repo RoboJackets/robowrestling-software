@@ -7,12 +7,16 @@
 template<typename T, typename U>
 class SlammyWhammy : public BT::SequenceNode<T, U> {
 public:
-    SlammyWhammy(int turnSpeed, int slamSpeed) : SequenceNode() {
-        Search<T,U> search(turnSpeed);
-        AddNode(search);
-        Slam<T,U> slam(slam);
-        AddNode(slam);
+    SlammyWhammy(int turnSpeed, int slamSpeed) : BT::SequenceNode<T,U>(0, 0) {
+        search = new Search<T,U>(turnSpeed);
+        this->AddNode(search);
+        slam = new Slam<T,U>(slamSpeed);
+        this->AddNode(slam);
     }
+
+private:
+    Search<T,U>* search;
+    Slam<T,U>* slam;
 };
 
 #endif
