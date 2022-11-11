@@ -10,10 +10,10 @@ struct RobotState {
     Vector2<double> position{0,0}; 
     Vector2<double> velocity{0,0}; 
 
-    double theta; 
-    bool _deployFlags; 
-    double currentLeftMotorPow; 
-    double currentRightMotorPow; 
+    double theta = 0; 
+    bool _deployFlags = false; 
+    double currentLeftMotorPow = 0.0; 
+    double currentRightMotorPow = 0.0; 
 
 };
 

@@ -2,18 +2,24 @@
 #define ROBOT_H 
 
 #include <Sensors/Sensor.h>
+#include "Robots/RobotState.h"
 #include <vector>
 
 class Robot {
     protected: 
-    float _x; 
-    float _y; 
     std::vector<Sensor> _sensors; 
+    RobotState _state; 
 
     public: 
-    Robot() : _x(0), _y(0) {}
+    Robot() {}
 
     bool UpdateSensors() {}
+
+
+    const RobotState& GetCurrentState() {
+        return _state; 
+    }
+
 
 
 }; 
