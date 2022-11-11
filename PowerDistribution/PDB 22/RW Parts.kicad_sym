@@ -215,7 +215,7 @@
     )
   )
   (symbol "PRT-10474" (in_bom yes) (on_board yes)
-    (property "Reference" "U" (id 0) (at 0 2.54 0)
+    (property "Reference" "U" (id 0) (at 0 -2.794 0)
       (effects (font (size 1.27 1.27)))
     )
     (property "Value" "PRT-10474" (id 1) (at 0 2.54 0)
