@@ -12,7 +12,7 @@ public:
     }
 
     U Run(T inputs) override {
-        _finished = inputs.lidar1 > 1000 & inputs.lidars2 > 1000; // neither lidars see anything
+        _finished = inputs.lidar[2] > 1000 || inputs.lidars[3] > 1000; // neither lidars see anything
 
         U out;
         out.motor1 = speed;
