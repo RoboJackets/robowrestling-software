@@ -1,5 +1,12 @@
 // set this to the hardware serial port you wish to use
+#include <TFMPlus.h>
+#include <SoftwareSerial.h>
+
 #define HWSERIAL Serial1
+
+SoftwareSerial softSerial(7,8);
+TFMPlus tfm;
+
 byte byteArray [9];
 // Byte0 Byte 1 Byte2 Byte3  Byte4      Byte5      Byte6  Byte7  Byte8
 // 0x89  0x89 Dist_L  Dist_H Strength_L Strength_H Temp_L Temp_H Checksum
@@ -11,24 +18,29 @@ byte configUART [5] = {0x5A, 0x05, 0x0A, 0x00, 0x11}; // write this array to HWS
 
 
 void setup() {
-  Serial.begin(115200); 
+  Serial.begin(115200);
+  softSerial.begin(115200);
   Serial.println("Hello");
-  HWSERIAL.setRX(31);
-  HWSERIAL.setTX(32);
+  HWSERIAL.setRX(8);
+  HWSERIAL.setTX(7);
   HWSERIAL.begin(115200);// default baud rate
   while(!HWSERIAL) { delay(100); }
   HWSERIAL.write(configUART, 5); // set sensor to UART mode
   HWSERIAL.write(configOutput, 5); // enable output
+  tfm.begin(&softSerial);
   delay(1000);
 }
 
 void loop() {
+  int16_t dist = 0;
+  tfm.getData(dist);
+  /*
   if (HWSERIAL) {
     //HWSERIAL.write(configUART, 5);
     HWSERIAL.readBytes(byteArray, 9); // write output of read to an array of length 9
     for (int i =0;i<9;i++){
       Serial.print(String(byteArray[i])+ " ");  
     }  
-  }
-  Serial.println();
+  }*/
+  Serial.println(dist);
 }
