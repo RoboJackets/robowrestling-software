@@ -2,6 +2,13 @@
 #define WAIT_UNTIL_CLOSE_H
 #include "Behaviors/Nodes/Node.h"
 
+/**
+ * Keeps the robot stationary until the enemy robot gets close.
+ * Designed for use in the Matador strategy.
+ *
+ * Note to self: Maybe add paramter to define custom "closeness" value
+ * in millimeters
+*/
 template<typename T, typename U>
 class WaitUntilClose : BT::Node<T, U> {
     public:
@@ -13,8 +20,8 @@ class WaitUntilClose : BT::Node<T, U> {
             this -> _finished = inputs.lidars[2] <= 350 && inputs.lidars[3] <= 350;
 
             U out;
-            out.motor1 = 0; // We don't need to move, just wait
-            out.motor2 = 0;
+            out.currentLeftMotorPow = 0; // We don't need to move, just wait
+            out.currentRightMotorPow = 0;
             return out;
         }
 };
