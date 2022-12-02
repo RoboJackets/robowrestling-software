@@ -5,12 +5,17 @@
 template<typename T, typename U>
 class WaitUntilClose : BT::Node<T, U> {
     public:
-        Wait() : Node() {
+        WaitUntilClose() : BT::Node<T, U>(0, 0) {
 
         }
 
-        U Run(T inputs) {
+        U Run(T inputs) override {
+            this -> _finished = inputs.lidars[2] <= 350 && inputs.lidars[3] <= 350;
 
+            U out;
+            out.motor1 = 0; // We don't need to move, just wait
+            out.motor2 = 0;
+            return out;
         }
 };
 
