@@ -1,5 +1,3 @@
-lines (20 sloc)  528 Bytes
-
 #ifndef SLAM_H
 #define SLAM_H
 
