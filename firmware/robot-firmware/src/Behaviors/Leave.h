@@ -14,7 +14,7 @@
 template<typename T, typename U>
 class Leave : BT::Node<T, U> {
     public:
-        Leave(long startTime) : BT::Node<T, U>(0, 0), _startTime(startTime) {
+        Leave(unsigned long startTime) : BT::Node<T, U>(0, 0), _startTime(startTime) {
 
         }
 
@@ -29,7 +29,7 @@ class Leave : BT::Node<T, U> {
         }
 
     protected:
-        long _startTime;
+        unsigned long _startTime;
 };
 
 #endif

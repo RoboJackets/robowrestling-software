@@ -17,7 +17,7 @@ class WaitUntilClose : BT::Node<T, U> {
         }
 
         U Run(T inputs) override {
-            this -> _finished = inputs.lidars[2] <= 350 && inputs.lidars[3] <= 350;
+            this -> _finished = inputs.lidars[2] <= 350 || inputs.lidars[3] <= 350; // test both && and ||
 
             U out;
             out.currentLeftMotorPow = 0; // We don't need to move, just wait
