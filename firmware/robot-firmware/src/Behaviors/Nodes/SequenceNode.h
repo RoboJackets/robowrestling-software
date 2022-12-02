@@ -16,12 +16,12 @@ namespace BT {
     template<typename T, typename U>
     class SequenceNode : public Node<T, U> {
     public: 
-        SequenceNode(Node<T, U>* next, Node<T, U>* prev) : Node(next, prev), _nodeIdx(0) {
+        SequenceNode(Node<T, U>* next, Node<T, U>* prev) : Node<T,U>(next, prev), _nodeIdx(0) {
 
         }
 
 
-        void AddNode(Node<T>* node) {
+        void AddNode(Node<T, U>* node) {
             if (_currentNode == nullptr) {
                 _currentNode = node; 
             }
@@ -37,15 +37,15 @@ namespace BT {
          */
         U Run(T inputs) override {
             if (_currentNode == nullptr) {
-                return T{};
+                return U{};
             }
 
 
             
-            T ret = _currentNode->Run(); 
+            U ret = _currentNode->Run(inputs); 
 
             if(_currentNode->IsFinished() && _nodeIdx == _nodes.size() - 1) {
-                _finished = true ;
+                this->_finished = true ;
                 return ret; 
             }
 
@@ -60,8 +60,8 @@ namespace BT {
         }
 
     private: 
-        std::vector<Node<T>*> _nodes; 
-        Node<T>* _currentNode; 
+        std::vector<Node<T, U>*> _nodes; 
+        Node<T, U>* _currentNode; 
         int _nodeIdx; 
 
     };
