@@ -11,7 +11,7 @@ struct RobotState {
     Vector2<double> velocity{0,0}; 
 
     double theta = 0; 
-    bool _deployFlags = false; 
+    bool deployFlags = false; 
     double currentLeftMotorPow = 0.0; 
     double currentRightMotorPow = 0.0; 
 
