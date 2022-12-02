@@ -10,6 +10,8 @@
  *
  * Note to self: Perhaps find a way to utilize a line sensor to strafe around
  * the edge of the Dohyo
+ * 
+ * Consider using distance from edge to determine turn radius (determined by wheel speed)
 */
 template<typename T, typename U>
 class Leave : BT::Node<T, U> {
