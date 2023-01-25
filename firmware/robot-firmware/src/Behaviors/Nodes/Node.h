@@ -2,10 +2,10 @@
 #define NODE_H
 
 namespace BT {
-    template<typename T>
+    template<typename T, typename U> // T is inputs, U is outputs
     class Node {
     public: 
-        Node(Node<T>* next, Node<T>* prev): _finished(false) {
+        Node(Node<T, U>* next, Node<T, U>* prev): _finished(false) {
             _next = next; 
             _prev = prev; 
         }
@@ -14,11 +14,11 @@ namespace BT {
             delete _next; 
         }
 
-        Node<T>* GetNext() {
+        Node<T, U>* GetNext() {
             return _next;
         }
 
-        Node<T>* GetLast() {
+        Node<T, U>* GetLast() {
             return _prev; 
         }
 
@@ -26,11 +26,11 @@ namespace BT {
             return _finished;
         }
 
-        virtual T Run() = 0;
+        virtual U Run(T inputs) = 0;
 
     protected: 
-        Node<T>* _next; 
-        Node<T>* _prev; 
+        Node<T, U>* _next; 
+        Node<T, U>* _prev; 
         bool _finished; 
     }; 
 }

@@ -10,12 +10,13 @@ namespace BT {
      * @brief A Node that runs its nodes in the order they were added. 
      * runs nodes 1 at a time. 
      * 
-     * @tparam T the return type of the data 
+     * @tparam T the inputs type of the sensors
+     * @tparam U the output type of the node
      */
-    template<typename T>
-    class SequenceNode : public Node<T> {
+    template<typename T, typename U>
+    class SequenceNode : public Node<T, U> {
     public: 
-        SequenceNode(Node<T>* next, Node<T>* prev) : Node(next, prev), _nodeIdx(0) {
+        SequenceNode(Node<T, U>* next, Node<T, U>* prev) : Node(next, prev), _nodeIdx(0) {
 
         }
 
@@ -31,9 +32,10 @@ namespace BT {
          * @brief Runs the nodes found in _nodes 1 at a time in the order 
          * they were added. 
          * 
-         * @return T the type of data structure we are returning. 
+         * @param inputs the sensor inputs to the robot
+         * @return U the type of data structure we are returning. 
          */
-        T Run() override {
+        U Run(T inputs) override {
             if (_currentNode == nullptr) {
                 return T{};
             }
