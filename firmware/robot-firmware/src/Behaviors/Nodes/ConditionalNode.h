@@ -39,10 +39,10 @@ namespace BT {
 
             U Run(T inputs) override {
                 // TODO maybe find a better to do this 
-        
-                if (this->_next->IsFinished() || _fallback->IsFinished()) {
-                    this->_finished = true;
-                }
+
+                /* Conditional node is never finished, it just checks the 
+                   predicate and runs the respective nodes 
+                */
 
                 U ret; 
                 if (_supplier()) {

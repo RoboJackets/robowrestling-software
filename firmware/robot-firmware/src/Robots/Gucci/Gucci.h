@@ -6,16 +6,26 @@
 
 class Gucci : public Robot {
 private: 
-    TFMini *frontOne; 
+        TFMini* rightDist;
+        TFMini* frontDist;
+        TFMini* leftDist;
 public: 
     Gucci() {
         //TODO: replace these with the actual pin values
-        frontOne = new TFMini(0,1); 
-        _sensors[0] = frontOne;  
+        rightDist = new TFMini(0, 1); 
+        frontDist = new TFMini(0, 1); 
+        leftDist = new TFMini(0, 1); 
+
+        _sensors.push_back(rightDist); // right 
+        _sensors.push_back(frontDist); 
+        _sensors.push_back(leftDist); 
+
     }
 
     void UpdateState() override {
-        _state.lidars[0] = frontOne -> GetDistance(); 
+        
+        Serial.printf("left: %d, right: %d, front: %d \n", leftDist->GetDistance(), rightDist->GetDistance(), frontDist->GetDistance()); 
+    
     } 
 
 
