@@ -14,7 +14,6 @@ public:
          _transmitPin(transmitPin) {}
      ~Sensor() {}
     virtual bool Poll() = 0;
-    virtual byte* GetBytes() = 0;
 
 }; 
 

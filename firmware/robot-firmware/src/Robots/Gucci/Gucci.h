@@ -2,6 +2,7 @@
 #define GUCCI_H
 
 #include "Robots/Robot.h"
+#include <Arduino.h>
 #include "Sensors/TFMini/TFMini.h"
 
 class Gucci : public Robot {
@@ -12,9 +13,22 @@ private:
 public: 
     Gucci() {
         //TODO: replace these with the actual pin values
-        rightDist = new TFMini(0, 1); 
-        frontDist = new TFMini(0, 1); 
-        leftDist = new TFMini(0, 1); 
+        
+        Serial1.begin(115200); 
+        Serial2.begin(115200); 
+        Serial3.begin(115200); 
+
+        pinMode(2, OUTPUT);  
+        pinMode(25, OUTPUT); 
+        pinMode(28, OUTPUT); 
+
+        digitalWrite(2, HIGH);
+        digitalWrite(25, HIGH);
+        digitalWrite(28, HIGH);
+
+        rightDist = new TFMini(&Serial1);
+        frontDist = new TFMini(&Serial2); 
+        leftDist =  new TFMini(&Serial3); 
 
         _sensors.push_back(rightDist); // right 
         _sensors.push_back(frontDist); 
