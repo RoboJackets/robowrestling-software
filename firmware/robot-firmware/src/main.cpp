@@ -7,13 +7,16 @@
 #include "Sensors/TFMini/TFMini.h"
 #include "Sensors/LidarMux.h"
 
+#include "Robots/Gucci/Gucci.h"
+
 // Init motor controller
 // Make sure that everything is grounded
 SoftwareSerial* motorControllerSerial = new SoftwareSerial(11, 2); // tx on pin 2, rx on pin 11 (not needed)
 MotorController motorController{motorControllerSerial};
 TFMini* tfMini;
 LidarMux* mux1;
-
+Gucci gucci{};  
+int16_t dist = -1;
 void setup() {
   tfMini = new TFMini(9, 10);
   mux1 = new LidarMux(25, tfMini);
@@ -31,5 +34,6 @@ void loop() {
   mux1->readLidars(x);
   String out =  out1 + x->lidarOne + out2 + x->lidarTwo;
   Serial.println(out);
+  gucci.UpdateSensors(); 
 }
 

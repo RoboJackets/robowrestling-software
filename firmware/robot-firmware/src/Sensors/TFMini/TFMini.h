@@ -16,19 +16,13 @@ private:
 
 
 public: 
-    TFMini(int rx, int tx) {
-        _serial = std::make_unique<SoftwareSerial>(rx, tx); 
-        _serial -> begin(115200); 
-        tfm.begin(_serial.get()); 
+    TFMini(Stream* stream) {
+        tfm.begin(stream); 
     }
 
     bool Poll() override {
         tfm.getData(_dist); 
         return true; 
-    }
-
-    byte* GetBytes() override {
-        return 0; 
     }
 
     int GetDistance() override {
