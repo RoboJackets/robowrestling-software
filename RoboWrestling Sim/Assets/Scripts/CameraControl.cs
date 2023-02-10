@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
+    //Keeps an array of all the cameras
     public GameObject[] cameras;
     private int cameraSize;
     private int index;
 
     void Start() 
     {
+        //sets the main camera active and the rest off
         cameraSize = cameras.Length;
         index = 1;
         for (int i = 0; i < cameraSize; i++) {
@@ -26,6 +28,7 @@ public class CameraControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //loops through the cameras when pressing tab key
        if(Input.GetKeyDown(KeyCode.Tab)) {
             Debug.Log(index);
             
