@@ -15,7 +15,7 @@ SoftwareSerial* motorControllerSerial = new SoftwareSerial(11, 2); // tx on pin 
 MotorController motorController{motorControllerSerial};
 TFMini* tfMini;
 LidarMux* mux1;
-Gucci gucci{};  
+Gucci gucci{};
 int16_t dist = -1;
 void setup() {
   tfMini = new TFMini(9, 10);
@@ -31,9 +31,11 @@ String out1 = "Lidar one: ";
 String out2 = ", Lidar two: ";
 struct twoValues* x = new twoValues;
 void loop() {
+  Serial.println("======= NEW LOOP AAAA =======");
   mux1->readLidars(x);
   String out =  out1 + x->lidarOne + out2 + x->lidarTwo;
   Serial.println(out);
-  gucci.UpdateSensors(); 
+  gucci.UpdateSensors();
+  delay(5000);
 }
 
