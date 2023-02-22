@@ -12,13 +12,9 @@
 // Make sure that everything is grounded
 SoftwareSerial* motorControllerSerial = new SoftwareSerial(11, 2); // tx on pin 2, rx on pin 11 (not needed)
 MotorController motorController{motorControllerSerial};
-<<<<<<< Updated upstream
 TFMini* tfMini;
 LidarMux* mux1;
 Gucci gucci{};
-=======
-Gucci gucci{};  
->>>>>>> Stashed changes
 int16_t dist = -1;
 void setup() {
   // put your setup code here, to run once:
@@ -27,17 +23,11 @@ void setup() {
 }
 
 void loop() {
-<<<<<<< Updated upstream
   Serial.println("======= NEW LOOP AAAA =======");
   mux1->readLidars(x);
   String out =  out1 + x->lidarOne + out2 + x->lidarTwo;
   Serial.println(out);
   gucci.UpdateSensors();
   delay(5000);
-=======
-   
-  gucci.UpdateSensors(); 
-   
->>>>>>> Stashed changes
 }
 
