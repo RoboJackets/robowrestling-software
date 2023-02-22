@@ -2,8 +2,8 @@
 
 #define MUX
 
+#include <Sensors/TFMini/TFMini.h>
 #include <Arduino.h>
-#include "TFMini/TFMini.h"
 
 struct twoValues {
     int lidarOne;
@@ -48,18 +48,9 @@ class LidarMux {
         }
     
     public:
-        LidarMux(int muxPin, TFMini* tfmini) {
-            _tfmini = tfmini;
-            _muxPin = muxPin;
-            pinMode(_muxPin, OUTPUT);
-            setLow();
-        }
-
-        LidarMux(int muxPin, Stream* str) {
-            _tfmini = new TFMini(str);
-            _muxPin = muxPin;
-            pinMode(_muxPin, OUTPUT);
-            setLow();
+        LidarMux(int pin) {
+            _muxPin = pin;
+            pinMode(_muxPin, INPUT);
         }
 
         struct twoValues* readLidars() {
