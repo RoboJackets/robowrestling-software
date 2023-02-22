@@ -22,6 +22,7 @@ class Robot {
         }
 
         UpdateState(); 
+        return true; 
     }
 
 

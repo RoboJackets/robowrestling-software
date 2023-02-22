@@ -55,8 +55,8 @@ class LidarMux {
             setLow();
         }
 
-        LidarMux(int muxPin, int rx, int tx) {
-            _tfmini = new TFMini(rx, tx);
+        LidarMux(int muxPin, Stream* str) {
+            _tfmini = new TFMini(str);
             _muxPin = muxPin;
             pinMode(_muxPin, OUTPUT);
             setLow();
