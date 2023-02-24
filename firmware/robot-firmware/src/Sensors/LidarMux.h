@@ -58,6 +58,11 @@ class LidarMux {
             pinMode(_muxPin, INPUT);
         }
 
+        LidarMux(int pin, TFMini* mini) {
+            _muxPin = pin; 
+            _tfmini = mini; 
+        }
+
         std::pair<LidarData, LidarData> readLidars() {
             setLow();
             _tfmini->Poll();
