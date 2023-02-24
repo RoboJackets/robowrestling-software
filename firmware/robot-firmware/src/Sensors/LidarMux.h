@@ -4,11 +4,8 @@
 
 #include <Sensors/TFMini/TFMini.h>
 #include <Arduino.h>
-
-struct twoValues {
-    int lidarOne;
-    int lidarTwo;
-};
+#include "TFMini/TFMini.h"
+#include <utility> 
 
 
 /***
@@ -34,15 +31,23 @@ struct twoValues {
 }
 */
 
-
+struct LidarData {
+    int dist; 
+    long int timestamp; 
+};
 
 class LidarMux {
     private:
         int _muxPin;
         TFMini* _tfmini;
+        LidarData _one; 
+        LidarData _two; 
+
+
         void setHigh() {
             digitalWrite(_muxPin, HIGH);
         }
+
         void setLow() {
             digitalWrite(_muxPin, LOW);
         }
@@ -53,48 +58,36 @@ class LidarMux {
             pinMode(_muxPin, INPUT);
         }
 
-        struct twoValues* readLidars() {
+        std::pair<LidarData, LidarData> readLidars() {
             setLow();
             _tfmini->Poll();
-            int one = _tfmini->GetDistance();
+            _one.dist = _tfmini->GetDistance(); 
+            _one.timestamp = 0; //TODO: give it a timestamp 
             setHigh();
             _tfmini->Poll();
-            int two = _tfmini->GetDistance();
-            struct twoValues* values = (struct twoValues*) malloc(sizeof(struct twoValues));
-            values->lidarOne = one;
-            values->lidarTwo = two;
+            _two.dist = _tfmini->GetDistance(); 
+            _two.timestamp = 0; 
+            auto values = std::make_pair(_one, _two); 
             return values;
-        }
-
-        struct twoValues* readLidars(struct twoValues* pointer) {
-            setLow();
-            _tfmini->Poll();
-            int one = _tfmini->GetDistance();
-            setHigh();
-            _tfmini->Poll();
-            int two = _tfmini->GetDistance();
-            pointer->lidarOne = one;
-            pointer->lidarTwo = two;
-            return pointer;
         }
         /**
          * Use this if need clocking?
          * 
         */
-        struct twoValues* readLidars(struct twoValues* pointer, int clock) {
+        std::pair<LidarData, LidarData> readLidars(int clock) {
             if (!clock) {
                 setLow();
                  _tfmini->Poll();
-                 int one = _tfmini->GetDistance();
-                  pointer->lidarOne = one;
+                _one.dist = _tfmini->GetDistance(); 
+                _one.timestamp = 0; //TODO: give it a timestamp 
             }
             else {
                 setHigh();
                 _tfmini->Poll();
-                int two = _tfmini->GetDistance();
-                pointer->lidarTwo = two;
+                _two.dist = _tfmini->GetDistance(); 
+                _two.timestamp = 0; 
             }           
-            return pointer;
+            return std::make_pair(_one, _two);
         }
 
 
