@@ -22,7 +22,7 @@ public class CameraControl : MonoBehaviour
             }
             
         }
-        Debug.Log(cameraSize);
+        //Debug.Log(cameraSize);
     }
 
     // Update is called once per frame
