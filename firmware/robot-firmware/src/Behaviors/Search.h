@@ -24,23 +24,23 @@ public:
         U out;
         switch (state) {
         case SEARCH:
-            out.motor1 = turnSpeed;
-            out.motor2 = -turnSpeed;
+            out.currentLeftMotorPow  = turnSpeed;
+            out.currentRightMotorPow = -turnSpeed;
             break;
         case TURN_LEFT:
-            out.motor1 = -turnSpeed;
-            out.motor2 = turnSpeed;
+            out.currentLeftMotorPow  = -turnSpeed;
+            out.currentRightMotorPow = turnSpeed;
             break;
         case TURN_RIGHT:
-            out.motor1 = turnSpeed;
-            out.motor2 = -turnSpeed;
+            out.currentLeftMotorPow = turnSpeed;
+            out.currentRightMotorPow = -turnSpeed;
             break;
         }
         return out;
     }
 
     void updateState(T inputs) {
-        int minLidar = 1000;
+        uint32_t minLidar = 1000;
         int minLidarIndex = -1;
         for (int i = 0; i < 6; i++) {
             if (inputs.lidars[i] < minLidar) {

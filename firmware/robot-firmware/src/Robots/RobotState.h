@@ -5,7 +5,7 @@
 #include "util/Vector2.h"
 
 struct RobotState {
-    std::array<int, 6> lidars; 
+    std::array<uint32_t, 6> lidars; 
 
     Vector2<double> position{0,0}; 
     Vector2<double> velocity{0,0}; 
@@ -14,6 +14,9 @@ struct RobotState {
     bool deployFlags = false; 
     double currentLeftMotorPow = 0.0; 
     double currentRightMotorPow = 0.0; 
+    bool atBounds = false; 
+
+    bool enabled = false; 
 
 };
 

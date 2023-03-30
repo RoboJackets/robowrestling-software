@@ -15,8 +15,8 @@ public:
         this->_finished = inputs.lidars[2] > 1000 || inputs.lidars[3] > 1000; // neither lidars see anything
 
         U out;
-        out.motor1 = speed;
-        out.motor2 = speed;
+        out.currentLeftMotorPow  = speed;
+        out.currentRightMotorPow = speed;
         return out;
     }
 

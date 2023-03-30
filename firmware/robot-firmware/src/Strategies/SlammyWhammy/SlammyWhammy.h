@@ -12,6 +12,7 @@ public:
         this->AddNode(search);
         slam = new Slam<T,U>(slamSpeed);
         this->AddNode(slam);
+ 
     }
 
 private:

@@ -62,7 +62,7 @@ namespace BT {
     private: 
         std::vector<Node<T, U>*> _nodes; 
         Node<T, U>* _currentNode; 
-        int _nodeIdx; 
+        size_t _nodeIdx; 
 
     };
 }

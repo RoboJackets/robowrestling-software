@@ -3,39 +3,44 @@
 #include <memory>
 
 #include "MotorController/MotorController.h"
-#include "Sensors/TFMini/TFMini.h"
-#include "Sensors/LidarMux.h"
-
 #include "Robots/Gucci/Gucci.h"
+#include "TFMPlus.h"
+
+#include "Strategies/SlammyWhammy/SlammyWhammy.h"
+#include "SabertoothSimplified.h"
+
 
 // Init motor controller
 // Make sure that everything is grounded
-SoftwareSerial* motorControllerSerial = new SoftwareSerial(11, 2); // tx on pin 2, rx on pin 11 (not needed)
-MotorController motorController{motorControllerSerial};
-TFMini* tfMini;
-LidarMux* mux1;
-Gucci gucci{};
-int16_t dist = -1;
-void setup() {
+MotorController motorController{&Serial5};
+SabertoothSimplified mc{Serial5};
 
-  // put your setup code here, to run once:
-  Serial.begin(115200);
-  Serial1.begin(115200);
-  Serial2.begin(115200);
-  Serial3.begin(115200); 
-  //motorControllerSerial -> begin(9600);
-  tfMini = new TFMini(&Serial1);
-  mux1 = new LidarMux(28, tfMini);
+Gucci gucci{};
+TFMPlus tfm{};
+SlammyWhammy<RobotState, RobotState> strategy(10, 20); 
+
+void setup() {
+  Serial2.begin(115200); 
+  tfm.begin(&Serial2);
+  Serial5.begin(9600); 
 }
-String out1 = "Lidar one: ";
-String out2 = ", Lidar two: ";
+
+
 void loop() {
-  Serial.println("======= NEW LOOP AAAA =======");
- // mux1->readLidars(x);
- // String out =  out1 + x->lidarOne + out2 + x->lidarTwo;
- // Serial.println(out);
- //gucci.UpdateSensors();
-  auto pair = mux1->readLidars();
-  Serial.printf("one: %d, two: %d \n", pair.first.dist, pair.second.dist);
-  delay(5000);
+  //Serial.println("======= NEW LOOP AAAA =======");
+  gucci.UpdateSensors(); 
+  gucci.UpdateState(); 
+  
+  auto state = gucci.GetCurrentState(); 
+  Serial.printf("%d \n", state.enabled);
+  if (state.enabled == 1) {
+    mc.motor(1, 100);
+    mc.motor(2, 100);  
+  } else { 
+    mc.stop(); 
+  }
+
+  
+  delay(50);
+  
 }

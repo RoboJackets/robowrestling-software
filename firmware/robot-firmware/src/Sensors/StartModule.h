@@ -3,9 +3,11 @@
 
 #include <Arduino.h>
 
-class StartModule{
+class StartModule {
 public:
-    StartModule(int pin) : _pin(pin) {}
+    StartModule(int pin) : _pin(pin) {
+        pinMode(_pin, INPUT);
+    }
     ~StartModule() {}
 
     bool isActive() { return digitalRead(_pin); }

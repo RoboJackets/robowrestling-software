@@ -10,7 +10,7 @@ namespace BT {
             _prev = prev; 
         }
 
-        ~Node() {
+        virtual ~Node() {
             delete _next; 
         }
 
