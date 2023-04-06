@@ -21,12 +21,15 @@ TFMPlus tfm{};
 RobotState currentState; 
 SlammyWhammy<RobotState, RobotState> strategy(30, 100); 
 FigureEight<RobotState, RobotState> figureEightStrategy(-100, 850); 
+
+const unsigned int BACKUP_TIME = 500; // in ms 
+
 void setup() {
   Serial2.begin(115200);
   tfm.begin(&Serial2);
   Serial5.begin(9600); 
   pinMode(A22, OUTPUT);
-  analogWrite(A22, 500); 
+  analogWrite(A22, 255); 
 }
 
 
@@ -36,6 +39,18 @@ void loop() {
   gucci.UpdateState(); 
   
   currentState = gucci.GetCurrentState(); 
+
+  if (currentState.atBounds) {
+    // Drive motors backwards for X amount of time 
+    unsigned int timestamp = millis(); 
+
+    while (millis() - timestamp < BACKUP_TIME) {
+      mc.motor(1, -100); 
+      mc.motor(2, 100); 
+    }
+  }
+
+
   if (currentState.enabled == 1) {
     auto output = strategy.Run(currentState); 
     mc.motor(1, output.currentRightMotorPow);
