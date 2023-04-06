@@ -22,7 +22,7 @@ RobotState currentState;
 SlammyWhammy<RobotState, RobotState> strategy(30, 100); 
 FigureEight<RobotState, RobotState> figureEightStrategy(-100, 850); 
 void setup() {
-  Serial2.begin(115200); 
+  Serial2.begin(115200);
   tfm.begin(&Serial2);
   Serial5.begin(9600); 
   pinMode(A22, OUTPUT);
@@ -44,7 +44,26 @@ void loop() {
     mc.stop(); 
   }
 
-  
+
   delay(50);
-  
+
 }
+
+/* emergency roomba strat */
+// if (state.atBounds) {
+//       state.backupUntilMillis = millis() + 1000;
+//       state.isBackingUp = true;
+//     }
+
+//     if (state.isBackingUp) {
+//       if (millis() >= state.backupUntilMillis) {
+//         state.isBackingUp = false;
+//       }
+
+//       mc.motor(1, -30);
+//       mc.motor(2, -30);
+//     } else {
+//       mc.motor(1, 100);
+//       mc.motor(2, 100);
+//     }
+// }
