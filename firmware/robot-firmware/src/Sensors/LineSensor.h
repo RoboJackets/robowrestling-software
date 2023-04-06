@@ -6,7 +6,9 @@
 
 class LineSensor : public Sensor {
 public:
-    LineSensor(int pin) : _pin(pin) {}
+    LineSensor(int pin) : _pin(pin) {
+     pinMode(pin, INPUT); 
+    }
     ~LineSensor() {}
 
     int read() { return analogRead(_pin); }
@@ -22,7 +24,7 @@ public:
 
 private:
     int _pin;
-    int _detected; 
+    int _detected = 0; 
 };
 
 #endif

@@ -1,18 +1,28 @@
 #ifndef SLAMMY_WHAMMY_H
 #define SLAMMY_WHAMMY_H
 #include "Behaviors/Nodes/SequenceNode.h"
+#include "Behaviors/Nodes/Node.h"
 #include "../../Behaviors/Search.h"
 #include "../../Behaviors/Slam.h"
 
 template<typename T, typename U>
-class SlammyWhammy : public BT::SequenceNode<T, U> {
+class SlammyWhammy : public BT::Node<T, U> {
 public:
-    SlammyWhammy(int turnSpeed, int slamSpeed) : BT::SequenceNode<T,U>(0, 0) {
+    SlammyWhammy(int turnSpeed, int slamSpeed) : BT::Node<T,U>(0, 0) {
         search = new Search<T,U>(turnSpeed);
-        this->AddNode(search);
         slam = new Slam<T,U>(slamSpeed);
-        this->AddNode(slam);
- 
+    }
+
+
+    U Run(T state) {
+        U out; 
+        out.currentLeftMotorPow = 0; 
+        out.currentRightMotorPow = 0; 
+        if (state.lidars[2] > 100 || state.lidars[3] > 100) {
+            return out; 
+        }
+
+        return slam->Run(state); 
     }
 
 private:

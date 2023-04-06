@@ -7,6 +7,7 @@
 #include "TFMPlus.h"
 
 #include "Strategies/SlammyWhammy/SlammyWhammy.h"
+#include "Strategies/FigureEight/FigureEight.h"
 #include "SabertoothSimplified.h"
 
 
@@ -17,12 +18,15 @@ SabertoothSimplified mc{Serial5};
 
 Gucci gucci{};
 TFMPlus tfm{};
-SlammyWhammy<RobotState, RobotState> strategy(10, 20); 
-
+RobotState currentState; 
+SlammyWhammy<RobotState, RobotState> strategy(30, 100); 
+FigureEight<RobotState, RobotState> figureEightStrategy(-100, 850); 
 void setup() {
   Serial2.begin(115200); 
   tfm.begin(&Serial2);
   Serial5.begin(9600); 
+  pinMode(A22, OUTPUT);
+  analogWrite(A22, 500); 
 }
 
 
@@ -31,11 +35,11 @@ void loop() {
   gucci.UpdateSensors(); 
   gucci.UpdateState(); 
   
-  auto state = gucci.GetCurrentState(); 
-  Serial.printf("%d \n", state.enabled);
-  if (state.enabled == 1) {
-    mc.motor(1, 100);
-    mc.motor(2, 100);  
+  currentState = gucci.GetCurrentState(); 
+  if (currentState.enabled == 1) {
+    auto output = strategy.Run(currentState); 
+    mc.motor(1, output.currentRightMotorPow);
+    mc.motor(2, -output.currentLeftMotorPow);  
   } else { 
     mc.stop(); 
   }

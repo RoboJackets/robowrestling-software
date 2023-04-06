@@ -17,25 +17,13 @@ public:
     }
 
     U Run(T inputs) override {
-        this->_finished = inputs.lidars[2] < 1000 && inputs.lidars[3] < 1000; // both lidars see something
+        this->_finished = inputs.lidars[2] < 100 && inputs.lidars[3] < 100; // both lidars see something
 
         updateState(inputs);
 
         U out;
-        switch (state) {
-        case SEARCH:
-            out.currentLeftMotorPow  = turnSpeed;
-            out.currentRightMotorPow = -turnSpeed;
-            break;
-        case TURN_LEFT:
-            out.currentLeftMotorPow  = -turnSpeed;
-            out.currentRightMotorPow = turnSpeed;
-            break;
-        case TURN_RIGHT:
-            out.currentLeftMotorPow = turnSpeed;
-            out.currentRightMotorPow = -turnSpeed;
-            break;
-        }
+        out.currentLeftMotorPow  = turnSpeed;
+        out.currentRightMotorPow = -turnSpeed;
         return out;
     }
 
@@ -48,14 +36,7 @@ public:
                 minLidarIndex = i;
             }
         }
-        if (0 <= minLidarIndex && minLidarIndex <= 2) {
-            state = TURN_LEFT;
-        }
-        else if (minLidarIndex >= 3) {
-            state = TURN_RIGHT;
-        } else {
-            state = SEARCH;
-        }
+        state = SEARCH; 
     }
 
 protected:

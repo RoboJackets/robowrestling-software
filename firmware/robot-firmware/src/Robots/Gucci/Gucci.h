@@ -8,6 +8,8 @@
 #include "Sensors/LineSensor.h"
 #include "Sensors/StartModule.h"
 
+constexpr int LINE_THRESHOLD = 200; 
+
 class Gucci : public Robot {
 private: 
         TFMini* rightDist;
@@ -33,14 +35,16 @@ public:
         Serial4.begin(115200); 
 
         startModule = std::make_unique<StartModule>(14);
-        leftDist = new TFMini(&Serial2);
-        rightDist =  new TFMini(&Serial3); 
-        lineSensor1 = new LineSensor(23);
-        lineSensor2 = new LineSensor(35);
+        leftDist = new TFMini(&Serial3);
+        rightDist =  new TFMini(&Serial2); 
+        lineSensor1 = new LineSensor(A9);
+        lineSensor2 = new LineSensor(A16);
 
 
         _sensors.push_back(lineSensor1); 
         _sensors.push_back(lineSensor2);
+        //_sensors.push_back(leftDist); 
+        //_sensors.push_back(rightDist); 
 
     }
 
@@ -52,9 +56,15 @@ public:
         _state.lidars[4] = 0xFFFF;
         _state.lidars[5] = 0xFFFF;  
 
-        Serial.printf("%d \n", leftDist->GetDistance());
+        Serial.printf("Left: %d, Right: %d \n", lineSensor1->GetDetection(), lineSensor2->GetDetection());
         _state.enabled = startModule->isActive(); 
-        _state.atBounds = lineSensor1->GetDetection() || lineSensor2->GetDetection(); 
+
+
+        if (lineSensor1->GetDetection() < LINE_THRESHOLD || lineSensor2->GetDetection() < LINE_THRESHOLD) {
+            _state.atBounds = true; 
+        } else {
+            _state.atBounds = false; 
+        }
     } 
 
 
