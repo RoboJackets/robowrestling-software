@@ -8,7 +8,7 @@
 #include "Sensors/LineSensor.h"
 #include "Sensors/StartModule.h"
 
-constexpr int LINE_THRESHOLD = 200; 
+constexpr int LINE_THRESHOLD = 800; 
 
 class Gucci : public Robot {
 private: 
@@ -43,8 +43,8 @@ public:
 
         _sensors.push_back(lineSensor1); 
         _sensors.push_back(lineSensor2);
-        //_sensors.push_back(leftDist); 
-        //_sensors.push_back(rightDist); 
+        _sensors.push_back(leftDist); 
+        _sensors.push_back(rightDist); 
 
     }
 
@@ -56,7 +56,16 @@ public:
         _state.lidars[4] = 0xFFFF;
         _state.lidars[5] = 0xFFFF;  
 
-        Serial.printf("Left: %d, Right: %d \n", lineSensor1->GetDetection(), lineSensor2->GetDetection());
+        if (_state.lidars[2] == 0) {
+            _state.lidars[2] = 0xFFFF;
+        }
+
+
+        if (_state.lidars[3] == 0) {
+            _state.lidars[3] = 0xFFFF;
+        }
+
+        Serial.printf("Left: %d, Right: %d \n", lineSensor2->GetDetection(),lineSensor1->GetDetection());
         _state.enabled = startModule->isActive(); 
 
 

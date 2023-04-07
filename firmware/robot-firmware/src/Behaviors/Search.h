@@ -17,13 +17,13 @@ public:
     }
 
     U Run(T inputs) override {
-        this->_finished = inputs.lidars[2] < 100 && inputs.lidars[3] < 100; // both lidars see something
+        this->_finished = inputs.lidars[2] < 150 && inputs.lidars[3] < 150; // both lidars see something
 
         updateState(inputs);
 
         U out;
-        out.currentLeftMotorPow  = turnSpeed;
-        out.currentRightMotorPow = -turnSpeed;
+        out.currentLeftMotorPow  = 100;
+        out.currentRightMotorPow = 0;
         return out;
     }
 
