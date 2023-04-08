@@ -20,6 +20,9 @@ private:
         LineSensor* lineSensor1;
         LineSensor* lineSensor2;
         std::unique_ptr<StartModule> startModule;  
+
+        int floorReading = 0; 
+        int samples = 0; 
          
 
 
@@ -65,15 +68,31 @@ public:
             _state.lidars[3] = 0xFFFF;
         }
 
-        Serial.printf("Left: %d, Right: %d \n", lineSensor2->GetDetection(),lineSensor1->GetDetection());
+        //Serial.printf("Left: %d, Right: %d \n", leftDist->GetDistance(),rightDist->GetDistance());
         _state.enabled = startModule->isActive(); 
 
 
-        if (lineSensor1->GetDetection() < LINE_THRESHOLD || lineSensor2->GetDetection() < LINE_THRESHOLD) {
+        if (abs(lineSensor1->GetDetection() - floorReading) > 200 || abs(lineSensor2->GetDetection() - floorReading) > 200) {
             _state.atBounds = true; 
         } else {
             _state.atBounds = false; 
         }
+    }
+
+    void SampleFloor() {
+        unsigned int timestamp = millis(); 
+        while (millis() - timestamp < 5000) {
+            lineSensor1->Poll(); 
+            lineSensor2->Poll(); 
+            int leftFloor = lineSensor1->GetDetection(); 
+            int rightFloor = lineSensor2->GetDetection(); 
+
+            int avg = (leftFloor + rightFloor) / 2; 
+            floorReading += avg; 
+            samples++; 
+        }
+
+        floorReading = (floorReading / samples); 
     } 
 
 

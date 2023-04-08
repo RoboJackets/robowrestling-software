@@ -22,6 +22,8 @@ RobotState currentState;
 SlammyWhammy<RobotState, RobotState> strategy(75, 100); 
 FigureEight<RobotState, RobotState> figureEightStrategy(100, 850); 
 
+bool hasStarted = false; 
+
 const unsigned int BACKUP_TIME = 500; // in ms 
 const unsigned int TURN_TIME = 200; 
 void setup() {
@@ -42,6 +44,11 @@ void loop() {
 
 
   if (currentState.enabled == 1) {
+    if (!hasStarted) {
+      gucci.SampleFloor(); 
+      hasStarted = true; 
+      currentState.atBounds = false; 
+    }
     if (currentState.atBounds) {
     // Drive motors backwards for X amount of time 
       unsigned int timestamp = millis(); 
@@ -56,6 +63,10 @@ void loop() {
         mc.motor(1, 100); 
         mc.motor(2, 100); 
       }
+
+      gucci.UpdateSensors(); 
+      gucci.UpdateState();
+      currentState = gucci.GetCurrentState();
   }
 
 
