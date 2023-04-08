@@ -8,7 +8,7 @@
 #include "Sensors/LineSensor.h"
 #include "Sensors/StartModule.h"
 
-constexpr int LINE_THRESHOLD = 800; 
+constexpr int LINE_THRESHOLD = 300; 
 
 class Gucci : public Robot {
 private: 
@@ -69,10 +69,11 @@ public:
         }
 
         //Serial.printf("Left: %d, Right: %d \n", leftDist->GetDistance(),rightDist->GetDistance());
+        //Serial.printf("Left: %d, Right: %d \n", lineSensor1->GetDetection(),lineSensor2->GetDetection());
         _state.enabled = startModule->isActive(); 
 
 
-        if (abs(lineSensor1->GetDetection() - floorReading) > 200 || abs(lineSensor2->GetDetection() - floorReading) > 200) {
+        if (abs(lineSensor1->GetDetection() - floorReading) > LINE_THRESHOLD || abs(lineSensor2->GetDetection() - floorReading) > LINE_THRESHOLD) {
             _state.atBounds = true; 
         } else {
             _state.atBounds = false; 

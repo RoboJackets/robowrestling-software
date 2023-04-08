@@ -24,7 +24,7 @@ FigureEight<RobotState, RobotState> figureEightStrategy(100, 850);
 
 bool hasStarted = false; 
 
-const unsigned int BACKUP_TIME = 500; // in ms 
+const unsigned int BACKUP_TIME = 300; // in ms 
 const unsigned int TURN_TIME = 200; 
 void setup() {
   Serial2.begin(115200);

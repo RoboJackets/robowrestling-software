@@ -14,7 +14,6 @@ public:
 
     U Run(T inputs) override {
         this->_finished = inputs.lidars[2] > 150 || inputs.lidars[3] > 150; // neither lidars see anything
-        Serial.println("Slamming");
         U out;
         out.currentLeftMotorPow  = speed-20;
         out.currentRightMotorPow = speed;
