@@ -1,4 +1,9 @@
 (fp_lib_table
   (lib (name "Teensy4")(type "KiCad")(uri "${KIPRJMOD}/Teensy4.pretty")(options "")(descr ""))
   (lib (name "RatatoulliLibrary")(type "KiCad")(uri "${KIPRJMOD}/RatatoulliLibrary.pretty")(options "")(descr ""))
+  (lib (name "kicadLib")(type "KiCad")(uri "C:/Program Files/KiCad/share/kicad/library/kicad-footprints-master/Capacitor_SMD.pretty")(options "")(descr ""))
+  (lib (name "jst")(type "KiCad")(uri "C:/Program Files/KiCad/share/kicad/library/kicad-footprints-master/Connector_JST.pretty")(options "")(descr ""))
+  (lib (name "molex")(type "KiCad")(uri "C:/Program Files/KiCad/share/kicad/library/kicad-footprints-master/Connector_Molex.pretty")(options "")(descr ""))
+  (lib (name "phoenix")(type "KiCad")(uri "C:/Program Files/KiCad/share/kicad/library/kicad-footprints-master/Connector_Phoenix_MSTB.pretty")(options "")(descr ""))
+  (lib (name "packageso")(type "KiCad")(uri "C:/Program Files/KiCad/share/kicad/library/kicad-footprints-master/Package_SO.pretty")(options "")(descr ""))
 )
