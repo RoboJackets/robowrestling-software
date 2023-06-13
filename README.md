@@ -68,7 +68,7 @@
 
 1. Go to the [PlatformIO website](https://platformio.org/platformio-ide)
 
-2. Click the "Get for VS Code" button and install the instructions
+2. Click the "Get for VS Code" button and follow the install instructions
     - If you wish to use another IDE, you can try looking for instructions [on this page](https://platformio.org/install/integration). However, VS Code will work best (at least from my experience).
 
 3. If you need to include common firmware modules and they aren't already included, you can open the platformio.ini file within each robot's folder (i.e. `firmware/3kg/Kirbi/platformio.ini` and add a build flag to `build_flags` in the format `-Ipath` (i.e. `-I../../CommonFirmware/src/3kg`.
