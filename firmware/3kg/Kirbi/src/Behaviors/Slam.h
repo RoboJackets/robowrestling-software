@@ -9,7 +9,7 @@ template<typename T, typename U>
 class Slam : public BT::Node<T, U> {
 public:
     Slam(int speed) : BT::Node<T, U>(0, 0), speed(speed){
-        
+
     }
 
     U Run(T inputs) override {

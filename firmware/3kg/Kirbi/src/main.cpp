@@ -18,63 +18,63 @@ SabertoothSimplified mc{Serial5};
 
 Gucci gucci{};
 TFMPlus tfm{};
-RobotState currentState; 
-SlammyWhammy<RobotState, RobotState> strategy(75, 100); 
-FigureEight<RobotState, RobotState> figureEightStrategy(100, 850); 
+RobotState currentState;
+SlammyWhammy<RobotState, RobotState> strategy(75, 100);
+FigureEight<RobotState, RobotState> figureEightStrategy(100, 850);
 
-bool hasStarted = false; 
+bool hasStarted = false;
 
-const unsigned int BACKUP_TIME = 300; // in ms 
-const unsigned int TURN_TIME = 200; 
+const unsigned int BACKUP_TIME = 300; // in ms
+const unsigned int TURN_TIME = 200;
 void setup() {
   Serial2.begin(115200);
   tfm.begin(&Serial2);
-  Serial5.begin(9600); 
+  Serial5.begin(9600);
   pinMode(A22, OUTPUT);
-  analogWrite(A22, 500); 
+  analogWrite(A22, 500);
 }
 
 
 void loop() {
   //Serial.println("======= NEW LOOP AAAA =======");
-  gucci.UpdateSensors(); 
-  gucci.UpdateState(); 
-  
-  currentState = gucci.GetCurrentState(); 
+  gucci.UpdateSensors();
+  gucci.UpdateState();
+
+  currentState = gucci.GetCurrentState();
 
 
   if (currentState.enabled == 1) {
     if (!hasStarted) {
-      gucci.SampleFloor(); 
-      hasStarted = true; 
-      currentState.atBounds = false; 
+      gucci.SampleFloor();
+      hasStarted = true;
+      currentState.atBounds = false;
     }
     if (currentState.atBounds) {
-    // Drive motors backwards for X amount of time 
-      unsigned int timestamp = millis(); 
+    // Drive motors backwards for X amount of time
+      unsigned int timestamp = millis();
 
       while (millis() - timestamp < BACKUP_TIME) {
-        mc.motor(1, 100); 
-        mc.motor(2, -100); 
+        mc.motor(1, 100);
+        mc.motor(2, -100);
       }
 
-      timestamp = millis(); 
+      timestamp = millis();
       while (millis() - timestamp < TURN_TIME) {
-        mc.motor(1, 100); 
-        mc.motor(2, 100); 
+        mc.motor(1, 100);
+        mc.motor(2, 100);
       }
 
-      gucci.UpdateSensors(); 
+      gucci.UpdateSensors();
       gucci.UpdateState();
       currentState = gucci.GetCurrentState();
   }
 
 
-    auto output = strategy.Run(currentState); 
+    auto output = strategy.Run(currentState);
     mc.motor(1, -output.currentRightMotorPow);
-    mc.motor(2, output.currentLeftMotorPow);  
-  } else { 
-    mc.stop(); 
+    mc.motor(2, output.currentLeftMotorPow);
+  } else {
+    mc.stop();
   }
 }
 
