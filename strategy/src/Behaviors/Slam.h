@@ -2,7 +2,6 @@
 #define SLAM_H
 
 #include "Nodes/Node.h"
-#include "MotorController/MotorController.h"
 #include <Arduino.h>
 
 template<typename T, typename U>
