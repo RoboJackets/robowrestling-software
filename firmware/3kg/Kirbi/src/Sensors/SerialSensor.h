@@ -24,7 +24,7 @@ public:
         return true; 
     }
 
-    byte* GetBytes() override {
+    byte* GetBytes() {
         return _bytes;
     }
 protected: 
