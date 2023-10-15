@@ -2,8 +2,8 @@
 #define SLAMMY_WHAMMY_H
 #include "Behaviors/Nodes/SequenceNode.h"
 #include "Behaviors/Nodes/Node.h"
-#include "../../Behaviors/Search.h"
-#include "../../Behaviors/Slam.h"
+#include "Behaviors/Search.h"
+#include "Behaviors/Slam.h"
 #include "../FigureEight/FigureEight.h"
 #include <Arduino.h>
 

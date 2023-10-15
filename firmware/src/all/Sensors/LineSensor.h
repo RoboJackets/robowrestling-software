@@ -2,29 +2,29 @@
 #define LINE_SENSOR_H
 
 #include <Arduino.h>
-#include "Sensors/Sensor.h"
+#include "Sensor.h"
 
 class LineSensor : public Sensor {
 public:
     LineSensor(int pin) : _pin(pin) {
-     pinMode(pin, INPUT); 
+     pinMode(pin, INPUT);
     }
     ~LineSensor() {}
 
     int read() { return analogRead(_pin); }
-    
+
    bool Poll() override {
-        _detected = analogRead(_pin); 
-        return true; 
+        _detected = analogRead(_pin);
+        return true;
    }
 
    int GetDetection() {
-        return _detected; 
+        return _detected;
    }
 
 private:
     int _pin;
-    int _detected = 0; 
+    int _detected = 0;
 };
 
 #endif
