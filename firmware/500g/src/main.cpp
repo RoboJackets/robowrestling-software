@@ -1,9 +1,9 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 #include <memory>
-#include "RobotState.h"
+#include "Frosti.h"
 
-RobotState currentState{};
+Frosti frosti{};
 
 void setup() {
 }

@@ -10,6 +10,9 @@ struct RobotState {
     double currentRightMotorPow = 0.0;
     bool atBounds = false;
     bool enabled = false;
+
+    //x is left sensor, y is right sensor
+    Vector2<uint32_t> distanceToEnemy{};
 };
 
 #endif
