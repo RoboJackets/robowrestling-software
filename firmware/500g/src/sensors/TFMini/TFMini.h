@@ -26,6 +26,7 @@ public:
         _lastRead = millis(); 
     }
 
+    // Is this even being used so does it even matter
     TFMini(int rx, int tx) {
         _serial = std::make_unique<SoftwareSerial>(rx, tx);
         //replace with pin value

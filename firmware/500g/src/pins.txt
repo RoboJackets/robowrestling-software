@@ -1,3 +1,13 @@
-In Frosti.h constructor
-In MotorController.h
-In TFMini.h constructor
+In Frosti.h
+
+3 LineSensors:
+    Ports 0, 1, 2
+
+3 DistanceSensors:
+    Ports 4, 5, 6
+
+StartModule:
+    Ports: unknown
+
+MotorController:
+    Ports: unknown

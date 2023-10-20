@@ -8,6 +8,16 @@
 #include "sensors/LineSensor.h"
 #include "sensors/StartModule.h"
 
+#define LINE_SENSOR_1 0
+#define LINE_SENSOR_2 1
+#define LINE_SENSOR_3 2
+
+#define DATA_SENSOR_1 4
+#define DATA_SENSOR_2 5
+#define DATA_SENSOR_3 6
+
+#define START_MODULE 999
+
 constexpr int LINE_THRESHOLD = 300; 
 
 class Frosti : public Robot {
@@ -15,11 +25,12 @@ class Frosti : public Robot {
 private: 
         TFMini* rightDist;
         TFMini* frontDist;
-        TFMini* frontDist2;
         TFMini* leftDist;
+        TFMini* otherDist;
 
         LineSensor* lineSensor1;
         LineSensor* lineSensor2;
+        LineSensor* lineSensor3;
         std::unique_ptr<StartModule> startModule;  
 
         int floorReading = 0; 
@@ -29,20 +40,26 @@ public:
     Frosti() {
         //TODO: replace these with the actual pin values
         
-        Serial1.begin(115200); 
-        Serial2.begin(115200);  
-        Serial3.begin(115200); 
+        Serial1.begin(DATA_SENSOR_1); 
+        Serial2.begin(DATA_SENSOR_2); 
+        Serial3.begin(DATA_SENSOR_3); 
+
+        //not used?
         Serial4.begin(115200); 
 
-        startModule = std::make_unique<StartModule>(14);
-        leftDist = new TFMini(&Serial3);
+        startModule = std::make_unique<StartModule>(START_MODULE);
+        leftDist = new TFMini(&Serial1);
         rightDist =  new TFMini(&Serial2); 
-        lineSensor1 = new LineSensor(A9);
-        lineSensor2 = new LineSensor(A16);
+        otherDist =  new TFMini(&Serial3); 
+        lineSensor1 = new LineSensor(LINE_SENSOR_1);
+        lineSensor2 = new LineSensor(LINE_SENSOR_2);
+        lineSensor3 = new LineSensor(LINE_SENSOR_3);
         _sensors.push_back(lineSensor1); 
         _sensors.push_back(lineSensor2);
+        _sensors.push_back(lineSensor3);
         _sensors.push_back(leftDist); 
         _sensors.push_back(rightDist); 
+        _sensors.push_back(otherDist);
     }
 
     void updateState() override {
@@ -63,9 +80,11 @@ public:
         while (millis() - timestamp < 5000) {
             lineSensor1->Poll(); 
             lineSensor2->Poll(); 
+            lineSensor3->Poll();
             int leftFloor = lineSensor1->GetDetection(); 
             int rightFloor = lineSensor2->GetDetection(); 
-            int avg = (leftFloor + rightFloor) / 2; 
+            int centerFloor = lineSensor3->GetDetection(); 
+            int avg = (leftFloor + rightFloor + centerFloor) / 3; 
             floorReading += avg; 
             samples++; 
         }

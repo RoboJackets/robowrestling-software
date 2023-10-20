@@ -2,6 +2,7 @@
 #define ROBOT_STATE_H
 
 #include "PhysicalState.h"
+#include "DistanceToEnemy.h"
 
 struct RobotState {
     PhysicalState pos_vel{};
@@ -13,6 +14,7 @@ struct RobotState {
 
     //x is left sensor, y is right sensor
     Vector2<uint32_t> distanceToEnemy{};
+    DistanceToEnemy distanceToEnemy{};
 };
 
 #endif
