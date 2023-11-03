@@ -4,6 +4,7 @@
 #include <vector>
 #include <memory>
 #include "RobotState.h"
+#include "sensors/Sensor.h"
 
 class Robot {
 
@@ -24,7 +25,7 @@ public:
         return true;
     }
 
-    const RobotState& getState() {
+    RobotState& getState() {
         return _state;
     }
 

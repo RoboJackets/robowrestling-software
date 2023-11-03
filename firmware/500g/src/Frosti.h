@@ -24,9 +24,8 @@ class Frosti : public Robot {
 
 private: 
         TFMini* rightDist;
-        TFMini* frontDist;
         TFMini* leftDist;
-        TFMini* otherDist;
+        TFMini* centerDist;
 
         LineSensor* lineSensor1;
         LineSensor* lineSensor2;
@@ -50,7 +49,7 @@ public:
         startModule = std::make_unique<StartModule>(START_MODULE);
         leftDist = new TFMini(&Serial1);
         rightDist =  new TFMini(&Serial2); 
-        otherDist =  new TFMini(&Serial3); 
+        centerDist =  new TFMini(&Serial3); 
         lineSensor1 = new LineSensor(LINE_SENSOR_1);
         lineSensor2 = new LineSensor(LINE_SENSOR_2);
         lineSensor3 = new LineSensor(LINE_SENSOR_3);
@@ -59,16 +58,18 @@ public:
         _sensors.push_back(lineSensor3);
         _sensors.push_back(leftDist); 
         _sensors.push_back(rightDist); 
-        _sensors.push_back(otherDist);
+        _sensors.push_back(centerDist);
     }
 
     void updateState() override {
-        _state.distanceToEnemy.setX(leftDist->GetDistance()); 
-        _state.distanceToEnemy.setY(rightDist->GetDistance()); 
+        _state.distanceToEnemy.left = leftDist->GetDistance(); 
+        _state.distanceToEnemy.right = rightDist->GetDistance(); 
+        _state.distanceToEnemy.center = centerDist->GetDistance(); 
         //Serial.printf("Left: %d, Right: %d \n", leftDist->GetDistance(),rightDist->GetDistance());
         //Serial.printf("Left: %d, Right: %d \n", lineSensor1->GetDetection(),lineSensor2->GetDetection());
         _state.enabled = startModule->isActive(); 
-        if (abs(lineSensor1->GetDetection() - floorReading) > LINE_THRESHOLD || abs(lineSensor2->GetDetection() - floorReading) > LINE_THRESHOLD) {
+        if (abs(lineSensor1->GetDetection() - floorReading) < LINE_THRESHOLD || abs(lineSensor2->GetDetection() - floorReading) < LINE_THRESHOLD
+            || abs(lineSensor3->GetDetection() - floorReading) < LINE_THRESHOLD) {
             _state.atBounds = true; 
         } else {
             _state.atBounds = false; 
@@ -77,6 +78,7 @@ public:
 
     void sampleFloor() {
         unsigned int timestamp = millis(); 
+        samples = 0;
         while (millis() - timestamp < 5000) {
             lineSensor1->Poll(); 
             lineSensor2->Poll(); 

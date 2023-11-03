@@ -13,7 +13,6 @@ struct RobotState {
     bool enabled = false;
 
     //x is left sensor, y is right sensor
-    Vector2<uint32_t> distanceToEnemy{};
     DistanceToEnemy distanceToEnemy{};
 };
 
