@@ -14,7 +14,7 @@ class SlammyWhammy : public BT::Node<T, U> {
 public:
     SlammyWhammy(int turnSpeed, int slamSpeed) : BT::Node<T,U>(0, 0) {
         search = new Search<T,U>(100);
-        figureEight = new FigureEight<T,U>(75, 850);
+        figureEight = new FigureEight<T,U>(50, 850);
         slam = new Slam<T,U>(slamSpeed);
     }
 

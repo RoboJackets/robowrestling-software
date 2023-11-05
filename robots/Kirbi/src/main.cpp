@@ -19,7 +19,7 @@ SabertoothSimplified mc{Serial5};
 Gucci gucci{};
 TFMPlus tfm{};
 RobotState currentState;
-SlammyWhammy<RobotState, RobotState> strategy(75, 100);
+SlammyWhammy<RobotState, RobotState> strategy(75, 50);
 FigureEight<RobotState, RobotState> figureEightStrategy(100, 850);
 
 bool hasStarted = false;
@@ -54,14 +54,14 @@ void loop() {
       unsigned int timestamp = millis();
 
       while (millis() - timestamp < BACKUP_TIME) {
-        mc.motor(1, 100);
-        mc.motor(2, -100);
+        mc.motor(1, 10);
+        mc.motor(2, 10);
       }
 
       timestamp = millis();
       while (millis() - timestamp < TURN_TIME) {
-        mc.motor(1, 100);
-        mc.motor(2, 100);
+        mc.motor(1, 10);
+        mc.motor(2, 10);
       }
 
       gucci.UpdateSensors();
@@ -71,7 +71,7 @@ void loop() {
 
 
     auto output = strategy.Run(currentState);
-    mc.motor(1, -output.currentRightMotorPow);
+    mc.motor(1, output.currentRightMotorPow);
     mc.motor(2, output.currentLeftMotorPow);
   } else {
     mc.stop();
