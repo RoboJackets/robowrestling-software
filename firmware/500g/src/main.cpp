@@ -6,7 +6,7 @@
 #include "MotorController.h"
 #include "strategy/Strategy.h"
 
-Frosti frosti{};
+Frosti* frosti = new Frosti();
 
 //Motor
 MotorController motorController{&Serial5};
@@ -32,16 +32,16 @@ void setup() {
 }
 
 void loop() {
-    frosti.updateSensors();
-    frosti.updateState();
+    frosti->updateSensors();
+    frosti->updateState();
 
-    if (frosti.getState().enabled == true) {
+    if (frosti->getState().enabled == true) {
         if (!hasStarted) {
-            frosti.sampleFloor();
+            frosti->sampleFloor();
             hasStarted = true;
-            frosti.getState().atBounds = false;
+            frosti->getState().atBounds = false;
         }
-        if (frosti.getState().atBounds) {
+        if (frosti->getState().atBounds) {
             // Drive motors backwards for X amount of time
             unsigned int timestamp = millis();
 
@@ -56,14 +56,14 @@ void loop() {
                 mc.motor(2, 100);
             }
 
-        frosti.updateSensors();
-        frosti.updateState();
+        frosti->updateSensors();
+        frosti->updateState();
     }
 
 
-        auto output = strategy.Run(frosti.getState());
-        mc.motor(1, -output.currentRightMotorPow);
-        mc.motor(2, output.currentLeftMotorPow);
+        strategy.run(frosti);
+        mc.motor(1, -frosti->getState().currentRightMotorPow);
+        mc.motor(2, frosti->getState().currentLeftMotorPow);
     } else {
         mc.stop();
     }
