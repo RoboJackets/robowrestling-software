@@ -8,7 +8,7 @@
 #include "Sensors/LineSensor.h"
 #include "Sensors/StartModule.h"
 
-constexpr int LINE_THRESHOLD = 300;
+constexpr int LINE_THRESHOLD = 100;
 
 class Gucci : public Robot {
 private:

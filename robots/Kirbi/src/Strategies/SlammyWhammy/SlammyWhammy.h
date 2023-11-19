@@ -13,7 +13,7 @@ template<typename T, typename U>
 class SlammyWhammy : public BT::Node<T, U> {
 public:
     SlammyWhammy(int turnSpeed, int slamSpeed) : BT::Node<T,U>(0, 0) {
-        search = new Search<T,U>(100);
+        search = new Search<T,U>(turnSpeed);
         figureEight = new FigureEight<T,U>(50, 850);
         slam = new Slam<T,U>(slamSpeed);
     }

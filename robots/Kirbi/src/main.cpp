@@ -19,7 +19,7 @@ SabertoothSimplified mc{Serial5};
 Gucci gucci{};
 TFMPlus tfm{};
 RobotState currentState;
-SlammyWhammy<RobotState, RobotState> strategy(75, 50);
+SlammyWhammy<RobotState, RobotState> strategy(75, 100);
 FigureEight<RobotState, RobotState> figureEightStrategy(100, 850);
 
 bool hasStarted = false;
@@ -50,18 +50,19 @@ void loop() {
       currentState.atBounds = false;
     }
     if (currentState.atBounds) {
+        Serial.println("AT BOUNDS");
     // Drive motors backwards for X amount of time
       unsigned int timestamp = millis();
 
       while (millis() - timestamp < BACKUP_TIME) {
-        mc.motor(1, 10);
-        mc.motor(2, 10);
+        mc.motor(1, -50);
+        mc.motor(2, -50);
       }
 
       timestamp = millis();
       while (millis() - timestamp < TURN_TIME) {
-        mc.motor(1, 10);
-        mc.motor(2, 10);
+        mc.motor(1, 50);
+        mc.motor(2, -50);
       }
 
       gucci.UpdateSensors();

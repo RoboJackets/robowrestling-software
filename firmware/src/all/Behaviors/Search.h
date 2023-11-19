@@ -22,8 +22,8 @@ public:
         updateState(inputs);
 
         U out;
-        out.currentLeftMotorPow  = 50;
-        out.currentRightMotorPow = 0;
+        out.currentLeftMotorPow  = turnSpeed;
+        out.currentRightMotorPow = -turnSpeed;
         return out;
     }
 
