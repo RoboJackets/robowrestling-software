@@ -68,8 +68,8 @@ public:
             _state.lidars[3] = 0xFFFF;
         }
 
-        //Serial.printf("Left: %d, Right: %d \n", leftDist->GetDistance(),rightDist->GetDistance());
-        //Serial.printf("Left: %d, Right: %d \n", lineSensor1->GetDetection(),lineSensor2->GetDetection());
+        //Serial.printf("DIST | Left: %d, Right: %d \n", leftDist->GetDistance(),rightDist->GetDistance());
+        //Serial.printf("DECT | Left: %d, Right: %d \n", lineSensor1->GetDetection(),lineSensor2->GetDetection());
         _state.enabled = startModule->isActive();
 
 
@@ -82,7 +82,8 @@ public:
 
     void SampleFloor() {
         unsigned int timestamp = millis();
-        while (millis() - timestamp < 5000) {
+        //while (millis() - timestamp < 5000) {
+        for (int i = 0; i < 25; i++) {
             lineSensor1->Poll();
             lineSensor2->Poll();
             int leftFloor = lineSensor1->GetDetection();
