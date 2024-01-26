@@ -5,57 +5,6 @@
   (paper "A4")
 
   (lib_symbols
-    (symbol "C_1" (pin_numbers hide) (pin_names (offset 0.254)) (in_bom yes) (on_board yes)
-      (property "Reference" "C2" (at 3.81 1.27 0)
-        (effects (font (size 1.27 1.27)) (justify left))
-      )
-      (property "Value" "1000uF" (at 3.81 -1.27 0)
-        (effects (font (size 1.27 1.27)) (justify left))
-      )
-      (property "Footprint" "" (at 0.9652 -3.81 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (property "Datasheet" "~" (at 0 0 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (property "ki_keywords" "cap capacitor" (at 0 0 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (property "ki_description" "Unpolarized capacitor" (at 0 0 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (property "ki_fp_filters" "C_*" (at 0 0 0)
-        (effects (font (size 1.27 1.27)) hide)
-      )
-      (symbol "C_1_0_1"
-        (polyline
-          (pts
-            (xy -2.032 -0.762)
-            (xy 2.032 -0.762)
-          )
-          (stroke (width 0.508) (type default))
-          (fill (type none))
-        )
-        (polyline
-          (pts
-            (xy -2.032 0.762)
-            (xy 2.032 0.762)
-          )
-          (stroke (width 0.508) (type default))
-          (fill (type none))
-        )
-      )
-      (symbol "C_1_1_1"
-        (pin passive line (at 0 3.81 270) (length 2.794)
-          (name "~" (effects (font (size 1.27 1.27))))
-          (number "1" (effects (font (size 1.27 1.27))))
-        )
-        (pin passive line (at 0 -3.81 90) (length 2.794)
-          (name "~" (effects (font (size 1.27 1.27))))
-          (number "2" (effects (font (size 1.27 1.27))))
-        )
-      )
-    )
     (symbol "C_2" (pin_numbers hide) (pin_names (offset 0.254)) (in_bom yes) (on_board yes)
       (property "Reference" "C" (at 0.635 2.54 0)
         (effects (font (size 1.27 1.27)) (justify left))
@@ -97,6 +46,108 @@
         )
       )
       (symbol "C_2_1_1"
+        (pin passive line (at 0 3.81 270) (length 2.794)
+          (name "~" (effects (font (size 1.27 1.27))))
+          (number "1" (effects (font (size 1.27 1.27))))
+        )
+        (pin passive line (at 0 -3.81 90) (length 2.794)
+          (name "~" (effects (font (size 1.27 1.27))))
+          (number "2" (effects (font (size 1.27 1.27))))
+        )
+      )
+    )
+    (symbol "C_3" (pin_numbers hide) (pin_names (offset 0.254)) (in_bom yes) (on_board yes)
+      (property "Reference" "C" (at 0.635 2.54 0)
+        (effects (font (size 1.27 1.27)) (justify left))
+      )
+      (property "Value" "C" (at 0.635 -2.54 0)
+        (effects (font (size 1.27 1.27)) (justify left))
+      )
+      (property "Footprint" "" (at 0.9652 -3.81 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "Datasheet" "~" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "ki_keywords" "cap capacitor" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "ki_description" "Unpolarized capacitor" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "ki_fp_filters" "C_*" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (symbol "C_3_0_1"
+        (polyline
+          (pts
+            (xy -2.032 -0.762)
+            (xy 2.032 -0.762)
+          )
+          (stroke (width 0.508) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts
+            (xy -2.032 0.762)
+            (xy 2.032 0.762)
+          )
+          (stroke (width 0.508) (type default))
+          (fill (type none))
+        )
+      )
+      (symbol "C_3_1_1"
+        (pin passive line (at 0 3.81 270) (length 2.794)
+          (name "~" (effects (font (size 1.27 1.27))))
+          (number "1" (effects (font (size 1.27 1.27))))
+        )
+        (pin passive line (at 0 -3.81 90) (length 2.794)
+          (name "~" (effects (font (size 1.27 1.27))))
+          (number "2" (effects (font (size 1.27 1.27))))
+        )
+      )
+    )
+    (symbol "C_4" (pin_numbers hide) (pin_names (offset 0.254)) (in_bom yes) (on_board yes)
+      (property "Reference" "C" (at 0.635 2.54 0)
+        (effects (font (size 1.27 1.27)) (justify left))
+      )
+      (property "Value" "C" (at 0.635 -2.54 0)
+        (effects (font (size 1.27 1.27)) (justify left))
+      )
+      (property "Footprint" "" (at 0.9652 -3.81 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "Datasheet" "~" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "ki_keywords" "cap capacitor" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "ki_description" "Unpolarized capacitor" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "ki_fp_filters" "C_*" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (symbol "C_4_0_1"
+        (polyline
+          (pts
+            (xy -2.032 -0.762)
+            (xy 2.032 -0.762)
+          )
+          (stroke (width 0.508) (type default))
+          (fill (type none))
+        )
+        (polyline
+          (pts
+            (xy -2.032 0.762)
+            (xy 2.032 0.762)
+          )
+          (stroke (width 0.508) (type default))
+          (fill (type none))
+        )
+      )
+      (symbol "C_4_1_1"
         (pin passive line (at 0 3.81 270) (length 2.794)
           (name "~" (effects (font (size 1.27 1.27))))
           (number "1" (effects (font (size 1.27 1.27))))
@@ -674,10 +725,10 @@
       )
     )
     (symbol "Device:C" (pin_numbers hide) (pin_names (offset 0.254)) (in_bom yes) (on_board yes)
-      (property "Reference" "C1" (at 3.81 1.27 0)
+      (property "Reference" "C" (at 0.635 2.54 0)
         (effects (font (size 1.27 1.27)) (justify left))
       )
-      (property "Value" "100uF" (at 3.81 -1.27 0)
+      (property "Value" "C" (at 0.635 -2.54 0)
         (effects (font (size 1.27 1.27)) (justify left))
       )
       (property "Footprint" "" (at 0.9652 -3.81 0)
@@ -776,10 +827,10 @@
       )
     )
     (symbol "Device:L" (pin_numbers hide) (pin_names (offset 1.016) hide) (in_bom yes) (on_board yes)
-      (property "Reference" "L1" (at -5.08 0 90)
+      (property "Reference" "L" (at -1.27 0 90)
         (effects (font (size 1.27 1.27)))
       )
-      (property "Value" "100uH" (at -2.54 0 90)
+      (property "Value" "L" (at 1.905 0 90)
         (effects (font (size 1.27 1.27)))
       )
       (property "Footprint" "" (at 0 0 0)
@@ -887,6 +938,57 @@
         )
         (pin passive line (at 3.81 0 180) (length 2.54)
           (name "A" (effects (font (size 1.27 1.27))))
+          (number "2" (effects (font (size 1.27 1.27))))
+        )
+      )
+    )
+    (symbol "L_1" (pin_numbers hide) (pin_names (offset 1.016) hide) (in_bom yes) (on_board yes)
+      (property "Reference" "L" (at -1.27 0 90)
+        (effects (font (size 1.27 1.27)))
+      )
+      (property "Value" "L" (at 1.905 0 90)
+        (effects (font (size 1.27 1.27)))
+      )
+      (property "Footprint" "" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "Datasheet" "~" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "ki_keywords" "inductor choke coil reactor magnetic" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "ki_description" "Inductor" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (property "ki_fp_filters" "Choke_* *Coil* Inductor_* L_*" (at 0 0 0)
+        (effects (font (size 1.27 1.27)) hide)
+      )
+      (symbol "L_1_0_1"
+        (arc (start 0 -2.54) (mid 0.6323 -1.905) (end 0 -1.27)
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (arc (start 0 -1.27) (mid 0.6323 -0.635) (end 0 0)
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (arc (start 0 0) (mid 0.6323 0.635) (end 0 1.27)
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+        (arc (start 0 1.27) (mid 0.6323 1.905) (end 0 2.54)
+          (stroke (width 0) (type default))
+          (fill (type none))
+        )
+      )
+      (symbol "L_1_1_1"
+        (pin passive line (at 0 3.81 270) (length 1.27)
+          (name "1" (effects (font (size 1.27 1.27))))
+          (number "1" (effects (font (size 1.27 1.27))))
+        )
+        (pin passive line (at 0 -3.81 90) (length 1.27)
+          (name "2" (effects (font (size 1.27 1.27))))
           (number "2" (effects (font (size 1.27 1.27))))
         )
       )
@@ -1183,10 +1285,55 @@
     (uuid f8a64f71-54e9-4480-9dae-608841f3328d)
   )
 
+  (no_connect (at 34.29 92.71) (uuid 163db565-2ba4-457a-b203-af1be585c486))
+  (no_connect (at 34.29 87.63) (uuid 1b8050a9-d139-4d6e-887e-be1cd6ac1019))
+  (no_connect (at 74.93 41.91) (uuid 1e160517-cb17-4e08-8790-2832411ce9ab))
+  (no_connect (at 74.93 49.53) (uuid 2160a6ac-8417-4570-80cb-30ee02aa9956))
+  (no_connect (at 74.93 77.47) (uuid 28ed60db-e5b7-4315-ac4c-1dabd135235f))
+  (no_connect (at 34.29 85.09) (uuid 2ba9f4e9-03e5-4a9c-938f-613b5ede67eb))
+  (no_connect (at 34.29 59.69) (uuid 37dfe362-17c4-4898-b75c-879b6ba885b9))
+  (no_connect (at 74.93 110.49) (uuid 3d3e7e49-db84-425a-a90a-162087635472))
   (no_connect (at 218.44 40.64) (uuid 3e7ad906-fd74-4461-8d1a-affc63588fa5))
+  (no_connect (at 34.29 64.77) (uuid 44a688a4-bfad-4b7a-9c09-34586ed27bee))
+  (no_connect (at 34.29 72.39) (uuid 48891c36-f9a7-4d5e-8f97-fe6668b0ffed))
+  (no_connect (at 74.93 72.39) (uuid 52234490-7560-4942-81c9-92948226a867))
+  (no_connect (at 34.29 57.15) (uuid 53d11282-db2c-403c-a301-1790838c5854))
+  (no_connect (at 74.93 59.69) (uuid 5b561f5a-31be-488f-aa81-4a7c2cb8df69))
+  (no_connect (at 34.29 74.93) (uuid 6081482e-7119-42cc-8ef2-459d1954a4b5))
+  (no_connect (at 34.29 67.31) (uuid 68533ebf-b94c-4b69-9268-32f1f58322f3))
+  (no_connect (at 34.29 80.01) (uuid 7079f928-47c5-4a34-a70c-8e315091757d))
+  (no_connect (at 74.93 115.57) (uuid 708dbefc-1c4c-4a26-aadc-1cf1190fa8a8))
+  (no_connect (at 74.93 87.63) (uuid 74fba9b9-6fc7-4ebd-a91c-c58dd1ab4503))
+  (no_connect (at 34.29 44.45) (uuid 76e62878-6469-4fad-a546-06b864e57f50))
+  (no_connect (at 74.93 107.95) (uuid 780cf226-76a3-4f4d-9b94-fab1dda50775))
+  (no_connect (at 74.93 82.55) (uuid 79e68094-e4f1-4f5d-a77e-ba6bb0b129de))
+  (no_connect (at 74.93 34.29) (uuid 7a1ba623-ae6c-4d3e-89ce-ad11e14fe83b))
+  (no_connect (at 34.29 49.53) (uuid 7a643d77-a951-44b5-8ae8-bb581f4c0176))
+  (no_connect (at 74.93 118.11) (uuid 8332cd84-0ce9-4ff9-bea2-c58aa0a5d950))
+  (no_connect (at 74.93 44.45) (uuid 83d42564-fa81-4313-ba1b-06b786efcbdc))
+  (no_connect (at 74.93 52.07) (uuid 99b20c1e-7e79-44c9-acb3-ea9a25f9aff8))
+  (no_connect (at 74.93 67.31) (uuid a4bda0a8-9fe5-46d1-845e-3a1b898524f7))
+  (no_connect (at 74.93 90.17) (uuid a80146c4-b917-43f9-9178-892dba1a6a06))
+  (no_connect (at 74.93 31.75) (uuid ab219cce-f7a4-4291-8e34-0a6898c1f601))
   (no_connect (at 261.62 45.72) (uuid abf483a6-e67c-4e8a-a694-88492e4705eb))
+  (no_connect (at 74.93 57.15) (uuid adc36383-15c5-4915-924f-a05a441c55d1))
+  (no_connect (at 34.29 90.17) (uuid b0106da6-c0f1-4bd9-839c-81bcee168ef9))
+  (no_connect (at 74.93 125.73) (uuid b419f8f6-d892-461a-8d51-6ddd03d75e6d))
+  (no_connect (at 74.93 80.01) (uuid b5d69751-6367-4925-a468-a01ead331a01))
+  (no_connect (at 74.93 105.41) (uuid b5ddd4f8-ff22-48e2-91ca-06fb26720f4b))
+  (no_connect (at 74.93 64.77) (uuid c4fb47f6-6127-4178-b930-7f3608e4426d))
+  (no_connect (at 34.29 77.47) (uuid c9c54a7e-5ab3-4c0b-b9af-86d0ada19fb8))
+  (no_connect (at 74.93 113.03) (uuid cb2b98fc-cae9-4b99-8eb5-0aad18500cad))
   (no_connect (at 261.62 40.64) (uuid ccd3035f-1ef9-436f-9cf5-d54d0e43e08e))
+  (no_connect (at 74.93 36.83) (uuid d972722b-ffb1-41aa-b002-2bbbc01285fd))
   (no_connect (at 218.44 45.72) (uuid d9778870-20bb-473b-817c-c33c1a296b56))
+  (no_connect (at 34.29 52.07) (uuid ded172d1-03a8-43e6-bf8a-bfb1af196467))
+  (no_connect (at 34.29 62.23) (uuid df27691a-4dd9-41c7-8c8a-80768d72e721))
+  (no_connect (at 74.93 102.87) (uuid e4d4de2a-22e7-4cfe-9ccd-1bb30987f647))
+  (no_connect (at 74.93 46.99) (uuid ea98e1af-f6e0-4b10-95df-5480943c808f))
+  (no_connect (at 74.93 69.85) (uuid f1444815-74ee-4ec7-a709-16790fcde642))
+  (no_connect (at 34.29 97.79) (uuid f1966bb7-b79c-45b2-ba7b-0f6650d72c69))
+  (no_connect (at 34.29 69.85) (uuid f9cfbd96-5d06-424f-ab1a-60860a1586a6))
 
   (wire (pts (xy 138.43 182.88) (xy 138.43 185.42))
     (stroke (width 0) (type default))
@@ -1263,10 +1410,6 @@
   (wire (pts (xy 104.14 165.1) (xy 109.22 165.1))
     (stroke (width 0) (type default))
     (uuid 3120e003-b023-4390-b214-81add91af11e)
-  )
-  (wire (pts (xy 26.67 97.79) (xy 34.29 97.79))
-    (stroke (width 0) (type default))
-    (uuid 3216a78f-04ed-48a9-aeec-bd53c15ea8d9)
   )
   (wire (pts (xy 215.9 85.09) (xy 215.9 86.36))
     (stroke (width 0) (type default))
@@ -1697,10 +1840,35 @@
     (uuid ffb1cd44-f815-4232-a786-e131f432b026)
   )
 
+  (rectangle (start 143.51 118.11) (end 148.59 125.73)
+    (stroke (width 0) (type default))
+    (fill (type none))
+    (uuid 036bad4d-0b9b-4113-b1ea-f6854f9c20eb)
+  )
+  (rectangle (start 148.59 105.41) (end 160.02 110.49)
+    (stroke (width 0) (type default))
+    (fill (type none))
+    (uuid 587e7e3c-2fdb-413e-8fbe-242b2b8ef799)
+  )
+  (rectangle (start 143.51 101.6) (end 156.21 118.11)
+    (stroke (width 0) (type default))
+    (fill (type none))
+    (uuid 679713aa-628d-4084-ae44-58669b63cedb)
+  )
+  (rectangle (start 151.13 118.11) (end 156.21 125.73)
+    (stroke (width 0) (type default))
+    (fill (type none))
+    (uuid 7e755dd8-5152-4b1d-a58f-002de7f4a271)
+  )
   (rectangle (start 191.77 12.7) (end 284.48 49.53)
     (stroke (width 0) (type default))
     (fill (type none))
     (uuid 8004cd0a-453c-4d8e-9032-e45dc18e1fe4)
+  )
+  (rectangle (start 110.49 85.09) (end 191.77 133.35)
+    (stroke (width 0) (type default))
+    (fill (type none))
+    (uuid 8121e237-c1f7-41e8-a1ff-6810ec2cc801)
   )
   (rectangle (start 110.49 12.7) (end 191.77 85.09)
     (stroke (width 0) (type default))
@@ -1711,6 +1879,11 @@
     (stroke (width 0) (type default))
     (fill (type none))
     (uuid cad6024c-4cd1-4593-86e1-816e86ef2159)
+  )
+  (rectangle (start 138.43 105.41) (end 143.51 115.57)
+    (stroke (width 0) (type default))
+    (fill (type none))
+    (uuid cd2456fc-3add-42f9-a8f1-77bdfd631264)
   )
   (rectangle (start 15.24 133.35) (end 172.72 193.04)
     (stroke (width 0) (type default))
@@ -1738,6 +1911,10 @@
   (text "Voltage Regulators" (at 21.59 146.05 0)
     (effects (font (size 5 5)) (justify left bottom))
     (uuid 5e373f7c-29f8-447e-b586-1235617c97ff)
+  )
+  (text "AMOGUS" (at 119.38 100.33 0)
+    (effects (font (size 10 10)) (justify left bottom))
+    (uuid 6b0ed9dc-48ff-42b2-9ddf-1213a12292aa)
   )
   (text "Motor Drivers\n" (at 113.03 19.05 0)
     (effects (font (size 5 5)) (justify left bottom))
@@ -1839,13 +2016,6 @@
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
   )
-  (global_label "IR_MOD" (shape input) (at 26.67 97.79 180) (fields_autoplaced)
-    (effects (font (size 1.27 1.27)) (justify right))
-    (uuid 89b6601e-0f84-44ae-ab47-3dfb26d6cf6f)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 16.7905 97.79 0)
-      (effects (font (size 1.27 1.27)) (justify right) hide)
-    )
-  )
   (global_label "MD1" (shape input) (at 170.815 33.02 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid 8b98f686-3777-4640-a025-c4d0f096c00d)
@@ -1853,10 +2023,10 @@
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
   )
-  (global_label "DDS3" (shape input) (at 78.74 97.79 0) (fields_autoplaced)
+  (global_label "DDS_3" (shape input) (at 78.74 97.79 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid cfc5d861-0864-4f99-b44d-17938c4f68cc)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 86.6842 97.79 0)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 87.6518 97.79 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
   )
@@ -1867,17 +2037,17 @@
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
   )
-  (global_label "R_LINE" (shape input) (at 251.46 43.18 180) (fields_autoplaced)
+  (global_label "L_LINE" (shape input) (at 251.46 43.18 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid d5fb7777-6785-4a9b-ae61-326802d53316)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 242.1248 43.18 0)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 242.3667 43.18 0)
       (effects (font (size 1.27 1.27)) (justify right) hide)
     )
   )
-  (global_label "DDS4" (shape input) (at 78.74 100.33 0) (fields_autoplaced)
+  (global_label "DDS_4" (shape input) (at 78.74 100.33 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left))
     (uuid d6b2e4fd-c234-4659-b1d0-79682b6fab92)
-    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 86.6842 100.33 0)
+    (property "Intersheetrefs" "${INTERSHEET_REFS}" (at 87.6518 100.33 0)
       (effects (font (size 1.27 1.27)) (justify left) hide)
     )
   )
@@ -1913,7 +2083,7 @@
     )
     (pin "1" (uuid f61a5a5f-d386-46ea-9f7d-738bf50df5e6))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR09") (unit 1)
         )
@@ -1940,7 +2110,7 @@
     (pin "2" (uuid 3af0f698-293d-4f9c-803d-87544e0ac570))
     (pin "3" (uuid 5833c5ae-303d-481c-bafa-a99911802b16))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "J9") (unit 1)
         )
@@ -1970,7 +2140,7 @@
           (reference "#PWR0124") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR028") (unit 1)
         )
@@ -2001,7 +2171,7 @@
           (reference "C2") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "C6") (unit 1)
         )
@@ -2031,7 +2201,7 @@
           (reference "#PWR0143") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR031") (unit 1)
         )
@@ -2058,7 +2228,7 @@
     (pin "2" (uuid 464d56a5-326e-4738-a08b-f0b48bd84714))
     (pin "3" (uuid b53961f8-3f2e-4131-bfab-7bd70ad15f7c))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "J1") (unit 1)
         )
@@ -2083,7 +2253,7 @@
     )
     (pin "1" (uuid e0490730-57fc-48c9-9255-2c4e06888926))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR012") (unit 1)
         )
@@ -2110,7 +2280,7 @@
     (pin "2" (uuid 006c9201-3d5e-434e-93fa-f354643f13b7))
     (pin "3" (uuid 755a822d-f341-479f-b593-309abff7f804))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "J4") (unit 1)
         )
@@ -2169,7 +2339,7 @@
           (reference "IC3") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "IC2") (unit 1)
         )
@@ -2194,7 +2364,7 @@
     )
     (pin "1" (uuid 62777ba0-416e-432d-9a4f-803c6d6968e9))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR04") (unit 1)
         )
@@ -2225,7 +2395,7 @@
           (reference "J9") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "J8") (unit 1)
         )
@@ -2250,7 +2420,7 @@
     )
     (pin "1" (uuid 69fbbd40-4f32-4530-8f21-b1adbf7bf884))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR023") (unit 1)
         )
@@ -2275,7 +2445,7 @@
     )
     (pin "1" (uuid 5ba59078-5e0f-46c5-806c-d3a7646765d2))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR024") (unit 1)
         )
@@ -2300,7 +2470,7 @@
     )
     (pin "1" (uuid 0794c564-e0aa-4778-9f11-b9431873831e))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR040") (unit 1)
         )
@@ -2325,7 +2495,7 @@
     )
     (pin "1" (uuid e9ca12f3-790f-4b21-bdf4-1c04b660e671))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR018") (unit 1)
         )
@@ -2351,7 +2521,7 @@
     (pin "1" (uuid 053fcf7b-5341-48a1-8f85-d1505d4eedf4))
     (pin "2" (uuid f5478351-24a5-415d-8986-47251dc3cb6b))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "L2") (unit 1)
         )
@@ -2382,7 +2552,7 @@
           (reference "C14") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "C7") (unit 1)
         )
@@ -2412,7 +2582,7 @@
           (reference "#PWR0125") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR025") (unit 1)
         )
@@ -2443,7 +2613,7 @@
           (reference "J2") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "J7") (unit 1)
         )
@@ -2451,7 +2621,7 @@
     )
   )
 
-  (symbol (lib_id "Device:C") (at 33.02 171.45 0) (unit 1)
+  (symbol (lib_name "C_4") (lib_id "Device:C") (at 33.02 171.45 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 43009b41-aa9f-4b5b-8c89-cbf82969fd65)
     (property "Reference" "C1" (at 36.83 170.18 0)
@@ -2469,7 +2639,7 @@
     (pin "1" (uuid 406dc0fb-6dec-4f78-9a01-bda36b64b5ae))
     (pin "2" (uuid f230e408-c475-49fa-bbf4-d00118717dc7))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "C1") (unit 1)
         )
@@ -2499,7 +2669,7 @@
           (reference "#PWR0123") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR026") (unit 1)
         )
@@ -2529,7 +2699,7 @@
           (reference "#PWR0126") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR029") (unit 1)
         )
@@ -2554,7 +2724,7 @@
     )
     (pin "1" (uuid 9b1a9272-2898-4163-ad03-ba38b360641d))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR013") (unit 1)
         )
@@ -2579,7 +2749,7 @@
     )
     (pin "1" (uuid bbc02e08-65c4-4756-9082-0cfd6940ede7))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR011") (unit 1)
         )
@@ -2605,7 +2775,7 @@
     (pin "1" (uuid d129dbcf-cd03-4ec9-903c-599632b3d546))
     (pin "2" (uuid 6b6cdeeb-551c-43f5-918a-caacac487807))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "D2") (unit 1)
         )
@@ -2635,7 +2805,7 @@
           (reference "#PWR0122") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR027") (unit 1)
         )
@@ -2660,7 +2830,7 @@
     )
     (pin "1" (uuid 91d75d6b-23ec-4fdc-bb9a-b01c7d982507))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR01") (unit 1)
         )
@@ -2668,7 +2838,7 @@
     )
   )
 
-  (symbol (lib_name "C_1") (lib_id "Device:C") (at 80.01 175.26 0) (unit 1)
+  (symbol (lib_name "C_3") (lib_id "Device:C") (at 80.01 175.26 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 5a42c616-769a-4bce-8043-d848d897064f)
     (property "Reference" "C2" (at 83.82 173.99 0)
@@ -2686,7 +2856,7 @@
     (pin "1" (uuid c023353b-c853-4cd9-8db1-c4f0d485e3ec))
     (pin "2" (uuid b50ed0d6-bb04-4489-9a1e-08c89f4075fa))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "C2") (unit 1)
         )
@@ -2711,7 +2881,7 @@
     )
     (pin "1" (uuid 31893840-d08f-4c08-bfc4-3688a6ded9b8))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR07") (unit 1)
         )
@@ -2737,7 +2907,7 @@
     (pin "1" (uuid 46f9fca7-da56-490d-b5b5-cf9fb0862d75))
     (pin "2" (uuid 1fd915c4-2861-484c-a5d6-703296f439aa))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "D1") (unit 1)
         )
@@ -2762,7 +2932,7 @@
     )
     (pin "1" (uuid cb9f0e79-1375-42ab-b914-5d35b9138059))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR037") (unit 1)
         )
@@ -2787,7 +2957,7 @@
     )
     (pin "1" (uuid 60bcaa19-a7e2-49e4-8eb8-91556c3f9758))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR038") (unit 1)
         )
@@ -2818,7 +2988,7 @@
           (reference "C17") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "C9") (unit 1)
         )
@@ -2843,7 +3013,7 @@
     )
     (pin "1" (uuid 14db5fcc-96e7-4a89-aa9b-f737a175b4c4))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR019") (unit 1)
         )
@@ -2868,7 +3038,7 @@
     )
     (pin "1" (uuid c70b9c45-010e-4b9d-a4ce-dec0444b861e))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR022") (unit 1)
         )
@@ -2893,7 +3063,7 @@
     )
     (pin "1" (uuid 636fc8e5-7fb1-414f-bb20-6baf3c18eb3c))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR08") (unit 1)
         )
@@ -2918,7 +3088,7 @@
     )
     (pin "1" (uuid 6405fb8a-8397-435e-9690-b9391b2eb500))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR039") (unit 1)
         )
@@ -2948,7 +3118,7 @@
           (reference "#PWR0137") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR033") (unit 1)
         )
@@ -2977,7 +3147,7 @@
     (pin "4" (uuid a7ac4576-e363-497b-9120-9203b0402932))
     (pin "5" (uuid 146ea948-b3bc-49f4-aa82-328012d22f00))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "U2") (unit 1)
         )
@@ -3006,7 +3176,7 @@
     (pin "4" (uuid 92a43501-4d39-4d10-ac0c-2c273f20595a))
     (pin "5" (uuid 871ad7e1-484d-42ce-bca9-16b4a1f160b4))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "J3") (unit 1)
         )
@@ -3031,7 +3201,7 @@
     )
     (pin "1" (uuid b2eed599-4ef2-48ca-a2b7-1594b01cb3bd))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR016") (unit 1)
         )
@@ -3057,7 +3227,7 @@
     (pin "1" (uuid ffb6f71e-eaed-4aae-9116-72eb48b561fc))
     (pin "2" (uuid dff4eae6-e2bf-47c5-8771-4c5323752264))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "C3") (unit 1)
         )
@@ -3087,7 +3257,7 @@
           (reference "#PWR0144") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR032") (unit 1)
         )
@@ -3112,7 +3282,7 @@
     )
     (pin "1" (uuid c9de5a0b-57df-4a44-aaac-192e210dc1a6))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR015") (unit 1)
         )
@@ -3137,7 +3307,7 @@
     )
     (pin "1" (uuid da6e6b62-4a96-4ad6-82f0-29eb57cf0786))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR041") (unit 1)
         )
@@ -3162,7 +3332,7 @@
     )
     (pin "1" (uuid 42e96eae-d35a-4e8a-8c61-cc78b7797ec5))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR06") (unit 1)
         )
@@ -3191,7 +3361,7 @@
     (pin "4" (uuid ea4f81b5-be94-4383-9030-00ec904d505c))
     (pin "5" (uuid f945d1b5-2e6e-4be8-8c57-b1a78906c6b8))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "U3") (unit 1)
         )
@@ -3222,7 +3392,7 @@
           (reference "C15") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "C8") (unit 1)
         )
@@ -3252,7 +3422,7 @@
           (reference "#PWR0142") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR035") (unit 1)
         )
@@ -3260,7 +3430,7 @@
     )
   )
 
-  (symbol (lib_name "C_1") (lib_id "Device:C") (at 156.21 175.26 0) (unit 1)
+  (symbol (lib_id "Device:C") (at 156.21 175.26 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid bec55f9f-d53c-42a2-a010-96a9eb29a4d5)
     (property "Reference" "C4" (at 160.02 173.99 0)
@@ -3278,7 +3448,7 @@
     (pin "1" (uuid 872845ad-afe9-4d58-8538-2827c1c122e2))
     (pin "2" (uuid be350a51-39da-4708-ba96-b66a1c05cc13))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "C4") (unit 1)
         )
@@ -3303,7 +3473,7 @@
     )
     (pin "1" (uuid 20ba2549-369f-45b3-a894-51b2f973b419))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR017") (unit 1)
         )
@@ -3334,7 +3504,7 @@
           (reference "C18") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "C10") (unit 1)
         )
@@ -3364,7 +3534,7 @@
           (reference "#PWR0139") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR036") (unit 1)
         )
@@ -3389,7 +3559,7 @@
     )
     (pin "1" (uuid 113866ee-d7ad-4e2b-96d2-75c25529b726))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR03") (unit 1)
         )
@@ -3397,7 +3567,7 @@
     )
   )
 
-  (symbol (lib_id "Device:L") (at 74.93 170.18 270) (unit 1)
+  (symbol (lib_name "L_1") (lib_id "Device:L") (at 74.93 170.18 270) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid d219e20a-c864-4f98-a849-ea802d4f2426)
     (property "Reference" "L1" (at 74.93 165.1 90)
@@ -3415,7 +3585,7 @@
     (pin "1" (uuid 2b23f026-7bf5-4f14-901c-5eca1240d0f8))
     (pin "2" (uuid a6acb5bf-bb02-41a2-8a2c-28b19f146da7))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "L1") (unit 1)
         )
@@ -3445,7 +3615,7 @@
           (reference "#PWR0138") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR034") (unit 1)
         )
@@ -3470,7 +3640,7 @@
     )
     (pin "1" (uuid f34d9357-46b0-4b89-b384-7174bcb1057e))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR010") (unit 1)
         )
@@ -3497,7 +3667,7 @@
     (pin "2" (uuid 9a6e533c-c4d1-47f6-ae29-820b1a7cf360))
     (pin "3" (uuid 95b8c989-a9d0-49e6-b541-ae4603b71a5b))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "J5") (unit 1)
         )
@@ -3522,7 +3692,7 @@
     )
     (pin "1" (uuid dd9abbc9-e0be-4ee2-aa54-a09a57e229e5))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR02") (unit 1)
         )
@@ -3547,7 +3717,7 @@
     )
     (pin "1" (uuid b3526580-9a50-4ac5-a2c0-4474ea19c155))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR021") (unit 1)
         )
@@ -3576,7 +3746,7 @@
     (pin "4" (uuid 2b6c935b-9d52-41aa-ba20-ae9c8e5dad32))
     (pin "5" (uuid 2c8eb7c0-44c8-4bb4-b289-701971d79919))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "J2") (unit 1)
         )
@@ -3607,7 +3777,7 @@
           (reference "C1") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "C5") (unit 1)
         )
@@ -3638,7 +3808,7 @@
           (reference "J1") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "J6") (unit 1)
         )
@@ -3663,7 +3833,7 @@
     )
     (pin "1" (uuid bad71cfc-8dfd-4b3e-96e5-8e151134d561))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR05") (unit 1)
         )
@@ -3791,7 +3961,7 @@
     (pin "VIN" (uuid 72750101-9181-4c44-b280-89fd3c1dbba4))
     (pin "VUSB" (uuid fad91af1-c15c-46b7-97fe-b72a537e044e))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "U1") (unit 1)
         )
@@ -3850,7 +4020,7 @@
           (reference "IC2") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "IC1") (unit 1)
         )
@@ -3875,7 +4045,7 @@
     )
     (pin "1" (uuid c372203c-a62e-4dab-bfe7-1c576589f520))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR014") (unit 1)
         )
@@ -3901,7 +4071,7 @@
     (pin "1" (uuid 765e6e48-e3a8-4604-9a41-ead91440e804))
     (pin "2" (uuid eba215d4-dd66-4430-8618-95ff72fdafd0))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "C11") (unit 1)
         )
@@ -3926,7 +4096,7 @@
     )
     (pin "1" (uuid c8bbfc0d-d665-499b-9787-971e555d4497))
     (instances
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR020") (unit 1)
         )
@@ -3956,7 +4126,7 @@
           (reference "#PWR0128") (unit 1)
         )
       )
-      (project "Musubi"
+      (project "musubidraft2"
         (path "/bfb4f8fa-e43b-463c-bdc3-769aafbe9403"
           (reference "#PWR030") (unit 1)
         )
