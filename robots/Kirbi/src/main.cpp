@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "MotorController.h"
-#include "Robots/Gucci/Gucci.h"
+#include "Robot/Kirbi.h"
 #include "TFMPlus.h"
 
 #include "Strategies/SlammyWhammy/SlammyWhammy.h"
@@ -16,9 +16,8 @@
 MotorController motorController{&Serial5};
 SabertoothSimplified mc{Serial5};
 
-Gucci gucci{};
+Kirbi kirbi{};
 TFMPlus tfm{};
-RobotState currentState;
 SlammyWhammy<RobotState, RobotState> strategy(75, 100);
 FigureEight<RobotState, RobotState> figureEightStrategy(100, 850);
 
@@ -37,15 +36,14 @@ void setup() {
 
 void loop() {
   //Serial.println("======= NEW LOOP AAAA =======");
-  gucci.UpdateSensors();
-  gucci.UpdateState();
+  kirbi.UpdateSensors();
+  kirbi.UpdateState();
 
-  currentState = gucci.GetCurrentState();
-
+  RobotState currentState = kirbi.GetCurrentState();
 
   if (currentState.enabled == 1) {
     if (!hasStarted) {
-      gucci.SampleFloor();
+      kirbi.SampleFloor();
       hasStarted = true;
       currentState.atBounds = false;
     }
@@ -65,9 +63,9 @@ void loop() {
         mc.motor(2, -50);
       }
 
-      gucci.UpdateSensors();
-      gucci.UpdateState();
-      currentState = gucci.GetCurrentState();
+      kirbi.UpdateSensors();
+      kirbi.UpdateState();
+      currentState = kirbi.GetCurrentState();
   }
 
 

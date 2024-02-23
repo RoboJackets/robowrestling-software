@@ -5,7 +5,7 @@
 
 #include <Arduino.h>
 #include "Strategies/Behaviors/Nodes/Node.h"
-#include "Robots/RobotState.h"
+#include "Robot/RobotState.h"
 
 class Brazil : public BT::Node<RobotState, RobotState> {
 public:

@@ -20,8 +20,6 @@ struct RobotState {
     int backupUntilMillis = 0;
 
     bool enabled = false;
-
 };
-
 
 #endif
