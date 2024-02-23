@@ -4,7 +4,7 @@
 #define BRAZIL_TURN_MILLIS 650
 
 #include <Arduino.h>
-#include "Behaviors/Nodes/Node.h"
+#include "../Behaviors/Nodes/Node.h"
 #include "Robots/RobotState.h"
 
 class Brazil : public BT::Node<RobotState, RobotState> {
