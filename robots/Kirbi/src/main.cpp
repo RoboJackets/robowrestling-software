@@ -6,8 +6,8 @@
 #include "Robot/Kirbi.h"
 #include "TFMPlus.h"
 
-#include "Strategies/SlammyWhammy/SlammyWhammy.h"
-#include "Strategies/FigureEight/FigureEight.h"
+#include "Strategies/SlammyWhammy.h"
+#include "Strategies/FigureEight.h"
 #include "SabertoothSimplified.h"
 
 
@@ -18,8 +18,8 @@ SabertoothSimplified mc{Serial5};
 
 Kirbi kirbi{};
 TFMPlus tfm{};
-SlammyWhammy<RobotState, RobotState> strategy(75, 100);
-FigureEight<RobotState, RobotState> figureEightStrategy(100, 850);
+SlammyWhammy strategy(75, 100);
+FigureEight figureEightStrategy(100, 850);
 
 bool hasStarted = false;
 
