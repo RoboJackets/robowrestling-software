@@ -2,7 +2,7 @@
 #include <SoftwareSerial.h>
 #include <memory>
 
-#include "MotorController/MotorController.h"
+#include "MotorController.h"
 #include "Robots/Gucci/Gucci.h"
 #include "TFMPlus.h"
 
