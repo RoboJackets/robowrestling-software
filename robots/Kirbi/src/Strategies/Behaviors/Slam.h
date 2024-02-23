@@ -1,7 +1,7 @@
 #ifndef SLAM_H
 #define SLAM_H
 
-#include "Nodes/Node.h"
+#include "Strategies/Behaviors/Nodes/Node.h"
 #include <Arduino.h>
 
 template<typename T, typename U>

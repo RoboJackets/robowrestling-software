@@ -1,7 +1,7 @@
 #ifndef SEARCH_H
 #define SEARCH_H
 
-#include "Nodes/Node.h"
+#include "Strategies/Behaviors/Nodes/Node.h"
 
 template<typename T, typename U>
 class Search : public BT::Node<T, U> {

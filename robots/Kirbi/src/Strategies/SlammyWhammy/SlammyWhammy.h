@@ -1,7 +1,7 @@
 #ifndef SLAMMY_WHAMMY_H
 #define SLAMMY_WHAMMY_H
-#include "../Behaviors/Nodes/SequenceNode.h"
-#include "../Behaviors/Nodes/Node.h"
+#include "Strategies/Behaviors/Nodes/SequenceNode.h"
+#include "Strategies/Behaviors/Nodes/Node.h"
 #include "../Behaviors/Search.h"
 #include "../Behaviors/Slam.h"
 #include "../FigureEight/FigureEight.h"

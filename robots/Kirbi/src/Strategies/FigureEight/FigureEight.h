@@ -1,7 +1,7 @@
 #ifndef FIGURE_EIGHT
 #define FIGURE_EIGHT
 
-#include "../Behaviors/Nodes/Node.h"
+#include "Strategies/Behaviors/Nodes/Node.h"
 #include <Arduino.h>
 
 template<typename T, typename U>
