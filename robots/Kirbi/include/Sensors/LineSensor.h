@@ -7,20 +7,20 @@
 class LineSensor : public Sensor {
 public:
     LineSensor(int pin) : _pin(pin) {
-     pinMode(pin, INPUT);
+        pinMode(pin, INPUT);
     }
     ~LineSensor() {}
 
     int read() { return analogRead(_pin); }
 
-   bool Poll() override {
+    bool Poll() override {
         _detected = analogRead(_pin);
         return true;
-   }
+    }
 
-   int GetDetection() {
+    int GetDetection() {
         return _detected;
-   }
+    }
 
 private:
     int _pin;
