@@ -60,6 +60,8 @@ protected:
     int _last_move_speed;
     int _last_turn_speed;
 
+    void _sendCommand(int leftSpeed, int rightSpeed);
+
 };
 
 #endif
