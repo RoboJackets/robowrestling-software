@@ -28,7 +28,7 @@ void setup() {
 }
 
 void loop() {
-    //Serial.println("======= NEW LOOP AAAA =======");
+    // Make sure we have the most recent values
     kirbi->UpdateSensors();
     kirbi->UpdateState();
 
@@ -36,13 +36,18 @@ void loop() {
     MotorController* motorController = kirbi->GetMotorController();
 
     if (currentState.enabled == 1) {
+
+        // This uses the line sensors to read the current values of the floor
+        // (ideally black so Kirbi knows what black looks like) for
+        // line-sensing purposes
         if (!hasStarted) {
             kirbi->SampleFloor();
             hasStarted = true;
             currentState.atBounds = false;
         }
+
+        // At bounds == hit a line
         if (currentState.atBounds) {
-            Serial.println("AT BOUNDS");
             // Drive motors backwards for X amount of time
             unsigned int timestamp = millis();
 
@@ -55,6 +60,8 @@ void loop() {
                 motorController->turn(50);
             }
 
+            // We don't go into a new loop after this finishes, so we need to
+            // re-update before we continue to run the strategy
             kirbi->UpdateSensors();
             kirbi->UpdateState();
             currentState = kirbi->GetCurrentState();

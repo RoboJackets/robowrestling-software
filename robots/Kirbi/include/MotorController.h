@@ -11,6 +11,11 @@
     Value of 128-255 commands motor 2
     Value of 0 sends full stop to both motors
 
+    For the above ranges, the minimum of the range (i.e. 1 for motor 1)
+    translates to full reverse, while the maximum of the
+    range (i.e. 127 for motor 1) translates to full forwards.
+    The value to stop the motor is the one in the middle of the range.
+
     Functions take a value of -100 to 100 and map it
     for arcade drive.
 */

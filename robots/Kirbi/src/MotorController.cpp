@@ -1,5 +1,8 @@
 #include "MotorController.h"
 
+// See include/MotorController.h for more detailed comments
+// about how this works.
+
 MotorController::MotorController(Stream* serial) {
     _serial = serial;
     _last_turn_speed = 0;
@@ -13,6 +16,7 @@ void MotorController::move(int speed) {
 
     int mapped_first = map(speed, -100, 100, 1, 127);
     int mapped_second = map(speed, -100, 100, 128, 255);
+
     uint8_t msg[2];
     msg[0] = mapped_first;
     msg[1] = mapped_second;

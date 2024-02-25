@@ -5,14 +5,14 @@
 #include <Sensors/TFMini/TFMini.h>
 #include <Arduino.h>
 #include "TFMini/TFMini.h"
-#include <utility> 
+#include <utility>
 
 
 /***
- * This is a class to control the muxes attached to two lidars. 
- * 
- * 
- * 
+ * This is a class to control the muxes attached to two lidars.
+ * NOT CURRENTLY USED -- IF YOU'RE READING THIS THEN KNOW IT'S UNUSED
+ *
+ *
  * Example code to read from both lidars (attached to a mux) in a loop
         Before Setup:
             TFMini* tfMini;
@@ -32,16 +32,16 @@
 */
 
 struct LidarData {
-    int dist; 
-    long int timestamp; 
+    int dist;
+    long int timestamp;
 };
 
 class LidarMux {
     private:
         int _muxPin;
         TFMini* _tfmini;
-        LidarData _one; 
-        LidarData _two; 
+        LidarData _one;
+        LidarData _two;
 
 
         void setHigh() {
@@ -51,7 +51,7 @@ class LidarMux {
         void setLow() {
             digitalWrite(_muxPin, LOW);
         }
-    
+
     public:
         LidarMux(int pin) {
             _muxPin = pin;
@@ -59,39 +59,39 @@ class LidarMux {
         }
 
         LidarMux(int pin, TFMini* mini) {
-            _muxPin = pin; 
-            _tfmini = mini; 
+            _muxPin = pin;
+            _tfmini = mini;
         }
 
         std::pair<LidarData, LidarData> readLidars() {
             setLow();
             _tfmini->Poll();
-            _one.dist = _tfmini->GetDistance(); 
-            _one.timestamp = 0; //TODO: give it a timestamp 
+            _one.dist = _tfmini->GetDistance();
+            _one.timestamp = 0; //TODO: give it a timestamp
             setHigh();
             _tfmini->Poll();
-            _two.dist = _tfmini->GetDistance(); 
-            _two.timestamp = 0; 
-            auto values = std::make_pair(_one, _two); 
+            _two.dist = _tfmini->GetDistance();
+            _two.timestamp = 0;
+            auto values = std::make_pair(_one, _two);
             return values;
         }
         /**
          * Use this if need clocking?
-         * 
+         *
         */
         std::pair<LidarData, LidarData> readLidars(int clock) {
             if (!clock) {
                 setLow();
                  _tfmini->Poll();
-                _one.dist = _tfmini->GetDistance(); 
-                _one.timestamp = 0; //TODO: give it a timestamp 
+                _one.dist = _tfmini->GetDistance();
+                _one.timestamp = 0; //TODO: give it a timestamp
             }
             else {
                 setHigh();
                 _tfmini->Poll();
-                _two.dist = _tfmini->GetDistance(); 
-                _two.timestamp = 0; 
-            }           
+                _two.dist = _tfmini->GetDistance();
+                _two.timestamp = 0;
+            }
             return std::make_pair(_one, _two);
         }
 
