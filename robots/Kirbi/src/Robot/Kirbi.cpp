@@ -1,19 +1,18 @@
 #include "Robot/Kirbi.h"
 
 Kirbi::Kirbi() {
-    //TODO: replace these with the actual pin values
-
     Serial1.begin(115200);
     Serial2.begin(115200);
     Serial3.begin(115200);
     Serial4.begin(115200);
+    Serial5.begin(9600);
 
     startModule = std::make_unique<StartModule>(14);
+    motorController = new MotorController(&Serial5);
     leftDist = new TFMini(&Serial3);
     rightDist =  new TFMini(&Serial2);
     lineSensor1 = new LineSensor(A9);
     lineSensor2 = new LineSensor(A16);
-
 
     _sensors.push_back(lineSensor1);
     _sensors.push_back(lineSensor2);
@@ -66,4 +65,8 @@ void Kirbi::SampleFloor() {
     }
 
     floorReading = (floorReading / samples);
+}
+
+MotorController* Kirbi::GetMotorController() {
+    return motorController;
 }

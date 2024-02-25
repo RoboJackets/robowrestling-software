@@ -1,12 +1,15 @@
 #ifndef KIRBI_H
 #define KIRBI_H
 
-#include "Robot/Robot.h"
 #include <Arduino.h>
 #include <memory>
+
+#include "Robot/Robot.h"
 #include "TFMini/TFMini.h"
 #include "Sensors/LineSensor.h"
 #include "Sensors/StartModule.h"
+#include "MotorController.h"
+
 
 constexpr int LINE_THRESHOLD = 100;
 
@@ -19,6 +22,7 @@ private:
 
     LineSensor* lineSensor1;
     LineSensor* lineSensor2;
+    MotorController* motorController;
     std::unique_ptr<StartModule> startModule;
 
     int floorReading = 0;
@@ -26,11 +30,9 @@ private:
 
 public:
     Kirbi();
-
     void UpdateState() override;
-
     void SampleFloor();
-
+    MotorController* GetMotorController();
 };
 
 #endif

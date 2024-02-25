@@ -13,8 +13,6 @@
 
 // Init motor controller
 // Make sure that everything is grounded
-MotorController motorController{&Serial5};
-
 Kirbi kirbi{};
 SlammyWhammy strategy(75, 100);
 FigureEight figureEightStrategy(100, 850);
@@ -24,11 +22,9 @@ bool hasStarted = false;
 const unsigned int BACKUP_TIME = 300; // in ms
 const unsigned int TURN_TIME = 200;
 void setup() {
-    Serial5.begin(9600);
     pinMode(A22, OUTPUT);
     analogWrite(A22, 500);
 }
-
 
 void loop() {
     //Serial.println("======= NEW LOOP AAAA =======");
@@ -36,6 +32,7 @@ void loop() {
     kirbi.UpdateState();
 
     RobotState currentState = kirbi.GetCurrentState();
+    MotorController* motorController = kirbi.GetMotorController();
 
     if (currentState.enabled == 1) {
         if (!hasStarted) {
@@ -49,12 +46,12 @@ void loop() {
             unsigned int timestamp = millis();
 
             while (millis() - timestamp < BACKUP_TIME) {
-                motorController.move(-50);
+                motorController->move(-50);
             }
 
             timestamp = millis();
             while (millis() - timestamp < TURN_TIME) {
-                motorController.turn(50);
+                motorController->turn(50);
             }
 
             kirbi.UpdateSensors();
@@ -64,9 +61,9 @@ void loop() {
 
 
         auto output = strategy.Run(currentState);
-        motorController.move(output.currentLeftMotorPow, output.currentRightMotorPow);
+        motorController->move(output.currentLeftMotorPow, output.currentRightMotorPow);
     } else {
-        motorController.stop();
+        motorController->stop();
     }
 }
 
