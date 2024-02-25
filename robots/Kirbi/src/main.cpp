@@ -11,9 +11,7 @@
 #include "SabertoothSimplified.h"
 
 
-// Init motor controller
-// Make sure that everything is grounded
-Kirbi kirbi{};
+Kirbi* kirbi;
 SlammyWhammy strategy(75, 100);
 FigureEight figureEightStrategy(100, 850);
 
@@ -21,22 +19,25 @@ bool hasStarted = false;
 
 const unsigned int BACKUP_TIME = 300; // in ms
 const unsigned int TURN_TIME = 200;
+
 void setup() {
+    kirbi = new Kirbi();
+
     pinMode(A22, OUTPUT);
     analogWrite(A22, 500);
 }
 
 void loop() {
     //Serial.println("======= NEW LOOP AAAA =======");
-    kirbi.UpdateSensors();
-    kirbi.UpdateState();
+    kirbi->UpdateSensors();
+    kirbi->UpdateState();
 
-    RobotState currentState = kirbi.GetCurrentState();
-    MotorController* motorController = kirbi.GetMotorController();
+    RobotState currentState = kirbi->GetCurrentState();
+    MotorController* motorController = kirbi->GetMotorController();
 
     if (currentState.enabled == 1) {
         if (!hasStarted) {
-            kirbi.SampleFloor();
+            kirbi->SampleFloor();
             hasStarted = true;
             currentState.atBounds = false;
         }
@@ -54,9 +55,9 @@ void loop() {
                 motorController->turn(50);
             }
 
-            kirbi.UpdateSensors();
-            kirbi.UpdateState();
-            currentState = kirbi.GetCurrentState();
+            kirbi->UpdateSensors();
+            kirbi->UpdateState();
+            currentState = kirbi->GetCurrentState();
         }
 
 
