@@ -26,55 +26,55 @@ bool hasStarted = false;
 const unsigned int BACKUP_TIME = 300; // in ms
 const unsigned int TURN_TIME = 200;
 void setup() {
-  Serial2.begin(115200);
-  tfm.begin(&Serial2);
-  Serial5.begin(9600);
-  pinMode(A22, OUTPUT);
-  analogWrite(A22, 500);
+    Serial2.begin(115200);
+    tfm.begin(&Serial2);
+    Serial5.begin(9600);
+    pinMode(A22, OUTPUT);
+    analogWrite(A22, 500);
 }
 
 
 void loop() {
-  //Serial.println("======= NEW LOOP AAAA =======");
-  kirbi.UpdateSensors();
-  kirbi.UpdateState();
+    //Serial.println("======= NEW LOOP AAAA =======");
+    kirbi.UpdateSensors();
+    kirbi.UpdateState();
 
-  RobotState currentState = kirbi.GetCurrentState();
+    RobotState currentState = kirbi.GetCurrentState();
 
-  if (currentState.enabled == 1) {
-    if (!hasStarted) {
-      kirbi.SampleFloor();
-      hasStarted = true;
-      currentState.atBounds = false;
+    if (currentState.enabled == 1) {
+        if (!hasStarted) {
+            kirbi.SampleFloor();
+            hasStarted = true;
+            currentState.atBounds = false;
+        }
+        if (currentState.atBounds) {
+            Serial.println("AT BOUNDS");
+            // Drive motors backwards for X amount of time
+            unsigned int timestamp = millis();
+
+            while (millis() - timestamp < BACKUP_TIME) {
+            mc.motor(1, -50);
+            mc.motor(2, -50);
+            }
+
+            timestamp = millis();
+            while (millis() - timestamp < TURN_TIME) {
+            mc.motor(1, 50);
+            mc.motor(2, -50);
+            }
+
+            kirbi.UpdateSensors();
+            kirbi.UpdateState();
+            currentState = kirbi.GetCurrentState();
+        }
+
+
+        auto output = strategy.Run(currentState);
+        mc.motor(1, output.currentRightMotorPow);
+        mc.motor(2, output.currentLeftMotorPow);
+    } else {
+        mc.stop();
     }
-    if (currentState.atBounds) {
-        Serial.println("AT BOUNDS");
-    // Drive motors backwards for X amount of time
-      unsigned int timestamp = millis();
-
-      while (millis() - timestamp < BACKUP_TIME) {
-        mc.motor(1, -50);
-        mc.motor(2, -50);
-      }
-
-      timestamp = millis();
-      while (millis() - timestamp < TURN_TIME) {
-        mc.motor(1, 50);
-        mc.motor(2, -50);
-      }
-
-      kirbi.UpdateSensors();
-      kirbi.UpdateState();
-      currentState = kirbi.GetCurrentState();
-  }
-
-
-    auto output = strategy.Run(currentState);
-    mc.motor(1, output.currentRightMotorPow);
-    mc.motor(2, output.currentLeftMotorPow);
-  } else {
-    mc.stop();
-  }
 }
 
 /* emergency roomba strat */
