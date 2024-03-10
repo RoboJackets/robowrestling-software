@@ -1,4 +1,5 @@
-#include <string>
+
+//switch to enums!
 class StateS {
     private: 
         std::string state_name;
