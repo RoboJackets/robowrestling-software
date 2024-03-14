@@ -1,25 +1,10 @@
-#ifndef FULLREVERSE_H
-#define FULLREVERSE_H
+#include "Strategies/Behaviors/FullReverse.h"
 
-#include "Strategies/Behaviors/Nodes/Node.h"
-#include <Arduino.h>
+FullReverse::FullReverse(int speed) : BT::Node<RobotState, RobotState>(0, 0), speed(speed) {}
 
-template<typename T, typename U>
-class FullReverse : public BT::Node<T, U> {
-public:
-    FullReverse(int speed) : BT::Node<T, U>(0, 0), speed(speed){
-
-    }
-
-    U Run(T inputs) override {
-        U out;
-        out.currentLeftMotorPow  = -speed;
-        out.currentRightMotorPow = -speed;
-        return out;
-    }
-
-protected:
-    int speed;
-};
-
-#endif
+RobotState FullReverse::Run(RobotState inputs) {
+    RobotState out;
+    out.currentLeftMotorPow  = -speed;
+    out.currentRightMotorPow = -speed;
+    return out;
+}
