@@ -20,6 +20,28 @@ bool hasStarted = false;
 const unsigned int BACKUP_TIME = 300; // in ms
 const unsigned int TURN_TIME = 200;
 
+RobotState EmergencyReverse() {
+    MotorController* motorController = kirbi->GetMotorController();
+
+    // Drive motors backwards for X amount of time
+    unsigned int timestamp = millis();
+
+    while (millis() - timestamp < BACKUP_TIME) {
+        motorController->move(-50);
+    }
+
+    timestamp = millis();
+    while (millis() - timestamp < TURN_TIME) {
+        motorController->turn(50);
+    }
+
+    // We don't go into a new loop after this finishes, so we need to
+    // re-update before we continue to run the strategy
+    kirbi->UpdateSensors();
+    kirbi->UpdateState();
+    return kirbi->GetCurrentState();
+}
+
 void setup() {
     kirbi = new Kirbi();
 
@@ -48,23 +70,8 @@ void loop() {
 
         // At bounds == hit a line
         if (currentState.atBounds) {
-            // Drive motors backwards for X amount of time
-            unsigned int timestamp = millis();
-
-            while (millis() - timestamp < BACKUP_TIME) {
-                motorController->move(-50);
-            }
-
-            timestamp = millis();
-            while (millis() - timestamp < TURN_TIME) {
-                motorController->turn(50);
-            }
-
-            // We don't go into a new loop after this finishes, so we need to
-            // re-update before we continue to run the strategy
-            kirbi->UpdateSensors();
-            kirbi->UpdateState();
-            currentState = kirbi->GetCurrentState();
+            // EmergencyReverse returns the new state after reversing
+            currentState = EmergencyReverse();
         }
 
 
