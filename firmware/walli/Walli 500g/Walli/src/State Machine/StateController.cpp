@@ -4,16 +4,18 @@ class StateController {
     StateS current;
     public: 
         StateController() {
+            current = *new StateS();
         }
         void transition() {
             if (current.getCondition()) {
+                current.setCondition(false);
                 current = *current.getNext();
             }
         }
-        void setCurrent(StateS &c) {
+        void setCurrent(StateS c) {
             current = c;
         }
 
-        StateS getCurrent() {return current;}
+        State getCurrent() {return current.getState();}
 };
 
