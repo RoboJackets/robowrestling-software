@@ -2,36 +2,36 @@
 
 class Matador {
     private:
-        Walli walli;
+        Walli* walli;
     public:
-        Matador(Walli w) {
+        Matador(Walli* w) {
             walli = w;
         }
 
         void run() {
-            if(walli.onFrontLine() || walli.onBackLine()) {
+            if(walli->onFrontLine() || walli->onBackLine()) {
                 return;
             }
             int start1 = millis();
             if (millis() - start1 < 500) {
-                walli.turnRight();
+                walli->turnRight();
             }
-            if (!walli.onFrontLine()) {
-                walli.forward();
+            if (!walli->onFrontLine()) {
+                walli->forward();
             }
             int start2 = millis();
             if (millis() - start2 < 500) {
-                walli.turnLeft();
+                walli->turnLeft();
             }
-            if (!walli.onFrontLine()) {
-                walli.forward();
+            if (!walli->onFrontLine()) {
+                walli->forward();
             }
             int start3 = millis();
             if (millis() - start3 < 500) {
-                walli.turnLeft();
+                walli->turnLeft();
             }
-            if (!walli.onFrontLine()) {
-                walli.forward();
+            if (!walli->onFrontLine()) {
+                walli->forward();
             }
         }
 };

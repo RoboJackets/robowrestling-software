@@ -1,21 +1,19 @@
-#include "StateS.cpp"
+#include <State Machine\StateController.h>
 
-class StateController {
-    StateS current;
-    public: 
-        StateController() {
-            current = *new StateS();
-        }
-        void transition() {
-            if (current.getCondition()) {
-                current.setCondition(false);
-                current = *current.getNext();
-            }
-        }
-        void setCurrent(StateS c) {
-            current = c;
-        }
 
-        State getCurrent() {return current.getState();}
-};
+StateController::StateController() {
+    current = new StateS(State::OFF);
+}
+void StateController::transition() {
+    if (current->getCondition()) {
+        current->setCondition(false);
+        current = current->getNext();
+    }
+}
+void StateController::setCurrent(StateS* c) {
+    current = c;
+}
+
+State StateController::getCurrent() {return current->getState();}
+
 

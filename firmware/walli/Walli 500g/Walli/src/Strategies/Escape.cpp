@@ -2,17 +2,17 @@
 
 class Escape {
     private:
-        Walli walli;
+        Walli* walli;
     public:
-        Escape(Walli w) {
+        Escape(Walli* w) {
             walli = w;
         }
 
         void run() {
-            if (walli.onFrontLine()) {
-                walli.reverse();
-            } else if (walli.onBackLine()){
-                walli.forward();
+            if (walli->onFrontLine()) {
+                walli->reverse();
+            } else if (walli->onBackLine()){
+                walli->forward();
             } else {
                 return;
             }

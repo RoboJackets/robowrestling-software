@@ -1,29 +1,19 @@
-#include<Sensors/Sensor.cpp>
+#include<Sensors/LineSensor.h>
 
-class LineSensor : public Sensor {
-    private:
-        int _base;
-        int _threshold;
-        int sample() {
-            int floorReading = 0;
-            int samples = 0;
-            for (int i = 0; i < 25; i++) {
-                floorReading += Sensor::read();
-                samples++;
-            }
-            return floorReading/samples; 
-        }
-    public:
-        LineSensor(int pin):Sensor(pin) {
-            _base = sample();
-            _threshold = 3;
-        }
+int LineSensor::sample() {
+    int floorReading = 0;
+    int samples = 0;
+    for (int i = 0; i < 25; i++) {
+        floorReading += WalliSensor::read();
+        samples++;
+    }
+    return floorReading/samples; 
+}
+LineSensor::LineSensor(int pin):WalliSensor(pin) {
+    _base = sample();
+    _threshold = 3;
+}
 
-        bool onLine() {
-            return abs(Sensor::read() - _base) >= _threshold;
-        }
-
-        
-
-
-};
+bool LineSensor::onLine() {
+    return abs(WalliSensor::read() - _base) >= _threshold;
+}

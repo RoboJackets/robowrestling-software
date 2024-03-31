@@ -2,20 +2,20 @@
 
 class SlamAttack {
     private:
-        Walli walli;
+        Walli* walli;
     public:
-        SlamAttack(Walli w) {
+        SlamAttack(Walli* w) {
             walli = w;
         }
         void run() {
-            if (walli.onFrontLine() || walli.onBackLine()) {
+            if (walli->onFrontLine() || walli->onBackLine()) {
                 return;
-            } else if (walli.centerDetected()) {
-                walli.forward();
-            } else if (!walli.leftDetected()) {
-                walli.turnRight();
+            } else if (walli->centerDetected()) {
+                walli->forward();
+            } else if (!walli->leftDetected()) {
+                walli->turnRight();
             } else {
-                walli.turnLeft();
+                walli->turnLeft();
             }
         }
 };

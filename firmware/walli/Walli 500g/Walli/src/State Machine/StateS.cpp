@@ -1,35 +1,14 @@
+#include <State Machine\StateS.h>
 
-//switch to enums!
+StateS::StateS(State name) {
+    _state = name;
+    condition = false;
+}
 
-enum State {
-    OFF,
-    START,
-    ATTACK,
-    ESCAPE
-};
-class StateS {
-    private: 
-        State _state;
-        StateS* _next;
-        bool condition;
+State StateS::getState() {return _state;}
+void StateS::setNext(StateS* nextState) { _next = nextState; }
+void StateS::setCondition(bool c) {condition = c;}
+bool StateS::getCondition() { return condition; }
+StateS* StateS::getNext() {return _next;}
 
-    public: 
-        StateS() {
-            _state = OFF;
-            condition = false;
-        }
-        StateS(State name) {
-            _state = name;
-            condition = false;
-        }
-
-        void setNext(StateS* nextState) { _next = nextState; }
-
-        void setCondition(bool c) {condition = c;}
-        State getState() {return _state;}
-
-        bool getCondition() { return condition; }
-
-        StateS* getNext() {return _next;}
-};
 
