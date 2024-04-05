@@ -4,7 +4,7 @@ int LineSensor::sample() {
     int floorReading = 0;
     int samples = 0;
     for (int i = 0; i < 25; i++) {
-        floorReading += WalliSensor::read();
+        floorReading += this->read();
         samples++;
     }
     return floorReading/samples; 

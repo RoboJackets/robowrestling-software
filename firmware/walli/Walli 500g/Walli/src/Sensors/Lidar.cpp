@@ -4,7 +4,7 @@ Lidar::Lidar(int pin):WalliSensor(pin) {
 }
 
 bool Lidar::detected() {
-    return WalliSensor::read() == 1;
+    return this->read() == 1;
     //should this be zero? not sure
 }
 

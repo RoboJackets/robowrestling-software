@@ -1,11 +1,10 @@
 #include <Sensors/WalliSensor.h>
 
+//see include\Sensors\WalliSensor.h
+WalliSensor::WalliSensor(int pin) {
+    _pin = pin;
+}
 
-        WalliSensor::WalliSensor(int pin) {
-            _pin = pin;
-        }
-
-        int WalliSensor::read() {
-            //overwritten in child classes
-            return digitalRead(_pin);
-        }
+int WalliSensor::read() {
+    return digitalRead(_pin);
+}
