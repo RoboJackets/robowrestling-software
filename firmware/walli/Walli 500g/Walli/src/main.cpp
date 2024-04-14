@@ -63,39 +63,41 @@ void setup() {
 
 //while the bot goes
 void loop() {
-    //emergency case
-    if (walli->onFrontLine() || walli->onBackLine()) {
-        sc->setCurrent(escape);
-    }
-    //this runs whatever method is associated with the current state
-    switch(sc->getCurrent()) {
-        case OFF:
-            off->setCondition(true);
-        case START:
-             //set this to false
-            start->setCondition(false);
-            //open with matador (hopefully)
-            m->run();
-            //set this to true
-            start->setCondition(true);
-            break;
-        case ATTACK:
-            //set to false
-            attack->setCondition(false);
-            //what the team calls "slammy whammy"
-            slam->run();
-            //set to true
-            attack->setCondition(true);
-            break;
-        case ESCAPE:
-            //set to false
-            escape->setCondition(false);
-            //we hit a line, need to back up
-            e->run();
-            //set to true
-            escape->setCondition(true);
-            break;
-    }
-    //note that when the switch is done running, the SC will be ready to transition (hopefully)
-    sc->transition();
+    //test file
+    walli->forward();
+    // //emergency case
+    // if (walli->onFrontLine() || walli->onBackLine()) {
+    //     sc->setCurrent(escape);
+    // }
+    // //this runs whatever method is associated with the current state
+    // switch(sc->getCurrent()) {
+    //     case OFF:
+    //         off->setCondition(true);
+    //     case START:
+    //          //set this to false
+    //         start->setCondition(false);
+    //         //open with matador (hopefully)
+    //         m->run();
+    //         //set this to true
+    //         start->setCondition(true);
+    //         break;
+    //     case ATTACK:
+    //         //set to false
+    //         attack->setCondition(false);
+    //         //what the team calls "slammy whammy"
+    //         slam->run();
+    //         //set to true
+    //         attack->setCondition(true);
+    //         break;
+    //     case ESCAPE:
+    //         //set to false
+    //         escape->setCondition(false);
+    //         //we hit a line, need to back up
+    //         e->run();
+    //         //set to true
+    //         escape->setCondition(true);
+    //         break;
+    // }
+    // //note that when the switch is done running, the SC will be ready to transition (hopefully)
+    // sc->transition();
 }
