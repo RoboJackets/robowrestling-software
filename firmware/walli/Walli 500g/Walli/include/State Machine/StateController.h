@@ -5,10 +5,13 @@
 class StateController {
     StateS* current;
     public: 
+        //constructor
         StateController();
+        //switch between the current state and the next one
         void transition();
+        //manually switch to the next state
         void setCurrent(StateS* c);
-        //C:\msys64
+        //reteive the curent state
         State getCurrent();
 };
 #endif
