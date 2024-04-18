@@ -7,7 +7,7 @@
 
 //constructor
 Walli::Walli(int leftLidarPin, int centerLidarPin, int rightLidarPin, 
-                int topLeftLinePin, int topRightLinePin, 
+                int topLeftLinePin,  
                 int bottomLeftLinePin, int bottomRightLinePin,
                 int leftMotorPin1, int leftMotorPin2, 
                 int rightMotorPin1, int rightMotorPin2) {
@@ -16,7 +16,6 @@ Walli::Walli(int leftLidarPin, int centerLidarPin, int rightLidarPin,
     this->centerLidar = new Lidar(centerLidarPin);
     this->rightLidar = new Lidar(rightLidarPin);
     this->topLeftLine = new LineSensor(topLeftLinePin);
-    this->topRightLine = new LineSensor(topRightLinePin);
     this->bottomLeftLine = new LineSensor(bottomLeftLinePin);
     this->bottomRightLine = new LineSensor(bottomRightLinePin);
     this->leftMotor = new Motor(leftMotorPin1, leftMotorPin2);
@@ -55,7 +54,7 @@ void Walli::off() {
 
 //detect if either of the upper sensors are on the line
 bool Walli::onFrontLine() {
-    return topLeftLine->onLine() || topRightLine->onLine();
+    return topLeftLine->onLine();
 }
 //detect if either of the lower  sensors are on the line
 bool Walli::onBackLine() {
