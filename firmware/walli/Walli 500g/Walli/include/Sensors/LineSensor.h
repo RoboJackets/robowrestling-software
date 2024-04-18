@@ -11,6 +11,7 @@ class LineSensor : public WalliSensor {
         LineSensor(int pin);
 
         bool onLine();
+        void write(int n);
 
 };
 #endif

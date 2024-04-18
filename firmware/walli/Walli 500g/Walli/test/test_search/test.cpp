@@ -1,19 +1,14 @@
-#include "unity.h"
+#include <unity.h>
 
 void setUp(void) {
 
 }
 
-void tearDown(void){
+void tearDown(void) {
 
-}
+} 
 
-void test_search(void) {
-    TEST_ASSERT_TRUE(true);
-}
-
-int main(void) {
+int main(int argc, char **argv) {
     UNITY_BEGIN();
-    RUN_TEST(test_search);
-    return UNITY_END();
+    UNITY_END();
 }

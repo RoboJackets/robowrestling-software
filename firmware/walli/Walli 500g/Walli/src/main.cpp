@@ -1,4 +1,3 @@
-#include <Arduino.h>
 #include <SoftwareSerial.h>
 #include <Robot/Walli.h>
 #include <Strategies/Escape.cpp>
@@ -13,7 +12,6 @@
 */
 
 Walli* walli;
-StateS* start;
 StateS* attack;
 StateS* escape;
 StateS* off;
@@ -44,18 +42,16 @@ void setup() {
     //initialize Walli's control states
     sc = new StateController();
     off = new StateS(sc->getCurrent());
-    start = new StateS(State::START);
     attack = new StateS(State::ATTACK);
     escape = new StateS(State::ESCAPE);
     
-    //start -> attack <-> escape
-    start->setNext(attack);
+    //off -> attack <-> escape
+    off->setNext(attack);
     attack->setNext(escape);
     escape->setNext(attack);
 
     //objects that run the strategies
-    //m -> slam <-> escape
-    m = new Matador(walli);
+    //slam <-> escape
     slam = new SlamAttack(walli);
     e = new Escape(walli);
     Serial.begin(9600);
@@ -64,40 +60,32 @@ void setup() {
 //while the bot goes
 void loop() {
     //test file
-    walli->forward();
-    // //emergency case
-    // if (walli->onFrontLine() || walli->onBackLine()) {
-    //     sc->setCurrent(escape);
-    // }
-    // //this runs whatever method is associated with the current state
-    // switch(sc->getCurrent()) {
-    //     case OFF:
-    //         off->setCondition(true);
-    //     case START:
-    //          //set this to false
-    //         start->setCondition(false);
-    //         //open with matador (hopefully)
-    //         m->run();
-    //         //set this to true
-    //         start->setCondition(true);
-    //         break;
-    //     case ATTACK:
-    //         //set to false
-    //         attack->setCondition(false);
-    //         //what the team calls "slammy whammy"
-    //         slam->run();
-    //         //set to true
-    //         attack->setCondition(true);
-    //         break;
-    //     case ESCAPE:
-    //         //set to false
-    //         escape->setCondition(false);
-    //         //we hit a line, need to back up
-    //         e->run();
-    //         //set to true
-    //         escape->setCondition(true);
-    //         break;
-    // }
-    // //note that when the switch is done running, the SC will be ready to transition (hopefully)
-    // sc->transition();
+    //walli->forward();
+    //emergency case
+    if (walli->onFrontLine() || walli->onBackLine()) {
+        sc->setCurrent(escape);
+    }
+    //this runs whatever method is associated with the current state
+    switch(sc->getCurrent()) {
+        case OFF:
+            off->setCondition(true);
+        case ATTACK:
+            //set to false
+            attack->setCondition(false);
+            //what the team calls "slammy whammy"
+            slam->run();
+            //set to true
+            attack->setCondition(true);
+            break;
+        case ESCAPE:
+            //set to false
+            escape->setCondition(false);
+            //we hit a line, need to back up
+            e->run();
+            //set to true
+            escape->setCondition(true);
+            break;
+    }
+    //note that when the switch is done running, the SC will be ready to transition (hopefully)
+    sc->transition();
 }

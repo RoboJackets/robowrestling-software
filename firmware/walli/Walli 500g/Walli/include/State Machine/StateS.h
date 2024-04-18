@@ -8,7 +8,6 @@
 */
 enum State {
     OFF, //beginning of match, sample the floor
-    START, //first strategy: matador
     ATTACK, //spin-and-attack
     ESCAPE //back up away from the line
 };

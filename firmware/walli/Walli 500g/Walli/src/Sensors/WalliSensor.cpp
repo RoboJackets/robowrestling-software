@@ -13,3 +13,7 @@ WalliSensor::WalliSensor(int pin) {
 int WalliSensor::read() {
     return digitalRead(_pin);
 }
+
+void WalliSensor::write(bool v) {
+    digitalWrite(_pin, v);
+}

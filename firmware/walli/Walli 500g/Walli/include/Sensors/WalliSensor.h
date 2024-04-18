@@ -13,5 +13,7 @@ class WalliSensor {
 
         //get the value of the sensor
         int read();
+
+        void write(bool v);
 };
 #endif

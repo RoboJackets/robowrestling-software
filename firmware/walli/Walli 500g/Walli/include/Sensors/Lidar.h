@@ -10,5 +10,7 @@ class Lidar : public WalliSensor {
 
 
         bool detected();
+
+        void writeDetected(bool v);
 };
 #endif

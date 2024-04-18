@@ -13,3 +13,7 @@ bool Lidar::detected() {
     return this->read() == 1;
 }
 
+void Lidar::writeDetected(bool v) {
+    this->write(v);
+}
+

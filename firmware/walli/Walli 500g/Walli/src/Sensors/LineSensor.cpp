@@ -27,3 +27,7 @@ LineSensor::LineSensor(int pin):WalliSensor(pin) {
 bool LineSensor::onLine() {
     return abs(WalliSensor::read() - _base) >= _threshold;
 }
+
+void LineSensor::write(int n) {
+    this->write(abs(n - _base) >= _threshold);
+}
