@@ -37,7 +37,7 @@ int startModulePin = A13; //CHANGE THIS TO THE ACTUAL PIN
 void setup() {
     //initialize WALLI
     walli = new Walli(leftLidarPin, centerLidarPin, rightLidarPin, 
-                        topLeftLinePin, bottomLeftLinePin, bottomRightLinePin, 
+                        topLeftLinePin, bottomRightLinePin, 
                         leftMotorPin1, leftMotorPin2, rightMotorPin1, rightMotorPin2);
     //initialize Walli's control states
     sc = new StateController();
