@@ -50,18 +50,19 @@ void loop() {
       currentState.atBounds = false;
     }
     if (currentState.atBounds) {
+        Serial.println("AT BOUNDS");
     // Drive motors backwards for X amount of time
       unsigned int timestamp = millis();
 
       while (millis() - timestamp < BACKUP_TIME) {
-        mc.motor(1, 100);
-        mc.motor(2, -100);
+        mc.motor(1, -50);
+        mc.motor(2, -50);
       }
 
       timestamp = millis();
       while (millis() - timestamp < TURN_TIME) {
-        mc.motor(1, 100);
-        mc.motor(2, 100);
+        mc.motor(1, 50);
+        mc.motor(2, -50);
       }
 
       gucci.UpdateSensors();
@@ -71,7 +72,7 @@ void loop() {
 
 
     auto output = strategy.Run(currentState);
-    mc.motor(1, -output.currentRightMotorPow);
+    mc.motor(1, output.currentRightMotorPow);
     mc.motor(2, output.currentLeftMotorPow);
   } else {
     mc.stop();

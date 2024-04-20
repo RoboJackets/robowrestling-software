@@ -2,8 +2,8 @@
 #define SLAMMY_WHAMMY_H
 #include "Behaviors/Nodes/SequenceNode.h"
 #include "Behaviors/Nodes/Node.h"
-#include "../../Behaviors/Search.h"
-#include "../../Behaviors/Slam.h"
+#include "Behaviors/Search.h"
+#include "Behaviors/Slam.h"
 #include "../FigureEight/FigureEight.h"
 #include <Arduino.h>
 
@@ -13,8 +13,8 @@ template<typename T, typename U>
 class SlammyWhammy : public BT::Node<T, U> {
 public:
     SlammyWhammy(int turnSpeed, int slamSpeed) : BT::Node<T,U>(0, 0) {
-        search = new Search<T,U>(100);
-        figureEight = new FigureEight<T,U>(75, 850);
+        search = new Search<T,U>(turnSpeed);
+        figureEight = new FigureEight<T,U>(50, 850);
         slam = new Slam<T,U>(slamSpeed);
     }
 

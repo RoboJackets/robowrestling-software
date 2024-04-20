@@ -13,7 +13,7 @@ public:
     };
 
     Search(int turnSpeed) : BT::Node<T, U>(0, 0), turnSpeed(turnSpeed), state(SEARCH) {
-        
+
     }
 
     U Run(T inputs) override {
@@ -22,8 +22,8 @@ public:
         updateState(inputs);
 
         U out;
-        out.currentLeftMotorPow  = 100;
-        out.currentRightMotorPow = 0;
+        out.currentLeftMotorPow  = turnSpeed;
+        out.currentRightMotorPow = -turnSpeed;
         return out;
     }
 
@@ -36,7 +36,7 @@ public:
                 minLidarIndex = i;
             }
         }
-        state = SEARCH; 
+        state = SEARCH;
     }
 
 protected:
