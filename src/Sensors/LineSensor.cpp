@@ -1,38 +1,21 @@
 #include <Arduino.h>
-#include "../include/Sensors/SensorBaseClass.h"
+#include "../include/Sensors/LineSensor.h"
 
-class LineSensor : public SensorBaseClass {
-    private:
-        const int _lineSensorValue;
-        const int _lineSensorReceivePin;
-        const int _lineSensorThreshold;
 
-    public:
+LineSensor::LineSensor() : _value(0), _signalPin(0), _threshold(0) {}
 
-        LineSensor() : _lineSensorValue(0), _lineSensorReceivePin(0), _lineSensorThreshold(0){            
-        }
+LineSensor::LineSensor(u_int8_t signalPin) : _signalPin(signalPin), _threshold(0), _value(0) {
+    pinMode(_signalPin, INPUT);
+}
 
-        LineSensor(int sensorValue, int sensorPin, int sensorThreshold) : _lineSensorValue(sensorValue), _lineSensorReceivePin(sensorPin), _lineSensorThreshold(sensorThreshold) {
-        }
+u_int16_t LineSensor::getValue() {
+    return analogRead(_signalPin);
+}
 
-        ~LineSensor() {
-        }
+bool LineSensor::lineDetected() {
+    return analogRead(_signalPin < _threshold);
+}
 
-        int getSensorValue() {
-            return analogRead(_lineSensorReceivePin);
-        }
-
-        bool lineDetected() {
-            return _lineSensorValue > _lineSensorThreshold;
-        }
-
-        void debugPrintData() {
-            Serial.print("Line Sensor at pin: " + _lineSensorReceivePin);
-            Serial.print("====================================");
-            while (true)
-            {
-                Serial.println("Value is: " + _lineSensorValue);
-            }
-            
-        }
-};
+void LineSensor::setThreshold(u_int16_t threshold) {
+    _threshold = threshold;
+}

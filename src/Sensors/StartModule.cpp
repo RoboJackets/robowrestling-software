@@ -1,21 +1,10 @@
 #include <Arduino.h>
+#include "../include/Sensors/StartModule.h"
 
-class StartModule {
-    private:
-        int _pin;
+StartModule::StartModule(u_int8_t signalPin) : _signalPin(signalPin) {
+    pinMode(_signalPin, INPUT);
+}
 
-    public: 
-        StartModule(int pin) : _pin(pin) {
-            pinMode(_pin, INPUT);
-        }
-        
-        ~StartModule() {}
-
-        bool isActive() {
-            return digitalRead(_pin) == HIGH;
-        }
-
-        int getValue() {
-            return analogRead(_pin);
-        }
-};
+bool StartModule::isActive() {
+    return digitalRead(_signalPin) == HIGH;
+}

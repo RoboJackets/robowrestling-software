@@ -1,20 +1,12 @@
 #include <Arduino.h>
+#include "../include/Sensors/JS40.h"
 
-class JS40 {
-    private:
-        int _receivePin;
-        int baudRate;
 
-    public: 
-        JS40(int receivePin, int baudRate) : _receivePin(receivePin), baudRate(baudRate){
-            Serial.begin(baudRate);
-            pinMode(_receivePin, INPUT);
-        }
-        
-        ~JS40() {}
 
-        bool objectDetected() {
-            return digitalRead(_receivePin) == HIGH;
-        }
+JS40::JS40(u_int8_t signalPin) : _signalPin(signalPin) {
+    pinMode(_signalPin, INPUT);
+}
 
-};
+bool JS40::objectDetected() {
+    return digitalRead(_signalPin) == HIGH;
+}
