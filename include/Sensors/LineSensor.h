@@ -22,5 +22,7 @@ class LineSensor {
         bool lineDetected();
         void setThreshold(u_int16_t threshold);
         void setBlackReading(u_int16_t blackReading);
+        u_int16_t getBlackReading();
+        u_int16_t getThreshold();
 };
 

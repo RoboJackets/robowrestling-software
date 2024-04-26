@@ -13,9 +13,13 @@ u_int16_t LineSensor::getValue() {
 }
 
 bool LineSensor::lineDetected() {
-    return analogRead(_signalPin < _threshold);
+    return abs(analogRead(_signalPin) - _blackReading) > _threshold;
 }
 
 void LineSensor::setThreshold(u_int16_t threshold) {
     _threshold = threshold;
+}
+
+void LineSensor::setBlackReading(u_int16_t blackReading) {
+    _blackReading = blackReading;
 }
