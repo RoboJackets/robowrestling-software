@@ -1,18 +1,17 @@
 #include <Arduino.h>
+#include <cstdint>
 
-#ifndef START_MODULE_H
-#define START_MODULE_H
+
+#pragma once
+
 
 class StartModule {
     private:
-        int _pin;
+        u_int8_t _signalPin;
 
     public: 
-        StartModule(int pin);
-        ~StartModule();
+        StartModule(u_int8_t signalPin);
 
         bool isActive();
-        int getValue(); 
 
 };
-#endif

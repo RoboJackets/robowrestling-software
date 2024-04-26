@@ -21,9 +21,7 @@
 #define LINE_SENSOR_THRESHOLD 80
 
 
-
 // put function declarations here:
-int myFunction(int, int);
 void search();
 void moveBackwards();
 void boundaryDetectedManuever();
@@ -67,9 +65,7 @@ void setup() {
 
   Serial.begin(9600);
 
-
   delay(3000);
-  // turn90left();
 }
 
 void fullFowards() {
@@ -107,14 +103,11 @@ void loop() {
 
   if (startModuleActivated) {
 
-
       if (midDetected && !midLeftDetected && !midRightDetected) {
-
           if (isLineDetected() == true) {
-              detectionStuff();
+            detectionStuff();
           } else {
             fullFowards();
-          
           }
       } else if (midDetected && midLeftDetected && midRightDetected) {
               if (isLineDetected() == true) {
@@ -186,64 +179,19 @@ void loop() {
           }
       }
   } else {
-        stop();
-      }
+    stop();
+  }
 }
-
-
-
-
-
-
-
-  
-  //  else {
-  //   analogWrite(PIN_MOTOR_LEFT_FORWARD_PIN, 255);
-  //   analogWrite(PIN_MOTOR_LEFT_REVERSE_PIN, 255);
-  //   analogWrite(PIN_MOTOR_RIGHT_FORWARD_PIN, 255);
-  //   analogWrite(PIN_MOTOR_RIGHT_REVERSE_PIN, 255);
-  // }
-  
-
-  // delay(50);
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
 
 void detectionStuff() {
-        // analogWrite(PIN_MOTOR_LEFT_FORWARD_PIN, 255);
-        // analogWrite(PIN_MOTOR_LEFT_REVERSE_PIN, 255);
-        // analogWrite(PIN_MOTOR_RIGHT_FORWARD_PIN, 255);
-        // analogWrite(PIN_MOTOR_RIGHT_REVERSE_PIN, 255);
-        moveBackwards();
-        boundaryDetectedTurn();
+  moveBackwards();
+  boundaryDetectedTurn();
 }
 
 // put function definitions here:
-
-
 
 void moveBackwards() {
     analogWrite(PIN_MOTOR_LEFT_FORWARD_PIN, 0);
@@ -252,36 +200,7 @@ void moveBackwards() {
   analogWrite(PIN_MOTOR_RIGHT_REVERSE_PIN, 255);
 
   delay(200);
-
-  //   analogWrite(PIN_MOTOR_LEFT_FORWARD_PIN, 255);
-  // analogWrite(PIN_MOTOR_LEFT_REVERSE_PIN, 255);
-  // analogWrite(PIN_MOTOR_RIGHT_FORWARD_PIN, 255);
-  // analogWrite(PIN_MOTOR_RIGHT_REVERSE_PIN, 255);
-
-  // digitalWrite(PIN_MOTOR_LEFT_FORWARD_PIN, LOW);
-  // digitalWrite(PIN_MOTOR_LEFT_REVERSE_PIN, HIGH);
-  // digitalWrite(PIN_MOTOR_RIGHT_FORWARD_PIN, LOW);
-  // digitalWrite(PIN_MOTOR_RIGHT_REVERSE_PIN, HIGH);
-
-  // delay(150);
-
-  // digitalWrite(PIN_MOTOR_LEFT_FORWARD_PIN, HIGH);
-  // digitalWrite(PIN_MOTOR_LEFT_REVERSE_PIN, HIGH);
-
-  // digitalWrite(PIN_MOTOR_RIGHT_FORWARD_PIN, HIGH);
-  // digitalWrite(PIN_MOTOR_RIGHT_REVERSE_PIN, HIGH);
-
-
-
-
-    analogWrite(PIN_MOTOR_LEFT_FORWARD_PIN, 255);
-  analogWrite(PIN_MOTOR_LEFT_REVERSE_PIN, 255);
-  analogWrite(PIN_MOTOR_RIGHT_FORWARD_PIN, 255);
-  analogWrite(PIN_MOTOR_RIGHT_REVERSE_PIN, 255);
-
-  // stop();
-
-
+  stop();
 }
 
 void stop() {
@@ -289,7 +208,6 @@ void stop() {
   analogWrite(PIN_MOTOR_LEFT_REVERSE_PIN, 255);
   analogWrite(PIN_MOTOR_RIGHT_FORWARD_PIN, 255);
   analogWrite(PIN_MOTOR_RIGHT_REVERSE_PIN, 255);
-
 }
 
 void boundaryDetectedManuever() {
@@ -311,12 +229,7 @@ void boundaryDetectedTurn() {
 
   delay(150);
 
-  analogWrite(PIN_MOTOR_LEFT_FORWARD_PIN, 255);
-  analogWrite(PIN_MOTOR_LEFT_REVERSE_PIN, 255);
-  analogWrite(PIN_MOTOR_RIGHT_FORWARD_PIN, 255);
-  analogWrite(PIN_MOTOR_RIGHT_REVERSE_PIN, 255);
-
-  // stop();
+  stop();
 }
 
 
@@ -329,12 +242,7 @@ void turn90left() {
 
   delay(150);
 
-  analogWrite(PIN_MOTOR_LEFT_FORWARD_PIN, 255);
-  analogWrite(PIN_MOTOR_LEFT_REVERSE_PIN, 255);
-  analogWrite(PIN_MOTOR_RIGHT_FORWARD_PIN, 255);
-  analogWrite(PIN_MOTOR_RIGHT_REVERSE_PIN, 255);
-
-  // stop();
+  stop();
 }
 
 void turn90right() {
@@ -345,10 +253,5 @@ void turn90right() {
 
   delay(150);
 
-  analogWrite(PIN_MOTOR_LEFT_FORWARD_PIN, 255);
-  analogWrite(PIN_MOTOR_LEFT_REVERSE_PIN, 255);
-  analogWrite(PIN_MOTOR_RIGHT_FORWARD_PIN, 255);
-  analogWrite(PIN_MOTOR_RIGHT_REVERSE_PIN, 255);
-
-  // stop();
+  stop();
 }

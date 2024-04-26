@@ -1,22 +1,26 @@
 #include <Arduino.h>
-#include "SensorBaseClass.h"
+#include <cstdint>
 
-class LineSensor: public SensorBaseClass {
+#pragma once
+
+
+class LineSensor {
     private:
-        const int _lineSensorValue;
-        const int _lineSensorReceivePin;
-        const int _lineSensorThreshold;
+        u_int16_t _value; // max value of 65535
+        u_int16_t _threshold;
+        u_int16_t _blackReading;
+
+        // const variables can't be reassigned, useful for pins
+        // max value of 255
+        const u_int8_t _signalPin; 
 
     public:
         LineSensor();
-        LineSensor(int sensorValue, int sensorPin, int sensorThreshold);
-        ~LineSensor();
+        LineSensor(u_int8_t signalPin);
 
-        int getReceivePin();
-        int getTransmitPin();
-        int getBaudRate();
-
-        void debugPrintData();
-        int getSensorValue();
-        bool lineDetected(); 
+        u_int16_t getValue();
+        bool lineDetected();
+        void setThreshold(u_int16_t threshold);
+        void setBlackReading(u_int16_t blackReading);
 };
+
