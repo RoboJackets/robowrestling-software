@@ -90,8 +90,10 @@ void Kirbi::UpdateState() {
 */
 void Kirbi::SampleFloor() {
     unsigned int timestamp = millis();
-    //while (millis() - timestamp < 5000) {
-    for (int i = 0; i < 25; i++) {
+    // uncomment one line and comment the other out
+    // to select behavior
+    while (millis() - timestamp < 5000) { //5 second delay
+    //for (int i = 0; i < 25; i++) { //no 5 second delay
         lineSensor1->Poll();
         lineSensor2->Poll();
         int leftFloor = lineSensor1->GetDetection();

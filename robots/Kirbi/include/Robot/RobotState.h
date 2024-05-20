@@ -2,6 +2,7 @@
 #define ROBOT_STATE_H
 
 #include <array>
+#include <stdint.h>
 #include "util/Vector2.h"
 
 struct RobotState {
