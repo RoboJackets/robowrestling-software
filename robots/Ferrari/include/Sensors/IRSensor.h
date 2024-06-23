@@ -9,7 +9,7 @@ public:
     IRSensor();
     IRSensor(int sensorValue);
     int getValue();
-    void setValue();
+    void setValue(int sensorValue);
 };
 
 #endif

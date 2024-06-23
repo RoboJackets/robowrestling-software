@@ -1,4 +1,4 @@
-#include "Sensors/IRSensor.h"
+#include "sensors/IRSensor.h"
 
 IRSensor::IRSensor() {
     value = 0;
