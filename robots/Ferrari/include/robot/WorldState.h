@@ -10,7 +10,10 @@ class WorldState {
         LineSensor* lineSensor = new LineSensor[8];
         LineSensor* plowSensor = new LineSensor[3];
     public:
-        WorldState(IRSensor* irSensorArr, LineSensor* lineSensorArr, LineSensor* plowSensorArr);
+        WorldState(IRSensor *irSensorArr, LineSensor *lineSensorArr, LineSensor *plowSensorArr);
+        int getEnemyPosition();
+        int getIsOnLine();
+        bool getIsOnPlow();
 };
 
 #endif
