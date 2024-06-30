@@ -9,40 +9,68 @@ WorldState::WorldState(IRSensor *irSensorArr, LineSensor *lineSensorArr, LineSen
     irSensor = irSensorArr;
     lineSensor = lineSensorArr;
     plowSensor = plowSensorArr;
+    enemyPosition = OP_NOT_FOUND;
+    lastEnemyPosition = OP_NOT_FOUND;
 }
 
 int WorldState::getEnemyPosition() {
     if (irSensor[CENTER_IR].getValue() == 1
     && getIsOnPlow()) {
-        return OP_ON_PLOW;
+        enemyPosition = OP_ON_PLOW;
+        lastEnemyPosition = OP_ON_PLOW;
+        return enemyPosition;
     }
     if (irSensor[CENTER_IR].getValue() == 1 
     && irSensor[LEFT_IR_IN].getValue() == 1 
     && irSensor[RIGHT_IR_IN].getValue() == 1) {
-        return OP_CLOSE_CENTER;
+        enemyPosition = OP_CLOSE_CENTER;
+        lastEnemyPosition = OP_CLOSE_CENTER;
+        return enemyPosition;
     }
     if (irSensor[CENTER_IR].getValue() == 1) {
-        return OP_FAR_CENTER;
+        enemyPosition = OP_FAR_CENTER;
+        lastEnemyPosition = OP_FAR_CENTER;\
+        return enemyPosition;
     }
     if (irSensor[LEFT_IR_90].getValue() == 1) {
-        return OP_LEFT_90;
+        enemyPosition = OP_LEFT_90;
+        lastEnemyPosition = OP_LEFT_90;
+        return enemyPosition;
     }
     if (irSensor[LEFT_IR_60].getValue() == 1) {
-        return OP_LEFT_60;
+        enemyPosition = OP_LEFT_60;
+        lastEnemyPosition = OP_LEFT_60;
+        return enemyPosition;
     }
+
     if (irSensor[LEFT_IR_45].getValue() == 1) {
-        return OP_LEFT_45;
+        enemyPosition = OP_LEFT_45;
+        lastEnemyPosition = OP_LEFT_45;
+        return enemyPosition;
     }
+
     if (irSensor[RIGHT_IR_45].getValue() == 1) {
-        return OP_RIGHT_45;
+        enemyPosition = OP_RIGHT_45;
+        lastEnemyPosition = OP_RIGHT_45;
+        return enemyPosition;
     }
     if (irSensor[RIGHT_IR_60].getValue() == 1) {
-        return OP_RIGHT_60;
+        enemyPosition = OP_RIGHT_60;
+        lastEnemyPosition = OP_RIGHT_60;
+        return enemyPosition;
     }
     if (irSensor[RIGHT_IR_90].getValue() == 1) {
-        return OP_RIGHT_90;
+        enemyPosition = OP_RIGHT_90;
+        lastEnemyPosition = OP_RIGHT_90;
+        return enemyPosition;
     }
-    return -1;
+    enemyPosition = OP_NOT_FOUND;
+    return enemyPosition;
+}
+
+int WorldState::getLastEnemyPosition() {
+    getEnemyPosition();
+    return lastEnemyPosition;
 }
 
 int WorldState::getIsOnLine() {
@@ -58,6 +86,7 @@ int WorldState::getIsOnLine() {
     if (lineSensor[BOTTOM_RIGHT_1].getValue() == 1 && lineSensor[BOTTOM_RIGHT_2].getValue() == 1) {
         return ON_LINE_BOTTOM_RIGHT;
     }
+    return NOT_ON_LINE;
 }
 
 bool WorldState::getIsOnPlow() {
