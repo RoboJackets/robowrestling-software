@@ -1,10 +1,6 @@
 #include "unity.h"
 #include "Sensors/IRSensor.h"
 #include "Sensors/LineSensor.h"
-#include <stdbool.h>
-
-//IRSensor irSensor = IRSensor();
-
 
 LineSensor lineSensor = LineSensor();
 void setUp(void) {

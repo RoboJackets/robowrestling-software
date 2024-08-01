@@ -1,8 +1,8 @@
 #ifndef WORLD_STATE_H
 #define WORLD_STATE_H
 
-#include "Sensors/LineSensor.h";
-#include "Sensors/IRSensor.h";
+#include "Sensors/LineSensor.h"
+#include "Sensors/IRSensor.h"
 
 class WorldState {
     private:
