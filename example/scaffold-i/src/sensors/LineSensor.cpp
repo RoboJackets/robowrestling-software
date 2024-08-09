@@ -1,17 +1,23 @@
 #include "sensors/LineSensor.h"
 
 LineSensor::LineSensor() {
-    value = 0;
+    threshold = 500;
+    value = false;
 }
 
-LineSensor::LineSensor(int sensorValue) {
+LineSensor::LineSensor(int thresholdValue) {
+    threshold = thresholdValue;
+}
+
+LineSensor::LineSensor(bool sensorValue, int thresholdValue) {
     value = sensorValue;
+    threshold = thresholdValue;
 }
 
-int LineSensor::getValue() {
+bool LineSensor::getValue() {
     return value;
 }
 
 void LineSensor::setValue(int sensorValue) {
-    value = sensorValue;
+    value = (sensorValue < threshold) ? false : true;
 }

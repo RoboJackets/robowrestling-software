@@ -1,17 +1,17 @@
 #include "sensors/IRSensor.h"
 
 IRSensor::IRSensor() {
-    value = 0;
+    value = false;
 }
 
-IRSensor::IRSensor(int sensorValue) {
+IRSensor::IRSensor(bool sensorValue) {
     value = sensorValue;
 }
 
-int IRSensor::getValue() {
+bool IRSensor::getValue() {
     return value;
 }
 
-void IRSensor::setValue(int sensorValue) {
+void IRSensor::setValue(bool sensorValue) {
     value = sensorValue;
 }

@@ -3,12 +3,15 @@
 
 class LineSensor {
 private:
-    /*represensents sensor value*/
-    int value;
+    /**threshold for sensor to read high or low*/
+    int threshold;
+    /**represensents sensor value*/
+    bool value;
 public:
     LineSensor();
-    LineSensor(int sensorValue);
-    int getValue();
+    LineSensor(int thresholdValue);
+    LineSensor(bool sensorValue, int thresholdValue);
+    bool getValue();
     void setValue(int sensorValue);
 };
 

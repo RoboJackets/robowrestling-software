@@ -3,13 +3,13 @@
 
 class IRSensor {
 private:
-    /*represensents sensor value*/
-    int value;
+    /**represensents sensor value*/
+    bool value;
 public:
     IRSensor();
-    IRSensor(int sensorValue);
-    int getValue();
-    void setValue(int sensorValue);
+    IRSensor(bool sensorValue);
+    bool getValue();
+    void setValue(bool sensorValue);
 };
 
 #endif
