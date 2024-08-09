@@ -7,11 +7,12 @@ LineSensor::LineSensor() {
 
 LineSensor::LineSensor(int thresholdValue) {
     threshold = thresholdValue;
+    value = false;
 }
 
 LineSensor::LineSensor(bool sensorValue, int thresholdValue) {
-    value = sensorValue;
     threshold = thresholdValue;
+    value = sensorValue;
 }
 
 bool LineSensor::getValue() {
