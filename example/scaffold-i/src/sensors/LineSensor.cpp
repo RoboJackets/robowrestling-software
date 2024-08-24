@@ -5,6 +5,11 @@ LineSensor::LineSensor() {
     value = false;
 }
 
+LineSensor::LineSensor(bool sensorValue) {
+    threshold = 500;
+    value = sensorValue;
+}
+
 LineSensor::LineSensor(int thresholdValue) {
     threshold = thresholdValue;
     value = false;

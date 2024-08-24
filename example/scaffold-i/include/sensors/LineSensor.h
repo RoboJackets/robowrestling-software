@@ -9,6 +9,7 @@ private:
     bool value;
 public:
     LineSensor();
+    LineSensor(bool sensorValue);
     LineSensor(int thresholdValue);
     LineSensor(bool sensorValue, int thresholdValue);
     bool getValue();
