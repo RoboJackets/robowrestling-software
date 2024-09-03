@@ -2,7 +2,7 @@
 
 void setup(void) {
     // Serial initialization (for debugging)
-    // Pin initialization
+    // Pin initialization -- handled by the things that use them
     // State initialization
     // Sensor initialization
 }

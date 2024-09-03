@@ -5,11 +5,11 @@
 #include <utility>
 #include "Sensors/DoubleLineSensor.hpp"
 
-enum LeftRight { LEFT, RIGHT };
+enum Position { FRONT_LEFT, FRONT_RIGHT, BACK_LEFT, BACK_RIGHT };
 
 class Skibidi {
     private:
-        std::map<LeftRight, DoubleLineSensor*> line_sensors;
+        std::map<Position, DoubleLineSensor*> line_sensors;
     public:
         Skibidi();
 };
