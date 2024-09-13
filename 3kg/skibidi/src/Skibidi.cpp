@@ -17,3 +17,11 @@ Skibidi::Skibidi(bool analog_line_sensors) {
 
     this->start_module = new StartModule(1);
 }
+
+std::map<Position, DoubleLineSensor*> Skibidi::get_line_sensors() {
+    return this->line_sensors;
+}
+
+const StartModule* Skibidi::get_start_module() {
+    return this->start_module;
+}
