@@ -22,6 +22,6 @@ std::map<Position, DoubleLineSensor*> Skibidi::get_line_sensors() {
     return this->line_sensors;
 }
 
-const StartModule* Skibidi::get_start_module() {
+StartModule* Skibidi::get_start_module() {
     return this->start_module;
 }
