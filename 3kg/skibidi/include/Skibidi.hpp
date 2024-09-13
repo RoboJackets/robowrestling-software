@@ -18,6 +18,7 @@ class Skibidi {
         Skibidi(bool analog_line_sensors);
 
         std::map<Position, DoubleLineSensor*> get_line_sensors();
+        StartModule* get_start_module();
 };
 
 #endif // SKIBIDI_HPP_

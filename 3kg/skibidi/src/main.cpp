@@ -22,6 +22,13 @@ void setup(void) {
 }
 
 void loop(void) {
+    // TODO: Convert to interrupt, send Teensy
+    // into low power at end of setup() and whenever
+    // start module goes low @ match end
+    StartModule* start_module = skibidi->get_start_module();
+    if (!start_module->is_started()) {
+        return;
+    }
     // Update sensors
     // Make decision
     // Execute decision
