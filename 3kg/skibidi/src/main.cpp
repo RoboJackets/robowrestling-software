@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "Sensors/DoubleLineSensor.hpp"
 #include "Skibidi.hpp"
 
 Skibidi* skibidi;
@@ -15,8 +16,9 @@ void setup(void) {
         // This SHOULD be fine because this will occur
         // after the bot is sat on the dohyo and started
         // but BEFORE the match begins
-        for (const auto& [posn, sensor] : skibidi->get_line_sensors()) {
-            sensor->calibrate_analog();
+        std::map<Position, DoubleLineSensor*> line_sensors = skibidi->get_line_sensors();
+        for (auto it = line_sensors.begin(); it != line_sensors.end(); ++it) {
+            line_sensors[it->first]->calibrate_analog();
         }
     }
 }
