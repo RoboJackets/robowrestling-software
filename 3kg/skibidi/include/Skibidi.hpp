@@ -15,7 +15,9 @@ class Skibidi {
         std::pair<IrSensor*, IrSensor*> ir_sensors;
         StartModule* start_module;
     public:
-        Skibidi();
+        Skibidi(bool analog_line_sensors);
+
+        std::map<Position, DoubleLineSensor*> get_line_sensors();
 };
 
 #endif // SKIBIDI_HPP_
