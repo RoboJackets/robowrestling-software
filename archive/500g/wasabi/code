@@ -1,0 +1,171 @@
+#define leftMotorP 1
+#define leftMotorN 2
+#define rightMotorP 3
+#define rightMotorN 4
+#define leftEnable 5
+#define rightEnable 6
+#define leftLine 44
+#define rightLine 45
+#define leftIR 43
+#define middleLeftIR 42
+#define middleIR 41
+#define middleRightIR 40
+#define rightIR 39
+#define startModule 38
+
+void setup() {
+	pinmode(leftMotorP, OUTPUT);
+	pinmode(leftMotorN, OUTPUT);
+	pinmode(leftEnable, OUTPUT);
+	pinmode(rightMotorP, OUTPUT);
+	pinmode(rightMotorN, OUTPUT);
+	pinmode(rightEnable, OUTPUT);
+	pinmode(leftLine, INPUT);
+	pinmode(rightLine, INPUT);
+	pinmode(leftIR, INPUT);
+	pinmode(middleLeftIR, INPUT);
+	pinmode(middleIR, INPUT);
+	pinmode(middleRightIR, INPUT);
+	pinmode(rightIR, INPUT);
+	pinmode(startModule, INPUT);
+}
+
+// Sets how reflective the white is compared to black.
+int reflectiveThreshold = 400;
+
+void loop() {
+	// Starts and runs the bot;
+	if (digitalRead(startModule) == 1) {
+		digitalWrite(leftEnable, HIGH);
+		digitalWrite(rightEnable, HIGH);
+		// If it sees something, it will run into it.
+		while (digitalRead(middleIR) == 1 
+			&& digitalRead(startModule) =! 0 
+			&& !seeLine()) {
+			if (seeLine()) {
+				timer(1, "Backward");
+			}
+			if (digitalRead(middleLeftIR) == 1) {
+				timer(.5, "Left");
+			}
+			if (digitalRead(middleRightIR) == 1) {
+				timer(.5, "Right");
+			}
+			forward();
+		}
+		// If it sees nothing, it will search.
+		while (digitalRead(middleIR) == 0 
+			&& (digitalRead(leftIR) == 0 
+			&& digitalRead(rightIR) == 0
+			&& digitalRead(startModule) =! 0 
+			&& !seeLine()) {
+			seek();
+			if (digitalRead(rightIR) == 1) {
+				while (digitalRead(middleRightIR) == 0) {
+					turnR;
+				}
+			}
+			if (digitalRead(leftIR) == 1) {
+				while (digitalRead(middleLeftIR) == 0) {
+					turnL;
+				}
+			}
+		}
+		// If see line, checks for left or right boundry, backs up accordingly.
+		if (seeLine()) {
+			if (analogRead(leftLine) > reflectiveThreshold && analogRead(rightLine) > reflectiveThreshold) {
+				timer(1, "Back");
+			} else if (analogRead(leftLine) > reflectiveThreshold) {
+				timer(.25, "Left");
+				timer(1, "Back");
+			} else if (analogRead(rightLine) > reflectiveThreshold) {
+				timer(.25, "Right");
+				timer(1, "Back");
+			}
+				
+		}
+	} else {
+		digitalWrite(rightEnable,LOW);
+		digitalWrite(leftEnable,LOW);
+		digitalWrite(leftMotorP, LOW);
+		digitalWrite(leftMotorN, LOW);
+		digitalWrite(rightMotorP, LOW);
+		digitalWrite(rightMotorN, LOW);
+	}
+}
+
+// Reverse
+void back() {
+	digitalWrite(leftMotorP, LOW);
+	digitalWrite(leftMotorN, HIGH);
+	digitalWrite(rightMotorP, LOW);
+	digitalWrite(rightMotorN, HIGH);
+}
+
+// Forward
+void forward() {
+	digitalWrite(leftMotorP, HIGH);
+	digitalWrite(leftMotorN, LOW);
+	digitalWrite(rightMotorP, HIGH);
+	digitalWrite(rightMotorN, LOW);
+}
+
+// Turn Left
+void turnL() {
+	digitalWrite(leftMotorP, LOW);
+	digitalWrite(leftMotorN,HIGH);
+	digitalWrite(rightMotorP, HIGH);
+	digitalWrite(rightMotorN, LOW);
+}
+
+// Turn Right
+void turnR() {
+	digitalWrite(leftMotorP, HIGH);
+	digitalWrite(leftMotorN, LOW);
+	digitalWrite(rightMotorP, LOW);
+	digitalWrite(rightMotorN, HIGH);
+}
+
+// Goes in a snaking motion
+void seek() {
+	digitalWrite(leftMotorP, HIGH);
+	digitalWrite(leftMotorN, LOW);
+	digitalWrite(rightMotorP, LOW);
+	digitalWrite(rightMotorN, LOw);
+	delay(5);
+	timer(.25, "FORWARD");
+	digitalWrite(leftMotorP, LOW);
+	digitalWrite(leftMotorN, LOW);
+	digitalWrite(rightMotorP, HIGH);
+	digitalWrite(rightMotorN, LOW);
+}
+
+// Checks for boundry line.
+boolean seeLine() {
+	if (analogRead(leftLine) > reflectiveThreshold || analogRead(rightLine) > reflectiveThreshold) {
+		return true;
+	}
+	return false;
+}
+
+// Allows you to go in a direction of n seconds.
+void timer(int seconds, String direction) {
+	currentTime = milis();
+	//flip while and switch statement later
+	while (currentTime + (seconds * 1000) != milis()) {
+		switch (direction) {
+			case "Forward": 
+				forward();
+				break;
+			case "Backward":
+				back();
+				break();
+			case "Left":
+				turnL();
+				break();
+			case "Right":
+				turnR();
+				break;
+		}
+	}
+}
