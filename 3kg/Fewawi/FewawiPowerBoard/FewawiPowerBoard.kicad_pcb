@@ -918,7 +918,7 @@
 		(descr "SQM40P10-40L_GE3-1")
 		(tags "MOSFET (P-Channel)")
 		(property "Reference" "Q1"
-			(at 0 3.556 0)
+			(at 0 5.906 0)
 			(layer "F.SilkS")
 			(uuid "80bded90-5ce6-469a-9ac9-d7225493613b")
 			(effects
