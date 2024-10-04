@@ -25,3 +25,13 @@ std::map<Position, DoubleLineSensor*> Skibidi::get_line_sensors() {
 StartModule* Skibidi::get_start_module() {
     return this->start_module;
 }
+
+Position Skibidi::check_line_sensors() {
+    for (auto it = this->line_sensors.begin(); it != this->line_sensors.end(); ++it) {
+        if (it->second->is_sensing()) {
+            return it->first;
+        }
+    }
+
+    return Position::NONE;
+}

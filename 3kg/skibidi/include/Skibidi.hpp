@@ -7,7 +7,7 @@
 #include "Sensors/IrSensor.hpp"
 #include "Sensors/StartModule.hpp"
 
-enum Position { FRONT_LEFT, FRONT_RIGHT, BACK_LEFT, BACK_RIGHT };
+enum Position { FRONT_LEFT, FRONT_RIGHT, BACK_LEFT, BACK_RIGHT, NONE };
 
 class Skibidi {
     private:
@@ -19,6 +19,7 @@ class Skibidi {
 
         std::map<Position, DoubleLineSensor*> get_line_sensors();
         StartModule* get_start_module();
+        Position check_line_sensors();
 };
 
 #endif // SKIBIDI_HPP_

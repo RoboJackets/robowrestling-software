@@ -32,6 +32,20 @@ void loop(void) {
         return;
     }
     // Update sensors
+
+    // Checking if we hit the border somewhere
+    switch(skibidi->check_line_sensors()) {
+        case BACK_LEFT:
+        case BACK_RIGHT:
+            // Move forward
+            break;
+        case FRONT_LEFT:
+        case FRONT_RIGHT:
+            // Move backward
+            break;
+        case NONE:
+            break;
+    }
     // Make decision
     // Execute decision
 }
