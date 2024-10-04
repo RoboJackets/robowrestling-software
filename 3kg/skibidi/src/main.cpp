@@ -18,7 +18,7 @@ void setup(void) {
         // but BEFORE the match begins
         std::map<Position, DoubleLineSensor*> line_sensors = skibidi->get_line_sensors();
         for (auto it = line_sensors.begin(); it != line_sensors.end(); ++it) {
-            line_sensors[it->first]->calibrate_analog();
+            it->second->calibrate_analog();
         }
     }
 }
