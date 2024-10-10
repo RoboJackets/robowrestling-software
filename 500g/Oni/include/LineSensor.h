@@ -7,8 +7,8 @@ class LineSensor {
 
     public:
         LineSensor(int sensorValue);
-        void setValue(int sensorValue);
         int getValue();
+        void setValue(int sensorValue);
 };
 
 #endif

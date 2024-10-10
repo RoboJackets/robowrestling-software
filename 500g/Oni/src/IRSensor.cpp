@@ -1,13 +1,14 @@
-#include <LineSensor.h>
+#include <IRSensor.h>
 
-LineSensor::LineSensor(int sensorValue) {
+IRSensor::IRSensor(int sensorValue) {
     value = 0;
 }
 
-int LineSensor::getValue() {
+void IRSensor::setValue(int sensorValue) {
+    value = sensorValue;
+}
+
+int IRSensor::getValue() {
     return value;
 }
 
-void LineSensor::setValue(int sensorValue) {
-    value = sensorValue;
-}
