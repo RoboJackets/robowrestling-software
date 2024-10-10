@@ -14,3 +14,4 @@ int line_sensor :: get_value() {
 
 void line_sensor :: set_value(int new_value) { 
     value = new_value;
+}
