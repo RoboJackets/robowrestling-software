@@ -1,4 +1,4 @@
-#include "sensors/line_sensor.h"
+#include "sensors/line_sensor.hpp"
 
 line_sensor :: line_sensor() {
     value = 0;
@@ -14,4 +14,3 @@ int line_sensor :: get_value() {
 
 void line_sensor :: set_value(int new_value) { 
     value = new_value;
-}
