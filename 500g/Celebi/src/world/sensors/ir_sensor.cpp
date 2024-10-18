@@ -1,4 +1,4 @@
-#include "sensors/ir_sensor.hpp"
+#include "world/sensors/ir_sensor.hpp"
 
 ir_sensor :: ir_sensor() {
     ir_sense = false;
