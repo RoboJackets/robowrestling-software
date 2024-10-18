@@ -1,4 +1,4 @@
-#include "sensors/line_sensor.hpp"
+#include "world/sensors/line_sensor.hpp"
 
 line_sensor :: line_sensor() {
     value = 0;
