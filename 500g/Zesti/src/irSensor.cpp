@@ -1,12 +1,12 @@
-#include "irSensor.h"
+#include "include/IRSensor.h"
 
-irSensor::irSensor() : irDetected(false) {
+IRSensor::IRSensor() : irDetected(false) {
 }
 
-bool irSensor::getirSensor() {
+int IRSensor::getIRSensor() {
     return irDetected;
 }
 
-void irSensor::setirSensor(bool value) {
+void IRSensor::setIRSensor(int value) {
     irDetected = value;
 }

@@ -1,11 +1,11 @@
 #ifndef LINESENSOR_H
 #define LINESENSOR_H
 
-class lineSensor {
+class LineSensor {
     private: 
         bool lineDetected;
     public: 
-        lineSensor();
+        LineSensor();
         bool getLineSensor();
         void setLineSensor(bool value);
 };

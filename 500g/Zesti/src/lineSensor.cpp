@@ -1,12 +1,12 @@
-#include "lineSensor.h"
+#include "include/LineSensor.h"
 
-lineSensor::lineSensor() : lineDetected(false) {
+LineSensor::LineSensor() : lineDetected(false) {
 }
 
-bool lineSensor::getLineSensor() {
+bool LineSensor::getLineSensor() {
     return lineDetected;
 }
 
-void lineSensor::setLineSensor(bool value) {
+void LineSensor::setLineSensor(bool value) {
     lineDetected = value;
 }
