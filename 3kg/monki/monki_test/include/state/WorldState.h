@@ -10,6 +10,7 @@ class WorldState {
         IrSensor ir_sensors[5];
         LineSensor line_sensors[2];
     public:
+        
         int getEnemyPos();
         bool getAtBoundary();
 };
