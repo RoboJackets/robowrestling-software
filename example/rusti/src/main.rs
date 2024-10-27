@@ -1,13 +1,3 @@
-//! The starter code slowly blinks the LED and sets up
-//! USB logging. It periodically logs messages over USB.
-//!
-//! Despite targeting the Teensy 4.0, this starter code
-//! should also work on the Teensy 4.1 and Teensy MicroMod.
-//! You should eventually target your board! See inline notes.
-//!
-//! This template uses [RTIC v2](https://rtic.rs/2/book/en/)
-//! for structuring the application.
-
 #![no_std]
 #![no_main]
 
@@ -24,8 +14,6 @@ mod app {
 
     use imxrt_log as logging;
 
-    // If you're using a Teensy 4.1 or MicroMod, you should eventually
-    // change 't40' to 't41' or micromod, respectively.
     use board::t41 as my_board;
 
     use rtic_monotonics::systick::{Systick, *};

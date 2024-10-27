@@ -24,3 +24,10 @@ features = [
 # Helps with build times.
 [profile.release.build-override]
 opt-level = 0
+
+[[bin]]
+name = "rusti"
+path = "src/main.rs"
+test = false
+doctest = false
+bench = false
