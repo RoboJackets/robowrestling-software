@@ -5,6 +5,6 @@ IRSensor::IRSensor(uint8_t pin) {
 }
 
 bool IRSensor::getValue() {
-    return digitalRead(pin);
+    return digitalRead(this->pin);
 }
  

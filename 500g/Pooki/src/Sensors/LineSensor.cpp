@@ -5,6 +5,6 @@ LineSensor::LineSensor(uint8_t pin) {
 }
 
 int LineSensor::getValue() {
-    return analogRead(pin);
+    return analogRead(this->pin);
 }
  

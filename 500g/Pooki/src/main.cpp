@@ -1,18 +1,17 @@
-#include <Arduino.h>
+#include "../include/common.h"
 
-// put function declarations here:
-int myFunction(int, int);
+  bool flags_deployed = false;
+  IRSensor rightSensor(2);
+  Flags flags(9);
 
 void setup() {
   // put your setup code here, to run once:
-  int result = myFunction(2, 3);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-}
-
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
+  if (rightSensor.getValue() && !flags_deployed) {
+    flags.deploy();
+  }
+  delay(500);
 }
