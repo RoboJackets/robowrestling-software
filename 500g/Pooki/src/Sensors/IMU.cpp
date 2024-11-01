@@ -1,18 +1,24 @@
 #include "../../include/common.h"
 
-IMU::IMU() : imu(MPU6050_DEFAULT_ADDRESS, &Wire) {
-    Wire.begin();
-    imu.initialize();
+IMU::IMU() : mpu(Wire) {
+    byte status = mpu.begin(3, 0);
 }
 
-int IMU::getAngleX() {
-    return imu.getRotationX();
+void IMU::update() {
+    mpu.update();
 }
 
-int IMU::getAngleY() {
-    return imu.getRotationY();
+// roll
+float IMU::getAngleX() {
+    return mpu.getAngleX();
 }
 
-int IMU::getAngleZ() {
-    return imu.getRotationZ();
+// pitch
+float IMU::getAngleY() {
+    return mpu.getAngleY();
+}
+
+// yaw
+float IMU::getAngleZ() {
+    return mpu.getAngleZ();
 }

@@ -1,5 +1,7 @@
 #include "../../include/common.h"
 
+IRSensor::IRSensor() {}
+
 IRSensor::IRSensor(uint8_t pin) {
     this->pin = pin;
 }

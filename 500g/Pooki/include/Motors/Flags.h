@@ -5,9 +5,10 @@
 class Flags {
     private: 
         uint8_t pin;
-        Servo flag_servo;
         bool deployed;
     public:
+        Servo flag_servo;
+        Flags();
         Flags(uint8_t pin);
         void deploy();
 };
