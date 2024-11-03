@@ -1,10 +1,7 @@
-// Header file
 #ifndef IRSENSOR_H
-
-
 #define IRSENSOR_H
 
-class IRSENSOR{
+class irSensor{
     private:
         bool line;
     public:
