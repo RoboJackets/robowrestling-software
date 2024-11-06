@@ -1,11 +1,14 @@
 #ifndef IRSENSOR_H
 #define IRSENSOR_H
-class irSensor {
+
+class IRSensor {
     private: 
-        bool irDetected;
+        int value;
+
     public: 
-        irSensor();
-        bool getirSensor();
-        void setirSensor(bool value);
+        IRSensor(int sensorValue);
+        int getValue();
+        void setValue(int sensorValue);
 };
+
 #endif

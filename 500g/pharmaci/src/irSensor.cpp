@@ -1,9 +1,13 @@
-#include "irSensor.h"
-irSensor::irSensor() : irDetected(false) {
+#include <IRSensor.h>
+
+IRSensor::IRSensor(int sensorValue) {
+    value = 0;
 }
-bool irSensor::getirSensor() {
-    return irDetected;
+
+int IRSensor::getValue() {
+    return value;
 }
-void irSensor::setirSensor(bool value) {
-    irDetected = value;
+
+void IRSensor::setValue(int sensorValue) {
+    value = sensorValue;
 }
