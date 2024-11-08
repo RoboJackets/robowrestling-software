@@ -8,8 +8,7 @@ class robot_actions {
         motor_driver* left_motor;
         motor_driver* right_motor;
     public:
-        robot_actions();
-        robot_actions(motor_driver *left_ptr, motor_driver *right_ptr);
+        robot_actions(motor_driver* left_ptr, motor_driver* right_ptr);
         void brake();
         void drive_forward(int speed);
         void drive_backward(int speed);

@@ -1,11 +1,6 @@
 #include "robot/robot_actions.hpp"
 
-robot_actions :: robot_actions() {
-    left_motor = &motor_driver();
-    right_motor = &motor_driver();
-}
-
-robot_actions :: robot_actions(motor_driver *left_ptr, motor_driver *right_ptr) {
+robot_actions :: robot_actions(motor_driver* left_ptr, motor_driver* right_ptr) {
     left_motor = left_ptr;
     right_motor = right_ptr;
 }
