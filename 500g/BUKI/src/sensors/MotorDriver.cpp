@@ -27,5 +27,6 @@ int MotorDriver::getSpeed() {
 }
 
 void MotorDriver::setSpeed(int newspeed) {
+    // possibly add some kind of conversion here, or add a completely new conversion method
     speed = newspeed;
 }
