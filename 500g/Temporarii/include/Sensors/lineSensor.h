@@ -3,10 +3,10 @@
 
 class LineSensor {
     private: 
-        int sensorValue;
+        int value;
     public:
         int getValue();
-        void setLineSensor(int value)
+        void setValue(int sensorValue);
 };
 
 #endif

@@ -1,12 +1,12 @@
 #ifndef IRSENSOR_H
 #define IRSENSOR_H
 
-class irSensor{
+class IrSensor{
     private:
-        bool line;
+        bool value;
     public:
-        bool getLine();
-        bool setLine(bool input);
+        bool getValue();
+        void setValue(bool input);
 };
 
 #endif

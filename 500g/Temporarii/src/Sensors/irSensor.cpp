@@ -1,6 +1,10 @@
-#include "irSensor.h"
+#include "Sensors/irSensor.h"
 
 // type | Class Name | function name
-bool IRSENSOR::getLine() {
+bool IrSensor::getValue() {
+    return value;
+}
 
+void IrSensor::setValue(bool sensorValue) {
+    value = sensorValue;
 }
