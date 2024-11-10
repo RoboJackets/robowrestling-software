@@ -1,5 +1,9 @@
-#include "lineSensor.h"
+#include "Sensors/lineSensor.h"
 
-bool LineSensor::getLineSensor() {
-    
+int LineSensor::getValue() {
+    return value;
+}
+
+void LineSensor::setValue(int sensorValue) {
+    value = sensorValue;
 }
