@@ -5,7 +5,7 @@ ir_sensor :: ir_sensor() {
 }
 
 ir_sensor :: ir_sensor(bool init_value) {
-    ir_sense = ignit_value;
+    ir_sense = init_value;
 }
 
 bool ir_sensor :: get_ir_sense() {

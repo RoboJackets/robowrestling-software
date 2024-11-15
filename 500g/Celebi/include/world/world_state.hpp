@@ -17,14 +17,14 @@ class world_state {
         line_sensor *line_left;
         line_sensor *line_right;
 
-        line_sensor[] line_values = {line_sensor.OFF, line_sensor.RIGHT_ON, line_sensor.LEFT_ON, line_sensor.BOTH_ON}
+        line_states line_values[4] = {OFF, RIGHT_ON, LEFT_ON, BOTH_ON};
     
     public:
         world_state(line_sensor* line_left, line_sensor* line_right,
             ir_sensor* ir_left, ir_sensor* ir_mid_left, ir_sensor* ir_mid, ir_sensor* ir_mid_right, ir_sensor* ir_right);
         std::array<bool, 5> seen_by_dist_sensors();
-        // [left][right]
-        int[] line_check();
+        
+        line_states line_check();
 
         int enemy_pos();
 };

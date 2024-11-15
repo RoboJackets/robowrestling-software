@@ -12,14 +12,22 @@ world_state :: world_state(line_sensor* line_left, line_sensor* line_right,
 
     this -> line_left = line_left;
     this -> line_right = line_right;
-}int[] world_state :: line_check() {
+}
+
+line_states world_state :: line_check() {
     int l_value = line_left -> get_value();
     int r_value = line_right -> get_value();
+
+    //bit shift the left value and combine with the right value to index into the array
+    //if both = 0, bin = 0
+    //if r_value  = 1, bin = 1
+    //if l_value = 1, bin = 2
+    //if both = 1, bin = 3
     int bin = (l_value << 1) + r_value;
-    cout << bin;
-    return values[bin];
+
+    return line_values[bin];
 }
 
 int world_state :: enemy_pos() {
-
+    return 1;
 }

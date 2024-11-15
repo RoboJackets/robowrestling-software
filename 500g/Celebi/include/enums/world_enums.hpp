@@ -1,7 +1,7 @@
 #ifndef WORLD_ENUM_H
 #define WORLD_ENUM_U
 
-enum line_sensor {
+enum line_states {
     LEFT_ON,
     RIGHT_ON,
     BOTH_ON,
@@ -18,6 +18,6 @@ enum enemy_position {
     CLOSE_MID_LEFT,
     CLOSE_MID_RIGHT,
     CLOSE_RIGHT
-}
+};
 
 #endif
