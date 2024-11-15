@@ -2,15 +2,29 @@
 #define WORLD_STATE_H
 #include "Zesti/include/SENSOR/lineSensor.h"
 #include "Zesti/include/SENSOR/irSensor.h"
+#include <array>
 
 class WorldState {
 private:
-    int IrSensor[0];
-    int LineSensor[0];
+    static const int NUM_READINGS = 10;
 
+    std::array<int, NUM_READINGS> leftLineSensorReadings;
+    std::array<int, NUM_READINGS> rightLineSensorReadings;
+    int currentIndex;
+
+    LineSensor leftLineSensor;
+    LineSensor rightLineSensor;
 public:
+
+    WorldState();
+
+    bool isLeftOnBlack();
+    bool isRightOnBlack();
+    bool isBothOnBlack();
+
+    void updateSensors();
+
     int getEnemyPosition();
-    int getIsOnLine();
 };
 
-#endif // WORLD_STATE_H
+#endif
