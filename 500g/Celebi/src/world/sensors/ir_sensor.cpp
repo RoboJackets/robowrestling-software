@@ -1,11 +1,11 @@
 #include "world/sensors/ir_sensor.hpp"
-
+//software representation of the sensor
 ir_sensor :: ir_sensor() {
     ir_sense = false;
 }
 
 ir_sensor :: ir_sensor(bool init_value) {
-    ir_sense = init_value;
+    ir_sense = ignit_value;
 }
 
 bool ir_sensor :: get_ir_sense() {
