@@ -4,13 +4,13 @@
 
 class MotorDriver {
     private: 
-        bool dir;
-        double speed;
+        bool direction;
+        int speed;
     public:
         bool getDirection();
-        double getSpeed();
-        void setDirection(bool direction);
-        void setSpeed(double speed);
+        int getSpeed();
+        void setDirection(bool value);
+        void setSpeed(int value);
 };
 
 #endif
