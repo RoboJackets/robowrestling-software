@@ -1,7 +1,7 @@
 #include "WorldState.h"
 
 WorldState::WorldState(LineSensor *leftLineSensorPtr, LineSensor *rightLineSensorPtr, IRSensor *leftIRSensorPtr, IRSensor *middleIRSensorPtr, IRSensor *rightIRSensorPtr) {
-    leftLineSensor = leftLineSensorPtr;
+    leftLineSensor = leftLineSensorPtr; 
     rightLineSensor = rightLineSensorPtr;
     leftIRSensor = leftIRSensorPtr;
     middleIRSensor = middleIRSensorPtr;

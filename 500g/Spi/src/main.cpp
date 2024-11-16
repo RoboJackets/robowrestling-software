@@ -10,7 +10,7 @@
 #include "sensors/IRSensor.h"
 #include "sensors/LineSensor.h"
 #include "RobotState.h"
-#include "Timer.h"
+#include "utility/Timer.h"
 
 const int RIGHT_PWM = 6;
 const int RIGHT_DIR = 5;
