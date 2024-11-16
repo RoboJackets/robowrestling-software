@@ -13,6 +13,14 @@ class WorldState {
         int lastEnemyPosition;
     public:
         WorldState(IRSensor *irSensorArr, LineSensor *lineSensorArr, LineSensor *plowSensorArr);
+
+        // Defines the mapping between sensors and positions
+        struct SensorPosition {
+            int sensorIndex;
+            int position;
+        };
+        static const SensorPosition sensorPositions[];
+        
         int getEnemyPosition();
         int getLastEnemyPosition();
         int getIsOnLine();
