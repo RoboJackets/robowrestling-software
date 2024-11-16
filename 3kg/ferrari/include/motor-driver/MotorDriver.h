@@ -6,7 +6,7 @@ class MotorDriver {
     public:
         MotorDriver();
         MotorDriver(int speed);
-        void set_speed(int speed);
-        int get_speed();
+        void setSpeed(int speed);
+        int getSpeed();
 };
 #endif
