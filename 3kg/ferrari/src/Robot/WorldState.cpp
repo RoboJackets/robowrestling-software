@@ -1,9 +1,4 @@
 #include "robot/WorldState.h"
-#include "global-constants/EnemyPositionEnum.h"
-#include "global-constants/IRSensorPositionEnum.h"
-#include "global-constants/PlowSensorEnum.h"
-#include "global-constants/LineSensorEnum.h"
-#include "global-constants/RobotPositionEnum.h"
 
 WorldState::WorldState(IRSensor *irSensorArr, LineSensor *lineSensorArr, LineSensor *plowSensorArr) {
     irSensor = irSensorArr;
@@ -29,7 +24,7 @@ const WorldState::SensorPosition WorldState::sensorPositions[] = {
 /**
  * Sets and returns the enemy position.
  */
-int WorldState::getEnemyPosition() {
+EnemyPositionEnum WorldState::getEnemyPosition() {
 
     // Special cases
     if (irSensor[CENTER_IR].getValue() == 1 && getIsOnPlow()) {
@@ -55,7 +50,7 @@ int WorldState::getEnemyPosition() {
 /**
  * Returns where the enemy was last seen.
  */
-int WorldState::getLastEnemyPosition() {
+EnemyPositionEnum WorldState::getLastEnemyPosition() {
     getEnemyPosition();
     return lastEnemyPosition;
 }
@@ -63,7 +58,7 @@ int WorldState::getLastEnemyPosition() {
 /**
  * Returns if and where Ferrari is on the line
  */
-int WorldState::getIsOnLine() {
+RobotPositionEnum WorldState::getIsOnLine() {
     if (lineSensor[TOP_LEFT_1].getValue() == 1 && lineSensor[TOP_LEFT_2].getValue() == 1) {
         return ON_LINE_TOP_LEFT;
     }
