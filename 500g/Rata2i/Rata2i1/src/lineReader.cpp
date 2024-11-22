@@ -1,19 +1,42 @@
 #include <Arduino.h>
+#include <util.h>
+#include "lineReader.h"
 
 class lineReader {
     private:
-        int pin;
+        int value;
+        int readings[10];
+        int threshold;
+        int counter;
     public:
-        lineReader(int pin){
-            this->pin = pin;
+        lineReader(){
+            value = 0;
+            threshold = 0;
+            counter = 0;
+            for (int i = 0; i < 10; i++){
+                readings[i] = 0;
+            }
         };
-        int read(){
-            return digitalRead(this->pin);
+        lineReader(int value){
+            this->value = value;
+            threshold = 0;
+            counter = 0;
+            for (int i = 0; i < 10; i++){
+                readings[i] = 0;
+            }
         };
-        void setPin(int pin){
-            this->pin = pin;
+        int getValue(){
+            return value;
         };
-        int getPin(){
-            return this->pin;
+        void setValue(int reading){
+            readings[counter] = reading;
+            counter = (counter + 1) % 10;
+            value = util::average(readings, 10);
+        };
+        int getThreshold(){
+            return threshold;
+        };
+        void setThreshold(int threshold){
+            this->threshold = threshold;
         };
 };
