@@ -8,7 +8,7 @@ enum line_states {
     OFF
 };
 
-enum enemy_position {
+enum enemy_states {
     LEFT,
     FRONT_LEFT,
     FRONT,
@@ -16,8 +16,10 @@ enum enemy_position {
     RIGHT,
     CLOSE_LEFT,
     CLOSE_MID_LEFT,
+    CLOSE_MID,
     CLOSE_MID_RIGHT,
-    CLOSE_RIGHT
+    CLOSE_RIGHT,
+    UNKNOWN
 };
 
 #endif
