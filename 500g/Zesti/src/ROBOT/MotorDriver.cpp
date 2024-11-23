@@ -1,13 +1,4 @@
-#include "include/MotorDriver.h"
-
-MotorDriver::MotorDriver() {
-
-}
-
-MotorDriver::MotorDriver(int speedInput, bool directionInput) {
-    speed = speedInput;
-    direction = directionInput;
-}
+#include "Zesti/include/ROBOT/MotorDriver.h"
 
 int MotorDriver::getSpeed() {
     return speed;
@@ -18,7 +9,7 @@ bool MotorDriver::getDirection() {
 }
 
 void MotorDriver::setSpeed(int speedInput) {
-    speedInput = speed;
+    speed = speedInput;
 }
 
 void MotorDriver::setDirection(bool directionInput) {

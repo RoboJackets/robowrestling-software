@@ -1,5 +1,5 @@
 #include "world/sensors/line_sensor.hpp"
-
+//software representation of the sensor
 line_sensor :: line_sensor() {
     value = 0;
 }

@@ -1,9 +1,4 @@
 #include "robot/WorldState.h"
-#include "global-constants/EnemyPositionEnum.h"
-#include "global-constants/IRSensorPositionEnum.h"
-#include "global-constants/PlowSensorEnum.h"
-#include "global-constants/LineSensorEnum.h"
-#include "global-constants/RobotPositionEnum.h"
 
 WorldState::WorldState(IRSensor *irSensorArr, LineSensor *lineSensorArr, LineSensor *plowSensorArr) {
     irSensor = irSensorArr;
@@ -13,67 +8,57 @@ WorldState::WorldState(IRSensor *irSensorArr, LineSensor *lineSensorArr, LineSen
     lastEnemyPosition = OP_NOT_FOUND;
 }
 
-int WorldState::getEnemyPosition() {
-    if (irSensor[CENTER_IR].getValue() == 1
-    && getIsOnPlow()) {
-        enemyPosition = OP_ON_PLOW;
-        lastEnemyPosition = OP_ON_PLOW;
-        return enemyPosition;
+/**
+ * Mapping between sensors and enemy position
+ */
+const WorldState::SensorPosition WorldState::sensorPositions[] = {
+    {CENTER_IR, OP_FAR_CENTER},
+    {LEFT_IR_90, OP_LEFT_90},
+    {LEFT_IR_60, OP_LEFT_60},
+    {LEFT_IR_45, OP_LEFT_45},
+    {RIGHT_IR_45, OP_RIGHT_45},
+    {RIGHT_IR_60, OP_RIGHT_60},
+    {RIGHT_IR_90, OP_RIGHT_90}
+};
+
+/**
+ * Sets and returns the enemy position.
+ */
+EnemyPositionEnum WorldState::getEnemyPosition() {
+
+    // Special cases
+    if (irSensor[CENTER_IR].getValue() == 1 && getIsOnPlow()) {
+        return lastEnemyPosition = OP_ON_PLOW;
     }
     if (irSensor[CENTER_IR].getValue() == 1 
-    && irSensor[LEFT_IR_IN].getValue() == 1 
-    && irSensor[RIGHT_IR_IN].getValue() == 1) {
-        enemyPosition = OP_CLOSE_CENTER;
-        lastEnemyPosition = OP_CLOSE_CENTER;
-        return enemyPosition;
-    }
-    if (irSensor[CENTER_IR].getValue() == 1) {
-        enemyPosition = OP_FAR_CENTER;
-        lastEnemyPosition = OP_FAR_CENTER;\
-        return enemyPosition;
-    }
-    if (irSensor[LEFT_IR_90].getValue() == 1) {
-        enemyPosition = OP_LEFT_90;
-        lastEnemyPosition = OP_LEFT_90;
-        return enemyPosition;
-    }
-    if (irSensor[LEFT_IR_60].getValue() == 1) {
-        enemyPosition = OP_LEFT_60;
-        lastEnemyPosition = OP_LEFT_60;
-        return enemyPosition;
+        && irSensor[LEFT_IR_IN].getValue() == 1 
+        && irSensor[RIGHT_IR_IN].getValue() == 1) {
+        return lastEnemyPosition = OP_CLOSE_CENTER;
     }
 
-    if (irSensor[LEFT_IR_45].getValue() == 1) {
-        enemyPosition = OP_LEFT_45;
-        lastEnemyPosition = OP_LEFT_45;
-        return enemyPosition;
+    // Check each sensor
+    for (const SensorPosition sensorPos : sensorPositions) {
+        if (irSensor[sensorPos.sensorIndex].getValue() == 1) {
+            return lastEnemyPosition = sensorPos.position;
+        }
     }
 
-    if (irSensor[RIGHT_IR_45].getValue() == 1) {
-        enemyPosition = OP_RIGHT_45;
-        lastEnemyPosition = OP_RIGHT_45;
-        return enemyPosition;
-    }
-    if (irSensor[RIGHT_IR_60].getValue() == 1) {
-        enemyPosition = OP_RIGHT_60;
-        lastEnemyPosition = OP_RIGHT_60;
-        return enemyPosition;
-    }
-    if (irSensor[RIGHT_IR_90].getValue() == 1) {
-        enemyPosition = OP_RIGHT_90;
-        lastEnemyPosition = OP_RIGHT_90;
-        return enemyPosition;
-    }
-    enemyPosition = OP_NOT_FOUND;
-    return enemyPosition;
+    // No ops? D:
+    return OP_NOT_FOUND;
 }
 
-int WorldState::getLastEnemyPosition() {
+/**
+ * Returns where the enemy was last seen.
+ */
+EnemyPositionEnum WorldState::getLastEnemyPosition() {
     getEnemyPosition();
     return lastEnemyPosition;
 }
 
-int WorldState::getIsOnLine() {
+/**
+ * Returns if and where Ferrari is on the line
+ */
+RobotPositionEnum WorldState::getIsOnLine() {
     if (lineSensor[TOP_LEFT_1].getValue() == 1 && lineSensor[TOP_LEFT_2].getValue() == 1) {
         return ON_LINE_TOP_LEFT;
     }
@@ -89,9 +74,12 @@ int WorldState::getIsOnLine() {
     return NOT_ON_LINE;
 }
 
+/**
+ * Returns whether or not the enemy is on the plow.
+ */
 bool WorldState::getIsOnPlow() {
-    int plowSensorsOn;
-    for (int i = 0; i < sizeof(plowSensor) / sizeof(lineSensor); i++) { //might want to double check that sizeof(plowSensor) / sizeof(lineSensor) == 3
+    int plowSensorsOn = 0;
+    for (int i = 0; i < 3; i++) {
         if (plowSensor[i].getValue() == 1) {
             plowSensorsOn++;
         }
