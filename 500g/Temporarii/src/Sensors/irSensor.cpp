@@ -1,4 +1,4 @@
-#include "Sensors/irSensor.h"
+#include "Sensors/IrSensor.h"
 
 // type | Class Name | function name
 bool IrSensor::getValue() {
