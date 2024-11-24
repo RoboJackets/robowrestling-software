@@ -17,7 +17,9 @@ class world_state {
         line_sensor *line_left;
         line_sensor *line_right;
 
-        line_states line_values[4] = {OFF, RIGHT_ON, LEFT_ON, BOTH_ON};
+        line_states line_arr[4] = {OFF, RIGHT_ON, LEFT_ON, BOTH_ON};
+        enemy_states enemy_arr[9] = {LEFT, FRONT_LEFT, FRONT, FRONT_RIGHT, RIGHT,
+            CLOSE_MID_LEFT, CLOSE_MID, CLOSE_MID_RIGHT, UNKNOWN};
     
     public:
         world_state(line_sensor* line_left, line_sensor* line_right,

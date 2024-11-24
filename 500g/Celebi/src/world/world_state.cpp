@@ -25,9 +25,32 @@ line_states world_state :: line_check() {
     //if both = 1, bin = 3
     int bin = (l_value << 1) + r_value;
 
-    return line_values[bin];
+    return line_arr[bin];
 }
 
 int world_state :: enemy_pos() {
-    return 1;
+    bool left_value = ir_left -> get_ir_sense();
+    bool mid_left_value = ir_mid_left -> get_ir_sense();
+    bool mid_value = ir_mid -> get_ir_sense();
+    bool mid_right_value = ir_mid_right -> get_ir_sense();
+    bool right_value = ir_right -> get_ir_sense();
+
+    if (left_value) {
+        return LEFT;
+    } else if (right_value) {
+        return RIGHT;
+    } else if (mid_left_value && mid_value && mid_right_value) {
+        return CLOSE_MID;
+    } else if (mid_left_value && mid_value) {
+        return CLOSE_MID_LEFT;
+    } else if (mid_right_value && mid_value) {
+        return CLOSE_MID_RIGHT;
+    } else if (mid_left_value) {
+        return FRONT_LEFT;
+    } else if (mid_right_value) {
+        return FRONT_RIGHT;
+    } else if (mid_value) {
+        return FRONT;
+    }
+    return UNKNOWN;
 }
