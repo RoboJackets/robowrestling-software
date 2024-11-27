@@ -1,27 +1,48 @@
 #include "robot/RobotActions.h"
-//double array/degree implementation
-RobotActions :: RobotActions(MotorDriver* leftPtr, MotorDriver* rightPtr){
-    leftMotor = leftPtr;
-    rightMotor = rightPtr;
+
+RobotActions :: RobotActions(){
+    motorDriver = MotorDriver::getInstance()->getMotorDriver();
 }
 
 void RobotActions :: brake() {
-    leftMotor->setSpeed(0);
-    rightMotor->setSpeed(0);
+    motorDriver->ForwardM1(address, 0);
+    motorDriver->ForwardM2(address, 0);
+}
+
+void RobotActions :: driveForward() {
+    motorDriver->ForwardM1(address, 127);
+    motorDriver->ForwardM2(address, 127);
 }
 
 void RobotActions :: driveForward(int speed) {
-    //motorDriver implmentation
+    motorDriver->ForwardM1(address, speed);
+    motorDriver->ForwardM2(address, speed);
+}
+
+void RobotActions :: driveBackward() {
+    motorDriver->BackwardM1(address, 127);
+    motorDriver->BackwardM2(address, 127);
 }
 
 void RobotActions :: driveBackward(int speed) {
-    //motorDriver implmentation
+    motorDriver->BackwardM1(address, speed);
+    motorDriver->BackwardM2(address, speed);
 }
 
-void RobotActions :: turnLeft(int speed) {
-    //motorDriver implmentation
+void RobotActions :: spinLeft() { // idk if this is true, we may need to switch values but for now we can go with it
+    motorDriver->ForwardM1(address, 127);
+    motorDriver->BackwardM2(address, 127);
 }
 
-void RobotActions :: turnRight(int speed) {
-    //motorDriver implmentation
+void RobotActions :: spinRight() {
+    motorDriver->BackwardM1(address, 127);
+    motorDriver->ForwardM2(address, 127);
+}
+
+void RobotActions :: turnRight(int turnRadius) {
+
+}
+
+void RobotActions :: turnLeft(int turnRadius) {
+
 }

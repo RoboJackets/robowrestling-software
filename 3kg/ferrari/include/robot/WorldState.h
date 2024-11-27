@@ -11,9 +11,9 @@
 
 class WorldState {
     private:
-        IRSensor* irSensor = new IRSensor[9];
-        LineSensor* lineSensor = new LineSensor[8];
-        LineSensor* plowSensor = new LineSensor[3];
+        IRSensor *irSensor = new IRSensor[9];
+        LineSensor *lineSensor = new LineSensor[8];
+        LineSensor *plowSensor = new LineSensor[3];
         EnemyPositionEnum enemyPosition;
         EnemyPositionEnum lastEnemyPosition;
     public:
