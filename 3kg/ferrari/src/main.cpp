@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "Sensors/IRSensor.h"
 
 const int LS_RF1 = 15;
 const int LS_RF2 = 14;
@@ -32,10 +33,59 @@ const int Button1 = 4;
 const int MD_inputSignal1 = 38;
 const int MD_inputSignal2 = 39;
 
-void setup() {
+IRSensor *irSensor;
+IRSensor *lineSensor;
 
+void pollSensors();
+void debug();
+
+void setup() {
+    Serial.begin(9600);
+    irSensor = new IRSensor[9];
+    lineSensor = new IRSensor[11];
+    pinMode(DS_90R, INPUT_PULLDOWN);
+    pinMode(DS_60R, INPUT_PULLDOWN);
+    pinMode(DS_45R, INPUT_PULLDOWN);
+    pinMode(DS_FR, INPUT_PULLDOWN);
+    pinMode(DS_MID, INPUT_PULLDOWN);
+    pinMode(DS_90L, INPUT_PULLDOWN);
+    pinMode(DS_60L, INPUT_PULLDOWN);
+    pinMode(DS_45L, INPUT_PULLDOWN);
+    pinMode(DS_FL, INPUT_PULLDOWN);
 }
 
 void loop() {
+    pollSensors();
+    debug();
+}
 
+void pollSensors() {
+    irSensor[0].setValue(digitalRead(DS_90R));
+    irSensor[1].setValue(digitalRead(DS_60R));
+    irSensor[2].setValue(digitalRead(DS_45R));
+    irSensor[3].setValue(digitalRead(DS_FR));
+    irSensor[4].setValue(digitalRead(DS_MID));
+    irSensor[5].setValue(digitalRead(DS_90L));
+    irSensor[6].setValue(digitalRead(DS_60L));
+    irSensor[7].setValue(digitalRead(DS_45L));
+    irSensor[8].setValue(digitalRead(DS_FL));
+}
+
+void debug() {
+    Serial.print(millis());
+    Serial.print(": DS: ");
+    for (int i = 0; i < 9; i++) {
+        Serial.print(irSensor[i].getValue());
+    }
+    Serial.print(" RAW: ");
+    Serial.print(digitalRead(DS_90R));
+    Serial.print(digitalRead(DS_60R));
+    Serial.print(digitalRead(DS_45R));
+    Serial.print(digitalRead(DS_FR));
+    Serial.print(digitalRead(DS_MID));
+    Serial.print(digitalRead(DS_90L));
+    Serial.print(digitalRead(DS_60L));
+    Serial.print(digitalRead(DS_45L));
+    Serial.print(digitalRead(DS_FL));
+    Serial.println();
 }
