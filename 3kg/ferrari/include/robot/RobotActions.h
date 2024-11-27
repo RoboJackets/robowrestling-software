@@ -1,17 +1,21 @@
 #ifndef ROBOT_ACTIONS_H
 #define ROBOT_ACTIONS_H
-#include "motor-driver/MotorDriver.h"
+
+#include "motor-driver/MotorDriver.hpp"
+
 class RobotActions {
-    //figure out motor driver stuff
     private:
-        MotorDriver* leftMotor;
-        MotorDriver* rightMotor;
+        RoboClaw *motorDriver;
     public:
-        RobotActions(MotorDriver* leftMotor, MotorDriver* rightMotor);
+        RobotActions();
         void brake();
+        void driveForward();
         void driveForward(int speed);
-        void driveBackward(int speed); 
-        void turnRight(int speed); 
-        void turnLeft(int speed); 
+        void driveBackward(); 
+        void driveBackward(int speed);
+        void spinRight(); 
+        void spinLeft(); 
+        void turnRight(int turnSpeed);
+        void turnLeft(int turnSpeed);
 };
 #endif
