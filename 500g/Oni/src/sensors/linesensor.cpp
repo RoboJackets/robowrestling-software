@@ -1,15 +1,13 @@
-#include "../../include/sensors/linesensor.h"
+#include "../../include/sensors/LineSensor.h"
 #include <Arduino.h>
 
-class LINESENSOR{
-private:
-    int pin;
-    int value;
-
-public: 
-    int getValue() {
-        int value = digitalRead(pin);
+    LINESENSOR::LINESENSOR(int pin){
+        this->pin = pin;
+    }
+    
+    int LINESENSOR::getValue() {
+        int value = analogRead(pin);
         return value;
     }
+    
 
-};

@@ -8,6 +8,7 @@ private:
     int value;
 
 public: 
+    LINESENSOR(int pin);
     int getValue();
 
 };

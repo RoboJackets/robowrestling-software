@@ -1,18 +1,19 @@
 #include <Arduino.h>
+#include "../include/sensors/irsensor.h"
+#include "../include/sensors/LineSensor.h"
 
-// put function declarations here:
-int myFunction(int, int);
+LINESENSOR left_line(A0); // A0
+LINESENSOR right_line(A1); // A1
+
 
 void setup() {
   // put your setup code here, to run once:
-  int result = myFunction(2, 3);
+  Serial.begin(9600);
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
+  Serial.println(left_line.getValue());
+  delay(10);
 }
 
-// put function definitions here:
-int myFunction(int x, int y) {
-  return x + y;
-}

@@ -8,6 +8,7 @@ private:
     bool value;
 
 public: 
+    IRSENSOR(int pin);
     bool getValue();
 
 };
