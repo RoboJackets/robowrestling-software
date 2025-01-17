@@ -5,12 +5,23 @@
 
 class WorldState{
     private:
+        IrSensor *Mid;
+        IrSensor *MidL;
+        IrSensor *MidR;
+        IrSensor *Left;
+        IrSensor *Right;
+
+        LineSensor *TopL;
+        LineSensor *TopR;
+        LineSensor *BackL;
+        LineSensor *BackR;
+
         // Change size of the array to add multiple data points
-        IrSensor irSensor[1];
-        LineSensor lineSensor[1];
+        char irStates[5] = {"Mid", "MidL", "MidR", "Left", "Right"};
+        char lineStates[4] = {};
     public:
-        int getEnemyPosition();
-        int getIsOnLine();
+        int getEnemyPosition(IrSensor value);
+        int getIsOnLine(LineSensor value);
 };
 
 #endif
