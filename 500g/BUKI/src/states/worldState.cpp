@@ -1,0 +1,2 @@
+/* interprets binary outputs of sensors and abstracts them into more meaningful knowledge. 
+use inumerations to describe lcoations and make a mapping. cycle thropugh mapping to return location of mapping */ 
