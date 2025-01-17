@@ -3,8 +3,10 @@
 // Defining Pins
 // #define name value
 //OUTPUT Pins
-#define LEFT_MOTOR_PIN A1
-#define RIGHT_MOTOR_PIN A2
+#define LEFT_FRONT_MOTOR_PIN A1
+#define RIGHT_FRONT_MOTOR_PIN A2
+#define LEFT_REAR_MOTOR_PIN A3
+#define RIGHT_REAR_MOTOR_PIN A4
 
 //INPUT Pins
 #define TOP_LEFT_LINE_PIN A10
@@ -20,8 +22,10 @@ bool shifting = false;
 // put your setup code here, to run once:
 void setup() {
   //Defines whether a pin is input or output
-  pinMode(LEFT_MOTOR_PIN, OUTPUT);
-  pinMode(RIGHT_MOTOR_PIN, OUTPUT);
+  pinMode(LEFT_FRONT_MOTOR_PIN, OUTPUT);
+  pinMode(LEFT_REAR_MOTOR_PIN, OUTPUT);
+  pinMode(RIGHT_FRONT_MOTOR_PIN, OUTPUT);
+  pinMode(RIGHT_REAR_MOTOR_PIN, OUTPUT);
   pinMode(TOP_LEFT_LINE_PIN, INPUT);
   pinMode(TOP_RIGHT_LINE_PIN, INPUT);
   pinMode(BACK_LEFT_LINE_PIN, INPUT);
@@ -36,16 +40,22 @@ void setup() {
 void loop() {
   if (digitalRead(MID_IR_PIN) == 1) {
     //Set robot to full power (100)
-    analogWrite(LEFT_MOTOR_PIN, 100);
-    analogWrite(RIGHT_MOTOR_PIN, 100);
+    analogWrite(LEFT_FRONT_MOTOR_PIN, 100);
+    analogWrite(LEFT_REAR_MOTOR_PIN, 100);
+    analogWrite(RIGHT_FRONT_MOTOR_PIN, 100);
+    analogWrite(RIGHT_REAR_MOTOR_PIN, 100);
   } else {
     if (shifting) {
-      analogWrite(LEFT_MOTOR_PIN, 50);
-      analogWrite(RIGHT_MOTOR_PIN, 80);
+      analogWrite(LEFT_FRONT_MOTOR_PIN, 50);
+      analogWrite(LEFT_REAR_MOTOR_PIN, 50);
+      analogWrite(RIGHT_FRONT_MOTOR_PIN, 80);
+      analogWrite(RIGHT_REAR_MOTOR_PIN, 80);
       shifting = false;
     } else {
-      analogWrite(LEFT_MOTOR_PIN, 80);
-      analogWrite(RIGHT_MOTOR_PIN, 50);
+      analogWrite(LEFT_FRONT_MOTOR_PIN, 80);
+      analogWrite(LEFT_REAR_MOTOR_PIN, 80);
+      analogWrite(RIGHT_FRONT_MOTOR_PIN, 50);
+      analogWrite(RIGHT_REAR_MOTOR_PIN, 50);
       shifting = true;
     }
   }
