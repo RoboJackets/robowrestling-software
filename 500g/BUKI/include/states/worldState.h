@@ -1,10 +1,17 @@
 #ifndef WORLD_STATE_H_
 #define WORLD_STATE_H_
 
-class WorldState {
+#include "sensors/LINEsensor.h"
+#include "sensors/IRsensor.h"
 
+class WorldState {
+    private:
+        LINEsensor *lnsn[3];
+        IRsensor *irsn[4];
     public:
         WorldState();
+        short isNearEdge();
+        short enemyDistance();
 };
 
 #endif
