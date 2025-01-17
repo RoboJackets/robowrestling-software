@@ -26,3 +26,11 @@ if (robot detected in middle) {
 }
 */
 
+#include <RobotState.h>
+
+RobotState::RobotState(WorldState *worldStatePtr, RobotActions *robotActionsPtr) {
+    worldState = worldStatePtr;
+    robotActions = robotActionsPtr;
+}
+
+
