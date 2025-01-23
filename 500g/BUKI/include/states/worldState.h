@@ -12,7 +12,6 @@ class WorldState {
         WorldState();
         short isNearEdge();
         short enemyDistance();
-        void apocalypse();
         void readSensors();
 };
 
