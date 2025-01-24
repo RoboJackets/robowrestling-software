@@ -7,6 +7,7 @@ enum EnemyPositions {
     MidR,
     Left,
     Right,
+    SEND,
     NoOp
 };
 

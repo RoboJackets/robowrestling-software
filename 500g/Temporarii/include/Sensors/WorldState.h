@@ -6,19 +6,9 @@
 
 class WorldState{
     private:
-        IrSensor *Mid;
-        IrSensor *MidL;
-        IrSensor *MidR;
-        IrSensor *Left;
-        IrSensor *Right;
-
-        LineSensor *TopL;
-        LineSensor *TopR;
-        LineSensor *BackL;
-        LineSensor *BackR;
-
-        // Change size of the array to add multiple data points
+        // IrSensor Array = {Left, MidLeft, Mid, MidRight, Right}
         IrSensor *irStates = new IrSensor[5];
+        // LineSensor Array = {FrontLeft, BackLeft, FrontRight, BackRight};
         LineSensor *lineStates = new LineSensor[4];
         EnemyPositions currPosition;
     public:
