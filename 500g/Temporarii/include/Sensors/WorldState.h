@@ -1,5 +1,6 @@
 #include "Sensors/irSensor.cpp"
 #include "Sensors/lineSensor.cpp"
+#include "Enumerations/EnemyPositions.hpp"
 #ifndef WORLDSTATE_H
 #define WORLDSTATE_H
 
@@ -17,11 +18,13 @@ class WorldState{
         LineSensor *BackR;
 
         // Change size of the array to add multiple data points
-        char irStates[5] = {"Mid", "MidL", "MidR", "Left", "Right"};
-        char lineStates[4] = {};
+        IrSensor *irStates = new IrSensor[5];
+        LineSensor *lineStates = new LineSensor[4];
+        EnemyPositions currPosition;
     public:
-        int getEnemyPosition(IrSensor value);
-        int getIsOnLine(LineSensor value);
+        WorldState(IrSensor *ir, LineSensor *line);
+        EnemyPositions getEnemyPosition();
+        bool getIsOnLine();
 };
 
 #endif

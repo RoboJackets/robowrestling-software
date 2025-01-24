@@ -2,11 +2,16 @@
 #include <Sensors/lineSensor.h>
 #include "Sensors/WorldState.h"
 
-int WorldState::getEnemyPosition() {
-    //Returns an integer value of where the enemy is
+WorldState::WorldState(IrSensor *ir, LineSensor *line) {
+    irStates = ir;
+    lineStates = line;
 }
 
-int WorldState::getIsOnLine() {
-    //Returns an integer value of distance to Line
+EnemyPositions WorldState::getEnemyPosition() {
+    return NoOp;
+}
+
+bool WorldState::getIsOnLine() {
+    return 0;
 }
 
