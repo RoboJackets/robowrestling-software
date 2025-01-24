@@ -11,7 +11,7 @@ class WorldState {
     public:
         WorldState();
         short isNearEdge();
-        short enemyDistance();
+        int enemyDistance();
         void readSensors();
 };
 
