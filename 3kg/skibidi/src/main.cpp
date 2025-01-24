@@ -12,15 +12,7 @@ void setup(void) {
     skibidi = new Skibidi(analog_line_sensors);
 
     // Sensor initialization
-    if (analog_line_sensors) {
-        // This SHOULD be fine because this will occur
-        // after the bot is sat on the dohyo and started
-        // but BEFORE the match begins
-        std::map<Position, DoubleLineSensor*> line_sensors = skibidi->get_line_sensors();
-        for (auto it = line_sensors.begin(); it != line_sensors.end(); ++it) {
-            it->second->calibrate_analog();
-        }
-    }
+    skibidi->initialize_sensors(analog_line_sensors);
 }
 
 void loop(void) {
@@ -31,21 +23,18 @@ void loop(void) {
     if (!start_module->is_started()) {
         return;
     }
+
     // Update sensors
+    skibidi->update_state();
 
     // Checking if we hit the border somewhere
-    switch(skibidi->check_line_sensors()) {
-        case BACK_LEFT:
-        case BACK_RIGHT:
-            // Move forward
-            break;
-        case FRONT_LEFT:
-        case FRONT_RIGHT:
-            // Move backward
-            break;
-        case NONE:
-            break;
+    struct State* state = skibidi->get_state();
+    if (state->active_line_sensors[Position::FRONT_LEFT] || state->active_line_sensors[Position::FRONT_RIGHT]) {
+        // Emergency reverse
+    } else if (state->active_line_sensors[Position::BACK_LEFT] || state->active_line_sensors[Position::BACK_RIGHT]) {
+        // Emergency forward
     }
+
     // Make decision
     // Execute decision
 }
