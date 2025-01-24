@@ -9,7 +9,7 @@ class motorDriver {
         void setSpeed(int speed);
         void setDirection(int direction);
         void stop();
-        void getSpeed();
-        void getDirection();
+        int getSpeed();
+        bool getDirection();
 };
 #endif
