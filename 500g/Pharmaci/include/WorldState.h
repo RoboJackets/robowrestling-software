@@ -3,11 +3,12 @@
 
 #include "IRSensor.h"
 #include "LineSensor.h"
+#include "Position.h"
 
 class WorldState {
 private:
-    LineSensor *frontLineSensor;
-    LineSensor *backLineSensor;
+    LineSensor *leftLineSensor;
+    LineSensor *rightLineSensor;
 
     IRSensor *leftIRSensor;
     IRSensor *leftMiddleIRSensor;
@@ -16,10 +17,11 @@ private:
     IRSensor *rightIRSensor;
 
 public:
-    WorldState(LineSensor *frontLineSensorPointer, LineSensor *backLineSensorPointer,
+    WorldState(LineSensor *leftLineSensorPointer, LineSensor *rightLineSensorPointer,
         IRSensor *leftIRSensorPointer, IRSensor *leftMiddleIRSensorPointer, IRSensor
             *middleIRSensorPointer, IRSensor *rightMiddleIRSensorPointer, IRSensor *rightIRSensorPointer);
-
+    Position getEnemyPosition();
+    Position getSelfPosition();
 };
 
 #endif
