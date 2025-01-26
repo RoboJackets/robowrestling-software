@@ -1,18 +1,18 @@
 #include "Robot/robotActions.hpp"
 
 void RobotActions::Forward() {
-    motorDriver.setDirection(true);
+    motorDriver.setDirection(0);
     motorDriver.setSpeed(10);
 }
 void RobotActions::Backwards() {
-    motorDriver.setDirection(false);
-    motorDriver.setSpeed(-10);
+    motorDriver.setDirection(180);
+    motorDriver.setSpeed(10);
 }
 void RobotActions::Left() {
-    motorDriver.setDirection(true);
+    motorDriver.setDirection(-90);
     motorDriver.setSpeed(10);
 }
 void RobotActions::Right() {
-    motorDriver.setDirection(true);
+    motorDriver.setDirection(90);
     motorDriver.setSpeed(10);
 }

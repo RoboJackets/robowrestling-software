@@ -1,13 +1,13 @@
 #include "Robot/motorDriver.hpp"
 
 // type | Class Name | function name
-bool MotorDriver::getDirection() {
+int MotorDriver::getDirection() {
     return direction;
 }
 int MotorDriver::getSpeed() {
     return speed;
 }
-void MotorDriver::setDirection(bool value) {
+void MotorDriver::setDirection(int value) {
     direction = value;
 }
 void MotorDriver::setSpeed(int value) {

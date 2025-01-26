@@ -69,4 +69,6 @@ void calcState() {
 }
 void writeMotors() {
   // Write to Motors digitalWrite()
+  digitalWrite(LEFT_FRONT_MOTOR_PIN);
+
 }
