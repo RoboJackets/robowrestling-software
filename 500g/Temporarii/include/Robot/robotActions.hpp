@@ -5,8 +5,9 @@
 
 class RobotActions {
     private: 
-        MotorDriver motorDriver;
+        MotorDriver *motorDriver;
     public:
+        RobotActions(MotorDriver *);
         void Forward();
         void Backwards();
         void Left();

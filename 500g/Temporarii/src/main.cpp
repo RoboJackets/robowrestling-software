@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include "Sensors/WorldState.h"
+#include "Sensors/robotActions.hpp"
 
 // Defining Pins
 // #define name value
@@ -22,6 +23,9 @@
 
 IrSensor *irSensor;
 LineSensor *lineSensor;
+WorldState world;
+
+RobotActions action;
 
 void setup() {
   // Defines whether a pin is input or output
@@ -43,7 +47,9 @@ void setup() {
   irSensor = new IrSensor[5];
   lineSensor = new LineSensor[4];
   // World State
-  WorldState world = WorldState(irSensor, lineSensor);
+  world = WorldState(irSensor, lineSensor);
+  // Robot Actions
+  action = RobotActions();
 }
 // put your main code here, to run repeatedly:
 void loop() {
@@ -69,6 +75,6 @@ void calcState() {
 }
 void writeMotors() {
   // Write to Motors digitalWrite()
-  digitalWrite(LEFT_FRONT_MOTOR_PIN);
+  digitalWrite(LEFT_FRONT_MOTOR_PIN, 0);
 
 }
