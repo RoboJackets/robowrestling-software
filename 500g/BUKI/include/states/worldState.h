@@ -4,6 +4,14 @@
 #include "sensors/LINEsensor.h"
 #include "sensors/IRsensor.h"
 
+enum Edge {
+    LEFT,
+    RIGHT,
+    FRONT,
+    BACK,
+    SAFE
+};
+
 // add enumerations and integrate with functions. Ex: enumeration: EnemyPosition, and then EnemyPosition getEnemyPosition
 
 class WorldState {
