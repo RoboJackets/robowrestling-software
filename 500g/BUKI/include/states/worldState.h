@@ -4,6 +4,14 @@
 #include "sensors/LINEsensor.h"
 #include "sensors/IRsensor.h"
 
+enum Edge {
+    LEFT,
+    RIGHT,
+    FRONT,
+    BACK,
+    SAFE
+};
+
 class WorldState {
     private:
         LINEsensor** lnsn;
