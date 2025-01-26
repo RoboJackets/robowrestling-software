@@ -1,6 +1,7 @@
 #include "Sensors/irSensor.cpp"
 #include "Sensors/lineSensor.cpp"
 #include "Enumerations/EnemyPositions.hpp"
+#include "Enumerations/OnLine.hpp"
 #ifndef WORLDSTATE_H
 #define WORLDSTATE_H
 
@@ -13,8 +14,9 @@ class WorldState{
         EnemyPositions currPosition;
     public:
         WorldState(IrSensor *ir, LineSensor *line);
+        WorldState();
         EnemyPositions getEnemyPosition();
-        bool getIsOnLine();
+        OnLine getIsOnLine();
 };
 
 #endif

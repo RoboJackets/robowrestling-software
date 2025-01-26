@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "Sensors/WorldState.h"
 
 // Defining Pins
 // #define name value
@@ -18,10 +19,9 @@
 #define MIDRIGHT_IR_PIN A16
 #define LEFT_IR_PIN A17
 #define RIGHT_IR_PIN A0
-bool shifting = false;
 // put your setup code here, to run once:
 void setup() {
-  //Defines whether a pin is input or output
+  // Defines whether a pin is input or output
   pinMode(LEFT_FRONT_MOTOR_PIN, OUTPUT);
   pinMode(LEFT_REAR_MOTOR_PIN, OUTPUT);
   pinMode(RIGHT_FRONT_MOTOR_PIN, OUTPUT);
@@ -35,28 +35,30 @@ void setup() {
   pinMode(MIDRIGHT_IR_PIN, INPUT);
   pinMode(LEFT_IR_PIN, INPUT);
   pinMode(RIGHT_IR_PIN, INPUT);
+  // IrSensor Arrays
+  WorldState world = WorldState();
 }
 // put your main code here, to run repeatedly:
 void loop() {
-  if (digitalRead(MID_IR_PIN) == 1) {
-    //Set robot to full power (100)
-    analogWrite(LEFT_FRONT_MOTOR_PIN, 100);
-    analogWrite(LEFT_REAR_MOTOR_PIN, 100);
-    analogWrite(RIGHT_FRONT_MOTOR_PIN, 100);
-    analogWrite(RIGHT_REAR_MOTOR_PIN, 100);
-  } else {
-    if (shifting) {
-      analogWrite(LEFT_FRONT_MOTOR_PIN, 50);
-      analogWrite(LEFT_REAR_MOTOR_PIN, 50);
-      analogWrite(RIGHT_FRONT_MOTOR_PIN, 80);
-      analogWrite(RIGHT_REAR_MOTOR_PIN, 80);
-      shifting = false;
-    } else {
-      analogWrite(LEFT_FRONT_MOTOR_PIN, 80);
-      analogWrite(LEFT_REAR_MOTOR_PIN, 80);
-      analogWrite(RIGHT_FRONT_MOTOR_PIN, 50);
-      analogWrite(RIGHT_REAR_MOTOR_PIN, 50);
-      shifting = true;
-    }
-  }
+  pollSensors();
+  calcState();
+  writeMotors();
+}
+
+void pollSensors() {
+  analogRead(TOP_LEFT_LINE_PIN);
+  analogRead(TOP_RIGHT_LINE_PIN);
+  analogRead(BACK_LEFT_LINE_PIN);
+  analogRead(BACK_RIGHT_LINE_PIN);
+  digitalRead(MID_IR_PIN);
+  digitalRead(MIDLEFT_IR_PIN);
+  digitalRead(MIDRIGHT_IR_PIN);
+  digitalRead(LEFT_IR_PIN);
+  digitalRead(RIGHT_IR_PIN);
+}
+void calcState() {
+  // Calculate States
+}
+void writeMotors() {
+  // Write to Motors digitalWrite()
 }
