@@ -19,7 +19,10 @@
 #define MIDRIGHT_IR_PIN A16
 #define LEFT_IR_PIN A17
 #define RIGHT_IR_PIN A0
-// put your setup code here, to run once:
+
+IrSensor *irSensor;
+LineSensor *lineSensor;
+
 void setup() {
   // Defines whether a pin is input or output
   pinMode(LEFT_FRONT_MOTOR_PIN, OUTPUT);
@@ -35,8 +38,12 @@ void setup() {
   pinMode(MIDRIGHT_IR_PIN, INPUT);
   pinMode(LEFT_IR_PIN, INPUT);
   pinMode(RIGHT_IR_PIN, INPUT);
-  // IrSensor Arrays
-  WorldState world = WorldState();
+
+  // Sensors
+  irSensor = new IrSensor[5];
+  lineSensor = new LineSensor[4];
+  // World State
+  WorldState world = WorldState(irSensor, lineSensor);
 }
 // put your main code here, to run repeatedly:
 void loop() {
@@ -46,15 +53,16 @@ void loop() {
 }
 
 void pollSensors() {
-  analogRead(TOP_LEFT_LINE_PIN);
-  analogRead(TOP_RIGHT_LINE_PIN);
-  analogRead(BACK_LEFT_LINE_PIN);
-  analogRead(BACK_RIGHT_LINE_PIN);
-  digitalRead(MID_IR_PIN);
-  digitalRead(MIDLEFT_IR_PIN);
-  digitalRead(MIDRIGHT_IR_PIN);
-  digitalRead(LEFT_IR_PIN);
-  digitalRead(RIGHT_IR_PIN);
+  lineSensor[0].setValue(analogRead(TOP_LEFT_LINE_PIN));
+  lineSensor[1].setValue(analogRead(BACK_LEFT_LINE_PIN));
+  lineSensor[2].setValue(analogRead(TOP_RIGHT_LINE_PIN));
+  lineSensor[3].setValue(analogRead(BACK_RIGHT_LINE_PIN));
+
+  irSensor[0].setValue(digitalRead(LEFT_IR_PIN));
+  irSensor[1].setValue(digitalRead(MIDLEFT_IR_PIN));
+  irSensor[2].setValue(digitalRead(MID_IR_PIN));
+  irSensor[3].setValue(digitalRead(MIDRIGHT_IR_PIN));
+  irSensor[4].setValue(digitalRead(RIGHT_IR_PIN));
 }
 void calcState() {
   // Calculate States
