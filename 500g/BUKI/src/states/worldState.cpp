@@ -6,13 +6,9 @@ use inumerations to describe lcoations and make a mapping. cycle thropugh mappin
 #include "states/worldState.h"
 #include <cstdlib>
 
-WorldState::WorldState() {
-    for (int i = 0; i < 3; i++) {
-        lnsn[i] = new LINEsensor();
-    }
-    for (int i = 0; i < 4; i++) {
-        irsn[i] = new IRsensor();
-    }
+WorldState::WorldState(LINEsensor* linesensors[], IRsensor* irsensors[]) {
+    lnsn = linesensors;
+    irsn = irsensors;
     
 }
 void WorldState::readSensors() {

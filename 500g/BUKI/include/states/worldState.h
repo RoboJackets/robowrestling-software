@@ -6,10 +6,10 @@
 
 class WorldState {
     private:
-        LINEsensor *lnsn[3];
-        IRsensor *irsn[4];
+        LINEsensor** lnsn;
+        IRsensor** irsn;
     public:
-        WorldState();
+        WorldState(LINEsensor*[], IRsensor*[]);
         short isNearEdge();
         int enemyDistance();
         void readSensors();
