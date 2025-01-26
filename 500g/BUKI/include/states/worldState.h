@@ -4,16 +4,18 @@
 #include "sensors/LINEsensor.h"
 #include "sensors/IRsensor.h"
 
+// add enumerations and integrate with functions. Ex: enumeration: EnemyPosition, and then EnemyPosition getEnemyPosition
+
 class WorldState {
     private:
-        LINEsensor** lnsn;
+        LINEsensor** lnsn;          // pass array of pointers for IR and Line sensors
         IRsensor** irsn;
     public:
         WorldState(LINEsensor*[], IRsensor*[]);
         short isNearEdge();
         int enemyDistance();
         void readSensors();
-        void enemyPos(int*);
+        void enemyPos(int*);    
 };
 
 #endif
