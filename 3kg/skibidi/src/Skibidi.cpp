@@ -14,6 +14,7 @@ Skibidi::Skibidi(bool analog_line_sensors) {
     }
 
     this->ir_sensors = std::make_pair(new IrSensor(1), new IrSensor(1));
+    this->motor_driver = new MotorDriver(std::make_pair(1, 2), std::make_pair(1, 2));
 
     this->start_module = new StartModule(1);
 }

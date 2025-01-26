@@ -3,6 +3,7 @@
 
 #include <map>
 #include <utility>
+#include "MotorDriver.hpp"
 #include "Sensors/DoubleLineSensor.hpp"
 #include "Sensors/IrSensor.hpp"
 #include "Sensors/StartModule.hpp"
@@ -14,14 +15,16 @@ struct State {
     // can be used instead of an if-elseif
     std::map<Position, bool> active_line_sensors;
     std::pair<bool, bool> active_ir_sensors;
-    // Stuff here for current behavior,
-    // root behavior (? - can just do circ. linked list), etc
+
+    DrivingState driving_state;
+    int motor_speed;
 };
 
 class Skibidi {
     private:
         std::map<Position, DoubleLineSensor*> line_sensors;
         std::pair<IrSensor*, IrSensor*> ir_sensors;
+        MotorDriver* motor_driver;
         StartModule* start_module;
 
         void check_line_sensors(State* state);
