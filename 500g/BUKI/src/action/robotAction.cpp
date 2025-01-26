@@ -1,46 +1,45 @@
 #include "action/robotAction.h"
 
-RobotAction::RobotAction() {
+RobotAction::RobotAction(MotorDriver* leftMotorParameter, MotorDriver* rightMotorParameter) {
     // initialize empty motor drivers
-
+    leftMotor = leftMotorParameter;
+    rightMotor = rightMotorParameter;           
 }
 
-void RobotAction::turnLeft(MotorDriver** motors) {
+void RobotAction::turnLeft() {
     // call setDir and setSpeed
-    motors[0]->setDir(true);
-    motors[1]->setDir(false);
-    motors[0]->setSpeed(125);
-    motors[1]->setSpeed(125);
+    leftMotor->setDir(false);           // leftMotor is a pointer to an object created in main, so use "->" to set direction. If it was a normal object (not a pointer), use leftMotor.setDir(false)
+    rightMotor->setDir(true);
+    rightMotor->setSpeed(125);
 }
 
-void RobotAction::turnRight(MotorDriver** motors) {
+void RobotAction::turnRight() {
     // call setDir and setSpeed
-    motors[0]->setDir(false);
-    motors[1]->setDir(true);
-    motors[0]->setSpeed(125);
-    motors[1]->setSpeed(125);
+    leftMotor->setDir(true);
+    rightMotor->setDir(false);
+    leftMotor->setSpeed(125);
 }
 
-void RobotAction::go(MotorDriver** motors) {
+void RobotAction::go() {
     // call setDir and setSpeed
-    motors[0]->setDir(true);
-    motors[1]->setDir(true);
-    motors[0]->setSpeed(125);
-    motors[1]->setSpeed(125);
+    leftMotor->setDir(true);
+    rightMotor->setDir(true);
+    leftMotor->setSpeed(125);
+    rightMotor->setSpeed(125);
 }
 
-void RobotAction::GOGOGO(MotorDriver** motors) {
+void RobotAction::GOGOGO() {
     // call setDir and setSpeed
-    motors[0]->setDir(true);
-    motors[1]->setDir(true);
-    motors[0]->setSpeed(255);
-    motors[1]->setSpeed(255);
+    leftMotor->setDir(true);
+    rightMotor->setDir(true);
+    leftMotor->setSpeed(255);
+    rightMotor->setSpeed(255);
 }
 
-void RobotAction::reverse(MotorDriver** motors) {
+void RobotAction::reverse() {
     // call setDir and setSpeed
-    motors[0]->setDir(false);
-    motors[1]->setDir(false);
-    motors[0]->setSpeed(125);
-    motors[1]->setSpeed(125);
+    leftMotor->setDir(false);
+    rightMotor->setDir(false);
+    leftMotor->setSpeed(125);
+    rightMotor->setSpeed(125);
 }

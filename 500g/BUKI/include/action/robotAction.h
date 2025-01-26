@@ -5,14 +5,15 @@
 
 class RobotAction {
     private:
-    
+        MotorDriver* leftMotor;     // pointers to left and right motor drivers
+        MotorDriver* rightMotor;
     public:
-        RobotAction();
-        void turnLeft(MotorDriver** motors);
-        void turnRight(MotorDriver** motors);
-        void go(MotorDriver** motors);
-        void GOGOGO(MotorDriver** motors);
-        void reverse(MotorDriver** motors);
+        RobotAction(MotorDriver* leftMotorParameter, MotorDriver* rightMotorParameter);   // Constructor (creates specific instances of parameters)
+        void turnLeft();
+        void turnRight();
+        void go();
+        void GOGOGO();
+        void reverse();
 };
 
 #endif

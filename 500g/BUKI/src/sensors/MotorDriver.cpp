@@ -1,32 +1,32 @@
 #include "sensors/MotorDriver.h"
 
-MotorDriver::MotorDriver() {
+MotorDriver::MotorDriver() {        // Constructor, initializes speed and direction to 0
     speed = 0;
     dir = 0;
 }
 
-MotorDriver::MotorDriver(int init_speed) {
+MotorDriver::MotorDriver(int init_speed) {      // Constructor overloading (just fvor flexibility)
     speed = init_speed;
 }
 
-MotorDriver::MotorDriver(int init_speed, int init_dir) {
+MotorDriver::MotorDriver(int init_speed, int init_dir) {    // Constructor overloading (just for flexibility)
     speed = init_speed;
     dir = init_dir;
 }
 
-bool MotorDriver::getDir() {
+bool MotorDriver::getDir() {    // stores dir in class
     return dir;
 }
 
-void MotorDriver::setDir(bool newdir) {
+void MotorDriver::setDir(bool newdir) {     // sets new dir in class
     dir = newdir;
 }
 
-int MotorDriver::getSpeed() {
+int MotorDriver::getSpeed() {   // stores speed in class
     return speed;
 }
 
-void MotorDriver::setSpeed(int newspeed) {
+void MotorDriver::setSpeed(int newspeed) {      // sets new speed in class
     // possibly add some kind of conversion here, or add a completely new conversion method
     speed = newspeed;
 }
