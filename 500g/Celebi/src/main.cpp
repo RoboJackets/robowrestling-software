@@ -7,8 +7,8 @@ const int LEFT_DIR = 7;
 const int LEFT_IR = 2;
 const int MIDDLE_IR = 3;
 const int RIGHT_IR = 4;
-const int LEFT_LINE = A8;
-const int RIGHT_LINE = A9;
+const int LEFT_LINE = A6;
+const int RIGHT_LINE = A7;
 const int START_PIN = 34;
 
 int left = 0;
