@@ -28,7 +28,7 @@ class world_state {
         
         line_states line_check();
 
-        int enemy_pos();
+        enemy_states enemy_pos();
 };
 
 #endif
