@@ -13,6 +13,7 @@ class WorldState {
         short isNearEdge();
         int enemyDistance();
         void readSensors();
+        void enemyPos(int*);
 };
 
 #endif

@@ -44,3 +44,19 @@ int WorldState::enemyDistance() {
     }
     return -1;
 }
+
+/** 
+* @param list list of sensors, will update list based on which sensors are detecting the enemy
+*/
+void WorldState::enemyPos(int* list) {
+    if (irsn[0]->isDetecting()) {
+        list[0] = 1;
+    } else if (irsn[1]->isDetecting()) {
+        list[1] = 1;
+    } else if (irsn[2]->isDetecting()) {
+        list[2] = 1;
+    } else if (irsn[3]->isDetecting()) {
+        list[3] = 1;
+    }
+    return;
+}
