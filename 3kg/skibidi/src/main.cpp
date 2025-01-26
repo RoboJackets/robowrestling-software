@@ -1,6 +1,7 @@
 #include "Skibidi.hpp"
 
 Skibidi* skibidi;
+State state;
 
 void setup(void) {
     // Serial initialization (for debugging)
@@ -8,6 +9,15 @@ void setup(void) {
     // State initialization
     bool analog_line_sensors = false;
     skibidi = new Skibidi(analog_line_sensors);
+    state = {
+        .active_line_sensors = {
+            {Position::FRONT_LEFT, false},
+            {Position::FRONT_RIGHT, false},
+            {Position::BACK_LEFT, false},
+            {Position::BACK_RIGHT, false},
+        },
+        .active_ir_sensors = std::make_pair(false, false),
+    };
 
     // Sensor initialization
     skibidi->initialize_sensors(analog_line_sensors);
@@ -23,13 +33,12 @@ void loop(void) {
     }
 
     // Update sensors
-    skibidi->update_state();
+    skibidi->update_state(&state);
 
     // Checking if we hit the border somewhere
-    struct State* state = skibidi->get_state();
-    if (state->active_line_sensors[Position::FRONT_LEFT] || state->active_line_sensors[Position::FRONT_RIGHT]) {
+    if (state.active_line_sensors[Position::FRONT_LEFT] || state.active_line_sensors[Position::FRONT_RIGHT]) {
         // Emergency reverse
-    } else if (state->active_line_sensors[Position::BACK_LEFT] || state->active_line_sensors[Position::BACK_RIGHT]) {
+    } else if (state.active_line_sensors[Position::BACK_LEFT] || state.active_line_sensors[Position::BACK_RIGHT]) {
         // Emergency forward
     }
 

@@ -23,16 +23,14 @@ class Skibidi {
         std::map<Position, DoubleLineSensor*> line_sensors;
         std::pair<IrSensor*, IrSensor*> ir_sensors;
         StartModule* start_module;
-        struct State state;
 
-        void check_line_sensors();
+        void check_line_sensors(State* state);
     public:
         Skibidi(bool analog_line_sensors);
 
         StartModule* get_start_module();
-        struct State* get_state();
         void initialize_sensors(bool analog_line_sensors);
-        void update_state();
+        void update_state(State* state);
 };
 
 #endif // SKIBIDI_HPP_
