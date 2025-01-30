@@ -15,3 +15,7 @@ int IRsensor::getValue() {
 void IRsensor::setValue(int sensorValue) {
     value = sensorValue;
 }
+
+bool isDetecting() {
+    return true;
+}
