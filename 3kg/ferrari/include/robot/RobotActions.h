@@ -15,6 +15,8 @@ class RobotActions {
         void driveBackward(int speed);
         void spinRight(); 
         void spinLeft(); 
+        void spinRight(int speed); 
+        void spinLeft(int speed); 
         void turnRight(int turnSpeed);
         void turnLeft(int turnSpeed);
 };

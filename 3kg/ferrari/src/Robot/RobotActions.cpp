@@ -39,6 +39,16 @@ void RobotActions :: spinRight() {
     motorDriver->ForwardM2(address, 127);
 }
 
+void RobotActions :: spinLeft(int speed) {
+    motorDriver->ForwardM1(address, speed);
+    motorDriver->BackwardM2(address, speed);
+}
+
+void RobotActions :: spinRight(int speed) {
+    motorDriver->BackwardM1(address, speed);
+    motorDriver->ForwardM2(address, speed);
+}
+
 void RobotActions :: turnRight(int turnRadius) {
 
 }

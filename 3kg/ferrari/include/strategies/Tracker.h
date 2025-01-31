@@ -1,12 +1,13 @@
 #ifndef SEARCH_H
 #define SEARCH_H
-#include "robot/RobotState.h"
+
+#include "robot/RobotActions.h"
 #include "robot/WorldState.h"
 class Tracker {
     private:
-        int turnSpeed;
+        int *currentTime;
     public:
-        Tracker(int turnSpeed);
-        RobotState Run(RobotState inputs);
+        Tracker();
+        void track();
 };
 #endif

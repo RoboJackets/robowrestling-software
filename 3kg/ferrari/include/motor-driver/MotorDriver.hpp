@@ -3,6 +3,7 @@
 
 #include <Arduino.h>    // makes me sad but is necessary
 #include "RoboClaw.h"
+
 #define address 0x80
 
 class MotorDriver {

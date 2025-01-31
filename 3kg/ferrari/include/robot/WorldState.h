@@ -13,7 +13,7 @@ class WorldState {
     private:
         IRSensor *irSensor = new IRSensor[9];
         LineSensor *lineSensor = new LineSensor[8];
-        LineSensor *plowSensor = new LineSensor[3];
+        LineSensor *plowSensor = new LineSensor;
         EnemyPositionEnum enemyPosition;
         EnemyPositionEnum lastEnemyPosition;
     public:
@@ -29,7 +29,6 @@ class WorldState {
         EnemyPositionEnum getEnemyPosition();
         EnemyPositionEnum getLastEnemyPosition();
         RobotPositionEnum getIsOnLine();
-        bool getIsOnPlow();
 };
 
 #endif
