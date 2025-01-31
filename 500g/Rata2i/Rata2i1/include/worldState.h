@@ -18,7 +18,7 @@ class worldState {
         Position EnemyPosition;
 
     public:
-        worldState(lineReader frontLeftLineSensor, lineReader frontRightLineSensor, lineReader backLeftLineSensor, lineReader backRightLineSensor, IRSensor frontLeftIRSensor, IRSensor frontRightIRSensor, IRSensor backLeftIRSensor, IRSensor backRightIRSensor);
+        worldState(lineReader *frontLeftLineSensor, lineReader *frontRightLineSensor, lineReader *backLeftLineSensor, lineReader *backRightLineSensor, IRSensor *frontLeftIRSensor, IRSensor *frontRightIRSensor, IRSensor *backLeftIRSensor, IRSensor *backRightIRSensor);
         Position getEnemyPosition();
         Position getLastEnemyPosition();
         Position getPosition();
