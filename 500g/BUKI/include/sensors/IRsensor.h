@@ -10,6 +10,7 @@ public:
     IRsensor(int sensorValue);
     int getValue();
     void setValue(int sensorValue);
+    bool isDetecting();
 };
 
 #endif
