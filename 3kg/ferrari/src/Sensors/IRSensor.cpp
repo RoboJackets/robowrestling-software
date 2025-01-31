@@ -2,10 +2,12 @@
 
 IRSensor::IRSensor() {
     value = 0;
+    filter = new Filter(true);
 }
 
 IRSensor::IRSensor(int sensorValue) {
     value = sensorValue;
+    filter = new Filter(true);
 }
 
 int IRSensor::getValue() {
@@ -13,5 +15,6 @@ int IRSensor::getValue() {
 }
 
 void IRSensor::setValue(int sensorValue) {
-    value = sensorValue;
+    filter->filterSensor(sensorValue);
+    value = filter->getSensorValue();
 }

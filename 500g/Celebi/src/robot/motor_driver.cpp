@@ -1,5 +1,5 @@
 #include "robot/motor_driver.hpp"
-
+//software reprentation of motor
 motor_driver :: motor_driver() {
     motor_driver(true, 0);
 }
