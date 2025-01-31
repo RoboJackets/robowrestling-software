@@ -1,6 +1,6 @@
 #include <Arduino.h>
-#include "../include/sensors/irsensor.h"
-#include "../include/sensors/LineSensor.h"
+#include "state/sensors/irsensor.h"
+#include "state/sensors/linesensor.h"
 
 LINESENSOR left_line(A0); // A0
 LINESENSOR right_line(A1); // A1
