@@ -8,6 +8,8 @@ robotAction::robotAction(){
 void robotAction::moveForward(int speed){
     leftMotor.setSpeed(speed);
     rightMotor.setSpeed(speed);
+    leftMotor.setDirection(true);
+    rightMotor.setDirection(true);
     
 };
 void robotAction::moveBackward(int speed){
@@ -29,6 +31,7 @@ void robotAction::turnRight(int speed){
     rightMotor.setDirection(false);
 };
 void robotAction::stop(){
-    leftMotor.stop();
-    rightMotor.stop();
+    leftMotor.setSpeed(0);
+    rightMotor.setSpeed(0);
+    
 };

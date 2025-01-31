@@ -7,9 +7,7 @@
 #include <Arduino.h>
 
 // imports
-#include "motorDriver.h"
-#include "robotAction.h"
-#include "worldState.h"
+#include "MotorDriver.h"
 
 // pinouts
 #define Lside 12
@@ -22,14 +20,12 @@
 #define Rneg 11
 #define Lpos 3
 #define Lneg 5
-#define Lline A0
-#define Rline A1
 #define switch1 A6
 #define switch2 A7
  
 // define objects
-motorDriver *leftMotorDriver;
-motorDriver *rightMotorDriver;
+MotorDriver *leftMotorDriver;
+MotorDriver *rightMotorDriver;
 
 // define functions
 void updateMotors();
@@ -43,20 +39,10 @@ void setup() {
     pinMode(StartMod, INPUT);
     pinMode(switch1, INPUT);
     pinMode(switch2, INPUT);
-    pinMode(Lsensor, INPUT);
-    pinMode(Rsensor, INPUT);
-    pinMode(MSensor, INPUT);
-    pinMode(Lline, INPUT);
-    pinMode(Rline, INPUT);
-    pinMode(Lside, INPUT);
-    pinMode(Rside, INPUT);
-    
 
     // instantiate objects
-    leftMotorDriver = new motorDriver();
-    rightMotorDriver = new motorDriver();
-
-    
+    leftMotorDriver = new MotorDriver();
+    rightMotorDriver = new MotorDriver();
 
     Serial.begin(9600);
 
@@ -68,7 +54,7 @@ void setup() {
 }
 
 void loop() {
-    pollsensors();
+    // pollsensors()
     // updateState()
     updateMotors();
 
@@ -109,35 +95,4 @@ void updateMotors() {
         analogWrite(Rpos, 0);
         analogWrite(Rneg, rightSpeed);
     }
-}
-
-void pollsensors() {
-    int LsensorVal = digitalRead(Lsensor);
-    int RsensorVal = digitalRead(Rsensor);
-    int MSensorVal = digitalRead(MSensor);
-    int LlineVal = digitalRead(Lline);
-    int RlineVal = digitalRead(Rline);
-    int LsideVal = digitalRead(Lside);
-    int RsideVal = digitalRead(Rside);
-    int switch1Val = digitalRead(switch1);
-    int switch2Val = digitalRead(switch2);
-
-    Serial.print("Lsensor: ");
-    Serial.print(LsensorVal);
-    Serial.print(" Rsensor: ");
-    Serial.print(RsensorVal);
-    Serial.print(" MSensor: ");
-    Serial.print(MSensorVal);
-    Serial.print(" Lline: ");
-    Serial.print(LlineVal);
-    Serial.print(" Rline: ");
-    Serial.print(RlineVal);
-    Serial.print(" Lside: ");
-    Serial.print(LsideVal);
-    Serial.print(" Rside: ");
-    Serial.print(RsideVal);
-    Serial.print(" switch1: ");
-    Serial.print(switch1Val);
-    Serial.print(" switch2: ");
-    Serial.println(switch2Val);
 }

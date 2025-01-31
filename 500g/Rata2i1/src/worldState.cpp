@@ -1,14 +1,27 @@
 #include "worldState.h"
 
-worldState::worldState(lineReader frontLeftLineSensor, lineReader frontRightLineSensor, lineReader backLeftLineSensor, lineReader backRightLineSensor, IRSensor frontLeftIRSensor, IRSensor frontRightIRSensor, IRSensor backLeftIRSensor, IRSensor backRightIRSensor){
-    this->frontLeftLineSensor = &frontLeftLineSensor;
-    this->frontRightLineSensor = &frontRightLineSensor;
-    this->backLeftLineSensor = &backLeftLineSensor;
-    this->backRightLineSensor = &backRightLineSensor;
-    this->frontLeftIRSensor = &frontLeftIRSensor;
-    this->frontRightIRSensor = &frontRightIRSensor;
-    this->backLeftIRSensor = &backLeftIRSensor;
-    this->backRightIRSensor = &backRightIRSensor;
+worldState::worldState(lineReader *frontLeftLineSensor, lineReader *frontRightLineSensor, lineReader *backLeftLineSensor, lineReader *backRightLineSensor, IRSensor *frontLeftIRSensor, IRSensor *frontRightIRSensor, IRSensor *Rside, IRSensor *Lside, IRSensor *MSensor){
+    this->frontLeftLineSensor = frontLeftLineSensor;
+    this->frontRightLineSensor = frontRightLineSensor;
+    this->backLeftLineSensor = backLeftLineSensor;
+    this->backRightLineSensor = backRightLineSensor;
+    this->frontLeftIRSensor = frontLeftIRSensor;
+    this->frontRightIRSensor = frontRightIRSensor;
+    this->lSide = Lside;
+    this->rSide = Rside;
+    this->mSensor = MSensor;
+    EnemyPosition = Position::MIDDLE_FRONT;
+}
+
+worldState::worldState(lineReader *frontLeftLineSensor, lineReader *frontRightLineSensor, lineReader *backLeftLineSensor, lineReader *backRightLineSensor, IRSensor *frontLeftIRSensor, IRSensor *frontRightIRSensor, IRSensor *backLeftIRSensor, IRSensor *backRightIRSensor){
+    this->frontLeftLineSensor = frontLeftLineSensor;
+    this->frontRightLineSensor = frontRightLineSensor;
+    this->backLeftLineSensor = backLeftLineSensor;
+    this->backRightLineSensor = backRightLineSensor;
+    this->frontLeftIRSensor = frontLeftIRSensor;
+    this->frontRightIRSensor = frontRightIRSensor;
+    this->backLeftIRSensor = backLeftIRSensor;
+    this->backRightIRSensor = backRightIRSensor;
     EnemyPosition = Position::MIDDLE_FRONT;
 }
 
