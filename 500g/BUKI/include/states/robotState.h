@@ -5,6 +5,7 @@ class RobotState {
 
     public:
         RobotState();
+        virtual void runAlgorithm();
 };
 
 #endif

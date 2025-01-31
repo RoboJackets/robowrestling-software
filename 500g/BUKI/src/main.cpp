@@ -5,7 +5,7 @@
 #define Rside 2
 #define Rsensor 4
 #define MSensor 7
-#define StartMod 10 
+#define StartMod 10
 
 #define Rpos 6
 #define Rneg 11
