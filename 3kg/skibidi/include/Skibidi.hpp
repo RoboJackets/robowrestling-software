@@ -9,12 +9,13 @@
 #include "Sensors/StartModule.hpp"
 
 enum Position { FRONT_LEFT, FRONT_RIGHT, BACK_LEFT, BACK_RIGHT, NONE };
+enum IrDirection { LEFT, MID_LEFT, CENTER_LEFT, CENTER, CENTER_RIGHT, MID_RIGHT, RIGHT };
 
 struct State {
     // maybe find a better way to do the line sensors so a switch-case
     // can be used instead of an if-elseif
     std::map<Position, bool> active_line_sensors;
-    std::pair<bool, bool> active_ir_sensors;
+    std::map<IrDirection, bool> active_ir_sensors;
 
     DrivingState driving_state;
     int motor_speed;
@@ -23,7 +24,7 @@ struct State {
 class Skibidi {
     private:
         std::map<Position, DoubleLineSensor*> line_sensors;
-        std::pair<IrSensor*, IrSensor*> ir_sensors;
+        std::map<IrDirection, IrSensor*> ir_sensors;
         MotorDriver* motor_driver;
         StartModule* start_module;
 

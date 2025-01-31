@@ -11,12 +11,20 @@ void setup(void) {
     skibidi = new Skibidi(analog_line_sensors);
     state = {
         .active_line_sensors = {
-            {Position::FRONT_LEFT, false},
+            {Position::FRONT_LEFT,  false},
             {Position::FRONT_RIGHT, false},
-            {Position::BACK_LEFT, false},
-            {Position::BACK_RIGHT, false},
+            {Position::BACK_LEFT,   false},
+            {Position::BACK_RIGHT,  false},
         },
-        .active_ir_sensors = std::make_pair(false, false),
+        .active_ir_sensors = {
+            {IrDirection::RIGHT,        false},
+            {IrDirection::MID_RIGHT,    false},
+            {IrDirection::CENTER_RIGHT, false},
+            {IrDirection::CENTER,       false},
+            {IrDirection::CENTER_LEFT,  false},
+            {IrDirection::MID_LEFT,     false},
+            {IrDirection::LEFT,         false},
+        },
     };
 
     // Sensor initialization

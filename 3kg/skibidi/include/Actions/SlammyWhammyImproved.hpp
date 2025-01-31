@@ -3,7 +3,7 @@
 
 #include "Actions/Action.hpp"
 
-enum Direction { LEFT, RIGHT, NONE };
+enum Direction { DLEFT, DRIGHT, DNONE };
 
 class SlammyWhammy : public Action {
     private:
