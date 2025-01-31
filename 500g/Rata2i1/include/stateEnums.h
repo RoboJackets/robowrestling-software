@@ -5,7 +5,8 @@ enum State {
     IDLE,
     MOVING,
     TURNING,
-    STOPPED
+    STOPPED,
+    OVERLINE
 };
 
 #endif

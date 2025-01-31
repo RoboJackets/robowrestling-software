@@ -1,3 +1,5 @@
+//test
+//test 2
 #ifndef ACCELEROMETER_H
 #define ACCELEROMETER_H
 
