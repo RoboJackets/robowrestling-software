@@ -1,6 +1,10 @@
 #include "Robot/motorDriver.hpp"
 
 // type | Class Name | function name
+MotorDriver::MotorDriver() {
+    direction = 0;
+    speed = 0;
+}
 int MotorDriver::getDirection() {
     return direction;
 }

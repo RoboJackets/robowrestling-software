@@ -1,8 +1,6 @@
 #include <Arduino.h>
 #include "Sensors/WorldState.h"
 #include "Robot/robotActions.hpp"
-#include "Robot/robotState.hpp"
-#include "Robot/algorithm.hpp"
 
 // Defining Pins
 // #define name value
@@ -29,9 +27,6 @@ WorldState world;
 
 RobotActions action;
 MotorDriver driver;
-Algorithm strat;
-
-RobotState state;
 
 void setup() {
   // Defines whether a pin is input or output
@@ -55,11 +50,7 @@ void setup() {
   // World State
   world = WorldState(irSensor, lineSensor);
   // Robot Actions
-  driver = MotorDriver();
-  action = RobotActions(&driver);
-  // Robot State
-  strat = Algorithm(&action);
-  state = RobotState(&world, &strat);
+  action = RobotActions(new MotorDriver(driver));
 }
 // put your main code here, to run repeatedly:
 void loop() {
@@ -82,7 +73,7 @@ void pollSensors() {
 }
 void calcState() {
   // Calculate States
-  state.runAlgorithm();
+  
 }
 void writeMotors() {
   // Write to Motors digitalWrite()
