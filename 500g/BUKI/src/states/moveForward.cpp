@@ -5,5 +5,5 @@ MoveForward::MoveForward() {
 }
 
 void MoveForward::runAlgorithm() {
-    
+
 }

@@ -1,4 +1,6 @@
 #include <Arduino.h>
+#include "states/robotState.h"
+#include "states/moveForward.h"
 
 #define Lside 12
 #define Lsensor 8
@@ -21,6 +23,7 @@ void back(double);
 void forward(double);
 void rotateRight(double);
 void rotateLeft(double);
+RobotState* rstate;
 
 void setup() {
   pinMode(Rpos, OUTPUT); 
@@ -32,11 +35,15 @@ void setup() {
   pinMode(switch1, INPUT);
   pinMode(switch2, INPUT);
   Serial.begin(9600);
+  rstate = new MoveForward();
 }
 
+
+
 void loop() {
+
   if(digitalRead(MSensor))
-    forward(100);
+    rstate->runAlgorithm();
   else 
     stop(); 
 

@@ -3,10 +3,10 @@
 
 #include "states/robotState.h"
 
-class MoveForward : RobotState {
+class MoveForward : public RobotState {
     public:
         MoveForward();
-        void runAlgorithm();
+        void runAlgorithm() override;
 };
 
 #endif
