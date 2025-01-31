@@ -3,6 +3,7 @@
 
 #include "world/world_state.hpp"
 #include "robot_state.hpp"
+#include "enums/world_enums.hpp"
 
 class algorithms {
     private:
