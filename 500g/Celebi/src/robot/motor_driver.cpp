@@ -8,11 +8,12 @@ motor_driver :: motor_driver(bool new_direction, int new_speed) {
     direction = new_direction;
     speed = new_speed;
 }
-
+// between 0 and 1
 void motor_driver :: set_direction(bool new_direction) {
     direction = new_direction;
 }
 
+// between 0 and 255
 void motor_driver :: set_speed(int new_speed) {
     speed = new_speed;
 }

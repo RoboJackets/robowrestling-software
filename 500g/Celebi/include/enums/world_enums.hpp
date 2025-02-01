@@ -1,5 +1,5 @@
 #ifndef WORLD_ENUM_H
-#define WORLD_ENUM_U
+#define WORLD_ENUM_H
 
 enum line_states {
     LEFT_ON,

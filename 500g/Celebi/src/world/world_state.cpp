@@ -28,12 +28,12 @@ line_states world_state :: line_check() {
     return line_arr[bin];
 }
 
-int world_state :: enemy_pos() {
-    bool left_value = ir_left -> get_ir_sense();
-    bool mid_left_value = ir_mid_left -> get_ir_sense();
-    bool mid_value = ir_mid -> get_ir_sense();
-    bool mid_right_value = ir_mid_right -> get_ir_sense();
-    bool right_value = ir_right -> get_ir_sense();
+enemy_states world_state :: enemy_pos() {
+    bool left_value = ir_left -> get_ir_sensor();
+    bool mid_left_value = ir_mid_left -> get_ir_sensor();
+    bool mid_value = ir_mid -> get_ir_sensor();
+    bool mid_right_value = ir_mid_right -> get_ir_sensor();
+    bool right_value = ir_right -> get_ir_sensor();
 
     if (left_value) {
         return LEFT;
