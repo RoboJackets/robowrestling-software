@@ -17,9 +17,9 @@
 #include "world/sensors/line_sensor.hpp"
 
 // pinouts
-#define Lside 12
+#define Lside A0
 #define Lsensor 8
-#define Rside 2
+#define Rside A1
 #define Rsensor 4
 #define MSensor 7
 #define RMsensor 9
@@ -32,7 +32,6 @@
 #define switch1 A6
 #define switch2 A7
 
- 
 // define objects
 motor_driver *leftMotorDriver;
 motor_driver *rightMotorDriver;
@@ -49,7 +48,11 @@ ir_sensor* ir_mid_right;
 ir_sensor* ir_right;
 
 //set up robot actions
-robot_actions* actions;
+robot_actions* robo_actions;
+
+//set up algorithms
+algorithms* algorithm;
+
 //set up world state and robot state pointers
 world_state* world;
 robot_state* robot;
@@ -59,6 +62,9 @@ int print = 0;
 
 // define functions
 void updateMotors();
+void pollSensors();
+void updateState();
+void debug();
 
 void setup() {
     // define pinmodes
@@ -84,13 +90,19 @@ void setup() {
     ir_mid = new ir_sensor(false);
     ir_mid_right = new ir_sensor(false);
     ir_right = new ir_sensor(false);
+    
+    //initialize robot actions
+    robo_actions = new robot_actions(leftMotorDriver, rightMotorDriver);
+    
+
+    //initialize world state
+    world = new world_state(line_left, line_right, ir_left, ir_mid_left, ir_mid, ir_mid_right, ir_right);
+    
+    //initialize algorithm
+    algorithm = new algorithms(robo_actions, world);
 
     //initialize robot actions
-    actions = new robot_actions()
-
-    //initialize world state and robot actions
-    world = new world_state(line_left, line_right, ir_left, ir_mid_left, ir_mid, ir_mid_right, ir_right);
-    robot = new robot_actions(left_motor, right_motor);
+    robot = new robot_state(world, algorithm);
 
     Serial.begin(9600);
     Serial.print("we are running\n");
@@ -102,8 +114,8 @@ void setup() {
 }
 
 void loop() {
-    pollSensors()
-    updateState()
+    pollSensors();
+    updateState();
     updateMotors();
 
     // listen for stop signal
@@ -113,7 +125,7 @@ void loop() {
         Serial.println("braking");
       }
     }
-    debug()
+    debug();
     
 }
 
@@ -131,7 +143,7 @@ void pollSensors() {
 }
 
 void updateState() {
-  robot_state -> runAlgorithm();
+  robot -> runAlgorithm();
 }
 
 /**
@@ -165,23 +177,43 @@ void updateMotors() {
 void debug() {
   if (print == 10) {
     //sensors
-    Serial.println("sensors:\n");
-    Serial.println("  line left: %d\n", line_left -> get_value);
-    Serial.println("  line right: %d\n", line_right -> get_value);
+    Serial.println("sensors:");
+    Serial.print("  line left: ");
+    Serial.println(line_left -> get_value());
+
+    Serial.print("  line right: ");
+    Serial.println(line_right -> get_value());
 
 
-    Serial.println("  distance left: %d\n", ir_left -> get_value);
-    Serial.println("  distance mid left: %d\n", ir_mid_left -> get_value);
-    Serial.println("  distance mid: %d\n", ir_mid -> get_value);
-    Serial.println("  distance mid right: %d\n", ir_mid_right -> get_value);
-    Serial.println("  distance right: %d\n", ir_right -> get_value);
+    Serial.print("  distance left: ");
+    Serial.println(line_right -> get_value());
+
+    Serial.print("  distance mid left: ");
+    Serial.println(ir_mid_left -> get_ir_sensor());
+
+    Serial.print("  distance mid: ");
+    Serial.println(ir_mid -> get_ir_sensor());
+
+    Serial.print("  distance mid right: ");
+    Serial.println(ir_mid_right -> get_ir_sensor());
+
+    Serial.print("  distance right: ");
+    Serial.println(ir_right -> get_ir_sensor());
 
     //motors
-    Serial.println("motors:\n");
-    Serial.println("  left motor direction: %d\n", leftMotorDriver -> get_direction());
-    Serial.println("  right motor directtion: %d\n", rightMotorDriver -> get_direction());
-    Serial.println("  left motor speed: %d\n", leftMotorDriver -> get_speed());
-    Serial.println("  right motor speed: %d\n", rightMotorDriver -> get_speed());
+    Serial.println("motors:");
+
+    Serial.print("  left motor direction: ");
+    Serial.println(leftMotorDriver -> get_direction());
+
+    Serial.print("  right motor directtion: ");
+    Serial.println(rightMotorDriver -> get_direction());
+
+    Serial.print("  left motor speed: ");
+    Serial.println(leftMotorDriver -> get_speed());
+
+    Serial.print("  right motor speed: ");
+    Serial.println(rightMotorDriver -> get_speed());
     
     print = 0;
   }
