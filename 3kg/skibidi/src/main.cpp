@@ -1,7 +1,10 @@
+#include "Actions/Action.hpp"
+#include "Actions/SlammyWhammyImproved.hpp"
 #include "Skibidi.hpp"
 
 Skibidi* skibidi;
 State state;
+Action *strategy;
 
 void setup(void) {
     // Serial initialization (for debugging)
@@ -26,6 +29,7 @@ void setup(void) {
             {IrDirection::LEFT,         false},
         },
     };
+    strategy = new SlammyWhammy();
 
     // Sensor initialization
     skibidi->initialize_sensors(analog_line_sensors);
@@ -46,10 +50,16 @@ void loop(void) {
     // Checking if we hit the border somewhere
     if (state.active_line_sensors[Position::FRONT_LEFT] || state.active_line_sensors[Position::FRONT_RIGHT]) {
         // Emergency reverse
+        state.driving_state = DrivingState::MBACKWARD;
+        state.motor_speed = 75;
     } else if (state.active_line_sensors[Position::BACK_LEFT] || state.active_line_sensors[Position::BACK_RIGHT]) {
         // Emergency forward
+        state.driving_state = DrivingState::MFORWARD;
+        state.motor_speed = 75;
     }
 
     // Make decision
+    strategy->make_decision(&state);
+
     // Execute decision
 }
