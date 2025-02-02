@@ -1,13 +1,12 @@
 #ifndef ROBOT_STATE_H_
 #define ROBOT_STATE_H_
 
-// add robotAction instance and worldState instance
-// encapsulation (getters and setters)
-// make runAlgorithm return an enumeration of actions
 
 class RobotState {
-
-    public:
+    private:    
+        MoveForward* moveForward;           // pointer to MoveForward instance
+        WorldState* worldState;             // pointer to WorldState instance
+    public: 
         RobotState();
         virtual void runAlgorithm();
 };
