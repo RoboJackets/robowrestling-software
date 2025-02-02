@@ -22,7 +22,7 @@ class WorldState {
         WorldState(LINEsensor*[], IRsensor*[]);     // Constructor: Takes arrays of pointers to LINEsensor and IRsensor objects
         Edge isNearEdge();                         // Function to check if the robot is near an edge and return the corresponding enum value
         int enemyDistance();                        
-        void readSensors();                         // Function to read values from all sensors and update the world state
+        void readSensors();   // do we need this? I think we read sensor values in "pollSensor" in main and then update the IR and Line sensor classes
         Edge enemyPos();                            // Function to check enemy Position and return enum value
 };
 
