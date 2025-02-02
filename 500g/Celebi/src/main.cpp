@@ -178,15 +178,14 @@ void updateMotors() {
 
 void debug() {
   //delay(500);
-  //Serial.println("\n\n*****************");
+  Serial.println("\n\n*****************");
   //sensors
   // Serial.println("sensors:");
-  // Serial.print("line left: ");
-  // Serial.println(line_left -> get_value());
+  Serial.print("line left: ");
+  Serial.println(line_left -> get_value());
 
-  // Serial.print("line right: ");
-  // Serial.println(line_right -> get_value());
-  Serial.println(world -> line_check() == 3);
+  Serial.print("line right: ");
+  Serial.println(line_right -> get_value());
 
 
   // Serial.print("distance left: ");
@@ -218,5 +217,5 @@ void debug() {
 
   // Serial.print("right motor speed: ");
   // Serial.println(rightMotorDriver -> get_speed());
-  //Serial.println("*****************");
+  Serial.println("*****************");
 }

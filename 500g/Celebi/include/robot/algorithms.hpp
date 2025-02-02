@@ -26,7 +26,9 @@ class algorithms {
 
     public:
         algorithms(robot_actions* robo_actions, world_state* world);
-
-        void forward_safe();
+        void draw();
+        void seek();
+        int forward_safe();
+        int turn_towards();
 };
 #endif

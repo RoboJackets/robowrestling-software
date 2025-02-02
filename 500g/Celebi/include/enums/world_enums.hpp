@@ -2,10 +2,10 @@
 #define WORLD_ENUM_H
 
 enum line_states {
+    OFF,
     LEFT_ON,
     RIGHT_ON,
-    BOTH_ON,
-    OFF
+    BOTH_ON
 };
 
 enum enemy_states {

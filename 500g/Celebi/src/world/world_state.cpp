@@ -19,12 +19,12 @@ line_states world_state :: line_check() {
     int r_value = line_right -> get_value();
 
     //bit shift the left value and combine with the right value to index into the array
-    //if both are white, bin = 0
+    //if both are black, bin = 0
     //if just right is black, bin = 1
     //if just left is black, bin = 2
-    //if both are black, bin = 3
-    int left_on = l_value < 500 ? 0 : 1;
-    int right_on = r_value < 500 ? 0 : 1;
+    //if both are white, bin = 3
+    int left_on = l_value < 40 ? 1 : 0;
+    int right_on = r_value < 40 ? 1 : 0;
     int bin = ((left_on) << 1) + right_on;
 
     return line_arr[bin];

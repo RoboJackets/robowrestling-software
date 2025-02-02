@@ -10,6 +10,6 @@ void robot_state :: runAlgorithm() {
     enemy_states enemyPosition = worldState -> enemy_pos(); 
 
     //Select algorithm base on position.
-    algorithm -> forward_safe();
+    algorithm -> draw();
 }
 

@@ -1,8 +1,8 @@
 #include "robot/robot_actions.hpp"
 
-robot_actions :: robot_actions(motor_driver* left_ptr, motor_driver* right_ptr) {
-    left_motor = left_ptr;
-    right_motor = right_ptr;
+robot_actions :: robot_actions(motor_driver* left_motor, motor_driver* right_motor) {
+    this -> left_motor = left_motor;
+    this -> right_motor = right_motor;
 }
 
 void robot_actions :: brake() {
@@ -35,5 +35,5 @@ void robot_actions :: turn_right(int speed) {
     left_motor->set_direction(true);
     left_motor->set_speed(speed);
     right_motor->set_direction(false);
-    right_motor->set_speed(0);
+    right_motor->set_speed(speed);
 }
