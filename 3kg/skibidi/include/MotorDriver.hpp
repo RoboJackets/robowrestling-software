@@ -5,7 +5,7 @@
 #include <cmath>
 #include <utility>
 
-enum DrivingState { FORWARD, BACKWARD, BRAKE, COAST };
+enum DrivingState { MFORWARD, MBACKWARD, MTURN_LEFT, MTURN_RIGHT, MBRAKE, MCOAST };
 
 class MotorDriver {
     private:

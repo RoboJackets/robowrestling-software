@@ -30,25 +30,38 @@ void MotorDriver::drive(int speed) {
     std::pair<int, int> left_pins = this->motor_pins[1];
 
     switch (this->driving_state) {
-        case FORWARD:
+        case MFORWARD:
             analogWrite(right_pins.first, this->map_to_pwm(-speed));
             analogWrite(right_pins.second, this->map_to_pwm(-speed));
             analogWrite(left_pins.first, this->map_to_pwm(speed));
             analogWrite(left_pins.second, this->map_to_pwm(speed));
             break;
-        case BACKWARD:
+        case MBACKWARD:
             analogWrite(right_pins.first, this->map_to_pwm(speed));
             analogWrite(right_pins.second, this->map_to_pwm(speed));
             analogWrite(left_pins.first, this->map_to_pwm(-speed));
             analogWrite(left_pins.second, this->map_to_pwm(-speed));
             break;
-        case COAST:
+        // TODO: Make sure that these turn the bot correctly
+        case MTURN_LEFT:
+            analogWrite(right_pins.first, this->map_to_pwm(-speed));
+            analogWrite(right_pins.second, this->map_to_pwm(-speed));
+            analogWrite(left_pins.first, this->map_to_pwm(-speed));
+            analogWrite(left_pins.second, this->map_to_pwm(-speed));
+            break;
+        case MTURN_RIGHT:
+            analogWrite(right_pins.first, this->map_to_pwm(speed));
+            analogWrite(right_pins.second, this->map_to_pwm(speed));
+            analogWrite(left_pins.first, this->map_to_pwm(speed));
+            analogWrite(left_pins.second, this->map_to_pwm(speed));
+            break;
+        case MCOAST:
             analogWrite(right_pins.first, 0);
             analogWrite(right_pins.second, 0);
             analogWrite(left_pins.first, 0);
             analogWrite(left_pins.second, 0);
             break;
-        case BRAKE:
+        case MBRAKE:
             analogWrite(right_pins.first, 255);
             analogWrite(right_pins.second, 255);
             analogWrite(left_pins.first, 255);
