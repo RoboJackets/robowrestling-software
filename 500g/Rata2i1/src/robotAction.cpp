@@ -1,9 +1,9 @@
 #include <Arduino.h>
 #include "robotAction.h"
 
-robotAction::robotAction(){
-    leftMotor = motorDriver();
-    rightMotor = motorDriver();
+robotAction::robotAction(motorDriver *leftMotor, motorDriver *rightMotor){
+    this->leftMotor = *leftMotor;
+    this->rightMotor = *rightMotor;
 };
 void robotAction::moveForward(int speed){
     leftMotor.setSpeed(speed);
@@ -33,5 +33,4 @@ void robotAction::turnRight(int speed){
 void robotAction::stop(){
     leftMotor.setSpeed(0);
     rightMotor.setSpeed(0);
-    
 };

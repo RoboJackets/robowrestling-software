@@ -10,6 +10,7 @@
 #include "motorDriver.h"
 #include "robotAction.h"
 #include "worldState.h"
+#include "Strategies.h"
 
 // pinouts
 #define Lside 12
@@ -30,6 +31,10 @@
 // define objects
 motorDriver *leftMotorDriver;
 motorDriver *rightMotorDriver;
+worldState *state;
+robotAction *robot;
+
+
 
 // define functions
 void updateMotors();
@@ -56,7 +61,23 @@ void setup() {
     leftMotorDriver = new motorDriver();
     rightMotorDriver = new motorDriver();
 
+    //construct world state with struct
+    worldState::joebotSensors sensors = {
+        new lineReader(Lline),
+        new lineReader(Rline),
+        new lineReader(Lline),
+        new lineReader(Rline),
+        new IRSensor(Lsensor),
+        new IRSensor(Rsensor),
+        new IRSensor(Lside),
+        new IRSensor(Rside),
+        new IRSensor(MSensor)
+    };
     
+    state = new worldState(sensors);
+
+    robot = new robotAction(leftMotorDriver, rightMotorDriver);
+
 
     Serial.begin(9600);
 
@@ -104,18 +125,25 @@ void pollSensors(bool debug = false) {
     }
 }
 
+void brake() {
+    robot -> stop();
+}
+
 void loop() {
     pollSensors();
     // updateState()
     updateMotors();
+    
+    
 
     // listen for stop signal
     if (!digitalRead(StartMod)) {
       while(true) {
-        // brake()
+        brake();
         Serial.println("braking");
       }
     }
+
     // debug()
     
 }
