@@ -67,8 +67,45 @@ void setup() {
     }
 }
 
+/**
+ * Polls all sensors and prints their values to the serial monitor
+ * @param debug - if true, prints sensor values to the serial monitor
+ */
+void pollSensors(bool debug = false) {
+    int LsensorVal = digitalRead(Lsensor);
+    int RsensorVal = digitalRead(Rsensor);
+    int MSensorVal = digitalRead(MSensor);
+    int LlineVal = digitalRead(Lline);
+    int RlineVal = digitalRead(Rline);
+    int LsideVal = digitalRead(Lside);
+    int RsideVal = digitalRead(Rside);
+    if (debug) {
+        int switch1Val = digitalRead(switch1);
+        int switch2Val = digitalRead(switch2);
+
+        Serial.print("Lsensor: ");
+        Serial.print(LsensorVal);
+        Serial.print(" Rsensor: ");
+        Serial.print(RsensorVal);
+        Serial.print(" MSensor: ");
+        Serial.print(MSensorVal);
+        Serial.print(" Lline: ");
+        Serial.print(LlineVal);
+        Serial.print(" Rline: ");
+        Serial.print(RlineVal);
+        Serial.print(" Lside: ");
+        Serial.print(LsideVal);
+        Serial.print(" Rside: ");
+        Serial.print(RsideVal);
+        Serial.print(" switch1: ");
+        Serial.print(switch1Val);
+        Serial.print(" switch2: ");
+        Serial.println(switch2Val);
+    }
+}
+
 void loop() {
-    pollsensors();
+    pollSensors();
     // updateState()
     updateMotors();
 
@@ -109,35 +146,4 @@ void updateMotors() {
         analogWrite(Rpos, 0);
         analogWrite(Rneg, rightSpeed);
     }
-}
-
-void pollsensors() {
-    int LsensorVal = digitalRead(Lsensor);
-    int RsensorVal = digitalRead(Rsensor);
-    int MSensorVal = digitalRead(MSensor);
-    int LlineVal = digitalRead(Lline);
-    int RlineVal = digitalRead(Rline);
-    int LsideVal = digitalRead(Lside);
-    int RsideVal = digitalRead(Rside);
-    int switch1Val = digitalRead(switch1);
-    int switch2Val = digitalRead(switch2);
-
-    Serial.print("Lsensor: ");
-    Serial.print(LsensorVal);
-    Serial.print(" Rsensor: ");
-    Serial.print(RsensorVal);
-    Serial.print(" MSensor: ");
-    Serial.print(MSensorVal);
-    Serial.print(" Lline: ");
-    Serial.print(LlineVal);
-    Serial.print(" Rline: ");
-    Serial.print(RlineVal);
-    Serial.print(" Lside: ");
-    Serial.print(LsideVal);
-    Serial.print(" Rside: ");
-    Serial.print(RsideVal);
-    Serial.print(" switch1: ");
-    Serial.print(switch1Val);
-    Serial.print(" switch2: ");
-    Serial.println(switch2Val);
 }
