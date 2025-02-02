@@ -23,12 +23,17 @@
 #define LEFT_IR_PIN A17
 #define RIGHT_IR_PIN A0
 
+// Define Objects
 IrSensor *irSensor;
 LineSensor *lineSensor;
 WorldState world;
 
 RobotActions action;
-MotorDriver driver;
+MotorDriver frontLeft;
+MotorDriver frontRight;
+MotorDriver backLeft;
+MotorDriver backRight;
+
 Algorithm strat;
 
 RobotState state;
@@ -55,17 +60,25 @@ void setup() {
   // World State
   world = WorldState(irSensor, lineSensor);
   // Robot Actions
-  driver = MotorDriver();
-  action = RobotActions(&driver);
+  frontLeft = MotorDriver();
+  frontRight = MotorDriver();
+  backLeft = MotorDriver();
+  backRight = MotorDriver();
+  action = RobotActions(&frontLeft);
+  action = RobotActions(&frontRight);
+  action = RobotActions(&backLeft);
+  action = RobotActions(&backRight);
   // Robot State
   strat = Algorithm(&action);
   state = RobotState(&world, &strat);
 }
+
 // put your main code here, to run repeatedly:
 void loop() {
   pollSensors();
   calcState();
   writeMotors();
+  debug();
 }
 
 void pollSensors() {
@@ -79,11 +92,24 @@ void pollSensors() {
   irSensor[2].setValue(digitalRead(MID_IR_PIN));
   irSensor[3].setValue(digitalRead(MIDRIGHT_IR_PIN));
   irSensor[4].setValue(digitalRead(RIGHT_IR_PIN));
+
+  
 }
+
+void debug() {
+  Serial.print(millis());
+  Serial.print("IR Sensor Value:");
+  for (int i = 0; i < 4; i++) {
+    Serial.print(irSensor[i].getValue());
+  }
+  Serial.println();
+}
+
 void calcState() {
   // Calculate States
   state.runAlgorithm();
 }
+
 void writeMotors() {
   // Write to Motors digitalWrite()
   digitalWrite(LEFT_FRONT_MOTOR_PIN, 0);
