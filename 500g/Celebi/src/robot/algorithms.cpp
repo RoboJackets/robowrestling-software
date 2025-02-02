@@ -7,7 +7,9 @@ algorithms :: algorithms(robot_actions *robot, world_state *world) {
 }
 
 void algorithms :: forward_safe() {
-    if (world -> line_check() != BOTH_ON) {
-        robot -> drive_forward(5);
+    if (world -> line_check() == 3) {
+        robot -> drive_forward(1);
+    } else {
+        robot -> drive_backward(1);
     }
 }

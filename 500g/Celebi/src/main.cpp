@@ -17,14 +17,16 @@
 #include "world/sensors/line_sensor.hpp"
 
 // pinouts
-#define Lside A0
+#define Lside 12
 #define Lsensor 8
-#define Rside A1
+#define Rside 2
 #define Rsensor 4
 #define MSensor 7
-#define RMsensor 9
-#define LMsensor 13
-#define StartMod 10
+#define StartMod 10 
+#define LineLeft A1
+#define LineRight A0
+
+
 #define Rpos 6
 #define Rneg 11
 #define Lpos 3
@@ -131,15 +133,15 @@ void loop() {
 
 void pollSensors() {
   //read line sensors
-  line_left -> set_value(analogRead(Lside));
-  line_right -> set_value(analogRead(Rside));
+  line_left -> set_value(analogRead(LineLeft));
+  line_right -> set_value(analogRead(LineRight));
 
   //read ir sensors
-  ir_left -> set_ir_sensor(digitalRead(Lsensor));
-  ir_mid_left -> set_ir_sensor(digitalRead(LMsensor));
+  ir_left -> set_ir_sensor(digitalRead(Lside));
+  ir_mid_left -> set_ir_sensor(digitalRead(Lsensor));
   ir_mid -> set_ir_sensor(digitalRead(MSensor));
-  ir_mid_right -> set_ir_sensor(digitalRead(RMsensor));
-  ir_right -> set_ir_sensor(digitalRead(Rsensor));
+  ir_mid_right -> set_ir_sensor(digitalRead(Rsensor));
+  ir_right -> set_ir_sensor(digitalRead(Rside));
 }
 
 void updateState() {
@@ -175,48 +177,46 @@ void updateMotors() {
 }
 
 void debug() {
-  if (print == 10) {
-    //sensors
-    Serial.println("sensors:");
-    Serial.print("  line left: ");
-    Serial.println(line_left -> get_value());
+  //delay(500);
+  //Serial.println("\n\n*****************");
+  //sensors
+  // Serial.println("sensors:");
+  // Serial.print("line left: ");
+  // Serial.println(line_left -> get_value());
 
-    Serial.print("  line right: ");
-    Serial.println(line_right -> get_value());
+  // Serial.print("line right: ");
+  // Serial.println(line_right -> get_value());
+  Serial.println(world -> line_check() == 3);
 
 
-    Serial.print("  distance left: ");
-    Serial.println(line_right -> get_value());
+  // Serial.print("distance left: ");
+  // Serial.println(line_right -> get_value());
 
-    Serial.print("  distance mid left: ");
-    Serial.println(ir_mid_left -> get_ir_sensor());
+  // Serial.print("distance mid left: ");
+  // Serial.println(ir_mid_left -> get_ir_sensor());
 
-    Serial.print("  distance mid: ");
-    Serial.println(ir_mid -> get_ir_sensor());
+  // Serial.print("distance mid: ");
+  // Serial.println(ir_mid -> get_ir_sensor());
 
-    Serial.print("  distance mid right: ");
-    Serial.println(ir_mid_right -> get_ir_sensor());
+  // Serial.print("distance mid right: ");
+  // Serial.println(ir_mid_right -> get_ir_sensor());
 
-    Serial.print("  distance right: ");
-    Serial.println(ir_right -> get_ir_sensor());
+  // Serial.print("distance right: ");
+  // Serial.println(ir_right -> get_ir_sensor());
 
-    //motors
-    Serial.println("motors:");
+  // motors
+  // Serial.println("motors:");
 
-    Serial.print("  left motor direction: ");
-    Serial.println(leftMotorDriver -> get_direction());
+  // Serial.print("left motor direction: ");
+  // Serial.println(leftMotorDriver -> get_direction());
 
-    Serial.print("  right motor directtion: ");
-    Serial.println(rightMotorDriver -> get_direction());
+  // Serial.print("right motor directtion: ");
+  // Serial.println(rightMotorDriver -> get_direction());
 
-    Serial.print("  left motor speed: ");
-    Serial.println(leftMotorDriver -> get_speed());
+  // Serial.print("left motor speed: ");
+  // Serial.println(leftMotorDriver -> get_speed());
 
-    Serial.print("  right motor speed: ");
-    Serial.println(rightMotorDriver -> get_speed());
-    
-    print = 0;
-  }
-  print++;
-
+  // Serial.print("right motor speed: ");
+  // Serial.println(rightMotorDriver -> get_speed());
+  //Serial.println("*****************");
 }
