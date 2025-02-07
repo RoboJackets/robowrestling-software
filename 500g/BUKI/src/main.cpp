@@ -76,7 +76,6 @@ void loop() {
         stop();
       }
     }
-    debug()
     
 }
 
