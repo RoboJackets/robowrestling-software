@@ -4,7 +4,6 @@ use inumerations to describe lcoations and make a mapping. cycle thropugh mappin
 #include "sensors/LINEsensor.h"
 #include "sensors/IRsensor.h"
 #include "states/worldState.h"
-#include <cstdlib>
 
 WorldState::WorldState(LINEsensor* linesensors[], IRsensor* irsensors[]) {      //constructor to initialize WorldState class with arrays of sensor objects
     lnsn = linesensors;

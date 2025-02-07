@@ -10,7 +10,7 @@ class MoveForward : public RobotState {         // Polymorphism (I have no idea 
         RobotAction* robotAction;
     public:
         MoveForward(RobotAction* robotActionParameter);     // constructor
-        void runAlgorithm() override;           // Override runAlgorithm() from RobotState
+        void runAlgorithm();           // Override runAlgorithm() from RobotState
 };
 
 #endif

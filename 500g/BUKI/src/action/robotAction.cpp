@@ -22,8 +22,8 @@ void RobotAction::turnRight() {
 
 void RobotAction::go() {
     // call setDir and setSpeed
-    leftMotor->setDir(true);
-    rightMotor->setDir(true);
+    leftMotor->setDir(1);
+    rightMotor->setDir(1);
     leftMotor->setSpeed(125);
     rightMotor->setSpeed(125);
 }

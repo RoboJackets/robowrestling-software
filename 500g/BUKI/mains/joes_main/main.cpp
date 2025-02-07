@@ -7,10 +7,7 @@
 #include <Arduino.h>
 
 // imports
-#include "sensors/MotorDriver.h"
-#include "states/robotState.h"
-#include "action/robotAction.h"
-#include "states/moveForward.h"
+#include "MotorDriver.h"
 
 // pinouts
 #define Lside 12
@@ -32,9 +29,6 @@ MotorDriver *rightMotorDriver;
 
 // define functions
 void updateMotors();
-void stop();
-MoveForward* rstate;
-RobotAction* raction;
 
 void setup() {
     // define pinmodes
@@ -52,39 +46,27 @@ void setup() {
 
     Serial.begin(9600);
 
-    raction = new RobotAction(leftMotorDriver, rightMotorDriver);
-    rstate = new MoveForward(raction);
     // wait for start signal
     while (!digitalRead(StartMod)) {
       Serial.print(digitalRead(StartMod));
       Serial.println(" Waiting for start signal");
     }
 }
+
 void loop() {
     // pollsensors()
     // updateState()
     updateMotors();
-    if (digitalRead(MSensor)) {
-      rstate->runAlgorithm();
-    } else {
-      stop();
-    }
+
     // listen for stop signal
     if (!digitalRead(StartMod)) {
       while(true) {
-        //brake
-        stop();
+        // brake()
+        Serial.println("braking");
       }
     }
-    debug()
+    // debug()
     
-}
-
-void stop() {
-  analogWrite(Rpos, 0);
-  analogWrite(Rneg, 0);
-  analogWrite(Lpos, 0);
-  analogWrite(Lneg, 0);
 }
 
 /**
@@ -92,7 +74,7 @@ void stop() {
  * simple motordriver with speed and direction.  
  */ 
 void updateMotors() {
-    int leftDirection = leftMotorDriver->getDir();
+    int leftDirection = leftMotorDriver->getDirection();
     int leftSpeed = leftMotorDriver->getSpeed();
 
     if (leftDirection == 1) {  // if direction is forward
@@ -103,7 +85,7 @@ void updateMotors() {
         analogWrite(Lneg, leftSpeed);
     }
 
-    int rightDirection = rightMotorDriver->getDir();
+    int rightDirection = rightMotorDriver->getDirection();
     int rightSpeed = rightMotorDriver->getSpeed();
 
     if (rightDirection == 1) {  // if direction is forward

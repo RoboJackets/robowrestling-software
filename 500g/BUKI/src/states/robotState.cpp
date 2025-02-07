@@ -3,5 +3,9 @@
 #include "states/robotState.h"
 
 RobotState::RobotState() {
-    moveForward->runAlgorithm();
+
+}
+
+void RobotState::runAlgorithm() {
+    
 }
