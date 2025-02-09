@@ -42,9 +42,6 @@ class worldState {
             lineReader *backRightLineSensor;
             IRSensor *frontLeftIRSensor;
             IRSensor *frontRightIRSensor;
-            IRSensor *Rside;
-            IRSensor *Lside;
-            IRSensor *MSensor;
             IRSensor *backLeftIRSensor;
             IRSensor *backRightIRSensor;
         };

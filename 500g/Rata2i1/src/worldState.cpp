@@ -21,9 +21,6 @@ worldState::worldState(worldState::robotSensors sensors){
     this->backRightLineSensor = sensors.backRightLineSensor;
     this->frontLeftIRSensor = sensors.frontLeftIRSensor;
     this->frontRightIRSensor = sensors.frontRightIRSensor;
-    this->lSide = sensors.Lside;
-    this->rSide = sensors.Rside;
-    this->mSensor = sensors.MSensor;
     this->backLeftIRSensor = sensors.backLeftIRSensor;
     this->backRightIRSensor = sensors.backRightIRSensor;
     EnemyPosition = Position::MIDDLE_FRONT;
