@@ -15,5 +15,6 @@ class Strategies {
     public:
         Strategies(worldState *state, robotAction *robot, Timer *timer);
         void test();
+        void moveForward();
 };
 #endif

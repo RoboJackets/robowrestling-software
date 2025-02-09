@@ -11,6 +11,9 @@
 #include "robotAction.h"
 #include "worldState.h"
 #include "Strategies.h"
+#include "lineReader.h"
+#include "irSensor.h"
+#include "Timer.h"
 
 // pinouts
 #define Lside 12
@@ -33,6 +36,8 @@ motorDriver *leftMotorDriver;
 motorDriver *rightMotorDriver;
 worldState *state;
 robotAction *robot;
+Timer *timer;
+Strategies *strategies;
 
 
 
@@ -78,6 +83,9 @@ void setup() {
 
     robot = new robotAction(leftMotorDriver, rightMotorDriver);
 
+    timer = new Timer();
+
+    strategies = new Strategies(state, robot, timer);
 
     Serial.begin(9600);
 
@@ -130,19 +138,19 @@ void brake() {
 }
 
 void loop() {
-    pollSensors();
+    // pollSensors();
     // updateState()
     updateMotors();
     
-    
+    strategies->test();
 
     // listen for stop signal
-    if (!digitalRead(StartMod)) {
-      while(true) {
-        brake();
-        Serial.println("braking");
-      }
-    }
+    // if (!digitalRead(StartMod)) {
+    //   while(true) {
+    //     brake();
+    //     Serial.println("braking");
+    //   }
+    // }
 
     // debug()
     

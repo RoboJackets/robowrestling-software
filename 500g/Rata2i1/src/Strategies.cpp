@@ -21,3 +21,7 @@ void Strategies::test() {
     }
     robot->stop();
 }
+
+void Strategies::moveForward() {
+    robot->moveForward(255);
+}
