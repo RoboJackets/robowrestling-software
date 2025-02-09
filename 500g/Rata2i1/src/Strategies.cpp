@@ -10,6 +10,7 @@ Strategies::Strategies(worldState *state, robotAction *robot, Timer *timer) {
     this->state = state;
     this->robot = robot;
     this->timer = timer;
+    currentState = IDLE;
 }
 void Strategies::test() {
     timer->setTimeInterval(1000);
@@ -25,3 +26,8 @@ void Strategies::test() {
 void Strategies::moveForward() {
     robot->moveForward(255);
 }
+
+void Strategies::generalStrategy() {
+    
+}
+

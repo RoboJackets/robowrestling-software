@@ -9,6 +9,7 @@
 class Strategies {
     private:
         worldState *state;
+        int currentState;
         robotAction *robot;
         Timer *timer;
         
@@ -16,5 +17,6 @@ class Strategies {
         Strategies(worldState *state, robotAction *robot, Timer *timer);
         void test();
         void moveForward();
+        void generalStrategy();
 };
 #endif
