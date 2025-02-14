@@ -2,10 +2,8 @@
 
 #include "states/robotState.h"
 
-RobotState::RobotState() {
-
-}
+RobotState::RobotState(WorldState* worldStateParameter) : worldState(worldStateParameter) {}
 
 void RobotState::runAlgorithm() {
-    
+    // Decide which algorithm to run based on sensor data from WorldState class
 }
