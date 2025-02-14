@@ -6,3 +6,4 @@ Algorithm::Algorithm(RobotActions *action) {
 void Algorithm::RunItDown() {
     action->Forward();
 }
+

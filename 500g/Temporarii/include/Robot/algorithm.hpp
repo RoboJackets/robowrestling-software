@@ -8,7 +8,7 @@ class Algorithm {
         RobotActions *action;
     public:
         Algorithm(RobotActions *action);
-        void RunItDown();
+        void RunItDown();        
 };
 
 #endif

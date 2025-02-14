@@ -1,6 +1,12 @@
 #include <Arduino.h>
 #include "Sensors/WorldState.h"
 #include "Robot/robotActions.hpp"
+#include "Robot/robotState.hpp"
+#include "Robot/algorithm.hpp"
+
+/*
+* Temporarii main.cpp
+*/
 
 // Defining Pins
 // #define name value
@@ -21,12 +27,23 @@
 #define LEFT_IR_PIN A17
 #define RIGHT_IR_PIN A0
 
+// Define Objects
 IrSensor *irSensor;
 LineSensor *lineSensor;
-WorldState world;
+WorldState *world;
 
-RobotActions action;
-MotorDriver driver;
+RobotActions *action;
+MotorDriver *frontLeft;
+MotorDriver *frontRight;
+MotorDriver *backLeft;
+MotorDriver *backRight;
+
+MotorDriver *left;
+MotorDriver *right;
+
+Algorithm *strat;
+
+RobotState *state;
 
 void setup() {
   // Defines whether a pin is input or output
@@ -48,15 +65,24 @@ void setup() {
   irSensor = new IrSensor[5];
   lineSensor = new LineSensor[4];
   // World State
-  world = WorldState(irSensor, lineSensor);
+  *world = WorldState(irSensor, lineSensor);
   // Robot Actions
-  action = RobotActions(new MotorDriver(driver));
+  *frontLeft = MotorDriver();
+  *frontRight = MotorDriver();
+  *backLeft = MotorDriver();
+  *backRight = MotorDriver();
+  *action = RobotActions(frontLeft, frontRight, backLeft, backRight);
+  // Robot State
+  *strat = Algorithm(action);
+  *state = RobotState(world, strat);
 }
+
 // put your main code here, to run repeatedly:
 void loop() {
   pollSensors();
   calcState();
   writeMotors();
+  debug();
 }
 
 void pollSensors() {
@@ -71,12 +97,22 @@ void pollSensors() {
   irSensor[3].setValue(digitalRead(MIDRIGHT_IR_PIN));
   irSensor[4].setValue(digitalRead(RIGHT_IR_PIN));
 }
+
+void debug() {
+  Serial.print(millis());
+  Serial.print("IR Sensor Value:");
+  for (int i = 0; i < 4; i++) {
+    Serial.print(irSensor[i].getValue());
+  }
+  Serial.println();
+}
+
 void calcState() {
   // Calculate States
-  
+  state->runAlgorithm();
 }
+
 void writeMotors() {
   // Write to Motors digitalWrite()
   digitalWrite(LEFT_FRONT_MOTOR_PIN, 0);
-
 }

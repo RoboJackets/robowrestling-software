@@ -5,9 +5,12 @@
 
 class RobotActions {
     private: 
-        MotorDriver *motorDriver;
+        MotorDriver *frontLeftDriver;
+        MotorDriver *frontRightDriver;
+        MotorDriver *backLeftDriver;
+        MotorDriver *backRightDriver;
     public:
-        RobotActions(MotorDriver *);
+        RobotActions(MotorDriver *, MotorDriver *, MotorDriver *, MotorDriver *);
         void Forward();
         void Backwards();
         void Left();

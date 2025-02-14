@@ -1,117 +1,150 @@
-#include <Arduino.h>
-#include "Sensors/WorldState.h"
-#include "Robot/robotActions.hpp"
-#include "Robot/robotState.hpp"
-#include "Robot/algorithm.hpp"
+/**
+ * Xander
+ * V1.0
+ * File that outlines Spi's main
+ * 1/30/2025
+ */
 
-// Defining Pins
-// #define name value
-//OUTPUT Pins
-#define LEFT_FRONT_MOTOR_PIN A1
-#define RIGHT_FRONT_MOTOR_PIN A2
-#define LEFT_REAR_MOTOR_PIN A3
-#define RIGHT_REAR_MOTOR_PIN A4
+ #include <Arduino.h>
 
-//INPUT Pins
-#define TOP_LEFT_LINE_PIN A10
-#define TOP_RIGHT_LINE_PIN A11
-#define BACK_LEFT_LINE_PIN A12
-#define BACK_RIGHT_LINE_PIN A13
-#define MID_IR_PIN A14
-#define MIDLEFT_IR_PIN A15
-#define MIDRIGHT_IR_PIN A16
-#define LEFT_IR_PIN A17
-#define RIGHT_IR_PIN A0
-
-// Define Objects
-IrSensor *irSensor;
-LineSensor *lineSensor;
-WorldState world;
-
-RobotActions action;
-MotorDriver frontLeft;
-MotorDriver frontRight;
-MotorDriver backLeft;
-MotorDriver backRight;
-
-Algorithm strat;
-
-RobotState state;
-
-void setup() {
-  // Defines whether a pin is input or output
-  pinMode(LEFT_FRONT_MOTOR_PIN, OUTPUT);
-  pinMode(LEFT_REAR_MOTOR_PIN, OUTPUT);
-  pinMode(RIGHT_FRONT_MOTOR_PIN, OUTPUT);
-  pinMode(RIGHT_REAR_MOTOR_PIN, OUTPUT);
-  pinMode(TOP_LEFT_LINE_PIN, INPUT);
-  pinMode(TOP_RIGHT_LINE_PIN, INPUT);
-  pinMode(BACK_LEFT_LINE_PIN, INPUT);
-  pinMode(BACK_RIGHT_LINE_PIN, INPUT);
-  pinMode(MID_IR_PIN, INPUT);
-  pinMode(MIDLEFT_IR_PIN, INPUT);
-  pinMode(MIDRIGHT_IR_PIN, INPUT);
-  pinMode(LEFT_IR_PIN, INPUT);
-  pinMode(RIGHT_IR_PIN, INPUT);
-
-  // Sensors
-  irSensor = new IrSensor[5];
-  lineSensor = new LineSensor[4];
-  // World State
-  world = WorldState(irSensor, lineSensor);
-  // Robot Actions
-  frontLeft = MotorDriver();
-  frontRight = MotorDriver();
-  backLeft = MotorDriver();
-  backRight = MotorDriver();
-  action = RobotActions(&frontLeft);
-  action = RobotActions(&frontRight);
-  action = RobotActions(&backLeft);
-  action = RobotActions(&backRight);
-  // Robot State
-  strat = Algorithm(&action);
-  state = RobotState(&world, &strat);
-}
-
-// put your main code here, to run repeatedly:
-void loop() {
-  pollSensors();
-  calcState();
-  writeMotors();
-  debug();
-}
-
-void pollSensors() {
-  lineSensor[0].setValue(analogRead(TOP_LEFT_LINE_PIN));
-  lineSensor[1].setValue(analogRead(BACK_LEFT_LINE_PIN));
-  lineSensor[2].setValue(analogRead(TOP_RIGHT_LINE_PIN));
-  lineSensor[3].setValue(analogRead(BACK_RIGHT_LINE_PIN));
-
-  irSensor[0].setValue(digitalRead(LEFT_IR_PIN));
-  irSensor[1].setValue(digitalRead(MIDLEFT_IR_PIN));
-  irSensor[2].setValue(digitalRead(MID_IR_PIN));
-  irSensor[3].setValue(digitalRead(MIDRIGHT_IR_PIN));
-  irSensor[4].setValue(digitalRead(RIGHT_IR_PIN));
-
-  
-}
-
-void debug() {
-  Serial.print(millis());
-  Serial.print("IR Sensor Value:");
-  for (int i = 0; i < 4; i++) {
-    Serial.print(irSensor[i].getValue());
-  }
-  Serial.println();
-}
-
-void calcState() {
-  // Calculate States
-  state.runAlgorithm();
-}
-
-void writeMotors() {
-  // Write to Motors digitalWrite()
-  digitalWrite(LEFT_FRONT_MOTOR_PIN, 0);
-
-}
+ // imports
+ #include "Robot/robotActions.hpp"
+ #include "Robot/motorDriver.hpp"
+ #include "Sensors/WorldState.h"
+ #include "Sensors/IrSensor.h"
+ #include "Sensors/lineSensor.h"
+ #include "Robot/robotState.hpp"
+ 
+ // pinouts
+ const int RIGHT_PWM = 6;
+ const int RIGHT_DIR = 5;
+ const int LEFT_PWM = 8;
+ const int LEFT_DIR = 7;
+ const int LEFT_IR = 2;
+ const int MIDDLE_IR = 3;
+ const int RIGHT_IR = 4;
+ const int LEFT_LINE = A8;
+ const int RIGHT_LINE = A9;
+ const int START_PIN = 34;
+ 
+ // object definitions
+ IrSensor *leftIRSensor;
+ IrSensor *middleIRSensor;
+ IrSensor *rightIRSensor;
+ LineSensor *leftLineSensor;
+ LineSensor *rightLineSensor;
+ 
+ MotorDriver *leftMotorDriver;
+ MotorDriver *rightMotorDriver;
+ MotorDriver *test1;
+ MotorDriver *test2;
+ RobotActions *robotAction;
+ WorldState *worldState;
+ RobotState *robotState;
+ 
+ // if debugging is true it will skip the start module check.
+ const bool DEBUGGING = false;
+ 
+ // function definitions
+ void debug();
+ void writeMotors();
+ void pollSensors();
+ 
+ void setup() {
+   Serial.begin(9600);
+   
+   // pinmode definitions
+   pinMode(RIGHT_PWM, OUTPUT);
+   pinMode(RIGHT_DIR, OUTPUT);
+   pinMode(LEFT_PWM, OUTPUT);
+   pinMode(LEFT_DIR, OUTPUT);
+ 
+   pinMode(LEFT_IR, INPUT);
+   pinMode(MIDDLE_IR, INPUT);
+   pinMode(RIGHT_IR, INPUT);
+   pinMode(LEFT_LINE, INPUT);
+   pinMode(RIGHT_LINE, INPUT);
+   pinMode(START_PIN, INPUT);
+   
+   // instantion
+   leftMotorDriver = new MotorDriver();
+   rightMotorDriver = new MotorDriver();
+   robotAction = new RobotActions(leftMotorDriver, rightMotorDriver, test1, test2);
+   leftIRSensor = new IrSensor();
+   middleIRSensor = new IrSensor();
+   rightIRSensor = new IrSensor();
+   leftLineSensor = new LineSensor();
+   rightLineSensor = new LineSensor();
+   worldState = new WorldState(leftLineSensor, rightLineSensor, leftIRSensor, middleIRSensor, rightIRSensor);
+   robotState = new RobotState(worldState, robotAction);
+ 
+   if (!DEBUGGING) {
+     while (!digitalRead(START_PIN)) {
+       Serial.print(digitalRead(START_PIN));
+       Serial.println(" Waiting for start signal");
+     }
+   }
+ }
+ 
+ void loop() {
+   debug();          // method that just reads sensors and other values
+   pollSensors();
+   // calculateState();
+   writeMotors();
+   if (!DEBUGGING) { // stops if recieves signal to stop from start module
+     if (!digitalRead(START_PIN)) {
+       while(true) {
+         //robotAction->brake();
+         Serial.println("braking");
+       }
+     }
+   }
+ }
+ 
+  /**
+   * Implemented for Spi's motordrivers to conform to the
+   * simple motordriver with speed and direction. 
+   * (Spi's motordrivers conform to this by default)  
+   */ 
+ void writeMotors() {
+   analogWrite(RIGHT_PWM, rightMotorDriver->getSpeed());
+   digitalWrite(RIGHT_DIR, rightMotorDriver->getDirection());
+   analogWrite(LEFT_PWM, leftMotorDriver->getSpeed());
+   digitalWrite(LEFT_DIR, leftMotorDriver->getDirection());
+ }
+ 
+ /**
+  * method to update the sensor objects
+  */
+ void pollSensors() {
+   leftIRSensor->setValue(digitalRead(LEFT_IR));
+   middleIRSensor->setValue(digitalRead(MIDDLE_IR));
+   rightIRSensor->setValue(digitalRead(RIGHT_IR));
+   leftLineSensor->setValue(analogRead(LEFT_LINE));
+   rightLineSensor->setValue(analogRead(RIGHT_LINE));
+ }
+ 
+ /**
+  * method that reads simple sensor and motor values
+  */
+ void debug() {
+   if (true) {
+     Serial.print(digitalRead(START_PIN));
+     Serial.print(" ");
+     Serial.print(leftIRSensor->getValue());
+     Serial.print(middleIRSensor->getValue());
+     Serial.print(rightIRSensor->getValue());
+     Serial.print(" ");
+     Serial.print(analogRead(LEFT_LINE));
+     Serial.print(" ");
+     Serial.print(analogRead(RIGHT_LINE));
+     Serial.print(" ");
+   }
+   if (true) {
+     Serial.print(rightMotorDriver->getSpeed());
+     Serial.print(rightMotorDriver->getDirection());
+     Serial.print(leftMotorDriver->getSpeed());
+     Serial.print(leftMotorDriver->getDirection());
+   }
+   Serial.println();
+ }

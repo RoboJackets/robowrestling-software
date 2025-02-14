@@ -1,21 +1,60 @@
 #include "Robot/robotActions.hpp"
 
-RobotActions::RobotActions(MotorDriver *driver) {
-    motorDriver = driver;
+RobotActions::RobotActions(MotorDriver *frontLeftDriver, MotorDriver *frontRightDriver, MotorDriver *backLeftDriver, MotorDriver *backRightDriver) {
+    this->frontLeftDriver = frontLeftDriver;
+    this->frontRightDriver = frontRightDriver;
+    this->backLeftDriver = backLeftDriver;
+    this->backRightDriver = backRightDriver;
 }
 void RobotActions::Forward() {
-    motorDriver->setDirection(0);
-    motorDriver->setSpeed(10);
+    frontLeftDriver->setDirection(0);
+    frontLeftDriver->setSpeed(10);
+
+    backLeftDriver->setDirection(0);
+    backLeftDriver->setSpeed(10);
+    
+    frontRightDriver->setDirection(0);
+    frontRightDriver->setSpeed(10);
+
+    backRightDriver->setDirection(0);
+    backRightDriver->setSpeed(10);
 }
 void RobotActions::Backwards() {
-    motorDriver->setDirection(180);
-    motorDriver->setSpeed(10);
+    frontLeftDriver->setDirection(180);
+    frontLeftDriver->setSpeed(10);
+
+    backLeftDriver->setDirection(180);
+    backLeftDriver->setSpeed(10);
+    
+    frontRightDriver->setDirection(180);
+    frontRightDriver->setSpeed(10);
+
+    backRightDriver->setDirection(180);
+    backRightDriver->setSpeed(10);
 }
 void RobotActions::Left() {
-    motorDriver->setDirection(-90);
-    motorDriver->setSpeed(10);
+    frontLeftDriver->setDirection(-90);
+    frontLeftDriver->setSpeed(-10);
+    
+    backLeftDriver->setDirection(-90);
+    backLeftDriver->setSpeed(-10);
+
+    frontRightDriver->setDirection(-90);
+    frontRightDriver->setSpeed(10);
+
+    backRightDriver->setDirection(-90);
+    backRightDriver->setSpeed(10);
 }
 void RobotActions::Right() {
-    motorDriver->setDirection(90);
-    motorDriver->setSpeed(10);
+    frontLeftDriver->setDirection(90);
+    frontLeftDriver->setSpeed(10);
+
+    backLeftDriver->setDirection(90);
+    backLeftDriver->setSpeed(10);
+    
+    frontRightDriver->setDirection(90);
+    frontRightDriver->setSpeed(-10);
+
+    backRightDriver->setDirection(90);
+    backRightDriver->setSpeed(-10);
 }
