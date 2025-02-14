@@ -33,6 +33,8 @@
  IrSensor *rightIRSensor;
  LineSensor *leftLineSensor;
  LineSensor *rightLineSensor;
+ IrSensor *test3;
+ IrSensor *test4;
  
  MotorDriver *leftMotorDriver;
  MotorDriver *rightMotorDriver;
@@ -75,7 +77,10 @@
    rightIRSensor = new IrSensor();
    leftLineSensor = new LineSensor();
    rightLineSensor = new LineSensor();
-   worldState = new WorldState(leftLineSensor, rightLineSensor, leftIRSensor, middleIRSensor, rightIRSensor);
+   IrSensor *irSensors = new IrSensor[5];
+   {test3, leftIRSensor, middleIRSensor, rightIRSensor, test4};
+   LineSensor *lineSensors = {leftLineSensor, rightLineSensor}
+   worldState = new WorldState(irSensors, lineSensors);
    robotState = new RobotState(worldState, robotAction);
  
    if (!DEBUGGING) {
