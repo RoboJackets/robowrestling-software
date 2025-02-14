@@ -23,11 +23,11 @@ class algorithms {
     private:
         robot_actions* robot;
         world_state* world;
-
+        approach_state app_line_state;
     public:
         algorithms(robot_actions* robo_actions, world_state* world);
         void draw();
-        void seek();
+        int approach_line();
         int forward_safe();
         int turn_towards();
 };

@@ -14,7 +14,6 @@ class robot_state {
     public:
         robot_state(world_state *worldState, algorithms *algorithm);
         void runAlgorithm();
-    
-
+        void seek();
 };
 #endif

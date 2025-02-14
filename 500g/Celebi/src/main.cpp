@@ -27,10 +27,12 @@
 #define LineRight A0
 
 
-#define Rpos 6
-#define Rneg 11
-#define Lpos 3
-#define Lneg 5
+#define Rpos 11
+#define Rneg 13
+#define Lpos 6
+#define Lneg A5
+#define PWMLeft 3
+#define PWMRight 5
 #define switch1 A6
 #define switch2 A7
 
@@ -74,6 +76,8 @@ void setup() {
     pinMode(Rneg, OUTPUT);
     pinMode(Lpos, OUTPUT);
     pinMode(Lneg, OUTPUT);
+    pinMode(PWMLeft, OUTPUT);
+    pinMode(PWMRight, OUTPUT);
     pinMode(StartMod, INPUT);
     pinMode(switch1, INPUT);
     pinMode(switch2, INPUT);
@@ -157,23 +161,25 @@ void updateMotors() {
     int leftSpeed = leftMotorDriver->get_speed();
 
     if (leftDirection == 1) {  // if direction is forward
-        analogWrite(Lpos, leftSpeed);
+        analogWrite(Lpos, 250);
         analogWrite(Lneg, 0);
     } else {                    // if direction is back
         analogWrite(Lpos, 0);
-        analogWrite(Lneg, leftSpeed);
+        analogWrite(Lneg, 250);
     }
+    analogWrite(PWMLeft, leftSpeed);
 
     int rightDirection = rightMotorDriver->get_direction();
     int rightSpeed = rightMotorDriver->get_speed();
 
     if (rightDirection == 1) {  // if direction is forward
-        analogWrite(Rpos, rightSpeed);
+        analogWrite(Rpos, 250);
         analogWrite(Rneg, 0);
     } else {                    // if direction is back
         analogWrite(Rpos, 0);
-        analogWrite(Rneg, rightSpeed);
+        analogWrite(Rneg, 250);
     }
+    analogWrite(PWMRight, rightSpeed);
 }
 
 void debug() {

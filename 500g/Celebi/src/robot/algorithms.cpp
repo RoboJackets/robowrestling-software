@@ -4,21 +4,26 @@
 algorithms :: algorithms(robot_actions *robot, world_state *world) {
     this -> robot = robot;
     this -> world = world;
+    app_line_state = GO_STRAIGHT;
 }
 
 void algorithms :: draw() {
-    if (world -> line_check() == OFF) {
-        robot -> drive_forward(25);
-    } else {
-        robot -> brake();
-    }
+    approach_line();
 }
 
-void algorithms :: seek() {
-    if (turn_towards() == 0) {
-        forward_safe();
+int algorithms :: approach_line() {
+    if (world -> line_check() == OFF) {
+        robot -> drive_forward(100);
+    } else if (app_line_state = GO_STRAIGHT) {
+        robot -> drive_backward(150);
+        app_line_state = TURN;
+    } else {
+        robot -> turn_left(150);
+        app_line_state = GO_STRAIGHT;
     }
+    return 0;
 }
+
 int algorithms :: forward_safe() {
     if (world -> enemy_pos() == FRONT || world -> enemy_pos() == CLOSE_MID) {
         robot -> drive_forward(100);
