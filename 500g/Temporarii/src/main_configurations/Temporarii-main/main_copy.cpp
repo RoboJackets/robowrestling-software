@@ -28,8 +28,16 @@
 #define RIGHT_IR_PIN A0
 
 // Define Objects
-IrSensor *irSensor;
-LineSensor *lineSensor;
+IrSensor *left;
+IrSensor *midLeft;
+IrSensor *mid;
+IrSensor *midRight;
+IrSensor *right;
+LineSensor *topLeftLine;
+LineSensor *topRightLine;
+LineSensor *backLeftLine;
+LineSensor *backRightLine;
+
 WorldState *world;
 
 RobotActions *action;
@@ -38,8 +46,6 @@ MotorDriver *frontRight;
 MotorDriver *backLeft;
 MotorDriver *backRight;
 
-MotorDriver *left;
-MotorDriver *right;
 
 Algorithm *strat;
 
@@ -62,10 +68,19 @@ void setup() {
   pinMode(RIGHT_IR_PIN, INPUT);
 
   // Sensors
-  irSensor = new IrSensor[5];
-  lineSensor = new LineSensor[4];
+  left = new IrSensor();
+  midLeft = new IrSensor();
+  mid = new IrSensor();
+  midRight = new IrSensor();
+  right = new IrSensor();
+  topLeftLine = new LineSensor();
+  topRightLine = new LineSensor();
+  backLeftLine = new LineSensor();
+  backRightLine = new LineSensor();
+  IrSensor *irArray[5] = {left, midLeft, mid, midRight, right};
+  LineSensor *lineArray[4] = {topLeftLine, topRightLine, backLeftLine, backRightLine};
   // World State
-  *world = WorldState(irSensor, lineSensor);
+  *world = WorldState(irArray, lineArray);
   // Robot Actions
   *frontLeft = MotorDriver();
   *frontRight = MotorDriver();
@@ -86,24 +101,32 @@ void loop() {
 }
 
 void pollSensors() {
-  lineSensor[0].setValue(analogRead(TOP_LEFT_LINE_PIN));
-  lineSensor[1].setValue(analogRead(BACK_LEFT_LINE_PIN));
-  lineSensor[2].setValue(analogRead(TOP_RIGHT_LINE_PIN));
-  lineSensor[3].setValue(analogRead(BACK_RIGHT_LINE_PIN));
+  topLeftLine->setValue(analogRead(TOP_LEFT_LINE_PIN));
+  backLeftLine->setValue(analogRead(BACK_LEFT_LINE_PIN));
+  topRightLine->setValue(analogRead(TOP_RIGHT_LINE_PIN));
+  backRightLine->setValue(analogRead(BACK_RIGHT_LINE_PIN));
 
-  irSensor[0].setValue(digitalRead(LEFT_IR_PIN));
-  irSensor[1].setValue(digitalRead(MIDLEFT_IR_PIN));
-  irSensor[2].setValue(digitalRead(MID_IR_PIN));
-  irSensor[3].setValue(digitalRead(MIDRIGHT_IR_PIN));
-  irSensor[4].setValue(digitalRead(RIGHT_IR_PIN));
+  left->setValue(digitalRead(LEFT_IR_PIN));
+  midLeft->setValue(digitalRead(MIDLEFT_IR_PIN));
+  mid->setValue(digitalRead(MID_IR_PIN));
+  midRight->setValue(digitalRead(MIDRIGHT_IR_PIN));
+  right->setValue(digitalRead(RIGHT_IR_PIN));
 }
 
 void debug() {
   Serial.print(millis());
   Serial.print("IR Sensor Value:");
-  for (int i = 0; i < 4; i++) {
-    Serial.print(irSensor[i].getValue());
-  }
+  Serial.print(left->getValue());
+  Serial.print(midLeft->getValue());
+  Serial.print(mid->getValue());
+  Serial.print(midRight->getValue());
+  Serial.print(right->getValue());
+  Serial.println();
+  Serial.print("Line Sensor Value:");
+  Serial.print(topLeftLine->getValue());
+  Serial.print(backLeftLine->getValue());
+  Serial.print(topRightLine->getValue());
+  Serial.print(backRightLine->getValue());
   Serial.println();
 }
 

@@ -11,7 +11,7 @@
  #include "Robot/robotActions.hpp"
  #include "Robot/motorDriver.hpp"
  #include "Sensors/WorldState.h"
- #include "Sensors/IrSensor.h"
+ #include "Sensors/irSensor.h"
  #include "Sensors/lineSensor.h"
  #include "Robot/robotState.hpp"
  
@@ -35,6 +35,8 @@
  LineSensor *rightLineSensor;
  IrSensor *test3;
  IrSensor *test4;
+ LineSensor *test5;
+ LineSensor *test6;
  
  MotorDriver *leftMotorDriver;
  MotorDriver *rightMotorDriver;
@@ -43,7 +45,7 @@
  RobotActions *robotAction;
  WorldState *worldState;
  RobotState *robotState;
- 
+ Algorithm *algo;
  // if debugging is true it will skip the start module check.
  const bool DEBUGGING = false;
  
@@ -77,11 +79,11 @@
    rightIRSensor = new IrSensor();
    leftLineSensor = new LineSensor();
    rightLineSensor = new LineSensor();
-   IrSensor *irSensors = new IrSensor[5];
-   {test3, leftIRSensor, middleIRSensor, rightIRSensor, test4};
-   LineSensor *lineSensors = {leftLineSensor, rightLineSensor}
+   IrSensor *irSensors[5] = {test3, leftIRSensor, middleIRSensor, rightIRSensor, test4};
+   LineSensor *lineSensors[4] = {leftLineSensor, test5, rightLineSensor, test6};
    worldState = new WorldState(irSensors, lineSensors);
-   robotState = new RobotState(worldState, robotAction);
+   algo = new Algorithm(robotAction);
+   robotState = new RobotState(worldState, algo);
  
    if (!DEBUGGING) {
      while (!digitalRead(START_PIN)) {

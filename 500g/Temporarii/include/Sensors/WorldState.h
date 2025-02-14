@@ -8,12 +8,12 @@
 class WorldState{
     private:
         // IrSensor Array = {Left, MidLeft, Mid, MidRight, Right}
-        IrSensor *irStates = new IrSensor[5];
+        IrSensor irStates[5];
         // LineSensor Array = {FrontLeft, BackLeft, FrontRight, BackRight};
-        LineSensor *lineStates = new LineSensor[4];
+        LineSensor lineStates[4];
         EnemyPositions currPosition;
     public:
-        WorldState(IrSensor *ir, LineSensor *line);
+        WorldState(IrSensor *ir[5], LineSensor *line[4]);
         WorldState();
         EnemyPositions getEnemyPosition();
         OnLine getIsOnLine();

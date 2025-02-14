@@ -2,9 +2,13 @@
 #include <Sensors/lineSensor.h>
 #include "Sensors/WorldState.h"
 
-WorldState::WorldState(IrSensor *ir, LineSensor *line) {
-    irStates = ir;
-    lineStates = line;
+WorldState::WorldState(IrSensor *ir[5], LineSensor *line[4]) {
+    for (int i = 0; i < 5; i++) {
+        irStates[i] = *ir[i];
+    }
+    for (int i = 0; i < 4; i++) {
+        lineStates[i] = *line[i];
+    }
     currPosition = NoOp;
 }
 

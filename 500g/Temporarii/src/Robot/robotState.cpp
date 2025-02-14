@@ -11,4 +11,5 @@ void RobotState::runAlgorithm() {
     if (worldState->getEnemyPosition() == SEND) {
         algorithm->RunItDown();
     }
+    algorithm->RunItDown();
 }
