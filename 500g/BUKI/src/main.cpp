@@ -10,21 +10,25 @@
 #include "sensors/MotorDriver.h"
 #include "states/robotState.h"
 #include "action/robotAction.h"
-#include "states/moveForward.h"
+#include "sensors/LINEsensor.h"
+#include "sensors/IRsensor.h"
+#include "states/stayOn.h"
 
 // pinouts
-#define Lside 12
-#define Lsensor 8
-#define Rside 2
-#define Rsensor 4
-#define MSensor 7
-#define StartMod 10
-#define Rpos 6
-#define Rneg 11
-#define Lpos 3
-#define Lneg 5
-#define switch1 A6
-#define switch2 A7
+const int L_POS = 2;
+const int L_NEG = 1;
+const int R_POS = 3;
+const int R_NEG = 4;
+const int L_PWM = 5;
+const int R_PWM = 6;
+const int LEFT_LINE = 23;
+const int RIGHT_LINE = 22;
+const int LEFT_IR_90 = 21;
+const int LEFT_IR_45 = 20;
+const int MIDDLE_IR = 19;
+const int RIGHT_IR_45 = 18;
+const int RIGHT_IR_90 = 17;
+const int START_MODULE = 16;
  
 // define objects
 MotorDriver *leftMotorDriver;
@@ -33,57 +37,67 @@ MotorDriver *rightMotorDriver;
 // define functions
 void updateMotors();
 void stop();
-MoveForward* rstate;
+void pollsensors();
+
+
+StayOn* rstate;
 RobotAction* raction;
+WorldState* wrldstate;
+LINEsensor* linesensors [3];
 
 void setup() {
-    // define pinmodes
-    pinMode(Rpos, OUTPUT);
-    pinMode(Rneg, OUTPUT);
-    pinMode(Lpos, OUTPUT);
-    pinMode(Lneg, OUTPUT);
-    pinMode(StartMod, INPUT);
-    pinMode(switch1, INPUT);
-    pinMode(switch2, INPUT);
+  // pinmode definitions
+  pinMode(L_POS, OUTPUT);
+  pinMode(L_NEG, OUTPUT);
+  pinMode(L_PWM, OUTPUT);
+  pinMode(R_POS, OUTPUT);
+  pinMode(R_NEG, OUTPUT);
+  pinMode(R_PWM, OUTPUT);
+  pinMode(LEFT_LINE, INPUT);
+  pinMode(RIGHT_LINE, INPUT);
+  pinMode(LEFT_IR_90, INPUT);
+  pinMode(LEFT_IR_45, INPUT);
+  pinMode(MIDDLE_IR, INPUT);
+  pinMode(RIGHT_IR_45, INPUT);
+  pinMode(RIGHT_IR_90, INPUT);
+  pinMode(START_MODULE, INPUT);
+  leftMotorDriver = new MotorDriver();
+  rightMotorDriver = new MotorDriver();
 
-    // instantiate objects
-    leftMotorDriver = new MotorDriver();
-    rightMotorDriver = new MotorDriver();
+  Serial.begin(9600);
 
-    Serial.begin(9600);
-
-    raction = new RobotAction(leftMotorDriver, rightMotorDriver);
-    rstate = new MoveForward(raction);
-    // wait for start signal
-    while (!digitalRead(StartMod)) {
-      Serial.print(digitalRead(StartMod));
-      Serial.println(" Waiting for start signal");
-    }
+  for (int i = 0; i < 3; i++) {
+    linesensors[i] = new LINEsensor(0);
+  }
+  raction = new RobotAction(leftMotorDriver, rightMotorDriver);
+  wrldstate = new WorldState(linesensors, NULL);
+  rstate = new StayOn(raction, wrldstate);
 }
 void loop() {
-    // pollsensors()
+    pollsensors();
     // updateState()
     updateMotors();
-    if (digitalRead(MSensor)) {
-      rstate->runAlgorithm();
-    } else {
-      stop();
-    }
+    rstate->runAlgorithm();
+    // Serial.print(leftMotorDriver->getSpeed());
+    // Serial.print(" ");
+    // Serial.println(rightMotorDriver->getSpeed());
     // listen for stop signal
-    if (!digitalRead(StartMod)) {
-      while(true) {
-        //brake
-        stop();
-      }
-    }
+    // if (!digitalRead(START_MODULE)) {
+    //   while(true) {
+    //     //brake
+    //     stop();
+    //   }
+    // }
     
 }
-
 void stop() {
-  analogWrite(Rpos, 0);
-  analogWrite(Rneg, 0);
-  analogWrite(Lpos, 0);
-  analogWrite(Lneg, 0);
+  analogWrite(L_PWM, 0);
+  analogWrite(R_PWM, 0);
+}
+
+void pollsensors() {
+  linesensors[0]->setValue(analogRead(LEFT_LINE));
+  linesensors[1]->setValue(analogRead(RIGHT_LINE));
 }
 
 /**
@@ -91,25 +105,32 @@ void stop() {
  * simple motordriver with speed and direction.  
  */ 
 void updateMotors() {
-    int leftDirection = leftMotorDriver->getDir();
-    int leftSpeed = leftMotorDriver->getSpeed();
+  int leftDirection = leftMotorDriver->getDir();
+  int leftSpeed = leftMotorDriver->getSpeed();
 
-    if (leftDirection == 1) {  // if direction is forward
-        analogWrite(Lpos, leftSpeed);
-        analogWrite(Lneg, 0);
-    } else {                    // if direction is back
-        analogWrite(Lpos, 0);
-        analogWrite(Lneg, leftSpeed);
-    }
+  if (leftDirection == 1) {  // if direction is forward
+     analogWrite(L_POS, 1);
+     analogWrite(L_NEG, 0);
+  } else {                    // if direction is back
+     analogWrite(L_POS, 0);
+     analogWrite(L_NEG, 1);
+  }
 
-    int rightDirection = rightMotorDriver->getDir();
-    int rightSpeed = rightMotorDriver->getSpeed();
+  int rightDirection = rightMotorDriver->getDir();
+  int rightSpeed = rightMotorDriver->getSpeed();
 
-    if (rightDirection == 1) {  // if direction is forward
-        analogWrite(Rpos, rightSpeed);
-        analogWrite(Rneg, 0);
-    } else {                    // if direction is back
-        analogWrite(Rpos, 0);
-        analogWrite(Rneg, rightSpeed);
-    }
+  if (rightDirection == 1) {  // if direction is forward
+     analogWrite(R_POS, 1);
+     analogWrite(R_NEG, 0);
+  } else {                    // if direction is back
+     analogWrite(R_POS, 0);
+     analogWrite(R_NEG, 1);
+  }
+
+  // controls the speed
+  Serial.print(leftSpeed);
+  Serial.print(" ");
+  Serial.println(rightSpeed);
+  analogWrite(L_PWM, leftSpeed);
+  analogWrite(R_PWM, rightSpeed);
 }

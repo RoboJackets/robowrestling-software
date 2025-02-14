@@ -106,10 +106,10 @@
      int rightSpeed = rightMotorDriver->getSpeed();
  
      if (rightDirection == 1) {  // if direction is forward
-         analogWrite(Rpos, rightSpeed);
-         analogWrite(Rneg, 0);
+        analogWrite(Rpos, rightSpeed);
+        analogWrite(Rneg, 0);
      } else {                    // if direction is back
-         analogWrite(Rpos, 0);
-         analogWrite(Rneg, rightSpeed);
+        analogWrite(Rpos, 0);
+        analogWrite(Rneg, rightSpeed);
      }
  }

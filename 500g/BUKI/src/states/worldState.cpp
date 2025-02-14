@@ -15,13 +15,13 @@ void WorldState::readSensors() {
 
 }
 Edge WorldState::isNearEdge() {                        
-    if (lnsn[0]->getValue() && lnsn[1]->getValue()) {       // Left and right sensors detect edge
+    if (lnsn[0]->getValue() < 200 && lnsn[1]->getValue() < 200) {       // Left and right sensors detect edge
         return FRONT;
-    } else if (lnsn[1]->getValue()) {                       // Right sensor detects edge
+    } else if (lnsn[1]->getValue() < 200) {                       // Right sensor detects edge
         return RIGHT;
-    } else if (lnsn[0]->getValue()) {                       // Left sensor detects edge
+    } else if (lnsn[0]->getValue() < 200) {                       // Left sensor detects edge
         return LEFT;
-    } else if (lnsn[2]->getValue()) {                       // Back sensor detects edge
+    } else if (lnsn[2]->getValue() < 200) {                       // Back sensor detects edge
         return BACK;
     } else {                                                // No sensor detects edge
         return SAFE;

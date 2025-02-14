@@ -4,14 +4,14 @@ LINEsensor::LINEsensor() {      // constructor
     value = 0;
 }
 
-LINEsensor::LINEsensor(bool sensorValue) {      // constructor
+LINEsensor::LINEsensor(int sensorValue) {      // constructor
     value = sensorValue;
 }
 
-bool LINEsensor::getValue() {          // gets line sensor value (function)
+int LINEsensor::getValue() {          // gets line sensor value (function)
     return value;
 }
 
-void LINEsensor::setValue(bool sensorValue) {       // sets line sensor value (function)
+void LINEsensor::setValue(int sensorValue) {       // sets line sensor value (function)
     value = sensorValue;
 }
