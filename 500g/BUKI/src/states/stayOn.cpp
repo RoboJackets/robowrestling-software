@@ -10,9 +10,9 @@ void StayOn::runAlgorithm() {      // calls runAlgorithm method of MoveForward c
     if (epos == FRONT) {
         robotAction->reverse();
     } else if (epos == LEFT || epos == SLIGHT_LEFT) {
-        robotAction->turnRight();
+        robotAction->reverseLeft();
     } else if (epos == RIGHT || epos == SLIGHT_RIGHT) {
-        robotAction->turnLeft();
+        robotAction->reverseRight();
     } else {
         robotAction->go();
     }

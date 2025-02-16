@@ -45,7 +45,7 @@ void loop() {
   if(digitalRead(MSensor))
     rstate->runAlgorithm();
   else ; 
-    stop()
+    stop();
 
 }
 void stop() {

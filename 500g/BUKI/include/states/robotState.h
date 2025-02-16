@@ -7,7 +7,8 @@
 class RobotState {
     private:    
         WorldState* worldState;             // pointer to WorldState instance
-    public: 
+    public:
+        RobotState();
         RobotState(WorldState* worldStateParameter);
         void runAlgorithm();
 };

@@ -2,6 +2,9 @@
 
 #include "states/robotState.h"
 
+RobotState::RobotState() {
+}
+
 RobotState::RobotState(WorldState* worldStateParameter) : worldState(worldStateParameter) {}
 
 void RobotState::runAlgorithm() {
