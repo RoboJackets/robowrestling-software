@@ -56,10 +56,11 @@ void loop(void) {
         // Emergency forward
         state.driving_state = DrivingState::MFORWARD;
         state.motor_speed = 75;
+    } else {
+        // Make decision
+        strategy->make_decision(&state);
     }
 
-    // Make decision
-    strategy->make_decision(&state);
-
     // Execute decision
+    skibidi->execute_action(&state);
 }

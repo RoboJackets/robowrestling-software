@@ -59,3 +59,8 @@ void Skibidi::update_state(State* state) {
         state->active_ir_sensors[it->first] = it->second->is_sensing();
     }
 }
+
+void Skibidi::execute_action(State* state) {
+    this->motor_driver->change_state(state->driving_state);
+    this->motor_driver->drive(state->motor_speed);
+}

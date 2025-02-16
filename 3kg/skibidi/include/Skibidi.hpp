@@ -35,6 +35,7 @@ class Skibidi {
         StartModule* get_start_module();
         void initialize_sensors(bool analog_line_sensors);
         void update_state(State* state);
+        void execute_action(State* state);
 };
 
 #endif // SKIBIDI_HPP_
