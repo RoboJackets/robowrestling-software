@@ -16,6 +16,8 @@ class RobotAction {
         void reverse();
         void reverseLeft();
         void reverseRight();
+        void spinRight();
+        void spinLeft();
 };
 
 #endif
