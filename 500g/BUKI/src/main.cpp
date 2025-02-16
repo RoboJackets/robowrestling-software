@@ -83,11 +83,16 @@ void loop() {
     // updateState()
     updateMotors();
     // rstate->runAlgorithm();
-    if (irsensors[2]) {
-      int stayoncounter = 500;
+    Serial.println(irsensors[2]->getValue());
+    if (irsensors[2]->getValue()) {
+      int stayoncounter = 200000;
       while (true) {
-        if (irsensors[2]) {
-          rstate2->move();
+        pollsensors();
+        updateMotors();
+
+        if (irsensors[2]->getValue()) {
+          raction->go();
+
         } else {
           rstate->runAlgorithm();
           stayoncounter--;
