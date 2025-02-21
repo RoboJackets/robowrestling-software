@@ -1,8 +1,9 @@
 #include "robot/robot_state.hpp"
 
-robot_state :: robot_state(world_state *worldState, algorithms *algorithm) {
+robot_state :: robot_state(world_state *worldState, algorithms *algorithm, timer* thymer) {
     this -> worldState = worldState;
     this -> algorithm = algorithm;
+    this -> thymer = thymer;
 }
 
 void robot_state :: runAlgorithm() {
@@ -10,7 +11,9 @@ void robot_state :: runAlgorithm() {
     enemy_states enemyPosition = worldState -> enemy_pos(); 
 
     //Select algorithm base on position.
-    seek();
+    //algorithm -> draw();
+    //seek();
+    algorithm -> turn_test();
 }
 
 void robot_state :: seek() {

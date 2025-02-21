@@ -15,6 +15,7 @@
 #include "world/world_state.hpp"
 #include "world/sensors/ir_sensor.hpp"
 #include "world/sensors/line_sensor.hpp"
+#include "world/sensors/timer.hpp"
 
 // pinouts
 #define Lside 12
@@ -61,6 +62,8 @@ algorithms* algorithm;
 world_state* world;
 robot_state* robot;
 
+timer* thymer;
+
 //filter
 int print = 0;
 
@@ -105,13 +108,18 @@ void setup() {
     world = new world_state(line_left, line_right, ir_left, ir_mid_left, ir_mid, ir_mid_right, ir_right);
     
     //initialize algorithm
-    algorithm = new algorithms(robo_actions, world);
+    algorithm = new algorithms(robo_actions, world, thymer);
 
     //initialize robot actions
-    robot = new robot_state(world, algorithm);
+    robot = new robot_state(world, algorithm, thymer);
+
+    thymer = new timer(millis());
 
     Serial.begin(9600);
     Serial.print("we are running\n");
+    thymer -> set_action_timer(0);
+    Serial.print("millis right now: ");
+    Serial.println(millis());
     // wait for start signal
     while (!digitalRead(StartMod)) {
       Serial.print(digitalRead(StartMod));
@@ -146,6 +154,8 @@ void pollSensors() {
   ir_mid -> set_ir_sensor(digitalRead(MSensor));
   ir_mid_right -> set_ir_sensor(digitalRead(Rsensor));
   ir_right -> set_ir_sensor(digitalRead(Rside));
+
+  thymer -> update_time(millis());
 }
 
 void updateState() {
@@ -183,15 +193,25 @@ void updateMotors() {
 }
 
 void debug() {
-  //delay(500);
+  //delay(50);
   Serial.println("\n\n*****************");
+  Serial.print("action timer has gone off: ");
+  Serial.println(thymer -> check_action_time());
+  Serial.print("time since match start: ");
+  Serial.println(thymer -> check_match_time());
+  Serial.print("millies: ");
+  Serial.println(millis());
+  Serial.print("action timer started at: ");
+  Serial.println(thymer -> get_action_start());
+  Serial.print("current time from timer: ");
+  Serial.println(thymer -> get_current_time());
   //sensors
   // Serial.println("sensors:");
-  Serial.print("line left: ");
-  Serial.println(line_left -> get_value());
+  // Serial.print("line left: ");
+  // Serial.println(line_left -> get_value());
 
-  Serial.print("line right: ");
-  Serial.println(line_right -> get_value());
+  // Serial.print("line right: ");
+  // Serial.println(line_right -> get_value());
 
 
   // Serial.print("distance left: ");
