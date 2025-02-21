@@ -41,7 +41,7 @@ Position WorldState::getEnemyPosition() {
     }
 
     if (rightMiddle) {
-        return Position::RightMiddle;
+        return Position::Right_Middle;
     }
 
     return Position::None;
@@ -50,10 +50,11 @@ Position WorldState::getEnemyPosition() {
 Position WorldState::getSelfPosition() {
     int left = leftLineSensor->getValue();
     int right = rightLineSensor->getValue();
-
-    if (left) {
+    if (left && right) {
+        return Position::On_Line;
+    } else if (left) {
         return Position::On_Line_Left;
-    } if (right) {
+    } else if (right) {
         return Position::On_Line_Right;
     }
     return Position::Off_Line;

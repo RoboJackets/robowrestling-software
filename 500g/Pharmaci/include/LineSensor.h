@@ -6,6 +6,7 @@ class LineSensor {
         int value;
 
     public:
+        LineSensor();
         LineSensor(int sensorValue);
         void setValue(int sensorValue);
         int getValue();

@@ -8,13 +8,14 @@ enum class Position {
     Left_Middle,
     Middle_Close,
     Middle_Far,
-    RightMiddle,
+    Right_Middle,
     Right,
 
 
     On_Line_Left,
     On_Line_Right,
-    Off_Line
+    Off_Line,
+    On_Line
 };
 
 #endif

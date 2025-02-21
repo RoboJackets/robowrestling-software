@@ -6,6 +6,7 @@ class IRSensor {
         int value;
 
     public: 
+        IRSensor();
         IRSensor(int sensorValue);
         int getValue();
         void setValue(int sensorValue);

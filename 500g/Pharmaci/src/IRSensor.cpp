@@ -1,7 +1,11 @@
 #include <IRSensor.h>
 
-IRSensor::IRSensor(int sensorValue) {
+IRSensor::IRSensor() {
     value = 0;
+}
+
+IRSensor::IRSensor(int sensorValue) {
+    value = sensorValue;
 }
 
 int IRSensor::getValue() {

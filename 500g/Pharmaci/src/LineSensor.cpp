@@ -1,8 +1,12 @@
 #include <LineSensor.h>
 
-LineSensor::LineSensor(int sensorValue) {
+LineSensor::LineSensor() {
     value = 0;
 };
+
+LineSensor::LineSensor(int sensorValue) {
+    value = sensorValue;
+}
 
 void LineSensor::setValue(int sensorValue) {
     value = sensorValue;
