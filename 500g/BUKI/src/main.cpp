@@ -83,11 +83,29 @@ void loop() {
     // updateState()
     updateMotors();
     // rstate->runAlgorithm();
-    Serial.print("   ");
-    Serial.println(irsensors[1]->getValue());
-    // Serial.print(leftMotorDriver->getSpeed());
-    // Serial.print(" ");
-    // Serial.println(rightMotorDriver->getSpeed());
+    Serial.println(linesensors[1]->getValue());
+    if (irsensors[2]->getValue()) {
+      int stayoncounter = 200000;
+      while (true) {
+        Serial.println(linesensors[1]->getValue());
+        pollsensors();
+        updateMotors();
+
+        if (irsensors[2]->getValue()) {
+          raction->go();
+
+        } else {
+          rstate->runAlgorithm();
+          stayoncounter--;
+          if (stayoncounter <= 0){
+            break;
+          }
+        }
+      }
+    } else {
+      raction->spinLeft();
+    }
+
     // listen for stop signal
     // if (!digitalRead(START_MODULE)) {
     //   while(true) {
