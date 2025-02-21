@@ -31,15 +31,15 @@ const int RIGHT_IR_45 = 18;
 const int RIGHT_IR_90 = 17;
 const int START_MODULE = 16;
  
-// define objects               allocates memory for these 5 objects
+// define objects               declares pointers to these objects
 MotorDriver *leftMotorDriver;
 MotorDriver *rightMotorDriver;
 StayOn* rstate;
 MoveForward* rstate2;
 RobotAction* raction;
 WorldState* wrldstate;
-LINEsensor* linesensors [3];
-IRsensor* irsensors [5];
+LINEsensor* linesensors[3];
+IRsensor* irsensors[5];
 
 // define functions
 void updateMotors();
@@ -62,18 +62,18 @@ void setup() {
   pinMode(RIGHT_IR_45, INPUT);
   pinMode(RIGHT_IR_90, INPUT);
   pinMode(START_MODULE, INPUT);
-  leftMotorDriver = new MotorDriver();            // creates instances of motor driver objects
+  leftMotorDriver = new MotorDriver();            // dynamically allocates memory for the object and returns a pointer (assigns it to leftMotorDriver)
   rightMotorDriver = new MotorDriver();
 
   Serial.begin(9600);
 
   for (int i = 0; i < 3; i++) {
-    linesensors[i] = new LINEsensor(0);
+    linesensors[i] = new LINEsensor(0);     // the "0" in LINEsensor(0) indicates that the sensor value is initialized to 0.
   }
   for (int i = 0; i < 5; i++) {
-    irsensors[i] = new IRsensor(0);
+    irsensors[i] = new IRsensor(0);         // the "0" in LINEsensor(0) indicates that the sensor value is initialized to 0.
   }
-  raction = new RobotAction(leftMotorDriver, rightMotorDriver);   // creates instances of objects
+  raction = new RobotAction(leftMotorDriver, rightMotorDriver);   // dynamically allocates memory for the object and returns a pointer (assigns it to raction)
   wrldstate = new WorldState(linesensors, NULL);
   rstate = new StayOn(raction, wrldstate);
   rstate2 = new MoveForward(raction);
