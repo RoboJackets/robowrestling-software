@@ -13,7 +13,11 @@ void robot_state :: runAlgorithm() {
     //Select algorithm base on position.
     //algorithm -> draw();
     //seek();
-    algorithm -> turn_test();
+    if (enemyPosition != UNKNOWN) {
+        seek();
+    } else {
+        algorithm -> draw();
+    }
 }
 
 void robot_state :: seek() {

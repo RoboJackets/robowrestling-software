@@ -99,11 +99,13 @@ void setup() {
     ir_mid = new ir_sensor(false);
     ir_mid_right = new ir_sensor(false);
     ir_right = new ir_sensor(false);
-    
+
+    //initialize timer
+    thymer = new timer(millis());
+
     //initialize robot actions
     robo_actions = new robot_actions(leftMotorDriver, rightMotorDriver);
     
-
     //initialize world state
     world = new world_state(line_left, line_right, ir_left, ir_mid_left, ir_mid, ir_mid_right, ir_right);
     
@@ -113,13 +115,10 @@ void setup() {
     //initialize robot actions
     robot = new robot_state(world, algorithm, thymer);
 
-    thymer = new timer(millis());
 
     Serial.begin(9600);
     Serial.print("we are running\n");
-    thymer -> set_action_timer(0);
-    Serial.print("millis right now: ");
-    Serial.println(millis());
+    thymer -> set_action_timer(100);
     // wait for start signal
     while (!digitalRead(StartMod)) {
       Serial.print(digitalRead(StartMod));
@@ -168,7 +167,7 @@ void updateState() {
  */ 
 void updateMotors() {
     int leftDirection = leftMotorDriver->get_direction();
-    int leftSpeed = leftMotorDriver->get_speed();
+    int leftSpeed = leftMotorDriver->get_speed()*.87;
 
     if (leftDirection == 1) {  // if direction is forward
         analogWrite(Lpos, 250);
@@ -195,23 +194,23 @@ void updateMotors() {
 void debug() {
   //delay(50);
   Serial.println("\n\n*****************");
-  Serial.print("action timer has gone off: ");
-  Serial.println(thymer -> check_action_time());
-  Serial.print("time since match start: ");
-  Serial.println(thymer -> check_match_time());
-  Serial.print("millies: ");
-  Serial.println(millis());
-  Serial.print("action timer started at: ");
-  Serial.println(thymer -> get_action_start());
-  Serial.print("current time from timer: ");
-  Serial.println(thymer -> get_current_time());
+  // Serial.print("action timer has gone off: ");
+  // Serial.println(thymer -> check_action_time());
+  // Serial.print("time since match start: ");
+  // Serial.println(thymer -> check_match_time());
+  // Serial.print("millies: ");
+  // Serial.println(millis());
+  // Serial.print("action timer started at: ");
+  // Serial.println(thymer -> get_action_start());
+  // Serial.print("current time from timer: ");
+  // Serial.println(thymer -> get_current_time());
   //sensors
   // Serial.println("sensors:");
-  // Serial.print("line left: ");
-  // Serial.println(line_left -> get_value());
+  Serial.print("line left: ");
+  Serial.println(line_left -> get_value());
 
-  // Serial.print("line right: ");
-  // Serial.println(line_right -> get_value());
+  Serial.print("line right: ");
+  Serial.println(line_right -> get_value());
 
 
   // Serial.print("distance left: ");
