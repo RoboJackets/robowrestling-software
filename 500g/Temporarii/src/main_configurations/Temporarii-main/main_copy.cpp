@@ -137,5 +137,8 @@ void calcState() {
 
 void writeMotors() {
   // Write to Motors digitalWrite()
-  digitalWrite(LEFT_FRONT_MOTOR_PIN, 0);
+  digitalWrite(LEFT_FRONT_MOTOR_PIN, frontLeft->getSpeed());
+  digitalWrite(RIGHT_FRONT_MOTOR_PIN, frontRight->getSpeed());
+  digitalWrite(LEFT_REAR_MOTOR_PIN, backLeft->getSpeed());
+  digitalWrite(RIGHT_REAR_MOTOR_PIN, backRight->getSpeed());
 }
