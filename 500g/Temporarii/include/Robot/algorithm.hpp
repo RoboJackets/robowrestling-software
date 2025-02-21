@@ -1,5 +1,5 @@
-#include "Robot/robotActions.hpp"
 #ifndef ALGORITHM_HPP
+#include "Robot/robotActions.hpp"
 
 #define ALGORITHM_HPP 
 

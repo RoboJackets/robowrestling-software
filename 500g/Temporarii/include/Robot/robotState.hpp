@@ -1,6 +1,7 @@
-#include "Sensors/WorldState.cpp"
-#include "Robot/algorithm.hpp"
 #ifndef ROBOTSTATE_HPP
+#include "Sensors/WorldState.h"
+#include "Robot/algorithm.hpp"
+
 
 #define ROBOTSTATE_HPP 
 

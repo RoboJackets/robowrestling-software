@@ -1,8 +1,8 @@
-#include "Sensors/irSensor.cpp"
-#include "Sensors/lineSensor.cpp"
+#ifndef WORLDSTATE_H
+#include "Sensors/irSensor.h"
+#include "Sensors/lineSensor.h"
 #include "Enumerations/EnemyPositions.hpp"
 #include "Enumerations/OnLine.hpp"
-#ifndef WORLDSTATE_H
 #define WORLDSTATE_H
 
 class WorldState{
