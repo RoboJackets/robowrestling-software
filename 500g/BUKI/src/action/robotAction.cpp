@@ -56,8 +56,8 @@ void RobotAction::spinRight() {
 void RobotAction::spinLeft() {
     leftMotor->setDir(true);
     rightMotor->setDir(false);
-    leftMotor->setSpeed(90);
-    rightMotor->setSpeed(90);
+    leftMotor->setSpeed(60);
+    rightMotor->setSpeed(60);
 }
 
 void RobotAction::reverseLeft() {
