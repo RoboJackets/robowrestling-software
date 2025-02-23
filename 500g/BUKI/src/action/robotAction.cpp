@@ -10,24 +10,24 @@ void RobotAction::turnLeft() {
     // call setDir and setSpeed
     leftMotor->setDir(false);           // leftMotor is a pointer to an object created in main, so use "->" to set direction. If it was a normal object (not a pointer), use leftMotor.setDir(false)
     rightMotor->setDir(true);
-    rightMotor->setSpeed(90);
-    leftMotor->setSpeed(90);
+    rightMotor->setSpeed(100);
+    leftMotor->setSpeed(100);
 }
 
 void RobotAction::turnRight() {
     // call setDir and setSpeed
     leftMotor->setDir(true);
     rightMotor->setDir(false);
-    leftMotor->setSpeed(90);
-    rightMotor->setSpeed(90);
+    leftMotor->setSpeed(100);
+    rightMotor->setSpeed(100);
 }
 
 void RobotAction::go() {
     // call setDir and setSpeed
     leftMotor->setDir(1);
     rightMotor->setDir(1);
-    leftMotor->setSpeed(75);
-    rightMotor->setSpeed(75);
+    leftMotor->setSpeed(80);
+    rightMotor->setSpeed(80);
 }
 
 void RobotAction::GOGOGO() {
