@@ -42,5 +42,5 @@ void robot_actions :: drive_custom(int LSpeed, int RSpeed, bool LDir, bool RDir)
     left_motor->set_direction(LDir);
     left_motor->set_speed(LSpeed);
     right_motor->set_direction(RDir);
-    right_motor->set_speed(RSpeed)
+    right_motor->set_speed(RSpeed);
 }
