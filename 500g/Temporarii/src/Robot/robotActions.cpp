@@ -8,16 +8,16 @@ RobotActions::RobotActions(MotorDriver *frontLeftDriver, MotorDriver *frontRight
 }
 void RobotActions::Forward() {
     frontLeftDriver->setDirection(0);
-    frontLeftDriver->setSpeed(10);
+    frontLeftDriver->setSpeed(100);
 
     backLeftDriver->setDirection(0);
-    backLeftDriver->setSpeed(10);
+    backLeftDriver->setSpeed(100);
     
     frontRightDriver->setDirection(0);
-    frontRightDriver->setSpeed(10);
+    frontRightDriver->setSpeed(100);
 
     backRightDriver->setDirection(0);
-    backRightDriver->setSpeed(10);
+    backRightDriver->setSpeed(100);
 }
 void RobotActions::Backwards() {
     frontLeftDriver->setDirection(180);

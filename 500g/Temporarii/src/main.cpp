@@ -47,15 +47,18 @@
  RobotState *robotState;
  Algorithm *algo;
  // if debugging is true it will skip the start module check.
- const bool DEBUGGING = false;
+ const bool DEBUGGING = true;
  
  // function definitions
  void debug();
  void writeMotors();
  void pollSensors();
+ void calculateState();
  
- void setup() {
-   Serial.begin(9600);
+void setup() {
+  Serial.begin(9600);
+  delay(2000);
+  Serial.println("Starting Setup");
    
    // pinmode definitions
    pinMode(RIGHT_PWM, OUTPUT);
@@ -94,10 +97,13 @@
  }
  
  void loop() {
+  Serial.println("Starting loop");
+  delay(2000);
+  writeMotors();
+  /*
    debug();          // method that just reads sensors and other values
    pollSensors();
-   // calculateState();
-   writeMotors();
+   calculateState();
    if (!DEBUGGING) { // stops if recieves signal to stop from start module
      if (!digitalRead(START_PIN)) {
        while(true) {
@@ -106,7 +112,9 @@
        }
      }
    }
+     */
  }
+
  
   /**
    * Implemented for Spi's motordrivers to conform to the
@@ -114,10 +122,13 @@
    * (Spi's motordrivers conform to this by default)  
    */ 
  void writeMotors() {
-   analogWrite(RIGHT_PWM, rightMotorDriver->getSpeed());
-   digitalWrite(RIGHT_DIR, rightMotorDriver->getDirection());
-   analogWrite(LEFT_PWM, leftMotorDriver->getSpeed());
-   digitalWrite(LEFT_DIR, leftMotorDriver->getDirection());
+   //analogWrite(RIGHT_PWM, rightMotorDriver->getSpeed());
+   //digitalWrite(RIGHT_DIR, rightMotorDriver->getDirection());
+   //analogWrite(LEFT_PWM, leftMotorDriver->getSpeed());
+   //digitalWrite(LEFT_DIR, leftMotorDriver->getDirection());
+   // 0 = backward, 1 = forward
+   analogWrite(RIGHT_PWM, 100);
+   digitalWrite(RIGHT_DIR, 1);
  }
  
  /**
@@ -130,7 +141,14 @@
    leftLineSensor->setValue(analogRead(LEFT_LINE));
    rightLineSensor->setValue(analogRead(RIGHT_LINE));
  }
- 
+
+ /**
+  * Calc State using algorithm
+  */
+ void calculateState() {
+    robotState->runAlgorithm();
+ }
+
  /**
   * method that reads simple sensor and motor values
   */

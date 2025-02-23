@@ -8,8 +8,10 @@ RobotState::RobotState(WorldState *state, Algorithm *algorithm) {
 }
 void RobotState::runAlgorithm() {
     // void State
+    /*
     if (worldState->getEnemyPosition() == SEND) {
         algorithm->RunItDown();
     }
+    */
     algorithm->RunItDown();
 }
