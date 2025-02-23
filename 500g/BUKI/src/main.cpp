@@ -34,8 +34,8 @@ const int START_MODULE = 16;
 // define objects               declares pointers to these objects
 MotorDriver *leftMotorDriver;
 MotorDriver *rightMotorDriver;
-StayOn* rstate;
-MoveForward* rstate2;
+RobotState* rstate;
+StayOn* stayOn;
 RobotAction* raction;
 WorldState* wrldstate;
 LINEsensor* linesensors[3];
@@ -75,13 +75,12 @@ void setup() {
   }
   raction = new RobotAction(leftMotorDriver, rightMotorDriver);   // dynamically allocates memory for the object and returns a pointer (assigns it to raction)
   wrldstate = new WorldState(linesensors, NULL);
-  rstate = new StayOn(raction, wrldstate);
-  rstate2 = new MoveForward(raction);
+  rstate = new RobotState(wrldstate, stayOn, raction);
 }
 void loop() {
     pollsensors();
     updateMotors();
-    
+    rstate->controlRobot();
 }
 void stop() {
   analogWrite(L_PWM, 0);

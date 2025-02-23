@@ -47,7 +47,6 @@ Edge WorldState::enemyPos() {
     } else {                                                // No sensor detects enemy
         return SAFE;
     }
-    return;
 
 
     // if (irsn[1]->getValue() && irsn[2]->getValue()) {       // Front sensors detect enemy

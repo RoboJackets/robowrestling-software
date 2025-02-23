@@ -3,6 +3,7 @@
 
 #include "states/worldState.h"
 #include "states/stayOn.h"
+#include "action/robotAction.h"
 
 class RobotState {
     private:    
@@ -12,7 +13,7 @@ class RobotState {
     public:
         RobotState();
         RobotState(WorldState* worldStateParameter, StayOn* stayOnParameter, RobotAction* robotActionParameter);
-        void runAlgorithm();
+        void controlRobot();
 };
 
 #endif

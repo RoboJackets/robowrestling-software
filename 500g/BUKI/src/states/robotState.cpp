@@ -8,14 +8,14 @@ RobotState::RobotState() {
 RobotState::RobotState(WorldState* worldStateParameter, StayOn* stayOnParameter, RobotAction* robotActionParameter) {
     worldState = worldStateParameter;
     stayOn = stayOnParameter;
-
+    robotAction = robotActionParameter;
 }
 
-void RobotState::runAlgorithm() {
+void RobotState::controlRobot() {
     // Decide which algorithm to run based on sensor data from WorldState class
 
     Edge enemy_pos = worldState->enemyPos();
-    
+
     if (enemy_pos == SAFE) {
         stayOn->runAlgorithm();
     } else if (enemy_pos == CLOSE_FRONT) {
