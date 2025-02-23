@@ -80,7 +80,7 @@ void setup() {
 void loop() {
     pollsensors();
     updateMotors();
-    rstate->controlRobot();
+    rstate->win();
 }
 void stop() {
   analogWrite(L_PWM, 0);

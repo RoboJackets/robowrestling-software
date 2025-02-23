@@ -11,7 +11,7 @@ RobotState::RobotState(WorldState* worldStateParameter, StayOn* stayOnParameter,
     robotAction = robotActionParameter;
 }
 
-void RobotState::controlRobot() {
+void RobotState::win() {
     // Decide which algorithm to run based on sensor data from WorldState class
 
     Edge enemy_pos = worldState->enemyPos();

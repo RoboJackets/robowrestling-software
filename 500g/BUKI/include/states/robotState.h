@@ -13,7 +13,7 @@ class RobotState {
     public:
         RobotState();
         RobotState(WorldState* worldStateParameter, StayOn* stayOnParameter, RobotAction* robotActionParameter);
-        void controlRobot();
+        void win();
 };
 
 #endif
