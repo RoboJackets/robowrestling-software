@@ -5,8 +5,29 @@
 RobotState::RobotState() {
 }
 
-RobotState::RobotState(WorldState* worldStateParameter) : worldState(worldStateParameter) {}
+RobotState::RobotState(WorldState* worldStateParameter, StayOn* stayOnParameter, RobotAction* robotActionParameter) {
+    worldState = worldStateParameter;
+    stayOn = stayOnParameter;
+
+}
 
 void RobotState::runAlgorithm() {
     // Decide which algorithm to run based on sensor data from WorldState class
+
+    Edge enemy_pos = worldState->enemyPos();
+    
+    if (enemy_pos == SAFE) {
+        stayOn->runAlgorithm();
+    } else if (enemy_pos == CLOSE_FRONT) {
+        robotAction->GOGOGO();
+    } else if (enemy_pos == FRONT) {
+        robotAction->go();
+    } else if (enemy_pos == LEFT || enemy_pos == SLIGHT_LEFT) {
+        robotAction->turnLeft();
+    } else if (enemy_pos == RIGHT || enemy_pos == SLIGHT_RIGHT) {
+        robotAction->turnRight();
+    } else {
+        stayOn->runAlgorithm();
+    }
+
 }
