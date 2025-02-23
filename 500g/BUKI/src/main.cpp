@@ -74,7 +74,7 @@ void setup() {
     irsensors[i] = new IRsensor(0);         // the "0" in LINEsensor(0) indicates that the sensor value is initialized to 0.
   }
   raction = new RobotAction(leftMotorDriver, rightMotorDriver);   // dynamically allocates memory for the object and returns a pointer (assigns it to raction)
-  wrldstate = new WorldState(linesensors, NULL);
+  wrldstate = new WorldState(linesensors, irsensors);
   rstate = new RobotState(wrldstate, stayOn, raction);
 }
 void loop() {
