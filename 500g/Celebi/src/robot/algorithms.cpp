@@ -67,7 +67,7 @@ int algorithms :: approach_line() {
         //set backwards timer
         thymer -> set_action_timer(50);
         //set state to go backwards
-        app_state = GO_BACKWARDS;
+        app_state = GO_BACKWARDS; 
     }
     return 0;
 }
@@ -104,4 +104,16 @@ int algorithms :: turn_towards() {
         return 1;
     }
     return 0;
+}
+
+int algorithms :: dodge() {
+    if (world -> enemy_pos() == FRONT) {
+        
+    } else if (world -> enemy_pos() == LEFT) {
+        robot -> drive_custom(50, 150, true, true);
+        return 1;
+    } else if (world -> enemy_pos() == RIGHT) {
+        robot ->
+    }
+    
 }

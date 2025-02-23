@@ -18,6 +18,7 @@ class robot_actions {
         void drive_backward(int speed);
         void turn_left(int speed);
         void turn_right(int speed);
+        void drive_custom(int LSpeed, int RSpeed, bool LDir, bool RDir);
 };
 
 class algorithms {
@@ -33,6 +34,7 @@ class algorithms {
         int approach_line();
         int forward_safe();
         int turn_towards();
+        int dodge();
         void turn_test();
 };
 #endif
