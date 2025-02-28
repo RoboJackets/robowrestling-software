@@ -7,6 +7,7 @@ State state;
 Action *strategy;
 
 void setup(void) {
+    /*
     // Serial initialization (for debugging)
     // Pin initialization -- handled by the things that use them
     // State initialization
@@ -33,30 +34,35 @@ void setup(void) {
 
     // Sensor initialization
     skibidi->initialize_sensors(analog_line_sensors);
+    */
+   pinMode(11, OUTPUT);
+   pinMode(12, OUTPUT);
+   pinMode(25, OUTPUT);
+   pinMode(36, OUTPUT);
+   pinMode(37, OUTPUT);
+   pinMode(24, OUTPUT);
 }
 
 void loop(void) {
     //skibidi->motor_driver->driving_state = DrivingState::MFORWARD;
     //skibidi->motor_driver->drive(50);
-    digitalWrite(11, HIGH);
-    digitalWrite(12, LOW);
-    digitalWrite(36, HIGH);
-    digitalWrite(37, LOW);
-    analogWrite(25, 128);
-    analogWrite(24, 128);
-
-    delay(2000);
-
     //skibidi->motor_driver->driving_state = DrivingState::MBACKWARD;
     //skibidi->motor_driver->drive(50);
-    digitalWrite(11, LOW);
-    digitalWrite(12, HIGH);
+
+    digitalWrite(36, HIGH);
+    digitalWrite(37, LOW);
+    digitalWrite(11, HIGH);
+    digitalWrite(12, LOW);
+    analogWrite(24, 128);
+    analogWrite(25, 128);
+    delay(1000);
     digitalWrite(36, LOW);
     digitalWrite(37, HIGH);
+    digitalWrite(11, LOW);
+    digitalWrite(12, HIGH);
     analogWrite(25, 128);
     analogWrite(24, 128);
-
-    delay(2000);
+    delay(1000);
 }
 
 /*
