@@ -36,6 +36,31 @@ void setup(void) {
 }
 
 void loop(void) {
+    //skibidi->motor_driver->driving_state = DrivingState::MFORWARD;
+    //skibidi->motor_driver->drive(50);
+    digitalWrite(11, HIGH);
+    digitalWrite(12, LOW);
+    digitalWrite(36, HIGH);
+    digitalWrite(37, LOW);
+    analogWrite(25, 128);
+    analogWrite(24, 128);
+
+    delay(2000);
+
+    //skibidi->motor_driver->driving_state = DrivingState::MBACKWARD;
+    //skibidi->motor_driver->drive(50);
+    digitalWrite(11, LOW);
+    digitalWrite(12, HIGH);
+    digitalWrite(36, LOW);
+    digitalWrite(37, HIGH);
+    analogWrite(25, 128);
+    analogWrite(24, 128);
+
+    delay(2000);
+}
+
+/*
+void loop(void) {
     // TODO: Convert to interrupt, send Teensy
     // into low power at end of setup() and whenever
     // start module goes low @ match end
@@ -64,3 +89,4 @@ void loop(void) {
     // Execute decision
     skibidi->execute_action(&state);
 }
+*/

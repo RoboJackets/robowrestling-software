@@ -26,7 +26,8 @@ Skibidi::Skibidi(bool analog_line_sensors) {
         {IrDirection::MID_LEFT,     new IrSensor(1)},
         {IrDirection::LEFT,         new IrSensor(1)},
     };
-    this->motor_driver = new MotorDriver(std::make_pair(1, 2), std::make_pair(1, 2));
+    //this->motor_driver = new MotorDriver(std::make_pair(1, 2), std::make_pair(1, 2));
+    this->motor_driver = new MotorDriver(36, 37, 24, 11, 12, 25);
 
     this->start_module = new StartModule(1);
 }

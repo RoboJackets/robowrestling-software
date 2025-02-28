@@ -25,11 +25,11 @@ class Skibidi {
     private:
         std::map<Position, DoubleLineSensor*> line_sensors;
         std::map<IrDirection, IrSensor*> ir_sensors;
-        MotorDriver* motor_driver;
         StartModule* start_module;
 
         void check_line_sensors(State* state);
     public:
+        MotorDriver* motor_driver;
         Skibidi(bool analog_line_sensors);
 
         StartModule* get_start_module();
