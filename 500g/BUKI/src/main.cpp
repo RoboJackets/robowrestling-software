@@ -82,7 +82,7 @@ void loop() {
     pollsensors();
     // updateState()
     updateMotors();
-    // rstate->runAlgorithm();
+    rstate->runAlgorithm();
     Serial.println(linesensors[1]->getValue());
     if (irsensors[2]->getValue()) {
       int stayoncounter = 300000;
@@ -106,7 +106,7 @@ void loop() {
       raction->spinLeft();
     }
 
-    // listen for stop signal
+    // // listen for stop signal
     // if (!digitalRead(START_MODULE)) {
     //   while(true) {
     //     //brake
