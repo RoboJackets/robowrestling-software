@@ -81,6 +81,7 @@ void loop() {
     pollsensors();
     updateMotors();
     rstate->win();
+    Serial.println(wrldstate->enemyPos());
 }
 void stop() {
   analogWrite(L_PWM, 0);
@@ -96,6 +97,16 @@ void pollsensors() {
   irsensors[2]->setValue(digitalRead(MIDDLE_IR));
   irsensors[3]->setValue(digitalRead(RIGHT_IR_45));
   irsensors[4]->setValue(digitalRead(RIGHT_IR_90));
+
+  Serial.print(irsensors[0]->getValue());
+  Serial.print(' ');
+  Serial.print(irsensors[1]->getValue());
+  Serial.print(' ');
+  Serial.print(irsensors[2]->getValue());
+  Serial.print(' ');
+  Serial.print(irsensors[3]->getValue());
+  Serial.print(' ');
+  Serial.println(irsensors[4]->getValue());
 }
 
 /**

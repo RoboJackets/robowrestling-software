@@ -40,7 +40,7 @@ Edge WorldState::enemyPos() {
         return SLIGHT_LEFT;
     } else if (irsn[3]->getValue()) {                       // Front left sensor detects enemy
         return SLIGHT_RIGHT;
-    } else if (irsn[4]->getValue()) {                        // Right sensor detects enemy
+    } else if (false && irsn[4]->getValue()) {                        // Right sensor detects enemy
         return RIGHT;
     } else if (irsn[1]->getValue() && irsn[2]->getValue() && irsn[3]->getValue()) {
         return CLOSE_FRONT;                                 // enemy is on top of us
