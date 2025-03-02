@@ -4,16 +4,16 @@ MotorDriver::MotorDriver(int left_ctrl_1, int left_ctrl_2, int left_speed, int r
     this->motor_pins[0][0] = left_ctrl_1;
     this->motor_pins[0][1] = left_ctrl_2;
     this->motor_pins[0][2] = left_speed;
-    this->motor_pins[0][0] = right_ctrl_1;
-    this->motor_pins[0][1] = right_ctrl_2;
-    this->motor_pins[0][2] = right_speed;
+    this->motor_pins[1][0] = right_ctrl_1;
+    this->motor_pins[1][1] = right_ctrl_2;
+    this->motor_pins[1][2] = right_speed;
 
     pinMode(motor_pins[0][0], OUTPUT);
     pinMode(motor_pins[0][1], OUTPUT);
     pinMode(motor_pins[0][2], OUTPUT);
-    pinMode(motor_pins[0][0], OUTPUT);
-    pinMode(motor_pins[0][1], OUTPUT);
-    pinMode(motor_pins[0][2], OUTPUT);
+    pinMode(motor_pins[1][0], OUTPUT);
+    pinMode(motor_pins[1][1], OUTPUT);
+    pinMode(motor_pins[1][2], OUTPUT);
 }
 
 inline int MotorDriver::map_to_pwm(int val) {
@@ -40,16 +40,16 @@ void MotorDriver::drive(int speed) {
         case MFORWARD:
             digitalWrite(left_pins[0], HIGH);
             digitalWrite(left_pins[1], LOW);
-            digitalWrite(right_pins[0], LOW);
-            digitalWrite(right_pins[1], HIGH);
+            digitalWrite(right_pins[0], HIGH);
+            digitalWrite(right_pins[1], LOW);
             analogWrite(left_pins[2], this->map_to_pwm(speed));
             analogWrite(right_pins[2], this->map_to_pwm(speed));
             break;
         case MBACKWARD:
             digitalWrite(left_pins[0], LOW);
             digitalWrite(left_pins[1], HIGH);
-            digitalWrite(right_pins[0], HIGH);
-            digitalWrite(right_pins[1], LOW);
+            digitalWrite(right_pins[0], LOW);
+            digitalWrite(right_pins[1], HIGH);
             analogWrite(left_pins[2], this->map_to_pwm(speed));
             analogWrite(right_pins[2], this->map_to_pwm(speed));
             break;
@@ -57,16 +57,16 @@ void MotorDriver::drive(int speed) {
         case MTURN_LEFT:
             digitalWrite(left_pins[0], HIGH);
             digitalWrite(left_pins[1], LOW);
-            digitalWrite(right_pins[0], HIGH);
-            digitalWrite(right_pins[1], LOW);
+            digitalWrite(right_pins[0], LOW);
+            digitalWrite(right_pins[1], HIGH);
             analogWrite(left_pins[2], this->map_to_pwm(speed));
             analogWrite(right_pins[2], this->map_to_pwm(speed));
             break;
         case MTURN_RIGHT:
             digitalWrite(left_pins[0], LOW);
             digitalWrite(left_pins[1], HIGH);
-            digitalWrite(right_pins[0], LOW);
-            digitalWrite(right_pins[1], HIGH);
+            digitalWrite(right_pins[0], HIGH);
+            digitalWrite(right_pins[1], LOW);
             analogWrite(left_pins[2], this->map_to_pwm(speed));
             analogWrite(right_pins[2], this->map_to_pwm(speed));
             break;
