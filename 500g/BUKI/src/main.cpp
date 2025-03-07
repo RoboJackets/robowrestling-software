@@ -66,6 +66,10 @@ void setup() {
   rightMotorDriver = new MotorDriver();
 
   Serial.begin(9600);
+  while (!Serial) {  // Wait for Serial to connect (optional, useful for debugging)
+    delay(10);
+    }
+    Serial.println("Teensy 4.1 started");   
 
   for (int i = 0; i < 3; i++) {
     linesensors[i] = new LINEsensor(0);     // the "0" in LINEsensor(0) indicates that the sensor value is initialized to 0.
@@ -75,6 +79,7 @@ void setup() {
   }
   raction = new RobotAction(leftMotorDriver, rightMotorDriver);   // dynamically allocates memory for the object and returns a pointer (assigns it to raction)
   wrldstate = new WorldState(linesensors, irsensors);
+  stayOn = new StayOn(raction, wrldstate);
   rstate = new RobotState(wrldstate, stayOn, raction);
 }
 void loop() {
