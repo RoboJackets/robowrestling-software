@@ -12,7 +12,11 @@ int MotorDriver::getSpeed() {
     return speed;
 }
 void MotorDriver::setDirection(int value) {
-    direction = value;
+    if (value == 1) {
+        direction = 1;
+    } else {
+        direction = 0;
+    }
 }
 void MotorDriver::setSpeed(int value) {
     speed = value;

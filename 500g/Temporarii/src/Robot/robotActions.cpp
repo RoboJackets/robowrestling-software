@@ -7,6 +7,8 @@ RobotActions::RobotActions(MotorDriver *frontLeftDriver, MotorDriver *frontRight
     this->backRightDriver = backRightDriver;
 }
 void RobotActions::Forward() {
+    // Future Note: Pins set the direction and speed of the robot
+    // Value 0 for direction means spin forward and Value 1 for direction means spin backwards
     frontLeftDriver->setDirection(0);
     frontLeftDriver->setSpeed(100);
 
@@ -20,41 +22,41 @@ void RobotActions::Forward() {
     backRightDriver->setSpeed(100);
 }
 void RobotActions::Backwards() {
-    frontLeftDriver->setDirection(180);
-    frontLeftDriver->setSpeed(10);
+    frontLeftDriver->setDirection(1);
+    frontLeftDriver->setSpeed(100);
 
-    backLeftDriver->setDirection(180);
-    backLeftDriver->setSpeed(10);
+    backLeftDriver->setDirection(1);
+    backLeftDriver->setSpeed(100);
     
-    frontRightDriver->setDirection(180);
-    frontRightDriver->setSpeed(10);
+    frontRightDriver->setDirection(1);
+    frontRightDriver->setSpeed(100);
 
-    backRightDriver->setDirection(180);
-    backRightDriver->setSpeed(10);
+    backRightDriver->setDirection(1);
+    backRightDriver->setSpeed(100);
 }
 void RobotActions::Left() {
-    frontLeftDriver->setDirection(-90);
-    frontLeftDriver->setSpeed(-10);
+    frontLeftDriver->setDirection(1);
+    frontLeftDriver->setSpeed(10);
     
-    backLeftDriver->setDirection(-90);
-    backLeftDriver->setSpeed(-10);
+    backLeftDriver->setDirection(1);
+    backLeftDriver->setSpeed(10);
 
-    frontRightDriver->setDirection(-90);
-    frontRightDriver->setSpeed(10);
+    frontRightDriver->setDirection(0);
+    frontRightDriver->setSpeed(100);
 
-    backRightDriver->setDirection(-90);
-    backRightDriver->setSpeed(10);
+    backRightDriver->setDirection(0);
+    backRightDriver->setSpeed(100);
 }
 void RobotActions::Right() {
-    frontLeftDriver->setDirection(90);
+    frontLeftDriver->setDirection(1);
     frontLeftDriver->setSpeed(10);
 
-    backLeftDriver->setDirection(90);
+    backLeftDriver->setDirection(1);
     backLeftDriver->setSpeed(10);
     
-    frontRightDriver->setDirection(90);
-    frontRightDriver->setSpeed(-10);
+    frontRightDriver->setDirection(0);
+    frontRightDriver->setSpeed(100);
 
-    backRightDriver->setDirection(90);
-    backRightDriver->setSpeed(-10);
+    backRightDriver->setDirection(0);
+    backRightDriver->setSpeed(100);
 }

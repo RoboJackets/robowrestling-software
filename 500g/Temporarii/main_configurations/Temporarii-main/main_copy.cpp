@@ -1,12 +1,11 @@
+/*
+* Temporarii main.cpp
+*/
 #include <Arduino.h>
 #include "Sensors/WorldState.h"
 #include "Robot/robotActions.hpp"
 #include "Robot/robotState.hpp"
 #include "Robot/algorithm.hpp"
-
-/*
-* Temporarii main.cpp
-*/
 
 // Defining Pins
 // #define name value
@@ -15,6 +14,11 @@
 #define RIGHT_FRONT_MOTOR_PIN A2
 #define LEFT_REAR_MOTOR_PIN A3
 #define RIGHT_REAR_MOTOR_PIN A4
+
+#define LEFT_FRONT_DIR_PIN A5
+#define RIGHT_FRONT_DIR_PIN A6
+#define LEFT_REAR_DIR_PIN A7
+#define RIGHT_REAR_DIR_PIN A8
 
 //INPUT Pins
 #define TOP_LEFT_LINE_PIN A10
@@ -46,7 +50,6 @@ MotorDriver *frontRight;
 MotorDriver *backLeft;
 MotorDriver *backRight;
 
-
 Algorithm *strat;
 
 RobotState *state;
@@ -57,6 +60,11 @@ void setup() {
   pinMode(LEFT_REAR_MOTOR_PIN, OUTPUT);
   pinMode(RIGHT_FRONT_MOTOR_PIN, OUTPUT);
   pinMode(RIGHT_REAR_MOTOR_PIN, OUTPUT);
+  pinMode(LEFT_FRONT_DIR_PIN, OUTPUT);
+  pinMode(LEFT_REAR_DIR_PIN, OUTPUT);
+  pinMode(RIGHT_FRONT_DIR_PIN, OUTPUT);
+  pinMode(RIGHT_REAR_DIR_PIN, OUTPUT);
+
   pinMode(TOP_LEFT_LINE_PIN, INPUT);
   pinMode(TOP_RIGHT_LINE_PIN, INPUT);
   pinMode(BACK_LEFT_LINE_PIN, INPUT);
@@ -90,10 +98,12 @@ void setup() {
   // Robot State
   *strat = Algorithm(action);
   *state = RobotState(world, strat);
+  Serial.begin(9600);
 }
 
 // put your main code here, to run repeatedly:
 void loop() {
+  // delay(2000); Delays code by 2 seconds
   pollSensors();
   calcState();
   writeMotors();
@@ -101,11 +111,13 @@ void loop() {
 }
 
 void pollSensors() {
+  // Setting Line Sensors AnalogRead (Reads BW color of line, 0 to 1000)
   topLeftLine->setValue(analogRead(TOP_LEFT_LINE_PIN));
   backLeftLine->setValue(analogRead(BACK_LEFT_LINE_PIN));
   topRightLine->setValue(analogRead(TOP_RIGHT_LINE_PIN));
   backRightLine->setValue(analogRead(BACK_RIGHT_LINE_PIN));
 
+  //Setting IR Sensors with DigitalRead (Reads 0 or 1)
   left->setValue(digitalRead(LEFT_IR_PIN));
   midLeft->setValue(digitalRead(MIDLEFT_IR_PIN));
   mid->setValue(digitalRead(MID_IR_PIN));
@@ -131,7 +143,7 @@ void debug() {
 }
 
 void calcState() {
-  // Calculate States
+  // Calculate States and Run Algorithms
   state->runAlgorithm();
 }
 
@@ -141,4 +153,9 @@ void writeMotors() {
   digitalWrite(RIGHT_FRONT_MOTOR_PIN, frontRight->getSpeed());
   digitalWrite(LEFT_REAR_MOTOR_PIN, backLeft->getSpeed());
   digitalWrite(RIGHT_REAR_MOTOR_PIN, backRight->getSpeed());
+
+  digitalWrite(LEFT_FRONT_DIR_PIN, frontLeft->getDirection());
+  digitalWrite(RIGHT_FRONT_DIR_PIN, frontRight->getDirection());
+  digitalWrite(LEFT_REAR_DIR_PIN, backLeft->getDirection());
+  digitalWrite(RIGHT_REAR_DIR_PIN, backRight->getDirection());
 }
