@@ -6,36 +6,45 @@ use inumerations to describe lcoations and make a mapping. cycle thropugh mappin
 #include "states/worldState.h"
 #include <cstdlib>
 
-WorldState::WorldState(LINEsensor* linesensors[], IRsensor* irsensors[]) {
+WorldState::WorldState(LINEsensor* linesensors[], IRsensor* irsensors[]) {      //constructor to initialize WorldState class with arrays of sensor objects
     lnsn = linesensors;
     irsn = irsensors;
     
 }
 void WorldState::readSensors() {
     // do some arduino stuff to set the sensor values based on pins
+
 }
-short WorldState::isNearEdge() {
-    if (lnsn[0]->getValue() && lnsn[1]->getValue()) {
+Edge WorldState::isNearEdge() {                        
+    if (lnsn[0]->getValue() && lnsn[1]->getValue()) {       // Left and right sensors detect edge
         return FRONT;
-    } else if (lnsn[1]->getValue()) {
+    } else if (lnsn[1]->getValue()) {                       // Right sensor detects edge
         return RIGHT;
-    } else if (lnsn[0]->getValue()) {
+    } else if (lnsn[0]->getValue()) {                       // Left sensor detects edge
         return LEFT;
-    } else if (lnsn[2]->getValue()) {
+    } else if (lnsn[2]->getValue()) {                       // Back sensor detects edge
         return BACK;
-    } else {
+    } else {                                                // No sensor detects edge
         return SAFE;
     }
 }
 
-
 /** 
 * @param list list of sensors, will update list based on which sensors are detecting the enemy
 */
-void WorldState::enemyPos(int* list) {
-    list[0] = irsn[0]->getValue();
-    list[1] = irsn[1]->getValue();
-    list[2] = irsn[2]->getValue();
-    list[3] = irsn[3]->getValue();
+Edge WorldState::enemyPos() {
+    if (irsn[1]->getValue() && irsn[2]->getValue()) {       // Front sensors detect enemy
+        return FRONT;
+    } else if (irsn[0]->getValue()) {                       // Left sensor detects enemy
+        return LEFT;
+    } else if (irsn[1]->getValue()) {                       // Front right sensor detects enemy
+        return SLIGHT_RIGHT;
+    } else if (irsn[2]->getValue()) {                       // Front left sensor detects enemy
+        return SLIGHT_LEFT;
+    }else if (irsn[3]->getValue()) {                        // Right sensor detects enemy
+        return RIGHT;
+    } else {                                                // No sensor detects enemy
+        return SAFE;
+    }
     return;
 }

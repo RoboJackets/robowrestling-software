@@ -5,17 +5,13 @@
 
 motorDriver::motorDriver(){
     speed = 0;
-    direction = 0;
+    direction = true;
 };
 void motorDriver::setSpeed(int speed){
     this->speed = speed;
 };
-void motorDriver::setDirection(int direction){
+void motorDriver::setDirection(bool direction){
     this->direction = direction;
-};
-void motorDriver::stop(){
-    this->speed = 0;
-    this -> direction = 0;
 };
 int motorDriver::getSpeed(){
     return this->speed;

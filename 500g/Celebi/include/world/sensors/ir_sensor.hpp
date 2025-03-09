@@ -8,8 +8,8 @@ class ir_sensor {
     public:
         ir_sensor();
         ir_sensor(bool ir_sense);
-        void set_ir_sense(bool new_ir_sense);
-        bool get_ir_sense();
+        void set_ir_sensor(bool new_ir_sense);
+        bool get_ir_sensor();
 };
 
 

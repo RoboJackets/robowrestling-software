@@ -6,10 +6,10 @@ robot_state :: robot_state(world_state *worldState, algorithms *algorithm) {
 }
 
 void robot_state :: runAlgorithm() {
-    line_states selfPosition = worldState -> line_check; 
-    enemy_states enemyPosition = worldState -> enemy_pos; 
+    line_states selfPosition = worldState -> line_check();
+    enemy_states enemyPosition = worldState -> enemy_pos(); 
 
     //Select algorithm base on position.
-    algorithm -> forward_safe();    
+    algorithm -> forward_safe();
 }
 
