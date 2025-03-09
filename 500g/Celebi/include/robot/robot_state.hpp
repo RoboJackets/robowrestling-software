@@ -1,11 +1,11 @@
 #ifndef ROBOT_STATE_H
 #define ROBOT_STATE_H
 
-#include "algorithms.hpp"
-
+#include "robot/algorithms.hpp"
 #include "enums/world_enums.hpp"
-
 #include "world/world_state.hpp"
+
+class algorithms;
 
 class robot_state {
     private:

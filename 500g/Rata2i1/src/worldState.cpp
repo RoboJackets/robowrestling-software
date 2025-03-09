@@ -1,14 +1,28 @@
 #include "worldState.h"
 
-worldState::worldState(lineReader frontLeftLineSensor, lineReader frontRightLineSensor, lineReader backLeftLineSensor, lineReader backRightLineSensor, IRSensor frontLeftIRSensor, IRSensor frontRightIRSensor, IRSensor backLeftIRSensor, IRSensor backRightIRSensor){
-    this->frontLeftLineSensor = &frontLeftLineSensor;
-    this->frontRightLineSensor = &frontRightLineSensor;
-    this->backLeftLineSensor = &backLeftLineSensor;
-    this->backRightLineSensor = &backRightLineSensor;
-    this->frontLeftIRSensor = &frontLeftIRSensor;
-    this->frontRightIRSensor = &frontRightIRSensor;
-    this->backLeftIRSensor = &backLeftIRSensor;
-    this->backRightIRSensor = &backRightIRSensor;
+//joebot worldstate
+worldState::worldState(worldState::joebotSensors sensors){
+    this->frontLeftLineSensor = sensors.frontLeftLineSensor;
+    this->frontRightLineSensor = sensors.frontRightLineSensor;
+    this->backLeftLineSensor = sensors.backLeftLineSensor;
+    this->backRightLineSensor = sensors.backRightLineSensor;
+    this->frontLeftIRSensor = sensors.frontLeftIRSensor;
+    this->frontRightIRSensor = sensors.frontRightIRSensor;
+    this->lSide = sensors.Lside;
+    this->rSide = sensors.Rside;
+    this->mSensor = sensors.MSensor;
+    EnemyPosition = Position::MIDDLE_FRONT;
+}
+
+worldState::worldState(worldState::robotSensors sensors){
+    this->frontLeftLineSensor = sensors.frontLeftLineSensor;
+    this->frontRightLineSensor = sensors.frontRightLineSensor;
+    this->backLeftLineSensor = sensors.backLeftLineSensor;
+    this->backRightLineSensor = sensors.backRightLineSensor;
+    this->frontLeftIRSensor = sensors.frontLeftIRSensor;
+    this->frontRightIRSensor = sensors.frontRightIRSensor;
+    this->backLeftIRSensor = sensors.backLeftIRSensor;
+    this->backRightIRSensor = sensors.backRightIRSensor;
     EnemyPosition = Position::MIDDLE_FRONT;
 }
 
