@@ -15,6 +15,7 @@ class RobotActions {
         void Backwards();
         void Left();
         void Right();
+        void Circle();
 };
 
 #endif

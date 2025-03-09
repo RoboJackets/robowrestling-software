@@ -14,4 +14,7 @@ void RobotState::runAlgorithm() {
     }
     */
     algorithm->RunItDown();
+
+    
+    algorithm->search();
 }

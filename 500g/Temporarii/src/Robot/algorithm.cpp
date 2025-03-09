@@ -3,7 +3,11 @@
 Algorithm::Algorithm(RobotActions *action) {
     this->action = action;
 }
+
 void Algorithm::RunItDown() {
     action->Forward();
 }
 
+void Algorithm::search() {
+    action->Circle();
+}
