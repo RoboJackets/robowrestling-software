@@ -46,24 +46,6 @@ int algorithms :: approach_line() {
             return 0;
         }
     }
-<<<<<<< HEAD
-    
-=======
-    //if neither of these are true (we're back to default behavior)
-    if (world -> line_check() == OFF) {
-        //go forwards
-        robot -> drive_forward(0);
-    //if we found a line
-    } else {
-        //drive backwards
-        robot -> brake();
-        //set backwards timer
-        thymer -> set_action_timer(50);
-        //set state to go backwards
-        app_state = GO_BACKWARDS; 
-    //if there's no timer
-    }
->>>>>>> fa014884d4e65b04004f5f3eb82424e54448f173
     if (app_state == GO_STRAIGHT) {
         if (world -> line_check() == OFF) {
             robot -> drive_forward(forward_speed);
