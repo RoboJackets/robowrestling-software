@@ -27,12 +27,13 @@ class algorithms {
         approach_state app_state;
         timer* thymer;
         bool timer_set;
+        int forward_speed;
     public:
         algorithms(robot_actions* robo_actions, world_state* world, timer* thymer);
         void draw();
         int approach_line();
         int forward_safe();
         int turn_towards();
-        void turn_test();
+        void back_and_forth();
 };
 #endif

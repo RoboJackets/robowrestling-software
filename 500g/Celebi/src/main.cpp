@@ -37,6 +37,8 @@
 #define switch1 A6
 #define switch2 A7
 
+int i = 0;
+
 // define objects
 motor_driver *leftMotorDriver;
 motor_driver *rightMotorDriver;
@@ -167,7 +169,7 @@ void updateState() {
  */ 
 void updateMotors() {
     int leftDirection = leftMotorDriver->get_direction();
-    int leftSpeed = leftMotorDriver->get_speed()*.87;
+    int leftSpeed = leftMotorDriver->get_speed()*.83;
 
     if (leftDirection == 1) {  // if direction is forward
         analogWrite(Lpos, 250);
@@ -192,26 +194,42 @@ void updateMotors() {
 }
 
 void debug() {
+  i++;
+  if (i < 250) {
+    return;
+  } else {
+    i = 0;
+  }
   //delay(50);
   Serial.println("\n\n*****************");
-  // Serial.print("action timer has gone off: ");
-  // Serial.println(thymer -> check_action_time());
-  // Serial.print("time since match start: ");
-  // Serial.println(thymer -> check_match_time());
-  // Serial.print("millies: ");
-  // Serial.println(millis());
-  // Serial.print("action timer started at: ");
-  // Serial.println(thymer -> get_action_start());
-  // Serial.print("current time from timer: ");
-  // Serial.println(thymer -> get_current_time());
-  //sensors
-  // Serial.println("sensors:");
+  
+  //Timer debugging
+
+  Serial.print("action timer has gone off: ");
+  Serial.println(thymer -> check_action_time());
+  Serial.print("time since match start: ");
+  Serial.println(thymer -> check_match_time());
+  Serial.print("millies: ");
+  Serial.println(millis());
+  Serial.print("action timer started at: ");
+  Serial.println(thymer -> get_action_start());
+  Serial.print("current time from timer: ");
+  Serial.println(thymer -> get_current_time());
+  Serial.print("timer status: ");
+  Serial.println(thymer -> get_timer_state());
+  
+  
+  //line sensors
+  
+  Serial.println("sensors:");
   Serial.print("line left: ");
   Serial.println(line_left -> get_value());
 
   Serial.print("line right: ");
   Serial.println(line_right -> get_value());
 
+
+  //distance sensors
 
   // Serial.print("distance left: ");
   // Serial.println(line_right -> get_value());
@@ -228,7 +246,9 @@ void debug() {
   // Serial.print("distance right: ");
   // Serial.println(ir_right -> get_ir_sensor());
 
+
   // motors
+
   // Serial.println("motors:");
 
   // Serial.print("left motor direction: ");
@@ -242,5 +262,11 @@ void debug() {
 
   // Serial.print("right motor speed: ");
   // Serial.println(rightMotorDriver -> get_speed());
+
+
+  //state
+  //Serial.println(world ->enemy_pos());
+  
+  
   Serial.println("*****************");
 }
