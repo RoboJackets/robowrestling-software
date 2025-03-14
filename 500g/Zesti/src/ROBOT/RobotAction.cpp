@@ -1,36 +1,33 @@
-#include "Zesti/include/ROBOT/RobotAction.h"
+#include "include/ROBOT/RobotAction.h"
 
 void RobotAction::moveForward() {
-    leftMotorDriver.setSpeed(100);
-    leftMotorDriver.setDirection(true);
-    rightMotorDriver.setSpeed(100);
-    rightMotorDriver.setDirection(true);
+    move(100, true, 100, true);
 }
 
 void RobotAction::moveBackward() {
-    leftMotorDriver.setSpeed(100);
-    leftMotorDriver.setDirection(false);
-    rightMotorDriver.setSpeed(100);
-    rightMotorDriver.setDirection(false);
+    move(100, false, 100, false);
 }
 
 void RobotAction::turnLeft() {
-    leftMotorDriver.setSpeed(30);
-    leftMotorDriver.setDirection(true);
-    rightMotorDriver.setSpeed(100);
-    rightMotorDriver.setDirection(true);
+    move(30, true, 100, true);
 }
 
 void RobotAction::turnRight() {
-    leftMotorDriver.setSpeed(100);
-    leftMotorDriver.setDirection(true);
-    rightMotorDriver.setSpeed(30);
-    rightMotorDriver.setDirection(true);
+    move(100, true, 30, true);
 }
 
 void RobotAction::stop() {
-    leftMotorDriver.setSpeed(0);
-    leftMotorDriver.setDirection(true);
-    rightMotorDriver.setSpeed(0);
-    rightMotorDriver.setDirection(true);
+    move(0, true, 0, true);
 }
+
+void RobotAction::move(int lMSpeed, bool lMDir, int rMSpeed, bool rMDir) {
+    leftMotorDriver.setSpeed(lMSpeed);
+    leftMotorDriver.setDirection(lMDir);
+    rightMotorDriver.setSpeed(rMSpeed);
+    rightMotorDriver.setDirection(rMDir);
+}
+
+
+/**
+ * Modified and checked by: Braiden Anderson
+ */

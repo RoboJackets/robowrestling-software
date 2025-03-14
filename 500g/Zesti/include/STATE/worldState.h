@@ -1,7 +1,7 @@
 #ifndef WORLD_STATE_H
 #define WORLD_STATE_H
-#include "Zesti/include/SENSOR/lineSensor.h"
-#include "Zesti/include/SENSOR/irSensor.h"
+#include "./Zesti/include/SENSOR/lineSensor.h"
+#include "./Zesti/include/SENSOR/irSensor.h"
 #include <array>
 
 class WorldState {
