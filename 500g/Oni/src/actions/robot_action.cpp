@@ -5,6 +5,11 @@
 //Working under assumptions that 1 means forward and 0 means backwards for direction
 
 // FORWARD
+RobotAction::RobotAction(MotorDriver *left, MotorDriver *right){
+    this->leftMotorDriver = left;
+    this -> rightMotorDriver = right;
+
+}
 void RobotAction::smallForward() {
     leftMotorDriver -> setDirection(1);
     leftMotorDriver -> setSpeed(1);
@@ -13,9 +18,9 @@ void RobotAction::smallForward() {
 }
 void RobotAction::medForward() {
     leftMotorDriver -> setDirection(1);
-    leftMotorDriver -> setSpeed(2);
+    leftMotorDriver -> setSpeed(128);
     rightMotorDriver -> setDirection(1);
-    rightMotorDriver -> setSpeed(2);
+    rightMotorDriver -> setSpeed(128);
 }
 void RobotAction::largeForward() {
     leftMotorDriver -> setDirection(1);

@@ -5,12 +5,13 @@
 class IRSENSOR{
 private:
     int pin;
-    bool value;
+    int value;
 
 public: 
     
     IRSENSOR(int pin);
-    bool getValue();
+    int getValue();
+    void setValue(int new_val);
 
 };
 

@@ -7,12 +7,7 @@
 #include <Arduino.h>
 
 // imports
-#include "state/world_state.h"
 #include "../../Oni/include/motor/motor_driver.h"
-#include "../include/actions/robot_action.h"
-#include "state/robot_state.h"
-#include "state/algorithms.h"
-
 
 // pinouts
 #define Lside 12
@@ -25,25 +20,15 @@
 #define Rneg 11
 #define Lpos 3
 #define Lneg 5
-#define line1 14
-#define line2 15
 #define switch1 A6
 #define switch2 A7
  
 // define objects
 MotorDriver *leftMotorDriver;
 MotorDriver *rightMotorDriver;
-world_state *worldState;
-RobotAction *roboAction;
-LINESENSOR *linesensor, *linesensor2;
-IRSENSOR * leftSensor, *midLeftSensor, *middleSensor, *midRightSensor, *rightSensor;
-robot_state * roboState;
-algorithms * algorithm; 
 
 // define functions
 void updateMotors();
-void pollSensors();
-void updateState();
 
 void setup() {
     // define pinmodes
@@ -58,17 +43,8 @@ void setup() {
     // instantiate objects
     leftMotorDriver = new MotorDriver();
     rightMotorDriver = new MotorDriver();
-    linesensor = new LINESENSOR(line1);
-    linesensor2 = new LINESENSOR(line2);
-    midLeftSensor = new IRSENSOR(Lsensor);
-    middleSensor = new IRSENSOR(MSensor);
-    midRightSensor = new IRSENSOR(Rsensor);
-    worldState = new world_state(linesensor, linesensor2, middleSensor, midLeftSensor, midRightSensor);
-    roboAction = new RobotAction(leftMotorDriver, rightMotorDriver);
-    algorithm = new algorithms(roboAction, worldState);
-    roboState = new robot_state(worldState, algorithm);
-
     
+
     Serial.begin(9600);
 
     // wait for start signal
@@ -78,10 +54,9 @@ void setup() {
     }
 }
 
-
 void loop() {
-    pollSensors();
-    updateState();
+    // pollsensors()
+    // updateState()
     updateMotors();
 
     // listen for stop signal
@@ -94,19 +69,6 @@ void loop() {
     // debug()
     
 }
-
-void pollSensors(){
-    midLeftSensor->setValue(digitalRead(Lsensor));
-    middleSensor->setValue(digitalRead(MSensor));
-    midRightSensor->setValue(digitalRead(Rsensor));
-    linesensor->setValue(analogRead(line1));
-    linesensor2->setValue(analogRead(line2));
-}
-
-void updateState(){
- roboState->runAlgorithm();
-}
-
 
 /**
  * Implemented for Shorti's motordrivers to conform to the

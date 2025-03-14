@@ -15,7 +15,7 @@ SelfPosition world_state:: line_state(){
     if (left_value > 500 || right_value > 500){
         return OFF_LINE;
     }
-    else if (left_value < 500 || right_value < 500){
+    else if (left_value <= 500 || right_value <= 500){
         return ON_LINE;
     }
 
@@ -26,14 +26,16 @@ EnemyPosition world_state:: enemy_location(){
     bool mid_left_val = ir_middle_left->getValue();
     bool mid_right_val = ir_middle_right->getValue();
 
-    if (mid_left_val){
-        return LEFT;
+    if (mid_val){
+        return MIDDLE;
     }
     else if (mid_right_val){
         return RIGHT;
     }
-    else if (mid_val){
-        return MIDDLE;
+    else if (mid_left_val){
+        return LEFT;
+    } else {
+        return NOTHING;
     }
 
 }

@@ -7,6 +7,7 @@ class RobotAction {
         MotorDriver *leftMotorDriver;
         MotorDriver *rightMotorDriver;
     public:
+        RobotAction(MotorDriver* left, MotorDriver* right);
         void smallForward();
         void medForward();
         void largeForward();

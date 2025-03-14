@@ -4,7 +4,8 @@
 enum EnemyPosition {
     LEFT, 
     MIDDLE, 
-    RIGHT
+    RIGHT,
+    NOTHING
     
 };
 

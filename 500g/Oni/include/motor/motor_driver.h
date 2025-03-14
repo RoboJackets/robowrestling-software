@@ -6,6 +6,7 @@ class MotorDriver {
         int speed;
         int direction;
     public:
+        MotorDriver();
         int getSpeed();
         void setSpeed(int speed);
         int getDirection();

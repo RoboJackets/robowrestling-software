@@ -9,6 +9,7 @@ private:
 
 public: 
     LINESENSOR(int pin);
+    void setValue(int new_val);
     int getValue();
 
 };

@@ -1,13 +1,15 @@
 #include "../../include/state/sensors/LineSensor.h"
-#include <Arduino.h>
 
-    LINESENSOR::LINESENSOR(int pin){
-        this->pin = pin;
+    LINESENSOR::LINESENSOR(int pin_ini){
+         pin = pin_ini;
     }
     
     int LINESENSOR::getValue() {
-        int value = analogRead(pin);
         return value;
+    }
+
+    void LINESENSOR::setValue(int new_val){
+        value = new_val;
     }
     
 
