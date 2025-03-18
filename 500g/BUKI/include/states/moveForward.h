@@ -5,12 +5,12 @@
 #include "action/robotAction.h"
 #include "states/worldState.h"
 
-class MoveForward : public RobotState {         // Polymorphism (I have no idea what's going on here - Shahmeel)
+class MoveForward {
     private:
         RobotAction* robotAction;
     public:
         MoveForward(RobotAction* robotActionParameter);     // constructor
-        void runAlgorithm() override;           // Override runAlgorithm() from RobotState
+        void move();
 };
 
 #endif
