@@ -1,20 +1,21 @@
-#ifndef WORLDSTATE_H
-#include "Sensors/irSensor.h"
-#include "Sensors/lineSensor.h"
+#include "Sensors/irSensor.cpp"
+#include "Sensors/lineSensor.cpp"
 #include "Enumerations/EnemyPositions.hpp"
 #include "Enumerations/OnLine.hpp"
-#define WORLDSTATE_H
+#ifndef WORLDSTATE_HPP
+#define WORLDSTATE_HPP
 
 class WorldState{
     private:
         // IrSensor Array = {Left, MidLeft, Mid, MidRight, Right}
-        IrSensor irStates[5];
+        IrSensor* irStates[5];
         // LineSensor Array = {FrontLeft, BackLeft, FrontRight, BackRight};
-        LineSensor lineStates[4];
+        LineSensor* lineStates[4];
         EnemyPositions currPosition;
     public:
         WorldState(IrSensor *ir[5], LineSensor *line[4]);
         WorldState();
+        //IrSensor getIRStates();
         EnemyPositions getEnemyPosition();
         OnLine getIsOnLine();
 };
