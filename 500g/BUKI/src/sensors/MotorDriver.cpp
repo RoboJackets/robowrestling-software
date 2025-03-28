@@ -14,11 +14,11 @@ MotorDriver::MotorDriver(int init_speed, int init_dir) {    // Constructor overl
     dir = init_dir;
 }
 
-bool MotorDriver::getDir() {    // stores dir in class (function)
+int MotorDriver::getDir() {    // stores dir in class (function)
     return dir;
 }
 
-void MotorDriver::setDir(bool newdir) {     // sets new dir in class (function)
+void MotorDriver::setDir(int newdir) {     // sets new dir in class (function)
     dir = newdir;
 }
 
