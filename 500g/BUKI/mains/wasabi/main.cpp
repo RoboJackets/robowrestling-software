@@ -1,14 +1,19 @@
 /**
- * Kevin
- * V1.0
- * File that outlines Wasabi's main
+ * Joe
+ * File that outlines Shorti's main
  * 1/30/2025
  */
 
 #include <Arduino.h>
 
 // imports
-#include "MotorDriver.h"
+#include "sensors/MotorDriver.h"
+#include "states/robotState.h"
+#include "action/robotAction.h"
+#include "sensors/LINEsensor.h"
+#include "sensors/IRsensor.h"
+#include "states/stayOn.h"
+#include "states/moveForward.h"
 
 // pinouts
 const int L_POS = 2;
@@ -25,67 +30,118 @@ const int MIDDLE_IR = 19;
 const int RIGHT_IR_45 = 18;
 const int RIGHT_IR_90 = 17;
 const int START_MODULE = 16;
-
-// object definitions
+ 
+// define objects               declares pointers to these objects
 MotorDriver *leftMotorDriver;
 MotorDriver *rightMotorDriver;
+RobotState* rstate;
+StayOn* stayOn;
+RobotAction* raction;
+WorldState* wrldstate;
+LINEsensor* linesensors[3];
+IRsensor* irsensors[5];
+
+// define functions
+void updateMotors();
+void stop();
+void pollsensors();
 
 void setup() {
-    // pinmode definitions
-    pinMode(L_POS, OUTPUT);
-    pinMode(L_NEG, OUTPUT);
-    pinMode(L_PWM, OUTPUT);
-    pinMode(R_POS, OUTPUT);
-    pinMode(R_NEG, OUTPUT);
-    pinMode(R_PWM, OUTPUT);
-    pinMode(LEFT_LINE, INPUT);
-    pinMode(RIGHT_LINE, INPUT);
-    pinMode(LEFT_IR_90, INPUT);
-    pinMode(LEFT_IR_45, INPUT);
-    pinMode(MIDDLE_IR, INPUT);
-    pinMode(RIGHT_IR_45, INPUT);
-    pinMode(RIGHT_IR_90, INPUT);
-    pinMode(START_MODULE, INPUT);
+  // pinmode definitions
+  pinMode(L_POS, OUTPUT);
+  pinMode(L_NEG, OUTPUT);
+  pinMode(L_PWM, OUTPUT);
+  pinMode(R_POS, OUTPUT);
+  pinMode(R_NEG, OUTPUT);
+  pinMode(R_PWM, OUTPUT);
+  pinMode(LEFT_LINE, INPUT);
+  pinMode(RIGHT_LINE, INPUT);
+  pinMode(LEFT_IR_90, INPUT);
+  pinMode(LEFT_IR_45, INPUT);
+  pinMode(MIDDLE_IR, INPUT);
+  pinMode(RIGHT_IR_45, INPUT);
+  pinMode(RIGHT_IR_90, INPUT);
+  pinMode(START_MODULE, INPUT);
+  leftMotorDriver = new MotorDriver();            // dynamically allocates memory for the object and returns a pointer (assigns it to leftMotorDriver)
+  rightMotorDriver = new MotorDriver();
 
-    Serial.begin(9600);
+  Serial.begin(9600);
+  while (!Serial) {  // Wait for Serial to connect (optional, useful for debugging)
+    delay(10);
+    }
+    Serial.println("Teensy 4.1 started");   
+
+  for (int i = 0; i < 3; i++) {
+    linesensors[i] = new LINEsensor(0);     // the "0" in LINEsensor(0) indicates that the sensor value is initialized to 0.
+  }
+  for (int i = 0; i < 5; i++) {
+    irsensors[i] = new IRsensor(0);         // the "0" in LINEsensor(0) indicates that the sensor value is initialized to 0.
+  }
+  raction = new RobotAction(leftMotorDriver, rightMotorDriver);   // dynamically allocates memory for the object and returns a pointer (assigns it to raction)
+  wrldstate = new WorldState(linesensors, irsensors);
+  stayOn = new StayOn(raction, wrldstate);
+  rstate = new RobotState(wrldstate, stayOn, raction);
 }
-
 void loop() {
-    // pollsensors()
-    // updateState()
+    pollsensors();
     updateMotors();
-    // listen for stop signal
-    // debug() 
+    rstate->win();
+    Serial.println(wrldstate->enemyPos());
+}
+void stop() {
+  analogWrite(L_PWM, 0);
+  analogWrite(R_PWM, 0);
 }
 
- /**
-  * Implemented for Shorti's motordrivers to conform to the
-  * simple motordriver with speed and direction.  
-  */ 
+void pollsensors() {
+  linesensors[0]->setValue(analogRead(LEFT_LINE));
+  linesensors[1]->setValue(analogRead(RIGHT_LINE));
+
+  irsensors[0]->setValue(digitalRead(LEFT_IR_90));
+  irsensors[1]->setValue(digitalRead(LEFT_IR_45));
+  irsensors[2]->setValue(digitalRead(MIDDLE_IR));
+  irsensors[3]->setValue(digitalRead(RIGHT_IR_45));
+  irsensors[4]->setValue(digitalRead(RIGHT_IR_90));
+
+  Serial.print(irsensors[0]->getValue());
+  Serial.print(' ');
+  Serial.print(irsensors[1]->getValue());
+  Serial.print(' ');
+  Serial.print(irsensors[2]->getValue());
+  Serial.print(' ');
+  Serial.print(irsensors[3]->getValue());
+  Serial.print(' ');
+  Serial.println(irsensors[4]->getValue());
+}
+
+/**
+ * Implemented for Shorti's motordrivers to conform to the
+ * simple motordriver with speed and direction.  
+ */ 
 void updateMotors() {
-    int leftDirection = leftMotorDriver->getDirection();
-    int leftSpeed = leftMotorDriver->getSpeed();
+  int leftDirection = leftMotorDriver->getDir();
+  int leftSpeed = leftMotorDriver->getSpeed();
 
-    if (leftDirection == 1) {  // if direction is forward
-       analogWrite(L_POS, 1);
-       analogWrite(L_NEG, 0);
-    } else {                    // if direction is back
-       analogWrite(L_POS, 0);
-       analogWrite(L_NEG, 1);
-    }
+  if (leftDirection == 1) {  // if direction is forward
+     digitalWrite(L_POS, 1);
+     digitalWrite(L_NEG, 0);
+  } else {                    // if direction is back
+     digitalWrite(L_POS, 0);
+     digitalWrite(L_NEG, 1);
+  }
 
-    int rightDirection = rightMotorDriver->getDirection();
-    int rightSpeed = rightMotorDriver->getSpeed();
+  int rightDirection = rightMotorDriver->getDir();
+  int rightSpeed = rightMotorDriver->getSpeed();
 
-    if (rightDirection == 1) {  // if direction is forward
-       analogWrite(R_POS, 1);
-       analogWrite(R_NEG, 0);
-    } else {                    // if direction is back
-       analogWrite(R_POS, 0);
-       analogWrite(R_NEG, 1);
-    }
+  if (rightDirection == 1) {  // if direction is forward
+     digitalWrite(R_POS, 0);
+     digitalWrite(R_NEG, 1);
+  } else {                    // if direction is back
+     digitalWrite(R_POS, 1);
+     digitalWrite(R_NEG, 0);
+  }
 
-    // controls the speed
-    analogWrite(L_PWM, leftSpeed);
-    analogWrite(R_PWM, rightSpeed);
+  // controls the speed
+  analogWrite(L_PWM, leftSpeed);
+  analogWrite(R_PWM, rightSpeed);
 }

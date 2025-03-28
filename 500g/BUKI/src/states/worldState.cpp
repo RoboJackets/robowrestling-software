@@ -34,13 +34,13 @@ Edge WorldState::isNearEdge() {
 Edge WorldState::enemyPos() {
     if (irsn[2]->getValue() && (!irsn[0]->getValue() && !irsn[1]->getValue() && !irsn[3]->getValue())) {       // Front sensors detect enemy
         return FRONT;
-    } else if (irsn[1]->getValue() && irsn[2]->getValue() && irsn[3]->getValue()) {
+    } else if (irsn[1]->getValue() && irsn[2]->getValue()) {
         return CLOSE_FRONT; 
     } else if (irsn[0]->getValue() || irsn[1]->getValue()) {                       // Left sensor detects enemy
         return LEFT;
     // } else if (irsn[1]->getValue()) {                       // Front right sensor detects enemy
     //     return SLIGHT_LEFT;
-    } else if (irsn[3]->getValue()) {                       // Front left sensor detects enemy
+    } else if (irsn[3]->getValue() || irsn[4]->getValue()) {                       // Front left sensor detects enemy
         return SLIGHT_RIGHT;
     // } else if (irsn[4]->getValue()) {                        // Right sensor detects enemy
     //     return RIGHT;                                // enemy is on top of us
