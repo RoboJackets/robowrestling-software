@@ -37,8 +37,10 @@
  void stop();
  RobotAction* raction;
  StayOn* rstate;
+ StayOn* stayOn;
   WorldState* wrldstate;
   LINEsensor* linesensors [3];
+  IRsensor* irsensors [5];
  void setup() {
      // define pinmodes
      pinMode(Rpos, OUTPUT);
@@ -58,9 +60,13 @@
      for (int i = 0; i < 3; i++) {
         linesensors[i] = new LINEsensor(0);
       }
-      raction = new RobotAction(leftMotorDriver, rightMotorDriver);
-      wrldstate = new WorldState(linesensors, NULL);
-      rstate = new StayOn(raction, wrldstate);
+      for (int i = 0; i < 5; i++) {
+        irsensors[i] = new IRsensor(0);         // the "0" in LINEsensor(0) indicates that the sensor value is initialized to 0.
+      }
+      raction = new RobotAction(leftMotorDriver, rightMotorDriver);   // dynamically allocates memory for the object and returns a pointer (assigns it to raction)
+      wrldstate = new WorldState(linesensors, irsensors);
+      stayOn = new StayOn(raction, wrldstate);
+      rstate = new RobotState(wrldstate, stayOn, raction);
      // wait for start signal
      while (!digitalRead(StartMod)) {
        Serial.print(digitalRead(StartMod));
