@@ -17,22 +17,20 @@
 #include "states/moveForward.h"
  
  // pinouts
- const int LEFT_IR_90 = 12;
- const int LEFT_IR_45 = 8;
- const int RIGHT_IR_90 = 2;
- const int RIGHT_IR_45 = 4;
- const int MIDDLE_IR = 7;
- const int START_MODULE = 10;
- const int R_POS = 11;
- const int R_NEG = 13;
- const int L_POS = 6;
- const int L_NEG = A5;
- const int R_PWM = 5;
- const int L_PWM = 3;
- const int DIP_SWITCH_1 = A6;
- const int DIP_SWITCH_2 = A7;
- const int LEFT_LINE = A0;
- const int RIGHT_LINE = A1;
+ #define Lside 12
+ #define Lsensor 8
+ #define Rside 2
+ #define Rsensor 4
+ #define MSensor 7
+ #define StartMod 10
+ #define Rpos 6
+ #define Rneg 11
+ #define Lpos 3
+ #define Lneg 5
+ #define switch1 A6
+ #define switch2 A7
+ #define LeftLine A0        // Line sensors may be reversed??
+ #define RightLine A1
  
 // define objects               declares pointers to these objects
 MotorDriver *leftMotorDriver;
@@ -48,20 +46,19 @@ IRsensor* irsensors[5];
  
  void setup() {
      // define pinmodes
-     pinMode(R_POS, OUTPUT);
-     pinMode(R_NEG, OUTPUT);
-     pinMode(L_POS, OUTPUT);
-     pinMode(L_NEG, OUTPUT);
-     pinMode(LEFT_IR_90, INPUT);
-     pinMode(LEFT_IR_45, INPUT);
-     pinMode(MIDDLE_IR, INPUT);
-     pinMode(RIGHT_IR_45, INPUT);
-     pinMode(RIGHT_IR_90, INPUT);
-     pinMode(LEFT_LINE, INPUT);
-     pinMode(RIGHT_LINE, INPUT);
-     pinMode(START_MODULE, INPUT);
-     pinMode(DIP_SWITCH_1, INPUT);
-     pinMode(DIP_SWITCH_2, INPUT);
+     pinMode(Rpos, OUTPUT);
+     pinMode(Rneg, OUTPUT);
+     pinMode(Lpos, OUTPUT);
+     pinMode(Lneg, OUTPUT);
+     pinMode(Lside, INPUT);
+     pinMode(Lsensor, INPUT);
+     pinMode(Rsensor, INPUT);
+     pinMode(Rside, INPUT);
+     pinMode(LeftLine, INPUT); 
+     pinMode(RightLine, INPUT);
+     pinMode(StartMod, INPUT);
+     pinMode(switch1, INPUT);
+     pinMode(switch2, INPUT);
  
      Serial.begin(9600);
 
