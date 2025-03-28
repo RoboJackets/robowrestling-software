@@ -50,6 +50,7 @@ StayOn* rstate;
 RobotAction* raction;
 WorldState* wrldstate;
 LINEsensor* linesensors [3];
+IRsensor* irsensors [5];
  
  void setup() {
      // define pinmodes
@@ -105,6 +106,12 @@ LINEsensor* linesensors [3];
    void pollsensors() {
      linesensors[0]->setValue(analogRead(LEFT_LINE));
      linesensors[1]->setValue(analogRead(RIGHT_LINE));
+
+    irsensors[0]->setValue(digitalRead(LEFT_IR_90));
+    irsensors[1]->setValue(digitalRead(LEFT_IR_45));
+    irsensors[2]->setValue(0);
+    irsensors[3]->setValue(digitalRead(RIGHT_IR_45));
+    irsensors[4]->setValue(digitalRead(RIGHT_IR_90));
    }
  
  /**
