@@ -24,11 +24,11 @@
  const int L_NEG = A5;
  const int R_PWM = 5;
  const int L_PWM = 3;
- const int DIP_SWITCH_1 = A6;
- const int DIP_SWITCH_2 = A7;
+ const int DIP_SWITCH_1 = A7;
+ const int DIP_SWITCH_2 = A6;
  const int LEFT_LINE = A0;
  const int RIGHT_LINE = A1;
- 
+
  // define objects
  MotorDriver *leftMotorDriver;
  MotorDriver *rightMotorDriver;
