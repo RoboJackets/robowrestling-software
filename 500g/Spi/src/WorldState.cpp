@@ -40,6 +40,10 @@ Position WorldState::getPosition() {
     // 1 when on line / white, 0 when not on line / black
     int left = (leftLineSensor->getValue());
     int right = (rightLineSensor->getValue());
+
+    // LINE SENSORS BROKE RETURNING 0
+    return Position::Off_Line;
+
     if (left) {
         return Position::On_Line_Left;
     }

@@ -1,17 +1,21 @@
-#include <Arduino.h>
-#include <Wire.h>
-#include <accIntegral.h>
+/**
+ * Xander
+ * V1.0
+ * File that outlines Spi's main
+ * 1/30/2025
+ */
 
-#include "ICM42670P.h"
-#include "sensors/Accelerometer.h"
+#include <Arduino.h>
+
+// imports
 #include "RobotAction.h"
 #include "MotorDriver.h"
 #include "WorldState.h"
 #include "sensors/IRSensor.h"
 #include "sensors/LineSensor.h"
 #include "RobotState.h"
-#include "Timer.h"
 
+// pinouts
 const int RIGHT_PWM = 6;
 const int RIGHT_DIR = 5;
 const int LEFT_PWM = 8;
@@ -23,55 +27,31 @@ const int LEFT_LINE = A8;
 const int RIGHT_LINE = A9;
 const int START_PIN = 34;
 
-// placeholder code for IMU (if I can ever get it working) :(
-
-// const double STUPID_GRAVITY_SCALE_FACTOR = 211.0;
-// const double MAX_GYRO_DPS = 2000.0;
-// constexpr float SD_ACC = 0.1;              // Adjusted standard deviation for acceleration
-// constexpr float SD_VEL = 0.1;              // Adjusted standard deviation for velocity
-// constexpr float ALPHA = 0.5;               // Gain of heading update
-
-// sensors
-ICM42670 IMU(Wire, 1);
-accIntegral fusion;
-
-Velocity *velocity;
+// object definitions
 IRSensor *leftIRSensor;
 IRSensor *middleIRSensor;
 IRSensor *rightIRSensor;
 LineSensor *leftLineSensor;
 LineSensor *rightLineSensor;
 
-// robot stuff
 MotorDriver *leftMotorDriver;
 MotorDriver *rightMotorDriver;
 RobotAction *robotAction;
 WorldState *worldState;
 RobotState *robotState;
 
-//etc
-Timer *accelerometerTimer;
-Timer *debugTimer;
+// if debugging is true it will skip the start module check.
+const bool DEBUGGING = false;
 
-const bool DEBUGGING = true;
-
+// function definitions
 void debug();
 void writeMotors();
 void pollSensors();
-void calculateState(int time);
 
 void setup() {
   Serial.begin(9600);
-
-  // IMU stuff that breaks the program
-
-  // initializing IMU
-  // Wire.begin();
-  // IMU.begin();
-  // IMU.startAccel(100, 16);
-  // IMU.startGyro(100, 2000);
-  // fusion.setup();
-
+  
+  // pinmode definitions
   pinMode(RIGHT_PWM, OUTPUT);
   pinMode(RIGHT_DIR, OUTPUT);
   pinMode(LEFT_PWM, OUTPUT);
@@ -84,10 +64,10 @@ void setup() {
   pinMode(RIGHT_LINE, INPUT);
   pinMode(START_PIN, INPUT);
   
+  // instantion
   leftMotorDriver = new MotorDriver();
   rightMotorDriver = new MotorDriver();
   robotAction = new RobotAction(leftMotorDriver, rightMotorDriver, 40);
-  velocity = new Velocity();
   leftIRSensor = new IRSensor();
   middleIRSensor = new IRSensor();
   rightIRSensor = new IRSensor();
@@ -95,14 +75,6 @@ void setup() {
   rightLineSensor = new LineSensor();
   worldState = new WorldState(leftLineSensor, rightLineSensor, leftIRSensor, middleIRSensor, rightIRSensor);
   robotState = new RobotState(worldState, robotAction);
-  accelerometerTimer = new Timer();
-  debugTimer = new Timer();
-  
-  accelerometerTimer->setTimeInterval(10);
-  debugTimer->setTimeInterval(10000);
-
-  leftLineSensor->setThreshold(200);
-  rightLineSensor->setThreshold(200);
 
   if (!DEBUGGING) {
     while (!digitalRead(START_PIN)) {
@@ -110,17 +82,14 @@ void setup() {
       Serial.println(" Waiting for start signal");
     }
   }
-
-  robotState->setStartTimer(millis());
-  delay(1000);
 }
 
 void loop() {
-  debug();
+  debug();          // method that just reads sensors and other values
   pollSensors();
-  calculateState(millis());
+  // calculateState();
   writeMotors();
-  if (!DEBUGGING) {
+  if (!DEBUGGING) { // stops if recieves signal to stop from start module
     if (!digitalRead(START_PIN)) {
       while(true) {
         robotAction->brake();
@@ -128,16 +97,13 @@ void loop() {
       }
     }
   }
-  if (DEBUGGING) {
-    if (millis() == 3v0000) {
-      while(true) {
-        robotAction->brake();
-        Serial.println("braking");
-      }
-    }
-  }
 }
 
+ /**
+  * Implemented for Spi's motordrivers to conform to the
+  * simple motordriver with speed and direction. 
+  * (Spi's motordrivers conform to this by default)  
+  */ 
 void writeMotors() {
   analogWrite(RIGHT_PWM, rightMotorDriver->getSpeed());
   digitalWrite(RIGHT_DIR, rightMotorDriver->getDirection());
@@ -145,8 +111,10 @@ void writeMotors() {
   digitalWrite(LEFT_DIR, leftMotorDriver->getDirection());
 }
 
+/**
+ * method to update the sensor objects
+ */
 void pollSensors() {
-  //implement proper velocity measurement D:
   leftIRSensor->setValue(digitalRead(LEFT_IR));
   middleIRSensor->setValue(digitalRead(MIDDLE_IR));
   rightIRSensor->setValue(digitalRead(RIGHT_IR));
@@ -154,20 +122,10 @@ void pollSensors() {
   rightLineSensor->setValue(analogRead(RIGHT_LINE));
 }
 
-void calculateState(int time) {
-  robotState->calculateState(time);
-}
-
+/**
+ * method that reads simple sensor and motor values
+ */
 void debug() {
-  if (false) {
-    Serial.print(leftMotorDriver->getDirection());
-    Serial.print(leftMotorDriver->getSpeed());
-    Serial.print(" ");
-    Serial.print(rightMotorDriver->getDirection());
-    Serial.print(rightMotorDriver->getSpeed());
-    Serial.print(" ");
-
-  }
   if (true) {
     Serial.print(digitalRead(START_PIN));
     Serial.print(" ");
@@ -180,25 +138,11 @@ void debug() {
     Serial.print(analogRead(RIGHT_LINE));
     Serial.print(" ");
   }
-  if (false) {
-    Serial.print(velocity->getX()); 
-    Serial.print(" ");
-    Serial.print(velocity->getY()); // -1000 = forward accel
-    Serial.print(" ");
-    Serial.print(velocity->getZ()); // up / down
-  }
   if (true) {
     Serial.print(rightMotorDriver->getSpeed());
     Serial.print(rightMotorDriver->getDirection());
     Serial.print(leftMotorDriver->getSpeed());
     Serial.print(leftMotorDriver->getDirection());
-  }
-  if (false) {
-    Serial.print(leftLineSensor->getValue());
-    // Serial.print(leftLineSensor->getThreshold());
-    Serial.print(rightLineSensor->getValue());
-    // Serial.print(leftLineSensor->getThreshold());
-    Serial.print((int)worldState->getPosition());
   }
   Serial.println();
 }
