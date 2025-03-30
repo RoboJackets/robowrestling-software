@@ -60,7 +60,7 @@ void RobotAction::medLeft() {
     leftMotorDriver -> setDirection(1);
     leftMotorDriver -> setSpeed(1);
     rightMotorDriver -> setDirection(1);
-    rightMotorDriver -> setSpeed(3);
+    rightMotorDriver -> setSpeed(128);
 }
 void RobotAction::largeLeft() {
     leftMotorDriver -> setDirection(1);
@@ -78,8 +78,8 @@ void RobotAction::smallRight() {
 }
 void RobotAction::medRight() {
     leftMotorDriver -> setDirection(1);
-    leftMotorDriver -> setSpeed(3);
-    rightMotorDriver -> setDirection(1);
+    leftMotorDriver -> setSpeed(128);
+    rightMotorDriver -> setDirection(0);
     rightMotorDriver -> setSpeed(1);
 }
 void RobotAction::largeRight() {

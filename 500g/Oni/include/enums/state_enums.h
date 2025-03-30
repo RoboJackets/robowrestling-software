@@ -1,5 +1,5 @@
-#ifndef STATE_ENUMS.H
-#define STATE_ENUMS.H
+#ifndef STATE_ENUMS_H
+#define STATE_ENUMS_H
 
 enum EnemyPosition {
     LEFT, 

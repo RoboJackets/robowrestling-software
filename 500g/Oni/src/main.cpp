@@ -72,10 +72,10 @@ void setup() {
     Serial.begin(9600);
 
     // wait for start signal
-    while (!digitalRead(StartMod)) {
-      Serial.print(digitalRead(StartMod));
-      Serial.println(" Waiting for start signal");
-    }
+    // while (!digitalRead(StartMod)) {
+    //   Serial.print(digitalRead(StartMod));
+    //   Serial.println(" Waiting for start signal");
+    // }
 }
 
 
@@ -85,12 +85,12 @@ void loop() {
     updateMotors();
 
     // listen for stop signal
-    if (!digitalRead(StartMod)) {
-      while(true) {
-        // brake()
-        Serial.println("braking");
-      }
-    }
+    // if (!digitalRead(StartMod)) {
+    //   while(true) {
+    //     // brake()
+    //     Serial.println("braking");
+    //   }
+    // }
     // debug()
     
 }
@@ -115,7 +115,8 @@ void updateState(){
 void updateMotors() {
     int leftDirection = leftMotorDriver->getDirection();
     int leftSpeed = leftMotorDriver->getSpeed();
-
+    Serial.print(leftDirection);
+    Serial.print(leftSpeed);
     if (leftDirection == 1) {  // if direction is forward
         analogWrite(Lpos, leftSpeed);
         analogWrite(Lneg, 0);
