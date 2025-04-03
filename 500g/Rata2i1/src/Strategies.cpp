@@ -13,14 +13,7 @@ Strategies::Strategies(worldState *state, robotAction *robot, Timer *timer) {
     currentState = IDLE;
 }
 void Strategies::test() {
-    timer->setTimeInterval(1000);
-    timer->setCurrentTime(millis());
-    timer->setPreviousTime(millis());
-    robot->moveForward(255);
-    while (timer->getReady()) {
-        timer->setCurrentTime(millis());
-    }
-    robot->stop();
+    
 }
 
 void Strategies::moveForward() {
@@ -28,6 +21,10 @@ void Strategies::moveForward() {
 }
 
 void Strategies::generalStrategy() {
-    
+    if (state->getEnemyPosition()== Position::FRONT_LEFT) {
+        robot->turnLeft(255);
+    } else if (state->getEnemyPosition() == Position::FRONT_RIGHT) {
+        robot->turnRight(255);
+    }
 }
 

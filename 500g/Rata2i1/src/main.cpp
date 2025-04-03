@@ -1,185 +1,156 @@
 /**
  * Joe
+ * V1.1
  * File that outlines Shorti's main
  * 1/30/2025
  */
 
-#include <Arduino.h>
+ #include <Arduino.h>
 
-// imports
-#include "motorDriver.h"
-#include "robotAction.h"
-#include "worldState.h"
-#include "Strategies.h"
-#include "lineReader.h"
-#include "irSensor.h"
-#include "Timer.h"
-
-// pinouts
-#define Lside 12
-#define Lsensor 8
-#define Rside 2
-#define Rsensor 4
-#define MSensor 7
-#define StartMod 10
-#define Rpos 6
-#define Rneg 11
-#define Lpos 3
-#define Lneg 5
-#define Lline A0
-#define Rline A1
-#define switch1 A6
-#define switch2 A7
+ // imports
+ #include "motorDriver.h"
+ #include "robotAction.h"
+ #include "worldState.h"
+ #include "Strategies.h"
+ #include "lineReader.h"
+ #include "irSensor.h"
+ #include "Timer.h"
  
-// define objects
-motorDriver *leftMotorDriver;
-motorDriver *rightMotorDriver;
-worldState *state;
-robotAction *robot;
-Timer *timer;
-Strategies *strategies;
+ // pinouts
+ const int LEFT_IR_90 = 12;
+ const int LEFT_IR_45 = 8;
+ const int RIGHT_IR_90 = 2;
+ const int RIGHT_IR_45 = 4;
+ const int START_MODULE = 10;
+ const int R_POS = 11;
+ const int R_NEG = 13;
+ const int L_POS = 6;
+ const int L_NEG = A5;
+ const int R_PWM = 5;
+ const int L_PWM = 3;
+ const int DIP_SWITCH_1 = A6;
+ const int DIP_SWITCH_2 = A7;
+ const int LEFT_LINE = A0;
+ const int RIGHT_LINE = A1;
+ 
+ // define objects
+ motorDriver *leftMotorDriver;
+ motorDriver *rightMotorDriver;
+ worldState *state;
+ robotAction *robot;
+ Timer *timer;
+ Strategies *strategies;
 
+ //sensors
+lineReader *leftLine;
+lineReader *rightLine;
+IRSensor *leftIR90;
+IRSensor *rightIR90;
+IRSensor *leftIR45;
+IRSensor *rightIR45;
+ 
+ void updateMotors();
+ 
+ void setup() {
+     // define pinmodes
+     pinMode(R_POS, OUTPUT);
+     pinMode(R_NEG, OUTPUT);
+     pinMode(L_POS, OUTPUT);
+     pinMode(L_NEG, OUTPUT);
+     pinMode(LEFT_IR_90, INPUT);
+     pinMode(LEFT_IR_45, INPUT);
+     pinMode(RIGHT_IR_45, INPUT);
+     pinMode(RIGHT_IR_90, INPUT);
+     pinMode(LEFT_LINE, INPUT);
+     pinMode(RIGHT_LINE, INPUT);
+     pinMode(START_MODULE, INPUT);
+     pinMode(DIP_SWITCH_1, INPUT);
+     pinMode(DIP_SWITCH_2, INPUT);
 
+     // instantiate objects
+     leftMotorDriver = new motorDriver();
+     rightMotorDriver = new motorDriver();
 
-// define functions
-void updateMotors();
+     // instantiate lineReader and IRSensor objects
+      leftLine = new lineReader(LEFT_LINE);
+      rightLine = new lineReader(RIGHT_LINE);
+      leftIR90 = new IRSensor(LEFT_IR_90);
+      rightIR90 = new IRSensor(RIGHT_IR_90);
+      leftIR45 = new IRSensor(LEFT_IR_45);
+      rightIR45 = new IRSensor(RIGHT_IR_45);
+ 
+     //construct world state with struct
+     worldState::joebotSensors sensors = {
+         leftLine,
+         rightLine,
+         leftIR90,
+         rightIR90,
+         leftIR45,
+         rightIR45
+     };
+     
+     state = new worldState(sensors);
+ 
+     robot = new robotAction(leftMotorDriver, rightMotorDriver);
+ 
+     timer = new Timer();
+ 
+     strategies = new Strategies(state, robot, timer);
+ 
+     Serial.begin(9600);
+ }
+ 
+ void loop() {
+     pollSensors();
+     // updateState()
+     updateMotors();
+     // listen for stop signal
+     // debug() 
+ }
+ 
+ /**
+  * Implemented for Shorti's motordrivers to conform to the
+  * simple motordriver with speed and direction.  
+  */ 
+ void updateMotors() {
+     int leftDirection = leftMotorDriver->getDirection();
+     int leftSpeed = leftMotorDriver->getSpeed();
+ 
+   //   if (leftDirection == 1) {  // if direction is forward
+   //      analogWrite(L_POS, 255);
+   //      analogWrite(L_NEG, 0);
+   //   } else {                    // if direction is back
+   //      analogWrite(L_POS, 0);
+   //      analogWrite(L_NEG, 255);
+   //   }
+ 
+   //   int rightDirection = rightMotorDriver->getDirection();
+   //   int rightSpeed = rightMotorDriver->getSpeed();
+ 
+   //   if (rightDirection == 1) {  // if direction is forward
+   //      analogWrite(R_POS, 255);
+   //      analogWrite(R_NEG, 0);
+   //   } else {                    // if direction is back
+   //      analogWrite(R_POS, 0);
+   //      analogWrite(R_NEG, 255);
+   //   }
 
-void setup() {
-    // define pinmodes
-    pinMode(Rpos, OUTPUT);
-    pinMode(Rneg, OUTPUT);
-    pinMode(Lpos, OUTPUT);
-    pinMode(Lneg, OUTPUT);
-    pinMode(StartMod, INPUT);
-    pinMode(switch1, INPUT);
-    pinMode(switch2, INPUT);
-    pinMode(Lsensor, INPUT);
-    pinMode(Rsensor, INPUT);
-    pinMode(MSensor, INPUT);
-    pinMode(Lline, INPUT);
-    pinMode(Rline, INPUT);
-    pinMode(Lside, INPUT);
-    pinMode(Rside, INPUT);
-    
+   //   // controls the speed
+     analogWrite(L_PWM, leftSpeed);
+     analogWrite(R_PWM, rightSpeed);
+ }
 
-    // instantiate objects
-    leftMotorDriver = new motorDriver();
-    rightMotorDriver = new motorDriver();
+ void pollSensors() {
+   leftLine->setValue(digitalRead(LEFT_LINE));
+   rightLine->setValue(digitalRead(RIGHT_LINE));
+   leftIR90->setValue(digitalRead(LEFT_IR_90));
+   rightIR90->setValue(digitalRead(RIGHT_IR_90));
+   leftIR45->setValue(digitalRead(LEFT_IR_45));
+   rightIR45->setValue(digitalRead(RIGHT_IR_45));
+ }
 
-    //construct world state with struct
-    worldState::joebotSensors sensors = {
-        new lineReader(Lline),
-        new lineReader(Rline),
-        new lineReader(Lline),
-        new lineReader(Rline),
-        new IRSensor(Lsensor),
-        new IRSensor(Rsensor),
-        new IRSensor(Lside),
-        new IRSensor(Rside),
-        new IRSensor(MSensor)
-    };
-    
-    state = new worldState(sensors);
-
-    robot = new robotAction(leftMotorDriver, rightMotorDriver);
-
-    timer = new Timer();
-
-    strategies = new Strategies(state, robot, timer);
-
-    Serial.begin(9600);
-
-    // wait for start signal
-    while (!digitalRead(StartMod)) {
-      Serial.print(digitalRead(StartMod));
-      Serial.println(" Waiting for start signal");
-    }
-}
-
-/**
- * Polls all sensors and prints their values to the serial monitor
- * @param debug - if true, prints sensor values to the serial monitor
- */
-void pollSensors(bool debug = false) {
-    int LsensorVal = digitalRead(Lsensor);
-    int RsensorVal = digitalRead(Rsensor);
-    int MSensorVal = digitalRead(MSensor);
-    int LlineVal = digitalRead(Lline);
-    int RlineVal = digitalRead(Rline);
-    int LsideVal = digitalRead(Lside);
-    int RsideVal = digitalRead(Rside);
-    if (debug) {
-        int switch1Val = digitalRead(switch1);
-        int switch2Val = digitalRead(switch2);
-
-        Serial.print("Lsensor: ");
-        Serial.print(LsensorVal);
-        Serial.print(" Rsensor: ");
-        Serial.print(RsensorVal);
-        Serial.print(" MSensor: ");
-        Serial.print(MSensorVal);
-        Serial.print(" Lline: ");
-        Serial.print(LlineVal);
-        Serial.print(" Rline: ");
-        Serial.print(RlineVal);
-        Serial.print(" Lside: ");
-        Serial.print(LsideVal);
-        Serial.print(" Rside: ");
-        Serial.print(RsideVal);
-        Serial.print(" switch1: ");
-        Serial.print(switch1Val);
-        Serial.print(" switch2: ");
-        Serial.println(switch2Val);
-    }
-}
-
-void brake() {
-    robot -> stop();
-}
-
-void loop() {
-    // pollSensors();
-    // updateState()
-    updateMotors();
-    
-    strategies->test();
-
-    // listen for stop signal
-    // if (!digitalRead(StartMod)) {
-    //   while(true) {
-    //     brake();
-    //     Serial.println("braking");
-    //   }
-    // }
-
-    // debug()
-    
-}
-
-/**
- * Implemented for Shorti's motordrivers to conform to the
- * simple motordriver with speed and direction.  
- */ 
-void updateMotors() {
-    int leftDirection = leftMotorDriver->getDirection();
-    int leftSpeed = leftMotorDriver->getSpeed();
-
-    if (leftDirection == 1) {  // if direction is forward
-        analogWrite(Lpos, leftSpeed);
-        analogWrite(Lneg, 0);
-    } else {                    // if direction is back
-        analogWrite(Lpos, 0);
-        analogWrite(Lneg, leftSpeed);
-    }
-
-    int rightDirection = rightMotorDriver->getDirection();
-    int rightSpeed = rightMotorDriver->getSpeed();
-
-    if (rightDirection == 1) {  // if direction is forward
-        analogWrite(Rpos, rightSpeed);
-        analogWrite(Rneg, 0);
-    } else {                    // if direction is back
-        analogWrite(Rpos, 0);
-        analogWrite(Rneg, rightSpeed);
-    }
-}
+   void updateState() {
+      //save enemy position
+      Position enemyPosition = state->getEnemyPosition();
+      Position position = state->getPosition();
+   }

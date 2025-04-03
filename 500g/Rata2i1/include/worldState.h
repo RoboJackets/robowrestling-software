@@ -27,6 +27,14 @@ class worldState {
         struct joebotSensors {
             lineReader *frontLeftLineSensor;
             lineReader *frontRightLineSensor;
+            IRSensor *frontLeftIRSensor;
+            IRSensor *frontRightIRSensor;
+            IRSensor *Rside;
+            IRSensor *Lside;
+        };
+        struct joebotSensors {
+            lineReader *frontLeftLineSensor;
+            lineReader *frontRightLineSensor;
             lineReader *backLeftLineSensor;
             lineReader *backRightLineSensor;
             IRSensor *frontLeftIRSensor;

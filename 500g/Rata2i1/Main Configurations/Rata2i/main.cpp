@@ -1,11 +1,5 @@
-/**
- * Joe
- * File that outlines Shorti's main
- * 1/30/2025
- */
-
 #include <Arduino.h>
-
+ 
 // imports
 #include "motorDriver.h"
 #include "robotAction.h"
@@ -55,22 +49,37 @@ void updateMotors();
 
 void setup() {
     // define pinmodes
+    pinMode(LF_LINE, INPUT);
+    pinMode(RF_LINE, INPUT);
+    pinMode(LB_LINE, INPUT);
+    pinMode(RB_LINE, INPUT);
+    pinMode(LF_IR, INPUT);
+    pinMode(RF_IR, INPUT);
+    pinMode(LB_IR, INPUT);
+    pinMode(RB_IR, INPUT);
     
-    
+    lineReader LFLine = new lineReader(LF_LINE);
+    lineReader RFLine = new lineReader(RF_LINE);
+    lineReader LBLine = new lineReader(LB_LINE);
+    lineReader RBLine = new lineReader(RB_LINE);
+    IRSensor LFIR = new IRSensor(LF_IR);
+    IRSensor RFIR = new IRSensor(RF_IR);
+    IRSensor LBIR = new IRSensor(LB_IR);
+    IRSensor RBIR = new IRSensor(RB_IR);
 
     // instantiate objects
     leftMotorDriver = new motorDriver();
     rightMotorDriver = new motorDriver();
 
     worldState::robotSensors sensors = {
-        new lineReader(LF_LINE),
-        new lineReader(RF_LINE),
-        new lineReader(LB_LINE),
-        new lineReader(RB_LINE),
-        new IRSensor(LF_IR),
-        new IRSensor(RF_IR),
-        new IRSensor(LB_IR),
-        new IRSensor(RB_IR)
+        LFLine,
+        RFLine,
+        LBLine,
+        RBLine,
+        LFIR,
+        RFIR,
+        LBIR,
+        RBIR
     };
     
     state = new worldState(sensors);
@@ -95,7 +104,14 @@ void setup() {
  * @param debug - if true, prints sensor values to the serial monitor
  */
 void pollSensors(bool debug = false) {
-
+    LFLine->setValue(digitalRead(LF_LINE));
+    RFLine->setValue(digitalRead(RF_LINE));
+    LBLine->setValue(digitalRead(LB_LINE));
+    RBLine->setValue(digitalRead(RB_LINE));
+    LFIR->setValue(digitalRead(LF_LINE));
+    RFIR->setValue(digitalRead(RF_LINE));
+    LBIR->setValue(digitalRead(LB_LINE));
+    RBIR->setValue(digitalRead(RB_LINE));
 }
 
 void brake() {
