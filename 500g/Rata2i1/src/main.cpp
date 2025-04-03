@@ -124,8 +124,8 @@ IRSensor *rightIR45;
    //      analogWrite(L_NEG, 255);
    //   }
  
-   //   int rightDirection = rightMotorDriver->getDirection();
-   //   int rightSpeed = rightMotorDriver->getSpeed();
+     int rightDirection = rightMotorDriver->getDirection();
+     int rightSpeed = rightMotorDriver->getSpeed();
  
    //   if (rightDirection == 1) {  // if direction is forward
    //      analogWrite(R_POS, 255);
