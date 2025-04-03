@@ -4,7 +4,9 @@
 #include "sensors/ir_sensor.hpp"
 #include "sensors/line_sensor.hpp"
 #include "enums/world_enums.hpp"
-#include <array>
+
+#define __ATMEGA__
+#include <ustd_array.h>
 
 class world_state {
     private:
@@ -24,11 +26,11 @@ class world_state {
     public:
         world_state(line_sensor* line_left, line_sensor* line_right,
             ir_sensor* ir_left, ir_sensor* ir_mid_left, ir_sensor* ir_mid, ir_sensor* ir_mid_right, ir_sensor* ir_right);
-        std::array<bool, 5> seen_by_dist_sensors();
+            ustd::array<bool> seen_by_dist_sensors();
         
         line_states line_check();
 
-        int enemy_pos();
+        enemy_states enemy_pos();
 };
 
 #endif

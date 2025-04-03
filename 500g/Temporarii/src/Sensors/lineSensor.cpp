@@ -1,5 +1,8 @@
 #include "Sensors/lineSensor.h"
 
+LineSensor::LineSensor() {
+    value = 0;
+}
 int LineSensor::getValue() {
     return value;
 }

@@ -5,6 +5,7 @@ class IrSensor{
     private:
         bool value;
     public:
+        IrSensor();
         bool getValue();
         void setValue(bool input);
 };
