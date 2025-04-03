@@ -5,7 +5,7 @@ MotorDriver::MotorDriver() {        // Constructor, initializes speed and direct
     dir = 0;
 }
 
-MotorDriver::MotorDriver(int init_speed) {      // Constructor overloading (just fvor flexibility)
+MotorDriver::MotorDriver(int init_speed) {      // Constructor overloading (just for flexibility)
     speed = init_speed;
 }
 
@@ -14,19 +14,19 @@ MotorDriver::MotorDriver(int init_speed, int init_dir) {    // Constructor overl
     dir = init_dir;
 }
 
-bool MotorDriver::getDir() {    // stores dir in class
+bool MotorDriver::getDir() {    // stores dir in class (function)
     return dir;
 }
 
-void MotorDriver::setDir(bool newdir) {     // sets new dir in class
+void MotorDriver::setDir(bool newdir) {     // sets new dir in class (function)
     dir = newdir;
 }
 
-int MotorDriver::getSpeed() {   // stores speed in class
+int MotorDriver::getSpeed() {   // stores speed in class (function)
     return speed;
 }
 
-void MotorDriver::setSpeed(int newspeed) {      // sets new speed in class
+void MotorDriver::setSpeed(int newspeed) {      // sets new speed in class (function)
     // possibly add some kind of conversion here, or add a completely new conversion method
     speed = newspeed;
 }

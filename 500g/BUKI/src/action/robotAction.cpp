@@ -1,7 +1,7 @@
 #include "action/robotAction.h"
 
 RobotAction::RobotAction(MotorDriver* leftMotorParameter, MotorDriver* rightMotorParameter) {
-    // initialize empty motor drivers
+    // initialize motor drivers to specific values
     leftMotor = leftMotorParameter;
     rightMotor = rightMotorParameter;           
 }
