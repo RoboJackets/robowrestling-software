@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 #include <Arduino.h>
  
 // imports
@@ -24,7 +24,6 @@
 #define Switch0 -1;
 #define Switch1 -1;
 
-=======
 /**
  * Joe
  * File that outlines Shorti's main
@@ -32,7 +31,6 @@
  */
 
  #include <Arduino.h>
->>>>>>> d717143f6d73f366f7071af46db733d2b4e11e72
 
  // imports
  #include "motorDriver.h"
@@ -43,7 +41,7 @@
  #include "irSensor.h"
  #include "Timer.h"
  
-<<<<<<< HEAD
+
 // define objects
 IRSensor *leftFrontIR;
 IRSensor *rightFrontIR;
@@ -183,7 +181,6 @@ void updateMotors() {
         analogWrite(Rneg, rightSpeed);
     }
 }
-=======
  // pinouts
  #define LF_IR -1;
  #define RF_IR -1;
@@ -339,4 +336,3 @@ void updateMotors() {
          analogWrite(Rneg, rightSpeed);
      }
  }
->>>>>>> d717143f6d73f366f7071af46db733d2b4e11e72
