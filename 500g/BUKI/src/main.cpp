@@ -52,11 +52,11 @@ IRsensor* irsensors[5];
      pinMode(Lpos, OUTPUT);
      pinMode(Lneg, OUTPUT);
      pinMode(Lside, INPUT);
-     pinMode(Lsensor, INPUT);
-     pinMode(Rsensor, INPUT);
+     pinMode(LSensor, INPUT);
+     pinMode(RSensor, INPUT);
      pinMode(Rside, INPUT);
-     pinMode(LeftLine, INPUT); 
-     pinMode(RightLine, INPUT);
+     pinMode(lineLeft, INPUT); 
+     pinMode(lineRight, INPUT);
      pinMode(StartMod, INPUT);
      pinMode(switch1, INPUT);
      pinMode(switch2, INPUT);
@@ -90,39 +90,40 @@ IRsensor* irsensors[5];
   * simple motordriver with speed and direction.  
   */ 
  void updateMotors() {
-     int leftDirection = leftMotorDriver->getDir();
-     int leftSpeed = leftMotorDriver->getSpeed();
- 
-     if (leftDirection == 1) {  // if direction is forward
-        analogWrite(L_POS, 1);
-        analogWrite(L_NEG, 0);
-     } else {                    // if direction is back
-        analogWrite(L_POS, 0);
-        analogWrite(L_NEG, 1);
-     }
- 
-     int rightDirection = rightMotorDriver->getDir();
-     int rightSpeed = rightMotorDriver->getSpeed();
- 
-     if (rightDirection == 1) {  // if direction is forward
-        analogWrite(R_POS, 1);
-        analogWrite(R_NEG, 0);
-     } else {                    // if direction is back
-        analogWrite(R_POS, 0);
-        analogWrite(R_NEG, 1);
-     }
+  int leftDirection = leftMotorDriver->getDir();
+  int leftSpeed = leftMotorDriver->getSpeed();
 
-     // controls the speed
-     analogWrite(L_PWM, leftSpeed);
-     analogWrite(R_PWM, rightSpeed);
- }
+  if (leftDirection == 1) {  // if direction is forward
+    analogWrite(Lpos, 250);
+    analogWrite(Lneg, 0);
+  } else {                    // if direction is back
+    analogWrite(Lpos, 0);
+    analogWrite(Lneg, 250);
+  }
+
+  int rightDirection = rightMotorDriver->getDir();
+  int rightSpeed = rightMotorDriver->getSpeed();
+
+  if (rightDirection == 1) {  // if direction is forward
+    analogWrite(Rpos, 250);
+    analogWrite(Rneg, 0);
+  } else {                    // if direction is back
+    analogWrite(Rpos, 0);
+    analogWrite(Rneg, 250);
+  }
+
+// controls the speed
+
+   analogWrite(PWMLeft, leftSpeed);
+   analogWrite(PWMRight, rightSpeed);
+}
 
  void pollsensors() {
-    linesensors[0]->setValue(analogRead(LEFT_LINE));
-    linesensors[1]->setValue(analogRead(RIGHT_LINE));
+    linesensors[0]->setValue(analogRead(lineLeft));
+    linesensors[1]->setValue(analogRead(lineRight));
   
-    irsensors[0]->setValue(digitalRead(LEFT_IR_90));
-    irsensors[1]->setValue(digitalRead(LEFT_IR_45));
-    irsensors[2]->setValue(digitalRead(RIGHT_IR_45));
-    irsensors[3]->setValue(digitalRead(RIGHT_IR_90));
+    irsensors[0]->setValue(digitalRead(Lside));
+    irsensors[1]->setValue(digitalRead(LSensor));
+    irsensors[2]->setValue(digitalRead(RSensor));
+    irsensors[3]->setValue(digitalRead(Rside));
  }
