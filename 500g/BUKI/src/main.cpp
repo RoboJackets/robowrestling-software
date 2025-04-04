@@ -18,19 +18,20 @@
  
  // pinouts
  #define Lside 12
- #define Lsensor 8
+ #define LSensor 8
  #define Rside 2
- #define Rsensor 4
- #define MSensor 7
+ #define RSensor 4
  #define StartMod 10
- #define Rpos 6
+ #define Rpos 13
  #define Rneg 11
- #define Lpos 3
- #define Lneg 5
- #define switch1 A6
- #define switch2 A7
- #define LeftLine A0        // Line sensors may be reversed??
- #define RightLine A1
+ #define Lpos A5
+ #define Lneg 6
+ #define PWMRight 5
+ #define PWMLeft 3
+ #define switch1 A7
+ #define switch2 A6
+ #define lineLeft A0
+ #define lineRight A1
  
 // define objects               declares pointers to these objects
 MotorDriver *leftMotorDriver;
