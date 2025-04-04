@@ -24,10 +24,10 @@ void RobotAction::turnRight() {
 
 void RobotAction::go() {
     // call setDir and setSpeed
-    leftMotor->setDir(0);
-    rightMotor->setDir(0);
-    leftMotor->setSpeed(125);
-    rightMotor->setSpeed(125);
+    leftMotor->setDir(1);
+    rightMotor->setDir(1);
+    leftMotor->setSpeed(90);
+    rightMotor->setSpeed(90);
 }
 
 void RobotAction::GOGOGO() {
