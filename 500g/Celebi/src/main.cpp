@@ -65,6 +65,7 @@ world_state* world;
 robot_state* robot;
 
 timer* thymer;
+timer* time;
 
 //filter
 int print = 0;
@@ -104,9 +105,10 @@ void setup() {
 
     //initialize timer
     thymer = new timer(millis());
+    time = new timer(millis());
 
     //initialize robot actions
-    robo_actions = new robot_actions(leftMotorDriver, rightMotorDriver);
+    robo_actions = new robot_actions(leftMotorDriver, rightMotorDriver, time);
     
     //initialize world state
     world = new world_state(line_left, line_right, ir_left, ir_mid_left, ir_mid, ir_mid_right, ir_right);
@@ -195,7 +197,7 @@ void updateMotors() {
 
 void debug() {
   i++;
-  if (i < 250) {
+  if (i < 1000) {
     return;
   } else {
     i = 0;
@@ -205,18 +207,18 @@ void debug() {
   
   //Timer debugging
 
-  Serial.print("action timer has gone off: ");
-  Serial.println(thymer -> check_action_time());
-  Serial.print("time since match start: ");
-  Serial.println(thymer -> check_match_time());
-  Serial.print("millies: ");
-  Serial.println(millis());
-  Serial.print("action timer started at: ");
-  Serial.println(thymer -> get_action_start());
-  Serial.print("current time from timer: ");
-  Serial.println(thymer -> get_current_time());
-  Serial.print("timer status: ");
-  Serial.println(thymer -> get_timer_state());
+  // Serial.print("action timer has gone off: ");
+  // Serial.println(thymer -> check_action_time());
+  // Serial.print("time since match start: ");
+  // Serial.println(thymer -> check_match_time());
+  // Serial.print("millies: ");
+  // Serial.println(millis());
+  // Serial.print("action timer started at: ");
+  // Serial.println(thymer -> get_action_start());
+  // Serial.print("current time from timer: ");
+  // Serial.println(thymer -> get_current_time());
+  // Serial.print("timer status: ");
+  // Serial.println(thymer -> get_timer_state());
   
   
   //line sensors

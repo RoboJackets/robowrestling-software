@@ -13,6 +13,7 @@ class robot_state {
         world_state* worldState;
         algorithms* algorithm;
         timer* thymer;
+        enum enemy_states prev[5];
     public:
         robot_state(world_state *worldState, algorithms *algorithm, timer* thymer);
         void runAlgorithm();

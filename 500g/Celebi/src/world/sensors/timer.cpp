@@ -1,7 +1,6 @@
 #include "world/sensors/timer.hpp"
 
 timer :: timer(unsigned long initial_time) {
-    this -> match_start = initial_time;
     this -> action_start = initial_time;
     this -> current_time = initial_time;
     this -> timer_state = false;
@@ -21,10 +20,6 @@ bool timer :: check_action_time() {
     return checkup;
 }
 
-unsigned long timer :: check_match_time() {
-    return current_time - match_start;
-}
-
 void timer :: set_action_timer(unsigned long length) {
     timer_state = true;
     action_length = length;
@@ -41,4 +36,12 @@ unsigned long timer :: get_current_time() {
 
 bool timer :: get_timer_state() {
     return timer_state;
+}
+
+void timer :: set_stopwatch() {
+    action_start = current_time;
+}
+
+unsigned long timer :: check_stopwatch() {
+    return current_time - action_start;
 }

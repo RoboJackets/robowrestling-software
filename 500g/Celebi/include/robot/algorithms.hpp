@@ -5,14 +5,20 @@
 #include "world/world_state.hpp"
 #include "robot/robot_state.hpp"
 #include "enums/world_enums.hpp"
+#include "enums/robot_enums.hpp"
 #include "world/sensors/timer.hpp"
 
 class robot_actions {
     private:
         motor_driver* left_motor;
         motor_driver* right_motor;
+        timer* time;
+        struct action_tracker {
+            int times;
+            enum movement_states last_func;
+        } last_action;
     public:
-        robot_actions(motor_driver* left_ptr, motor_driver* right_ptr);
+        robot_actions(motor_driver* left_ptr, motor_driver* right_ptr, timer* time);
         void brake();
         void drive_forward(int speed);
         void drive_backward(int speed);
@@ -38,5 +44,6 @@ class algorithms {
         void back_and_forth();
         int dodge();
         void turn_test();
+        void seek_drive(enum enemy_states);
 };
 #endif

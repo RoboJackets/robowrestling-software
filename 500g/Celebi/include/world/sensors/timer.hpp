@@ -18,6 +18,8 @@ class timer {
         unsigned long get_action_start();
         unsigned long get_current_time();
         bool get_timer_state();
+        void set_stopwatch();
+        unsigned long check_stopwatch();
 };
 
 #endif

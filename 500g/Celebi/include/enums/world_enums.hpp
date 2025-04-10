@@ -24,9 +24,4 @@ enum enemy_states {
     UNKNOWN
 };
 
-enum approach_state {
-    TURN,
-    GO_STRAIGHT,
-    GO_BACKWARDS
-};
 #endif
