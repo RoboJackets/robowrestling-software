@@ -1,7 +1,8 @@
 #ifndef ALGORITHM_HPP
 #include "Robot/robotActions.hpp"
-#include "Sensors/IrSensor.hpp"
-#include "Sensors/lineSensor.hpp"
+#include "Sensors/irSensor.h"
+#include "Sensors/lineSensor.h"
+#include "Enumerations/OnLine.hpp"
 
 #define ALGORITHM_HPP
 
@@ -14,6 +15,7 @@ public:
     Algorithm(RobotActions *action);
     void RunItDown();
     void search();
+    void backTrack(OnLine line_state);
 };
 
 #endif

@@ -8,13 +8,12 @@ RobotState::RobotState(WorldState *state, Algorithm *algorithm) {
 }
 void RobotState::runAlgorithm() {
     // void State
-    /*
-    if (worldState->getEnemyPosition() == SEND) {
+    OnLine line_state = worldState->getIsOnLine();
+    if (line_state != not_on_line) {
+        algorithm->backTrack(line_state);
+    } else if (worldState->getEnemyPosition() == SEND) {
         algorithm->RunItDown();
+    } else {
+        algorithm->search();
     }
-    */
-    algorithm->RunItDown();
-
-    
-    algorithm->search();
 }

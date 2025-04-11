@@ -119,7 +119,7 @@ void setup() {
    }
      */
    
-   //pollSensors();
+   pollSensors();
    calculateState();
    writeMotors();
  }
