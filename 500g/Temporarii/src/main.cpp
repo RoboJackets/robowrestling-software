@@ -10,7 +10,7 @@
  // imports
  #include "Robot/robotActions.hpp"
  #include "Robot/motorDriver.hpp"
- #include "Sensors/WorldState.h"
+ #include "Sensors/WorldState.hpp"
  #include "Sensors/irSensor.h"
  #include "Sensors/lineSensor.h"
  #include "Robot/robotState.hpp"
