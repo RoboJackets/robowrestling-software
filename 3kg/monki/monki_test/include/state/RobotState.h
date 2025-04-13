@@ -1,5 +1,11 @@
 #include <Arduino.h>
-#include "../common.h"
+#include "action/RobotAction.h"
+#include "sensors/StartModule.h"
+#include "sensors/IMU.h"
+#include "EnemyPosition.h"
+#include "../motor/MotorDriver.h"
+#include "../sensors/LineSensor.h"
+#include "../sensors/StartModule.h"
 
 #ifndef ROBOT_STATE_H
 #define ROBOT_STATE_H
@@ -11,7 +17,6 @@ class RobotState {
     private:
         RobotAction robotAction; 
         StartModule startModule;
-        CurrentSensor currentSensor;
         IMU imu;
 
     public:

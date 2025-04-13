@@ -1,4 +1,5 @@
-#include "../../include/common.h"
+#include "sensors/IRSensor.h"
+#include <Arduino.h>
 
 IrSensor::IrSensor(uint8_t pin) {
     this->pin = pin;

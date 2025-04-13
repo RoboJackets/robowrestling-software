@@ -1,4 +1,6 @@
-#include "../../include/common.h"
+#include "sensors/LineSensor.h"
+#include <Arduino.h>
+
 
 LineSensor::LineSensor(uint8_t pin) {
     this->pin = pin;
