@@ -9,6 +9,7 @@ class StayOn : public RobotState {         // Polymorphism (I have no idea what'
     private:
         RobotAction* robotAction;
         WorldState* worldState;
+        int reverseTimer;
     public:
         StayOn(RobotAction* robotActionParameter, WorldState* worldState);     // constructor
         void runAlgorithm();           // Override runAlgorithm() from RobotState

@@ -21,8 +21,6 @@ Edge WorldState::isNearEdge() {
         return RIGHT;
     } else if (lnsn[0]->getValue() < 450) {                       // Left sensor detects edge
         return LEFT;
-    //} else if (lnsn[2]->getValue() < 450) {                       // Back sensor detects edge
-      //  return BACK;
     } else {                                                // No sensor detects edge
         return SAFE;
     }

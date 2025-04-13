@@ -6,21 +6,24 @@
 #include "states/moveForward.h"
 #include "states/stayOn.h"
 
-#define Lside 12
-#define LSensor 8
-#define Rside 2
-#define RSensor 4
-#define StartMod 10
-#define Rpos 13
-#define Rneg 11
+#define Rpos A1
+#define Rneg A0
 #define Lpos A5
-#define Lneg 6
-#define PWMRight 5
-#define PWMLeft 3
+#define Lneg 8
+#define PWMRight 13
+#define PWMLeft 9
+#define Lside A11
+#define LSensor 7
+#define Rside 0
+#define RSensor 8
+#define StartMod 29
+#define testLED1 1
+#define testLED2 2
+#define testLED3 3
 #define switch1 A7
 #define switch2 A6
-#define lineLeft A0
-#define lineRight A1
+#define lineLeft A12
+#define lineRight A10
 void line();
 void stop();
 void turnLeft(double);
@@ -77,7 +80,7 @@ void loop() {
   Serial.print(linesensors[0]->getValue());
   Serial.print("  ");
   Serial.println(linesensors[1]->getValue());
-  delay(50);
+
 }
 void lineRightt() {
   back(140);
