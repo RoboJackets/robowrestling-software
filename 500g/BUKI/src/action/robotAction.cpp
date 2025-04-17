@@ -22,12 +22,12 @@ void RobotAction::turnRight() {
     rightMotor->setSpeed(120);
 }
 
-void RobotAction::go() {
+void RobotAction::go(int weight) {
     // call setDir and setSpeed
     leftMotor->setDir(1);
     rightMotor->setDir(1);
-    leftMotor->setSpeed(90);
-    rightMotor->setSpeed(90);
+    leftMotor->setSpeed(90 + weight);
+    rightMotor->setSpeed(90 - weight);
 }
 
 void RobotAction::GOGOGO() {
@@ -44,4 +44,36 @@ void RobotAction::reverse() {
     rightMotor->setDir(0);
     leftMotor->setSpeed(100);
     rightMotor->setSpeed(100);
+}
+
+void RobotAction::spinRight() {
+    // call setDir and setSpeed
+    leftMotor->setDir(1);
+    rightMotor->setDir(0);
+    leftMotor->setSpeed(60);
+    rightMotor->setSpeed(60);
+}
+
+void RobotAction::spinLeft() {
+    // call setDir and setSpeed
+    leftMotor->setDir(0);
+    rightMotor->setDir(1);
+    leftMotor->setSpeed(60);
+    rightMotor->setSpeed(60);
+}
+
+void RobotAction::turnRightSlow() {
+    // call setDir and setSpeed
+    leftMotor->setDir(0);
+    rightMotor->setDir(0);
+    leftMotor->setSpeed(20);
+    rightMotor->setSpeed(50);
+}
+
+void RobotAction::turnLeftSlow() {
+    // call setDir and setSpeed
+    leftMotor->setDir(0);
+    rightMotor->setDir(0);
+    leftMotor->setSpeed(50);
+    rightMotor->setSpeed(20);
 }

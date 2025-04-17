@@ -40,7 +40,7 @@ RobotAction *raction;
 StayOn* stayOn;
 WorldState* wrldstate;
 LINEsensor* linesensors [3];
-IRsensor* irsensors [5];
+IRsensor* irsensors [4];
 
 void setup() {
   pinMode(Rpos, OUTPUT);
@@ -60,7 +60,9 @@ void setup() {
   for (int i = 0; i < 3; i++) {
     linesensors[i] = new LINEsensor(0);
   }
-
+  for (int i = 0; i < 4; i++) {
+    irsensors[i] = new IRsensor(0);
+  }
   raction = new RobotAction(leftMotorDriver, rightMotorDriver);
   wrldstate = new WorldState(linesensors, irsensors);
   stayOn = new StayOn(raction, wrldstate);
@@ -69,14 +71,32 @@ void setup() {
 void pollsensors() {
   linesensors[0]->setValue(analogRead(lineLeft));
   linesensors[1]->setValue(analogRead(lineRight));
+
+  irsensors[0]->setValue(digitalRead(Lside));
+  irsensors[1]->setValue(digitalRead(LSensor));
+  irsensors[2]->setValue(digitalRead(RSensor));
+  irsensors[3]->setValue(digitalRead(Rside));
 }
+
+
 void loop() {
-  stayOn->runAlgorithm();
+  
+   if (wrldstate->enemyPos() == FRONT) {
+    stayOn->runAlgorithm(0);
+  } else if (wrldstate->enemyPos() == SLIGHT_LEFT) {
+    stayOn->runAlgorithm(20);
+  } else if (wrldstate->enemyPos() == SLIGHT_RIGHT) {
+    stayOn->runAlgorithm(-20);
+   } else if (wrldstate->enemyPos() == RIGHT) {
+     raction->spinRight();
+  } else if (wrldstate->enemyPos() == LEFT) {
+    raction->spinLeft();
+  } else {
+    stayOn->runAlgorithm(50);
+  }
+
   updateMotors();
   pollsensors();
-  Serial.print(linesensors[0]->getValue());
-  Serial.print("  ");
-  Serial.println(linesensors[1]->getValue());
   delay(50);
 }
 void lineRightt() {

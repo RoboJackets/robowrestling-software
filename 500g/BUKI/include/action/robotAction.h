@@ -11,9 +11,13 @@ class RobotAction {
         RobotAction(MotorDriver* leftMotorParameter, MotorDriver* rightMotorParameter);   // Constructor (creates specific instances of parameters)
         void turnLeft();
         void turnRight();
-        void go();
+        void go(int);
         void GOGOGO();
         void reverse();
+        void spinRight();
+        void spinLeft();
+        void turnRightSlow();
+        void turnLeftSlow();
 };
 
 #endif

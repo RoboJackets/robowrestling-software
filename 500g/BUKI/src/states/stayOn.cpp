@@ -6,7 +6,7 @@ StayOn::StayOn(RobotAction* robotActionParameter, WorldState* worldStateParamete
     reverseTimer = 0;
 }
 
-void StayOn::runAlgorithm() {      // calls runAlgorithm method of MoveForward class. Delegates movement of robot to robotAction object
+void StayOn::runAlgorithm(int weight) {      // calls runAlgorithm method of MoveForward class. Delegates movement of robot to robotAction object
     Edge epos = worldState->isNearEdge(); 
     if (reverseTimer > 5) {
         robotAction->reverse();
@@ -22,6 +22,6 @@ void StayOn::runAlgorithm() {      // calls runAlgorithm method of MoveForward c
     } else if (epos == RIGHT || epos == SLIGHT_RIGHT) {
         robotAction->turnLeft();
     } else {
-        robotAction->go();
+        robotAction->go(weight);
     }
 }

@@ -30,15 +30,15 @@ Edge WorldState::isNearEdge() {
 * @param list list of sensors, will update list based on which sensors are detecting the enemy
 */
 Edge WorldState::enemyPos() {
-    if (irsn[1]->getValue() && irsn[2]->getValue()) {       // Front sensors detect enemy
+    if (irsn[1]->getValue() == 1 && irsn[2]->getValue() == 1) {       // Front sensors detect enemy
         return FRONT;
-    } else if (irsn[0]->getValue()) {                       // Left sensor detects enemy
+    } else if (irsn[0]->getValue() == 1) {                       // Left sensor detects enemy
         return LEFT;
-    } else if (irsn[1]->getValue()) {                       // Front right sensor detects enemy
+    } else if (irsn[1]->getValue() == 1) {                       // Front right sensor detects enemy
         return SLIGHT_RIGHT;
-    } else if (irsn[2]->getValue()) {                       // Front left sensor detects enemy
+    } else if (irsn[2]->getValue() == 1) {                       // Front left sensor detects enemy
         return SLIGHT_LEFT;
-    }else if (irsn[3]->getValue()) {                        // Right sensor detects enemy
+    }else if (irsn[3]->getValue() == 1) {                        // Right sensor detects enemy
         return RIGHT;
     } else {                                                // No sensor detects enemy
         return SAFE;

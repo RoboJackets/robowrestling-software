@@ -5,5 +5,5 @@ MoveForward::MoveForward(RobotAction* robotActionParameter) {       // construct
 }
 
 void MoveForward::runAlgorithm() {      // calls runAlgorithm method of MoveForward class. Delegates movement of robot to robotAction object
-    robotAction->go();                  // calls go() method on robotAction object
+    robotAction->go(0);                  // calls go() method on robotAction object
 }
