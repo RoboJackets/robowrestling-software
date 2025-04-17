@@ -2,7 +2,7 @@
 * Temporarii main.cpp
 */
 #include <Arduino.h>
-#include "Sensors/WorldState.h"
+#include "Sensors/WorldState.hpp"
 #include "Robot/robotActions.hpp"
 #include "Robot/robotState.hpp"
 #include "Robot/algorithm.hpp"

@@ -10,7 +10,7 @@
  // imports
  #include "Robot/robotActions.hpp"
  #include "Robot/motorDriver.hpp"
- #include "Sensors/WorldState.h"
+ #include "Sensors/WorldState.hpp"
  #include "Sensors/irSensor.h"
  #include "Sensors/lineSensor.h"
  #include "Robot/robotState.hpp"
@@ -55,9 +55,9 @@
  void pollSensors();
  void calculateState();
  
+// instantiation
 void setup() {
   Serial.begin(9600);
-  delay(2000);
   Serial.println("Starting Setup");
    
    // pinmode definitions
@@ -73,21 +73,29 @@ void setup() {
    pinMode(RIGHT_LINE, INPUT);
    pinMode(START_PIN, INPUT);
    
-   // instantion
-   leftMotorDriver = new MotorDriver();
-   rightMotorDriver = new MotorDriver();
-   robotAction = new RobotActions(leftMotorDriver, rightMotorDriver, test1, test2);
    leftIRSensor = new IrSensor();
    middleIRSensor = new IrSensor();
    rightIRSensor = new IrSensor();
    leftLineSensor = new LineSensor();
    rightLineSensor = new LineSensor();
+
+   leftMotorDriver = new MotorDriver();
+   rightMotorDriver = new MotorDriver();
+
+   test1 = new MotorDriver();
+   test2 = new MotorDriver();
+   test3 = new IrSensor();
+   test4 = new IrSensor();
+   test5 = new LineSensor();
+   test6 = new LineSensor();
+
    IrSensor *irSensors[5] = {test3, leftIRSensor, middleIRSensor, rightIRSensor, test4};
    LineSensor *lineSensors[4] = {leftLineSensor, test5, rightLineSensor, test6};
+   robotAction = new RobotActions(leftMotorDriver, rightMotorDriver, test1, test2);
    worldState = new WorldState(irSensors, lineSensors);
    algo = new Algorithm(robotAction);
    robotState = new RobotState(worldState, algo);
- 
+
    if (!DEBUGGING) {
      while (!digitalRead(START_PIN)) {
        Serial.print(digitalRead(START_PIN));
@@ -97,13 +105,10 @@ void setup() {
  }
  
  void loop() {
-  Serial.println("Starting loop");
-  delay(2000);
-  writeMotors();
+  //Serial.println("Starting loop");
   /*
    debug();          // method that just reads sensors and other values
    pollSensors();
-   calculateState();
    if (!DEBUGGING) { // stops if recieves signal to stop from start module
      if (!digitalRead(START_PIN)) {
        while(true) {
@@ -113,6 +118,10 @@ void setup() {
      }
    }
      */
+   
+   pollSensors();
+   calculateState();
+   writeMotors();
  }
 
  
@@ -122,24 +131,41 @@ void setup() {
    * (Spi's motordrivers conform to this by default)  
    */ 
  void writeMotors() {
-   //analogWrite(RIGHT_PWM, rightMotorDriver->getSpeed());
-   //digitalWrite(RIGHT_DIR, rightMotorDriver->getDirection());
-   //analogWrite(LEFT_PWM, leftMotorDriver->getSpeed());
-   //digitalWrite(LEFT_DIR, leftMotorDriver->getDirection());
+   //int rightSpeed = rightMotorDriver->getSpeed();
+   //int rightDirection = rightMotorDriver->getDirection();
+   //rightMotorDriver->setSpeed(100);
+   //rightMotorDriver->setDirection(0);
+   //leftMotorDriver->setSpeed(100);
+   //leftMotorDriver->setDirection(0);
+   Serial.println("Testing");
+   Serial.print("Right Speed: ");
+   Serial.println(rightMotorDriver->getSpeed());
+   //delay(2000);
+   analogWrite(RIGHT_PWM, rightMotorDriver->getSpeed());
+   digitalWrite(RIGHT_DIR, rightMotorDriver->getDirection());
+   analogWrite(LEFT_PWM, leftMotorDriver->getSpeed());
+   digitalWrite(LEFT_DIR, leftMotorDriver->getDirection());
    // 0 = backward, 1 = forward
-   analogWrite(RIGHT_PWM, 100);
-   digitalWrite(RIGHT_DIR, 1);
+   //analogWrite(RIGHT_PWM, 100);
+   //digitalWrite(RIGHT_DIR, 1);
+   // analogWrite(RIGHT_PWM, 100);
+   // digitalWrite(RIGHT_DIR, 0);
+   // analogWrite(LEFT_PWM, 100);
+   // digitalWrite(LEFT_DIR, 0);
  }
  
  /**
   * method to update the sensor objects
   */
  void pollSensors() {
+   //delay(500);
    leftIRSensor->setValue(digitalRead(LEFT_IR));
    middleIRSensor->setValue(digitalRead(MIDDLE_IR));
    rightIRSensor->setValue(digitalRead(RIGHT_IR));
    leftLineSensor->setValue(analogRead(LEFT_LINE));
    rightLineSensor->setValue(analogRead(RIGHT_LINE));
+   //Serial.print("Mid IR: ");
+   //Serial.println(middleIRSensor->getValue());
  }
 
  /**
