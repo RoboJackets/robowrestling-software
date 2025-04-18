@@ -65,13 +65,14 @@ EnemyPositions WorldState::getEnemyPosition()
 OnLine WorldState::getIsOnLine() {
     // Line Sensors Array = [Top Left, Top Right, Back Left, Back Right]
     // Test reading from circle to get white and black values (0 is black and 1000 is white)
-    if (lineStates[0]->getValue() >= 700) {
+    // Tested for circular platform ~950 for black and <700 for white
+    if (lineStates[0]->getValue() <= 800) {
         return left_front_on_line;
-    } else if (lineStates[1]->getValue() >= 700) {
+    } else if (lineStates[1]->getValue() <= 800) {
         return right_front_on_line;
-    } else if (lineStates[2]->getValue() >= 700) {
+    } else if (lineStates[2]->getValue() <= 800) {
         return left_on_line;
-    } else if (lineStates[3]->getValue() >= 700) {
+    } else if (lineStates[3]->getValue() <= 800) {
         return right_on_line;
     }
     return not_on_line;

@@ -19,9 +19,9 @@ void Algorithm::backTrack(OnLine line_state) {
     * Front_on_line means you have pushed over line, rotate and scan
     */
     if (line_state == left_front_on_line) {
-        action->Circle();
+        action->Forward();
     } else if (line_state == right_front_on_line) {
-        action->Circle();
+        action->Forward();
     } else if (line_state == left_on_line) {
         action->Forward();
     } else {

@@ -74,8 +74,8 @@ void RobotActions::Circle()
     backLeftDriver->setSpeed(10);
 
     frontRightDriver->setDirection(1);
-    frontRightDriver->setSpeed(50);
+    frontRightDriver->setSpeed(30);
 
     backRightDriver->setDirection(1);
-    backRightDriver->setSpeed(50);
+    backRightDriver->setSpeed(30);
 }
