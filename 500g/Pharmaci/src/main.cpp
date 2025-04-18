@@ -21,88 +21,134 @@ WorldState *worldState;
 RobotState *robotState;
 
 // Shorti Pins
-const int RIGHT_PWM = 5;
-const int RIGHT_POS = 11;
-const int RIGHT_NEG = 13;
-const int LEFT_PWM = 3;
-const int LEFT_POS = 5;
-const int LEFT_NEG = A5;
-
-const int START_MODULE = 10;
-const int DIP_SWITCH_1 = A6;
-const int DIP_SWITCH_2 = A7;
-
-const int LEFT_IR = 2;
-// const int MIDDLE_IR = 3;
-// const int RIGHT_IR = 4;
-// const int LEFT_LINE = A8;
-// const int RIGHT_LINE = A9;
-// const int START_PIN = 34;
+ const int LEFT_IR_90 = 12;
+ const int LEFT_IR_45 = 8;
+ const int RIGHT_IR_90 = 2;
+ const int RIGHT_IR_45 = 4;
+ const int MIDDLE_IR = 7;
+ const int START_MODULE = 10;
+ const int R_POS = 11;
+ const int R_NEG = 13;
+ const int L_POS = 6;
+ const int L_NEG = A5;
+ const int R_PWM = 5;
+ const int L_PWM = 3;
+ const int DIP_SWITCH_1 = A6;
+ const int DIP_SWITCH_2 = A7;
+ const int LEFT_LINE = A0;
+ const int RIGHT_LINE = A1;
 
 void setup() {
   Serial.begin(9600);
+    pinMode(R_POS, OUTPUT);
+     pinMode(R_NEG, OUTPUT);
+     pinMode(L_POS, OUTPUT);
+     pinMode(L_NEG, OUTPUT);
+     pinMode(LEFT_IR_90, INPUT);
+     pinMode(LEFT_IR_45, INPUT);
+     pinMode(MIDDLE_IR, INPUT);
+     pinMode(RIGHT_IR_45, INPUT);
+     pinMode(RIGHT_IR_90, INPUT);
+     pinMode(LEFT_LINE, INPUT);
+     pinMode(RIGHT_LINE, INPUT);
+     pinMode(START_MODULE, INPUT);
+     pinMode(DIP_SWITCH_1, INPUT);
+     pinMode(DIP_SWITCH_2, INPUT);
 
-  pinMode(RIGHT_POS, OUTPUT);
-  pinMode(RIGHT_NEG, OUTPUT);
-  pinMode(LEFT_POS, OUTPUT);
-  pinMode(LEFT_NEG, OUTPUT);
 
-  pinMode(RIGHT_PWM, OUTPUT);
-  pinMode(LEFT_PWM, OUTPUT);
-
-  pinMode(START_MODULE, INPUT);
-  pinMode(DIP_SWITCH_1, INPUT);
-  pinMode(DIP_SWITCH_2, INPUT);
-
-  pinMode(LEFT_IR, INPUT);
-
+  leftMotorDriver = new MotorDriver();
+  rightMotorDriver = new MotorDriver();
+  robotActions = new RobotActions(leftMotorDriver, rightMotorDriver);
   leftIRSensor = new IRSensor();
+  leftMiddleIRSensor = new IRSensor();
+  middleIRSensor = new IRSensor();
+  rightMiddleIRSensor = new IRSensor();
+  rightIRSensor = new IRSensor();
+  leftLineSensor = new LineSensor();
+  rightLineSensor = new LineSensor();
 
-  // leftMotorDriver = new MotorDriver();
-  // rightMotorDriver = new MotorDriver();
-  // robotActions = new RobotActions(leftMotorDriver, rightMotorDriver);
-  // leftIRSensor = new IRSensor();
-  // leftMiddleIRSensor = new IRSensor();
-  // middleIRSensor = new IRSensor();
-  // rightMiddleIRSensor = new IRSensor();
-  // rightIRSensor = new IRSensor();
-  // leftLineSensor = new LineSensor();
-  // rightLineSensor = new LineSensor();
-
-  // worldState = new WorldState(leftLineSensor, rightLineSensor, leftIRSensor, leftMiddleIRSensor, middleIRSensor, rightMiddleIRSensor, rightIRSensor);
-  // robotState = new RobotState(worldState, robotActions);
-
-}
-
-void loop() {
-  int speed = 100;
-  int direction = 1;
-  
-  digitalWrite(RIGHT_POS, 0);
-  digitalWrite(RIGHT_NEG, 255);
-  digitalWrite(LEFT_POS, 0);
-  digitalWrite(LEFT_NEG, 255);
-
-
-  if (digitalRead(LEFT_IR) == HIGH) {
-      analogWrite(RIGHT_PWM, speed);
-      analogWrite(LEFT_PWM, speed);
-  } else {
-      analogWrite(RIGHT_PWM, 0);
-      analogWrite(LEFT_PWM, 0);
-  }
-
+  worldState = new WorldState(leftLineSensor, rightLineSensor, leftIRSensor, leftMiddleIRSensor, middleIRSensor, rightMiddleIRSensor, rightIRSensor);
+  robotState = new RobotState(worldState, robotActions);
 
 }
 
 
-void writeMotors() {
-  // analogWrite(RIGHT_PWM, rightMotorDriver->getSpeed());
-  // digitalWrite(RIGHT_DIR, rightMotorDriver->getDirection());
-  // analogWrite(LEFT_PWM, leftMotorDriver->getSpeed());
-  // digitalWrite(LEFT_DIR, leftMotorDriver->getDirection());
+void updateMotors() {
+     int leftDirection = leftMotorDriver->getDirection();
+     int leftSpeed = leftMotorDriver->getSpeed();
+ 
+     if (leftDirection == 1) {  // if direction is forward
+        analogWrite(L_POS, 255);
+        analogWrite(L_NEG, 0);
+     } else {                    // if direction is back
+        analogWrite(L_POS, 0);
+        analogWrite(L_NEG, 255);
+     }
+ 
+     int rightDirection = rightMotorDriver->getDirection();
+     int rightSpeed = rightMotorDriver->getSpeed();
+ 
+     if (rightDirection == 1) {  // if direction is forward
+        analogWrite(R_POS, 255);
+        analogWrite(R_NEG, 0);
+     } else {                    // if direction is back
+        analogWrite(R_POS, 0);
+        analogWrite(R_NEG, 255);
+     }
+
+     analogWrite(L_PWM, leftSpeed);
+     analogWrite(R_PWM, rightSpeed);
+ }
+
+void pollSensors() {
+  //implement proper velocity measurement D:
+  leftIRSensor->setValue(digitalRead(LEFT_IR_90));
+  middleIRSensor->setValue(digitalRead(MIDDLE_IR));
+  rightIRSensor->setValue(digitalRead(RIGHT_IR_90));
+  leftMiddleIRSensor->setValue(digitalRead(LEFT_IR_45));
+  rightMiddleIRSensor->setValue(digitalRead(RIGHT_IR_45));
+  leftLineSensor->setValue(analogRead(LEFT_LINE));
+  rightLineSensor->setValue(analogRead(RIGHT_LINE));
 }
 
 void calculateState() {
   robotState->calculateState();
 }
+
+const char* positionToString(Position pos) {
+    switch (pos) {
+        case Position::None: return "None";
+        case Position::Left: return "Left";
+        case Position::Left_Middle: return "Left_Middle";
+        case Position::Middle_Close: return "Middle_Close";
+        case Position::Middle_Far: return "Middle_Far";
+        case Position::Right_Middle: return "Right_Middle";
+        case Position::Right: return "Right";
+        case Position::On_Line_Left: return "On_Line_Left";
+        case Position::On_Line_Right: return "On_Line_Right";
+        case Position::Off_Line: return "Off_Line";
+        case Position::On_Line: return "On_Line";
+        default: return "Unknown";
+    }
+}
+void debug() {
+  Serial.println(leftLineSensor->getValue());
+  Serial.println(rightLineSensor->getValue());
+
+  // Serial.println(leftMotorDriver->getSpeed());
+
+  Serial.println(positionToString(worldState->getSelfPosition()));  // prints: LEFT
+}
+
+void loop() {
+  int speed = 100;
+  int direction = 1;
+
+  debug();
+  pollSensors();
+  calculateState();
+  updateMotors();
+}
+
+
+ 
