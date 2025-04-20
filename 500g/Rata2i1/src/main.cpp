@@ -15,28 +15,20 @@
 #define RF_IR 3;
 #define LB_IR 4;
 #define RB_IR 5;
+
 #define F_LINE 1;
 #define B_LINE 2;
+
 #define R_PWM 6;
 #define L_PWM 9;
 #define R_FWD 19;
 #define R_BWD 20;
 #define L_FWD 21;
 #define L_BWD 22;
+
 #define StartMod -1;
 #define Switch0 -1;
 #define Switch1 -1;
-
- #include <Arduino.h>
-
- // imports
- #include "motorDriver.h"
- #include "robotAction.h"
- #include "worldState.h"
- #include "Strategies.h"
- #include "lineReader.h"
- #include "irSensor.h"
- #include "Timer.h"
  
 
 // define objects
@@ -49,6 +41,7 @@ lineReader *backLine;
 
 motorDriver *leftMotorDriver;
 motorDriver *rightMotorDriver;
+
 robotAction *robot;
 worldState *state;
 Timer *timer;
@@ -61,7 +54,7 @@ void updateMotors();
 
 void setup() {
     // define pinmodes
-    pinMode(LF_IR, INPUT);
+    pinMode(F_LINE, INPUT);
     
     state = new worldState(sensors);
 
