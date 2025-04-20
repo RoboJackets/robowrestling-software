@@ -26,10 +26,41 @@ void Strategies::moveForward() {
 }
 
 void Strategies::generalStrategy() {
-    if (state->getEnemyPosition()== Position::FRONT_LEFT) {
+    if (state->getPosition == Position::ON_LINE_FRONT) {
+        robot->moveBackward(255);
+    } else if (state->getPosition == Position::ON_LINE_BACK) {
+        robot->moveForward(255);
+    } else if (state->getEnemyPosition() == Position::FRONT_LEFT || state->getEnemyPosition() == Position::BACK_RIGHT) {
         robot->turnLeft(255);
-    } else if (state->getEnemyPosition() == Position::FRONT_RIGHT) {
+    } else if (state->getEnemyPosition()== Position::FRONT_LEFT || state->getEnemyPosition() == Position::BACK_RIGHT) {
+        robot->turnLeft(255);
+    } else if (state->getEnemyPosition() == Position::FRONT_RIGHT|| state->getEnemyPosition() == Position::BACK_LEFT) {
+        robot->turnRight(255);
+    } else if (state->getEnemyPosition() == Position::MIDDLE_FRONT) {
+        robot->moveForward(50);
+    } else if (state->getEnemyPosition() == Position::MIDDLE_BACK) {
+        robot->moveBackward(50);
+    } else if {state->getEnemyPosition() == Position::NONE} {
         robot->turnRight(255);
     }
 }
 
+void Strategies::runAway() {
+    if (state->getPosition == Position::ON_LINE_FRONT) {
+        robot->moveFowardFor(255, 1000);
+    } else if (state->getPosition == Position::ON_LINE_BACK) {
+        robot->moveBackwardFor(255, 1000);
+    } else if (state->getEnemyPosition() == Position::FRONT_LEFT || state->getEnemyPosition() == Position::BACK_RIGHT) {
+        robot->turnLeft(255);
+    } else if (state->getEnemyPosition()== Position::FRONT_LEFT || state->getEnemyPosition() == Position::BACK_RIGHT) {
+        robot->turnLeft(255);
+    } else if (state->getEnemyPosition() == Position::FRONT_RIGHT|| state->getEnemyPosition() == Position::BACK_LEFT) {
+        robot->turnRight(255);
+    } else if (state->getEnemyPosition() == Position::MIDDLE_FRONT) {
+        robot->moveBackward(50);
+    } else if (state->getEnemyPosition() == Position::MIDDLE_BACK) {
+        robot->moveForward(50);
+    } else if {state->getEnemyPosition() == Position::NONE} {
+        robot->turnRight(255);
+    }
+}

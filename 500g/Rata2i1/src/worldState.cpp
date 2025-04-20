@@ -19,17 +19,17 @@ Position worldState::getEnemyPosition(){
     
 
     if (frontLeft && frontRight) {
-        EnemyPosition = Position::ON_LINE_FRONT;
+        EnemyPosition = Position::MIDDLE_FRONT;
     } else if (frontLeft) {
-        EnemyPosition = Position::ON_LINE_FRONT_LEFT;
+        EnemyPosition = Position::FRONT_RIGHT;
     } else if (frontRight) {
-        EnemyPosition = Position::ON_LINE_FRONT_RIGHT;
+        EnemyPosition = Position::FRONT_LEFT;
     } else if (backLeft && backRight) {
-        EnemyPosition = Position::ON_LINE_BACK;
+        EnemyPosition = Position::MIDDLE_BACK;
     } else if (backLeft) {
-        EnemyPosition = Position::ON_LINE_BACK_LEFT;
+        EnemyPosition = Position::BACK_RIGHT;
     } else if (backRight) {
-        EnemyPosition = Position::ON_LINE_BACK_RIGHT;
+        EnemyPosition = Position::BACK_LEFT;
     } else {
         EnemyPosition = Position::NONE;
     }
