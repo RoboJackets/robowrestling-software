@@ -10,7 +10,7 @@
 #define LSensor 8
 #define Rside 2
 #define RSensor 4
-#define StartMod 10
+#define StartMod 29
 #define Rpos 13
 #define Rneg 11
 #define Lpos A5
@@ -80,24 +80,31 @@ void pollsensors() {
 
 
 void loop() {
-  
-   if (wrldstate->enemyPos() == FRONT) {
-    stayOn->runAlgorithm(0);
-  } else if (wrldstate->enemyPos() == SLIGHT_LEFT) {
-    stayOn->runAlgorithm(20);
-  } else if (wrldstate->enemyPos() == SLIGHT_RIGHT) {
-    stayOn->runAlgorithm(-20);
-   } else if (wrldstate->enemyPos() == RIGHT) {
-     raction->spinRight();
-  } else if (wrldstate->enemyPos() == LEFT) {
-    raction->spinLeft();
-  } else {
-    stayOn->runAlgorithm(50);
-  }
 
-  updateMotors();
-  pollsensors();
-  delay(50);
+    Serial.print("Start module signal: ");
+    Serial.print(digitalRead(StartMod));
+
+//     while (digitalRead(StartMod) == 0) {
+//         Serial.print("Waiting for remote");
+//       }
+      
+//    if (wrldstate->enemyPos() == FRONT) {
+//     stayOn->runAlgorithm(0);
+//   } else if (wrldstate->enemyPos() == SLIGHT_LEFT) {
+//     stayOn->runAlgorithm(20);
+//   } else if (wrldstate->enemyPos() == SLIGHT_RIGHT) {
+//     stayOn->runAlgorithm(-20);
+//    } else if (wrldstate->enemyPos() == RIGHT) {
+//      raction->spinRight();
+//   } else if (wrldstate->enemyPos() == LEFT) {
+//     raction->spinLeft();
+//   } else {
+//     stayOn->runAlgorithm(50);
+//   }
+
+//   updateMotors();
+//   pollsensors();
+//   delay(50);
 }
 void lineRightt() {
   back(140);
