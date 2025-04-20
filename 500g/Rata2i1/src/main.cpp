@@ -41,7 +41,6 @@ Timer *timer;
 Strategies *strategies;
 
 // define functions
-void updateMotors();
 void pollSensors(bool debug = false);
 void updateState();
 
@@ -107,8 +106,7 @@ void brake()
 void loop()
 {
     pollSensors();
-    // updateState()
-    updateMotors();
+    updateState()
 
     strategies->test();
 
@@ -121,11 +119,6 @@ void loop()
     // }
 
     // debug()
-}
-
-
-void updateMotors() {
-    
 }
 
 void updateState() {
