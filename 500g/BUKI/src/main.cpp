@@ -6,21 +6,24 @@
 #include "states/moveForward.h"
 #include "states/stayOn.h"
 
-#define Lside 12
-#define LSensor 8
-#define Rside 2
-#define RSensor 4
-#define StartMod 10
-#define Rpos 13
-#define Rneg 11
-#define Lpos A5
-#define Lneg 6
-#define PWMRight 5
-#define PWMLeft 3
+#define Rpos 22
+#define Rneg 19
+#define Lpos 15
+#define Lneg 14
+#define PWMRight 13
+#define PWMLeft 23
+#define Lside 25
+#define LSensor 7
+#define Rside 0
+#define RSensor 8
+#define StartMod 29
+#define testLED1 1
+#define testLED2 2
+#define testLED3 3
 #define switch1 A7
 #define switch2 A6
-#define lineLeft A0
-#define lineRight A1
+#define lineLeft 26
+#define lineRight 24
 void line();
 void stop();
 void turnLeft(double);
@@ -97,7 +100,7 @@ void loop() {
 
   updateMotors();
   pollsensors();
-  delay(50);
+  delay(500);
 }
 void lineRightt() {
   back(140);
@@ -121,14 +124,14 @@ void stop() {
   analogWrite(Lpos, 0);
   analogWrite(Lneg, 0);
 }
-// void forward(double speed) {
-//   analogWrite(13, speed);
-//   analogWrite(A9, speed);
-//   analogWrite(A1, 250);
-//   analogWrite(A0, 0);
-//   analogWrite(A5, 250);
-//   analogWrite(A8, 0);
-// }
+void forward(double speed) {
+  analogWrite(PWMLeft, speed);
+  analogWrite(Rpos, 250);
+  analogWrite(Rneg, 0);
+  analogWrite(PWMRight, speed);
+  analogWrite(Lpos, 250);
+  analogWrite(Lneg, 0);
+}
 void back(double speed) {
   analogWrite(PWMRight, speed);
   analogWrite(PWMLeft, speed);
