@@ -43,29 +43,39 @@ LINEsensor* linesensors [3];
 IRsensor* irsensors [4];
 
 void setup() {
-  pinMode(Rpos, OUTPUT);
-  pinMode(Rneg, OUTPUT);
-  pinMode(Lpos, OUTPUT);
-  pinMode(Lneg, OUTPUT);
-  pinMode(StartMod, INPUT);
-  pinMode(switch1, INPUT);
-  pinMode(switch2, INPUT);
-  pinMode(lineLeft, INPUT);
-  pinMode(lineRight, INPUT);
-  Serial.begin(9600);
 
-  leftMotorDriver = new MotorDriver();
-  rightMotorDriver = new MotorDriver();
+        pinMode(Rpos, OUTPUT);
+        pinMode(Rneg, OUTPUT);
+        pinMode(Lpos, OUTPUT);
+        pinMode(Lneg, OUTPUT);
+        pinMode(StartMod, INPUT);
+        pinMode(switch1, INPUT);
+        pinMode(switch2, INPUT);
+        pinMode(lineLeft, INPUT);
+        pinMode(lineRight, INPUT);
+        Serial.begin(9600);
 
-  for (int i = 0; i < 3; i++) {
-    linesensors[i] = new LINEsensor(0);
-  }
-  for (int i = 0; i < 4; i++) {
-    irsensors[i] = new IRsensor(0);
-  }
-  raction = new RobotAction(leftMotorDriver, rightMotorDriver);
-  wrldstate = new WorldState(linesensors, irsensors);
-  stayOn = new StayOn(raction, wrldstate);
+        leftMotorDriver = new MotorDriver();
+        rightMotorDriver = new MotorDriver();
+
+        for (int i = 0; i < 3; i++) {
+            linesensors[i] = new LINEsensor(0);
+        }
+        for (int i = 0; i < 4; i++) {
+            irsensors[i] = new IRsensor(0);
+        }
+        raction = new RobotAction(leftMotorDriver, rightMotorDriver);
+        wrldstate = new WorldState(linesensors, irsensors);
+        stayOn = new StayOn(raction, wrldstate);
+
+        while (digitalRead(StartMod) == 0) {
+            Serial.print("Waiting for start signal");
+            stop();
+        }
+        while (digitalRead(StartMod) == 1) {
+            delay(5000);
+        }
+  
 }
 
 void pollsensors() {
@@ -80,6 +90,11 @@ void pollsensors() {
 
 
 void loop() {
+
+    while (digitalRead(StartMod) == 0) {
+        Serial.print("Waiting for start signal");
+        stop();
+    }
   
    if (wrldstate->enemyPos() == FRONT) {
     stayOn->runAlgorithm(0);
