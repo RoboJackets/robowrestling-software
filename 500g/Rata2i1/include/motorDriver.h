@@ -3,8 +3,8 @@
 class motorDriver {
     private:
         int speed;
-        bool direction;
-        
+        bool fwd;
+        bool bwd;
     public:
         motorDriver();
         void setSpeed(int speed);
