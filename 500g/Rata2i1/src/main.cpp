@@ -27,17 +27,6 @@
 #define Switch0 -1;
 #define Switch1 -1;
 
-#include <Arduino.h>
-
-// imports
-#include "motorDriver.h"
-#include "robotAction.h"
-#include "worldState.h"
-#include "Strategies.h"
-#include "lineReader.h"
-#include "irSensor.h"
-#include "Timer.h"
-
 // define objects
 IRSensor *leftFrontIR;
 IRSensor *rightFrontIR;
