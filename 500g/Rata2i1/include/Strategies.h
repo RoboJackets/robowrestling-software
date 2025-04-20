@@ -19,5 +19,6 @@ class Strategies {
         void test();
         void moveForward();
         void generalStrategy();
+        void runAway();
 };
 #endif

@@ -26,9 +26,9 @@ void Strategies::moveForward() {
 }
 
 void Strategies::generalStrategy() {
-    if (state->getPosition == Position::ON_LINE_FRONT) {
+    if (state->getPosition() == Position::ON_LINE_FRONT) {
         robot->moveBackward(255);
-    } else if (state->getPosition == Position::ON_LINE_BACK) {
+    } else if (state->getPosition() == Position::ON_LINE_BACK) {
         robot->moveForward(255);
     } else if (state->getEnemyPosition() == Position::FRONT_LEFT || state->getEnemyPosition() == Position::BACK_RIGHT) {
         robot->turnLeft(255);
@@ -40,15 +40,15 @@ void Strategies::generalStrategy() {
         robot->moveForward(50);
     } else if (state->getEnemyPosition() == Position::MIDDLE_BACK) {
         robot->moveBackward(50);
-    } else if {state->getEnemyPosition() == Position::NONE} {
+    } else if (state->getEnemyPosition() == Position::NONE) {
         robot->turnRight(255);
     }
 }
 
 void Strategies::runAway() {
-    if (state->getPosition == Position::ON_LINE_FRONT) {
-        robot->moveFowardFor(255, 1000);
-    } else if (state->getPosition == Position::ON_LINE_BACK) {
+    if (state->getPosition() == Position::ON_LINE_FRONT) {
+        robot->moveForwardFor(255, 1000);
+    } else if (state->getPosition() == Position::ON_LINE_BACK) {
         robot->moveBackwardFor(255, 1000);
     } else if (state->getEnemyPosition() == Position::FRONT_LEFT || state->getEnemyPosition() == Position::BACK_RIGHT) {
         robot->turnLeft(255);
@@ -60,7 +60,7 @@ void Strategies::runAway() {
         robot->moveBackward(50);
     } else if (state->getEnemyPosition() == Position::MIDDLE_BACK) {
         robot->moveForward(50);
-    } else if {state->getEnemyPosition() == Position::NONE} {
+    } else if (state->getEnemyPosition() == Position::NONE) {
         robot->turnRight(255);
     }
 }

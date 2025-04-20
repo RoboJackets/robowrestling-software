@@ -1,5 +1,8 @@
 
 #include <Arduino.h>
+//q:what's wrong with my file
+
+
 
 // imports
 #include "motorDriver.h"
@@ -11,19 +14,19 @@
 #include "Timer.h"
 
 // pinouts
-#define LF_IR 2;
-#define RF_IR 3;
-#define LB_IR 4;
-#define RB_IR 5;
-#define F_LINE 14;
-#define B_LINE 15;
-#define R_PWM 6;
-#define L_PWM 9;
-#define R_FWD 19;
-#define R_BWD 20;
-#define L_FWD 21;
-#define L_BWD 22;
-#define StartMod 17;
+const int LF_IR = 2;
+const int RF_IR = 3;
+const int LB_IR = 4;
+const int RB_IR = 5;
+const int F_LINE = 14;
+const int B_LINE = 15;
+const int R_PWM = 6;
+const int L_PWM = 9;
+const int R_FWD = 19;
+const int R_BWD = 20;
+const int L_FWD = 21;
+const int L_BWD = 22;
+const int StartMod = 17;
 
 // define objects
 IRSensor *leftFrontIR;
@@ -39,10 +42,6 @@ robotAction *robot;
 worldState *state;
 Timer *timer;
 Strategies *strategies;
-
-// define functions
-void pollSensors(bool debug = false);
-void updateState();
 
 void setup()
 {
@@ -74,12 +73,16 @@ void setup()
 
     Serial.begin(9600);
 
-    // wait for start signal
-    while (!digitalRead(StartMod))
-    {
-        Serial.print(digitalRead(StartMod));
-        Serial.println(" Waiting for start signal");
-    }
+    delay(5000);
+
+    // // wait for start signal
+    // while (!digitalRead(StartMod))
+    // {
+    //     Serial.print(digitalRead(StartMod));
+    //     Serial.println(" Waiting for start signal");
+    // }
+    
+    
 }
 
 /**
@@ -88,27 +91,36 @@ void setup()
  */
 void pollSensors(bool debug = false)
 {
-    LFLine->setValue(digitalRead(LF_LINE));
-    RFLine->setValue(digitalRead(RF_LINE));
-    LBLine->setValue(digitalRead(LB_LINE));
-    RBLine->setValue(digitalRead(RB_LINE));
-    LFIR->setValue(digitalRead(LF_LINE));
-    RFIR->setValue(digitalRead(RF_LINE));
-    LBIR->setValue(digitalRead(LB_LINE));
-    RBIR->setValue(digitalRead(RB_LINE));
+    leftFrontIR->setValue(digitalRead(LF_IR));
+    rightFrontIR->setValue(digitalRead(RF_IR));
+    leftBackIR->setValue(digitalRead(LB_IR));
+    rightBackIR->setValue(digitalRead(RB_IR));
+    frontLine->setValue(analogRead(F_LINE));
+    backLine->setValue(analogRead(B_LINE));
+
+    if (debug)
+    {
+        Serial.print("LF: ");
+        Serial.print(leftFrontIR->getValue());
+        Serial.print(" RF: ");
+        Serial.print(rightFrontIR->getValue());
+        Serial.print(" LB: ");
+        Serial.print(leftBackIR->getValue());
+        Serial.print(" RB: ");
+        Serial.println(rightBackIR->getValue());
+    }
 }
 
-void brake()
-{
-    robot->stop();
+void updateState() {
+    state->getEnemyPosition();
+    state->getPosition();
 }
 
 void loop()
 {
     pollSensors();
-    updateState()
-
-    strategies->test();
+    updateState();
+    // robot ->moveForward(255);
 
     // listen for stop signal
     // if (!digitalRead(StartMod)) {
@@ -117,11 +129,8 @@ void loop()
     //     Serial.println("braking");
     //   }
     // }
+    Serial.println("Running");
 
     // debug()
 }
 
-void updateState() {
-    state->getEnemyPosition();
-    state->getPosition();
-}
