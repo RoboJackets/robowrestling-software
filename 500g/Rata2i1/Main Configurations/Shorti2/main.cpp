@@ -6,9 +6,15 @@
  */
 
  #include <Arduino.h>
- 
+
  // imports
-   #include "motorDriver.h"
+ #include "motorDriver.h"
+ #include "robotAction.h"
+ #include "worldState.h"
+ #include "Strategies.h"
+ #include "lineReader.h"
+ #include "irSensor.h"
+ #include "Timer.h"
  
  // pinouts
  const int LEFT_IR_90 = 12;
@@ -30,6 +36,18 @@
  // define objects
  motorDriver *leftMotorDriver;
  motorDriver *rightMotorDriver;
+ worldState *state;
+ robotAction *robot;
+ Timer *timer;
+ Strategies *strategies;
+
+ //sensors
+lineReader *leftLine;
+lineReader *rightLine;
+IRSensor *leftIR90;
+IRSensor *rightIR90;
+IRSensor *leftIR45;
+IRSensor *rightIR45;
  
  void updateMotors();
  
@@ -48,12 +66,42 @@
      pinMode(START_MODULE, INPUT);
      pinMode(DIP_SWITCH_1, INPUT);
      pinMode(DIP_SWITCH_2, INPUT);
+
+     // instantiate objects
+     leftMotorDriver = new motorDriver();
+     rightMotorDriver = new motorDriver();
+
+     // instantiate lineReader and IRSensor objects
+      leftLine = new lineReader(LEFT_LINE);
+      rightLine = new lineReader(RIGHT_LINE);
+      leftIR90 = new IRSensor(LEFT_IR_90);
+      rightIR90 = new IRSensor(RIGHT_IR_90);
+      leftIR45 = new IRSensor(LEFT_IR_45);
+      rightIR45 = new IRSensor(RIGHT_IR_45);
+ 
+     //construct world state with struct
+     worldState::joebotSensors sensors = {
+         leftLine,
+         rightLine,
+         leftIR90,
+         rightIR90,
+         leftIR45,
+         rightIR45
+     };
+     
+     state = new worldState(sensors);
+ 
+     robot = new robotAction(leftMotorDriver, rightMotorDriver);
+ 
+     timer = new Timer();
+ 
+     strategies = new Strategies(state, robot, timer);
  
      Serial.begin(9600);
  }
  
  void loop() {
-     // pollsensors()
+     pollSensors();
      // updateState()
      updateMotors();
      // listen for stop signal
@@ -68,26 +116,41 @@
      int leftDirection = leftMotorDriver->getDirection();
      int leftSpeed = leftMotorDriver->getSpeed();
  
-     if (leftDirection == 1) {  // if direction is forward
-        analogWrite(L_POS, 255);
-        analogWrite(L_NEG, 0);
-     } else {                    // if direction is back
-        analogWrite(L_POS, 0);
-        analogWrite(L_NEG, 255);
-     }
+   //   if (leftDirection == 1) {  // if direction is forward
+   //      analogWrite(L_POS, 255);
+   //      analogWrite(L_NEG, 0);
+   //   } else {                    // if direction is back
+   //      analogWrite(L_POS, 0);
+   //      analogWrite(L_NEG, 255);
+   //   }
  
      int rightDirection = rightMotorDriver->getDirection();
      int rightSpeed = rightMotorDriver->getSpeed();
  
-     if (rightDirection == 1) {  // if direction is forward
-        analogWrite(R_POS, 255);
-        analogWrite(R_NEG, 0);
-     } else {                    // if direction is back
-        analogWrite(R_POS, 0);
-        analogWrite(R_NEG, 255);
-     }
+   //   if (rightDirection == 1) {  // if direction is forward
+   //      analogWrite(R_POS, 255);
+   //      analogWrite(R_NEG, 0);
+   //   } else {                    // if direction is back
+   //      analogWrite(R_POS, 0);
+   //      analogWrite(R_NEG, 255);
+   //   }
 
-     // controls the speed
+   //   // controls the speed
      analogWrite(L_PWM, leftSpeed);
      analogWrite(R_PWM, rightSpeed);
  }
+
+ void pollSensors() {
+   leftLine->setValue(digitalRead(LEFT_LINE));
+   rightLine->setValue(digitalRead(RIGHT_LINE));
+   leftIR90->setValue(digitalRead(LEFT_IR_90));
+   rightIR90->setValue(digitalRead(RIGHT_IR_90));
+   leftIR45->setValue(digitalRead(LEFT_IR_45));
+   rightIR45->setValue(digitalRead(RIGHT_IR_45));
+ }
+
+   void updateState() {
+      //save enemy position
+      Position enemyPosition = state->getEnemyPosition();
+      Position position = state->getPosition();
+   }

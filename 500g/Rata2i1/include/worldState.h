@@ -32,28 +32,35 @@ class worldState {
             IRSensor *Rside;
             IRSensor *Lside;
         };
-        struct joebotSensors {
+        struct xanderSensors {
             lineReader *frontLeftLineSensor;
             lineReader *frontRightLineSensor;
-            lineReader *backLeftLineSensor;
-            lineReader *backRightLineSensor;
             IRSensor *frontLeftIRSensor;
             IRSensor *frontRightIRSensor;
-            IRSensor *Rside;
-            IRSensor *Lside;
-            IRSensor *MSensor;
         };
+        // struct joebotSensors {
+        //     lineReader *frontLeftLineSensor;
+        //     lineReader *frontRightLineSensor;
+        //     lineReader *backLeftLineSensor;
+        //     lineReader *backRightLineSensor;
+        //     IRSensor *frontLeftIRSensor;
+        //     IRSensor *frontRightIRSensor;
+        //     IRSensor *Rside;
+        //     IRSensor *Lside;
+        //     IRSensor *MSensor;
+        // };
         struct robotSensors {
             lineReader *frontLeftLineSensor;
             lineReader *frontRightLineSensor;
             lineReader *backLeftLineSensor;
             lineReader *backRightLineSensor;
             IRSensor *frontLeftIRSensor;
-            IRSensor *frontRightIRSensor;
-            IRSensor *backLeftIRSensor;
+            // IRSensor *frontRightIRSensor;
+            // IRSensor *backLeftIRSensor;
             IRSensor *backRightIRSensor;
         };
         worldState(joebotSensors sensors);
+        worldState(xanderSensors sensors);
         worldState(robotSensors sensors);
         Position getEnemyPosition();
         Position getLastEnemyPosition();

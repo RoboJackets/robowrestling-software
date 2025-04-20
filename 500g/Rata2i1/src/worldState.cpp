@@ -11,6 +11,14 @@ worldState::worldState(worldState::joebotSensors sensors){
     EnemyPosition = Position::MIDDLE_FRONT;
 }
 
+worldState::worldState(worldState::xanderSensors sensors){
+    this->frontLeftLineSensor = sensors.frontLeftLineSensor;
+    this->frontRightLineSensor = sensors.frontRightLineSensor;
+    this->frontLeftIRSensor = sensors.frontLeftIRSensor;
+    this->frontRightIRSensor = sensors.frontRightIRSensor;
+    EnemyPosition = Position::MIDDLE_FRONT;
+}
+
 // //joebot worldstate
 // worldState::worldState(worldState::joebotSensors sensors){
 //     this->frontLeftLineSensor = sensors.frontLeftLineSensor;

@@ -12,6 +12,11 @@ Strategies::Strategies(worldState *state, robotAction *robot, Timer *timer) {
     this->timer = timer;
     currentState = IDLE;
 }
+Strategies::Strategies(worldState *state, robotAction *robot) {
+    this->state = state;
+    this->robot = robot;
+    currentState = IDLE;
+}
 void Strategies::test() {
     
 }
