@@ -119,7 +119,6 @@ void loop()
 
     // debug()
 }
-}
 
 /**
  * Implemented for Shorti's motordrivers to conform to the
