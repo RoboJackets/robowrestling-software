@@ -5,7 +5,6 @@ class motorDriver {
         int speed;
         bool fwd;
         bool bwd;
-        bool direction;
         
     public:
         motorDriver();
