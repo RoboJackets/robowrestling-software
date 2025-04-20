@@ -1,11 +1,17 @@
 #include "Robot/algorithm.hpp"
 
-Algorithm::Algorithm(RobotActions *action) {
+Algorithm::Algorithm(RobotActions *action, Timer *time) {
     this->action = action;
+    this->time = time;
 }
 
-void Algorithm::RunItDown() {
-    action->Forward();
+void Algorithm::RunItDown(EnemyPositions pos) {
+    // Modify this for timer checks
+    if (time->check_action_time()) {
+        
+    } else {
+        action->Forward(pos);
+    }
 }
 
 void Algorithm::search() {
@@ -19,12 +25,12 @@ void Algorithm::backTrack(OnLine line_state) {
     * Front_on_line means you have pushed over line, rotate and scan
     */
     if (line_state == left_front_on_line) {
-        action->Forward();
+        action->Backwards();
     } else if (line_state == right_front_on_line) {
-        action->Forward();
+        action->Backwards();
     } else if (line_state == left_on_line) {
-        action->Forward();
+        action->Backwards();
     } else {
-        action->Forward();
+        action->Backwards();
     }
 }

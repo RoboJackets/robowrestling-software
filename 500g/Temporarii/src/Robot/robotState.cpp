@@ -11,8 +11,8 @@ void RobotState::runAlgorithm() {
     OnLine line_state = worldState->getIsOnLine();
     if (line_state != not_on_line) {
         algorithm->backTrack(line_state);
-    } else if (worldState->getEnemyPosition() == SEND) {
-        algorithm->RunItDown();
+    } else if (worldState->getEnemyPosition() == SEND || worldState->getEnemyPosition() == MidL || worldState->getEnemyPosition() == MidR) {
+        algorithm->RunItDown(worldState->getEnemyPosition());
     } else {
         algorithm->search();
     }

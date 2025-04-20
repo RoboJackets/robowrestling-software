@@ -148,11 +148,13 @@ void calcState() {
 }
 
 void writeMotors() {
+  // Have a delay for ramping motors (Temporary, replace with Timer class)
+  // delay(100);
   // Write to Motors digitalWrite()
-  digitalWrite(LEFT_FRONT_MOTOR_PIN, frontLeft->getSpeed());
-  digitalWrite(RIGHT_FRONT_MOTOR_PIN, frontRight->getSpeed());
-  digitalWrite(LEFT_REAR_MOTOR_PIN, backLeft->getSpeed());
-  digitalWrite(RIGHT_REAR_MOTOR_PIN, backRight->getSpeed());
+  analogWrite(LEFT_FRONT_MOTOR_PIN, frontLeft->getSpeed());
+  analogWrite(RIGHT_FRONT_MOTOR_PIN, frontRight->getSpeed());
+  analogWrite(LEFT_REAR_MOTOR_PIN, backLeft->getSpeed());
+  analogWrite(RIGHT_REAR_MOTOR_PIN, backRight->getSpeed());
 
   digitalWrite(LEFT_FRONT_DIR_PIN, frontLeft->getDirection());
   digitalWrite(RIGHT_FRONT_DIR_PIN, frontRight->getDirection());

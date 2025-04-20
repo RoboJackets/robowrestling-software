@@ -14,6 +14,7 @@
 #include "Sensors/irSensor.h"
 #include "Sensors/lineSensor.h"
 #include "Robot/robotState.hpp"
+#include "Sensors/Timer.hpp"
 
 // pinouts
 const int RIGHT_PWM = 6;
@@ -46,6 +47,8 @@ RobotActions *robotAction;
 WorldState *worldState;
 RobotState *robotState;
 Algorithm *algo;
+
+Timer *time_var;
 // if debugging is true it will skip the start module check.
 const bool DEBUGGING = true;
 
@@ -96,9 +99,10 @@ void setup()
   test6->setValue(1000);
   robotAction = new RobotActions(leftMotorDriver, rightMotorDriver, test1, test2);
   worldState = new WorldState(irSensors, lineSensors);
-  algo = new Algorithm(robotAction);
+  algo = new Algorithm(robotAction, time_var);
   robotState = new RobotState(worldState, algo);
 
+  time_var = new Timer(millis());
   if (!DEBUGGING)
   {
     while (!digitalRead(START_PIN))
@@ -107,10 +111,13 @@ void setup()
       Serial.println(" Waiting for start signal");
     }
   }
+  time_var->set_action_timer(100);
 }
 
 void loop()
 {
+  // 5 Seconds before start for comp
+  delay(5000);
   // Serial.println("Starting loop");
   /*
    debug();          // method that just reads sensors and other values
@@ -146,7 +153,9 @@ void writeMotors()
   // Serial.println("Testing");
   // Serial.print("Right Speed: ");
   // Serial.println(rightMotorDriver->getSpeed());
-  delay(100);
+
+  // Temporary delay to motors. Replace with Timer.cpp implementations
+  //delay(100);
   analogWrite(RIGHT_PWM, rightMotorDriver->getSpeed());
   digitalWrite(RIGHT_DIR, rightMotorDriver->getDirection());
   analogWrite(LEFT_PWM, leftMotorDriver->getSpeed());
@@ -171,7 +180,7 @@ void pollSensors()
   rightIRSensor->setValue(digitalRead(RIGHT_IR));
   leftLineSensor->setValue(analogRead(LEFT_LINE));
   rightLineSensor->setValue(analogRead(RIGHT_LINE));
-  //delay(2000);
+  //delay(500);
   Serial.print("Left Line Is on Line: ");
   Serial.println(worldState->getIsOnLine());
   Serial.print("Left Line:");
@@ -180,6 +189,7 @@ void pollSensors()
   // Serial.println(middleIRSensor->getValue());
   // Serial.print("Right IR: ");
   // Serial.println(rightIRSensor->getValue());
+  time_var->update_time(millis());
 }
 
 /**

@@ -1,5 +1,7 @@
 #ifndef ROBOTACTIONS_HPP
 #include "Robot/motorDriver.hpp"
+#include "Enumerations/PrevAction.hpp"
+#include "Enumerations/EnemyPositions.hpp"
 
 #define ROBOTACTIONS_HPP 
 
@@ -9,9 +11,11 @@ class RobotActions {
         MotorDriver *frontRightDriver;
         MotorDriver *backLeftDriver;
         MotorDriver *backRightDriver;
+        int speed;
+        PrevAction prev_action;
     public:
         RobotActions(MotorDriver *, MotorDriver *, MotorDriver *, MotorDriver *);
-        void Forward();
+        void Forward(EnemyPositions pos);
         void Backwards();
         void Left();
         void Right();
