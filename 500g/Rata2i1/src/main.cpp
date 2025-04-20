@@ -118,3 +118,33 @@ void loop()
 
     // debug()
 }
+}
+
+/**
+ * Implemented for Shorti's motordrivers to conform to the
+ * simple motordriver with speed and direction.  
+ */ 
+void updateMotors() {
+    int leftDirection = leftMotorDriver->getDirection();
+    int leftSpeed = leftMotorDriver->getSpeed();
+
+    if (leftDirection == 1) {  // if direction is forward
+        analogWrite(Lpos, leftSpeed);
+        analogWrite(Lneg, 0);
+    } else {                    // if direction is back
+        analogWrite(Lpos, 0);
+        analogWrite(Lneg, leftSpeed);
+    }
+
+    int rightDirection = rightMotorDriver->getDirection();
+    int rightSpeed = rightMotorDriver->getSpeed();
+
+    if (rightDirection == 1) {  // if direction is forward
+        analogWrite(Rpos, rightSpeed);
+        analogWrite(Rneg, 0);
+    } else {                    // if direction is back
+        analogWrite(Rpos, 0);
+        analogWrite(Rneg, rightSpeed);
+    }
+}
+
