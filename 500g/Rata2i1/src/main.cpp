@@ -64,6 +64,9 @@ void setup()
         new IRSensor(RB_IR)};
     state = new worldState(sensors);
 
+    leftMotorDriver = new motorDriver();
+    rightMotorDriver = new motorDriver();
+
     robot = new robotAction(leftMotorDriver, rightMotorDriver);
 
     timer = new Timer();
