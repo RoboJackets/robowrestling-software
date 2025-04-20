@@ -15,6 +15,7 @@ class Strategies {
         
     public:
         Strategies(worldState *state, robotAction *robot, Timer *timer);
+        Strategies(worldState *state, robotAction *robot);
         void test();
         void moveForward();
         void generalStrategy();
