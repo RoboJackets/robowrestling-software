@@ -49,7 +49,19 @@ void setup()
 {
     // define pinmodes
     pinMode(LF_IR, INPUT);
+    pinMode(RF_IR, INPUT);
+    pinMode(LB_IR, INPUT);
+    pinMode(RB_IR, INPUT);
+    pinMode(F_LINE, INPUT);
+    pinMode(B_LINE, INPUT);
 
+    worldState::robotSensors sensors = {
+        new lineReader(F_LINE),
+        new lineReader(B_LINE),
+        new IRSensor(LF_IR),
+        new IRSensor(RF_IR),
+        new IRSensor(LB_IR),
+        new IRSensor(RB_IR)};
     state = new worldState(sensors);
 
     robot = new robotAction(leftMotorDriver, rightMotorDriver);
