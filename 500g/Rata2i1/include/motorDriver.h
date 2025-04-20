@@ -4,6 +4,7 @@ class motorDriver {
     private:
         int speed;
         bool direction;
+        
     public:
         motorDriver();
         void setSpeed(int speed);
