@@ -7,10 +7,8 @@
 
 class worldState {
     private:
-        lineReader *frontLeftLineSensor;
-        lineReader *frontRightLineSensor;
-        lineReader *backLeftLineSensor;
-        lineReader *backRightLineSensor;
+        lineReader *frontLineSensor;
+        lineReader *backLineSensor;
         IRSensor *frontLeftIRSensor;
         IRSensor *frontRightIRSensor;
         IRSensor *backLeftIRSensor;
@@ -23,44 +21,14 @@ class worldState {
         IRSensor *mSensor;
 
     public:
-        //joe worldstate
-        struct joebotSensors {
-            lineReader *frontLeftLineSensor;
-            lineReader *frontRightLineSensor;
-            IRSensor *frontLeftIRSensor;
-            IRSensor *frontRightIRSensor;
-            IRSensor *Rside;
-            IRSensor *Lside;
-        };
-        struct xanderSensors {
-            lineReader *frontLeftLineSensor;
-            lineReader *frontRightLineSensor;
-            IRSensor *frontLeftIRSensor;
-            IRSensor *frontRightIRSensor;
-        };
-        // struct joebotSensors {
-        //     lineReader *frontLeftLineSensor;
-        //     lineReader *frontRightLineSensor;
-        //     lineReader *backLeftLineSensor;
-        //     lineReader *backRightLineSensor;
-        //     IRSensor *frontLeftIRSensor;
-        //     IRSensor *frontRightIRSensor;
-        //     IRSensor *Rside;
-        //     IRSensor *Lside;
-        //     IRSensor *MSensor;
-        // };
         struct robotSensors {
-            lineReader *frontLeftLineSensor;
-            lineReader *frontRightLineSensor;
-            lineReader *backLeftLineSensor;
-            lineReader *backRightLineSensor;
+            lineReader *frontLineSensor;
+            lineReader *backLineSensor;
             IRSensor *frontLeftIRSensor;
-            // IRSensor *frontRightIRSensor;
-            // IRSensor *backLeftIRSensor;
+            IRSensor *frontRightIRSensor;
+            IRSensor *backLeftIRSensor;
             IRSensor *backRightIRSensor;
         };
-        worldState(joebotSensors sensors);
-        worldState(xanderSensors sensors);
         worldState(robotSensors sensors);
         Position getEnemyPosition();
         Position getLastEnemyPosition();
