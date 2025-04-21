@@ -44,6 +44,8 @@ StayOn* stayOn;
 WorldState* wrldstate;
 LINEsensor* linesensors [3];
 IRsensor* irsensors [4];
+int panRight;
+int panLeft;
 
 void setup() {
 
@@ -70,14 +72,14 @@ void setup() {
         raction = new RobotAction(leftMotorDriver, rightMotorDriver);
         wrldstate = new WorldState(linesensors, irsensors);
         stayOn = new StayOn(raction, wrldstate);
-
-        while (digitalRead(StartMod) == 0) {
-            Serial.print("Waiting for start signal");
-            stop();
-        }
-        while (digitalRead(StartMod) == 1) {
-            delay(5000);
-        }
+        panRight = 0;
+        // while (digitalRead(StartMod) == 0) {
+        //     Serial.print("Waiting for start signal");
+        //     stop();
+        // }
+        // while (digitalRead(StartMod) == 1) {
+        //     delay(5000);
+        // }
   
 }
 
@@ -94,28 +96,41 @@ void pollsensors() {
 
 void loop() {
 
-    while (digitalRead(StartMod) == 0) {
-        Serial.print("Waiting for start signal");
-        stop();
-    }
+    // while (digitalRead(StartMod) == 0) {
+    //     Serial.print("Waiting for start signal");
+    //     stop();
+    // }
   
    if (wrldstate->enemyPos() == FRONT) {
-    stayOn->runAlgorithm(0);
+      stayOn->runAlgorithm(0);
   } else if (wrldstate->enemyPos() == SLIGHT_LEFT) {
-    stayOn->runAlgorithm(20);
+    stayOn->runAlgorithm(40);
   } else if (wrldstate->enemyPos() == SLIGHT_RIGHT) {
-    stayOn->runAlgorithm(-20);
+    stayOn->runAlgorithm(-50);
+    panRight = 0;
    } else if (wrldstate->enemyPos() == RIGHT) {
-     raction->spinRight();
+    stayOn->runAlgorithm(-90);
+    panRight = 15;
+  }  else if (panRight > 0) {
+    stayOn->runAlgorithm(-90);
+    panRight--;
   } else if (wrldstate->enemyPos() == LEFT) {
     raction->spinLeft();
+    panLeft = 15;
+  } else if (panLeft > 0) {
+    stayOn->runAlgorithm(90);
+    panLeft--;
   } else {
-    stayOn->runAlgorithm(50);
+    stayOn->runAlgorithm(25);
   }
+
+  Serial.print(linesensors[0]->getValue());
+  Serial.print("     ");
+  Serial.println(linesensors[1]->getValue());
 
   updateMotors();
   pollsensors();
-  delay(500);
+  delay(20);
 }
 void lineRightt() {
   back(140);
@@ -192,7 +207,7 @@ void updateMotors() {
   int leftDirection = leftMotorDriver->getDir();
   int leftSpeed = leftMotorDriver->getSpeed();
 
-  if (leftDirection == 1) {  // if direction is forward
+  if (leftDirection == 0) {  // if direction is forward
     analogWrite(Lpos, 250);
     analogWrite(Lneg, 0);
   } else {                    // if direction is back
@@ -203,7 +218,7 @@ void updateMotors() {
   int rightDirection = rightMotorDriver->getDir();
   int rightSpeed = rightMotorDriver->getSpeed();
 
-  if (rightDirection == 1) {  // if direction is forward
+  if (rightDirection == 0) {  // if direction is forward
     analogWrite(Rpos, 250);
     analogWrite(Rneg, 0);
   } else {                    // if direction is back

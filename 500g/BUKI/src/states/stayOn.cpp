@@ -16,11 +16,13 @@ void StayOn::runAlgorithm(int weight) {      // calls runAlgorithm method of Mov
         reverseTimer--;
     } else if (epos == FRONT) {
         robotAction->reverse();
-        reverseTimer = 20;
+        reverseTimer = 30;
     } else if (epos == LEFT || epos == SLIGHT_LEFT) {
-        robotAction->turnRight();
+        robotAction->reverse();
+        reverseTimer = 30;
     } else if (epos == RIGHT || epos == SLIGHT_RIGHT) {
-        robotAction->turnLeft();
+        robotAction->reverse();
+        reverseTimer = 30;
     } else {
         robotAction->go(weight);
     }
