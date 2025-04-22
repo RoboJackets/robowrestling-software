@@ -12,5 +12,7 @@ class motorDriver {
         void setDirection(bool direction);
         int getSpeed();
         bool getDirection();
+        int getFwd();
+        int getBwd();
 };
 #endif

@@ -2,6 +2,7 @@
 #define POSITION_ENUM_H
 
 enum Position {
+    START,
     FRONT_LEFT,
     FRONT_RIGHT,
     BACK_LEFT,

@@ -8,6 +8,7 @@ worldState::worldState(worldState::robotSensors sensors){
     this->backLeftIRSensor = sensors.backLeftIRSensor;
     this->backRightIRSensor = sensors.backRightIRSensor;
     EnemyPosition = Position::MIDDLE_FRONT;
+    lastEnemyPosition = Position::MIDDLE_FRONT;
 }
 
 Position worldState::getEnemyPosition(){
@@ -20,20 +21,34 @@ Position worldState::getEnemyPosition(){
 
     if (frontLeft && frontRight) {
         EnemyPosition = Position::MIDDLE_FRONT;
+        lastEnemyPosition = EnemyPosition;
     } else if (frontLeft) {
         EnemyPosition = Position::FRONT_RIGHT;
+        lastEnemyPosition = EnemyPosition;
     } else if (frontRight) {
         EnemyPosition = Position::FRONT_LEFT;
+        lastEnemyPosition = EnemyPosition;
     } else if (backLeft && backRight) {
         EnemyPosition = Position::MIDDLE_BACK;
+        lastEnemyPosition = EnemyPosition;
     } else if (backLeft) {
         EnemyPosition = Position::BACK_RIGHT;
+        lastEnemyPosition = EnemyPosition;
     } else if (backRight) {
         EnemyPosition = Position::BACK_LEFT;
+        lastEnemyPosition = EnemyPosition;
     } else {
+        
         EnemyPosition = Position::NONE;
     }
     return EnemyPosition;
+}
+
+Position worldState::getLastEnemyPosition(){
+    return lastEnemyPosition;
+}
+void worldState::setLastEnemyPosition(Position position){
+    lastEnemyPosition = position;
 }
 
 Position worldState::getPosition(){

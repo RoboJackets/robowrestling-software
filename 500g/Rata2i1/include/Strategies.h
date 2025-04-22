@@ -12,6 +12,8 @@ class Strategies {
         int currentState;
         robotAction *robot;
         Timer *timer;
+        bool sweep;
+        bool direction;
         
     public:
         Strategies(worldState *state, robotAction *robot, Timer *timer);
@@ -19,6 +21,7 @@ class Strategies {
         void test();
         void moveForward();
         void generalStrategy();
+        void generalStrategyBAD();
         void runAway();
 };
 #endif

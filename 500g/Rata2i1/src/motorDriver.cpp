@@ -30,3 +30,9 @@ bool motorDriver::getDirection(){
         return false;
     }
 };
+int motorDriver::getFwd(){
+    return fwd;
+};
+int motorDriver::getBwd(){
+    return bwd;
+};

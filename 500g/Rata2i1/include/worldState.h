@@ -14,6 +14,8 @@ class worldState {
         IRSensor *backLeftIRSensor;
         IRSensor *backRightIRSensor;
         Position EnemyPosition;
+        Position lastEnemyPosition;
+
 
         //joebot sensors
         IRSensor *lSide;
@@ -32,6 +34,7 @@ class worldState {
         worldState(robotSensors sensors);
         Position getEnemyPosition();
         Position getLastEnemyPosition();
+        void setLastEnemyPosition(Position position);
         Position getPosition();
 
 

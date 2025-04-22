@@ -3,7 +3,7 @@
 
 class util {
     public:
-       static int average(int values[], int size);
+       static double average(int values[], int size);
 };
 
 #endif
