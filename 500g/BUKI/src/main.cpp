@@ -46,6 +46,7 @@ LINEsensor* linesensors [3];
 IRsensor* irsensors [4];
 int panRight;
 int panLeft;
+int pressTime;
 
 void setup() {
 
@@ -73,6 +74,7 @@ void setup() {
         wrldstate = new WorldState(linesensors, irsensors);
         stayOn = new StayOn(raction, wrldstate);
         panRight = 0;
+        pressTime = 0;
         // while (digitalRead(StartMod) == 0) {
         //     Serial.print("Waiting for start signal");
         //     stop();
@@ -102,9 +104,14 @@ void loop() {
     // }
   
    if (wrldstate->enemyPos() == FRONT) {
+    if (pressTime < 50) {  
       stayOn->runAlgorithm(0);
+    } else {
+      raction->GOGOGO();
+    }
   } else if (wrldstate->enemyPos() == SLIGHT_LEFT) {
     stayOn->runAlgorithm(40);
+    panLeft = 0;
   } else if (wrldstate->enemyPos() == SLIGHT_RIGHT) {
     stayOn->runAlgorithm(-50);
     panRight = 0;
@@ -124,9 +131,11 @@ void loop() {
     stayOn->runAlgorithm(25);
   }
 
-  Serial.print(linesensors[0]->getValue());
-  Serial.print("     ");
-  Serial.println(linesensors[1]->getValue());
+  if (wrldstate->enemyPos() == FRONT) {
+    pressTime++;
+  } else {
+    pressTime = 0;
+  }
 
   updateMotors();
   pollsensors();
