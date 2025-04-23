@@ -75,13 +75,10 @@ void setup() {
         stayOn = new StayOn(raction, wrldstate);
         panRight = 0;
         pressTime = 0;
-        // while (digitalRead(StartMod) == 0) {
-        //     Serial.print("Waiting for start signal");
-        //     stop();
-        // }
-        // while (digitalRead(StartMod) == 1) {
-        //     delay(5000);
-        // }
+        while (digitalRead(StartMod) == 0) {
+            Serial.print("Waiting for start signal");
+            stop();
+        }
   
 }
 
@@ -98,10 +95,10 @@ void pollsensors() {
 
 void loop() {
 
-    // while (digitalRead(StartMod) == 0) {
-    //     Serial.print("Waiting for start signal");
-    //     stop();
-    // }
+    while (digitalRead(StartMod) == 0) {
+        Serial.print("Waiting for start signal");
+        stop();
+    }
   
    if (wrldstate->enemyPos() == FRONT) {
     if (pressTime < 50) {  
