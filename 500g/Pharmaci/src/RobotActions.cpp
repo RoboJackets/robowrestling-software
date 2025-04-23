@@ -13,5 +13,5 @@ void RobotActions::drive(int leftSpeed, int rightSpeed) {
     leftMotorDriver -> setSpeed(leftSpeed >= 0 ? leftSpeed : -leftSpeed);
     leftMotorDriver -> setDirection(leftSpeed >= 0);
     rightMotorDriver -> setSpeed(rightSpeed >= 0 ? rightSpeed : -rightSpeed);
-    rightMotorDriver -> setDirection(rightSpeed < 0);
+    rightMotorDriver -> setDirection(rightSpeed >= 0);
 }
