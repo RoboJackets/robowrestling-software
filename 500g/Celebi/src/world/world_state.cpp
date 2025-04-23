@@ -2,7 +2,7 @@
 // world state processes sensor data and summarizes it
 //  ex: turn line sensor data into where our robot is
 //  ex: turn ir sensor data into where their robot is
-world_state :: world_state(line_sensor* line_left, line_sensor* line_right,
+world_state :: world_state(line_sensor* line_left1, line_sensor* line_left2, line_sensor* line_right1, line_sensor* line_right2,
     ir_sensor* ir_left, ir_sensor* ir_mid_left, ir_sensor* ir_mid, ir_sensor* ir_mid_right, ir_sensor* ir_right) {
     this -> ir_left = ir_left;
     this -> ir_mid_left = ir_mid_left;
@@ -10,22 +10,28 @@ world_state :: world_state(line_sensor* line_left, line_sensor* line_right,
     this -> ir_mid_right = ir_mid_right;
     this -> ir_right = ir_right;
 
-    this -> line_left = line_left;
-    this -> line_right = line_right;
+    this -> line_left1 = line_left1;
+    this -> line_left2 = line_left2;
+    this -> line_right1 = line_right1;
+    this -> line_right2 = line_right2;
 }
 
 line_states world_state :: line_check() {
-    int l_value = line_left -> get_value();
-    int r_value = line_right -> get_value();
+    int l_value1 = line_left1 -> get_value();
+    int l_value2 = line_left2 -> get_value();
+    int r_value1 = line_right1 -> get_value();
+    int r_value2 = line_right2 -> get_value();
 
     //bit shift the left value and combine with the right value to index into the array
     //if both are black, bin = 0
     //if just right is black, bin = 1
     //if just left is black, bin = 2
     //if both are white, bin = 3
-    int left_on = l_value < 40 ? 1 : 0;
-    int right_on = r_value < 40 ? 1 : 0;
-    int bin = ((left_on) << 1) + right_on;
+    int left_on1 = l_value1 < 100 ? 1 : 0;
+    int left_on2 = l_value2 < 100 ? 1 : 0;
+    int right_on1 = r_value1 < 100 ? 1 : 0;
+    int right_on2 = r_value2 < 100 ? 1 : 0;
+    int bin = ((left_on1 && left_on2) << 1) + (right_on1 && right_on2);
 
     return line_arr[bin];
 }

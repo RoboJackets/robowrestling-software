@@ -14,13 +14,17 @@ enum enemy_states {
     FRONT,
     FRONT_RIGHT,
     RIGHT,
+    
     //unused for 3 sensors
     CLOSE_LEFT,
+    
     CLOSE_MID_LEFT,
     CLOSE_MID,
+    
     CLOSE_MID_RIGHT,
     //unused for 3 sensors
     CLOSE_RIGHT,
+    
     UNKNOWN
 };
 

@@ -1,9 +1,8 @@
 #include "robot/robot_actions.hpp"
 
-robot_actions :: robot_actions(motor_driver* left_motor, motor_driver* right_motor, timer* time) {
+robot_actions :: robot_actions(motor_driver* left_motor, motor_driver* right_motor) {
     this -> left_motor = left_motor;
     this -> right_motor = right_motor;
-    this -> time = time;
 }
 
 void robot_actions :: brake() {

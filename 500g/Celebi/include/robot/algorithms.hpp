@@ -7,43 +7,52 @@
 #include "enums/world_enums.hpp"
 #include "enums/robot_enums.hpp"
 #include "world/sensors/timer.hpp"
+#include <algorithm>
 
 class robot_actions {
     private:
         motor_driver* left_motor;
         motor_driver* right_motor;
-        timer* time;
-        struct action_tracker {
-            int times;
-            enum movement_states last_func;
-        } last_action;
     public:
-        robot_actions(motor_driver* left_ptr, motor_driver* right_ptr, timer* time);
+        robot_actions(motor_driver* left_ptr, motor_driver* right_ptr);
         void brake();
         void drive_forward(int speed);
         void drive_backward(int speed);
         void turn_left(int speed);
         void turn_right(int speed);
         void drive_custom(int LSpeed, int RSpeed, bool LDir, bool RDir);
+
 };
+
+
 
 class algorithms {
     private:
         robot_actions* robot;
         world_state* world;
-        approach_state app_state;
-        timer* thymer;
+        timer* draw_timer;
+        timer* attack_timer;
         bool timer_set;
         int forward_speed;
+        struct algorithm_states {
+            draw_state circle;
+            swerve_state swerve;
+            attack_state attack;
+        } states;
+
     public:
-        algorithms(robot_actions* robo_actions, world_state* world, timer* thymer);
-        void draw();
-        int approach_line();
-        int forward_safe();
+        algorithms(robot_actions* robo_actions, world_state* world, timer* draw_timer, timer *attack_timer);
+        void slammy_whammy();
+        void draw_seek();
+        void seek();
+        int draw_circle();
+        int attack_forward();
         int turn_towards();
-        void back_and_forth();
+        int attack_forward_no_delay();
+        int turn_towards_no_delay();
         int dodge();
-        void turn_test();
-        void seek_drive(enum enemy_states);
+        void seek_drive();
+        int swerve();
+        void test();
 };
 #endif

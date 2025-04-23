@@ -4,6 +4,7 @@ timer :: timer(unsigned long initial_time) {
     this -> action_start = initial_time;
     this -> current_time = initial_time;
     this -> timer_state = false;
+    this -> action_length = 0;
 }
 
 
@@ -13,6 +14,9 @@ void timer :: update_time(unsigned long new_time) {
 
 //return true if the timer has expired
 bool timer :: check_action_time() {
+    if (timer_state == false) {
+        return 0;
+    } 
     bool checkup = current_time - action_start >= action_length;
     if (checkup) {
         timer_state = false;
