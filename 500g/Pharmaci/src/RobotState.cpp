@@ -81,13 +81,13 @@ void RobotState::calculateState() {
     if (enemyPosition == Position::Middle_Close) {
         robotActions->drive(255, 255);
     } else if (enemyPosition == Position::Middle_Far) {
-        robotActions->drive(100, 100);
+        robotActions->drive(255, 255);
     } else if (enemyPosition == Position::Left) {
-        robotActions->drive(-100, 100);
+        robotActions->drive(-255, 255);
     } else if (enemyPosition == Position::Right) {
-        robotActions->drive(100, -100);
+        robotActions->drive(255, -255);
     } else if (enemyPosition == Position::None) {
-        robotActions->drive(100, -100);
+        robotActions->drive(255, -255);
     }
 }
 

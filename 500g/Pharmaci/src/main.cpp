@@ -146,16 +146,21 @@ void loop() {
 
   // debug();
   
-
-  if (!digitalRead(START_MODULE)) {
-      while(true) {
-        robotActions->drive(0, 0);
-      }
-  } else {
-    pollSensors();
+pollSensors();
       calculateState();
       updateMotors();
-  }
+      
+  // if (digitalRead(START_MODULE)) {
+      
+  //     pollSensors();
+  //     calculateState();
+  //     updateMotors();
+  // } else {
+  //     robotActions->drive(0, 0);
+      
+  // }
+    
+
 }
 
 
