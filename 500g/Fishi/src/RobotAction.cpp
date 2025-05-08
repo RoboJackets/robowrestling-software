@@ -17,32 +17,11 @@ void RobotAction::forward() {
     rightMotorDriver->setDirection(1);
 }
 
-void RobotAction::forward(int _speed) {
-    leftMotorDriver->setSpeed(_speed);
-    leftMotorDriver->setDirection(1);
-    rightMotorDriver->setSpeed(_speed);
-    rightMotorDriver->setDirection(1);
-}
-
 void RobotAction::back() {
     leftMotorDriver->setSpeed(speed);
     leftMotorDriver->setDirection(0);
     rightMotorDriver->setSpeed(speed);
     rightMotorDriver->setDirection(0);
-}
-
-void RobotAction::back(int _speed) {
-    leftMotorDriver->setSpeed(_speed);
-    leftMotorDriver->setDirection(0);
-    rightMotorDriver->setSpeed(_speed);
-    rightMotorDriver->setDirection(0);
-}
-
-void RobotAction::turn(int leftSpeed, int rightSpeed) {
-    leftMotorDriver->setSpeed(leftSpeed);
-    leftMotorDriver->setDirection(1);
-    rightMotorDriver->setSpeed(rightSpeed);
-    rightMotorDriver->setDirection(1);
 }
 
 void RobotAction::brake() {
@@ -74,4 +53,11 @@ void RobotAction::spinRight() {
     leftMotorDriver->setDirection(1);
     rightMotorDriver->setSpeed(speed);
     rightMotorDriver->setDirection(0);
+}
+
+void RobotAction::slightTurnLeft() {
+    leftMotorDriver->setSpeed(speed - 20);
+    leftMotorDriver->setDirection(1);
+    rightMotorDriver->setSpeed(speed);
+    rightMotorDriver->setDirection(1);
 }

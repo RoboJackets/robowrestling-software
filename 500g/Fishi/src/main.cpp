@@ -1,8 +1,5 @@
 #include <Arduino.h>
 #include <Wire.h>
-#include <accIntegral.h>
-
-#include "ICM42670P.h"
 #include "sensors/Accelerometer.h"
 #include "RobotAction.h"
 #include "MotorDriver.h"
@@ -11,18 +8,19 @@
 #include "sensors/LineSensor.h"
 #include "RobotState.h"
 #include "Timer.h"
-#include "algorithms/InchForward.hpp"
 
-const int RIGHT_PWM = 6;
-const int RIGHT_DIR = 5;
-const int LEFT_PWM = 8;
-const int LEFT_DIR = 7;
-const int LEFT_IR = 2;
-const int MIDDLE_IR = 3;
-const int RIGHT_IR = 4;
-const int LEFT_LINE = A8;
-const int RIGHT_LINE = A9;
-const int START_PIN = 40;
+const int L_IR = 2;
+const int M_IR = 3;
+const int R_IR = 4;
+const int L_LINE = A0;
+const int R_LINE = A1;
+const int START_MOD = 12;
+const int L_MOTOR_IN_1 = 5;
+const int L_MOTOR_IN_2 = 6;
+const int R_MOTOR_IN_1 = 9;
+const int R_MOTOR_IN_2 = 10;
+const int DIP_1 = 7;
+const int DIP_2 = 8;
 
 // placeholder code for IMU (if I can ever get it working) :(
 
@@ -33,9 +31,6 @@ const int START_PIN = 40;
 // constexpr float ALPHA = 0.5;               // Gain of heading update
 
 // sensors
-ICM42670 IMU(Wire, 1);
-accIntegral fusion;
-
 Velocity *velocity;
 IRSensor *leftIRSensor;
 IRSensor *middleIRSensor;
@@ -49,7 +44,6 @@ MotorDriver *rightMotorDriver;
 RobotAction *robotAction;
 WorldState *worldState;
 RobotState *robotState;
-InchForward *inchForward;
 
 //etc
 Timer *accelerometerTimer;
@@ -74,17 +68,17 @@ void setup() {
   // IMU.startGyro(100, 2000);
   // fusion.setup();
 
-  pinMode(RIGHT_PWM, OUTPUT);
-  pinMode(RIGHT_DIR, OUTPUT);
-  pinMode(LEFT_PWM, OUTPUT);
-  pinMode(LEFT_DIR, OUTPUT);
+  pinMode(L_MOTOR_IN_1, OUTPUT);
+  pinMode(L_MOTOR_IN_2, OUTPUT);
+  pinMode(R_MOTOR_IN_1, OUTPUT);
+  pinMode(R_MOTOR_IN_2, OUTPUT);
 
-  pinMode(LEFT_IR, INPUT);
-  pinMode(MIDDLE_IR, INPUT);
-  pinMode(RIGHT_IR, INPUT);
-  pinMode(LEFT_LINE, INPUT);
-  pinMode(RIGHT_LINE, INPUT);
-  pinMode(START_PIN, INPUT);
+  pinMode(L_IR, INPUT);
+  pinMode(M_IR, INPUT);
+  pinMode(R_IR, INPUT);
+  pinMode(L_LINE, INPUT);
+  pinMode(R_LINE, INPUT);
+  pinMode(START_MOD, INPUT);
   
   leftMotorDriver = new MotorDriver();
   rightMotorDriver = new MotorDriver();
@@ -99,17 +93,16 @@ void setup() {
   robotState = new RobotState(worldState, robotAction);
   accelerometerTimer = new Timer();
   debugTimer = new Timer();
-  inchForward = new InchForward(worldState, robotAction, 80);
   
   accelerometerTimer->setTimeInterval(10);
   debugTimer->setTimeInterval(10000);
 
-  leftLineSensor->setThreshold(800);
-  rightLineSensor->setThreshold(800);
+  leftLineSensor->setThreshold(700);
+  rightLineSensor->setThreshold(700);
 
   if (!DEBUGGING) {
-    while (!digitalRead(START_PIN)) {
-      Serial.print(digitalRead(START_PIN));
+    while (!digitalRead(START_MOD)) {
+      Serial.print(digitalRead(START_MOD));
       Serial.println(" Waiting for start signal");
     }
   }
@@ -123,7 +116,7 @@ void loop() {
   calculateState(millis());
   writeMotors();
   if (!DEBUGGING) {
-    if (!digitalRead(START_PIN)) {
+    if (!digitalRead(START_MOD)) {
       while(true) {
         robotAction->brake();
         writeMotors();
@@ -134,28 +127,46 @@ void loop() {
 }
 
 void writeMotors() {
-  analogWrite(RIGHT_PWM, rightMotorDriver->getSpeed());
-  digitalWrite(RIGHT_DIR, !rightMotorDriver->getDirection());
-  analogWrite(LEFT_PWM, leftMotorDriver->getSpeed());
-  digitalWrite(LEFT_DIR, !leftMotorDriver->getDirection());
+  int leftDirection = leftMotorDriver->getDirection();
+  int leftSpeed = leftMotorDriver->getSpeed();
+
+  if (leftDirection == 0) {  // if direction is forward
+     analogWrite(L_MOTOR_IN_1, leftSpeed);
+     analogWrite(L_MOTOR_IN_2, 0);
+  } else {                    // if direction is back
+     analogWrite(L_MOTOR_IN_1, 0);
+     analogWrite(L_MOTOR_IN_2, leftSpeed);
+  }
+
+  int rightDirection = rightMotorDriver->getDirection();
+  int rightSpeed = rightMotorDriver->getSpeed();
+
+  if (rightDirection == 0) {  // if direction is forward
+     analogWrite(R_MOTOR_IN_1, rightSpeed);
+     analogWrite(R_MOTOR_IN_2, 0);
+  } else {                    // if direction is back
+     analogWrite(R_MOTOR_IN_1, 0);
+     analogWrite(R_MOTOR_IN_2, rightSpeed);
+  }
 }
 
 void pollSensors() {
   //implement proper velocity measurement D:
-  leftIRSensor->setValue(digitalRead(LEFT_IR), 50); // bro the teensy is cracked it does like 50 polls in like 1ms
-  middleIRSensor->setValue(digitalRead(MIDDLE_IR), 50);
-  rightIRSensor->setValue(digitalRead(RIGHT_IR), 50);
-  leftLineSensor->setValue(analogRead(LEFT_LINE));
-  rightLineSensor->setValue(analogRead(RIGHT_LINE));
+  leftIRSensor->setValue(!digitalRead(L_IR));
+  middleIRSensor->setValue(!digitalRead(M_IR));
+  rightIRSensor->setValue(!digitalRead(R_IR));
+  leftLineSensor->setValue(analogRead(L_LINE));
+  rightLineSensor->setValue(analogRead(R_LINE));
 }
 
 void calculateState(int time) {
-  // robotState->calculateState(time);
-  inchForward->inch();
+  //robotState->calculateState(time);
+  robotAction->setSpeed(255);
+  robotAction->forward();
 }
 
 void debug() {
-  if (false) {
+  if (true) {
     Serial.print(leftMotorDriver->getDirection());
     Serial.print(leftMotorDriver->getSpeed());
     Serial.print(" ");
@@ -165,21 +176,15 @@ void debug() {
 
   }
   if (true) {
-    Serial.print(digitalRead(START_PIN));
+    Serial.print(digitalRead(START_MOD));
     Serial.print(" ");
     Serial.print(leftIRSensor->getValue());
     Serial.print(middleIRSensor->getValue());
     Serial.print(rightIRSensor->getValue());
     Serial.print(" ");
-    Serial.print(digitalRead(LEFT_IR));
-    Serial.print(digitalRead(MIDDLE_IR));
-    Serial.print(digitalRead(RIGHT_IR));
+    Serial.print(analogRead(L_LINE));
     Serial.print(" ");
-    // Serial.print(rightIRSensor->getSum());
-    // Serial.print(" ");
-    Serial.print(analogRead(LEFT_LINE));
-    Serial.print(" ");
-    Serial.print(analogRead(RIGHT_LINE));
+    Serial.print(analogRead(R_LINE));
     Serial.print(" ");
   }
   if (false) {
@@ -189,7 +194,7 @@ void debug() {
     Serial.print(" ");
     Serial.print(velocity->getZ()); // up / down
   }
-  if (true) {
+  if (false) {
     Serial.print(rightMotorDriver->getSpeed());
     Serial.print(rightMotorDriver->getDirection());
     Serial.print(leftMotorDriver->getSpeed());
@@ -202,10 +207,5 @@ void debug() {
     // Serial.print(leftLineSensor->getThreshold());
     Serial.print((int)worldState->getPosition());
   }
-
-  if (true) {
-    Serial.print((int)worldState->getLastEnemyPosition());
-  }
-
   Serial.println();
 }

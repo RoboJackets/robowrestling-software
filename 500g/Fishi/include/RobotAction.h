@@ -12,14 +12,12 @@ public:
     RobotAction(MotorDriver *leftMotorDriverPointer, MotorDriver *rightMotorDriverPointer, int speedValue);
     void setSpeed(int speedValue);
     void forward();
-    void forward(int _speed);
     void back();
-    void back(int _speed);
-    void turn(int leftSpeed, int rightSpeed);
     void spinLeft();
-    void pivotLeft();
     void spinRight();
+    void pivotLeft();
     void pivotRight();
+    void slightTurnLeft();
     void brake();
 };
 

@@ -32,16 +32,7 @@ Position WorldState::getEnemyPosition() {
     return Position::None;
 }
 
-/**
- * returns last enemy position
- * Options:
- * Middle_Close
- * Middle_Far
- * Left
- * Right
- */
 Position WorldState::getLastEnemyPosition() {
-    getEnemyPosition();
     return lastEnemyPosition;
 }
 
@@ -50,10 +41,16 @@ Position WorldState::getPosition() {
     int left = (leftLineSensor->getValue());
     int right = (rightLineSensor->getValue());
     if (left) {
+        lastPosition = Position::On_Line_Left;
         return Position::On_Line_Left;
     }
     if (right) {
+        lastPosition = Position::On_Line_Right;
         return Position::On_Line_Right;
     }
     return Position::Off_Line;
+}
+
+Position WorldState::getLastPosition() {
+    return lastPosition;
 }

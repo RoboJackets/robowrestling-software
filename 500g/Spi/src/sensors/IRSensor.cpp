@@ -2,6 +2,7 @@
 
 IRSensor::IRSensor() {
     value = 0;
+    sum = 0;
 }
 
 IRSensor::IRSensor(int sensorValue) {
@@ -13,14 +14,28 @@ int IRSensor::getValue() {
 }
 
 void IRSensor::setValue(int sensorValue) {
-    if (sensorValue) {
-        concurrentReadings++;
-    } else {
-        concurrentReadings = 0;
+    if (sensorValue && sum < 10) {
+        sum++;
     }
-    if (concurrentReadings > 10) {
-        value = 1;
-    } else {
-        value = 0;
+    else if (!sensorValue && sum > 0) {
+        sum--;
     }
+    value = (sum > 5) ? 1 : 0;;
+}
+
+void IRSensor::setValue(int sensorValue, int concurrency) {
+    if (sensorValue && sum < concurrency) {
+        sum++;
+    }
+    else if (!sensorValue && sum > 0) {
+        sum--;
+    }
+    value = (sum > (concurrency / 2)) ? 1 : 0;;
+}
+
+/**
+ * debug function
+ */
+int IRSensor::getSum() {
+    return sum;
 }

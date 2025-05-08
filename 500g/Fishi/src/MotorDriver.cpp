@@ -3,7 +3,6 @@
 MotorDriver::MotorDriver() {
     speed = 0;
     direction = 0;
-    speedChangeTimer = new AutoTimer(1);
 }
 
 int MotorDriver::getDirection() {
@@ -18,15 +17,6 @@ void MotorDriver::setDirection(int directionValue) {
     direction = directionValue;
 }
 
-/**
- * sets speed with acceleration implementation
- */
 void MotorDriver::setSpeed(int speedValue) {
-    if (speedValue < speed) {
-        speed = speedValue;
-    }
-    if (speedValue > speed && speedChangeTimer->getReady()) {
-        speedChangeTimer->resetTimer();
-        speed++;
-    }
+    speed = speedValue;
 }

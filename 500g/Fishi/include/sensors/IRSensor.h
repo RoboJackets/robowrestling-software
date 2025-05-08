@@ -4,15 +4,13 @@
 class IRSensor {
 private:
     /*represensents sensor value*/
-    int sum; // sum of past x readings
+    int concurrentReadings;
     int value;
 public:
     IRSensor();
     IRSensor(int sensorValue);
     int getValue();
-    int getSum();
     void setValue(int sensorValue);
-    void setValue(int sensorValue, int concurrency);
 };
 
 #endif

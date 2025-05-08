@@ -1,13 +1,10 @@
 #ifndef MOTORDRIVER_H
 #define MOTORDRIVER_H
 
-#include "utility/AutoTimer.hpp"
-
 class MotorDriver {
 private:
     int speed;
     int direction;
-    AutoTimer *speedChangeTimer;
 public:
     MotorDriver();
     void setSpeed(int speedValue);
