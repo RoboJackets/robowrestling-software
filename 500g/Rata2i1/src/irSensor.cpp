@@ -1,4 +1,4 @@
-#include "IRSensor.h"
+#include "irSensor.h"
 #include <util.h>
 
 IRSensor::IRSensor() {

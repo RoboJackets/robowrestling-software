@@ -17,11 +17,55 @@ class worldState {
         IRSensor *backRightIRSensor;
         Position EnemyPosition;
 
+        //joebot sensors
+        IRSensor *lSide;
+        IRSensor *rSide;
+        IRSensor *mSensor;
+
     public:
-        worldState(lineReader frontLeftLineSensor, lineReader frontRightLineSensor, lineReader backLeftLineSensor, lineReader backRightLineSensor, IRSensor frontLeftIRSensor, IRSensor frontRightIRSensor, IRSensor backLeftIRSensor, IRSensor backRightIRSensor);
+        //joe worldstate
+        struct joebotSensors {
+            lineReader *frontLeftLineSensor;
+            lineReader *frontRightLineSensor;
+            IRSensor *frontLeftIRSensor;
+            IRSensor *frontRightIRSensor;
+            IRSensor *Rside;
+            IRSensor *Lside;
+        };
+        struct xanderSensors {
+            lineReader *frontLeftLineSensor;
+            lineReader *frontRightLineSensor;
+            IRSensor *frontLeftIRSensor;
+            IRSensor *frontRightIRSensor;
+        };
+        // struct joebotSensors {
+        //     lineReader *frontLeftLineSensor;
+        //     lineReader *frontRightLineSensor;
+        //     lineReader *backLeftLineSensor;
+        //     lineReader *backRightLineSensor;
+        //     IRSensor *frontLeftIRSensor;
+        //     IRSensor *frontRightIRSensor;
+        //     IRSensor *Rside;
+        //     IRSensor *Lside;
+        //     IRSensor *MSensor;
+        // };
+        struct robotSensors {
+            lineReader *frontLeftLineSensor;
+            lineReader *frontRightLineSensor;
+            lineReader *backLeftLineSensor;
+            lineReader *backRightLineSensor;
+            IRSensor *frontLeftIRSensor;
+            // IRSensor *frontRightIRSensor;
+            // IRSensor *backLeftIRSensor;
+            IRSensor *backRightIRSensor;
+        };
+        worldState(joebotSensors sensors);
+        worldState(xanderSensors sensors);
+        worldState(robotSensors sensors);
         Position getEnemyPosition();
         Position getLastEnemyPosition();
         Position getPosition();
+
 
 };
 
