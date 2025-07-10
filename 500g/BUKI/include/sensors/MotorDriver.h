@@ -3,14 +3,14 @@
 
 class MotorDriver {
     private:                                    // attributes
-        bool dir;               
+        int dir;               
         unsigned int speed;
     public:                                     // methods
         MotorDriver();      // constructer
         MotorDriver(int init_speed);        // constructer
         MotorDriver(int init_speed, int init_dir);      // constructer
-        bool getDir();
-        void setDir(bool);
+        int getDir();
+        void setDir(int);
         int getSpeed();
         void setSpeed(int);
 };

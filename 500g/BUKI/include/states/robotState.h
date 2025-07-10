@@ -1,14 +1,19 @@
 #ifndef ROBOT_STATE_H_
 #define ROBOT_STATE_H_
 
+#include "states/worldState.h"
+#include "states/stayOn.h"
+#include "action/robotAction.h"
 
 class RobotState {
     private:    
-        MoveForward* moveForward;           // pointer to MoveForward instance
         WorldState* worldState;             // pointer to WorldState instance
-    public: 
+        StayOn* stayOn;
+        RobotAction* robotAction;
+    public:
         RobotState();
-        virtual void runAlgorithm();
+        RobotState(WorldState* worldStateParameter, StayOn* stayOnParameter, RobotAction* robotActionParameter);
+        void win();
 };
 
 #endif
