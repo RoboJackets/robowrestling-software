@@ -61,3 +61,10 @@ void RobotAction::slightTurnLeft() {
     rightMotorDriver->setSpeed(speed);
     rightMotorDriver->setDirection(1);
 }
+
+void RobotAction::turn(int leftSpeed, int rightSpeed) {
+    leftMotorDriver->setSpeed(leftSpeed);
+    leftMotorDriver->setDirection(1);
+    rightMotorDriver->setSpeed(rightSpeed);
+    rightMotorDriver->setDirection(1);
+}

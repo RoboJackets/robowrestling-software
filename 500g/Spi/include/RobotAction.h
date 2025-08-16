@@ -8,6 +8,7 @@ private:
     MotorDriver *leftMotorDriver;
     MotorDriver *rightMotorDriver;
     int speed;
+    void setIsBraking(bool isBraking);
 public:
     RobotAction(MotorDriver *leftMotorDriverPointer, MotorDriver *rightMotorDriverPointer, int speedValue);
     void setSpeed(int speedValue);
@@ -16,6 +17,7 @@ public:
     void back();
     void back(int _speed);
     void turn(int leftSpeed, int rightSpeed);
+    void turnBack(int leftSpeed, int rightSpeed);
     void spinLeft();
     void pivotLeft();
     void spinRight();

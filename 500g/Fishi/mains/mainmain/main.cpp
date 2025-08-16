@@ -129,7 +129,7 @@ void loop() {
 void writeMotors() {
   int leftDirection = leftMotorDriver->getDirection();
   int leftSpeed = leftMotorDriver->getSpeed();
-
+  
   if (leftDirection == 0) {  // if direction is forward
      analogWrite(L_MOTOR_IN_1, leftSpeed);
      analogWrite(L_MOTOR_IN_2, 0);
@@ -164,6 +164,12 @@ void calculateState(int time) {
 }
 
 void debug() {
+  if (true) {
+    Serial.print(digitalRead(DIP_1));
+    Serial.print(digitalRead(DIP_2));
+    Serial.print(" ");
+  }
+
   if (false) {
     Serial.print(leftMotorDriver->getDirection());
     Serial.print(leftMotorDriver->getSpeed());

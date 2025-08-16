@@ -7,13 +7,16 @@ class MotorDriver {
 private:
     int speed;
     int direction;
+    bool isBraking;
     AutoTimer *speedChangeTimer;
 public:
     MotorDriver();
     void setSpeed(int speedValue);
-    int getSpeed();
     void setDirection(int directionValue);
-    int getDirection();
+    bool getIsBraking();
+    void setIsBraking(bool _isBraking);
+    int getIn1();
+    int getIn2();
 };
 
 #endif

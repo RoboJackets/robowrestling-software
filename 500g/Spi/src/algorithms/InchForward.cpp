@@ -1,8 +1,8 @@
 #include "algorithms/InchForward.hpp"
 
 /**
- * 500 ms moving
- * 500 ms stopped 
+ * 250 ms moving
+ * 250 ms stopped 
  */
 InchForward::InchForward(WorldState *_worldState, RobotAction *_robotAction, int _speed) {
     moving = new AutoTimer(250);

@@ -7,6 +7,7 @@ WorldState::WorldState(LineSensor *leftLineSensorPtr, LineSensor *rightLineSenso
     middleIRSensor = middleIRSensorPtr;
     rightIRSensor = rightIRSensorPtr;
     lastEnemyPosition = Position::Middle_Far;
+    lastPosition = Position::Off_Line;
 }
 
 Position WorldState::getEnemyPosition() {
@@ -49,11 +50,22 @@ Position WorldState::getPosition() {
     // 1 when on line / white, 0 when not on line / black
     int left = (leftLineSensor->getValue());
     int right = (rightLineSensor->getValue());
+    if (left && right) {
+        lastPosition = Position::On_Line_Both;
+        return Position::On_Line_Both;
+    }
     if (left) {
+        lastPosition = Position::On_Line_Left;
         return Position::On_Line_Left;
     }
     if (right) {
+        lastPosition = Position::On_Line_Right;
         return Position::On_Line_Right;
     }
     return Position::Off_Line;
+}
+
+Position WorldState::getLastPosition() {
+    getPosition();
+    return lastPosition;
 }

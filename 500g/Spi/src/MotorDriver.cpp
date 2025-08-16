@@ -6,14 +6,6 @@ MotorDriver::MotorDriver() {
     speedChangeTimer = new AutoTimer(1);
 }
 
-int MotorDriver::getDirection() {
-    return direction;
-}
-
-int MotorDriver::getSpeed() {
-    return speed;
-}
-
 void MotorDriver::setDirection(int directionValue) {
     direction = directionValue;
 }
@@ -29,4 +21,26 @@ void MotorDriver::setSpeed(int speedValue) {
         speedChangeTimer->resetTimer();
         speed++;
     }
+}
+
+int MotorDriver::getIn1() {
+    if (isBraking) {
+        return 255;
+    }
+    return direction == 1 ? speed : 0;
+}
+
+int MotorDriver::getIn2() {
+    if (isBraking) {
+        return 255;
+    }
+    return direction == 1 ? 0 : speed;
+}
+
+bool MotorDriver::getIsBraking() {
+    return isBraking;
+}
+
+void MotorDriver::setIsBraking(bool _isBraking) {
+    isBraking = _isBraking;
 }

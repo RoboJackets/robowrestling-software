@@ -37,7 +37,6 @@ Position WorldState::getLastEnemyPosition() {
 }
 
 Position WorldState::getPosition() {
-    // 1 when on line / white, 0 when not on line / black
     int left = (leftLineSensor->getValue());
     int right = (rightLineSensor->getValue());
     if (left) {

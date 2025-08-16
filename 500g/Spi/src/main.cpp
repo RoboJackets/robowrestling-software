@@ -12,17 +12,19 @@
 #include "RobotState.h"
 #include "Timer.h"
 #include "algorithms/InchForward.hpp"
+#include "algorithms/BackSpin.hpp"
 
-const int RIGHT_PWM = 6;
-const int RIGHT_DIR = 5;
-const int LEFT_PWM = 8;
-const int LEFT_DIR = 7;
+const int START_PIN = 0;
+const int RIGHT_IN1 = 5;
+const int RIGHT_IN2 = 6;
+const int LEFT_IN1 = 7;
+const int LEFT_IN2 = 8;
+const int KILL_SW = 1;
 const int LEFT_IR = 2;
 const int MIDDLE_IR = 3;
 const int RIGHT_IR = 4;
-const int LEFT_LINE = A8;
-const int RIGHT_LINE = A9;
-const int START_PIN = 40;
+const int LEFT_LINE = 23;
+const int RIGHT_LINE = 22;
 
 // placeholder code for IMU (if I can ever get it working) :(
 
@@ -50,6 +52,7 @@ RobotAction *robotAction;
 WorldState *worldState;
 RobotState *robotState;
 InchForward *inchForward;
+BackSpin *backSpin;
 
 //etc
 Timer *accelerometerTimer;
@@ -61,23 +64,15 @@ void debug();
 void writeMotors();
 void pollSensors();
 void calculateState(int time);
+void calibrateLineSensors();
 
 void setup() {
   Serial.begin(9600);
 
-  // IMU stuff that breaks the program
-
-  // initializing IMU
-  // Wire.begin();
-  // IMU.begin();
-  // IMU.startAccel(100, 16);
-  // IMU.startGyro(100, 2000);
-  // fusion.setup();
-
-  pinMode(RIGHT_PWM, OUTPUT);
-  pinMode(RIGHT_DIR, OUTPUT);
-  pinMode(LEFT_PWM, OUTPUT);
-  pinMode(LEFT_DIR, OUTPUT);
+  pinMode(RIGHT_IN1, OUTPUT);
+  pinMode(RIGHT_IN2, OUTPUT);
+  pinMode(LEFT_IN1, OUTPUT);
+  pinMode(LEFT_IN2, OUTPUT);
 
   pinMode(LEFT_IR, INPUT);
   pinMode(MIDDLE_IR, INPUT);
@@ -99,9 +94,9 @@ void setup() {
   robotState = new RobotState(worldState, robotAction);
   accelerometerTimer = new Timer();
   debugTimer = new Timer();
-  inchForward = new InchForward(worldState, robotAction, 80);
+  inchForward = new InchForward(worldState, robotAction, 128);
+  backSpin = new BackSpin(worldState, robotAction);
   
-  accelerometerTimer->setTimeInterval(10);
   debugTimer->setTimeInterval(10000);
 
   leftLineSensor->setThreshold(800);
@@ -111,6 +106,7 @@ void setup() {
     while (!digitalRead(START_PIN)) {
       Serial.print(digitalRead(START_PIN));
       Serial.println(" Waiting for start signal");
+      // calibrateLineSensors();
     }
   }
 
@@ -134,10 +130,10 @@ void loop() {
 }
 
 void writeMotors() {
-  analogWrite(RIGHT_PWM, rightMotorDriver->getSpeed());
-  digitalWrite(RIGHT_DIR, !rightMotorDriver->getDirection());
-  analogWrite(LEFT_PWM, leftMotorDriver->getSpeed());
-  digitalWrite(LEFT_DIR, !leftMotorDriver->getDirection());
+  analogWrite(RIGHT_IN1, rightMotorDriver->getIn1());
+  analogWrite(RIGHT_IN2, rightMotorDriver->getIn2());
+  analogWrite(LEFT_IN1, leftMotorDriver->getIn1());
+  analogWrite(LEFT_IN2, leftMotorDriver->getIn2());
 }
 
 void pollSensors() {
@@ -151,18 +147,26 @@ void pollSensors() {
 
 void calculateState(int time) {
   // robotState->calculateState(time);
-  inchForward->inch();
+  backSpin->run();
+}
+
+void calibrateLineSensors() {
+  leftLineSensor->calibrate(analogRead(LEFT_LINE));
+  rightLineSensor->calibrate(analogRead(RIGHT_LINE));
 }
 
 void debug() {
+  if (true) {
+    Serial.print(millis());
+    Serial.print(": ");
+  }
   if (false) {
-    Serial.print(leftMotorDriver->getDirection());
-    Serial.print(leftMotorDriver->getSpeed());
+    Serial.print(leftMotorDriver->getIn1());
+    Serial.print(leftMotorDriver->getIn2());
     Serial.print(" ");
-    Serial.print(rightMotorDriver->getDirection());
-    Serial.print(rightMotorDriver->getSpeed());
+    Serial.print(rightMotorDriver->getIn1());
+    Serial.print(rightMotorDriver->getIn2());
     Serial.print(" ");
-
   }
   if (true) {
     Serial.print(digitalRead(START_PIN));
@@ -190,10 +194,10 @@ void debug() {
     Serial.print(velocity->getZ()); // up / down
   }
   if (true) {
-    Serial.print(rightMotorDriver->getSpeed());
-    Serial.print(rightMotorDriver->getDirection());
-    Serial.print(leftMotorDriver->getSpeed());
-    Serial.print(leftMotorDriver->getDirection());
+    Serial.print(rightMotorDriver->getIn1());
+    Serial.print(rightMotorDriver->getIn2());
+    Serial.print(leftMotorDriver->getIn1());
+    Serial.print(leftMotorDriver->getIn2());
   }
   if (false) {
     Serial.print(leftLineSensor->getValue());
@@ -202,10 +206,8 @@ void debug() {
     // Serial.print(leftLineSensor->getThreshold());
     Serial.print((int)worldState->getPosition());
   }
-
-  if (true) {
+  if (false) {
     Serial.print((int)worldState->getLastEnemyPosition());
   }
-
   Serial.println();
 }

@@ -8,6 +8,7 @@
 #include "sensors/LineSensor.h"
 #include "RobotState.h"
 #include "Timer.h"
+#include "algorithms/circle.hpp"
 
 const int L_IR = 2;
 const int M_IR = 3;
@@ -22,16 +23,7 @@ const int R_MOTOR_IN_2 = 10;
 const int DIP_1 = 7;
 const int DIP_2 = 8;
 
-// placeholder code for IMU (if I can ever get it working) :(
-
-// const double STUPID_GRAVITY_SCALE_FACTOR = 211.0;
-// const double MAX_GYRO_DPS = 2000.0;
-// constexpr float SD_ACC = 0.1;              // Adjusted standard deviation for acceleration
-// constexpr float SD_VEL = 0.1;              // Adjusted standard deviation for velocity
-// constexpr float ALPHA = 0.5;               // Gain of heading update
-
 // sensors
-Velocity *velocity;
 IRSensor *leftIRSensor;
 IRSensor *middleIRSensor;
 IRSensor *rightIRSensor;
@@ -44,6 +36,7 @@ MotorDriver *rightMotorDriver;
 RobotAction *robotAction;
 WorldState *worldState;
 RobotState *robotState;
+Circle *circle;
 
 //etc
 Timer *accelerometerTimer;
@@ -83,7 +76,6 @@ void setup() {
   leftMotorDriver = new MotorDriver();
   rightMotorDriver = new MotorDriver();
   robotAction = new RobotAction(leftMotorDriver, rightMotorDriver, 40);
-  velocity = new Velocity();
   leftIRSensor = new IRSensor();
   middleIRSensor = new IRSensor();
   rightIRSensor = new IRSensor();
@@ -93,6 +85,7 @@ void setup() {
   robotState = new RobotState(worldState, robotAction);
   accelerometerTimer = new Timer();
   debugTimer = new Timer();
+  circle = new Circle(worldState, robotAction);
   
   accelerometerTimer->setTimeInterval(10);
   debugTimer->setTimeInterval(10000);
@@ -160,52 +153,48 @@ void pollSensors() {
 }
 
 void calculateState(int time) {
-  //robotState->calculateState(time);
-  robotAction->setSpeed(255);
-  robotAction->forward();
+  circle->run();
 }
 
 void debug() {
-  if (true) {
-    Serial.print(leftMotorDriver->getDirection());
-    Serial.print(leftMotorDriver->getSpeed());
-    Serial.print(" ");
-    Serial.print(rightMotorDriver->getDirection());
-    Serial.print(rightMotorDriver->getSpeed());
-    Serial.print(" ");
+    if (true) {
+        Serial.print(digitalRead(DIP_1));
+        Serial.print(digitalRead(DIP_2));
+        Serial.print(" ");
+    }
+    if (true) {
+        Serial.print(leftMotorDriver->getDirection());
+        Serial.print(leftMotorDriver->getSpeed());
+        Serial.print(" ");
+        Serial.print(rightMotorDriver->getDirection());
+        Serial.print(rightMotorDriver->getSpeed());
+        Serial.print(" ");
 
-  }
-  if (true) {
-    Serial.print(digitalRead(START_MOD));
-    Serial.print(" ");
-    Serial.print(leftIRSensor->getValue());
-    Serial.print(middleIRSensor->getValue());
-    Serial.print(rightIRSensor->getValue());
-    Serial.print(" ");
-    Serial.print(analogRead(L_LINE));
-    Serial.print(" ");
-    Serial.print(analogRead(R_LINE));
-    Serial.print(" ");
-  }
-  if (false) {
-    Serial.print(velocity->getX()); 
-    Serial.print(" ");
-    Serial.print(velocity->getY()); // -1000 = forward accel
-    Serial.print(" ");
-    Serial.print(velocity->getZ()); // up / down
-  }
-  if (false) {
-    Serial.print(rightMotorDriver->getSpeed());
-    Serial.print(rightMotorDriver->getDirection());
-    Serial.print(leftMotorDriver->getSpeed());
-    Serial.print(leftMotorDriver->getDirection());
-  }
-  if (false) {
-    Serial.print(leftLineSensor->getValue());
-    // Serial.print(leftLineSensor->getThreshold());
-    Serial.print(rightLineSensor->getValue());
-    // Serial.print(leftLineSensor->getThreshold());
-    Serial.print((int)worldState->getPosition());
-  }
-  Serial.println();
+    }
+    if (true) {
+        Serial.print(digitalRead(START_MOD));
+        Serial.print(" ");
+        Serial.print(leftIRSensor->getValue());
+        Serial.print(middleIRSensor->getValue());
+        Serial.print(rightIRSensor->getValue());
+        Serial.print(" ");
+        Serial.print(analogRead(L_LINE));
+        Serial.print(" ");
+        Serial.print(analogRead(R_LINE));
+        Serial.print(" ");
+    }
+    if (false) {
+        Serial.print(rightMotorDriver->getSpeed());
+        Serial.print(rightMotorDriver->getDirection());
+        Serial.print(leftMotorDriver->getSpeed());
+        Serial.print(leftMotorDriver->getDirection());
+    }
+    if (false) {
+        Serial.print(leftLineSensor->getValue());
+        // Serial.print(leftLineSensor->getThreshold());
+        Serial.print(rightLineSensor->getValue());
+        // Serial.print(leftLineSensor->getThreshold());
+        Serial.print((int)worldState->getPosition());
+    }
+    Serial.println();
 }

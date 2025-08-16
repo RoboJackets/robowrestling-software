@@ -19,6 +19,7 @@ public:
     void pivotRight();
     void slightTurnLeft();
     void brake();
+    void turn(int leftSpeed, int rightSpeed);
 };
 
 #endif
