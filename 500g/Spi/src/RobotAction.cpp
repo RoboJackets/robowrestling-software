@@ -78,6 +78,22 @@ void RobotAction::pivotRight() {
     rightMotorDriver->setSpeed(0);
 }
 
+void RobotAction::spinLeft(int _speed) {
+    setIsBraking(false);
+    leftMotorDriver->setSpeed(_speed);
+    leftMotorDriver->setDirection(0);
+    rightMotorDriver->setSpeed(_speed);
+    rightMotorDriver->setDirection(1);
+}
+
+void RobotAction::spinRight(int _speed) {
+    setIsBraking(false);
+    leftMotorDriver->setSpeed(_speed);
+    leftMotorDriver->setDirection(1);
+    rightMotorDriver->setSpeed(_speed);
+    rightMotorDriver->setDirection(0);
+}
+
 void RobotAction::spinLeft() {
     setIsBraking(false);
     leftMotorDriver->setSpeed(speed);

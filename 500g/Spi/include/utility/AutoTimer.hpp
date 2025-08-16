@@ -5,6 +5,7 @@
 
 class AutoTimer {
     private:
+        bool started;
         int time;
         int startTime;
         int timerlength;

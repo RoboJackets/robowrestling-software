@@ -7,8 +7,8 @@
 
 class BackSpinLeft : public Action {
     private:
-        const int SPIN_DURATION = 400;
-        const int BACKUP_DURATION = 250; 
+        static constexpr int SPIN_DURATION = 80;
+        static constexpr int BACKUP_DURATION = 400; 
         RobotAction *robotAction;
         AutoTimer *backup;
         AutoTimer *spin;
