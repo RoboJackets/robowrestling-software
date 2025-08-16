@@ -6,16 +6,18 @@
 #include "algorithms/BackSpinLeft.hpp"
 #include "algorithms/BackSpinRight.hpp"
 
-class SmartBackSpin {
+class SmartBackSpin : public Action {
     private:
         BackSpinLeft *backSpinLeft;
         BackSpinRight *backSpinRight;
         RobotAction *robotAction;
         WorldState *worldState;
         Action *lastAction;
+    protected:
+        virtual void performAction() = 0;
+        virtual void resetTimers() = 0;
     public:
         SmartBackSpin(WorldState *_worldState, RobotAction* _robotAction);
-        void run();
 };
 
 #endif

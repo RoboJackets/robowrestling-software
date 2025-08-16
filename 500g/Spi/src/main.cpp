@@ -11,6 +11,7 @@
 #include "algorithms/InchForward.hpp"
 #include "algorithms/BackSpinLeft.hpp"
 #include "algorithms/BackSpinRight.hpp"
+#include "algorithms/SmartBackSpin.hpp"
 
 const int START_PIN = 0;
 const int RIGHT_IN1 = 5;
@@ -40,6 +41,7 @@ WorldState *worldState;
 RobotState *robotState;
 InchForward *inchForward;
 BackSpinRight *backSpinRight;
+SmartBackSpin *smartBackSpin;
 
 const bool DEBUGGING = false;
 
@@ -77,9 +79,8 @@ void setup() {
   robotState = new RobotState(worldState, robotAction);
   inchForward = new InchForward(worldState, robotAction, 128);
   backSpinRight = new BackSpinRight(robotAction);
+  smartBackSpin = new SmartBackSpin(worldState, robotAction);
   
-  debugTimer->setTimeInterval(10000);
-
   leftLineSensor->setThreshold(800);
   rightLineSensor->setThreshold(800);
 
@@ -128,7 +129,7 @@ void pollSensors() {
 
 void calculateState(int time) {
   // robotState->calculateState(time);
-  backSpinRight->run();
+  smartBackSpin->run();
 }
 
 void calibrateLineSensors() {
@@ -187,8 +188,9 @@ void debug() {
     // Serial.print(leftLineSensor->getThreshold());
     Serial.print((int)worldState->getPosition());
   }
-  if (false) {
-    Serial.print((int)worldState->getLastEnemyPosition());
+  if (true) {
+    Serial.print(" ");
+    Serial.print((int)worldState->getPosition());
   }
   Serial.println();
 }

@@ -1,16 +1,16 @@
 #include "algorithms/SmartBackSpin.hpp"
 
-SmartBackSpin::SmartBackSpin(WorldState *_worldState, RobotAction* _robotAction) {
+SmartBackSpin::SmartBackSpin(WorldState *_worldState, RobotAction* _robotAction) : Action(-1, 0, _robotAction) {
     worldState = _worldState;
     robotAction = _robotAction;
+    lastAction = nullptr;
     backSpinLeft = new BackSpinLeft(robotAction);
     backSpinRight = new BackSpinRight(robotAction);
 }
 
-void SmartBackSpin::run() {
+void SmartBackSpin::performAction() {
     Position position = worldState->getPosition();
-    if (position == Position::On_Line_Both) { robotAction->back(255); }
-    if (position == Position::On_Line_Left) {
+    if (position == Position::On_Line_Left || position == Position::On_Line_Both ) {
         backSpinRight->resetAction();
         backSpinRight->run();
         lastAction = backSpinRight;
@@ -20,7 +20,14 @@ void SmartBackSpin::run() {
         backSpinLeft->run();
         lastAction = backSpinLeft;
     }
-    if (position == Position::Off_Line && lastAction->getActionCompleted()) {
-        robotAction->forward(80);
+    if (position == Position::Off_Line) {
+        if (lastAction == nullptr) {
+            return;
+        }
+        lastAction->run();
     }
+}
+
+void SmartBackSpin::resetTimers() {
+    return;
 }
