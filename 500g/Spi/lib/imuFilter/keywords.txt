@@ -1,5 +1,0 @@
-# libraries
-imuFilter	KEYWORD1
-accIntegral	KEYWORD1
-
-# NOTE: separate keywords with single tab 

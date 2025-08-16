@@ -1,8 +1,6 @@
 #include <Arduino.h>
 #include <Wire.h>
-#include <accIntegral.h>
 
-#include "ICM42670P.h"
 #include "sensors/Accelerometer.h"
 #include "RobotAction.h"
 #include "MotorDriver.h"
@@ -25,18 +23,7 @@ const int MIDDLE_IR = 3;
 const int RIGHT_IR = 4;
 const int LEFT_LINE = 23;
 const int RIGHT_LINE = 22;
-
-// placeholder code for IMU (if I can ever get it working) :(
-
-// const double STUPID_GRAVITY_SCALE_FACTOR = 211.0;
-// const double MAX_GYRO_DPS = 2000.0;
-// constexpr float SD_ACC = 0.1;              // Adjusted standard deviation for acceleration
-// constexpr float SD_VEL = 0.1;              // Adjusted standard deviation for velocity
-// constexpr float ALPHA = 0.5;               // Gain of heading update
-
 // sensors
-ICM42670 IMU(Wire, 1);
-accIntegral fusion;
 
 Velocity *velocity;
 IRSensor *leftIRSensor;

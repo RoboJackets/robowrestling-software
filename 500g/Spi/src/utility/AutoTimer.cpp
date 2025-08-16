@@ -7,7 +7,7 @@ AutoTimer::AutoTimer(int _timerlength) {
 }
 
 bool AutoTimer::getReady() {
-    return ((millis() - startTime) > timerlength);
+    return ((int)(millis() - startTime) > timerlength);
 }
 
 void AutoTimer::resetTimer() {
