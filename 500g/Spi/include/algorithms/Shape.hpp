@@ -3,18 +3,18 @@
 
 #include "RobotAction.h"
 #include "WorldState.h"
-#include "algorithms/BackSpinLeft.hpp"
-#include "algorithms/BackSpinRight.hpp"
+#include "BackSpin.hpp"
 
 class Shape {
     private:
-        BackSpinLeft *backSpinLeft;
-        BackSpinRight *backSpinRight;
+        BackSpin *backSpinLeft;
+        BackSpin *backSpinRight;
+        Action *previousAction;
         RobotAction *robotAction;
         WorldState *worldState;
     public:
         Shape(WorldState *_worldState, RobotAction* _robotAction);
-        void Run();
+        void run();
 };
 
 #endif

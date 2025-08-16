@@ -9,9 +9,7 @@
 #include "sensors/LineSensor.h"
 #include "RobotState.h"
 #include "algorithms/InchForward.hpp"
-#include "algorithms/BackSpinLeft.hpp"
-#include "algorithms/BackSpinRight.hpp"
-#include "algorithms/SmartBackSpin.hpp"
+#include "algorithms/Shape.hpp"
 
 const int START_PIN = 0;
 const int RIGHT_IN1 = 5;
@@ -40,8 +38,7 @@ RobotAction *robotAction;
 WorldState *worldState;
 RobotState *robotState;
 InchForward *inchForward;
-BackSpinRight *backSpinRight;
-SmartBackSpin *smartBackSpin;
+Shape *shape;
 
 const bool DEBUGGING = false;
 
@@ -78,8 +75,7 @@ void setup() {
   worldState = new WorldState(leftLineSensor, rightLineSensor, leftIRSensor, middleIRSensor, rightIRSensor);
   robotState = new RobotState(worldState, robotAction);
   inchForward = new InchForward(worldState, robotAction, 128);
-  backSpinRight = new BackSpinRight(robotAction);
-  smartBackSpin = new SmartBackSpin(worldState, robotAction);
+  shape = new Shape(worldState, robotAction);
   
   leftLineSensor->setThreshold(800);
   rightLineSensor->setThreshold(800);
@@ -91,7 +87,6 @@ void setup() {
       // calibrateLineSensors();
     }
   }
-
   robotState->setStartTimer(millis());
 }
 
@@ -129,7 +124,7 @@ void pollSensors() {
 
 void calculateState(int time) {
   // robotState->calculateState(time);
-  smartBackSpin->run();
+  shape->run();
 }
 
 void calibrateLineSensors() {
