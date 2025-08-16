@@ -19,8 +19,10 @@ public:
     void turn(int leftSpeed, int rightSpeed);
     void turnBack(int leftSpeed, int rightSpeed);
     void spinLeft();
+    void spinLeft(int _speed);
     void pivotLeft();
     void spinRight();
+    void spinRight(int _speed);
     void pivotRight();
     void brake();
 };

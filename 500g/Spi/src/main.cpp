@@ -11,6 +11,7 @@
 #include "Timer.h"
 #include "algorithms/InchForward.hpp"
 #include "algorithms/BackSpin.hpp"
+#include "algorithms/BackSpinLeft.hpp"
 
 const int START_PIN = 0;
 const int RIGHT_IN1 = 5;
@@ -39,7 +40,7 @@ RobotAction *robotAction;
 WorldState *worldState;
 RobotState *robotState;
 InchForward *inchForward;
-BackSpin *backSpin;
+BackSpinLeft *backSpinLeft;
 
 //etc
 Timer *accelerometerTimer;
@@ -82,7 +83,7 @@ void setup() {
   accelerometerTimer = new Timer();
   debugTimer = new Timer();
   inchForward = new InchForward(worldState, robotAction, 128);
-  backSpin = new BackSpin(worldState, robotAction);
+  backSpinLeft = new BackSpinLeft(robotAction);
   
   debugTimer->setTimeInterval(10000);
 
@@ -134,7 +135,7 @@ void pollSensors() {
 
 void calculateState(int time) {
   // robotState->calculateState(time);
-  backSpin->run();
+  backSpinLeft->run();
 }
 
 void calibrateLineSensors() {

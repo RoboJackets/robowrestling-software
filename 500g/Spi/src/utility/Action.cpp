@@ -1,7 +1,8 @@
 #include "utility/Action.hpp"
 
-Action::Action(int _actionDuration, int _priority) {
+Action::Action(int _actionDuration, int _priority, RobotAction *_robotAction) {
     actionTimer = new AutoTimer(_actionDuration);
+    robotAction = _robotAction;
     priority = _priority;
     actionCompleted = false;
     actionInitiated = false;
@@ -13,21 +14,19 @@ bool Action::getActionCompleted() {
     } else {
         actionCompleted = false;
     }
-    return actionTimer->getReady(); 
+    return actionCompleted; 
 }
 
 void Action::run() {
-    if (actionTimer->getReady()) {
-        return;
-    }
-    if (actionCompleted) {
-        return;
-    }
     if (!actionInitiated) {
         actionTimer->resetTimer();
         actionInitiated = true;
     }
-    performAction();
+    if (getActionCompleted()) {
+        robotAction->brake();
+    } else {
+        performAction();
+    }
 }
 
 int Action::getPriority() {
