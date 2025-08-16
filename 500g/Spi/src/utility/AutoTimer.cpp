@@ -17,4 +17,5 @@ bool AutoTimer::getReady() {
 
 void AutoTimer::resetTimer() {
     startTime = millis();
+    started = false;
 }

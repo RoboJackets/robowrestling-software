@@ -14,6 +14,7 @@ class BackSpinLeft : public Action {
         AutoTimer *spin;
     protected:
         void performAction();
+        void resetTimers();
     public:
         BackSpinLeft(RobotAction *_robotAction);
 };

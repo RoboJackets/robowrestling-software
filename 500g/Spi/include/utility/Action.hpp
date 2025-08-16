@@ -13,6 +13,7 @@ class Action {
         int priority;
     protected:
         virtual void performAction() = 0;
+        virtual void resetTimers() = 0;
     public:
         Action(int _actionDuration, int _priority, RobotAction *_robotAction);
         bool getActionCompleted();

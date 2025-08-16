@@ -36,4 +36,5 @@ int Action::getPriority() {
 void Action::resetAction() {
     actionInitiated = false;
     actionCompleted = false;
+    resetTimers();
 }

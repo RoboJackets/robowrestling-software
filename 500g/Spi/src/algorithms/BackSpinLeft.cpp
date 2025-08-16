@@ -10,3 +10,8 @@ void BackSpinLeft::performAction() {
     if (!backup->getReady()) { robotAction->back(255); }
     else if (!spin->getReady()) { robotAction->spinLeft(255); }
 }
+
+void BackSpinLeft::resetTimers() {
+    backup->resetTimer();
+    spin->resetTimer();
+}

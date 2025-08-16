@@ -8,9 +8,7 @@
 #include "sensors/IRSensor.h"
 #include "sensors/LineSensor.h"
 #include "RobotState.h"
-#include "Timer.h"
 #include "algorithms/InchForward.hpp"
-#include "algorithms/BackSpin.hpp"
 #include "algorithms/BackSpinLeft.hpp"
 #include "algorithms/BackSpinRight.hpp"
 
@@ -42,10 +40,6 @@ WorldState *worldState;
 RobotState *robotState;
 InchForward *inchForward;
 BackSpinRight *backSpinRight;
-
-//etc
-Timer *accelerometerTimer;
-Timer *debugTimer;
 
 const bool DEBUGGING = false;
 
@@ -81,8 +75,6 @@ void setup() {
   rightLineSensor = new LineSensor();
   worldState = new WorldState(leftLineSensor, rightLineSensor, leftIRSensor, middleIRSensor, rightIRSensor);
   robotState = new RobotState(worldState, robotAction);
-  accelerometerTimer = new Timer();
-  debugTimer = new Timer();
   inchForward = new InchForward(worldState, robotAction, 128);
   backSpinRight = new BackSpinRight(robotAction);
   
