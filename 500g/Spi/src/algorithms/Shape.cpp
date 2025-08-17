@@ -17,11 +17,11 @@ void Shape::run() {
     }
     if (position == Position::On_Line_Left) {
         backSpinLeft->resetAction();
-        backSpinRight->run();
+        backSpinLeft->run();
         previousAction = backSpinLeft;
     }
     if (position == Position::Off_Line) {
-        if (previousAction == nullptr || previousAction->getActionCompleted()) { robotAction->forward(80); }
+        if (previousAction == nullptr || previousAction->getActionCompleted()) { robotAction->forward(60); }
         else { previousAction->run(); }
     }
 }
