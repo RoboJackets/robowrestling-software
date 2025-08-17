@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include <Wire.h>
 
-#include "sensors/Accelerometer.h"
 #include "RobotAction.h"
 #include "MotorDriver.h"
 #include "WorldState.h"
@@ -10,6 +9,8 @@
 #include "RobotState.h"
 #include "algorithms/InchForward.hpp"
 #include "algorithms/Shape.hpp"
+#include "algorithms/Tracker.hpp"
+#include "algorithms/Scan.hpp"
 
 const int START_PIN = 0;
 const int RIGHT_IN1 = 5;
@@ -24,7 +25,6 @@ const int LEFT_LINE = 23;
 const int RIGHT_LINE = 22;
 // sensors
 
-Velocity *velocity;
 IRSensor *leftIRSensor;
 IRSensor *middleIRSensor;
 IRSensor *rightIRSensor;
@@ -39,6 +39,8 @@ WorldState *worldState;
 RobotState *robotState;
 InchForward *inchForward;
 Shape *shape;
+Tracker *tracker;
+Scan *scan;
 
 const bool DEBUGGING = false;
 
@@ -66,7 +68,6 @@ void setup() {
   leftMotorDriver = new MotorDriver();
   rightMotorDriver = new MotorDriver();
   robotAction = new RobotAction(leftMotorDriver, rightMotorDriver, 40);
-  velocity = new Velocity();
   leftIRSensor = new IRSensor();
   middleIRSensor = new IRSensor();
   rightIRSensor = new IRSensor();
@@ -76,6 +77,8 @@ void setup() {
   robotState = new RobotState(worldState, robotAction);
   inchForward = new InchForward(worldState, robotAction, 128);
   shape = new Shape(worldState, robotAction);
+  tracker = new Tracker(worldState, robotAction);
+  scan = new Scan(robotAction);
   
   leftLineSensor->setThreshold(800);
   rightLineSensor->setThreshold(800);
@@ -124,7 +127,8 @@ void pollSensors() {
 
 void calculateState(int time) {
   // robotState->calculateState(time);
-  shape->run();
+  // tracker->run();
+  scan->run();
 }
 
 void calibrateLineSensors() {
@@ -162,13 +166,6 @@ void debug() {
     Serial.print(" ");
     Serial.print(analogRead(RIGHT_LINE));
     Serial.print(" ");
-  }
-  if (false) {
-    Serial.print(velocity->getX()); 
-    Serial.print(" ");
-    Serial.print(velocity->getY()); // -1000 = forward accel
-    Serial.print(" ");
-    Serial.print(velocity->getZ()); // up / down
   }
   if (true) {
     Serial.print(rightMotorDriver->getIn1());

@@ -6,7 +6,7 @@ WorldState::WorldState(LineSensor *leftLineSensorPtr, LineSensor *rightLineSenso
     leftIRSensor = leftIRSensorPtr;
     middleIRSensor = middleIRSensorPtr;
     rightIRSensor = rightIRSensorPtr;
-    lastEnemyPosition = Position::Middle_Far;
+    lastEnemyPosition = Position::None;
     lastPosition = Position::Off_Line;
 }
 
