@@ -8,6 +8,7 @@ Tracker::Tracker(WorldState *_worldState, RobotAction* _robotAction) {
     accelerationTimer = new AutoTimer(ACCELERATION_TIMER_DURATION);
     backSpinLeft = new BackSpin(robotAction, true);
     backSpinRight = new BackSpin(robotAction, false);
+    _scan = new Scan(robotAction);
 }
 
 void Tracker::run() {
@@ -47,10 +48,10 @@ void Tracker::track() {
         acceleration = 0;
     }
     if (enemyPosition == Position::Left) {
-        robotAction->turn(SLOW_SPEED, MAX_SAFE_SPEED);
+        robotAction->turn(MAX_SAFE_SPEED, MODERATE_SPEED);
     }
     if (enemyPosition == Position::Right) {
-        robotAction->turn(MAX_SAFE_SPEED, SLOW_SPEED);
+        robotAction->turn(MODERATE_SPEED, MAX_SAFE_SPEED);
     }
     if (enemyPosition == Position::None) {
         seek();
@@ -77,5 +78,5 @@ void Tracker::seek() {
 }
 
 void Tracker::scan() {
-
+    _scan->run();
 }

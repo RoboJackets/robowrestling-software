@@ -20,7 +20,7 @@ void IRSensor::setValue(int sensorValue) {
     else if (!sensorValue && sum > 0) {
         sum--;
     }
-    value = (sum > 5) ? 1 : 0;;
+    value = (sum > 3) ? 1 : 0;;
 }
 
 void IRSensor::setValue(int sensorValue, int concurrency) {

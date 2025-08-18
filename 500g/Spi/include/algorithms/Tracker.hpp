@@ -4,11 +4,13 @@
 #include "utility/Action.hpp"
 #include "WorldState.h"
 #include "BackSpin.hpp"
+#include "Scan.hpp"
 
 class Tracker {
     private:
-        static constexpr int SLOW_SPEED = 50;
+        static constexpr int SLOW_SPEED = 60;
         static constexpr int MAX_SAFE_SPEED = 70;
+        static constexpr int MODERATE_SPEED = 100;
         static constexpr int FAST_SPEED = 140;
         static constexpr int MAX_SPEED = 255;
         static constexpr int ACCELERATION_TIMER_DURATION = 5; //ms
@@ -16,6 +18,7 @@ class Tracker {
         AutoTimer *accelerationTimer;
         BackSpin *backSpinLeft;
         BackSpin *backSpinRight;
+        Scan *_scan;
         Action *previousAction;
         RobotAction *robotAction;
         WorldState *worldState;
