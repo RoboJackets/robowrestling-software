@@ -8,6 +8,9 @@ MotorDriver::MotorDriver(int left_ctrl_1, int left_ctrl_2, int left_speed, int r
     this->motor_pins[1][1] = right_ctrl_2;
     this->motor_pins[1][2] = right_speed;
 
+    this->switch_millis = 0;
+    this->switching = false;
+
     pinMode(motor_pins[0][0], OUTPUT);
     pinMode(motor_pins[0][1], OUTPUT);
     pinMode(motor_pins[0][2], OUTPUT);
@@ -29,7 +32,24 @@ inline int MotorDriver::map_to_pwm(int val) {
 }
 
 void MotorDriver::change_state(DrivingState new_state) {
-    this->driving_state = new_state;
+    if (this->switching || new_state != this->driving_state) {
+        int mills = millis();
+
+        if (!this->switching) {
+            this->switching = true;
+            this->switch_millis = mills;
+        }
+
+        if (mills - this->switch_millis >= SWITCH_WAIT_MILLIS) {
+            this->driving_state = new_state;
+            this->switching = false;
+        } else {
+            this->driving_state = DrivingState::MBRAKE;
+        }
+
+    } else {
+        this->driving_state = new_state;
+    }
 }
 
 void MotorDriver::drive(int speed) {
@@ -54,7 +74,7 @@ void MotorDriver::drive(int speed) {
             analogWrite(right_pins[2], this->map_to_pwm(speed));
             break;
         // TODO: Make sure that these turn the bot correctly
-        case MTURN_LEFT:
+        case MTURN_RIGHT:
             digitalWrite(left_pins[0], HIGH);
             digitalWrite(left_pins[1], LOW);
             digitalWrite(right_pins[0], LOW);
@@ -62,7 +82,7 @@ void MotorDriver::drive(int speed) {
             analogWrite(left_pins[2], this->map_to_pwm(speed));
             analogWrite(right_pins[2], this->map_to_pwm(speed));
             break;
-        case MTURN_RIGHT:
+        case MTURN_LEFT:
             digitalWrite(left_pins[0], LOW);
             digitalWrite(left_pins[1], HIGH);
             digitalWrite(right_pins[0], HIGH);

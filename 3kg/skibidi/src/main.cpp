@@ -8,10 +8,10 @@ Action *strategy;
 
 void setup(void) {
     // Serial initialization (for debugging)
+    Serial.begin(9600);
     // Pin initialization -- handled by the things that use them
     // State initialization
-    bool analog_line_sensors = false;
-    skibidi = new Skibidi(analog_line_sensors);
+    skibidi = new Skibidi();
     state = {
         .active_line_sensors = {
             {Position::FRONT_LEFT,  false},
@@ -32,27 +32,28 @@ void setup(void) {
     strategy = new SlammyWhammy();
 
     // Sensor initialization
-    skibidi->initialize_sensors(analog_line_sensors);
+    skibidi->initialize_sensors();
 }
 
-void loop(void) {
-    skibidi->motor_driver->driving_state = DrivingState::MFORWARD;
-    skibidi->motor_driver->drive(50);
-    delay(1000);
-    skibidi->motor_driver->driving_state = DrivingState::MBACKWARD;
-    skibidi->motor_driver->drive(50);
-    delay(1000);
+char* linetos(Position ir) {
+    switch (ir) {
+        case Position::FRONT_LEFT:  return (char*)"FRONT_LEFT\0";
+        case Position::FRONT_RIGHT: return (char*)"FRONT_RIGHT\0";
+        case Position::BACK_LEFT:   return (char*)"BACK_LEFT\0";
+        case Position::BACK_RIGHT:  return (char*)"BACK_RIGHT\0";
+        case Position::NONE:        return (char*)"NONE\0";
+    }
+    return (char*)"NONE";
 }
 
-/*
 void loop(void) {
     // TODO: Convert to interrupt, send Teensy
     // into low power at end of setup() and whenever
     // start module goes low @ match end
-    StartModule* start_module = skibidi->get_start_module();
-    if (!start_module->is_started()) {
-        return;
-    }
+    // StartModule* start_module = skibidi->get_start_module();
+    // if (!start_module->is_started()) {
+    //     return;
+    // }
 
     // Update sensors
     skibidi->update_state(&state);
@@ -61,11 +62,11 @@ void loop(void) {
     if (state.active_line_sensors[Position::FRONT_LEFT] || state.active_line_sensors[Position::FRONT_RIGHT]) {
         // Emergency reverse
         state.driving_state = DrivingState::MBACKWARD;
-        state.motor_speed = 75;
+        state.motor_speed = 20;
     } else if (state.active_line_sensors[Position::BACK_LEFT] || state.active_line_sensors[Position::BACK_RIGHT]) {
         // Emergency forward
         state.driving_state = DrivingState::MFORWARD;
-        state.motor_speed = 75;
+        state.motor_speed = 20;
     } else {
         // Make decision
         strategy->make_decision(&state);
@@ -74,4 +75,3 @@ void loop(void) {
     // Execute decision
     skibidi->execute_action(&state);
 }
-*/

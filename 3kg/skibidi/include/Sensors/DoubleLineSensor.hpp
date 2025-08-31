@@ -9,17 +9,13 @@
 
 class DoubleLineSensor {
     private:
-        int nor_pin_number;
-        int analog_pin_number_1;
-        int analog_pin_number_2;
+        int pin_number;
         int floor_value;
-        bool analog_mode;
 
     public:
         DoubleLineSensor(int pin_number);
-        DoubleLineSensor(int analog_pin_number_1, int analog_pin_number_2);
         bool is_sensing();
-        void calibrate_analog();
+        void calibrate();
 };
 
 #endif // DOUBLELINESENSOR_HPP_

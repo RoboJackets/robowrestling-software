@@ -30,10 +30,10 @@ class Skibidi {
         void check_line_sensors(State* state);
     public:
         MotorDriver* motor_driver;
-        Skibidi(bool analog_line_sensors);
+        Skibidi(void);
 
         StartModule* get_start_module();
-        void initialize_sensors(bool analog_line_sensors);
+        void initialize_sensors();
         void update_state(State* state);
         void execute_action(State* state);
 };
