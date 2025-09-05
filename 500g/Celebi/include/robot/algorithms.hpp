@@ -1,30 +1,12 @@
 #ifndef ALGORITHMS_H
 #define ALGORITHMS_H
 
-#include "motor_driver.hpp"
+#include "robot_actions.hpp"
 #include "world/world_state.hpp"
-#include "robot/robot_state.hpp"
 #include "enums/world_enums.hpp"
 #include "enums/robot_enums.hpp"
-#include "world/sensors/timer.hpp"
+#include "world/timer.hpp"
 #include <algorithm>
-
-class robot_actions {
-    private:
-        motor_driver* left_motor;
-        motor_driver* right_motor;
-    public:
-        robot_actions(motor_driver* left_ptr, motor_driver* right_ptr);
-        void brake();
-        void drive_forward(int speed);
-        void drive_backward(int speed);
-        void turn_left(int speed);
-        void turn_right(int speed);
-        void drive_custom(int LSpeed, int RSpeed, bool LDir, bool RDir);
-
-};
-
-
 
 class algorithms {
     private:
@@ -32,6 +14,8 @@ class algorithms {
         world_state* world;
         timer* draw_timer;
         timer* attack_timer;
+        line_states selfPosition;
+        enemy_states enemyPosition;
         bool timer_set;
         int forward_speed;
         struct algorithm_states {
@@ -42,6 +26,7 @@ class algorithms {
 
     public:
         algorithms(robot_actions* robo_actions, world_state* world, timer* draw_timer, timer *attack_timer);
+        void match_strategy();
         void slammy_whammy();
         void draw_seek();
         void seek();

@@ -8,13 +8,22 @@ algorithms :: algorithms(robot_actions *robot, world_state *world, timer* draw_t
     this -> world = world;
     this -> draw_timer = draw_timer;
     this -> attack_timer = attack_timer;
+    selfPosition = OFF;
+    enemyPosition = UNKNOWN;
     states.circle = D_GO_STRAIGHT;
     states.swerve = S_UNKNOWN;
     states.attack = A_BLIND;
 }
 
+void algorithms :: match_strategy() {
+    selfPosition = world -> line_check();
+    enemyPosition = world -> enemy_pos(); 
+
+    slammy_whammy();
+}
+
 void algorithms :: slammy_whammy() {
-    if (world -> enemy_pos() != UNKNOWN) {
+    if (enemyPosition != UNKNOWN) {
         if (turn_towards_no_delay() == 0) {
             attack_forward_no_delay();
         } else {
@@ -27,7 +36,7 @@ void algorithms :: slammy_whammy() {
 }
 
 void algorithms :: draw_seek() {
-    if (world -> enemy_pos() != UNKNOWN) {
+    if (enemyPosition != UNKNOWN) {
         seek();
     } else {
         draw_circle();
@@ -64,7 +73,7 @@ int algorithms :: draw_circle() {
     //if the current state is going forwards
     if (states.circle == D_GO_STRAIGHT) {
         //continue forward if no line detected
-        if (world -> line_check() == OFF) {
+        if (selfPosition == OFF) {
             robot -> drive_forward(100);
         //there is a line, set an action to go backwards
         } else {
@@ -85,7 +94,7 @@ int algorithms :: draw_circle() {
 //drive forward if we see someone in front of us
 // assume that we have already been confirmed to see
 int algorithms :: attack_forward() {
-    enemy_states enemy = world -> enemy_pos();
+    enemy_states enemy = enemyPosition;
     if (enemy == UNKNOWN) {
         draw_circle();
         return 1;
@@ -136,7 +145,7 @@ int algorithms :: attack_forward() {
 }
 //returns 0 if we should proceed to attack_forward, returns 1 otherwise
 int algorithms :: turn_towards() {
-    enemy_states enemy = world -> enemy_pos();
+    enemy_states enemy = enemyPosition;
     if(enemy == FRONT_LEFT) {
         //turn left a little slower
         robot -> turn_left(100);
@@ -163,10 +172,10 @@ void algorithms :: seek_drive() {
 }
 
 int algorithms :: dodge() {
-    if (world -> enemy_pos() == LEFT) {
+    if (enemyPosition == LEFT) {
         robot -> drive_custom(75, 150, true, true);
         return 1;
-    } else if (world -> enemy_pos() == RIGHT) {
+    } else if (enemyPosition == RIGHT) {
         robot -> drive_custom(150, 75, true, true);
         return 1;
     }
@@ -182,7 +191,7 @@ int algorithms :: swerve() {
     if (states.swerve == S_ATTACK) {
         return 0;
     } else if (states.swerve == S_UNKNOWN) {
-        if (world -> enemy_pos() == FRONT || world -> enemy_pos() == FRONT_LEFT || world -> enemy_pos() == FRONT_RIGHT) {
+        if (enemyPosition == FRONT || enemyPosition == FRONT_LEFT || enemyPosition == FRONT_RIGHT) {
             states.swerve = S_TURN_AWAY;
             draw_timer -> set_action_timer(400);
             robot -> brake();
@@ -191,7 +200,7 @@ int algorithms :: swerve() {
         robot -> brake();
         return -1;
     } else if (draw_timer -> check_action_time()) {
-        if (world -> enemy_pos() != UNKNOWN) {
+        if (enemyPosition != UNKNOWN) {
             states.swerve = S_ATTACK;
             return 0;
         } else {
@@ -199,7 +208,7 @@ int algorithms :: swerve() {
             return -1;
         }
     } else if (states.swerve == S_TURN_AWAY) {
-        if (world -> enemy_pos() == RIGHT) {
+        if (enemyPosition == RIGHT) {
             states.swerve = S_GO_STRAIGHT;
             robot -> brake();
             draw_timer -> set_action_timer(40);
@@ -208,7 +217,7 @@ int algorithms :: swerve() {
         robot -> turn_left(80);
         return 1;
     } else if (states.swerve == S_GO_STRAIGHT) {
-        if (world -> enemy_pos() == UNKNOWN) {
+        if (enemyPosition == UNKNOWN) {
             robot -> brake();
             draw_timer -> set_action_timer(400);
             states.swerve = S_TURN_BACK;
@@ -217,8 +226,8 @@ int algorithms :: swerve() {
         robot -> drive_forward(100);
         return 1;
     } else if (states.swerve == S_TURN_BACK) {
-        if (world -> enemy_pos() == FRONT || world -> enemy_pos() == CLOSE_MID_LEFT
-            || world -> enemy_pos() == CLOSE_MID_RIGHT || world -> enemy_pos() == CLOSE_MID) {
+        if (enemyPosition == FRONT || enemyPosition == CLOSE_MID_LEFT
+            || enemyPosition == CLOSE_MID_RIGHT || enemyPosition == CLOSE_MID) {
             states.swerve = S_ATTACK;
             return 0;
         }
@@ -234,7 +243,7 @@ int algorithms :: swerve() {
 //drive forward if we see someone in front of us
 // assume that we have already been confirmed to see
 int algorithms :: attack_forward_no_delay() {
-    enemy_states enemy = world -> enemy_pos();
+    enemy_states enemy = enemyPosition;
     //if the robot is close, drive forward fast
         //if the robot is close, drive forward fast
         if (enemy == CLOSE_MID) {
@@ -268,7 +277,7 @@ int algorithms :: attack_forward_no_delay() {
 }
 //returns 0 if we should proceed to attack_forward, returns 1 otherwise
 int algorithms :: turn_towards_no_delay() {
-    enemy_states enemy = world -> enemy_pos();
+    enemy_states enemy = enemyPosition;
     if(enemy == FRONT_LEFT) {
         //turn left a little slower
         robot -> turn_left(120);
