@@ -1,10 +1,10 @@
-#include "Actions/Action.hpp"
-#include "Actions/SlammyWhammyImproved.hpp"
+#include "Strategies/Strategy.hpp"
+#include "Strategies/SlammyWhammyImproved.hpp"
 #include "Skibidi.hpp"
 
-Skibidi* skibidi;
+Skibidi *skibidi;
 State state;
-Action *strategy;
+Strategy *strategy;
 
 void setup(void) {
     // Serial initialization (for debugging)

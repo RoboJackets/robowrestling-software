@@ -1,17 +1,17 @@
 #ifndef SLAMMY_WHAMMY_IMPROVED_H_
 #define SLAMMY_WHAMMY_IMPROVED_H_
 
-#include "Actions/Action.hpp"
+#include "Strategies/Strategy.hpp"
 
 enum Direction { DLEFT, DRIGHT, DNONE };
 
-class SlammyWhammy : public Action {
+class SlammyWhammy : public Strategy {
     private:
         enum Direction last_seen;
     public:
         SlammyWhammy();
 
-        virtual void make_decision(State* state);
+        void make_decision(State* state);
 };
 
 #endif // SLAMMY_WHAMMY_IMPROVED_H_

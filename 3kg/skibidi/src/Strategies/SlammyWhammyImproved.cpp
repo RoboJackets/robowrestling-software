@@ -1,4 +1,4 @@
-#include "Actions/SlammyWhammyImproved.hpp"
+#include "Strategies/SlammyWhammyImproved.hpp"
 
 SlammyWhammy::SlammyWhammy() {
     this->last_seen = Direction::DNONE;

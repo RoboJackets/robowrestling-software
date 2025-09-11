@@ -1,4 +1,4 @@
-#include "Actions/Defense.hpp"
+#include "Strategies/Defense.hpp"
 
 void Defense::make_decision(State *state) {
     switch (this->phase) {

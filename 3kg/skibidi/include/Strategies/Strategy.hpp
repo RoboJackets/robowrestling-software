@@ -3,9 +3,9 @@
 
 #include "Skibidi.hpp"
 
-class Action {
+class Strategy {
     public:
-        virtual ~Action() {}
+        virtual ~Strategy() {}
         virtual void make_decision(State* state) = 0;
 };
 

@@ -1,7 +1,7 @@
 #ifndef DEFENSE_HPP_
 #define DEFENSE_HPP_
 
-#include "Actions/Action.hpp"
+#include "Strategies/Strategy.hpp"
 
 #define FLINCH_MILLIS     100
 #define UNTIL_INCH_MILLIS 3000
@@ -14,14 +14,14 @@ enum Phase {
   CHARGING
 };
 
-class Defense : public Action {
+class Defense : public Strategy {
     private:
         enum Phase phase;
         int flinch_started_millis;
         int inch_started_millis;
     public:
         Defense();
-        virtual void make_decision(State* state);
+        void make_decision(State* state);
 };
 
 #endif // DEFENSE_HPP_
