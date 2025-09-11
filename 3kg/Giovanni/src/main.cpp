@@ -3,6 +3,7 @@
 // Imports
 #include "Robot/Algorithms.cpp"
 #include "Robot/RobotActions.cpp"
+#include "Enumerations/EnemyPos.cpp"
 
 // Output Pins
 const int leftPWM = 33;
@@ -70,15 +71,6 @@ void setup() {
   algo = new Algorithms(action);
 }
 
-/**
- * Repeated method calling: Read, Update States, Write Output
- */
-void loop() {
-  pollSensors();
-  calcState();
-  writeMotors();
-}
-
 void pollSensors() {
   // IR Sensor Update
   irArray[0] = digitalRead(left90IR);
@@ -114,13 +106,34 @@ void writeMotors() {
 /**
  * World State Functions
  */
-int getEnemyPosition() {
+EnemyPos getEnemyPosition() {
   // Based on irArray
-  return 1;
+  if (irArray[4] == 1) {
+    return FRONT;
+  } else if (irArray[3] == 1 || irArray[2] == 1 || irArray[1] == 1 || irArray[0] == 1) {
+    return LEFT;
+  } else {
+    return RIGHT;
+  }
+  return NONE;
 }
 
 int isOnLine() {
   // Based on lineArray
-  return 1;
+  for (int i = 0; i < sizeof(lineArray); i++) {
+    if (lineArray[i] < 800) {
+      return 1;
+    }
+  }
+  return 0;
+}
+
+/**
+ * Repeated method calling: Read, Update States, Write Output
+ */
+void loop() {
+  pollSensors();
+  calcState();
+  writeMotors();
 }
 
