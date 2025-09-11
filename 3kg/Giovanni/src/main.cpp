@@ -70,15 +70,6 @@ void setup() {
   algo = new Algorithms(action);
 }
 
-/**
- * Repeated method calling: Read, Update States, Write Output
- */
-void loop() {
-  pollSensors();
-  calcState();
-  writeMotors();
-}
-
 void pollSensors() {
   // IR Sensor Update
   irArray[0] = digitalRead(left90IR);
@@ -100,6 +91,7 @@ void pollSensors() {
 
 void calcState() {
   // Update States + Run Algorithm
+  // get enemy position, get action, update driver array
   
 }
 
@@ -124,3 +116,11 @@ int isOnLine() {
   return 1;
 }
 
+/**
+ * Repeated method calling: Read, Update States, Write Output
+ */
+void loop() {
+  pollSensors();
+  calcState();
+  writeMotors();
+}
