@@ -92,6 +92,7 @@ void pollSensors() {
 
 void calcState() {
   // Update States + Run Algorithm
+  // get enemy position, get action, update driver array
   
 }
 
@@ -137,3 +138,11 @@ void loop() {
   writeMotors();
 }
 
+/**
+ * Repeated method calling: Read, Update States, Write Output
+ */
+void loop() {
+  pollSensors();
+  calcState();
+  writeMotors();
+}
