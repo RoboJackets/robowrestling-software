@@ -137,12 +137,3 @@ void loop() {
   calcState();
   writeMotors();
 }
-
-/**
- * Repeated method calling: Read, Update States, Write Output
- */
-void loop() {
-  pollSensors();
-  calcState();
-  writeMotors();
-}
