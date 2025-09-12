@@ -93,7 +93,10 @@ void pollSensors() {
 void calcState() {
   // Update States + Run Algorithm
   // get enemy position, get action, update driver array
-  
+  int enemyPos = getEnemyPosition();
+  int onLine = isOnLine();
+  // enemyPos: LEFT, RIGHT, FRONT, NONE
+  // onLine: 0, 1
 }
 
 void writeMotors() {
