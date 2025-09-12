@@ -1,8 +1,8 @@
 #include <Arduino.h>
 
 // Imports
-#include "Robot/Algorithms.cpp"
-#include "Robot/RobotActions.cpp"
+#include "Robot/Algorithms.hpp"
+#include "Robot/RobotActions.hpp"
 #include "Enumerations/EnemyPos.cpp"
 
 // Output Pins
@@ -67,7 +67,7 @@ void setup() {
   pinMode(brLine, INPUT);
   pinMode(blLine, INPUT);
 
-  action = new RobotActions(0, 0);
+  action = new RobotActions(driver, driver + 1);
   algo = new Algorithms(action);
 }
 
@@ -121,7 +121,7 @@ EnemyPos getEnemyPosition() {
 
 int isOnLine() {
   // Based on lineArray
-  for (int i = 0; i < sizeof(lineArray); i++) {
+  for (int i = 0; i < int(sizeof(lineArray) / sizeof(lineArray[0])); i++) {
     if (lineArray[i] < 800) {
       return 1;
     }

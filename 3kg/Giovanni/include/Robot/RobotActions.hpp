@@ -4,10 +4,10 @@
 
 class RobotActions {
     private:
-        int driver[2];
+        int *driver[2];
     
     public:
-        RobotActions(int left, int right);
+        RobotActions(int *left, int *right);
         int getLeft();
         int getRight();
         void setLeft(int spd);
