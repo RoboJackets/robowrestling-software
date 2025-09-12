@@ -6,8 +6,10 @@ enum class Position {
     None,
     Left,
     Left_Middle,
+    Left_Middle_Close,
     Middle_Close,
     Middle_Far,
+    Right_Middle_Close,
     Right_Middle,
     Right,
 

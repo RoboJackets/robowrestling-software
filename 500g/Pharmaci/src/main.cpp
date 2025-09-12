@@ -65,15 +65,12 @@ void setup() {
   
 
   worldState = new WorldState(leftLineSensor, rightLineSensor, leftIRSensor, leftMiddleIRSensor, middleIRSensor, rightMiddleIRSensor, rightIRSensor);
-  robotState = new RobotState(worldState, robotActions);
+  robotState = new RobotState(worldState, robotActions, leftMotorDriver, rightMotorDriver);
 
 }
 
 
 void updateMotors() {
-
-
-
      int leftDirection = leftMotorDriver->getDirection();
      int leftSpeed = leftMotorDriver->getSpeed();
  
@@ -107,6 +104,8 @@ void pollSensors() {
   rightMiddleIRSensor->setValue(digitalRead(RIGHT_IR_45));
   leftLineSensor->setValue(analogRead(LEFT_LINE));
   rightLineSensor->setValue(analogRead(RIGHT_LINE));
+  
+
 }
 
 void calculateState() {
@@ -118,8 +117,10 @@ const char* positionToString(Position pos) {
         case Position::None: return "None";
         case Position::Left: return "Left";
         case Position::Left_Middle: return "Left_Middle";
+        case Position::Left_Middle_Close: return "Left_Middle_Close";
         case Position::Middle_Close: return "Middle_Close";
         case Position::Middle_Far: return "Middle_Far";
+        case Position::Right_Middle_Close: return "Right_Middle_Close";
         case Position::Right_Middle: return "Right_Middle";
         case Position::Right: return "Right";
         case Position::On_Line_Left: return "On_Line_Left";
@@ -135,32 +136,29 @@ void debug() {
   Serial.println(middleIRSensor->getValue());
   Serial.println(rightMiddleIRSensor->getValue());
   Serial.println(rightIRSensor->getValue());
-
-
   Serial.println(positionToString(worldState->getEnemyPosition()));  // prints: LEFT
-  delay(1000);
+
+  // Serial.println(leftLineSensor->getValue());
+  // Serial.println(rightLineSensor->getValue());
+  // Serial.println(positionToString(worldState->getSelfPosition()));  // prints: LEFT
+  delay(10);
 }
 
 void loop() {
-
-
   // debug();
+  pollSensors();
+  calculateState();
+  updateMotors();
+      
   
-pollSensors();
-      calculateState();
-      updateMotors();
-      
+  // Not sure what happened here, i think this is for comp?
   // if (digitalRead(START_MODULE)) {
-      
   //     pollSensors();
   //     calculateState();
   //     updateMotors();
   // } else {
   //     robotActions->drive(0, 0);
-      
   // }
-    
-
 }
 
 

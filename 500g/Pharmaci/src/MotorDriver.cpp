@@ -26,4 +26,3 @@ double MotorDriver::getSpeed() {
     return speed;
 }
 
-

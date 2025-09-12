@@ -11,6 +11,7 @@ WorldState::WorldState(LineSensor *leftLineSensorPointer, LineSensor *rightLineS
     middleIRSensor = middleIRSensorPointer;
     rightMiddleIRSensor = rightMiddleIRSensorPointer;
     rightIRSensor = rightIRSensorPointer;
+    lastEnemyPosition = Position::Middle_Far;
 }
 
 Position WorldState::getEnemyPosition() {
@@ -20,31 +21,51 @@ Position WorldState::getEnemyPosition() {
     int rightMiddle = rightMiddleIRSensor->getValue();
     int right = rightIRSensor->getValue();
 
-    if (middle && (leftMiddle || rightMiddle)) {
+    if (middle && leftMiddle && rightMiddle) {
+        lastEnemyPosition = Position::Middle_Close;
         return Position::Middle_Close;
     }
 
+    if (middle && leftMiddle && !rightMiddle) {
+        lastEnemyPosition = Position::Left_Middle_Close;
+        return Position::Left_Middle_Close;
+    }
+    
+    if (middle && rightMiddle && !leftMiddle) {
+        lastEnemyPosition = Position::Right_Middle_Close;
+        return Position::Right_Middle_Close;
+    }
+
     if (middle) {
+        lastEnemyPosition = Position::Middle_Far;
         return Position::Middle_Far;
     }
 
     if (left) {
+        lastEnemyPosition = Position::Left;
         return Position::Left;
     }
 
     if (right) {
+        lastEnemyPosition = Position::Right;
         return Position::Right;
     }
 
-    // if (leftMiddle) {
-    //     return Position::Left_Middle;
-    // }
+    if (rightMiddle) {
+        lastEnemyPosition = Position::Right_Middle;
+        return Position::Right_Middle;
+    }
 
-    // if (rightMiddle) {
-    //     return Position::Right_Middle;
-    // }
+    if (leftMiddle) {
+        lastEnemyPosition = Position::Left_Middle;
+        return Position::Left_Middle;
+    }
 
     return Position::None;
+}
+
+Position WorldState::getLastEnemyPosition() {
+    return lastEnemyPosition;
 }
 
 Position WorldState::getSelfPosition() {

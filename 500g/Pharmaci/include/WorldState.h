@@ -15,12 +15,15 @@ private:
     IRSensor *middleIRSensor;
     IRSensor *rightMiddleIRSensor;
     IRSensor *rightIRSensor;
+    Position lastEnemyPosition;
 
 public:
     WorldState(LineSensor *leftLineSensorPointer, LineSensor *rightLineSensorPointer,
         IRSensor *leftIRSensorPointer, IRSensor *leftMiddleIRSensorPointer, IRSensor
             *middleIRSensorPointer, IRSensor *rightMiddleIRSensorPointer, IRSensor *rightIRSensorPointer);
     Position getEnemyPosition();
+    Position getLastEnemyPosition();
+
     Position getSelfPosition();
 };
 

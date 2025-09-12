@@ -28,68 +28,100 @@ if (robot detected in middle) {
 
 #include <RobotState.h>
 
-RobotState::RobotState(WorldState *worldStatePtr, RobotActions *robotActionsPtr) {
+RobotState::RobotState(WorldState *worldStatePtr, RobotActions *robotActionsPtr, MotorDriver *leftMotorDriverPointer, MotorDriver *rightMotorDriverPointer) {
     worldState = worldStatePtr;
     robotActions = robotActionsPtr;
+    leftMotorDriver = leftMotorDriverPointer;
+    rightMotorDriver = rightMotorDriverPointer;
+    turnTimer = new Timer();
+    turnTimer -> setTimeInterval(1000); // 1 second interval
+    backupTimer =  new Timer();
+    backupTimer -> setTimeInterval(1000); // 0.3 second interval
+    backingUp = false;
+
 }
 
-void RobotState::calculateState() {
+// void RobotState::calculateState() {
+//     Position selfPosition = worldState->getSelfPosition();
+//     Position enemyPosition = worldState->getEnemyPosition();
+//     double speed = 150.0;
+//     double rotSpeed = 150.0;
+
+//     if (enemyPosition == Position::Middle_Close) {
+//         robotActions->drive(speed, speed);
+//     } else if (enemyPosition == Position::Middle_Far) {
+//         robotActions->drive(speed, speed);
+//     } else if (enemyPosition == Position::Left) {
+//         robotActions->drive(-rotSpeed, rotSpeed);
+//     } else if (enemyPosition == Position::Right) {
+//         robotActions->drive(rotSpeed, -rotSpeed);
+//     } else if (enemyPosition == Position::None) {
+//         if (selfPosition == Position::On_Line) {
+//             robotActions->drive(-speed, -speed);
+//         } else if (selfPosition == Position::On_Line_Left) {
+//             robotActions->drive(-rotSpeed, 0);
+//         } else if (selfPosition == Position::On_Line_Right) {
+//             robotActions->drive(0, -rotSpeed);
+//         } else {
+//             if (worldState->getLastEnemyPosition() == Position::Left) {
+//                 robotActions->drive(-rotSpeed, rotSpeed);
+//             } else if (worldState->getLastEnemyPosition() == Position::Right) {
+//                 robotActions->drive(rotSpeed, -rotSpeed);
+//             } else {
+//                 robotActions->drive(rotSpeed, -rotSpeed);
+//             }
+//         }
+//     }
+// }
+
+
+
+//Turret State
+
+// void RobotState::calculateState() {
+//     Position selfPosition = worldState->getSelfPosition();
+//     Position enemyPosition = worldState->getEnemyPosition();
+//     double speed = 100.0;
+//     double rotSpeed = 150.0;
+//     double slowRotSpeed = 100.0;
+
+//     if (enemyPosition == Position::Middle_Close || enemyPosition == Position::Middle_Far) {
+//         robotActions->drive(0.0, 0.0);
+
+//     } else if (enemyPosition == Position::Right_Middle_Close) {
+//         robotActions->drive(slowRotSpeed, -slowRotSpeed);
+//     } else if (enemyPosition == Position::Left_Middle_Close) {
+//         robotActions->drive(-slowRotSpeed, slowRotSpeed);
+//     } else if (enemyPosition == Position::Right_Middle) {
+//         robotActions->drive(slowRotSpeed, -slowRotSpeed);
+//     } else if (enemyPosition == Position::Left_Middle) {
+//         robotActions->drive(-slowRotSpeed, slowRotSpeed);
+//     } else if (enemyPosition == Position::Right) {
+//         robotActions->drive(rotSpeed, -rotSpeed);
+//     } else if (enemyPosition == Position::Left) {
+//         robotActions->drive(-rotSpeed, rotSpeed);
+//     } else if (enemyPosition == Position::None) {
+//     }
+// }
+
+// Timer based state
+
+void RobotState::calculateState(int time) {
     Position selfPosition = worldState->getSelfPosition();
-    Position enemyPosition = worldState->getEnemyPosition();
+    double speed = 150.0;
+    double rotSpeed = 150.0;
+    bool turning = false;
 
-    // OLD STUFF
-    // if (selfPosition != Position::Off_Line) {
-    //     if (selfPosition == Position::On_Line) {
-    //         robotActions->drive(80, 80);
-    //     } else if (selfPosition == Position::On_Line_Left) {
-    //         robotActions->drive(80, 0);
-    //     } else if (selfPosition == Position::On_Line_Right) {
-    //         robotActions->drive(0, 80);
-    //     } else {
-    //         robotActions->drive(0, 0);
+    if (selfPosition == Position::On_Line || selfPosition == Position::On_Line_Left || selfPosition == Position::On_Line_Right) {
+        turnTimer->setPreviousTime(time);
 
-    //     }
-    // } else {
-    //     if (enemyPosition == Position::Middle_Close) {
-    //         robotActions->drive(255, 255);
-    //     } else if (enemyPosition == Position::Middle_Far) {
-    //         robotActions->drive(80, 80);
-    //     } else if (enemyPosition == Position::Left) {
-    //         robotActions->drive(0, 80);
-    //     } else if (enemyPosition == Position::Right) {
-    //         robotActions->drive(80, 0);
-    //     } else if (enemyPosition == Position::Left_Middle) {
-    //         robotActions->drive(0, 40);
-    //     } else if (enemyPosition == Position::Right_Middle) {
-    //         robotActions->drive(40, 0);
-    //     } else {
-    //         robotActions->drive(80, -80);
-    //     }
-    // }
-
-
-    // New algorithm (for now)
-
-    // if (selfPosition == Position::On_Line_Left) {
-    //     robotActions->drive(0, 100);
-    // } else if (selfPosition == Position::On_Line_Right) {
-    //            robotActions->drive(100, 0);
- 
-    // }
-
-
-    if (enemyPosition == Position::Middle_Close) {
-        robotActions->drive(255, 255);
-    } else if (enemyPosition == Position::Middle_Far) {
-        robotActions->drive(255, 255);
-    } else if (enemyPosition == Position::Left) {
-        robotActions->drive(-255, 255);
-    } else if (enemyPosition == Position::Right) {
-        robotActions->drive(255, -255);
-    } else if (enemyPosition == Position::None) {
-        robotActions->drive(255, -255);
+        if (!turnTimer->getReady()) {
+            turning = false;
+            robotActions->drive(rotSpeed, -rotSpeed);
+        } else {
+            turning = true;
+        }
+    } else if (!turning && selfPosition == Position::Off_Line) {
+        robotActions->drive(speed, speed);
     }
 }
-
-
-
