@@ -1,4 +1,6 @@
 #include "Robot/RobotActions.hpp"
+#include "Enumerations/EnemyPos.cpp"
+#include "Enumerations/OnLine.cpp"
 
 #ifndef Algorithms_hpp
 
@@ -11,6 +13,7 @@ class Algorithms {
     public:
         Algorithms(RobotActions *);
         // Add more algorithms below
+        void slam(EnemyPos enemyPos, OnLine onLine);
 }; 
 
 #endif
