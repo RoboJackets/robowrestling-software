@@ -97,7 +97,8 @@ void calcState() {
   int enemyPos = getEnemyPosition();
   int onLine = isOnLine();
   // enemyPos: LEFT, RIGHT, FRONT, NONE
-  // onLine: 0, 1
+  // onLine: FRONTLINE, BACKLINE, LEFTLINE, RIGHTLINE, NONELINE
+  // algo->someAlgo(enemyPos, onLine);
 }
 
 void writeMotors() {
