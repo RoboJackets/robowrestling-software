@@ -1,0 +1,7 @@
+enum OnLine {
+    FRONTLINE,
+    BACKLINE,
+    LEFTLINE,
+    RIGHTLINE,
+    NONELINE
+};

@@ -4,6 +4,7 @@
 #include "Robot/Algorithms.hpp"
 #include "Robot/RobotActions.hpp"
 #include "Enumerations/EnemyPos.cpp"
+#include "Enumerations/OnLine.cpp"
 
 // Output Pins
 const int leftPWM = 33;
@@ -122,14 +123,22 @@ EnemyPos getEnemyPosition() {
   return NONE;
 }
 
-int isOnLine() {
-  // Based on lineArray
-  for (int i = 0; i < int(sizeof(lineArray) / sizeof(lineArray[0])); i++) {
-    if (lineArray[i] < 800) {
-      return 1;
-    }
+OnLine isOnLine() {
+  // Assuming < 800 is OnLine and >= 800 is not on line (on the doyho)
+  if ((lineArray[0] < 800 || lineArray[1] < 800) && (lineArray[2] >= 800 && lineArray[3] >= 800)) {
+    // One of the front ones are on the line and back ones don't detect a line
+    return FRONTLINE;
+  } else if ((lineArray[2] < 800 || lineArray[3] < 800) && (lineArray[1] >= 800 && lineArray[0] >= 800)) {
+    // One of the back ones are on the line and the front ones don't detect a line
+    return BACKLINE;
+  } else if (lineArray[0] < 800 && lineArray[3] < 800) {
+    return LEFTLINE;
+  } else if (lineArray[1] < 800 && lineArray[2] < 800) {
+    return RIGHTLINE;
   }
-  return 0;
+
+  // Otherwise, all lines are in bounds
+  return NONELINE;
 }
 
 /**
