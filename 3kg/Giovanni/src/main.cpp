@@ -3,8 +3,8 @@
 // Imports
 #include "Robot/Algorithms.hpp"
 #include "Robot/RobotActions.hpp"
-#include "Enumerations/EnemyPos.cpp"
-#include "Enumerations/OnLine.cpp"
+#include "Enumerations/EnemyPos.hpp"
+#include "Enumerations/OnLine.hpp"
 
 // Output Pins
 const int leftPWM = 33;
@@ -41,6 +41,10 @@ int driver[2]; // [-255, 255]
 // Classes
 Algorithms *algo;
 RobotActions *action;
+
+// Declaration
+EnemyPos getEnemyPosition();
+OnLine isOnLine();
 
 /**
  * Initializing
@@ -94,8 +98,8 @@ void pollSensors() {
 void calcState() {
   // Update States + Run Algorithm
   // get enemy position, get action, update driver array
-  int enemyPos = getEnemyPosition();
-  int onLine = isOnLine();
+  EnemyPos enemyPos = getEnemyPosition();
+  OnLine onLine = isOnLine();
   // enemyPos: LEFT, RIGHT, FRONT, NONE
   // onLine: FRONTLINE, BACKLINE, LEFTLINE, RIGHTLINE, NONELINE
   // algo->someAlgo(enemyPos, onLine);

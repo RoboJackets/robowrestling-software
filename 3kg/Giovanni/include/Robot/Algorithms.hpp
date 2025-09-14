@@ -1,6 +1,6 @@
 #include "Robot/RobotActions.hpp"
-#include "Enumerations/EnemyPos.cpp"
-#include "Enumerations/OnLine.cpp"
+#include "Enumerations/EnemyPos.hpp"
+#include "Enumerations/OnLine.hpp"
 
 #ifndef Algorithms_hpp
 

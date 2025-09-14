@@ -1,9 +1,7 @@
 #include "Robot/Algorithms.hpp"
-#include "Enumerations/EnemyPos.cpp"
-#include "Enumerations/OnLine.cpp"
 
 Algorithms :: Algorithms(RobotActions *actions) {
-    this->action = action;
+    this->action = actions;
 }
 
 // Add more algorithms below
