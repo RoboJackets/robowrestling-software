@@ -21,3 +21,15 @@ void Algorithms :: slam(EnemyPos enemyPos, OnLine onLine) {
     }
 
 }
+
+void Algorithms :: lineMovement(EnemyPos enemyPos, OnLine onLine) {
+    if (onLine == FRONTLINE) {
+        action->turnLeft(200);
+    } else if (onLine == BACKLINE) {
+        action->forward(200);
+    } else if (onLine == LEFTLINE) {
+        action->turnRight(200);
+    } else if (onLine == RIGHTLINE) {
+        action->turnLeft(200);
+    }
+}

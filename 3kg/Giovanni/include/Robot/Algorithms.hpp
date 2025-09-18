@@ -14,6 +14,7 @@ class Algorithms {
         Algorithms(RobotActions *);
         // Add more algorithms below
         void slam(EnemyPos enemyPos, OnLine onLine);
+        void lineMovement(EnemyPos enemyPos, OnLine onLine);
 }; 
 
 #endif

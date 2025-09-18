@@ -103,6 +103,7 @@ void calcState() {
   // enemyPos: LEFT, RIGHT, FRONT, NONE
   // onLine: FRONTLINE, BACKLINE, LEFTLINE, RIGHTLINE, NONELINE
   // algo->someAlgo(enemyPos, onLine);
+  // algo->lineMovement(enemyPos, onLine);
 }
 
 void writeMotors() {
@@ -129,6 +130,10 @@ EnemyPos getEnemyPosition() {
 }
 
 OnLine isOnLine() {
+  // What if we returned T/F array of size 4 instead? We can mark which sensors are on the line
+  // and then pass that through to lineMovement() algorithm. Then we can micro detect
+  // FL, FR, BR, BL in order to have better line movement around the doyho
+
   // Assuming < 800 is OnLine and >= 800 is not on line (on the doyho)
   if ((lineArray[0] < 800 || lineArray[1] < 800) && (lineArray[2] >= 800 && lineArray[3] >= 800)) {
     // One of the front ones are on the line and back ones don't detect a line
