@@ -1,39 +1,35 @@
 #include "robot/robot_actions.hpp"
 
-robot_actions :: robot_actions(motor_driver* left_ptr, motor_driver* right_ptr) {
-    left_motor = left_ptr;
-    right_motor = right_ptr;
+robot_actions :: robot_actions(int* motors) {
+    this -> motors = motors;
 }
 
 void robot_actions :: brake() {
-    left_motor->set_speed(0);
-    right_motor->set_speed(0);
+    motors[0] = 0;
+    motors[1] = 0;
 }
 
 void robot_actions :: drive_forward(int speed) {
-    left_motor->set_direction(true);
-    right_motor->set_direction(true);
-    left_motor->set_speed(speed);
-    right_motor->set_speed(speed);
+    motors[0] = speed;
+    motors[1] = speed;
 }
 
 void robot_actions :: drive_backward(int speed) {
-    left_motor->set_direction(false);
-    right_motor->set_direction(false);
-    left_motor->set_speed(speed);
-    right_motor->set_speed(speed);
+    motors[0] = -1 * speed;
+    motors[1] = -1 * speed;
 }
 
 void robot_actions :: turn_left(int speed) {
-    right_motor->set_direction(true);
-    right_motor->set_speed(speed);
-    left_motor->set_direction(false);
-    left_motor->set_speed(speed);
+    motors[0] = -1 * speed;
+    motors[1] = speed;
 }
 
 void robot_actions :: turn_right(int speed) {
-    left_motor->set_direction(true);
-    left_motor->set_speed(speed);
-    right_motor->set_direction(false);
-    right_motor->set_speed(0);
+    motors[0] = speed;
+    motors[1] = -1 * speed;
+}
+
+void robot_actions :: drive_custom(int LSpeed, int RSpeed, bool LDir, bool RDir) {
+    motors[0] = LDir * LSpeed;
+    motors[1] = RDir * RSpeed;
 }

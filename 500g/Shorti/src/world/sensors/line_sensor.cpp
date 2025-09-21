@@ -7,7 +7,7 @@ line_sensor :: line_sensor() {
 line_sensor :: line_sensor(int init_value) {
     value = init_value;
 }
-
+//returns ~0 on write, ~1000 on black
 int line_sensor :: get_value() {
     return value;
 }

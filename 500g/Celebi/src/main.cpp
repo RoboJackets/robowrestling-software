@@ -1,61 +1,57 @@
 /**
- * Joe
- * File that outlines Shorti's main
- * 1/30/2025
+ * Celebi's main
  */
+
+
+// imports
 
 #include <Arduino.h>
 
-// imports
-#include "robot/motor_driver.hpp"
 #include "robot/algorithms.hpp"
 #include "robot/robot_actions.hpp"
-#include "robot/robot_state.hpp"
 
 #include "world/world_state.hpp"
-#include "world/sensors/ir_sensor.hpp"
-#include "world/sensors/line_sensor.hpp"
+#include "world/timer.hpp"
 
 // pinouts
-#define Lside A0
-#define Lsensor 8
-#define Rside A1
-#define Rsensor 4
-#define MSensor 7
-#define RMsensor 9
-#define LMsensor 13
-#define StartMod 10
-#define Rpos 6
-#define Rneg 11
-#define Lpos 3
-#define Lneg 5
-#define switch1 A6
-#define switch2 A7
+#define Leftline1 16
+#define Leftline2 17
+#define Rightline1 18
+#define Rightline2 19
 
-// define objects
-motor_driver *leftMotorDriver;
-motor_driver *rightMotorDriver;
+#define Rdist 0
+#define RMIDdist 1
+#define CENTdist 7
+#define LMIDdist 8
+#define Ldist 28
+#define StartMod 29
 
-//set up pointers to software sensors and motors
-//set up line sensors
-line_sensor* line_left;
-line_sensor* line_right;
-//set up ir sensors
-ir_sensor* ir_left;
-ir_sensor* ir_mid_left;
-ir_sensor* ir_mid;
-ir_sensor* ir_mid_right;
-ir_sensor* ir_right;
+#define RmotorPos 3
+#define RmotorNeg 4
+#define LmotorPos 33
+#define LmotorNeg 13
 
-//set up robot actions
-robot_actions* robo_actions;
+int i = 0;
 
-//set up algorithms
+// define motor array
+int motors[2] = {0,0};
+
+// define sensor arrays
+int line_sensors[4] = {0,0,0,0};
+int ir_sensors[5] = {0,0,0,0,0};
+
+
+// set up algorithms class
 algorithms* algorithm;
 
-//set up world state and robot state pointers
+//set up robot actions
+robot_actions* robot;
+
+//set up world state
 world_state* world;
-robot_state* robot;
+
+timer *draw_timer;
+timer *attack_timer;
 
 //filter
 int print = 0;
@@ -64,48 +60,45 @@ int print = 0;
 void updateMotors();
 void pollSensors();
 void updateState();
+void brake();
 void debug();
 
 void setup() {
     // define pinmodes
-    pinMode(Rpos, OUTPUT);
-    pinMode(Rneg, OUTPUT);
-    pinMode(Lpos, OUTPUT);
-    pinMode(Lneg, OUTPUT);
+    pinMode(LmotorNeg, OUTPUT);
+    pinMode(LmotorPos, OUTPUT);
+    pinMode(RmotorNeg, OUTPUT);
+    pinMode(RmotorPos, OUTPUT);
+    pinMode(Leftline1, INPUT);
+    pinMode(Leftline2, INPUT);
+    pinMode(Rightline1, INPUT);
+    pinMode(Rightline2, INPUT);
+    pinMode(Ldist, INPUT);
+    pinMode(LMIDdist, INPUT);
+    pinMode(CENTdist, INPUT);
+    pinMode(RMIDdist, INPUT);
+    pinMode(Rdist, INPUT);
     pinMode(StartMod, INPUT);
-    pinMode(switch1, INPUT);
-    pinMode(switch2, INPUT);
 
-    // instantiate objects
-    leftMotorDriver = new motor_driver();
-    rightMotorDriver = new motor_driver();
-
-    //initialize line sensors
-    line_left = new line_sensor(0);
-    line_right = new line_sensor(0);
-
-    //initialize distance sensors
-    ir_left = new ir_sensor(false);
-    ir_mid_left = new ir_sensor(false);
-    ir_mid = new ir_sensor(false);
-    ir_mid_right = new ir_sensor(false);
-    ir_right = new ir_sensor(false);
-    
-    //initialize robot actions
-    robo_actions = new robot_actions(leftMotorDriver, rightMotorDriver);
-    
+    //initialize timer
+    draw_timer = new timer(millis());
+    attack_timer = new timer(millis());
 
     //initialize world state
-    world = new world_state(line_left, line_right, ir_left, ir_mid_left, ir_mid, ir_mid_right, ir_right);
-    
-    //initialize algorithm
-    algorithm = new algorithms(robo_actions, world);
+    world = new world_state(line_sensors, ir_sensors);
 
     //initialize robot actions
-    robot = new robot_state(world, algorithm);
+    robot = new robot_actions(motors);    
+
+    //initialize strategy
+    algorithm = new algorithms(robot, world, draw_timer, attack_timer);
+
+
 
     Serial.begin(9600);
     Serial.print("we are running\n");
+    draw_timer -> set_action_timer(10);
+    attack_timer -> set_action_timer(10);
     // wait for start signal
     while (!digitalRead(StartMod)) {
       Serial.print(digitalRead(StartMod));
@@ -118,10 +111,10 @@ void loop() {
     updateState();
     updateMotors();
 
-    // listen for stop signal
+    //listen for stop signal
     if (!digitalRead(StartMod)) {
       while(true) {
-        // brake()
+        brake();
         Serial.println("braking");
       }
     }
@@ -131,19 +124,34 @@ void loop() {
 
 void pollSensors() {
   //read line sensors
-  line_left -> set_value(analogRead(Lside));
-  line_right -> set_value(analogRead(Rside));
+  int left1 = analogRead(Leftline1);
+  int left2 = analogRead(Leftline2);
+  int right1 = analogRead(Rightline1);
+  int right2 = analogRead(Rightline2);
+
+  //if both are black, bin = 0
+  //if just right is black, bin = 1
+  //if just left is black, bin = 2
+  //if both are white, bin = 3
+
+  line_sensors[0] = left1 < 100 ? 1 : 0;
+  line_sensors[1] = left2 < 100 ? 1 : 0;
+  line_sensors[2] = right1 < 100 ? 1 : 0;
+  line_sensors[3] = right2 < 100 ? 1 : 0;
 
   //read ir sensors
-  ir_left -> set_ir_sensor(digitalRead(Lsensor));
-  ir_mid_left -> set_ir_sensor(digitalRead(LMsensor));
-  ir_mid -> set_ir_sensor(digitalRead(MSensor));
-  ir_mid_right -> set_ir_sensor(digitalRead(RMsensor));
-  ir_right -> set_ir_sensor(digitalRead(Rsensor));
+  ir_sensors[0] = digitalRead(Ldist);
+  ir_sensors[1] = digitalRead(LMIDdist);
+  ir_sensors[2] = digitalRead(CENTdist);
+  ir_sensors[3] = digitalRead(RMIDdist);
+  ir_sensors[4] = digitalRead(Rdist);
+
+  draw_timer -> update_time(millis());
+  attack_timer -> update_time(millis());
 }
 
 void updateState() {
-  robot -> runAlgorithm();
+  algorithm -> match_strategy();
 }
 
 /**
@@ -151,72 +159,105 @@ void updateState() {
  * simple motordriver with speed and direction.  
  */ 
 void updateMotors() {
-    int leftDirection = leftMotorDriver->get_direction();
-    int leftSpeed = leftMotorDriver->get_speed();
-
-    if (leftDirection == 1) {  // if direction is forward
-        analogWrite(Lpos, leftSpeed);
-        analogWrite(Lneg, 0);
-    } else {                    // if direction is back
-        analogWrite(Lpos, 0);
-        analogWrite(Lneg, leftSpeed);
+    if (motors[0] > 0) {  // if direction is forward
+        analogWrite(LmotorPos, motors[0]);
+        analogWrite(LmotorNeg, 0);
+    } else {   // if direction is forward
+        analogWrite(LmotorPos, 0);
+        analogWrite(LmotorNeg, abs(motors[0]));
     }
 
-    int rightDirection = rightMotorDriver->get_direction();
-    int rightSpeed = rightMotorDriver->get_speed();
-
-    if (rightDirection == 1) {  // if direction is forward
-        analogWrite(Rpos, rightSpeed);
-        analogWrite(Rneg, 0);
+    if (motors[1] > 0) {  // if direction is forward
+        analogWrite(RmotorPos, motors[1]);
+        analogWrite(RmotorNeg, 0);
     } else {                    // if direction is back
-        analogWrite(Rpos, 0);
-        analogWrite(Rneg, rightSpeed);
+        analogWrite(RmotorPos, 0);
+        analogWrite(RmotorNeg, abs(motors[1]));
     }
+
+}
+
+void brake() {
+  robot -> brake();
+  updateMotors();
 }
 
 void debug() {
-  if (print == 10) {
-    //sensors
-    Serial.println("sensors:");
-    Serial.print("  line left: ");
-    Serial.println(line_left -> get_value());
-
-    Serial.print("  line right: ");
-    Serial.println(line_right -> get_value());
-
-
-    Serial.print("  distance left: ");
-    Serial.println(line_right -> get_value());
-
-    Serial.print("  distance mid left: ");
-    Serial.println(ir_mid_left -> get_ir_sensor());
-
-    Serial.print("  distance mid: ");
-    Serial.println(ir_mid -> get_ir_sensor());
-
-    Serial.print("  distance mid right: ");
-    Serial.println(ir_mid_right -> get_ir_sensor());
-
-    Serial.print("  distance right: ");
-    Serial.println(ir_right -> get_ir_sensor());
-
-    //motors
-    Serial.println("motors:");
-
-    Serial.print("  left motor direction: ");
-    Serial.println(leftMotorDriver -> get_direction());
-
-    Serial.print("  right motor directtion: ");
-    Serial.println(rightMotorDriver -> get_direction());
-
-    Serial.print("  left motor speed: ");
-    Serial.println(leftMotorDriver -> get_speed());
-
-    Serial.print("  right motor speed: ");
-    Serial.println(rightMotorDriver -> get_speed());
-    
-    print = 0;
+  i++;
+  if (i < 1000) {
+    return;
+  } else {
+    i = 0;
   }
-  print++;
+  //delay(50);
+  Serial.println("\n\n*****************");
+  
+  //Timer debugging
 
+  // Serial.print("action timer has gone off: ");
+  // Serial.println(thymer -> check_action_time());
+  // Serial.print("time since match start: ");
+  // Serial.println(thymer -> check_match_time());
+  // Serial.print("millies: ");
+  // Serial.println(millis());
+  // Serial.print("action timer started at: ");
+  // Serial.println(thymer -> get_action_start());
+  // Serial.print("current time from timer: ");
+  // Serial.println(thymer -> get_current_time());
+  // Serial.print("timer status: ");
+  // Serial.println(thymer -> get_timer_state());
+  
+  
+  //line sensors
+  
+  Serial.println("sensors:");
+  Serial.print("line left: ");
+  Serial.println(line_sensors[0]);
+  Serial.println(line_sensors[1]);
+
+  Serial.print("line right: ");
+  Serial.println(line_sensors[2]);
+  Serial.println(line_sensors[3]);
+
+
+  //distance sensors
+
+  Serial.print("distance left: ");
+  Serial.println(ir_sensors[0]);
+
+  Serial.print("distance mid left: ");
+  Serial.println(ir_sensors[1]);
+
+  Serial.print("distance mid: ");
+  Serial.println(ir_sensors[2]);
+
+  Serial.print("distance mid right: ");
+  Serial.println(ir_sensors[3]);
+
+  Serial.print("distance right: ");
+  Serial.println(ir_sensors[4]);
+
+
+  // motors
+
+  // Serial.println("motors:");
+
+  // Serial.print("left motor direction: ");
+  // Serial.println(leftMotorDriver -> get_direction());
+
+  // Serial.print("right motor directtion: ");
+  // Serial.println(rightMotorDriver -> get_direction());
+
+  // Serial.print("left motor speed: ");
+  // Serial.println(leftMotorDriver -> get_speed());
+
+  // Serial.print("right motor speed: ");
+  // Serial.println(rightMotorDriver -> get_speed());
+
+
+  //state
+  //Serial.println(world ->enemy_pos());
+  
+  
+  Serial.println("*****************");
 }
