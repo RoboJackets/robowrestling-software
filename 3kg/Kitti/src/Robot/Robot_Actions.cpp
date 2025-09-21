@@ -29,3 +29,11 @@ void RobotActions::drive_right(int speed) {
     motors[0] = speed;
     motors[1] = -speed;
 }
+
+int RobotActions::get_left_velocity() {
+    return motors[0];
+} 
+
+int RobotActions::get_right_velocity() {
+    return motors[1];
+}

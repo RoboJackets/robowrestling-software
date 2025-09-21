@@ -13,7 +13,7 @@ class Algorithms {
         line_states self_position;
         enemy_states enemy_position;
     public:
-        Algorithms(RobotActions new_action, WorldState new_state, line_states self_pos, enemy_states enemy_pos);
+        Algorithms(RobotActions* new_action, WorldState* new_state, line_states self_pos, enemy_states enemy_pos);
         void match_strategy();
         void slammy_whammy();
         void attack_forward();

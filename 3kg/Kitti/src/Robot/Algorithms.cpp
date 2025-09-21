@@ -1,8 +1,8 @@
 #include "Robot/Algorithms.hpp"
 
-Algorithms::Algorithms(RobotActions new_action, WorldState new_state, line_states self_pos, enemy_states enemy_pos) {
-    actions = new RobotActions(new_action);
-    world_state = new WorldState(new_state);
+Algorithms::Algorithms(RobotActions* new_action, WorldState* new_state, line_states self_pos, enemy_states enemy_pos) {
+    actions = new_action;
+    world_state = new_state;
     self_position = self_pos;
     enemy_position = enemy_pos;
 }

@@ -39,9 +39,9 @@ int ir_sensors[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 // int lidar[3] = {0, 0, 0}; LIDAR uses DFRobot_TFmini library
 
 // Class instances
-WorldState world;
-RobotActions action;
-Algorithms algo;
+WorldState* world;
+RobotActions* action;
+Algorithms* algo;
 
 // Function declarations
 void pollSensors();
@@ -74,9 +74,9 @@ void setup() {
   pinMode(ir_right_back, INPUT);
   pinMode(ir_back_right, INPUT);
 
-  world = WorldState(line_sensors, ir_sensors);
-  action = RobotActions();
-  algo = Algorithms(action, world, NoneLine, NoneEnemy);
+  *world = WorldState(line_sensors, ir_sensors);
+  *action = RobotActions();
+  *algo = Algorithms(action, world, NoneLine, NoneEnemy);
 }
 
 /**
@@ -117,7 +117,7 @@ void pollSensors() {
   // lidar[2] = tfmini.getTemperature();
 
   // Update World State Sensor Values
-  world.update_sensors(line_sensors, ir_sensors);
+  world->update_sensors(line_sensors, ir_sensors);
 }
 
 // Push to Motors
@@ -131,7 +131,7 @@ void updateMotors() {
 
 // Update Robot World State
 void updateState() {
-  algo.match_strategy();
-  motors[0] = action.get_left_velocity();
-  motors[1] = action.get_right_velocity();
+  algo->match_strategy();
+  motors[0] = action->get_left_velocity();
+  motors[1] = action->get_right_velocity();
 }
