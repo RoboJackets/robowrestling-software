@@ -1,5 +1,11 @@
 #include <Arduino.h>
 
+#include "Robot/World_State.hpp"
+#include "Robot/Robot_Actions.hpp"
+#include "Robot/Algorithms.hpp"
+#include "Enums/line_states.hpp"
+#include "Enums/enemy_states.hpp"
+
 // Pins definitions
 const int motor_left = 1;
 const int motor_left_dir = 20;
@@ -32,6 +38,10 @@ int line_sensors[4] = {0, 0, 0, 0};
 int ir_sensors[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 // int lidar[3] = {0, 0, 0}; LIDAR uses DFRobot_TFmini library
 
+// Class instances
+WorldState world;
+RobotActions action;
+Algorithms algo;
 
 // Function declarations
 void pollSensors();
@@ -44,7 +54,29 @@ void updateState();
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  
+  pinMode(motor_left, OUTPUT);
+  pinMode(motor_left_dir, OUTPUT);
+  pinMode(motor_right, OUTPUT);
+  pinMode(motor_right_dir, OUTPUT);
+
+  pinMode(line_fl, INPUT);
+  pinMode(line_fr, INPUT);
+  pinMode(line_bl, INPUT);
+  pinMode(line_br, INPUT);
+
+  pinMode(ir_back_left, INPUT);
+  pinMode(ir_left_back, INPUT);
+  pinMode(ir_left_front, INPUT);
+  pinMode(ir_left_mid, INPUT);
+  pinMode(ir_mid, INPUT);
+  pinMode(ir_right_mid, INPUT);
+  pinMode(ir_right_front, INPUT);
+  pinMode(ir_right_back, INPUT);
+  pinMode(ir_back_right, INPUT);
+
+  world = WorldState(line_sensors, ir_sensors);
+  action = RobotActions();
+  algo = Algorithms(action, world, NoneLine, NoneEnemy);
 }
 
 /**
@@ -52,8 +84,8 @@ void setup() {
  */
 void loop() {
   pollSensors();
-  updateMotors();
   updateState();
+  updateMotors();
 }
 
 /**
@@ -83,17 +115,23 @@ void pollSensors() {
   // lidar[0] = tfmini.getDistance();
   // lidar[1] = tfmini.getStrength();
   // lidar[2] = tfmini.getTemperature();
+
+  // Update World State Sensor Values
+  world.update_sensors(line_sensors, ir_sensors);
 }
 
 // Push to Motors
 void updateMotors() {
   // Updating motors from robot actions
+  analogWrite(motor_left, motors[0]);
+  digitalWrite(motor_left_dir, motors[0] > 0 ? 0 : 1);
+  analogWrite(motor_right, motors[1]);
+  digitalWrite(motor_right_dir, motors[1] > 0 ? 0 : 1);
 }
 
 // Update Robot World State
 void updateState() {
-  analogWrite(motor_left, motors[0]);
-  analogWrite(motor_left_dir, motors[0] > 0 ? 0 : 1);
-  analogWrite(motor_right, motors[1]);
-  analogWrite(motor_right_dir, motors[1] > 0 ? 0 : 1);
+  algo.match_strategy();
+  motors[0] = action.get_left_velocity();
+  motors[1] = action.get_right_velocity();
 }

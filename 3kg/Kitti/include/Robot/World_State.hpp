@@ -11,6 +11,7 @@ class WorldState {
         int ir_sensors[9];
     public:
         WorldState(int line[4], int ir[9]);
+        void update_sensors(int line[4], int ir[9]);
         line_states line_check();
         enemy_states enemy_pos();
 };
