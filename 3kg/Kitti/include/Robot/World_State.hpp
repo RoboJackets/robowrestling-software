@@ -7,11 +7,11 @@
 // World state representation
 class WorldState {
     private:
-        int line_sensors[4];
-        int ir_sensors[9];
+        int line_sensors[2];
+        int ir_sensors[4];
     public:
-        WorldState(int line[4], int ir[9]);
-        void update_sensors(int line[4], int ir[9]);
+        WorldState(int line[2], int ir[4]);
+        void update_sensors(int line[2], int ir[4]);
         line_states line_check();
         enemy_states enemy_pos();
 };

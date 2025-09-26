@@ -31,5 +31,5 @@ void Algorithms::slammy_whammy() {
 
 void Algorithms::attack_forward() {
     // Implement attack forward logic
-    actions->drive_forward(150); 
+    actions->drive_forward(100); 
 }

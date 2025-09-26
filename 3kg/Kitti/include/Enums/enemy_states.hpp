@@ -3,9 +3,10 @@
 
 enum enemy_states {
     Front,
+    FrontL,
+    FrontR,
     Left,
     Right,
-    Back,
     NoneEnemy
 };
 

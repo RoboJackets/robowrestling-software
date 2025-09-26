@@ -13,6 +13,7 @@ class RobotActions {
         void drive_right(int speed);
         int get_left_velocity();
         int get_right_velocity();
+        
 };
 
 #endif // ROBOT_ACTIONS_HPP

@@ -1,3 +1,7 @@
+/**
+ * Updating Kitti's main.cpp to fit Joe's robot
+ */
+
 #include <Arduino.h>
 
 #include "Robot/World_State.hpp"
@@ -7,36 +11,32 @@
 #include "Enums/enemy_states.hpp"
 
 // Pins definitions
-const int motor_left = 1;
-const int motor_left_dir = 20;
-const int motor_right = 2;
-const int motor_right_dir = 21;
+#define start_mod 10
 
-const int line_fl = 3;
-const int line_fr = 4;
-const int line_bl = 5;
-const int line_br = 6;
+#define LPos 6
+#define LNeg A5
+#define RPos 13
+#define RNeg 11
+#define left_speed 5
+#define right_speed 3
 
-const int ir_back_left = 7;
-const int ir_left_back = 8;
-const int ir_left_front = 9;
-const int ir_left_mid = 10;
-const int ir_mid = 11;
-const int ir_right_mid = 12;
-const int ir_right_front = 13;
-const int ir_right_back = 14;
-const int ir_back_right = 15;
+#define line_left A0
+#define line_right A1
+
+#define ir_side_left 12
+#define ir_front_left 8
+#define ir_front_right 2
+#define ir_side_right 4
 
 // Arrays
 /**
  * Motors: [Left, Right]
- * Line Sensors: [Front Left, Front Right, Back Left, Back Right]
- * IR Sensors: [Back Left, Left Back, Left Front, LeftMid, Mid, RightMid, Right Front, Right Back, Back Right]
+ * Line Sensors: [Left, Righ]
+ * IR Sensors: [SideLeft, FrontLeft, FrontRight, SideRight]
  */
 int motors[2] = {0, 0};
-int line_sensors[4] = {0, 0, 0, 0};
-int ir_sensors[9] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
-// int lidar[3] = {0, 0, 0}; LIDAR uses DFRobot_TFmini library
+int line_sensors[2] = {0, 0};
+int ir_sensors[4] = {0, 0, 0, 0};
 
 // Class instances
 WorldState* world;
@@ -52,40 +52,38 @@ void updateState();
  * Set up structure of the code.
  */
 void setup() {
-  // put your setup code here, to run once:
+  // put your setup code here, to run once
+  pinMode(RPos, OUTPUT);
+  pinMode(RNeg, OUTPUT);
+  pinMode(LPos, OUTPUT);
+  pinMode(LNeg, OUTPUT);
+  pinMode(left_speed, OUTPUT);
+  pinMode(right_speed, OUTPUT);
+
+  pinMode(line_left, INPUT);
+  pinMode(line_right, INPUT);
+
+  pinMode(ir_side_left, INPUT);
+  pinMode(ir_front_left, INPUT);
+  pinMode(ir_front_right, INPUT);
+  pinMode(ir_side_right, INPUT);
+
+  // Allocate objects (was dereferencing uninitialized pointers which caused UB)
+  world = new WorldState(line_sensors, ir_sensors);
+  action = new RobotActions();
+  algo = new Algorithms(action, world, NoneLine, NoneEnemy);
   Serial.begin(9600);
-  pinMode(motor_left, OUTPUT);
-  pinMode(motor_left_dir, OUTPUT);
-  pinMode(motor_right, OUTPUT);
-  pinMode(motor_right_dir, OUTPUT);
-
-  pinMode(line_fl, INPUT);
-  pinMode(line_fr, INPUT);
-  pinMode(line_bl, INPUT);
-  pinMode(line_br, INPUT);
-
-  pinMode(ir_back_left, INPUT);
-  pinMode(ir_left_back, INPUT);
-  pinMode(ir_left_front, INPUT);
-  pinMode(ir_left_mid, INPUT);
-  pinMode(ir_mid, INPUT);
-  pinMode(ir_right_mid, INPUT);
-  pinMode(ir_right_front, INPUT);
-  pinMode(ir_right_back, INPUT);
-  pinMode(ir_back_right, INPUT);
-
-  *world = WorldState(line_sensors, ir_sensors);
-  *action = RobotActions();
-  *algo = Algorithms(action, world, NoneLine, NoneEnemy);
 }
 
 /**
  * Main loop
  */
 void loop() {
-  pollSensors();
-  updateState();
-  updateMotors();
+  if (digitalRead(start_mod) == HIGH) {
+    pollSensors();
+    updateState();
+    updateMotors();
+  }
 }
 
 /**
@@ -95,26 +93,14 @@ void loop() {
 // Updating Sensor Arrays
 void pollSensors() {
   // Poll line sensors
-  line_sensors[0] = digitalRead(line_fl);
-  line_sensors[1] = digitalRead(line_fr);
-  line_sensors[2] = digitalRead(line_bl);
-  line_sensors[3] = digitalRead(line_br);
+  line_sensors[0] = digitalRead(line_left);
+  line_sensors[1] = digitalRead(line_right);
 
   // Poll IR sensors
-  ir_sensors[0] = digitalRead(ir_back_left);
-  ir_sensors[1] = digitalRead(ir_left_back);
-  ir_sensors[2] = digitalRead(ir_left_front);
-  ir_sensors[3] = digitalRead(ir_left_mid);
-  ir_sensors[4] = digitalRead(ir_mid);
-  ir_sensors[5] = digitalRead(ir_right_mid);
-  ir_sensors[6] = digitalRead(ir_right_front);
-  ir_sensors[7] = digitalRead(ir_right_back);
-  ir_sensors[8] = digitalRead(ir_back_right);
-
-  // Poll LIDAR
-  // lidar[0] = tfmini.getDistance();
-  // lidar[1] = tfmini.getStrength();
-  // lidar[2] = tfmini.getTemperature();
+  ir_sensors[0] = digitalRead(ir_side_left);
+  ir_sensors[1] = digitalRead(ir_front_left);
+  ir_sensors[2] = digitalRead(ir_front_right);
+  ir_sensors[3] = digitalRead(ir_side_right);
 
   // Update World State Sensor Values
   world->update_sensors(line_sensors, ir_sensors);
@@ -123,10 +109,24 @@ void pollSensors() {
 // Push to Motors
 void updateMotors() {
   // Updating motors from robot actions
-  analogWrite(motor_left, motors[0]);
-  digitalWrite(motor_left_dir, motors[0] > 0 ? 0 : 1);
-  analogWrite(motor_right, motors[1]);
-  digitalWrite(motor_right_dir, motors[1] > 0 ? 0 : 1);
+  Serial.println("Left Motor: ");
+  Serial.print(motors[0]);
+  Serial.println("Right Motor: ");
+  Serial.println(motors[1]);
+
+  // Ensure PWM is within 0-255
+  int left_pwm = min(255, max(0, abs(motors[0])));
+  int right_pwm = min(255, max(0, abs(motors[1])));
+
+  // Left motor drive
+  digitalWrite(LPos, motors[0] > 0 ? HIGH : LOW);
+  digitalWrite(LNeg, motors[0] > 0 ? LOW : HIGH);
+  analogWrite(left_speed, left_pwm);
+
+  // Right motor drive
+  digitalWrite(RPos, motors[1] > 0 ? HIGH : LOW);
+  digitalWrite(RNeg, motors[1] > 0 ? LOW : HIGH);
+  analogWrite(right_speed, right_pwm);
 }
 
 // Update Robot World State
