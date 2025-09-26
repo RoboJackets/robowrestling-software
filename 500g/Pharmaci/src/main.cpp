@@ -108,8 +108,8 @@ void pollSensors() {
 
 }
 
-void calculateState() {
-  robotState->calculateState();
+void calculateState(int time) {
+  robotState->calculateState(time);
 }
 
 const char* positionToString(Position pos) {
@@ -141,15 +141,17 @@ void debug() {
   // Serial.println(leftLineSensor->getValue());
   // Serial.println(rightLineSensor->getValue());
   // Serial.println(positionToString(worldState->getSelfPosition()));  // prints: LEFT
+  // Serial.println(leftMotorDriver->getVelocity());
+  // Serial.println(rightMotorDriver->getVelocity());
   delay(10);
 }
 
 void loop() {
   // debug();
   pollSensors();
-  calculateState();
+  calculateState(millis());
   updateMotors();
-      
+
   
   // Not sure what happened here, i think this is for comp?
   // if (digitalRead(START_MODULE)) {

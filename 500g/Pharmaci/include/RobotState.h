@@ -5,22 +5,31 @@
 #include "RobotActions.h"
 #include "Timer.h"
 
+enum class TurnDir { Left, Right, None };
+enum class Phase   { Idle, BackingUp, Rotating };
 
 class RobotState {
-    private:
-        WorldState *worldState;
-        RobotActions *robotActions;
-        MotorDriver *leftMotorDriver;
-        MotorDriver *rightMotorDriver;
-        Timer *turnTimer;
-        Timer *backupTimer;
-        bool backingUp;
+  private:
+    WorldState*   worldState;
+    RobotActions* robotActions;
+    MotorDriver*  leftMotorDriver;
+    MotorDriver*  rightMotorDriver;
 
-    public:
-        RobotState(WorldState *worldStatePtr, RobotActions *robotActionsPtr, MotorDriver *leftMotorDriverPointer, MotorDriver *rightMotorDriverPointer);
-        void calculateState();
-        void calculateState(int time);
+    Timer* turnTimer;
+    Timer* backupTimer;
 
+    bool    isTurning = false;
+    Phase   phase     = Phase::Idle;
+    TurnDir turnDir   = TurnDir::None;
+
+  public:
+    RobotState(WorldState* worldStatePtr,
+               RobotActions* robotActionsPtr,
+               MotorDriver* leftMotorDriverPtr,
+               MotorDriver* rightMotorDriverPtr);
+
+    void calculateState();
+    void calculateState(int time);
 };
 
 #endif

@@ -13,6 +13,8 @@ class MotorDriver {
         void setSpeed(double speed);
         double getSpeed();
         bool getDirection();
+
+        double getVelocity();
         
 };
 

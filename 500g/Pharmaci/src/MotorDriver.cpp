@@ -26,3 +26,7 @@ double MotorDriver::getSpeed() {
     return speed;
 }
 
+double MotorDriver::getVelocity() {
+    return direction ? speed : -speed;
+}
+
