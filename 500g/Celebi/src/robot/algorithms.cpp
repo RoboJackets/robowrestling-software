@@ -17,7 +17,7 @@ algorithms :: algorithms(robot_actions *robot, world_state *world, timer* draw_t
 
 void algorithms :: match_strategy() {
     selfPosition = world -> line_check();
-    enemyPosition = world -> enemy_pos(); 
+    enemyPosition = world -> enemy_pos();
 
     slammy_whammy();
 }
