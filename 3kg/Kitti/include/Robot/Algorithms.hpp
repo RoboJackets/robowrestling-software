@@ -15,6 +15,7 @@ class Algorithms {
     public:
         Algorithms(RobotActions* new_action, WorldState* new_state, line_states self_pos, enemy_states enemy_pos);
         void match_strategy();
+        void update_algo_state(line_states self_pos, enemy_states enemy_pos);
         void slammy_whammy();
         void attack_forward();
 };

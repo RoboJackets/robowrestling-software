@@ -20,10 +20,10 @@ void WorldState::update_sensors(int line[2], int ir[4]) {
 
 line_states WorldState::line_check() {
     // Simple line check for two sensors (left, right)
-    if (line_sensors[0] == 1) {
+    if (line_sensors[0] < 700) {
         return TopLeft;
     }
-    if (line_sensors[1] == 1) {
+    if (line_sensors[1] < 700) {
         return TopRight;
     }
     return NoneLine;

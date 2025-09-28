@@ -9,7 +9,7 @@ Algorithms::Algorithms(RobotActions* new_action, WorldState* new_state, line_sta
 
 void Algorithms::match_strategy() {
     // General Strategy for the Match based on self_position and enemy_position
-    attack_forward();
+    // attack_forward();
     // if (self_position == NoneLine) {
     //     actions->brake();
     // } else if (enemy_position == Front) {
@@ -23,6 +23,20 @@ void Algorithms::match_strategy() {
     // } else {
     //     slammy_whammy();
     // }
+    if (self_position == TopLeft) {
+        actions->drive_right(50);
+    } else if (self_position == TopRight) {
+        actions->drive_left(50);
+    } else if (enemy_position == Front) {
+        attack_forward();
+    } else {
+        actions->drive_forward(50);
+    }
+}
+
+void Algorithms::update_algo_state(line_states self_pos, enemy_states enemy_pos) {
+    self_position = self_pos;
+    enemy_position = enemy_pos;
 }
 
 void Algorithms::slammy_whammy() {

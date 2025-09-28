@@ -93,8 +93,8 @@ void loop() {
 // Updating Sensor Arrays
 void pollSensors() {
   // Poll line sensors
-  line_sensors[0] = digitalRead(line_left);
-  line_sensors[1] = digitalRead(line_right);
+  line_sensors[0] = analogRead(line_left);
+  line_sensors[1] = analogRead(line_right);
 
   // Poll IR sensors
   ir_sensors[0] = digitalRead(ir_side_left);
@@ -104,15 +104,23 @@ void pollSensors() {
 
   // Update World State Sensor Values
   world->update_sensors(line_sensors, ir_sensors);
+  // Serial.println("Left IR: ");
+  // Serial.print(ir_sensors[1]);
+  // Serial.print("Right IR: ");
+  // Serial.println(ir_sensors[2]);
+  Serial.println("Left Line: ");
+  Serial.print(line_sensors[0]);
+  Serial.print("Right Line: ");
+  Serial.println(line_sensors[1]);
 }
 
 // Push to Motors
 void updateMotors() {
   // Updating motors from robot actions
-  Serial.println("Left Motor: ");
-  Serial.print(motors[0]);
-  Serial.println("Right Motor: ");
-  Serial.println(motors[1]);
+  // Serial.println("Left Motor: ");
+  // Serial.print(motors[0]);
+  // Serial.println("Right Motor: ");
+  // Serial.println(motors[1]);
 
   // Ensure PWM is within 0-255
   int left_pwm = min(255, max(0, abs(motors[0])));
@@ -131,6 +139,7 @@ void updateMotors() {
 
 // Update Robot World State
 void updateState() {
+  algo->update_algo_state(world->line_check(), world->enemy_pos());
   algo->match_strategy();
   motors[0] = action->get_left_velocity();
   motors[1] = action->get_right_velocity();
