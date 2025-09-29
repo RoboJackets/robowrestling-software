@@ -7,6 +7,7 @@
 #include "Robot/World_State.hpp"
 #include "Robot/Robot_Actions.hpp"
 #include "Robot/Algorithms.hpp"
+#include "Robot/Timer.hpp"
 #include "Enums/line_states.hpp"
 #include "Enums/enemy_states.hpp"
 
@@ -42,6 +43,8 @@ int ir_sensors[4] = {0, 0, 0, 0};
 WorldState* world;
 RobotActions* action;
 Algorithms* algo;
+Timer* timer;
+
 
 // Function declarations
 void pollSensors();
@@ -71,7 +74,8 @@ void setup() {
   // Allocate objects (was dereferencing uninitialized pointers which caused UB)
   world = new WorldState(line_sensors, ir_sensors);
   action = new RobotActions();
-  algo = new Algorithms(action, world, NoneLine, NoneEnemy);
+  timer = new Timer(millis());
+  algo = new Algorithms(action, world, timer, NoneLine, NoneEnemy);
   Serial.begin(9600);
 }
 
@@ -102,8 +106,11 @@ void pollSensors() {
   ir_sensors[2] = digitalRead(ir_front_right);
   ir_sensors[3] = digitalRead(ir_side_right);
 
-  // Update World State Sensor Values
+  // Update World State Sensor Values and Update Timer
   world->update_sensors(line_sensors, ir_sensors);
+  timer->updateTime();
+
+
   // Serial.println("Left IR: ");
   // Serial.print(ir_sensors[1]);
   // Serial.print("Right IR: ");
