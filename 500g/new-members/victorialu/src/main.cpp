@@ -17,11 +17,37 @@ const int RIGHT_LINE = 22;
 
 const int START_PIN = 0;
 
+const char* lineStateToString(line_states state) {
+  switch (state) {
+    case LINE_BOTH_BLACK: return "LINE_BOTH_BLACK";
+    case LINE_LEFT_WHITE: return "LINE_LEFT_WHITE";
+    case LINE_RIGHT_WHITE: return "LINE_RIGHT_WHITE";
+    case LINE_BOTH_WHITE: return "LINE_BOTH_WHITE";
+    default: return "UNKNOWN_LINE";
+  }
+}
+
+const char* enemyStateToString(enemy_states state) {
+  switch (state) {
+    case ENEMY_NONE: return "ENEMY_NONE";
+    case ENEMY_LEFT: return "ENEMY_LEFT";
+    case ENEMY_CENTER: return "ENEMY_CENTER";
+    case ENEMY_RIGHT: return "ENEMY_RIGHT";
+    case ENEMY_LEFT_CENTER: return "ENEMY_LEFT_CENTER";
+    case ENEMY_CENTER_RIGHT: return "ENEMY_CENTER_RIGHT";
+    case ENEMY_LEFT_RIGHT: return "ENEMY_LEFT_RIGHT";
+    case ENEMY_ALL: return "ENEMY_ALL";
+    default: return "UNKNOWN_ENEMY";
+  }
+}
+
 int motors[2] = {255, 255};
 int line_sensors[2] = {32, 790};
 int ir_sensors[3] = {1, 1, 1};
+int i = 0;
 
 world_state state(ir_sensors, line_sensors);
+robot_actions robot(motors);
 
 void pullSensors();
 void updateMotors();
@@ -42,16 +68,19 @@ void setup() {
 
   Serial.begin(9600);
   Serial.println("Setup complete");
-
-  while (digitalRead(START_PIN) == 0) {
-    Serial.println("Waiting");
-  }
+  
+  // while (digitalRead(START_PIN) == 0 && i % 100 == 0) {
+  //   Serial.println("Waiting");
+  //   i++;
+  // }
 }
 
 void loop() {
-  if (digitalRead(START_PIN) == 1) {
+  // if (digitalRead(START_PIN) == 1 or true) {
+  if (true) {
     pullSensors();
     updateMotors();
+    updateState();
     debug();
   } else {
     motors[0] = 0;
@@ -71,48 +100,52 @@ void pullSensors() {
 }
 
 void updateMotors() {
-  if (motors[0] > 0 && motors[1] > 0) {
-    //forward
-    digitalWrite(leftDIR, HIGH);
-    analogWrite(leftPWM, motors[0]);
-    digitalWrite(rightDIR, HIGH);
-    analogWrite(rightPWM, motors[1]);
-  } else if (motors[0] < 0 && motors[1] < 0) {
-    //backward
-    digitalWrite(leftDIR, LOW);
-    analogWrite(leftPWM, -motors[0]);
-    digitalWrite(rightDIR, LOW);
-    analogWrite(rightPWM, -motors[1]);
-  } else if (motors[0] > 0 && motors[1] < 0) {
-    //turn right
-    digitalWrite(leftDIR, HIGH);
-    analogWrite(leftPWM, motors[0]);
-    digitalWrite(rightDIR, LOW);
-    analogWrite(rightPWM, -motors[1]);
-  } else if (motors[0] < 0 && motors[1] > 0) {
-    //turn left
-    digitalWrite(leftDIR, LOW);
-    analogWrite(leftPWM, -motors[0]);
-    digitalWrite(rightDIR, HIGH);
-    analogWrite(rightPWM, motors[1]);
-  } else {
-    //brake
-    digitalWrite(leftDIR, HIGH);
-    analogWrite(leftPWM, 255);
-    digitalWrite(rightDIR, HIGH);
-    analogWrite(rightPWM, 255);
-  }
-  
+  robot.applyMotors();
 }
 
 void updateState() {
-  
+  line_states line = state.line_check();
+  enemy_states enemy = state.enemy_pos();
+
+  if (line == LINE_BOTH_BLACK) {
+    robot.drive_backward(150);
+  } else if (line == LINE_LEFT_WHITE) {
+    robot.drive_right(150);
+  } else if (line == LINE_RIGHT_WHITE) {
+    robot.drive_left(200);
+  } else {
+    switch (enemy) {
+      case ENEMY_CENTER:
+        robot.drive_forward(100);
+        break;
+
+      case ENEMY_LEFT:
+      case ENEMY_LEFT_CENTER:
+        robot.drive_left(100);
+        break;
+
+      case ENEMY_RIGHT:
+      case ENEMY_CENTER_RIGHT:
+        robot.drive_right(100);
+        break;
+
+      case ENEMY_ALL:
+        robot.drive_forward(150);
+        break;
+
+      case ENEMY_NONE:
+      default:
+        robot.drive_left(50);
+        break;
+    }
+  }
+
 }
 
 void debug() {
-  int i = 0;
   i ++;
-  if (i % 100 == 0) {
+  if (i % 513 == 0) {
+    Serial.print(sizeof(int));
     Serial.print("IR: ");
     Serial.print(ir_sensors[0]);
     Serial.print(" ");
@@ -129,5 +162,14 @@ void debug() {
     Serial.print(motors[0]);
     Serial.print(" ");
     Serial.println(motors[1]);
+
+    line_states line = state.line_check();
+    enemy_states enemy = state.enemy_pos();
+    
+    Serial.print("Line State: ");
+    Serial.println(lineStateToString(line));
+
+    Serial.print("Enemy State: ");
+    Serial.println(enemyStateToString(enemy));
   }
 }
