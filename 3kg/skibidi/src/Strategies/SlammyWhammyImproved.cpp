@@ -1,6 +1,8 @@
 #include "Strategies/SlammyWhammyImproved.hpp"
 
-SlammyWhammy::SlammyWhammy() {
+SlammyWhammy::SlammyWhammy(int charge_speed, int search_speed) {
+    this->charge_speed = charge_speed;
+    this->search_speed = search_speed;
     this->last_seen = Direction::DNONE;
 }
 
@@ -16,7 +18,7 @@ void SlammyWhammy::make_decision(State* state) {
     if (center_sensing) {
         // Directly in front, charge
         state->driving_state = DrivingState::MFORWARD;
-        state->motor_speed = 10;
+        state->motor_speed = this->charge_speed;
     } else if (!(center_sensing || left_sensing || right_sensing)) {
         switch(this->last_seen) {
             case Direction::DNONE:
@@ -29,11 +31,11 @@ void SlammyWhammy::make_decision(State* state) {
                 state->driving_state = DrivingState::MTURN_RIGHT;
                 break;
         }
-        state->motor_speed = 5;
+        state->motor_speed = this->search_speed;
     } else {
         // Turn towards side that is sensing
         this->last_seen = left_sensing ? Direction::DLEFT : Direction::DRIGHT;
         state->driving_state = left_sensing ? DrivingState::MTURN_LEFT : DrivingState::MTURN_RIGHT;
-        state->motor_speed = 5;
+        state->motor_speed = this->search_speed;
     }
 }

@@ -29,7 +29,7 @@ void setup(void) {
             {IrDirection::LEFT,         false},
         },
     };
-    strategy = new SlammyWhammy();
+    strategy = new SlammyWhammy(50, 35);
 
     // Sensor initialization
     skibidi->initialize_sensors();

@@ -8,8 +8,9 @@ enum Direction { DLEFT, DRIGHT, DNONE };
 class SlammyWhammy : public Strategy {
     private:
         enum Direction last_seen;
+        int charge_speed, search_speed;
     public:
-        SlammyWhammy();
+        SlammyWhammy(int charge_speed, int search_speed);
 
         void make_decision(State* state);
 };
