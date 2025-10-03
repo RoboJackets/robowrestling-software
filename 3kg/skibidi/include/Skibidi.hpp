@@ -18,7 +18,8 @@ struct State {
     std::map<IrDirection, bool> active_ir_sensors;
 
     DrivingState driving_state;
-    int motor_speed;
+    bool tank_drive;
+    int motor_speed, left_speed, right_speed;
 };
 
 class Skibidi {

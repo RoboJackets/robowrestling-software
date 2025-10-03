@@ -52,7 +52,11 @@ void MotorDriver::change_state(DrivingState new_state) {
     }
 }
 
-void MotorDriver::drive(int speed) {
+inline void MotorDriver::drive(int speed) {
+    this->drive(speed, speed);
+}
+
+void MotorDriver::drive(int left_speed, int right_speed) {
     std::array<int, 3> left_pins = this->motor_pins[0];
     std::array<int, 3> right_pins = this->motor_pins[1];
 
@@ -62,16 +66,16 @@ void MotorDriver::drive(int speed) {
             digitalWrite(left_pins[1], LOW);
             digitalWrite(right_pins[0], HIGH);
             digitalWrite(right_pins[1], LOW);
-            analogWrite(left_pins[2], this->map_to_pwm(speed));
-            analogWrite(right_pins[2], this->map_to_pwm(speed));
+            analogWrite(left_pins[2], this->map_to_pwm(left_speed));
+            analogWrite(right_pins[2], this->map_to_pwm(right_speed));
             break;
         case MBACKWARD:
             digitalWrite(left_pins[0], LOW);
             digitalWrite(left_pins[1], HIGH);
             digitalWrite(right_pins[0], LOW);
             digitalWrite(right_pins[1], HIGH);
-            analogWrite(left_pins[2], this->map_to_pwm(speed));
-            analogWrite(right_pins[2], this->map_to_pwm(speed));
+            analogWrite(left_pins[2], this->map_to_pwm(left_speed));
+            analogWrite(right_pins[2], this->map_to_pwm(right_speed));
             break;
         // TODO: Make sure that these turn the bot correctly
         case MTURN_RIGHT:
@@ -79,16 +83,16 @@ void MotorDriver::drive(int speed) {
             digitalWrite(left_pins[1], LOW);
             digitalWrite(right_pins[0], LOW);
             digitalWrite(right_pins[1], HIGH);
-            analogWrite(left_pins[2], this->map_to_pwm(speed));
-            analogWrite(right_pins[2], this->map_to_pwm(speed));
+            analogWrite(left_pins[2], this->map_to_pwm(left_speed));
+            analogWrite(right_pins[2], this->map_to_pwm(right_speed));
             break;
         case MTURN_LEFT:
             digitalWrite(left_pins[0], LOW);
             digitalWrite(left_pins[1], HIGH);
             digitalWrite(right_pins[0], HIGH);
             digitalWrite(right_pins[1], LOW);
-            analogWrite(left_pins[2], this->map_to_pwm(speed));
-            analogWrite(right_pins[2], this->map_to_pwm(speed));
+            analogWrite(left_pins[2], this->map_to_pwm(left_speed));
+            analogWrite(right_pins[2], this->map_to_pwm(right_speed));
             break;
         case MCOAST:
             digitalWrite(left_pins[0], LOW);

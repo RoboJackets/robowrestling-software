@@ -22,7 +22,8 @@ class MotorDriver {
         DrivingState driving_state;
         MotorDriver(int left_ctrl_1, int left_ctrl_2, int left_speed, int right_ctrl_1, int right_ctrl_2, int right_speed);
         void change_state(DrivingState new_state);
-        void drive(int speed);
+        inline void drive(int speed);
+        void drive(int left_speed, int right_speed);
 };
 
 #endif // MOTORDRIVER_HPP_

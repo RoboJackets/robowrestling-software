@@ -49,5 +49,9 @@ void Skibidi::update_state(State* state) {
 
 void Skibidi::execute_action(State* state) {
     this->motor_driver->change_state(state->driving_state);
-    this->motor_driver->drive(state->motor_speed);
+
+    if (state->tank_drive)
+        this->motor_driver->drive(state->left_speed, state->right_speed);
+    else
+        this->motor_driver->drive(state->motor_speed);
 }
