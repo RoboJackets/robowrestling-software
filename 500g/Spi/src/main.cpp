@@ -118,9 +118,9 @@ void writeMotors() {
 
 void pollSensors() {
   //implement proper velocity measurement D:
-  leftIRSensor->setValue(digitalRead(LEFT_IR)); // bro the teensy is cracked it does like 50 polls in like 1ms
-  middleIRSensor->setValue(digitalRead(MIDDLE_IR));
-  rightIRSensor->setValue(digitalRead(RIGHT_IR));
+  leftIRSensor->setValue(digitalRead(LEFT_IR), 50); // bro the teensy is cracked it does like 50 polls in like 1ms
+  middleIRSensor->setValue(digitalRead(MIDDLE_IR), 50);
+  rightIRSensor->setValue(digitalRead(RIGHT_IR), 50);
   leftLineSensor->setValue(analogRead(LEFT_LINE));
   rightLineSensor->setValue(analogRead(RIGHT_LINE));
 }

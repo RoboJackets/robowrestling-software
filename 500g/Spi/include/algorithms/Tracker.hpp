@@ -13,9 +13,19 @@ class Tracker {
         static constexpr int MODERATE_SPEED = 100;
         static constexpr int FAST_SPEED = 140;
         static constexpr int MAX_SPEED = 255;
-        static constexpr int ACCELERATION_TIMER_DURATION = 5; //ms
+        static constexpr int ACCELERATION_TIMER_DURATION = 4; //ms
+        static constexpr int STUCK_TIMER_DURATION = 5000;
+        static constexpr int BRAKE_TIMER_DURATION = 500;
+        static constexpr int BACKUP_TIMER_DURATION = 500;
         int acceleration;
+        int leftAcceleration;
+        int rightAcceleration;
+        bool stuck;
+        Position previousPosition;
+        AutoTimer *stuckTimer;
         AutoTimer *accelerationTimer;
+        AutoTimer *brakeTimer;
+        AutoTimer *backupTimer; // for getting unstuck
         BackSpin *backSpinLeft;
         BackSpin *backSpinRight;
         Scan *_scan;
