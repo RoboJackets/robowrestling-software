@@ -13,8 +13,8 @@ class Algorithms {
     public:
         Algorithms(RobotActions *);
         // Add more algorithms below
-        void slam(EnemyPos enemyPos, OnLine onLine);
-        void lineMovement(EnemyPos enemyPos, OnLine onLine);
+        int slam(EnemyPos enemyPos, OnLine onLine);
+        int lineMovement(EnemyPos enemyPos, OnLine onLine);
 }; 
 
 #endif
