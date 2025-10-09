@@ -1,41 +1,41 @@
 #include "World_State.hpp"
 
-
-
 World_State::World_State(int* lineSensors, int* irSensors) {
-    this->lineSensors = lineSensors;
-    this->irSensors = irSensors;
- 
+  this->lineSensors = lineSensors;
+  this->irSensors = irSensors;
 }
-
 
 void World_State::checkConcurrency() {
-    for (int i = 0; i < 3; i++) {
-        if (irSensors[i] == 1) {
-            concurrency[i]++;
-
-        } else {
-            concurrency[i] = 0;
-        }
-        if(concurrency[i]>= 10){
-            irSensors[i] = 1;
-        }
-        else{
-            irSensors[i] = 0;
-        }
+  for (int i = 0; i < 3; i++) {
+    if (irSensors[i] == 1) {
+      concurrency[i]++;
+    } else {
+      concurrency[i] = 0;
     }
+    irSensors[i] = (concurrency[i] >= 10) ? 1 : 0;
+  }
 }
 
-// World_State::line_check() {
-//     if (lineSensors[0] == 1 && lineSensors[1] == 1) return CENTER;
-//     if (lineSensors[0] == 1) return LEFT;
-//     if (lineSensors[1] == 1) return RIGHT;
-//     return OFF_LINE;
-// }
+LinePosition World_State::line_check() {
+  bool left = lineSensors[0] > 620;
+  bool right = lineSensors[1] > 775;
 
-//  World_State::enemy_pos() {
-//     if (irSensors[1] == 1) return FRONT;
-//     if (irSensors[0] == 1) return LEFT;
-//     if (irSensors[2] == 1) return EnemyState.RIGHT;
-//     return NONE;
-// }
+  if (left && right) return CENTER_LINE;
+  if (left && !right) return LEFT_LINE;
+  if (!left && right) return RIGHT_LINE;
+  return OFF_LINE;
+}
+
+EnemyPosition World_State::enemy_pos() {
+  // simple mapping to your enum values
+  // adjust depending on how your IR sensors are arranged
+  if (irSensors[1] == 1){
+    if(irSensors[0] == 1 && irSensors[2] == 1) return FRONT;
+    if (irSensors[0] == 1) return MIDLEFT;
+    if (irSensors[2] == 1) return MIDRIGHT;
+    return FARFRONT;
+  } 
+  if (irSensors[0] == 1) return LEFT;
+  if (irSensors[2] == 1) return RIGHT;
+  return NONE;
+}

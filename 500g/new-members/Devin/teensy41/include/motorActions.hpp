@@ -13,6 +13,7 @@ public:
     void driveBackward(int speed); 
     void spinLeft(int speed); 
     void spinRight(int speed); 
+    void customDrive(int rightSpeed, int leftSpeed);
     void stop();
 private:
     int* motors;
