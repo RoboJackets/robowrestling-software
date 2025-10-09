@@ -83,11 +83,11 @@ void setup() {
  * Main loop
  */
 void loop() {
-  if (digitalRead(start_mod) == HIGH) {
+  //if (digitalRead(start_mod) == HIGH) {
     pollSensors();
     updateState();
     updateMotors();
-  }
+  //}
 }
 
 /**
