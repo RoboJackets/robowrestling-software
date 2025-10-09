@@ -1,15 +1,17 @@
-#include "Robot/robotActions.cpp"
-#include "Sensors/WorldState.cpp"
 #ifndef ROBOTSTATE_HPP
+#include "Sensors/WorldState.hpp"
+#include "Robot/algorithm.hpp"
+
 
 #define ROBOTSTATE_HPP 
 
 class RobotState {
     private: 
-        RobotActions RobotActions;
-        WorldState worldState;
+        WorldState *worldState;
+        Algorithm *algorithm;
     public:
-        void calculateState();
+        RobotState(WorldState *state, Algorithm *algorithm);
+        void runAlgorithm();
 };
 
 #endif

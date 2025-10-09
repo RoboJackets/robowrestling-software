@@ -14,7 +14,6 @@
 #include "Sensors/irSensor.h"
 #include "Sensors/lineSensor.h"
 #include "Robot/robotState.hpp"
-#include "Sensors/Timer.hpp"
 
 // pinouts
 const int RIGHT_PWM = 6;
@@ -47,8 +46,6 @@ RobotActions *robotAction;
 WorldState *worldState;
 RobotState *robotState;
 Algorithm *algo;
-
-Timer *time_var;
 // if debugging is true it will skip the start module check.
 const bool DEBUGGING = true;
 
@@ -94,15 +91,12 @@ void setup()
   test6 = new LineSensor();
 
   IrSensor *irSensors[5] = {test3, leftIRSensor, middleIRSensor, rightIRSensor, test4};
-  LineSensor *lineSensors[4] = {leftLineSensor, rightLineSensor, test5, test6};
-  test5->setValue(1000);
-  test6->setValue(1000);
+  LineSensor *lineSensors[4] = {leftLineSensor, test5, rightLineSensor, test6};
   robotAction = new RobotActions(leftMotorDriver, rightMotorDriver, test1, test2);
   worldState = new WorldState(irSensors, lineSensors);
-  algo = new Algorithm(robotAction, time_var);
+  algo = new Algorithm(robotAction);
   robotState = new RobotState(worldState, algo);
 
-  time_var = new Timer(millis());
   if (!DEBUGGING)
   {
     while (!digitalRead(START_PIN))
@@ -111,13 +105,10 @@ void setup()
       Serial.println(" Waiting for start signal");
     }
   }
-  time_var->set_action_timer(100);
 }
 
 void loop()
 {
-  // 5 Seconds before start for comp
-  delay(5000);
   // Serial.println("Starting loop");
   /*
    debug();          // method that just reads sensors and other values
@@ -150,12 +141,10 @@ void writeMotors()
   // rightMotorDriver->setDirection(0);
   // leftMotorDriver->setSpeed(100);
   // leftMotorDriver->setDirection(0);
-  // Serial.println("Testing");
-  // Serial.print("Right Speed: ");
-  // Serial.println(rightMotorDriver->getSpeed());
-
-  // Temporary delay to motors. Replace with Timer.cpp implementations
-  //delay(100);
+  Serial.println("Testing");
+  Serial.print("Right Speed: ");
+  Serial.println(rightMotorDriver->getSpeed());
+  // delay(2000);
   analogWrite(RIGHT_PWM, rightMotorDriver->getSpeed());
   digitalWrite(RIGHT_DIR, rightMotorDriver->getDirection());
   analogWrite(LEFT_PWM, leftMotorDriver->getSpeed());
@@ -180,16 +169,8 @@ void pollSensors()
   rightIRSensor->setValue(digitalRead(RIGHT_IR));
   leftLineSensor->setValue(analogRead(LEFT_LINE));
   rightLineSensor->setValue(analogRead(RIGHT_LINE));
-  //delay(500);
-  Serial.print("Left Line Is on Line: ");
-  Serial.println(worldState->getIsOnLine());
-  Serial.print("Left Line:");
-  Serial.println(leftLineSensor->getValue());
   // Serial.print("Mid IR: ");
   // Serial.println(middleIRSensor->getValue());
-  // Serial.print("Right IR: ");
-  // Serial.println(rightIRSensor->getValue());
-  time_var->update_time(millis());
 }
 
 /**

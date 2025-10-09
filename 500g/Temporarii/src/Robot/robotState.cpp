@@ -1,6 +1,19 @@
 #include "Robot/robotState.hpp"
+#include "Robot/algorithm.hpp"
 
 // type | Class Name | function name
-void RobotState::calculateState() {
+RobotState::RobotState(WorldState *state, Algorithm *algorithm) {
+    worldState = state;
+    this->algorithm = algorithm;
+}
+void RobotState::runAlgorithm() {
     // void State
+    OnLine line_state = worldState->getIsOnLine();
+    if (line_state != not_on_line) {
+        algorithm->backTrack(line_state);
+    } else if (worldState->getEnemyPosition() == SEND || worldState->getEnemyPosition() == MidL || worldState->getEnemyPosition() == MidR) {
+        algorithm->RunItDown(worldState->getEnemyPosition());
+    } else {
+        algorithm->search();
+    }
 }
