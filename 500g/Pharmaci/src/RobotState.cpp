@@ -288,13 +288,13 @@ void RobotState::calculateState(int time) {
     // === Your original enemy reaction logic ===
     if (enemyPos == Position::Middle_Close || enemyPos == Position::Middle_Far) {
         // stop when enemy dead ahead (you can change to charge if desired)
-        robotActions->drive(200.0, 200.0);
+        robotActions->drive(255.0, 255.0);
 
     } else if (enemyPos == Position::Right_Middle_Close) {
-        robotActions->drive(200.0, 200.0);
+        robotActions->drive(255.0, 255.0);
 
     } else if (enemyPos == Position::Left_Middle_Close) {
-        robotActions->drive(200.0, 200.0);
+        robotActions->drive(255.0, 255.0);
 
     } else if (enemyPos == Position::Right_Middle) {
         robotActions->drive(255.0, 200.0);
