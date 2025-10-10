@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "MotorDriver.hpp"
+#include "RoboClaw.h"
 
 // Line Sensors
 const int LN_RB2 = 22;
@@ -36,21 +36,17 @@ const int S1 = 34;
 // Start Module
 const int S_MOD = 33;
 
-RoboClaw *motorDriver;
+#define address 0x80
+RoboClaw roboclaw(&Serial8,10000);
 
 void setup() {
-  motorDriver = MotorDriver::getInstance()->getMotorDriver();
-  pinMode(S1, OUTPUT);
-  pinMode(S2, OUTPUT);
+  roboclaw.begin(38400);
 }
 
 void loop() {
-    delay(50);
-    for (int i = 0; i < 127; i++) {
-      motorDriver->ForwardM1(address, i);
-      motorDriver->ForwardM2(address, i);
-    }
-    motorDriver->ForwardM1(address, 0);
-    motorDriver->ForwardM2(address, 0);
-    delay(10000);
+  roboclaw.ForwardM1(address, 50);
+  delay(10000);
+  while (true) {
+    roboclaw.ForwardM1(address, 0);
+  }
 }
