@@ -13,6 +13,12 @@ class motor_actions {
         motor_actions(int* motors, int* sensors, timer* actionTimer);
         void drive_binary();
         void drive_avgs(float* avgs);
+        void driveForward(int speed); 
+        void driveBackward(int speed); 
+        void spinLeft(int speed); 
+        void spinRight(int speed); 
+        void stop();
+        void customDrive(int rightSpeed, int leftSpeed);
 };
 
 #endif

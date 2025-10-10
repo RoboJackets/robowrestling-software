@@ -19,11 +19,12 @@ int printCounter = 0;
 
 float* avgs;
 int motors[2] = {0};
-int sensors[3] = {0};
+int* line_sensors = new int[2];
+int ir_sensors[3] = {0};
 
-world_state* ws = new world_state(sensors);
+world_state* ws = new world_state(line_sensors, ir_sensors);
 timer* motor_timer = new timer(&currentMillis);
-motor_actions* ma = new motor_actions(motors, sensors, motor_timer);
+motor_actions* ma = new motor_actions(motors, ir_sensors, motor_timer);
 
 
 void drive();
@@ -65,9 +66,9 @@ void loop() {
 }
 
 void pullSensors() {
-  sensors[0] = digitalRead(leftSensor);
-  sensors[1] = digitalRead(middleSensor);
-  sensors[2] = digitalRead(rightSensor);
+  ir_sensors[0] = digitalRead(leftSensor);
+  ir_sensors[1] = digitalRead(middleSensor);
+  ir_sensors[2] = digitalRead(rightSensor);
   currentMillis = millis();
 
 }
@@ -75,9 +76,9 @@ void pullSensors() {
 void debug() {
   printCounter++;
   if (printCounter % 10000 == 0) {
-    Serial.print(sensors[0]);
-    Serial.print(sensors[1]);
-    Serial.print(sensors[2]);
+    Serial.print(ir_sensors[0]);
+    Serial.print(ir_sensors[1]);
+    Serial.print(ir_sensors[2]);
     Serial.println();
   }
 }

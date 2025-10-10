@@ -9,6 +9,41 @@ motor_actions::motor_actions(int* motors, int* sensors, timer* actionTimer) {
     actionTimer->start();
 }
 
+void motor_actions::driveForward(int speed) {
+    motors[0] = speed; // Right motor speed
+    motors[1] = speed; // Left motor speed
+    return;
+}
+
+void motor_actions::driveBackward(int speed) {
+    motors[0] = -speed; 
+    motors[1] = -speed; 
+    return;
+}
+
+void motor_actions::spinLeft(int speed) {
+    motors[0] = speed; 
+    motors[1] = -speed; 
+    return;
+}
+
+void motor_actions::spinRight(int speed) {
+    motors[0] = -speed; 
+    motors[1] = speed; 
+    return;
+}
+
+void motor_actions::stop() {
+    motors[0] = 0; 
+    motors[1] = 0; 
+    return;
+}
+void motor_actions::customDrive(int rightSpeed, int leftSpeed) {
+    motors[0] = rightSpeed; 
+    motors[1] = leftSpeed; 
+    return;
+}
+
 void motor_actions::drive_binary() {
     seeThing = true;
     for (int i = 0; i < 3; i++) {
