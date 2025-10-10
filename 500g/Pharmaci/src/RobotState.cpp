@@ -40,6 +40,7 @@ RobotState::RobotState(WorldState* worldStatePtr, RobotActions* robotActionsPtr,
     backupTimer = new Timer(); backupTimer->setTimeInterval(300); // back-up phase
 
 
+
     isTurning = false;
     phase = Phase::Idle;
     turnDir = TurnDir::None;
@@ -285,6 +286,7 @@ void RobotState::calculateState(int time) {
         // if latch just ended, fall through to your normal enemy logic below
     }
 
+
     // === Your original enemy reaction logic ===
     if (enemyPos == Position::Middle_Close || enemyPos == Position::Middle_Far) {
         // stop when enemy dead ahead (you can change to charge if desired)
@@ -309,11 +311,26 @@ void RobotState::calculateState(int time) {
         robotActions->drive(-255.0, 255.0);
 
     } else if (enemyPos == Position::None) {
-        // idle mode → drive forward
-        robotActions->drive(75.0, 75.0);
-    }
 
-    // === Default: cruise ===
+        const int ZIGZAG_MS = 500;
+
+        static bool zigLeft = false;
+        static int ZIGZAG_INITIAL_MS = 0;
+
+        if (ZIGZAG_INITIAL_MS == 0) ZIGZAG_INITIAL_MS = time; 
+        if (time - ZIGZAG_INITIAL_MS >= ZIGZAG_MS) { 
+            zigLeft = !zigLeft;
+            ZIGZAG_INITIAL_MS = time;
+        }
+\
+        if (zigLeft) {
+            robotActions->drive(0.0, 100.0);
+        } else {
+            robotActions->drive(100.0, 0.0);
+        }
+
+        return;
+    }
 }
 
 
