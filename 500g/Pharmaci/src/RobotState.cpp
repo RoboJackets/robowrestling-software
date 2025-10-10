@@ -123,23 +123,19 @@ void RobotState::calculateState(int time) {
     const int ROTATE_MS_SIDE = 120;
     const int ROTATE_MS_BOTH = 180;
 
-    // debounce window to decide "both" vs "side-only"
     const int BOTH_WINDOW_MS = 20;
 
-    // --- NEW: latch tunables (turn-hold after Left/Right detection)
-    const int LATCH_MS = 100;             // hold hard turn for ~0.6s
-    const int MIDDLE_CONFIRM_MS = 150;    // see middle for this long to break latch early
+    const int LATCH_MS = 100;  
+    const int MIDDLE_CONFIRM_MS = 150;   
 
-    // Debounce state (static locals: no header changes)
-    static bool     pendingLine = false;       // we saw a side hit and are waiting
-    static TurnDir  pendingDir  = TurnDir::None;
-    static int      pendingT0   = 0;
+    static bool pendingLine = false;   
+    static TurnDir pendingDir  = TurnDir::None;
+    static int pendingT0   = 0;
 
-    // --- NEW: latch state (locals only)
-    static bool     latchActive = false;
-    static TurnDir  latchDir    = TurnDir::None;
-    static int      latchT0     = 0;
-    static int      middleSeenT0 = -1;
+    static bool latchActive = false;
+    static TurnDir latchDir    = TurnDir::None;
+    static int latchT0     = 0;
+    static int middleSeenT0 = -1;
 
     Position selfPos = worldState->getSelfPosition();
     Position enemyPos = worldState->getEnemyPosition();  // sector detection
@@ -312,7 +308,7 @@ void RobotState::calculateState(int time) {
 
     } else if (enemyPos == Position::None) {
 
-        const int ZIGZAG_MS = 500;
+        const int ZIGZAG_MS = 250;
 
         static bool zigLeft = false;
         static int ZIGZAG_INITIAL_MS = 0;
@@ -324,9 +320,9 @@ void RobotState::calculateState(int time) {
         }
 \
         if (zigLeft) {
-            robotActions->drive(0.0, 100.0);
+            robotActions->drive(-150.0, 255.0);
         } else {
-            robotActions->drive(100.0, 0.0);
+            robotActions->drive(255.0, -150.0);
         }
 
         return;
