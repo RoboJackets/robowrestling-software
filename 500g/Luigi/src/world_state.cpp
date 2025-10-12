@@ -37,14 +37,14 @@ float* world_state::get_sensors_avg() {
 EnemyPosition world_state::enemy_pos() {
     // simple mapping to your enum values
     // adjust depending on how your IR sensors are arranged
-    if (ir_sensors[1] == 1){
-        if(ir_sensors[0] == 1 && ir_sensors[2] == 1) return FRONT;
-        if (ir_sensors[0] == 1) return MIDLEFT;
-        if (ir_sensors[2] == 1) return MIDRIGHT;
+    if (avgs[1] >= 0.9){
+        if(avgs[0] >= 0.9 && avgs[2] >= 0.9) return FRONT;
+        if (avgs[0] >= 0.9) return MIDLEFT;
+        if (avgs[2] >= 0.9) return MIDRIGHT;
         return FARFRONT;
     } 
-    if (ir_sensors[0] == 1) return LEFT;
-    if (ir_sensors[2] == 1) return RIGHT;
+    if (avgs[0] >= 0.9) return LEFT;
+    if (avgs[2] >= 0.9) return RIGHT;
     return NONE;
 }
 

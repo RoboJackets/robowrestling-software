@@ -1,6 +1,5 @@
 #ifndef WORLD_STATE_H
 #define WORLD_STATE_H
-#include <vector>
 #include "enums.hpp"
 
 class world_state {

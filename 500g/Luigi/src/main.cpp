@@ -2,6 +2,7 @@
 #include "world_state.hpp"
 #include "motor_actions.hpp"
 #include "timer.hpp"
+#include "Algorithms.hpp"
 
 const int leftSensor = 2;
 const int middleSensor = 3;
@@ -13,8 +14,8 @@ const int leftB = 8;
 const int leftF = 7;
 
 const int startPin = 0;
-const int LeftLineSensor= 23;
-const int RightLIneSensor= 22;
+const int leftLineSensor= 23;
+const int rightLIneSensor= 22;
 
 long currentMillis = 0;
 int printCounter = 0;
@@ -26,7 +27,8 @@ int ir_sensors[3] = {0};
 
 world_state* ws = new world_state(line_sensors, ir_sensors);
 timer* motor_timer = new timer(&currentMillis);
-motor_actions* ma = new motor_actions(motors, ir_sensors, motor_timer);
+motor_actions* ma = new motor_actions(motors);
+algorithms* algo = new algorithms(ma, ws);
 
 
 void drive();
@@ -48,8 +50,8 @@ void setup() {
   pinMode(leftF, OUTPUT);
   pinMode(leftB, OUTPUT);
 
-  pinMode(LeftLineSensor, INPUT);
-  pinMode(RightLIneSensor, INPUT);
+  pinMode(leftLineSensor, INPUT);
+  pinMode(rightLIneSensor, INPUT);
 
   Serial.begin(9600);
   // while (digitalRead(startPin) == 0) {
@@ -68,8 +70,7 @@ void loop() {
   pullSensors();
   ws->clean_sensors();
   avgs = ws->get_sensors_avg();
-  // debug();
-  ma->drive_avgs(avgs);
+  algo->respondToLine();  
   writeMotors();
 }
 
@@ -78,7 +79,8 @@ void pullSensors() {
   ir_sensors[1] = digitalRead(middleSensor);
   ir_sensors[2] = digitalRead(rightSensor);
   currentMillis = millis();
-
+  line_sensors[0] = analogRead(leftLineSensor);
+  line_sensors[1] = analogRead(rightLIneSensor);
 }
 
 void debug() {
@@ -88,6 +90,8 @@ void debug() {
     Serial.print(ir_sensors[1]);
     Serial.print(ir_sensors[2]);
     Serial.println();
+
+    
   }
 }
 
@@ -135,7 +139,6 @@ void debugLine(){
          Serial.print(line_sensors[i]);
          Serial.print(" ");
      }
-
 }
 
 void debugIR(){
@@ -143,5 +146,4 @@ void debugIR(){
          Serial.print(ir_sensors[i]);
          Serial.print(" ");
      }
-   
 }
