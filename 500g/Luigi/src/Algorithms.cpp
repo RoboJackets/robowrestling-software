@@ -12,11 +12,11 @@ void algorithms::respondToEnemy() {
 
   switch(e) {
     case FRONT: 
-    motors-> driveForward(100);
+    motors-> driveForward(120);
       break;
     case FARFRONT:
       // back up then spin to dodge
-      motors->driveForward(50);
+      motors->driveForward(60);
       
       break;
 

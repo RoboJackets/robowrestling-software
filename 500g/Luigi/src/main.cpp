@@ -13,6 +13,8 @@ const int leftB = 8;
 const int leftF = 7;
 
 const int startPin = 0;
+const int LeftLineSensor= 23;
+const int RightLIneSensor= 22;
 
 long currentMillis = 0;
 int printCounter = 0;
@@ -31,6 +33,9 @@ void drive();
 void pullSensors();
 void writeMotors();
 void debug();
+void debugLine();
+void debugIR();
+void debugEnemy(EnemyPosition ep);
 
 void setup() {
   pinMode(leftSensor, INPUT);
@@ -42,6 +47,9 @@ void setup() {
   pinMode(rightB, OUTPUT);
   pinMode(leftF, OUTPUT);
   pinMode(leftB, OUTPUT);
+
+  pinMode(LeftLineSensor, INPUT);
+  pinMode(RightLIneSensor, INPUT);
 
   Serial.begin(9600);
   // while (digitalRead(startPin) == 0) {
@@ -108,4 +116,32 @@ void writeMotors() {
     analogWrite(rightF, 255);
     analogWrite(rightB, 255);
   }
+}
+
+void debugEnemy(EnemyPosition ep){
+  switch(ep) {
+    case NONE:     Serial.print("NONE"); break;
+    case LEFT:     Serial.print("LEFT"); break;
+    case FRONT:    Serial.print("FRONT"); break;
+    case RIGHT:    Serial.print("RIGHT"); break;
+    case MIDLEFT:  Serial.print("MIDLEFT"); break;
+    case MIDRIGHT: Serial.print("MIDRIGHT"); break;
+    case FARFRONT: Serial.print("FARFRONT"); break;
+  }
+  Serial.println();
+}
+void debugLine(){
+  for(int i = 0; i < 2; i++){
+         Serial.print(line_sensors[i]);
+         Serial.print(" ");
+     }
+
+}
+
+void debugIR(){
+  for(int i = 0; i < 3; i++){
+         Serial.print(ir_sensors[i]);
+         Serial.print(" ");
+     }
+   
 }
