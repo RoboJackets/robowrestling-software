@@ -1,5 +1,4 @@
 #include "world_state.hpp"
-#include "Enums.hpp"
 #include <Arduino.h>
 
 world_state::world_state(int* lineSensors, int* ir_sensors) {

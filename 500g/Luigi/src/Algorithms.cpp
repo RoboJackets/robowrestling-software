@@ -1,13 +1,13 @@
-#include "Algorithms.hpp"
-#include "Enums.hpp"
+#include "algorithms.hpp"
+#include "enums.hpp"
 #include <Arduino.h>
 
-Algorithms::Algorithms(motor_actions* motors, world_state* world) {
+algorithms::algorithms(motor_actions* motors, world_state* world) {
   this->motors = motors;
   this->world = world;
 }
 
-void Algorithms::respondToEnemy() {
+void algorithms::respondToEnemy() {
   EnemyPosition e = world->enemy_pos();
 
   switch(e) {
