@@ -12,8 +12,7 @@ class Timer {
         unsigned long current_time;
         bool timer_state;
     public:
-        Timer(unsigned long intial_time);
-        
+        Timer(unsigned long initial_time);
         void update_time(unsigned long new_time);
         bool check_action_time();
         unsigned long check_match_time();

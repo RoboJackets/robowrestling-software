@@ -1,4 +1,4 @@
-#include "Sensors/lineSensor.h"
+#include "Sensors/lineSensor.hpp"
 
 LineSensor::LineSensor() {
     value = 0;

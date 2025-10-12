@@ -80,16 +80,16 @@ void setup() {
   IrSensor *irArray[5] = {left, midLeft, mid, midRight, right};
   LineSensor *lineArray[4] = {topLeftLine, topRightLine, backLeftLine, backRightLine};
   // World State
-  *world = WorldState(irArray, lineArray);
+  world = new WorldState(irArray, lineArray);
   // Robot Actions
-  *frontLeft = MotorDriver();
-  *frontRight = MotorDriver();
-  *backLeft = MotorDriver();
-  *backRight = MotorDriver();
-  *action = RobotActions(frontLeft, frontRight, backLeft, backRight);
+  frontLeft = new MotorDriver();
+  frontRight = new MotorDriver();
+  backLeft = new MotorDriver();
+  backRight = new MotorDriver();
+  action = new RobotActions(frontLeft, frontRight, backLeft, backRight);
   // Robot State
-  *strat = Algorithm(action);
-  *state = RobotState(world, strat);
+  strat = new Algorithm(action);
+  state = new RobotState(world, strat);
 }
 
 // put your main code here, to run repeatedly:

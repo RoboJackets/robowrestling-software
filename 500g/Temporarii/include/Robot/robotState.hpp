@@ -1,16 +1,15 @@
-#ifndef ROBOTSTATE_HPP
 #include "Sensors/WorldState.hpp"
 #include "Robot/algorithm.hpp"
 
-
+#ifndef ROBOTSTATE_HPP
 #define ROBOTSTATE_HPP 
 
 class RobotState {
     private: 
-        WorldState *worldState;
-        Algorithm *algorithm;
+        WorldState *world;
+        Algorithm *algo;
     public:
-        RobotState(WorldState *state, Algorithm *algorithm);
+        RobotState(WorldState *world, Algorithm *algo);
         void runAlgorithm();
 };
 

@@ -1,17 +1,13 @@
 #include "Robot/algorithm.hpp"
 
-Algorithm::Algorithm(RobotActions *action, Timer *time) {
+Algorithm::Algorithm(RobotActions *action, Timer *timer) {
     this->action = action;
-    this->time = time;
+    this->timer = timer;
 }
 
 void Algorithm::RunItDown(EnemyPositions pos) {
     // Modify this for timer checks
-    if (time->check_action_time()) {
-        
-    } else {
-        action->Forward(pos);
-    }
+    action->Attack(pos);
 }
 
 void Algorithm::search() {
@@ -24,13 +20,17 @@ void Algorithm::backTrack(OnLine line_state) {
     * When left_on_line or right_on_line, make the robot move forward (You are in push battle)
     * Front_on_line means you have pushed over line, rotate and scan
     */
-    if (line_state == left_front_on_line) {
-        action->Backwards();
-    } else if (line_state == right_front_on_line) {
-        action->Backwards();
-    } else if (line_state == left_on_line) {
-        action->Backwards();
-    } else {
-        action->Backwards();
+   // TODO: Implement timer control with backTracking
+
+    if (line_state == LineBL) {
+        action->Forward(40);
+    } else if (line_state == LineBR) {
+        action->Forward(40);
+    } else if (line_state == LineFL) {
+        action->Backwards(40);
+    } else if (line_state == LineFR) {
+        action->Backwards(40);
     }
+
+    // Otherwise, LineNone
 }

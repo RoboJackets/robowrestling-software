@@ -11,8 +11,8 @@
 #include "Robot/robotActions.hpp"
 #include "Robot/motorDriver.hpp"
 #include "Sensors/WorldState.hpp"
-#include "Sensors/irSensor.h"
-#include "Sensors/lineSensor.h"
+#include "Sensors/IrSensor.hpp"
+#include "Sensors/lineSensor.hpp"
 #include "Robot/robotState.hpp"
 
 // pinouts

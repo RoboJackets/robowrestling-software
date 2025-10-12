@@ -1,19 +1,20 @@
 #include "Robot/robotState.hpp"
 #include "Robot/algorithm.hpp"
 
-// type | Class Name | function name
-RobotState::RobotState(WorldState *state, Algorithm *algorithm) {
-    worldState = state;
-    this->algorithm = algorithm;
+// Tempi's Home :)
+RobotState::RobotState(WorldState *world, Algorithm *algo) {
+    this->world = world;
+    this->algo = algo;
 }
+
+// Selecting Algo 🌀🔄
 void RobotState::runAlgorithm() {
-    // void State
-    OnLine line_state = worldState->getIsOnLine();
-    if (line_state != not_on_line) {
-        algorithm->backTrack(line_state);
-    } else if (worldState->getEnemyPosition() == SEND || worldState->getEnemyPosition() == MidL || worldState->getEnemyPosition() == MidR) {
-        algorithm->RunItDown(worldState->getEnemyPosition());
+    OnLine line_state = world->getIsOnLine();
+    if (line_state != LineNone) {
+        algo->backTrack(line_state);
+    } else if (world->getEnemyPosition() == EnemyFront || world->getEnemyPosition() == EnemyFL || world->getEnemyPosition() == EnemyFR) {
+        algo->RunItDown(world->getEnemyPosition());
     } else {
-        algorithm->search();
+        algo->search();
     }
 }
