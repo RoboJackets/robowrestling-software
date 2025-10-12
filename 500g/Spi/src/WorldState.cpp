@@ -64,6 +64,10 @@ Position WorldState::getPosition() {
     return Position::Off_Line;
 }
 
+void WorldState::overrideLastPosition(Position position) {
+    lastEnemyPosition = position;
+}
+
 Position WorldState::getLastPosition() {
     getPosition();
     return lastPosition;

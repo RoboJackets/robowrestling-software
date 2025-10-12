@@ -10,10 +10,14 @@ BackSpin::BackSpin(RobotAction *_robotAction, bool _spinLeft) : Action(ACTION_DU
 }
 
 void BackSpin::performAction() {
-    if (!backup->getReady()) { robotAction->back(255); }
-    else if (!spin->getReady()){
-        if (spinLeft) { robotAction->spinLeft(255); }
-        else { robotAction->spinRight(255); }
+    if (!backup->getReady()) {
+        if (spinLeft) { robotAction->turnBack(100, 255); }
+        else { robotAction->turnBack(100, 255); }
+    }
+    else if (!spin->getReady()) {
+        robotAction->setSpeed(255);
+        if (spinLeft) { robotAction->pivotLeft(); }
+        else { robotAction->pivotRight(); }
     }
 }
 

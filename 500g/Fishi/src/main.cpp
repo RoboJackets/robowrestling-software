@@ -42,7 +42,7 @@ Circle *circle;
 Timer *accelerometerTimer;
 Timer *debugTimer;
 
-const bool DEBUGGING = false;
+const bool DEBUGGING = true;
 
 void debug();
 void writeMotors();
@@ -153,7 +153,8 @@ void pollSensors() {
 }
 
 void calculateState(int time) {
-  circle->run();
+  robotAction->setSpeed(255);
+  robotAction->forward();
 }
 
 void debug() {

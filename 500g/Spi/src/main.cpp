@@ -23,6 +23,8 @@ const int MIDDLE_IR = 3;
 const int RIGHT_IR = 4;
 const int LEFT_LINE = 23;
 const int RIGHT_LINE = 22;
+const int DIP_1 = 20;
+const int DIP_2 = 21;
 // sensors
 
 IRSensor *leftIRSensor;
@@ -65,6 +67,8 @@ void setup() {
   pinMode(RIGHT_LINE, INPUT);
   pinMode(START_PIN, INPUT);
   
+  int mode = (digitalRead(DIP_1) * 2) + (digitalRead(DIP_2));
+
   leftMotorDriver = new MotorDriver();
   rightMotorDriver = new MotorDriver();
   robotAction = new RobotAction(leftMotorDriver, rightMotorDriver, 40);
@@ -77,11 +81,11 @@ void setup() {
   robotState = new RobotState(worldState, robotAction);
   inchForward = new InchForward(worldState, robotAction, 128);
   shape = new Shape(worldState, robotAction);
-  tracker = new Tracker(worldState, robotAction);
+  tracker = new Tracker(worldState, robotAction, mode);
   scan = new Scan(robotAction);
   
-  leftLineSensor->setThreshold(800);
-  rightLineSensor->setThreshold(800);
+  leftLineSensor->setThreshold(900);
+  rightLineSensor->setThreshold(900);
 
   if (!DEBUGGING) {
     while (!digitalRead(START_PIN)) {
@@ -118,17 +122,15 @@ void writeMotors() {
 
 void pollSensors() {
   //implement proper velocity measurement D:
-  leftIRSensor->setValue(digitalRead(LEFT_IR), 50); // bro the teensy is cracked it does like 50 polls in like 1ms
-  middleIRSensor->setValue(digitalRead(MIDDLE_IR), 50);
-  rightIRSensor->setValue(digitalRead(RIGHT_IR), 50);
+  leftIRSensor->setValue(digitalRead(LEFT_IR), millis()); // bro the teensy is cracked it does like 50 polls in like 1ms
+  middleIRSensor->setValue(digitalRead(MIDDLE_IR), millis());
+  rightIRSensor->setValue(digitalRead(RIGHT_IR), millis());
   leftLineSensor->setValue(analogRead(LEFT_LINE));
   rightLineSensor->setValue(analogRead(RIGHT_LINE));
 }
 
 void calculateState(int time) {
-  // robotState->calculateState(time);
   tracker->run();
-  // scan->run();
 }
 
 void calibrateLineSensors() {

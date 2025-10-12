@@ -42,6 +42,10 @@ void RobotAction::back(int _speed) {
     rightMotorDriver->setDirection(0);
 }
 
+/**
+ * slow fast for left
+ * fast slow for right
+ */
 void RobotAction::turn(int leftSpeed, int rightSpeed) {
     setIsBraking(false);
     leftMotorDriver->setSpeed(leftSpeed);

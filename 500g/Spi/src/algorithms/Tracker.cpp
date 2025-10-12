@@ -1,6 +1,6 @@
 #include "algorithms/Tracker.hpp"
 
-Tracker::Tracker(WorldState *_worldState, RobotAction* _robotAction) {
+Tracker::Tracker(WorldState *_worldState, RobotAction* _robotAction, int _mode) {
     worldState = _worldState;
     robotAction = _robotAction;
     previousAction = nullptr;
@@ -8,7 +8,9 @@ Tracker::Tracker(WorldState *_worldState, RobotAction* _robotAction) {
     acceleration = 0;
     leftAcceleration = 0;
     rightAcceleration = 0;
+    mode = _mode;
     stuck = false;
+    turnt = false;
     accelerationTimer = new AutoTimer(ACCELERATION_TIMER_DURATION);
     backupTimer = new AutoTimer(BACKUP_TIMER_DURATION);
     brakeTimer = new AutoTimer(BRAKE_TIMER_DURATION);
@@ -16,6 +18,7 @@ Tracker::Tracker(WorldState *_worldState, RobotAction* _robotAction) {
     backSpinLeft = new BackSpin(robotAction, true);
     backSpinRight = new BackSpin(robotAction, false);
     _scan = new Scan(robotAction);
+    turnAround = new TurnAround(robotAction);
 }
 
 void Tracker::run() {
@@ -24,21 +27,19 @@ void Tracker::run() {
         backSpinRight->resetAction();
         backSpinRight->run();
         previousAction = backSpinRight;
+        worldState->overrideLastPosition(Position::None);
     }
     if (position == Position::On_Line_Left) {
         backSpinLeft->resetAction();
         backSpinLeft->run();
         previousAction = backSpinLeft;
+        worldState->overrideLastPosition(Position::None);
     }
     if (position == Position::Off_Line) {
         if (stuck) {
             if (!brakeTimer->getReady()) {
                 robotAction->brake();
             } else {
-                Position enemyPosition = worldState->getEnemyPosition();
-                if (previousPosition == enemyPosition) {
-                    backupTimer->resetTimer();
-                }
                 robotAction->back(MAX_SPEED);
                 if (backupTimer->getReady()) {
                     stuck = false;
@@ -56,7 +57,7 @@ void Tracker::run() {
 
 void Tracker::track() {
     Position enemyPosition = worldState->getEnemyPosition();
-    if (previousPosition != Position::None) {
+    if (true) {
         if (previousPosition == enemyPosition) {
             if (stuckTimer->getReady()) {
                 stuck = true;
@@ -65,6 +66,7 @@ void Tracker::track() {
             }
         } else {
             stuckTimer->resetTimer();
+            worldState->overrideLastPosition(Position::None);
         }
     }
     previousPosition = enemyPosition;
@@ -83,24 +85,26 @@ void Tracker::track() {
         acceleration = 0;
     }
     if (enemyPosition == Position::Left) {
+        int rightSpeed = MAX_SAFE_SPEED + leftAcceleration;
         if (accelerationTimer->getReady()) { 
-            if (leftAcceleration + MAX_SAFE_SPEED < MAX_SPEED) {
+            if (rightSpeed < MAX_SPEED) {
                 leftAcceleration++;
             } 
             accelerationTimer->resetTimer();
         }
-        robotAction->turn(MAX_SAFE_SPEED + leftAcceleration, MODERATE_SPEED);
+        robotAction->turn(SLOW_SPEED, rightSpeed);
     } else {
         leftAcceleration = 0;
     }
     if (enemyPosition == Position::Right) {
+        int leftSpeed = rightAcceleration + MAX_SAFE_SPEED;
         if (accelerationTimer->getReady()) { 
-            if (rightAcceleration + MAX_SAFE_SPEED < MAX_SPEED) {
+            if (leftSpeed < MAX_SPEED) {
                 rightAcceleration++;
             }
             accelerationTimer->resetTimer();  
         }
-        robotAction->turn(MODERATE_SPEED, MAX_SAFE_SPEED + rightAcceleration);
+        robotAction->turn(leftSpeed, SLOW_SPEED);
     } else {
         rightAcceleration = 0;
     }
@@ -118,16 +122,25 @@ void Tracker::seek() {
         robotAction->forward(MAX_SAFE_SPEED);
     }
     if (lastSeen == Position::Left) {
-        robotAction->spinLeft(MAX_SAFE_SPEED);
+        robotAction->turn(SLOW_SPEED, MAX_SAFE_SPEED);
     }
     if (lastSeen == Position::Right) {
-        robotAction->spinRight(MAX_SAFE_SPEED);
+        robotAction->turn(MAX_SAFE_SPEED, SLOW_SPEED);
     }
     if (lastSeen == Position::None) {
-        scan();
+        default_action();
     }
 }
 
-void Tracker::scan() {
-    _scan->run();
+void Tracker::default_action() {
+    if (mode == 0) { robotAction->forward(MAX_SAFE_SPEED); }
+    if (mode == 1) { _scan->run(); }
+    if (mode == 2) { 
+        turnAround->run();
+        if (!turnt) {
+            turnt = true;
+        } else if (turnAround->getActionCompleted()) {
+            mode = 0;
+        } 
+    }
 }

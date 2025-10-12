@@ -20,6 +20,7 @@ public:
     Position getLastEnemyPosition();
     Position getPosition();
     Position getLastPosition();
+    void overrideLastPosition(Position position);
 };
 
 #endif
