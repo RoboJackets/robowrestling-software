@@ -22,13 +22,13 @@ int printCounter = 0;
 
 float* avgs;
 int motors[2] = {0};
-int* line_sensors = new int[2];
+int line_sensors[2] = {0};
 int ir_sensors[3] = {0};
 
+timer* algo_timer = new timer(&currentMillis);
 world_state* ws = new world_state(line_sensors, ir_sensors);
-timer* motor_timer = new timer(&currentMillis);
 motor_actions* ma = new motor_actions(motors);
-algorithms* algo = new algorithms(ma, ws);
+algorithms* algo = new algorithms(ma, ws, algo_timer);
 
 
 void drive();
@@ -37,6 +37,7 @@ void writeMotors();
 void debug();
 void debugLine();
 void debugIR();
+void debugAverages();
 void debugEnemy(EnemyPosition ep);
 
 void setup() {
@@ -70,8 +71,9 @@ void loop() {
   pullSensors();
   ws->clean_sensors();
   avgs = ws->get_sensors_avg();
-  algo->respondToLine();  
+  algo->defaultBehavior();  
   writeMotors();
+  debug();
 }
 
 void pullSensors() {
@@ -86,12 +88,9 @@ void pullSensors() {
 void debug() {
   printCounter++;
   if (printCounter % 10000 == 0) {
-    Serial.print(ir_sensors[0]);
-    Serial.print(ir_sensors[1]);
-    Serial.print(ir_sensors[2]);
+    debugLine();
+    debugAverages();
     Serial.println();
-
-    
   }
 }
 
@@ -136,14 +135,21 @@ void debugEnemy(EnemyPosition ep){
 }
 void debugLine(){
   for(int i = 0; i < 2; i++){
-         Serial.print(line_sensors[i]);
-         Serial.print(" ");
-     }
+    Serial.print(line_sensors[i]);
+    Serial.print(" ");
+  }
 }
 
 void debugIR(){
   for(int i = 0; i < 3; i++){
-         Serial.print(ir_sensors[i]);
-         Serial.print(" ");
-     }
+    Serial.print(ir_sensors[i]);
+    Serial.print(" ");
+  }
+}
+
+void debugAverages(){
+  for(int i = 0; i < 3; i++){
+    Serial.print(avgs[i]);
+    Serial.print(" ");
+  }
 }

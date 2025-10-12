@@ -3,16 +3,65 @@
 #include <Arduino.h>
 #include <algorithm>
 
-algorithms::algorithms(motor_actions* motors, world_state* world) {
+algorithms::algorithms(motor_actions* motors, world_state* world, timer* algo_timer) {
   this->motors = motors;
   this->world = world;
+  this->algo_timer = algo_timer;
 }
 
-void algorithms::respondToEnemy() {
+void algorithms::defaultBehavior() {
   EnemyPosition e = world->enemy_pos();
- 
-  switch(e) {
+  LinePosition l = world->line_check();
+
+  if (algo_timer->isRunning() == false) {
+    algo_timer->start();
+  }
+  if (algo_timer->elapsedMilliseconds() < 5000) {
+    if (e != lastEnemyPos) {
+      switch (e)
+      {
+      case LEFT:
+        mode = AVOID_LEFT;
+        break;
+      case RIGHT:
+        mode = AVOID_RIGHT;
+        break;
+      default:
+        mode = ATTACK;
+        break;
+      }
+    }
+  }
+  else {
+    mode = ATTACK;
+  }
+
+  switch (mode) {
+    case FOLLOW_LINE:
+      respondToLine(l);
+      break;
+    default:
+      respondToEnemy(e, mode);
+      break;
+  }
+}
+
+void algorithms::respondToEnemy(EnemyPosition currentPosition, RobotMode robotMode) {
+  switch (robotMode) {
+    case AVOID_LEFT:
+      break;
+    case AVOID_RIGHT:
+      break;
+    case ATTACK:
+      break;
+    default:
+      break;
+  }
+
+  // Will move this code into the robot mode switch
+  switch(currentPosition) {
     case FRONT: 
+    
     motors-> driveForward(120);
       break;
     case FARFRONT:
@@ -42,17 +91,19 @@ void algorithms::respondToEnemy() {
       break;
 
     case NONE:
+      if(lastEnemyPos== LEFT) {
+        // lost sight of enemy — back up and spin to try to find them
+      
+      }
     default:
       // nothing detected — go forward slowly
       motors->spinLeft(60);
       break;
   }
-   lastEnemyPos = e;
+  lastEnemyPos = currentPosition;
 }
 
-void algorithms::respondToLine() {
-  LinePosition l = world->line_check();
-
+void algorithms::respondToLine(LinePosition l) {
   switch(l) {
     case LEFT_LINE:
       // turn right
@@ -65,10 +116,9 @@ void algorithms::respondToLine() {
       break;
 
     case CENTER_LINE:
-      
+      motors->driveForward(80);
       break;
 
-   
     default:
       // do nothing
       break;

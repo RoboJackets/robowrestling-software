@@ -42,7 +42,7 @@ EnemyPosition world_state::enemy_pos() {
         if (avgs[0] >= 0.9) return MIDLEFT;
         if (avgs[2] >= 0.9) return MIDRIGHT;
         return FARFRONT;
-    } 
+    }
     if (avgs[0] >= 0.9) return LEFT;
     if (avgs[2] >= 0.9) return RIGHT;
     return NONE;
