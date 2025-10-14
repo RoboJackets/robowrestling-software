@@ -16,7 +16,7 @@ class Tracker {
         static constexpr int MAX_SPEED = 255;
         static constexpr int ACCELERATION_TIMER_DURATION = 4; //ms
         static constexpr int STUCK_TIMER_DURATION = 8000;
-        static constexpr int BRAKE_TIMER_DURATION = 1000;
+        static constexpr int BRAKE_TIMER_DURATION = 500;
         static constexpr int BACKUP_TIMER_DURATION = 250;
         int acceleration;
         int leftAcceleration;
