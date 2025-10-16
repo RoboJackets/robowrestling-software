@@ -110,8 +110,8 @@ void loop() {
     pollSensors();
 
     updateState();
-    // updateMotors();
-
+    updateMotors();
+    
     //listen for stop signal
     // if (!digitalRead(StartMod)) {
     //   while(true) {
@@ -119,7 +119,7 @@ void loop() {
     //     Serial.println("braking");
     //   }
     // }
-    // debug();
+    debug();
 }
 
 void pollSensors() {
@@ -183,14 +183,12 @@ void brake() {
 }
 
 void debug() {
-  printf(sizeof(int));
-  i++;
-  if (i < 1000) {
-    return;
-  } else {
-    i = 0;
-  }
   //delay(50);
+  i++;
+  if (i != 500) {
+    return;
+  }
+  i = 0;
   Serial.println("\n\n*****************");
   
   //Timer debugging
