@@ -118,7 +118,7 @@ void RobotState::calculateState(int time) {
     const int BACKUP_SPEED   = 200;
     const int ROTATE_SPEED   = 200;
 
-    const int BACKUP_MS_SIDE = 100;
+    const int BACKUP_MS_SIDE = 200;
     const int BACKUP_MS_BOTH = 200;
     const int ROTATE_MS_SIDE = 120;
     const int ROTATE_MS_BOTH = 180;
@@ -160,8 +160,8 @@ void RobotState::calculateState(int time) {
 
         if (phase == Phase::Rotating) {
             if (!turnTimer->getReady()) {
-                if (turnDir == TurnDir::Left)  robotActions->drive(-ROTATE_SPEED, ROTATE_SPEED);
-                else                            robotActions->drive( ROTATE_SPEED, -ROTATE_SPEED);
+                if (turnDir == TurnDir::Left) robotActions->drive(-ROTATE_SPEED, ROTATE_SPEED);
+                else robotActions->drive( ROTATE_SPEED, -ROTATE_SPEED);
                 return;
             }
             // finish
@@ -318,7 +318,7 @@ void RobotState::calculateState(int time) {
             zigLeft = !zigLeft;
             ZIGZAG_INITIAL_MS = time;
         }
-\
+
         if (zigLeft) {
             robotActions->drive(-150.0, 255.0);
         } else {
