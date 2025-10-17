@@ -181,23 +181,23 @@ void calculateState() {
  */
 void writeMotors() {
   // 0: forward, 1: backward
-  // analogWrite(fr_pwm, frMotor->getSpeed());
-  // digitalWrite(fr_dir, frMotor->getDirection());
-  // analogWrite(fl_pwm, flMotor->getSpeed());
-  // digitalWrite(fl_dir, flMotor->getDirection());
-  // analogWrite(br_pwm, brMotor->getSpeed());
-  // digitalWrite(br_dir, brMotor->getDirection());
-  // analogWrite(bl_pwm, blMotor->getSpeed());
-  // digitalWrite(bl_dir, blMotor->getDirection());
-  analogWrite(fr_pwm, 50);
-  digitalWrite(fr_dir, 0);
-  analogWrite(fl_pwm, 50);
-  digitalWrite(fl_dir, 0);
-  analogWrite(br_pwm, 50);
-  digitalWrite(br_dir, 0);
-  analogWrite(bl_pwm, 150);
-  digitalWrite(bl_dir, 1);
-  
+  analogWrite(fr_pwm, frMotor->getSpeed());
+  digitalWrite(fr_dir, frMotor->getDirection());
+  analogWrite(fl_pwm, flMotor->getSpeed());
+  digitalWrite(fl_dir, flMotor->getDirection());
+  analogWrite(br_pwm, brMotor->getSpeed());
+  digitalWrite(br_dir, brMotor->getDirection());
+  analogWrite(bl_pwm, blMotor->getSpeed());
+  digitalWrite(bl_dir, blMotor->getDirection());
+
+  // analogWrite(fr_pwm, 50);
+  // digitalWrite(fr_dir, 0);
+  // analogWrite(fl_pwm, 50);
+  // digitalWrite(fl_dir, 0);
+  // analogWrite(br_pwm, 50);
+  // digitalWrite(br_dir, 0);
+  // analogWrite(bl_pwm, 150);
+  // digitalWrite(bl_dir, 1);
 }
 
 /**
