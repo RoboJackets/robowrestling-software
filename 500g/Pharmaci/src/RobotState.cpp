@@ -113,29 +113,35 @@ RobotState::RobotState(WorldState* worldStatePtr, RobotActions* robotActionsPtr,
 
 // Timer based state
 
+
+
 void RobotState::calculateState(int time) {
     const int CRUISE_SPEED   = 75;
     const int BACKUP_SPEED   = 200;
     const int ROTATE_SPEED   = 200;
 
-    const int BACKUP_MS_SIDE = 200;
+    const int BACKUP_MS_SIDE = 150;
     const int BACKUP_MS_BOTH = 200;
     const int ROTATE_MS_SIDE = 120;
-    const int ROTATE_MS_BOTH = 180;
+    const int ROTATE_MS_BOTH = 120;
 
+    // debounce window to decide "both" vs "side-only"
     const int BOTH_WINDOW_MS = 20;
 
-    const int LATCH_MS = 100;  
-    const int MIDDLE_CONFIRM_MS = 150;   
+    // --- NEW: latch tunables (turn-hold after Left/Right detection)
+    const int LATCH_MS = 60;             // hold hard turn for ~0.6s
+    const int MIDDLE_CONFIRM_MS = 150;    // see middle for this long to break latch early
 
-    static bool pendingLine = false;   
-    static TurnDir pendingDir  = TurnDir::None;
-    static int pendingT0   = 0;
+    // Debounce state (static locals: no header changes)
+    static bool     pendingLine = false;       // we saw a side hit and are waiting
+    static TurnDir  pendingDir  = TurnDir::None;
+    static int      pendingT0   = 0;
 
-    static bool latchActive = false;
-    static TurnDir latchDir    = TurnDir::None;
-    static int latchT0     = 0;
-    static int middleSeenT0 = -1;
+    // --- NEW: latch state (locals only)
+    static bool     latchActive = false;
+    static TurnDir  latchDir    = TurnDir::None;
+    static int      latchT0     = 0;
+    static int      middleSeenT0 = -1;
 
     Position selfPos = worldState->getSelfPosition();
     Position enemyPos = worldState->getEnemyPosition();  // sector detection
@@ -160,8 +166,8 @@ void RobotState::calculateState(int time) {
 
         if (phase == Phase::Rotating) {
             if (!turnTimer->getReady()) {
-                if (turnDir == TurnDir::Left) robotActions->drive(-ROTATE_SPEED, ROTATE_SPEED);
-                else robotActions->drive( ROTATE_SPEED, -ROTATE_SPEED);
+                if (turnDir == TurnDir::Left)  robotActions->drive(-ROTATE_SPEED, ROTATE_SPEED);
+                else                            robotActions->drive( ROTATE_SPEED, -ROTATE_SPEED);
                 return;
             }
             // finish
@@ -282,7 +288,7 @@ void RobotState::calculateState(int time) {
         // if latch just ended, fall through to your normal enemy logic below
     }
 
-
+   
     // === Your original enemy reaction logic ===
     if (enemyPos == Position::Middle_Close || enemyPos == Position::Middle_Far) {
         // stop when enemy dead ahead (you can change to charge if desired)
@@ -320,15 +326,16 @@ void RobotState::calculateState(int time) {
         }
 
         if (zigLeft) {
-            robotActions->drive(-150.0, 255.0);
+            robotActions->drive(-100.0, 200.0);
         } else {
-            robotActions->drive(255.0, -150.0);
+            robotActions->drive(200.0, -100.0);
         }
 
         return;
     }
-}
 
+    // === Default: cruise ===
+}
 
 
 // Zig-zag search
