@@ -116,13 +116,13 @@ RobotState::RobotState(WorldState* worldStatePtr, RobotActions* robotActionsPtr,
 
 
 void RobotState::calculateState(int time) {
-    const int BACKUP_SPEED   = 255;
-    const int ROTATE_SPEED   = 255;
+    const int BACKUP_SPEED   = 200;
+    const int ROTATE_SPEED   = 200;
 
     const int BACKUP_MS_SIDE = 150; 
     const int BACKUP_MS_BOTH = 200;
-    const int ROTATE_MS_SIDE = 80;
-    const int ROTATE_MS_BOTH = 80;
+    const int ROTATE_MS_SIDE = 120;
+    const int ROTATE_MS_BOTH = 120;
 
     // debounce window to decide "both" vs "side-only"
     const int BOTH_WINDOW_MS = 20;
@@ -311,9 +311,10 @@ void RobotState::calculateState(int time) {
     }
 
     // === Your original enemy reaction logic ===
-    if (enemyPos == Position::Middle_Close || enemyPos == Position::Middle_Far) {
+    if (enemyPos == Position::Middle_Close) {
         robotActions->drive(255.0, 255.0);
-
+    } else if (enemyPos == Position::Middle_Far) {
+        robotActions->drive(150.0, 150.0);
     } else if (enemyPos == Position::Right_Middle_Close) {
         robotActions->drive(255.0, 255.0);
 
