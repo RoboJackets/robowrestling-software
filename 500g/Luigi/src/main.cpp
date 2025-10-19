@@ -71,7 +71,7 @@ void loop() {
   pullSensors();
   ws->clean_sensors();
   avgs = ws->get_sensors_avg();
-  algo->defaultBehavior();  
+  algo->selectBehavior();  
   writeMotors();
   debug();
 }
@@ -89,7 +89,7 @@ void debug() {
   printCounter++;
   if (printCounter % 10000 == 0) {
     debugLine();
-    debugAverages();
+    // debugAverages();
     Serial.println();
   }
 }

@@ -15,8 +15,9 @@ class algorithms {
   public:
     algorithms(motor_actions* motors, world_state* world, timer* algo_timer);
 
-    void defaultBehavior(); // what to do if nothing else is happening
-    void respondToEnemy(EnemyPosition currentPosition, RobotMode mode);  // do something based on enemy_pos
+    void selectBehavior(); // what to do if nothing else is happening
+    void followBehavior(EnemyPosition e, LinePosition l);
+    void respondToEnemy(EnemyPosition currentPosition);  // do something based on enemy_pos
     void respondToLine(LinePosition l);   // do something based on line_pos
     void drive_avgs(float* avgs);
 };

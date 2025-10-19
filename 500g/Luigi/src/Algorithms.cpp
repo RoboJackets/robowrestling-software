@@ -9,46 +9,61 @@ algorithms::algorithms(motor_actions* motors, world_state* world, timer* algo_ti
   this->algo_timer = algo_timer;
 }
 
-void algorithms::defaultBehavior() {
+void algorithms::selectBehavior() {
   EnemyPosition e = world->enemy_pos();
   LinePosition l = world->line_check();
 
-  if (algo_timer->isRunning() == false) {
-    algo_timer->start();
-  }
-  if (algo_timer->elapsedMilliseconds() < 5000) {
-    if (e != lastEnemyPos) {
-      switch (e)
-      {
-      case LEFT:
-        mode = AVOID_LEFT;
-        break;
-      case RIGHT:
-        mode = AVOID_RIGHT;
-        break;
-      default:
-        mode = ATTACK;
-        break;
-      }
-    }
+  algo_timer->start();
+  if (l == RIGHT_LINE || l == LEFT_LINE || l == CENTER_LINE) {
+    mode = FOLLOW_LINE;
   }
   else {
-    mode = ATTACK;
+    if (algo_timer->elapsedMilliseconds() < 5000) {
+      if (e != lastEnemyPos) {
+        switch (e) {
+          case LEFT:
+            mode = AVOID_LEFT;
+            break;
+          case RIGHT:
+            mode = AVOID_RIGHT;
+            break;
+          default:
+            mode = ATTACK;
+            break;
+        }
+      }
+    }
+    else {
+      mode = ATTACK;
+    }
   }
+  followBehavior(e, l);
+}
 
+void algorithms::followBehavior(EnemyPosition e, LinePosition l) {
   switch (mode) {
     case FOLLOW_LINE:
       respondToLine(l);
       break;
+    case ATTACK:
+      respondToEnemy(e);
+      break;
+    case AVOID_LEFT:
+      respondToEnemy(e);
+      break;
+    case AVOID_RIGHT:
+      respondToEnemy(e);
+      break;
     default:
-      respondToEnemy(e, mode);
+      respondToLine(l);
       break;
   }
 }
 
-void algorithms::respondToEnemy(EnemyPosition currentPosition, RobotMode robotMode) {
-  switch (robotMode) {
+void algorithms::respondToEnemy(EnemyPosition currentPosition) {
+  switch (mode) {
     case AVOID_LEFT:
+      
       break;
     case AVOID_RIGHT:
       break;
@@ -58,48 +73,7 @@ void algorithms::respondToEnemy(EnemyPosition currentPosition, RobotMode robotMo
       break;
   }
 
-  // Will move this code into the robot mode switch
-  switch(currentPosition) {
-    case FRONT: 
-    
-    motors-> driveForward(120);
-      break;
-    case FARFRONT:
-      // back up then spin to dodge
-      motors->driveForward(60);
-      
-      break;
 
-    case MIDLEFT:
-      // gentle turn right to face enemy
-      motors->customDrive(70, 60);
-      break;
-
-    case LEFT:
-      // spin harder right
-      motors->customDrive(85, 60);
-      break;
-
-    case MIDRIGHT:
-      // gentle turn left
-      motors->customDrive(60, 70);
-      break;
-
-    case RIGHT:
-      // spin harder left
-      motors->customDrive(60, 85);
-      break;
-
-    case NONE:
-      if(lastEnemyPos== LEFT) {
-        // lost sight of enemy — back up and spin to try to find them
-      
-      }
-    default:
-      // nothing detected — go forward slowly
-      motors->spinLeft(60);
-      break;
-  }
   lastEnemyPos = currentPosition;
 }
 
