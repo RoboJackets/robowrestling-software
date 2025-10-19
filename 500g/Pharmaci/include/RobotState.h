@@ -29,7 +29,7 @@ class RobotState {
                MotorDriver* rightMotorDriverPtr);
 
     void calculateState();
-    void calculateState(int time);
+    void calculateState(uint32_t time);
 };
 
 #endif

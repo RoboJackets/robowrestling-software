@@ -115,7 +115,7 @@ RobotState::RobotState(WorldState* worldStatePtr, RobotActions* robotActionsPtr,
 
 
 
-void RobotState::calculateState(int time) {
+void RobotState::calculateState(uint32_t time) {
     const int BACKUP_SPEED   = 200;
     const int ROTATE_SPEED   = 200;
 
@@ -127,9 +127,13 @@ void RobotState::calculateState(int time) {
     // debounce window to decide "both" vs "side-only"
     const int BOTH_WINDOW_MS = 20;
 
-    // --- NEW: latch tunables (turn-hold after Left/Right detection)
+    // --- latch tunables (turn-hold after Left/Right detection)
     const int LATCH_MS = 40;              // hold hard turn briefly
-    const int MIDDLE_CONFIRM_MS = 150;    // see middle this long to break latch early
+    const int MIDDLE_CONFIRM_MS = 20;     // see middle this long to break latch early
+
+    // --- NEW: anti-race minimum dwells to survive slow/jittery loops
+    const int MIN_BACKUP_DWELL_MS = 60;   // must back up at least this long
+    const int MIN_ROTATE_DWELL_MS = 120;  // must rotate at least this long
 
     // Debounce state (static locals: no header changes)
     static bool     pendingLine = false;       // we saw a side hit and are waiting
@@ -141,6 +145,10 @@ void RobotState::calculateState(int time) {
     static TurnDir  latchDir     = TurnDir::None;
     static int      latchT0      = 0;
     static int      middleSeenT0 = -1;
+
+    // --- NEW: phase dwell (anti-race) timestamps
+    static uint32_t backupEarliestDone = 0;
+    static uint32_t rotateEarliestDone = 0;
 
     Position selfPos  = worldState->getSelfPosition();
     Position enemyPos = worldState->getEnemyPosition();  // sector detection
@@ -164,16 +172,21 @@ void RobotState::calculateState(int time) {
             latchActive = false;
 
             if (phase == Phase::BackingUp) {
-                if (!backupTimer->getReady()) {
+                // --- NEW: enforce minimum dwell to avoid finishing in one coarse tick
+                bool dwellSatisfied = (int32_t)(time - backupEarliestDone) >= 0;
+                if (!backupTimer->getReady() || !dwellSatisfied) {
                     robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
                     return;
                 }
                 phase = Phase::Rotating;
                 turnTimer->setPreviousTime(time);
+                rotateEarliestDone = time + MIN_ROTATE_DWELL_MS;   // start rotate dwell
             }
 
             if (phase == Phase::Rotating) {
-                if (!turnTimer->getReady()) {
+                // --- NEW: enforce minimum dwell to avoid rotate “instant finish”
+                bool dwellSatisfied = (int32_t)(time - rotateEarliestDone) >= 0;
+                if (!turnTimer->getReady() || !dwellSatisfied) {
                     if (turnDir == TurnDir::Left)  robotActions->drive(-ROTATE_SPEED, ROTATE_SPEED);
                     else                            robotActions->drive( ROTATE_SPEED, -ROTATE_SPEED);
                     return;
@@ -208,6 +221,7 @@ void RobotState::calculateState(int time) {
                 isTurning = true;
                 phase = Phase::BackingUp;
                 backupTimer->setPreviousTime(time);
+                backupEarliestDone = time + MIN_BACKUP_DWELL_MS;   // start backup dwell
                 pendingLine = false;
                 latchActive = false; // edge safety cancels aim latch
                 robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
@@ -221,6 +235,7 @@ void RobotState::calculateState(int time) {
                 isTurning = true;
                 phase = Phase::BackingUp;
                 backupTimer->setPreviousTime(time);
+                backupEarliestDone = time + MIN_BACKUP_DWELL_MS;   // start backup dwell
                 pendingLine = false;
                 latchActive = false; // edge safety cancels aim latch
                 robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
@@ -246,6 +261,7 @@ void RobotState::calculateState(int time) {
             isTurning = true;
             phase = Phase::BackingUp;
             backupTimer->setPreviousTime(time);
+            backupEarliestDone = time + MIN_BACKUP_DWELL_MS;       // start backup dwell
             pendingLine = false;
             latchActive = false; // edge safety cancels aim latch
             robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
@@ -335,7 +351,7 @@ void RobotState::calculateState(int time) {
 
     } else if (enemyPos == Position::None) {
 
-        const int ZIGZAG_MS = 300;
+        const int ZIGZAG_MS = 350;
 
         static bool zigLeft = false;
         static int ZIGZAG_INITIAL_MS = 0;
@@ -357,11 +373,4 @@ void RobotState::calculateState(int time) {
 
     // === Default: cruise ===
 }
-
-
-// Zig-zag search
-
-
-
-// Full Algorithm
 
