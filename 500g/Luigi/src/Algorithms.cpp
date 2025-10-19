@@ -76,7 +76,7 @@ void algorithms::respondToEnemy(EnemyPosition currentPosition) {
     case AVOID_RIGHT:
       motors->customDrive(50,100);
       break;
-    case ATTACK:  
+    case ATTACK:
       switch(currentPosition) {
         case LEFT:
           if(last_state_changed->elapsedMilliseconds() < 2000) {
@@ -119,8 +119,8 @@ void algorithms::respondToEnemy(EnemyPosition currentPosition) {
           }
           break;
         case FRONT:
-        if(last_state_changed->elapsedMilliseconds() < 2000) {
-           switch (lastEnemyPos) {
+          if(last_state_changed->elapsedMilliseconds() < 2000) {
+            switch (lastEnemyPos) {
               case FARFRONT:
                 motors->driveForward(200);
                 break;
@@ -133,14 +133,14 @@ void algorithms::respondToEnemy(EnemyPosition currentPosition) {
               default:
                 motors->driveForward(200);
                 break;
-            }
+          }
           } else {
             motors->driveForward(200);
           }
           break;
         case MIDLEFT:
-        if(last_state_changed->elapsedMilliseconds() < 2000) {
-           switch (lastEnemyPos) {
+          if(last_state_changed->elapsedMilliseconds() < 2000) {
+            switch (lastEnemyPos) {
               case LEFT:
                 motors->customDrive(130, 90);
                 break;
@@ -156,8 +156,8 @@ void algorithms::respondToEnemy(EnemyPosition currentPosition) {
           }
           break;
         case MIDRIGHT:
-        if(last_state_changed->elapsedMilliseconds() < 2000) {
-           switch (lastEnemyPos) {
+          if(last_state_changed->elapsedMilliseconds() < 2000) {
+            switch (lastEnemyPos) {
               case RIGHT:
                 motors->customDrive(90, 130);
                 break;
@@ -167,14 +167,14 @@ void algorithms::respondToEnemy(EnemyPosition currentPosition) {
               default:
                 motors->customDrive(90, 120);
                 break;
-            }
+          }
           } else {
             motors->customDrive(90, 120);
           }
           break;
         case FARFRONT:
-        if(last_state_changed->elapsedMilliseconds() < 2000) {
-           switch (lastEnemyPos) {
+          if(last_state_changed->elapsedMilliseconds() < 2000) {
+            switch (lastEnemyPos) {
               case LEFT:
                 motors->customDrive(100, 120);
                 break;
@@ -197,7 +197,6 @@ void algorithms::respondToEnemy(EnemyPosition currentPosition) {
           } else {
             motors->driveForward(150);
           }
-          motors->driveForward(100);
           break;
         case NONE:
           if(last_state_changed->elapsedMilliseconds() < 2000) {
@@ -228,7 +227,7 @@ void algorithms::respondToEnemy(EnemyPosition currentPosition) {
       }
       break;
     default:
-      motors-> driveForward(80);
+      motors->driveForward(80);
       break;
   }
 
