@@ -116,20 +116,19 @@ RobotState::RobotState(WorldState* worldStatePtr, RobotActions* robotActionsPtr,
 
 
 void RobotState::calculateState(int time) {
-    const int CRUISE_SPEED   = 75;
-    const int BACKUP_SPEED   = 200;
-    const int ROTATE_SPEED   = 200;
+    const int BACKUP_SPEED   = 255;
+    const int ROTATE_SPEED   = 255;
 
     const int BACKUP_MS_SIDE = 150; 
     const int BACKUP_MS_BOTH = 200;
-    const int ROTATE_MS_SIDE = 120;
-    const int ROTATE_MS_BOTH = 120;
+    const int ROTATE_MS_SIDE = 80;
+    const int ROTATE_MS_BOTH = 80;
 
     // debounce window to decide "both" vs "side-only"
     const int BOTH_WINDOW_MS = 20;
 
     // --- NEW: latch tunables (turn-hold after Left/Right detection)
-    const int LATCH_MS = 60;              // hold hard turn briefly
+    const int LATCH_MS = 40;              // hold hard turn briefly
     const int MIDDLE_CONFIRM_MS = 150;    // see middle this long to break latch early
 
     // Debounce state (static locals: no header changes)
@@ -270,9 +269,7 @@ void RobotState::calculateState(int time) {
     }
 
     // ====== ENEMY DETECTION (your exact speeds) ======
-    double speed        = 75.0;
     double rotSpeed     = 255.0;
-    double slowRotSpeed = 100.0;
 
     // create/maintain latch when we see Left/Right near the boundary
     if (!latchActive && (enemyPos == Position::Left || enemyPos == Position::Right)) {
