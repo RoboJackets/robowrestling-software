@@ -1,163 +1,227 @@
-/*
-* Temporarii main.cpp
-*/
+/**
+ * Temporarii Main File - Da Four-Wheel Drive
+ */
 #include <Arduino.h>
-#include "Sensors/WorldState.hpp"
+
+/**
+ * Imports
+ */
 #include "Robot/robotActions.hpp"
+#include "Robot/motorDriver.hpp"
+#include "Sensors/WorldState.hpp"
+#include "Sensors/IrSensor.hpp"
+#include "Sensors/lineSensor.hpp"
 #include "Robot/robotState.hpp"
-#include "Robot/algorithm.hpp"
+#include "Sensors/Timer.hpp"
 
-// Defining Pins
-// #define name value
-//OUTPUT Pins
-#define LEFT_FRONT_MOTOR_PIN A1
-#define RIGHT_FRONT_MOTOR_PIN A2
-#define LEFT_REAR_MOTOR_PIN A3
-#define RIGHT_REAR_MOTOR_PIN A4
+/**
+ * Pinouts
+ */
+const int fr_pwm = 9;
+const int fr_dir = 10;
+const int fl_pwm = 8;
+const int fl_dir = 7;
+const int br_pwm = 18;
+const int br_dir = 13;
+const int bl_pwm = 19;
+const int bl_dir = 21;
 
-#define LEFT_FRONT_DIR_PIN A5
-#define RIGHT_FRONT_DIR_PIN A6
-#define LEFT_REAR_DIR_PIN A7
-#define RIGHT_REAR_DIR_PIN A8
+const int left_ir = 22;
+const int mid_ir = 15;
+const int right_ir = 40;
 
-//INPUT Pins
-#define TOP_LEFT_LINE_PIN A10
-#define TOP_RIGHT_LINE_PIN A11
-#define BACK_LEFT_LINE_PIN A12
-#define BACK_RIGHT_LINE_PIN A13
-#define MID_IR_PIN A14
-#define MIDLEFT_IR_PIN A15
-#define MIDRIGHT_IR_PIN A16
-#define LEFT_IR_PIN A17
-#define RIGHT_IR_PIN A0
+const int left_line = 14;
+const int right_line = 24;
 
-// Define Objects
-IrSensor *left;
-IrSensor *midLeft;
-IrSensor *mid;
-IrSensor *midRight;
-IrSensor *right;
-LineSensor *topLeftLine;
-LineSensor *topRightLine;
-LineSensor *backLeftLine;
-LineSensor *backRightLine;
+// Start mod
+// const int start_mod = 0;
 
-WorldState *world;
+/**
+ * Object Definition
+ */
+IrSensor *leftIR;
+IrSensor *midIR;
+IrSensor *rightIR;
+// Temp sensors: Replace with actual when we get 5
+IrSensor *tempIRL;
+IrSensor *tempIRR;
+
+LineSensor *leftLine;
+LineSensor *rightLine;
+// Temp line: Replace with actual when we get 4
+LineSensor *tempLineBL;
+LineSensor *tempLineBR;
+
+MotorDriver *flMotor;
+MotorDriver *frMotor;
+MotorDriver *blMotor;
+MotorDriver *brMotor;
 
 RobotActions *action;
-MotorDriver *frontLeft;
-MotorDriver *frontRight;
-MotorDriver *backLeft;
-MotorDriver *backRight;
+WorldState *world;
+Algorithm *algo;
 
-Algorithm *strat;
+// Tempi 😃
+RobotState *tempi;
 
-RobotState *state;
+Timer *timer;
+// if debugging is true it will skip the start module check.
+const bool DEBUGGING = true;
 
+// function definitions
+void debug();
+void writeMotors();
+void pollSensors();
+void calculateState();
+
+/**
+ * Setup Pin Definitions
+ */
 void setup() {
-  // Defines whether a pin is input or output
-  pinMode(LEFT_FRONT_MOTOR_PIN, OUTPUT);
-  pinMode(LEFT_REAR_MOTOR_PIN, OUTPUT);
-  pinMode(RIGHT_FRONT_MOTOR_PIN, OUTPUT);
-  pinMode(RIGHT_REAR_MOTOR_PIN, OUTPUT);
-  pinMode(LEFT_FRONT_DIR_PIN, OUTPUT);
-  pinMode(LEFT_REAR_DIR_PIN, OUTPUT);
-  pinMode(RIGHT_FRONT_DIR_PIN, OUTPUT);
-  pinMode(RIGHT_REAR_DIR_PIN, OUTPUT);
-
-  pinMode(TOP_LEFT_LINE_PIN, INPUT);
-  pinMode(TOP_RIGHT_LINE_PIN, INPUT);
-  pinMode(BACK_LEFT_LINE_PIN, INPUT);
-  pinMode(BACK_RIGHT_LINE_PIN, INPUT);
-  pinMode(MID_IR_PIN, INPUT);
-  pinMode(MIDLEFT_IR_PIN, INPUT);
-  pinMode(MIDRIGHT_IR_PIN, INPUT);
-  pinMode(LEFT_IR_PIN, INPUT);
-  pinMode(RIGHT_IR_PIN, INPUT);
-
-  // Sensors
-  left = new IrSensor();
-  midLeft = new IrSensor();
-  mid = new IrSensor();
-  midRight = new IrSensor();
-  right = new IrSensor();
-  topLeftLine = new LineSensor();
-  topRightLine = new LineSensor();
-  backLeftLine = new LineSensor();
-  backRightLine = new LineSensor();
-  IrSensor *irArray[5] = {left, midLeft, mid, midRight, right};
-  LineSensor *lineArray[4] = {topLeftLine, topRightLine, backLeftLine, backRightLine};
-  // World State
-  world = new WorldState(irArray, lineArray);
-  // Robot Actions
-  frontLeft = new MotorDriver();
-  frontRight = new MotorDriver();
-  backLeft = new MotorDriver();
-  backRight = new MotorDriver();
-  action = new RobotActions(frontLeft, frontRight, backLeft, backRight);
-  // Robot State
-  strat = new Algorithm(action);
-  state = new RobotState(world, strat);
   Serial.begin(9600);
+  Serial.println("Starting Setup");
+
+  // pinmode definitions
+  pinMode(fr_pwm, OUTPUT);
+  pinMode(fr_dir, OUTPUT);
+  pinMode(fl_pwm, OUTPUT);
+  pinMode(fl_dir, OUTPUT);
+
+  pinMode(left_ir, INPUT);
+  pinMode(mid_ir, INPUT);
+  pinMode(right_ir, INPUT);
+
+  pinMode(left_line, INPUT);
+  pinMode(right_line, INPUT);
+
+  // pinMode(start_mod, INPUT);
+
+  leftIR = new IrSensor();
+  rightIR = new IrSensor();
+  midIR = new IrSensor();
+  // Replace with actual IR
+  tempIRL = new IrSensor();
+  tempIRR = new IrSensor();
+
+
+  leftLine = new LineSensor();
+  rightLine = new LineSensor();
+  // Replace with actual line
+  tempLineBL = new LineSensor();
+  tempLineBR = new LineSensor();
+
+  flMotor = new MotorDriver();
+  frMotor = new MotorDriver();
+  blMotor = new MotorDriver();
+  brMotor = new MotorDriver();
+
+  IrSensor *irSensors[5] = {tempIRL, leftIR, midIR, rightIR, tempIRR};
+  LineSensor *lineSensors[4] = {tempLineBL, leftLine, rightLine, tempLineBR};
+
+  // Temp settings
+  tempLineBL->setValue(1000);
+  tempLineBR->setValue(1000);
+
+   // Setting up class structure
+  action = new RobotActions(blMotor, flMotor, frMotor, brMotor);
+  world = new WorldState(irSensors, lineSensors);
+  timer = new Timer(millis());
+  algo = new Algorithm(action, timer);
+
+  tempi = new RobotState(world, algo);
+  timer->set_action_timer(100);
 }
 
-// put your main code here, to run repeatedly:
+/**
+ * Main loop
+ */
 void loop() {
-  // delay(2000); Delays code by 2 seconds
+  // 5 Seconds before start for comp
+  // Serial.print("LIR: ");
+  // Serial.println(analogRead(left_ir));
+  // Serial.print("RIR: ");
+  // Serial.println(analogRead(right_ir));
+  // Serial.print("MIR: ");
+  // Serial.println(analogRead(mid_ir));
+  // Serial.println(" ");
   pollSensors();
-  calcState();
+  calculateState();
   writeMotors();
-  debug();
 }
 
+/**
+ * Update Sensors
+ */
 void pollSensors() {
-  // Setting Line Sensors AnalogRead (Reads BW color of line, 0 to 1000)
-  topLeftLine->setValue(analogRead(TOP_LEFT_LINE_PIN));
-  backLeftLine->setValue(analogRead(BACK_LEFT_LINE_PIN));
-  topRightLine->setValue(analogRead(TOP_RIGHT_LINE_PIN));
-  backRightLine->setValue(analogRead(BACK_RIGHT_LINE_PIN));
+  leftIR->setValue(digitalRead(left_ir));
+  midIR->setValue(digitalRead(mid_ir));
+  rightIR->setValue(digitalRead(right_ir));
 
-  //Setting IR Sensors with DigitalRead (Reads 0 or 1)
-  left->setValue(digitalRead(LEFT_IR_PIN));
-  midLeft->setValue(digitalRead(MIDLEFT_IR_PIN));
-  mid->setValue(digitalRead(MID_IR_PIN));
-  midRight->setValue(digitalRead(MIDRIGHT_IR_PIN));
-  right->setValue(digitalRead(RIGHT_IR_PIN));
+  leftLine->setValue(analogRead(left_line));
+  rightLine->setValue(analogRead(right_line));
+
+  // Debug printing
+  // Serial.print("Left Line On Line: ");
+  // Serial.println(world->getIsOnLine());
+  // Serial.print("Left Line: ");
+  // Serial.println(leftLine->getValue());
+
+  timer->update_time(millis());
 }
 
-void debug() {
-  Serial.print(millis());
-  Serial.print("IR Sensor Value:");
-  Serial.print(left->getValue());
-  Serial.print(midLeft->getValue());
-  Serial.print(mid->getValue());
-  Serial.print(midRight->getValue());
-  Serial.print(right->getValue());
-  Serial.println();
-  Serial.print("Line Sensor Value:");
-  Serial.print(topLeftLine->getValue());
-  Serial.print(backLeftLine->getValue());
-  Serial.print(topRightLine->getValue());
-  Serial.print(backRightLine->getValue());
-  Serial.println();
+/**
+ * Calc State using algorithm
+ */
+void calculateState() {
+  tempi->runAlgorithm();
 }
 
-void calcState() {
-  // Calculate States and Run Algorithms
-  state->runAlgorithm();
-}
-
+/**
+ * Write to motors
+ */
 void writeMotors() {
-  // Have a delay for ramping motors (Temporary, replace with Timer class)
-  // delay(100);
-  // Write to Motors digitalWrite()
-  analogWrite(LEFT_FRONT_MOTOR_PIN, frontLeft->getSpeed());
-  analogWrite(RIGHT_FRONT_MOTOR_PIN, frontRight->getSpeed());
-  analogWrite(LEFT_REAR_MOTOR_PIN, backLeft->getSpeed());
-  analogWrite(RIGHT_REAR_MOTOR_PIN, backRight->getSpeed());
+  // 0: forward, 1: backward
+  analogWrite(fr_pwm, frMotor->getSpeed());
+  digitalWrite(fr_dir, frMotor->getDirection());
+  analogWrite(fl_pwm, flMotor->getSpeed());
+  digitalWrite(fl_dir, flMotor->getDirection());
+  analogWrite(br_pwm, brMotor->getSpeed());
+  digitalWrite(br_dir, brMotor->getDirection());
+  analogWrite(bl_pwm, blMotor->getSpeed());
+  digitalWrite(bl_dir, blMotor->getDirection());
 
-  digitalWrite(LEFT_FRONT_DIR_PIN, frontLeft->getDirection());
-  digitalWrite(RIGHT_FRONT_DIR_PIN, frontRight->getDirection());
-  digitalWrite(LEFT_REAR_DIR_PIN, backLeft->getDirection());
-  digitalWrite(RIGHT_REAR_DIR_PIN, backRight->getDirection());
+  // analogWrite(fr_pwm, 50);
+  // digitalWrite(fr_dir, 0);
+  // analogWrite(fl_pwm, 50);
+  // digitalWrite(fl_dir, 0);
+  // analogWrite(br_pwm, 50);
+  // digitalWrite(br_dir, 0);
+  // analogWrite(bl_pwm, 150);
+  // digitalWrite(bl_dir, 1);
+}
+
+/**
+ * Debuggin'
+ */
+void debug() {
+  // if (true) {
+  //   Serial.print(digitalRead(START_PIN));
+  //   Serial.print(" ");
+  //   Serial.print(leftIRSensor->getValue());
+  //   Serial.print(middleIRSensor->getValue());
+  //   Serial.print(rightIRSensor->getValue());
+  //   Serial.print(" ");
+  //   Serial.print(analogRead(LEFT_LINE));
+  //   Serial.print(" ");
+  //   Serial.print(analogRead(RIGHT_LINE));
+  //   Serial.print(" ");
+  // }
+  // if (true)
+  // {
+  //   Serial.print(rightMotorDriver->getSpeed());
+  //   Serial.print(rightMotorDriver->getDirection());
+  //   Serial.print(leftMotorDriver->getSpeed());
+  //   Serial.print(leftMotorDriver->getDirection());
+  // }
+  // Serial.println();
 }

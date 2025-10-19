@@ -7,6 +7,10 @@ enum Algos {
     LineLeftAlgo,
     SlammyWhammyAlgo,
     LineAdvAlgo,
+    SnakeLeft,
+    SnakeRight,
+    SnakeForward,
+    CheckingAttack,
     InvalidAlgo
 };
 

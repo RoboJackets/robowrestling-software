@@ -26,8 +26,8 @@
 
 #define ir_side_left 12
 #define ir_front_left 8
-#define ir_front_right 2
-#define ir_side_right 4
+#define ir_front_right 4
+#define ir_side_right 2
 
 // Arrays
 /**
@@ -111,8 +111,8 @@ void pollSensors() {
   timer->updateTime();
 
 
-  // Serial.println("Left IR: ");
-  // Serial.print(ir_sensors[1]);
+  // Serial.print("Left IR: ");
+  // Serial.println(digitalRead(ir_side_left));
   // Serial.print("Right IR: ");
   // Serial.println(ir_sensors[2]);
   Serial.println("Left Line: ");

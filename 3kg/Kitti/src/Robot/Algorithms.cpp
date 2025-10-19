@@ -28,38 +28,68 @@ void Algorithms::match_strategy() {
 
     // Flow Chart: Line Check First -> Some algo running from being in queue -> Other algorithms
 
+    // Always attack first
+    if (enemy_position == Front) {
+        if (timer->getRunningProcess() == false) {
+            timer->startTimer(5);
+        }
+        curr_algo = CheckingAttack;
+        attack_forward();
+        return;
+    }
+
     // Set current state
     if (timer->getRunningProcess() == false) {
-        curr_algo = InvalidAlgo;
+        if (curr_algo == SnakeLeft || curr_algo == SnakeRight || curr_algo == SnakeForward) {
+            slammy_whammy();
+        } else {
+            curr_algo = InvalidAlgo;
+        }
     }
 
     // Special Case Algo: Line Check -> Check before traditional line check bc line check baked into algo
-    if (curr_algo == LineAdvAlgo) {
+    if (curr_algo == CheckingAttack) {
+        attack_forward();
+        return;
+    } else if (curr_algo == LineAdvAlgo) {
         adv_line_movement();
         return;
     } else if (curr_algo == LineRightAlgo) {
         // Finish out turns
-        actions->drive_right(100);
+        if (timer->getDuration() > 10) {
+            actions->drive_left(50);
+        } else {
+            actions->drive_forward(50);
+        }
+        return;
     } else if (curr_algo == LineLeftAlgo) {
         // Finish out turns
-        actions->drive_left(100);
+        if (timer->getDuration() > 10) {
+            actions->drive_right(50);
+        } else {
+            actions->drive_forward(50);
+        }
+        return;
     }
 
     // Line Check
     if (self_position == TopLeft) {
         curr_algo = LineLeftAlgo;
-        timer->startTimer(5);
+        timer->startTimer(30);
         actions->drive_right(50);
     } else if (self_position == TopRight) {
         curr_algo = LineRightAlgo;
-        timer->startTimer(5);
+        timer->startTimer(30);
         actions->drive_left(50);
     } else if (curr_algo != InvalidAlgo) {
         // Checking queued algo
-        if (curr_algo == SlammyWhammyAlgo) {
-            slammy_whammy();
+        if (curr_algo == SnakeLeft) {
+            actions->drive_left(70);
+        } else if (curr_algo == SnakeRight) {
+            actions->drive_right(70);
+        } else {
+            actions->drive_forward(70);
         }
-
     } else {
         // TODO: Select algo to run
         slammy_whammy();
@@ -75,12 +105,28 @@ void Algorithms::slammy_whammy() {
     // Implement slammy whammy logic
     if (enemy_position == Front) {
         attack_forward();
-    } else if (enemy_position == Left) {
-        // Set timer to move forwards for the dodge before curving towards the enemy
-    } else if (enemy_position == Right) {
-        // Same thing for right
+    // } else if (enemy_position == Left) {
+    //     // Set timer to move forwards for the dodge before curving towards the enemy
+    // } else if (enemy_position == Right) {
+    //     // Same thing for right
     } else {
-        actions->drive_left(70);
+        // Snaking
+        if (curr_algo == SnakeLeft) {
+            if (timer->getRunningProcess() == false) {
+                timer->startTimer(14);
+            }
+            curr_algo = SnakeRight;
+        } else if (curr_algo == SnakeRight) {
+            if (timer->getRunningProcess() == false) {
+                timer->startTimer(14);
+            }
+            curr_algo = SnakeForward;
+        } else {
+            if (timer->getRunningProcess() == false) {
+                timer->startTimer(7);
+            }
+            curr_algo = SnakeLeft;
+        }
     }
     
 }
@@ -90,15 +136,17 @@ void Algorithms::attack_forward() {
     actions->drive_forward(170); 
 }
 
+// Currently doing nothing. Implement for more timer control
 void Algorithms::adv_line_movement() {
     // Algorithm for setting timer for precise line movement
     if (timer->getRunningProcess() == false) {
-        timer->startTimer(50);
+        timer->startTimer(500);
     }
 
     curr_algo = LineAdvAlgo;
     if (self_position == TopLeft) {
         actions->drive_right(100);
+
     } else if (self_position == TopRight) {
         actions->drive_left(100);
     } else {
