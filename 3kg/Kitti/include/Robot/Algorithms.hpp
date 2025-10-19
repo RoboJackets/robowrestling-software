@@ -20,9 +20,9 @@ class Algorithms {
         Algorithms(RobotActions* new_action, WorldState* new_state, Timer* timer, line_states self_pos, enemy_states enemy_pos);
         void match_strategy();
         void update_algo_state(line_states self_pos, enemy_states enemy_pos);
-        void slammy_whammy();
+        void snake_search(Algos previous);
         void attack_forward();
-        void adv_line_movement();
+        // void adv_line_movement();
 };
 
 #endif // ALGORITHMS_HPP
