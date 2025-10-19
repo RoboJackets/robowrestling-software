@@ -52,7 +52,7 @@ void MotorDriver::change_state(DrivingState new_state) {
     }
 }
 
-inline void MotorDriver::drive(int speed) {
+void MotorDriver::drive(int speed) {
     this->drive(speed, speed);
 }
 

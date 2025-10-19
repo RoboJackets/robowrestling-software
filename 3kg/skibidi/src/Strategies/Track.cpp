@@ -5,6 +5,18 @@ Track::Track(int fwd_speed, int turn_speed) {
     this->turn_speed = turn_speed;
 }
 
+int map_range(int old_min, int old_max, int new_min, int new_max, int val) {
+    /**
+     *  OldRange = (OldMax - OldMin) = 100 - 0 = 100
+     *  NewRange = (NewMax - NewMin) 255 - 0 = 255
+     *
+     *  NewValue = (((OldValue - OldMin) * NewRange) / OldRange) + NewMin
+     */
+    int old_range = old_max - old_min;
+    int new_range = new_max - new_min;
+    return (((val - old_min) * new_range) / old_range) + new_min;
+}
+
 void Track::make_decision(State* state) {
     int left_bias = 0, right_bias = 0;
     left_bias += (int)state->active_ir_sensors[IrDirection::CENTER_LEFT]*15
@@ -29,16 +41,4 @@ void Track::make_decision(State* state) {
     state->tank_drive = true;
     state->left_speed = left_spd_adj;
     state->right_speed = right_spd_adj;
-}
-
-int map_range(int old_min, int old_max, int new_min, int new_max, int val) {
-    /**
-     *  OldRange = (OldMax - OldMin) = 100 - 0 = 100
-     *  NewRange = (NewMax - NewMin) 255 - 0 = 255
-     *
-     *  NewValue = (((OldValue - OldMin) * NewRange) / OldRange) + NewMin
-     */
-    int old_range = old_max - old_min;
-    int new_range = new_max - new_min;
-    return (((val - old_min) * new_range) / old_range) + new_min;
 }
