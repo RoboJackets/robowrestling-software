@@ -3,14 +3,21 @@
 #include <Arduino.h>
 #include <algorithm>
 
-algorithms::algorithms(motor_actions* motors, world_state* world, timer* algo_timer) {
+algorithms::algorithms(motor_actions* motors, world_state* world, timer* algo_timer, timer* last_state_changed) {
   this->motors = motors;
   this->world = world;
   this->algo_timer = algo_timer;
+  this->last_state_changed = last_state_changed;
 }
 
 void algorithms::selectBehavior() {
   EnemyPosition e = world->enemy_pos();
+  if(currentEnemyPos != e && currentEnemyPos != NONE) {
+    lastEnemyPos = currentEnemyPos;
+    last_state_changed->reset();
+    last_state_changed->start();
+  }
+  currentEnemyPos = e;
   LinePosition l = world->line_check();
 
   algo_timer->start();
@@ -19,7 +26,8 @@ void algorithms::selectBehavior() {
   }
   else {
     if (algo_timer->elapsedMilliseconds() < 5000) {
-      if (e != lastEnemyPos) {
+
+      if (e != lastEnemyPos && mode != ATTACK) {
         switch (e) {
           case LEFT:
             mode = AVOID_LEFT;
@@ -63,18 +71,171 @@ void algorithms::followBehavior(EnemyPosition e, LinePosition l) {
 void algorithms::respondToEnemy(EnemyPosition currentPosition) {
   switch (mode) {
     case AVOID_LEFT:
-      
+      motors->customDrive(100,50);
       break;
     case AVOID_RIGHT:
+      motors->customDrive(50,100);
       break;
-    case ATTACK:
+    case ATTACK:  
+      switch(currentPosition) {
+        case LEFT:
+          if(last_state_changed->elapsedMilliseconds() < 2000) {
+            switch(lastEnemyPos) {
+              case FARFRONT:
+                motors->customDrive(120, 80);
+                break;
+              case FRONT:
+                motors->customDrive(120, 60);
+                break;
+              case MIDLEFT:
+                motors->customDrive(120, 40);
+                break;
+              default:
+                motors->spinLeft(100);
+                break;
+            }
+          } else {
+           motors->customDrive(120, 60);
+          }
+          break;
+        case RIGHT:
+          if(last_state_changed->elapsedMilliseconds() < 2000) {
+            switch(lastEnemyPos) {
+              case FARFRONT:
+                motors->customDrive(80, 120);
+                break;
+              case FRONT:
+                motors->customDrive(60, 120);
+                break;
+              case MIDRIGHT:
+                motors->customDrive(40, 120);
+                break;
+              default:
+                motors->spinRight(100);
+                break;
+            }
+          } else {
+           motors->customDrive(60, 120);
+          }
+          break;
+        case FRONT:
+        if(last_state_changed->elapsedMilliseconds() < 2000) {
+           switch (lastEnemyPos) {
+              case FARFRONT:
+                motors->driveForward(200);
+                break;
+              case MIDLEFT:
+                motors->customDrive(200, 175);
+                break;
+              case MIDRIGHT:
+                motors->customDrive(175, 200);
+                break;  
+              default:
+                motors->driveForward(200);
+                break;
+            }
+          } else {
+            motors->driveForward(200);
+          }
+          break;
+        case MIDLEFT:
+        if(last_state_changed->elapsedMilliseconds() < 2000) {
+           switch (lastEnemyPos) {
+              case LEFT:
+                motors->customDrive(130, 90);
+                break;
+              case FARFRONT:
+                motors->customDrive(100, 120);
+                break;  
+              default:
+                motors->customDrive(120, 90);
+                break;
+            }
+          } else {
+            motors->customDrive(120, 90);
+          }
+          break;
+        case MIDRIGHT:
+        if(last_state_changed->elapsedMilliseconds() < 2000) {
+           switch (lastEnemyPos) {
+              case RIGHT:
+                motors->customDrive(90, 130);
+                break;
+              case FARFRONT:
+                motors->customDrive(120, 100);
+                break;  
+              default:
+                motors->customDrive(90, 120);
+                break;
+            }
+          } else {
+            motors->customDrive(90, 120);
+          }
+          break;
+        case FARFRONT:
+        if(last_state_changed->elapsedMilliseconds() < 2000) {
+           switch (lastEnemyPos) {
+              case LEFT:
+                motors->customDrive(100, 120);
+                break;
+              case MIDLEFT:
+                motors->customDrive(100, 120);
+                break;
+              case RIGHT:
+                motors->customDrive(120, 100);
+                break;  
+              case MIDRIGHT:
+                motors->customDrive(120, 100);
+                break;  
+              case FRONT:
+                motors->driveForward(200);
+                break;
+              default:
+                motors->driveForward(120);
+                break;
+            }
+          } else {
+            motors->driveForward(150);
+          }
+          motors->driveForward(100);
+          break;
+        case NONE:
+          if(last_state_changed->elapsedMilliseconds() < 2000) {
+           switch (lastEnemyPos) {
+              case LEFT:
+                motors->customDrive(120, 50);
+                break;
+              case RIGHT:
+                motors->customDrive(50, 120);
+                break;
+              case FARFRONT:
+                motors->driveForward(120);
+                break;
+              case MIDLEFT:
+                motors->customDrive(110, 80);
+                break;
+              case MIDRIGHT:
+                motors->customDrive(80, 110);
+                break;  
+              default:
+                motors->driveForward(80);
+                break;
+            }
+          } else {
+            motors->driveForward(100);
+          }
+          break;
+      }
       break;
     default:
+      motors-> driveForward(80);
       break;
   }
 
-
-  lastEnemyPos = currentPosition;
+  if(currentPosition != lastEnemyPos && currentPosition != NONE) {
+    lastEnemyPos = currentPosition;
+  }
+  
 }
 
 void algorithms::respondToLine(LinePosition l) {

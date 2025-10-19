@@ -26,9 +26,10 @@ int line_sensors[2] = {0};
 int ir_sensors[3] = {0};
 
 timer* algo_timer = new timer(&currentMillis);
+timer* last_enemy_changed = new timer(&currentMillis);
 world_state* ws = new world_state(line_sensors, ir_sensors);
 motor_actions* ma = new motor_actions(motors);
-algorithms* algo = new algorithms(ma, ws, algo_timer);
+algorithms* algo = new algorithms(ma, ws, algo_timer, last_enemy_changed);
 
 
 void drive();

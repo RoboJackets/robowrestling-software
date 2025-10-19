@@ -12,8 +12,11 @@ class algorithms {
     timer* algo_timer;
     EnemyPosition lastEnemyPos = NONE;
     RobotMode mode = FOLLOW_LINE;
+    EnemyPosition currentEnemyPos = NONE; 
+    timer* last_state_changed;
   public:
-    algorithms(motor_actions* motors, world_state* world, timer* algo_timer);
+  
+    algorithms(motor_actions* motors, world_state* world, timer* algo_timer, timer* last_state_changed);
 
     void selectBehavior(); // what to do if nothing else is happening
     void followBehavior(EnemyPosition e, LinePosition l);
