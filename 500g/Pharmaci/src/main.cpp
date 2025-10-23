@@ -37,7 +37,7 @@ RobotState *robotState;
  const int RIGHT_LINE = A6;
 
 void setup() {
-  Serial.begin(9600);
+  // Serial.begin(9600);
     pinMode(R_POS, OUTPUT);
      pinMode(R_NEG, OUTPUT);
      pinMode(L_POS, OUTPUT);
