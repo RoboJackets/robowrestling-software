@@ -113,8 +113,6 @@ RobotState::RobotState(WorldState* worldStatePtr, RobotActions* robotActionsPtr,
 
 // Timer based state
 
-
-
 void RobotState::calculateState(uint32_t time) {
     const int BACKUP_SPEED   = 200;
     const int ROTATE_SPEED   = 200;
