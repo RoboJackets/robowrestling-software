@@ -83,9 +83,6 @@ void calculateState();
  * Setup Pin Definitions
  */
 void setup() {
-  Serial.begin(9600);
-  Serial.println("Starting Setup");
-
   // pinmode definitions
   pinMode(fr_pwm, OUTPUT);
   pinMode(fr_move_forward, OUTPUT);
@@ -106,6 +103,11 @@ void setup() {
 
   pinMode(left_line, INPUT);
   pinMode(right_line, INPUT);
+
+  pinMode(19, OUTPUT);
+  pinMode(20, OUTPUT);
+  digitalWrite(19, HIGH);
+  digitalWrite(20, HIGH);
 
   // pinMode(start_mod, INPUT);
 
@@ -143,6 +145,10 @@ void setup() {
   tempi = new RobotState(world, algo);
 
   timer->set_action_timer(100);
+
+  Serial.println("Starting Setup");
+  Serial.begin(9600);
+  delay(5000);
 }
 
 /**

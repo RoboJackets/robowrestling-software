@@ -9,6 +9,7 @@ RobotState::RobotState(WorldState *world, Algorithm *algo) {
 
 // Selecting Algo 🌀🔄
 void RobotState::runAlgorithm() {
+    // Implement with timer controls
     OnLine line_state = world->getIsOnLine();
     if (line_state != LineNone) {
         algo->backTrack(line_state);
