@@ -18,23 +18,27 @@
  * Pinouts
  */
 const int fr_pwm = 9;
-const int fr_dir = 10;
-const int fl_pwm = 8;
-const int fl_dir = 7;
-const int br_pwm = 18;
-const int br_dir = 13;
-const int bl_pwm = 19;
-const int bl_dir = 21;
+const int fr_move_forward = 7;
+const int fr_move_backward = 6;
+const int fl_pwm = 10;
+const int fl_move_forward = 16;
+const int fl_move_backward = 15;
+const int br_pwm = 11;
+const int br_move_forward = 13;
+const int br_move_backward = 12;
+const int bl_pwm = 8;
+const int bl_move_forward = 5;
+const int bl_move_backward = 14;
 
-const int left_ir = 22;
-const int mid_ir = 15;
-const int right_ir = 40;
+const int left_ir = 26;
+const int mid_ir = 24;
+const int right_ir = 25;
 
-const int left_line = 14;
-const int right_line = 24;
+const int left_line = 22;
+const int right_line = 23;
 
 // Start mod
-// const int start_mod = 0;
+// const int start_mod = 21;
 
 /**
  * Object Definition
@@ -65,8 +69,9 @@ Algorithm *algo;
 RobotState *tempi;
 
 Timer *timer;
-// if debugging is true it will skip the start module check.
-const bool DEBUGGING = true;
+
+// Prints debugging every few times to avoid spam
+int debug_counter = 0;
 
 // function definitions
 void debug();
@@ -83,9 +88,17 @@ void setup() {
 
   // pinmode definitions
   pinMode(fr_pwm, OUTPUT);
-  pinMode(fr_dir, OUTPUT);
+  pinMode(fr_move_forward, OUTPUT);
+  pinMode(fr_move_backward, OUTPUT);
   pinMode(fl_pwm, OUTPUT);
-  pinMode(fl_dir, OUTPUT);
+  pinMode(fl_move_forward, OUTPUT);
+  pinMode(fl_move_backward, OUTPUT);
+  pinMode(br_pwm, OUTPUT);
+  pinMode(br_move_forward, OUTPUT);
+  pinMode(br_move_backward, OUTPUT);
+  pinMode(bl_pwm, OUTPUT);
+  pinMode(bl_move_forward, OUTPUT);
+  pinMode(bl_move_backward, OUTPUT);
 
   pinMode(left_ir, INPUT);
   pinMode(mid_ir, INPUT);
@@ -127,8 +140,8 @@ void setup() {
   world = new WorldState(irSensors, lineSensors);
   timer = new Timer(millis());
   algo = new Algorithm(action, timer);
-
   tempi = new RobotState(world, algo);
+
   timer->set_action_timer(100);
 }
 
@@ -137,16 +150,14 @@ void setup() {
  */
 void loop() {
   // 5 Seconds before start for comp
-  // Serial.print("LIR: ");
-  // Serial.println(analogRead(left_ir));
-  // Serial.print("RIR: ");
-  // Serial.println(analogRead(right_ir));
-  // Serial.print("MIR: ");
-  // Serial.println(analogRead(mid_ir));
-  // Serial.println(" ");
   pollSensors();
   calculateState();
   writeMotors();
+  // debug_counter++;
+  // if (debug_counter >= 20) {
+  //   debug();
+  //   debug_counter = 0;
+  // }
 }
 
 /**
@@ -159,12 +170,6 @@ void pollSensors() {
 
   leftLine->setValue(analogRead(left_line));
   rightLine->setValue(analogRead(right_line));
-
-  // Debug printing
-  // Serial.print("Left Line On Line: ");
-  // Serial.println(world->getIsOnLine());
-  // Serial.print("Left Line: ");
-  // Serial.println(leftLine->getValue());
 
   timer->update_time(millis());
 }
@@ -182,46 +187,45 @@ void calculateState() {
 void writeMotors() {
   // 0: forward, 1: backward
   analogWrite(fr_pwm, frMotor->getSpeed());
-  digitalWrite(fr_dir, frMotor->getDirection());
+  digitalWrite(fr_move_forward, frMotor->getDirection() == 0 ? HIGH : LOW);
+  digitalWrite(fr_move_backward, frMotor->getDirection() == 1 ? HIGH : LOW);
   analogWrite(fl_pwm, flMotor->getSpeed());
-  digitalWrite(fl_dir, flMotor->getDirection());
+  digitalWrite(fl_move_forward, flMotor->getDirection() == 0 ? HIGH : LOW);
+  digitalWrite(fl_move_backward, flMotor->getDirection() == 1 ? HIGH : LOW);
   analogWrite(br_pwm, brMotor->getSpeed());
-  digitalWrite(br_dir, brMotor->getDirection());
+  digitalWrite(br_move_forward, brMotor->getDirection() == 0 ? HIGH : LOW);
+  digitalWrite(br_move_backward, brMotor->getDirection() == 1 ? HIGH : LOW);
   analogWrite(bl_pwm, blMotor->getSpeed());
-  digitalWrite(bl_dir, blMotor->getDirection());
-
-  // analogWrite(fr_pwm, 50);
-  // digitalWrite(fr_dir, 0);
-  // analogWrite(fl_pwm, 50);
-  // digitalWrite(fl_dir, 0);
-  // analogWrite(br_pwm, 50);
-  // digitalWrite(br_dir, 0);
-  // analogWrite(bl_pwm, 150);
-  // digitalWrite(bl_dir, 1);
+  digitalWrite(bl_move_forward, blMotor->getDirection() == 0 ? HIGH : LOW);
+  digitalWrite(bl_move_backward, blMotor->getDirection() == 1 ? HIGH : LOW);
 }
 
 /**
  * Debuggin'
  */
 void debug() {
-  // if (true) {
-  //   Serial.print(digitalRead(START_PIN));
-  //   Serial.print(" ");
-  //   Serial.print(leftIRSensor->getValue());
-  //   Serial.print(middleIRSensor->getValue());
-  //   Serial.print(rightIRSensor->getValue());
-  //   Serial.print(" ");
-  //   Serial.print(analogRead(LEFT_LINE));
-  //   Serial.print(" ");
-  //   Serial.print(analogRead(RIGHT_LINE));
-  //   Serial.print(" ");
-  // }
-  // if (true)
-  // {
-  //   Serial.print(rightMotorDriver->getSpeed());
-  //   Serial.print(rightMotorDriver->getDirection());
-  //   Serial.print(leftMotorDriver->getSpeed());
-  //   Serial.print(leftMotorDriver->getDirection());
-  // }
-  // Serial.println();
+  Serial.println("Debug loop: ");
+  // IR Sensors
+  Serial.print("Left IR: ");
+  Serial.println(leftIR->getValue());
+  Serial.print("Mid IR: ");
+  Serial.println(midIR->getValue());
+  Serial.print("Right IR: ");
+  Serial.println(rightIR->getValue());
+
+  // Line Sensors
+  Serial.print("Left Line: ");
+  Serial.println(leftLine->getValue());
+  Serial.print("Right Line: ");
+  Serial.println(rightLine->getValue());
+  
+  // Motor States
+  Serial.print("FL Motor: ");
+  Serial.print(flMotor->getSpeed());
+  Serial.print("FR Motor: ");
+  Serial.println(frMotor->getSpeed());
+  Serial.print("BL Motor: ");
+  Serial.print(blMotor->getSpeed());
+  Serial.print("BR Motor: ");
+  Serial.println(brMotor->getSpeed());
 }
