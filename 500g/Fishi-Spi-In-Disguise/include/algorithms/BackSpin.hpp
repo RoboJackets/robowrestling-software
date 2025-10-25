@@ -1,0 +1,23 @@
+#ifndef BACKSPIN_H
+#define BACKSPIN_H
+
+#include "utility/Action.hpp"
+#include "WorldState.h"
+
+class BackSpin : public Action {
+    private:
+        static constexpr int LEFT_SPIN_DURATION = 160; //ms
+        static constexpr int RIGHT_SPIN_DURATION = 100; //ms
+        static constexpr int ACTION_DURATION = 250;
+        bool spinLeft;
+        RobotAction *robotAction;
+        AutoTimer *backup;
+        AutoTimer *spin;
+    protected:
+        void performAction();
+        void resetTimers();
+    public:
+        BackSpin(RobotAction *_robotAction, bool _spinLeft);
+};
+
+#endif
