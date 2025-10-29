@@ -18,6 +18,8 @@ class Tracker {
         static constexpr int STUCK_TIMER_DURATION = 8000;
         static constexpr int BRAKE_TIMER_DURATION = 500;
         static constexpr int BACKUP_TIMER_DURATION = 250;
+        static constexpr int GO_TIMER = 300;
+        static constexpr int STOP_TIMER = 30;
         int acceleration;
         int leftAcceleration;
         int rightAcceleration;
@@ -29,6 +31,8 @@ class Tracker {
         AutoTimer *accelerationTimer;
         AutoTimer *brakeTimer;
         AutoTimer *backupTimer; // for getting unstuck
+        AutoTimer *stopTimer;
+        AutoTimer *goTimer;
         BackSpin *backSpinLeft;
         BackSpin *backSpinRight;
         Scan *_scan;

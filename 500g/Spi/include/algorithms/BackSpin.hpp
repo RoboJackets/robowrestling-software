@@ -8,10 +8,12 @@ class BackSpin : public Action {
     private:
         static constexpr int LEFT_SPIN_DURATION = 160; //ms
         static constexpr int RIGHT_SPIN_DURATION = 100; //ms
+        static constexpr int BACKUP_DURATION = 60;
         static constexpr int ACTION_DURATION = 250;
         bool spinLeft;
         RobotAction *robotAction;
         AutoTimer *backup;
+        AutoTimer *backTurn;
         AutoTimer *spin;
     protected:
         void performAction();

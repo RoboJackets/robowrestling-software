@@ -15,6 +15,8 @@ Tracker::Tracker(WorldState *_worldState, RobotAction* _robotAction, int _mode) 
     backupTimer = new AutoTimer(BACKUP_TIMER_DURATION);
     brakeTimer = new AutoTimer(BRAKE_TIMER_DURATION);
     stuckTimer = new AutoTimer(STUCK_TIMER_DURATION);
+    stopTimer = new AutoTimer(STOP_TIMER);
+    goTimer = new AutoTimer(GO_TIMER);
     backSpinLeft = new BackSpin(robotAction, true);
     backSpinRight = new BackSpin(robotAction, false);
     _scan = new Scan(robotAction);
@@ -133,7 +135,16 @@ void Tracker::seek() {
 }
 
 void Tracker::default_action() {
-    if (mode == 0) { robotAction->forward(MAX_SAFE_SPEED); }
+    if (mode == 0) {
+        if (!goTimer->getReady()) {
+            robotAction->forward(MAX_SAFE_SPEED);
+        } else if (!stopTimer->getReady()) {
+            robotAction->brake();
+        } else {
+            goTimer->resetTimer();
+            stopTimer->resetTimer();
+        }
+    }
     if (mode == 1) { _scan->run(); }
     if (mode == 2) { 
         turnAround->run();

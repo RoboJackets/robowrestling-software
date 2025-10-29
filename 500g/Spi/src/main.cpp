@@ -43,6 +43,7 @@ InchForward *inchForward;
 Shape *shape;
 Tracker *tracker;
 Scan *scan;
+BackSpin *backSpinLeft;
 
 const bool DEBUGGING = false;
 
@@ -83,6 +84,7 @@ void setup() {
   shape = new Shape(worldState, robotAction);
   tracker = new Tracker(worldState, robotAction, mode);
   scan = new Scan(robotAction);
+  backSpinLeft = new BackSpin(robotAction, true);
   
   leftLineSensor->setThreshold(900);
   rightLineSensor->setThreshold(900);
@@ -131,6 +133,7 @@ void pollSensors() {
 
 void calculateState(int time) {
   tracker->run();
+  // backSpinLeft->run();
 }
 
 void calibrateLineSensors() {
