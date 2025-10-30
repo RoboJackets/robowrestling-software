@@ -1,7 +1,10 @@
 #include "robot/algorithms.hpp"
 #include "enums/world_enums.hpp"
-
+#include <Arduino.h>
 int multiplier = 1;
+int fast_turn = 512;
+int fast_forward = 512;
+int max_speed = 512;
 
 algorithms :: algorithms(robot_actions *robot, world_state *world, timer* draw_timer, timer *attack_timer) {
     this -> robot = robot;
@@ -13,6 +16,7 @@ algorithms :: algorithms(robot_actions *robot, world_state *world, timer* draw_t
     states.circle = D_GO_STRAIGHT;
     states.swerve = S_UNKNOWN;
     states.attack = A_BLIND;
+    turn_direction = 0;
 }
 
 void algorithms :: match_strategy() {
@@ -29,32 +33,15 @@ void algorithms :: slammy_whammy() {
         } else {
             multiplier = 1;
         }
-        attack_timer -> set_action_timer(50);
-    } else if (attack_timer -> check_action_time()){
-        robot -> turn_left(120);
+        attack_timer -> set_action_timer(100);
+    } else if (attack_timer -> check_action_time()) {
+        if (turn_direction == 0) {
+            robot -> turn_left(200);
+        } else {
+            robot -> turn_right(200);
+        }
     }
 }
-
-void algorithms :: draw_seek() {
-    if (enemyPosition != UNKNOWN) {
-        seek();
-    } else {
-        draw_circle();
-    }
-}
-
-void algorithms :: seek() {
-    if (turn_towards() == 0) {
-        attack_forward();
-    } else {
-        multiplier = 1;
-    }
-}
-
-void algorithms :: test() {
-    robot -> brake();
-}
-
 
 int algorithms :: draw_circle() {
     //if the timer went off (action has completed)
@@ -74,7 +61,7 @@ int algorithms :: draw_circle() {
     if (states.circle == D_GO_STRAIGHT) {
         //continue forward if no line detected
         if (selfPosition == OFF) {
-            robot -> drive_forward(100);
+            robot -> drive_forward(60);
         //there is a line, set an action to go backwards
         } else {
             states.attack = A_BLIND;
@@ -84,87 +71,11 @@ int algorithms :: draw_circle() {
         }
     //if the current state is go backwards
     } else if (states.circle == D_GO_BACKWARDS) {
-        robot -> drive_backward(150);
+        robot -> drive_backward(80);
     } else {
-        robot -> turn_left(100);
+        robot -> turn_left(70);
     }
     return 0;
-}
-
-//drive forward if we see someone in front of us
-// assume that we have already been confirmed to see
-int algorithms :: attack_forward() {
-    enemy_states enemy = enemyPosition;
-    if (enemy == UNKNOWN) {
-        draw_circle();
-        return 1;
-    }
-    if (states.attack == A_LOOKING && attack_timer -> check_action_time()) {
-        states.attack = A_SEE;
-    }
-    if (states.attack == A_LOOKING || states.circle != D_GO_STRAIGHT) {
-        draw_circle();
-        return 1;
-    }
-    if (states.attack == A_SEE) {
-        //if the robot is close, drive forward fast
-        if (enemy == CLOSE_MID) {
-            robot -> drive_forward(std::min(200 * multiplier, 255));
-            multiplier += 5;
-            return 1;
-        //if the robot is a little further, drive forward slower
-        } else if (enemy == FRONT) {
-            robot -> drive_forward(std::min(150 * multiplier, 255));
-            multiplier += 5;
-            return 1;
-        //if we don't see the robot, brake and do nothing
-        } else if (enemy == CLOSE_MID) {
-            robot -> drive_forward(std::min(250 * multiplier, 255));
-            multiplier += 5;
-            return 1;
-        } else if (enemy == CLOSE_MID_LEFT) {
-            robot -> drive_custom(std::min(200 * multiplier, 255), std::min(120 * multiplier, 255), 1, 1);
-            multiplier += 5;
-            return 1;
-        } else if (enemy == CLOSE_MID_RIGHT) {
-            robot -> drive_custom(std::min(200 * multiplier, 255), std::min(100 * multiplier, 255), 1, 1);
-            multiplier += 5;
-            return 1;
-        } else {
-            multiplier = 1;
-            robot -> brake();
-            states.swerve = S_UNKNOWN;
-            return 0;
-        }
-    } else {
-        attack_timer -> set_action_timer(500);
-        states.attack = A_LOOKING;
-        draw_circle();
-        return 1;
-    }
-}
-//returns 0 if we should proceed to attack_forward, returns 1 otherwise
-int algorithms :: turn_towards() {
-    enemy_states enemy = enemyPosition;
-    if(enemy == FRONT_LEFT) {
-        //turn left a little slower
-        robot -> turn_left(100);
-        return 1;
-    } else if (enemy == LEFT) {
-        //turn left
-        robot -> turn_left(120);
-        return 1;
-    } else if (enemy == FRONT_RIGHT) {
-        //turn right a little slower
-        robot -> turn_right(100);
-        return 1;
-    } else if (enemy == RIGHT) {
-        //turn right
-        robot -> turn_right(120);
-        return 1;
-    } else {
-        return 0;
-    }
 }
 
 void algorithms :: seek_drive() {
@@ -247,25 +158,25 @@ int algorithms :: attack_forward_no_delay() {
     //if the robot is close, drive forward fast
         //if the robot is close, drive forward fast
         if (enemy == CLOSE_MID) {
-            robot -> drive_forward(std::min(200 * multiplier, 255));
+            robot -> drive_forward(std::min(200 * multiplier, max_speed));
             multiplier += 5;
             return 1;
         //if the robot is a little further, drive forward slower
         } else if (enemy == FRONT) {
-            robot -> drive_forward(std::min(150 * multiplier, 255));
+            robot -> drive_forward(std::min(150 * multiplier, max_speed));
             multiplier += 5;
             return 1;
         //if we don't see the robot, brake and do nothing
         } else if (enemy == CLOSE_MID) {
-            robot -> drive_forward(std::min(250 * multiplier, 255));
+            robot -> drive_forward(std::min(250 * multiplier, max_speed));
             multiplier += 5;
             return 1;
         } else if (enemy == CLOSE_MID_LEFT) {
-            robot -> drive_custom(std::min(200 * multiplier, 255), std::min(120 * multiplier, 255), 1, 1);
+            robot -> drive_custom(std::min(200 * multiplier, max_speed), std::min(120 * multiplier, max_speed), 1, 1);
             multiplier += 5;
             return 1;
         } else if (enemy == CLOSE_MID_RIGHT) {
-            robot -> drive_custom(std::min(200 * multiplier, 255), std::min(100 * multiplier, 255), 1, 1);
+            robot -> drive_custom(std::min(200 * multiplier, max_speed), std::min(100 * multiplier, max_speed), 1, 1);
             multiplier += 5;
             return 1;
         } else {
@@ -280,19 +191,23 @@ int algorithms :: turn_towards_no_delay() {
     enemy_states enemy = enemyPosition;
     if(enemy == FRONT_LEFT) {
         //turn left a little slower
-        robot -> turn_left(140);
+        robot -> turn_left(fast_turn * .7);
+        turn_direction = 0;
         return 1;
     } else if (enemy == LEFT) {
         //turn left
-        robot -> turn_left(170);
+        robot -> turn_left(fast_turn * .8);
+        turn_direction = 0;
         return 1;
     } else if (enemy == FRONT_RIGHT) {
         //turn right a little slower
-        robot -> turn_right(140);
+        robot -> turn_right(fast_turn * .7);
+        turn_direction = 1;
         return 1;
     } else if (enemy == RIGHT) {
         //turn right
-        robot -> turn_right(170);
+        robot -> turn_right(fast_turn * .8);
+        turn_direction = 1;
         return 1;
     } else {
         return 0;

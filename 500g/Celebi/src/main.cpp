@@ -28,8 +28,8 @@
 
 #define RmotorPos 3
 #define RmotorNeg 4
-#define LmotorPos 33
-#define LmotorNeg 13
+#define LmotorPos 13
+#define LmotorNeg 33
 
 int i = 0;
 
@@ -95,13 +95,13 @@ void setup() {
 
 
 
-    Serial.begin(9600);
-    Serial.print("we are running\n");
+    // Serial.begin(9600);
+    // Serial.print("we are running\n");
     draw_timer -> set_action_timer(10);
     attack_timer -> set_action_timer(10);
     // wait for start signal
     // while (!digitalRead(StartMod)) {
-    //   Serial.print(digitalRead(StartMod));
+    //   // Serial.print(digitalRead(StartMod));
     //   Serial.println(" Waiting for start signal");
     // }
 }
@@ -112,14 +112,14 @@ void loop() {
     updateState();
     updateMotors();
     
-    //listen for stop signal
+    // listen for stop signal
     // if (!digitalRead(StartMod)) {
     //   while(true) {
     //     brake();
     //     Serial.println("braking");
     //   }
     // }
-    debug();
+    // debug();
 }
 
 void pollSensors() {
@@ -159,6 +159,7 @@ void updateState() {
  * simple motordriver with speed and direction.  
  */ 
 void updateMotors() {
+    motors[0] = motors[0] * .8;
     if (motors[0] > 0) {  // if direction is forward
         analogWrite(LmotorPos, motors[0]);
         analogWrite(LmotorNeg, 0);
@@ -174,7 +175,6 @@ void updateMotors() {
         analogWrite(RmotorPos, 0);
         analogWrite(RmotorNeg, abs(motors[1]));
     }
-
 }
 
 void brake() {
@@ -198,64 +198,56 @@ void debug() {
   // Serial.print("time since match start: ");
   // Serial.println(thymer -> check_match_time());
   // Serial.print("millies: ");
-  // Serial.println(millis());
-  // Serial.print("action timer started at: ");
-  // Serial.println(thymer -> get_action_start());
-  // Serial.print("current time from timer: ");
-  // Serial.println(thymer -> get_current_time());
-  // Serial.print("timer status: ");
-  // Serial.println(thymer -> get_timer_state());
+  Serial.println(millis());
+  Serial.print("action timer started at: ");
+  Serial.println(attack_timer -> get_action_start());
+  Serial.print("current time from timer: ");
+  Serial.println(attack_timer -> get_current_time());
+  Serial.print("timer status: ");
+  Serial.println(attack_timer -> get_timer_state());
   
   
   //line sensors
   
-  Serial.println("sensors:");
-  Serial.print("line left: ");
-  Serial.println(line_sensors[0]);
-  Serial.println(line_sensors[1]);
+  // Serial.println(line_sensors[0]);
+  // Serial.println(line_sensors[1]);
 
-  Serial.print("line right: ");
-  Serial.println(line_sensors[2]);
-  Serial.println(line_sensors[3]);
+
+  // Serial.println(line_sensors[2]);
+  // Serial.println(line_sensors[3]);
 
 
   //distance sensors
 
-  Serial.print("distance left: ");
-  Serial.println(ir_sensors[0]);
+  // Serial.print("distance left: ");
+  // Serial.println(ir_sensors[0]);
 
-  Serial.print("distance mid left: ");
-  Serial.println(ir_sensors[1]);
+  // Serial.print("distance mid left: ");
+  // Serial.println(ir_sensors[1]);
 
-  Serial.print("distance mid: ");
-  Serial.println(ir_sensors[2]);
+  // Serial.print("distance mid: ");
+  // Serial.println(ir_sensors[2]);
 
-  Serial.print("distance mid right: ");
-  Serial.println(ir_sensors[3]);
+  // Serial.print("distance mid right: ");
+  // Serial.println(ir_sensors[3]);
 
-  Serial.print("distance right: ");
-  Serial.println(ir_sensors[4]);
+  // Serial.print("distance right: ");
+  // Serial.println(ir_sensors[4]);
 
 
   // motors
 
   // Serial.println("motors:");
 
-  // Serial.print("left motor direction: ");
-  // Serial.println(leftMotorDriver -> get_direction());
+  // Serial.print("left motor: ");
+  // Serial.println(motors[0]);
 
-  // Serial.print("right motor directtion: ");
-  // Serial.println(rightMotorDriver -> get_direction());
-
-  // Serial.print("left motor speed: ");
-  // Serial.println(leftMotorDriver -> get_speed());
-
-  // Serial.print("right motor speed: ");
-  // Serial.println(rightMotorDriver -> get_speed());
+  // Serial.print("right motor: ");
+  // Serial.println(motors[1]);
 
 
   //state
-  //Serial.println(world ->enemy_pos());
+  // Serial.println(world ->enemy_pos());
   
   
   Serial.println("*****************");

@@ -18,6 +18,7 @@ class algorithms {
         enemy_states enemyPosition;
         bool timer_set;
         int forward_speed;
+        int turn_direction;
         struct algorithm_states {
             draw_state circle;
             swerve_state swerve;
