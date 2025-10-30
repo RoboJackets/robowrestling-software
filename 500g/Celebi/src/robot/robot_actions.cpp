@@ -1,4 +1,5 @@
 #include "robot/robot_actions.hpp"
+#include <Arduino.h>
 
 robot_actions :: robot_actions(int* motors) {
     this -> motors = motors;
