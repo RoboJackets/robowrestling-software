@@ -22,9 +22,9 @@ algorithms :: algorithms(robot_actions *robot, world_state *world, timer* draw_t
 void algorithms :: match_strategy() {
     selfPosition = world -> line_check();
     enemyPosition = world -> enemy_pos();
-    // test();
+    test();
     // slammy_whammy();
-    draw_circle();
+    // draw_circle();
 }
 
 // turn towards enemy and attack
@@ -49,6 +49,10 @@ void algorithms :: slammy_whammy() {
     }
 }
 
+void algorithms :: test() {
+    // drive forward at constant speed
+    robot -> drive_forward(100);
+}
 
 int algorithms :: draw_circle() {
     // check if the bot is currently backing off or turning after hitting a line
@@ -65,7 +69,6 @@ int algorithms :: draw_circle() {
         robot -> brake();
         return 0;
     }
-
     // state is going straight
     if (states.circle == D_GO_STRAIGHT) {
         //continue forward if no line detected
