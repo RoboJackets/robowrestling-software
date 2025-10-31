@@ -29,7 +29,7 @@ void setup(void) {
             {IrDirection::LEFT,         false},
         },
     };
-    strategy = new SlammyWhammy(50, 35);
+    strategy = new SlammyWhammy(50, 30);
 
     // Sensor initialization
     skibidi->initialize_sensors();
@@ -52,6 +52,10 @@ void loop(void) {
     // start module goes low @ match end
     StartModule* start_module = skibidi->get_start_module();
     if (!start_module->is_started()) {
+        state.driving_state = DrivingState::MBRAKE;
+        state.motor_speed = 0;
+        state.tank_drive = false;
+        skibidi->execute_action(&state);
         return;
     }
 
@@ -59,14 +63,15 @@ void loop(void) {
     skibidi->update_state(&state);
 
     // Checking if we hit the border somewhere
-    if (state.active_line_sensors[Position::FRONT_LEFT] || state.active_line_sensors[Position::FRONT_RIGHT]) {
+    if (state.emergency_mvmt && millis() - state.emerg_started_millis < EMERG_MVMT_MILLIS) {
+        // do nothing, continue backing up
+    } else if (state.active_line_sensors[Position::FRONT_LEFT] || state.active_line_sensors[Position::FRONT_RIGHT]) {
         // Emergency reverse
+        state.emergency_mvmt = true;
+        state.emerg_started_millis = millis();
         state.driving_state = DrivingState::MBACKWARD;
-        state.motor_speed = 20;
-    } else if (state.active_line_sensors[Position::BACK_LEFT] || state.active_line_sensors[Position::BACK_RIGHT]) {
-        // Emergency forward
-        state.driving_state = DrivingState::MFORWARD;
-        state.motor_speed = 20;
+        state.motor_speed = 10;
+        Serial.println("Emergency back");
     } else {
         // Make decision
         strategy->make_decision(&state);

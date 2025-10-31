@@ -20,7 +20,7 @@ Skibidi::Skibidi(void) {
     //this->motor_driver = new MotorDriver(std::make_pair(1, 2), std::make_pair(1, 2));
     this->motor_driver = new MotorDriver(11, 12, 25, 36, 37, 24);
 
-    this->start_module = new StartModule(13);
+    this->start_module = new StartModule(33);
 }
 
 StartModule* Skibidi::get_start_module() {

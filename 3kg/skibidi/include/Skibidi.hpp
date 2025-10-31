@@ -8,6 +8,8 @@
 #include "Sensors/IrSensor.hpp"
 #include "Sensors/StartModule.hpp"
 
+#define EMERG_MVMT_MILLIS 100
+
 enum Position { FRONT_LEFT, FRONT_RIGHT, BACK_LEFT, BACK_RIGHT, NONE };
 enum IrDirection { LEFT, MID_LEFT, CENTER_LEFT, CENTER, CENTER_RIGHT, MID_RIGHT, RIGHT };
 
@@ -18,8 +20,8 @@ struct State {
     std::map<IrDirection, bool> active_ir_sensors;
 
     DrivingState driving_state;
-    bool tank_drive;
-    int motor_speed, left_speed, right_speed;
+    bool tank_drive, emergency_mvmt;
+    int motor_speed, left_speed, right_speed, emerg_started_millis;
 };
 
 class Skibidi {
