@@ -3,7 +3,7 @@
 
 robot_actions :: robot_actions(int* motors) {
     this -> motors = motors;
-    acceleration = 5;
+    acceleration = 10;
 }
 
 void robot_actions :: brake() {
@@ -38,13 +38,6 @@ void robot_actions :: turn_right(int speed) {
 }
 
 void robot_actions :: drive_custom(int LSpeed, int RSpeed, bool LDir, bool RDir) {
-    // cap speed increase to acceleration
-    if (LSpeed - motors[0] > acceleration) {
-        motors[0] += acceleration;
-    } else if (RSpeed - motors[1] > acceleration) {
-        motors[1] += acceleration;
-    } else {
-        motors[0] = LDir * LSpeed;
-        motors[1] = RDir * RSpeed;
-    }
+    motors[0] = LDir * LSpeed;
+    motors[1] = RDir * RSpeed;
 }

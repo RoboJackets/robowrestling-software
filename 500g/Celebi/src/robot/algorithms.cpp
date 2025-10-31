@@ -22,18 +22,24 @@ algorithms :: algorithms(robot_actions *robot, world_state *world, timer* draw_t
 void algorithms :: match_strategy() {
     selfPosition = world -> line_check();
     enemyPosition = world -> enemy_pos();
+    // test();
     // slammy_whammy();
     draw_circle();
 }
 
+// turn towards enemy and attack
+// otherwise, turn in last known direction
 void algorithms :: slammy_whammy() {
+    // if we see the enemy, turn towards and attack
     if (enemyPosition != UNKNOWN) {
         if (turn_towards_no_delay() == 0) {
             attack_forward_no_delay();
         } else {
             multiplier = 1;
         }
+        // attack for set time
         attack_timer -> set_action_timer(100);
+    // if we don't see the enemy, turn in last known direction
     } else if (attack_timer -> check_action_time()) {
         if (turn_direction == 0) {
             robot -> turn_left(200);
@@ -43,21 +49,24 @@ void algorithms :: slammy_whammy() {
     }
 }
 
+
 int algorithms :: draw_circle() {
-    //if the timer went off (action has completed)
+    // check if the bot is currently backing off or turning after hitting a line
     if (states.circle == D_GO_BACKWARDS && draw_timer -> check_action_time()) {
+        // finished backing off, start turning
         states.circle = D_TURN;
         robot -> brake();
         states.attack = A_BLIND;
         draw_timer -> set_action_timer(200);
         return 0;
     } else if (states.circle == D_TURN && draw_timer -> check_action_time()) {
+        // finished turning, start going forwards again
         states.circle = D_GO_STRAIGHT;
         robot -> brake();
         return 0;
     }
-    //if a timer isn't currently going off
-    //if the current state is going forwards
+
+    // state is going straight
     if (states.circle == D_GO_STRAIGHT) {
         //continue forward if no line detected
         if (selfPosition == OFF) {
@@ -78,10 +87,7 @@ int algorithms :: draw_circle() {
     return 0;
 }
 
-void algorithms :: seek_drive() {
-    robot -> drive_forward(100);
-}
-
+// UNUSED
 int algorithms :: dodge() {
     if (enemyPosition == LEFT) {
         robot -> drive_custom(75, 150, true, true);
@@ -94,6 +100,7 @@ int algorithms :: dodge() {
 }
 
 // return 0 if we should go forward, return -1 if we don't see the robot
+// UNUSED
 int algorithms :: swerve() {
     if (states.swerve == S_GO_STRAIGHT && draw_timer -> check_action_time() == 0) {
         robot -> drive_forward(100);
@@ -148,9 +155,6 @@ int algorithms :: swerve() {
     return 0;
 }
 
-
-
-
 //drive forward if we see someone in front of us
 // assume that we have already been confirmed to see
 int algorithms :: attack_forward_no_delay() {
@@ -166,11 +170,6 @@ int algorithms :: attack_forward_no_delay() {
             robot -> drive_forward(std::min(150 * multiplier, max_speed));
             multiplier += 5;
             return 1;
-        //if we don't see the robot, brake and do nothing
-        } else if (enemy == CLOSE_MID) {
-            robot -> drive_forward(std::min(250 * multiplier, max_speed));
-            multiplier += 5;
-            return 1;
         } else if (enemy == CLOSE_MID_LEFT) {
             robot -> drive_custom(std::min(200 * multiplier, max_speed), std::min(120 * multiplier, max_speed), 1, 1);
             multiplier += 5;
@@ -179,6 +178,7 @@ int algorithms :: attack_forward_no_delay() {
             robot -> drive_custom(std::min(200 * multiplier, max_speed), std::min(100 * multiplier, max_speed), 1, 1);
             multiplier += 5;
             return 1;
+        //if we don't see the robot, brake and do nothing
         } else {
             multiplier = 1;
             robot -> brake();
@@ -186,7 +186,9 @@ int algorithms :: attack_forward_no_delay() {
             return 0;
         }
 }
-//returns 0 if we should proceed to attack_forward, returns 1 otherwise
+
+// returns 0 if we should proceed to attack_forward, returns 1 otherwise
+// changes turn direction to last seen direction
 int algorithms :: turn_towards_no_delay() {
     enemy_states enemy = enemyPosition;
     if(enemy == FRONT_LEFT) {

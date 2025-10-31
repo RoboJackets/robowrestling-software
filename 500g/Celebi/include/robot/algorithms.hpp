@@ -37,7 +37,6 @@ class algorithms {
         int attack_forward_no_delay();
         int turn_towards_no_delay();
         int dodge();
-        void seek_drive();
         int swerve();
         void test();
 };
