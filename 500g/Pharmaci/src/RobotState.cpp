@@ -117,21 +117,21 @@ void RobotState::calculateState(uint32_t time) {
     const int BACKUP_SPEED   = 200;
     const int ROTATE_SPEED   = 200;
 
-    const int BACKUP_MS_SIDE = 150; 
-    const int BACKUP_MS_BOTH = 200;
-    const int ROTATE_MS_SIDE = 120;
-    const int ROTATE_MS_BOTH = 120;
+    const int BACKUP_MS_SIDE = 250; 
+    const int BACKUP_MS_BOTH = 400;
+    const int ROTATE_MS_SIDE = 90;
+    const int ROTATE_MS_BOTH = 90;
 
     // debounce window to decide "both" vs "side-only"
     const int BOTH_WINDOW_MS = 20;
 
     // --- latch tunables (turn-hold after Left/Right detection)
-    const int LATCH_MS = 40;              // hold hard turn briefly
+    const int LATCH_MS = 30;              // hold hard turn briefly
     const int MIDDLE_CONFIRM_MS = 20;     // see middle this long to break latch early
 
     // --- NEW: anti-race minimum dwells to survive slow/jittery loops
-    const int MIN_BACKUP_DWELL_MS = 60;   // must back up at least this long
-    const int MIN_ROTATE_DWELL_MS = 120;  // must rotate at least this long
+    const int MIN_BACKUP_DWELL_MS = 45;   // must back up at least this long
+    const int MIN_ROTATE_DWELL_MS = 90;  // must rotate at least this long
 
     // Debounce state (static locals: no header changes)
     static bool     pendingLine = false;       // we saw a side hit and are waiting
@@ -349,7 +349,7 @@ void RobotState::calculateState(uint32_t time) {
 
     } else if (enemyPos == Position::None) {
 
-        const int ZIGZAG_MS = 350;
+        const int ZIGZAG_MS = 250;
 
         static bool zigLeft = false;
         static int ZIGZAG_INITIAL_MS = 0;
@@ -361,9 +361,9 @@ void RobotState::calculateState(uint32_t time) {
         }
 
         if (zigLeft) {
-            robotActions->drive(-100.0, 200.0);
+            robotActions->drive(-125.0, 255.0);
         } else {
-            robotActions->drive(200.0, -100.0);
+            robotActions->drive(255.0, -125.0);
         }
 
         return;
@@ -371,4 +371,5 @@ void RobotState::calculateState(uint32_t time) {
 
     // === Default: cruise ===
 }
+
 
