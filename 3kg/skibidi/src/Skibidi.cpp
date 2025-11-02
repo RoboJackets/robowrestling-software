@@ -9,18 +9,18 @@ Skibidi::Skibidi(void) {
     };
 
     this->ir_sensors = {
-        {IrDirection::RIGHT,        new IrSensor(2)},
-        {IrDirection::MID_RIGHT,    new IrSensor(3)},
-        {IrDirection::CENTER_RIGHT, new IrSensor(4)},
+        {IrDirection::LEFT,        new IrSensor(2)},
+        {IrDirection::MID_LEFT,    new IrSensor(3)},
+        {IrDirection::CENTER_LEFT, new IrSensor(4)},
         {IrDirection::CENTER,       new IrSensor(5)},
-        {IrDirection::CENTER_LEFT,  new IrSensor(6)},
-        {IrDirection::MID_LEFT,     new IrSensor(9)},
-        {IrDirection::LEFT,         new IrSensor(10)},
+        {IrDirection::CENTER_RIGHT,  new IrSensor(6)},
+        {IrDirection::MID_RIGHT,     new IrSensor(9)},
+        {IrDirection::RIGHT,         new IrSensor(10)},
     };
     //this->motor_driver = new MotorDriver(std::make_pair(1, 2), std::make_pair(1, 2));
-    this->motor_driver = new MotorDriver(11, 12, 25, 36, 37, 24);
+    this->motor_driver = new MotorDriver(11, 12, 36, 39, 38, 37);
 
-    this->start_module = new StartModule(33);
+    this->start_module = new StartModule(13);
 }
 
 StartModule* Skibidi::get_start_module() {
