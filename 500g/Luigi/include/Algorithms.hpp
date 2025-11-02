@@ -18,7 +18,7 @@ class algorithms {
   
     algorithms(motor_actions* motors, world_state* world, timer* algo_timer, timer* last_state_changed);
 
-    void selectBehavior(); // what to do if nothing else is happening
+    void selectBehavior();
     void followBehavior(EnemyPosition e, LinePosition l);
     void respondToEnemy(EnemyPosition currentPosition);  // do something based on enemy_pos
     void respondToLine(LinePosition l);   // do something based on line_pos
