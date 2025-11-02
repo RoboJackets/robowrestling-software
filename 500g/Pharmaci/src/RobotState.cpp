@@ -116,8 +116,8 @@ void RobotState::calculateState(uint32_t time) {
     const int BACKUP_SPEED   = 200;
     const int ROTATE_SPEED   = 200;
 
-    const int BACKUP_MS_SIDE = 250; 
-    const int BACKUP_MS_BOTH = 400;
+    const int BACKUP_MS_SIDE = 150; 
+    const int BACKUP_MS_BOTH = 200;
     const int ROTATE_MS_SIDE = 90;
     const int ROTATE_MS_BOTH = 90;
 
