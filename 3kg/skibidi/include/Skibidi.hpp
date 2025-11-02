@@ -1,8 +1,10 @@
 #ifndef SKIBIDI_HPP_
 #define SKIBIDI_HPP_
 
+#include <Adafruit_SSD1306.h>
 #include <map>
 #include <utility>
+#include <Wire.h>
 #include "MotorDriver.hpp"
 #include "Sensors/DoubleLineSensor.hpp"
 #include "Sensors/IrSensor.hpp"

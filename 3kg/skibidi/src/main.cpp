@@ -2,13 +2,21 @@
 #include "Strategies/SlammyWhammyImproved.hpp"
 #include "Skibidi.hpp"
 
+#define DIP_HI 26
+#define DIP_MID 27
+#define DIP_LO 33
+
 Skibidi *skibidi;
 State state;
 Strategy *strategy;
 
+Adafruit_SSD1306 disp(128, 64, &Wire2, -1);
+void display_debug_info(State* state, bool running);
+
 void setup(void) {
     // Serial initialization (for debugging)
     Serial.begin(9600);
+    Serial.println("Init");
     // Pin initialization -- handled by the things that use them
     // State initialization
     skibidi = new Skibidi();
@@ -33,6 +41,11 @@ void setup(void) {
 
     // Sensor initialization
     skibidi->initialize_sensors();
+
+    if (!disp.begin(SSD1306_SWITCHCAPVCC, 0x3C)) {
+        Serial.println("Failed to init display\n");
+        while (true) { delay(5000); }
+    }
 }
 
 char* linetos(Position ir) {
@@ -47,10 +60,13 @@ char* linetos(Position ir) {
 }
 
 void loop(void) {
-    // TODO: Convert to interrupt, send Teensy
-    // into low power at end of setup() and whenever
-    // start module goes low @ match end
+    // TODO: move into update_state
     StartModule* start_module = skibidi->get_start_module();
+
+    // Update sensors
+    skibidi->update_state(&state);
+    display_debug_info(&state, start_module->is_started());
+
     if (!start_module->is_started()) {
         state.driving_state = DrivingState::MBRAKE;
         state.motor_speed = 0;
@@ -58,9 +74,6 @@ void loop(void) {
         skibidi->execute_action(&state);
         return;
     }
-
-    // Update sensors
-    skibidi->update_state(&state);
 
     // Checking if we hit the border somewhere
     if (state.emergency_mvmt && millis() - state.emerg_started_millis < EMERG_MVMT_MILLIS) {
@@ -79,4 +92,32 @@ void loop(void) {
 
     // Execute decision
     skibidi->execute_action(&state);
+}
+
+void display_debug_info(State* state, bool started) {
+    unsigned short strat = 0;
+    strat = (digitalRead(DIP_HI) << 2) | (digitalRead(DIP_MID) << 1) | digitalRead(DIP_LO);
+
+    disp.clearDisplay();
+    disp.setTextSize(1);
+    disp.setTextColor(WHITE);
+    disp.setCursor(0, 0);
+
+    disp.println("------ SKIBIDI ------");
+    disp.printf("%s         STRAT: %hu\n", started ? "STRT" : "HALT", strat);
+    disp.printf("  L %d %d %d %d %d %d %d R\n",
+        state->active_ir_sensors[IrDirection::LEFT],
+        state->active_ir_sensors[IrDirection::MID_LEFT],
+        state->active_ir_sensors[IrDirection::CENTER_LEFT],
+        state->active_ir_sensors[IrDirection::CENTER],
+        state->active_ir_sensors[IrDirection::CENTER_RIGHT],
+        state->active_ir_sensors[IrDirection::MID_RIGHT],
+        state->active_ir_sensors[IrDirection::RIGHT]
+    );
+    disp.println("4");
+    disp.println("5");
+    disp.println("6");
+    disp.println("7");
+    disp.println("8");
+    disp.display();
 }
