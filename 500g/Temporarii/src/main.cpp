@@ -144,7 +144,7 @@ void setup() {
   algo = new Algorithm(action, timer);
   tempi = new RobotState(world, algo);
 
-  timer->set_action_timer(100);
+  timer = new Timer(millis());
 
   Serial.println("Starting Setup");
   Serial.begin(9600);
@@ -177,7 +177,7 @@ void pollSensors() {
   leftLine->setValue(analogRead(left_line));
   rightLine->setValue(analogRead(right_line));
 
-  timer->update_time(millis());
+  timer->updateTime();
 }
 
 /**

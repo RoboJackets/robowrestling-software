@@ -1,46 +1,38 @@
-/*
-* From Celebi program implementations
-*/
 #include "Sensors/Timer.hpp"
 
 Timer::Timer(unsigned long initial_time) {
-    this->match_start = initial_time;
-    this->action_start = initial_time;
-    this->current_time = initial_time;
-    this->timer_state = false;
+    start_time = initial_time;
+    duration = 0;
+    global_time = initial_time;
+    runningProcess = false;
 }
 
-void Timer::update_time(unsigned long new_time) {
-    current_time = new_time;
+void Timer::begin() {
+    start_time = 0;
+    global_time = 0;
+    runningProcess = false;
 }
 
-// return true if the timer has expired
-bool Timer::check_action_time() {
-    bool checkup = current_time - action_start >= action_length;
-    if (checkup) {
-        timer_state = false;
+void Timer::startTimer(unsigned long duration){
+    this->duration = duration;
+    start_time = global_time;
+    runningProcess = true;
+}
+
+void Timer::updateTime() {
+    global_time = global_time + 1;
+    if (duration > 0) {
+        duration = duration - 1;
     }
-    return checkup;
+    if (runningProcess && duration == 0) {
+        runningProcess = false;
+    }
 }
 
-unsigned long Timer::check_match_time() {
-    return current_time - match_start;
+bool Timer::getRunningProcess() {
+    return runningProcess;
 }
 
-void Timer::set_action_timer(unsigned long length) {
-    timer_state = true;
-    action_length = length;
-    action_start = current_time;
-}
-
-unsigned long Timer::get_action_start() {
-    return action_start;
-}
-
-unsigned long Timer::get_current_time() {
-    return current_time;
-}
-
-bool Timer::get_timer_state() {
-    return timer_state;
+int Timer::getDuration() {
+    return duration;
 }

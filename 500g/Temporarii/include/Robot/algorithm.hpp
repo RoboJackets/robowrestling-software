@@ -3,6 +3,7 @@
 #include "Sensors/lineSensor.hpp"
 #include "Enumerations/OnLine.hpp"
 #include "Enumerations/EnemyPositions.hpp"
+#include "Enumerations/AlgoLogs.hpp"
 #include "Sensors/Timer.hpp"
 
 #ifndef ALGORITHM_HPP
@@ -18,7 +19,8 @@ public:
     Algorithm(RobotActions *action, Timer *timer);
     void RunItDown(EnemyPositions pos);
     void search();
-    void backTrack(OnLine line_state);
+    void backTrack(OnLine line_state, AlgoLogs algo);
+    bool getTimer();
 };
 
 #endif
