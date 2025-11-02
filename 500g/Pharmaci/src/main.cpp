@@ -67,6 +67,7 @@ void setup() {
   worldState = new WorldState(leftLineSensor, rightLineSensor, leftIRSensor, leftMiddleIRSensor, middleIRSensor, rightMiddleIRSensor, rightIRSensor);
   robotState = new RobotState(worldState, robotActions, leftMotorDriver, rightMotorDriver);
 
+  delay(5000); // wait for 5 seconds before starting the robot
 }
 
 

@@ -119,14 +119,14 @@ void RobotState::calculateState(uint32_t time) {
 
     const int BACKUP_MS_SIDE = 150; 
     const int BACKUP_MS_BOTH = 200;
-    const int ROTATE_MS_SIDE = 90;
-    const int ROTATE_MS_BOTH = 90;
+    const int ROTATE_MS_SIDE = 120;
+    const int ROTATE_MS_BOTH = 120;
 
     // debounce window to decide "both" vs "side-only"
     const int BOTH_WINDOW_MS = 20;
 
     // --- latch tunables (turn-hold after Left/Right detection)
-    const int LATCH_MS = 30;              // hold hard turn briefly
+    const int LATCH_MS = 40;              // hold hard turn briefly
     const int MIDDLE_CONFIRM_MS = 20;     // see middle this long to break latch early
 
     // --- NEW: anti-race minimum dwells to survive slow/jittery loops
