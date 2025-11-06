@@ -28,7 +28,7 @@ class algorithms {
     public:
         algorithms(robot_actions* robo_actions, world_state* world, timer* draw_timer, timer *attack_timer);
         void match_strategy();
-        void slammy_whammy();
+        int slammy_whammy();
         void draw_seek();
         void seek();
         int draw_circle();

@@ -6,6 +6,7 @@ int fast_turn = 512;
 int fast_forward = 512;
 int max_speed = 512;
 
+
 algorithms :: algorithms(robot_actions *robot, world_state *world, timer* draw_timer, timer *attack_timer) {
     this -> robot = robot;
     this -> world = world;
@@ -22,25 +23,22 @@ algorithms :: algorithms(robot_actions *robot, world_state *world, timer* draw_t
 void algorithms :: match_strategy() {
     selfPosition = world -> line_check();
     enemyPosition = world -> enemy_pos();
-    // slammy_whammy();
-    draw_circle();
+    if (slammy_whammy() == 0) {
+        draw_circle();
+    }
 }
 
-void algorithms :: slammy_whammy() {
-    if (enemyPosition != UNKNOWN) {
-        if (turn_towards_no_delay() == 0) {
-            attack_forward_no_delay();
-        } else {
-            multiplier = 1;
-        }
-        attack_timer -> set_action_timer(100);
-    } else if (attack_timer -> check_action_time()) {
-        if (turn_direction == 0) {
-            robot -> turn_left(200);
-        } else {
-            robot -> turn_right(200);
-        }
+int algorithms :: slammy_whammy() {
+    if (enemyPosition == UNKNOWN) {
+        return 0;
     }
+    if (turn_towards_no_delay() == 0) {
+        attack_forward_no_delay();
+    } else {
+        multiplier = 1;
+    }
+    attack_timer -> set_action_timer(100);
+    return 1;
 }
 
 int algorithms :: draw_circle() {
@@ -49,7 +47,7 @@ int algorithms :: draw_circle() {
         states.circle = D_TURN;
         robot -> brake();
         states.attack = A_BLIND;
-        draw_timer -> set_action_timer(200);
+        draw_timer -> set_action_timer(100);
         return 0;
     } else if (states.circle == D_TURN && draw_timer -> check_action_time()) {
         states.circle = D_GO_STRAIGHT;
@@ -61,7 +59,7 @@ int algorithms :: draw_circle() {
     if (states.circle == D_GO_STRAIGHT) {
         //continue forward if no line detected
         if (selfPosition == OFF) {
-            robot -> drive_forward(60);
+            seek_drive();
         //there is a line, set an action to go backwards
         } else {
             states.attack = A_BLIND;
@@ -71,15 +69,32 @@ int algorithms :: draw_circle() {
         }
     //if the current state is go backwards
     } else if (states.circle == D_GO_BACKWARDS) {
-        robot -> drive_backward(80);
+        robot -> drive_backward(max_speed);
     } else {
-        robot -> turn_left(70);
+        robot -> turn_left(max_speed);
     }
     return 0;
 }
 
+int left_inc = -2;
+int right_inc = 2;
+int tolerance = 90;
+int base = 100;
+int left_speed = base;
+int right_speed = base;
+
 void algorithms :: seek_drive() {
-    robot -> drive_forward(100);
+    robot -> drive_custom(left_speed, right_speed, true, true);
+    if (millis() % 10 == 0) {
+        if (abs(left_speed-base) >= tolerance) {
+            left_inc *= -1;
+        }
+        if (abs(right_speed-base) >= tolerance) {
+            right_inc *= -1;
+        }
+        left_speed += left_inc;
+        right_speed += right_inc;
+    }
 }
 
 int algorithms :: dodge() {

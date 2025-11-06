@@ -26,10 +26,10 @@
 #define Ldist 28
 #define StartMod 29
 
-#define RmotorPos 3
-#define RmotorNeg 4
-#define LmotorPos 13
-#define LmotorNeg 33
+#define RmotorPos 4
+#define RmotorNeg 3
+#define LmotorPos 33
+#define LmotorNeg 13
 
 int i = 0;
 
@@ -159,7 +159,7 @@ void updateState() {
  * simple motordriver with speed and direction.  
  */ 
 void updateMotors() {
-    motors[0] = motors[0] * .8;
+    motors[0] = motors[0];
     if (motors[0] > 0) {  // if direction is forward
         analogWrite(LmotorPos, motors[0]);
         analogWrite(LmotorNeg, 0);
@@ -175,6 +175,7 @@ void updateMotors() {
         analogWrite(RmotorPos, 0);
         analogWrite(RmotorNeg, abs(motors[1]));
     }
+
 }
 
 void brake() {
@@ -183,12 +184,9 @@ void brake() {
 }
 
 void debug() {
-  //delay(50);
-  i++;
-  if (i != 500) {
+  if (millis() % 100 != 0) {
     return;
   }
-  i = 0;
   Serial.println("\n\n*****************");
   
   //Timer debugging
@@ -198,13 +196,13 @@ void debug() {
   // Serial.print("time since match start: ");
   // Serial.println(thymer -> check_match_time());
   // Serial.print("millies: ");
-  Serial.println(millis());
-  Serial.print("action timer started at: ");
-  Serial.println(attack_timer -> get_action_start());
-  Serial.print("current time from timer: ");
-  Serial.println(attack_timer -> get_current_time());
-  Serial.print("timer status: ");
-  Serial.println(attack_timer -> get_timer_state());
+  // Serial.println(millis());
+  // Serial.print("action timer started at: ");
+  // Serial.println(attack_timer -> get_action_start());
+  // Serial.print("current time from timer: ");
+  // Serial.println(attack_timer -> get_current_time());
+  // Serial.print("timer status: ");
+  // Serial.println(attack_timer -> get_timer_state());
   
   
   //line sensors
@@ -239,11 +237,11 @@ void debug() {
 
   // Serial.println("motors:");
 
-  // Serial.print("left motor: ");
-  // Serial.println(motors[0]);
+  Serial.print("left motor: ");
+  Serial.println(motors[0]);
 
-  // Serial.print("right motor: ");
-  // Serial.println(motors[1]);
+  Serial.print("right motor: ");
+  Serial.println(motors[1]);
 
 
   //state
