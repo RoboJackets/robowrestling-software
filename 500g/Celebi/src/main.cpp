@@ -93,22 +93,19 @@ void setup() {
     //initialize strategy
     algorithm = new algorithms(robot, world, draw_timer, attack_timer);
 
-
-
     // Serial.begin(9600);
     // Serial.print("we are running\n");
     draw_timer -> set_action_timer(10);
     attack_timer -> set_action_timer(10);
     // wait for start signal
-    // while (!digitalRead(StartMod)) {
-    //   // Serial.print(digitalRead(StartMod));
-    //   Serial.println(" Waiting for start signal");
-    // }
+    while (!digitalRead(StartMod)) {
+      Serial.print(digitalRead(StartMod));
+      Serial.println(" Waiting for start signal");
+    }
 }
 
 void loop() {
     pollSensors();
-
     updateState();
     updateMotors();
     

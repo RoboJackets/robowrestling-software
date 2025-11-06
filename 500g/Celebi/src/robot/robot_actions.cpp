@@ -3,6 +3,7 @@
 
 robot_actions :: robot_actions(int* motors) {
     this -> motors = motors;
+    acceleration = 10;
 }
 
 void robot_actions :: brake() {
@@ -11,8 +12,14 @@ void robot_actions :: brake() {
 }
 
 void robot_actions :: drive_forward(int speed) {
-    motors[0] = speed;
-    motors[1] = speed;
+    // cap speed increase to acceleration
+    if (speed - motors[0] > acceleration || speed - motors[1] > acceleration) {
+        motors[0] += acceleration;
+        motors[1] += acceleration;
+    } else {
+        motors[0] = speed;
+        motors[1] = speed;
+    }
 }
 
 void robot_actions :: drive_backward(int speed) {
