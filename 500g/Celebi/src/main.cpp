@@ -95,8 +95,8 @@ void setup() {
     //initialize strategy
     algorithm = new algorithms(robot, world, draw_timer, attack_timer, swerve_timer);
 
-    Serial.begin(9600);
-    Serial.print("we are running\n");
+    // Serial.begin(9600);
+    // Serial.print("we are running\n");
     draw_timer -> set_action_timer(10);
     attack_timer -> set_action_timer(10);
     swerve_timer -> set_action_timer(10);
@@ -105,7 +105,8 @@ void setup() {
     //   Serial.print(digitalRead(StartMod));
     //   Serial.println(" Waiting for start signal");
     // }
-    // delay(5000);
+    delay(5000);
+    swerve_timer -> set_action_timer(500);
 }
 
 void loop() {

@@ -20,10 +20,18 @@ algorithms :: algorithms(robot_actions *robot, world_state *world, timer* draw_t
     states.attack = A_BLIND;
     turn_direction = 0;
 }
-
+bool match_start = true;
 void algorithms :: match_strategy() {
     selfPosition = world -> line_check();
     enemyPosition = world -> enemy_pos();
+    if (match_start) {
+        if (swerve_timer -> check_action_time()) {
+            match_start = false;
+        } else {
+            robot -> drive_forward(max_speed);
+            return;
+        }
+    }
     if (slammy_whammy() == 0) {
         draw_circle();
     }
