@@ -4,13 +4,13 @@
 
 class world_state {
     private:
-        static const int buffer_size = 500;
+        static const int buffer_size = 60;
         int* ir_sensors;
         int* lineSensors;
-        int concurrency[3];
+        int concurrency[5];
         long time;
-        float rolling_avgs[3][buffer_size] = {0};
-        float avgs[3] = {0};
+        float rolling_avgs[5][buffer_size] = {0};
+        float avgs[5] = {0};
         int head = 0;
     public:
         world_state(int* line_sensors, int* ir_sensors);

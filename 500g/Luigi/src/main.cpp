@@ -10,10 +10,10 @@ const int middleSensor = 7;
 const int rightSensor = 4;
 const int rightSideSensor = 2;
 
-const int rightB = 3;
-const int rightF = 5;
-const int leftB = 9;
-const int leftF = 10;
+const int rightB = 10;
+const int rightF = 9;
+const int leftB = 3; 
+const int leftF = 5;
 
 const int startPin = 6;
 const int leftLineSensor = 16;
@@ -31,16 +31,17 @@ int motors[2] = {0};
 int line_sensors[2] = {0};
 int ir_sensors[5] = {0};
 
-timer* algo_timer = new timer(&currentMillis);
 timer* last_enemy_changed = new timer(&currentMillis);
+timer* behavior_timer = new timer(&currentMillis);
 world_state* ws = new world_state(line_sensors, ir_sensors);
 motor_actions* ma = new motor_actions(motors);
-algorithms* algo = new algorithms(ma, ws, algo_timer, last_enemy_changed);
+algorithms* algo = new algorithms(ma, ws, last_enemy_changed, behavior_timer);
 
 void pullSensors();
 void writeMotors();
 void debug();
 void debugLine();
+void debugLineLP(LinePosition lp);
 void debugIR();
 void debugAverages();
 void debugEnemy(EnemyPosition ep);
@@ -66,34 +67,29 @@ void setup() {
   pinMode(0, OUTPUT);
 
   Serial.begin(9600);
-  Serial.println("Starting up...");
-  // while (digitalRead(startPin) == 0) {
-  //   printCounter++;
-  //   if (printCounter%100000 == 0)
-  //     Serial.println("Waiting to start");
-  // }
+  while (analogRead(startPin) <= 900) {
+    printCounter++;
+    if (printCounter%100 == 0)
+      Serial.println("Waiting to start");
+  }
+  // delay(5000);
+  Serial.println("Started");
 }
 
 void loop() {
-  // while (digitalRead(startPin) == 0) {
-  //   printCounter++;
-  //   if (printCounter%100000 == 0)
-  //     Serial.println("Waiting to start");
-  // }
-  digitalWrite(0, HIGH);
-  pullSensors();
-  ws->clean_sensors();
+  // pullSensors();
+  // ws->clean_sensors();
+  pullSensors(); 
   avgs = ws->get_sensors_avg();
-  algo->selectBehavior();  
+  algo->selectMode();  
   writeMotors();
-  debug();
 }
 
 void pullSensors() {
-  ir_sensors[0] = digitalRead(leftSensor);
-  ir_sensors[1] = digitalRead(middleSensor);
-  ir_sensors[2] = digitalRead(rightSensor);
-  ir_sensors[3] = digitalRead(leftSideSensor);
+  ir_sensors[0] = digitalRead(leftSideSensor);
+  ir_sensors[1] = digitalRead(leftSensor);
+  ir_sensors[2] = digitalRead(middleSensor);
+  ir_sensors[3] = digitalRead(rightSensor);
   ir_sensors[4] = digitalRead(rightSideSensor);
   currentMillis = millis();
   line_sensors[0] = analogRead(leftLineSensor);
@@ -101,17 +97,18 @@ void pullSensors() {
 }
 
 void debug() {
-  Serial.print("Line: ");
   printCounter++;
-  if (printCounter % 10000 == 0) {
+  if (printCounter % 100 == 0) {
     debugLine();
-    debugIR();
-    // debugAverages();
+    debugLineLP(ws->line_check());
+    debugEnemy(ws->enemy_pos());
     Serial.println();
   }
 }
 
 void writeMotors() {
+  motors[0] = motors[0]/1.75;
+  motors[1] = motors[1]/1.75;
   if (motors[0] > 0) {
     analogWrite(leftF, abs(motors[0]));
     analogWrite(leftB, 0);
@@ -150,6 +147,16 @@ void debugEnemy(EnemyPosition ep){
   }
   Serial.println();
 }
+
+void debugLineLP(LinePosition lp) {
+  switch(lp) {
+    case OFF_LINE: Serial.println("OFF LINE "); break;
+    case LEFT_LINE: Serial.println("LEFT LINE "); break;
+    case RIGHT_LINE: Serial.println("RIGHT LINE "); break;
+    case CENTER_LINE: Serial.println("CENTER LINE "); break;
+  }
+}
+
 void debugLine(){
   for(int i = 0; i < 2; i++){
     Serial.print(line_sensors[i]);
@@ -158,7 +165,7 @@ void debugLine(){
 }
 
 void debugIR(){
-  for(int i = 0; i < 3; i++){
+  for(int i = 0; i < 5; i++){
     Serial.print(ir_sensors[i]);
     Serial.print(" ");
   }
@@ -172,7 +179,7 @@ void debugDIP(){
 }
 
 void debugAverages(){
-  for(int i = 0; i < 3; i++){
+  for(int i = 0; i < 5; i++){
     Serial.print(avgs[i]);
     Serial.print(" ");
   }

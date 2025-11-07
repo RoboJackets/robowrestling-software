@@ -9,20 +9,21 @@ class algorithms {
   private:
     motor_actions* motors;
     world_state* world;
-    timer* algo_timer;
+    timer* behavior_timer;
     EnemyPosition lastEnemyPos = NONE;
-    RobotMode mode = FOLLOW_LINE;
     EnemyPosition currentEnemyPos = NONE; 
+    Behavior behavior = NO;
     timer* last_state_changed;
   public:
   
-    algorithms(motor_actions* motors, world_state* world, timer* algo_timer, timer* last_state_changed);
+    algorithms(motor_actions* motors, world_state* world, timer* behavior_timer, timer* last_state_changed);
 
-    void selectBehavior();
-    void followBehavior(EnemyPosition e, LinePosition l);
-    void respondToEnemy(EnemyPosition currentPosition);  // do something based on enemy_pos
-    void respondToLine(LinePosition l);   // do something based on line_pos
-    void drive_avgs(float* avgs);
+    void selectMode();
+    void followBehavior();
+    void chooseAction(EnemyPosition currentPosition, LinePosition l);  // do something based on enemy_pos
+    void liveDrive(EnemyPosition currentPosition, LinePosition l);
+    // void respondToLine(LinePosition l);   // do something based on line_pos
+    // void drive_avgs(float* avgs);
 };
 
 #endif
