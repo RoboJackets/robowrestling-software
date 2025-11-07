@@ -67,7 +67,7 @@ void setup() {
   worldState = new WorldState(leftLineSensor, rightLineSensor, leftIRSensor, leftMiddleIRSensor, middleIRSensor, rightMiddleIRSensor, rightIRSensor);
   robotState = new RobotState(worldState, robotActions, leftMotorDriver, rightMotorDriver);
 
-  delay(5000); // wait for 5 seconds before starting the robot
+  delay(4800); // wait for 5 seconds before starting the robot
 }
 
 
@@ -128,6 +128,8 @@ const char* positionToString(Position pos) {
         case Position::On_Line_Right: return "On_Line_Right";
         case Position::Off_Line: return "Off_Line";
         case Position::On_Line: return "On_Line";
+        case Position::Flag_Left: return "Flag_Left";
+        case Position::Flag_Right: return "Flag_Right";
         default: return "Unknown";
     }
 }

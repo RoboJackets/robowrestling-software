@@ -14,12 +14,73 @@ WorldState::WorldState(LineSensor *leftLineSensorPointer, LineSensor *rightLineS
     lastEnemyPosition = Position::Middle_Far;
 }
 
+// Position WorldState::getEnemyPosition() {
+//     int left = leftIRSensor->getValue();
+//     int leftMiddle = leftMiddleIRSensor->getValue();
+//     int middle = middleIRSensor->getValue();
+//     int rightMiddle = rightMiddleIRSensor->getValue();
+//     int right = rightIRSensor->getValue();
+
+//     if (middle && leftMiddle && rightMiddle) {
+//         lastEnemyPosition = Position::Middle_Close;
+//         return Position::Middle_Close;
+//     }
+
+//     if (middle && leftMiddle && !rightMiddle) {
+//         lastEnemyPosition = Position::Left_Middle_Close;
+//         return Position::Left_Middle_Close;
+//     }
+    
+//     if (middle && rightMiddle && !leftMiddle) {
+//         lastEnemyPosition = Position::Right_Middle_Close;
+//         return Position::Right_Middle_Close;
+//     }
+
+//     if (middle) {
+//         lastEnemyPosition = Position::Middle_Far;
+//         return Position::Middle_Far;
+//     }
+
+//     if (left) {
+//         lastEnemyPosition = Position::Left;
+//         return Position::Left;
+//     }
+
+//     if (right) {
+//         lastEnemyPosition = Position::Right;
+//         return Position::Right;
+//     }
+
+//     if (rightMiddle) {
+//         lastEnemyPosition = Position::Right_Middle;
+//         return Position::Right_Middle;
+//     }
+
+//     if (leftMiddle) {
+//         lastEnemyPosition = Position::Left_Middle;
+//         return Position::Left_Middle;
+//     }
+
+//     return Position::None;
+// }
+
+
 Position WorldState::getEnemyPosition() {
     int left = leftIRSensor->getValue();
     int leftMiddle = leftMiddleIRSensor->getValue();
     int middle = middleIRSensor->getValue();
     int rightMiddle = rightMiddleIRSensor->getValue();
     int right = rightIRSensor->getValue();
+
+    if (middle && rightMiddle && right) {
+        lastEnemyPosition = Position::Flag_Right;
+        return Position::Flag_Right;
+    }
+
+    if (middle && leftMiddle && left) {
+        lastEnemyPosition = Position::Flag_Left;
+        return Position::Flag_Left;
+    }
 
     if (middle && leftMiddle && rightMiddle) {
         lastEnemyPosition = Position::Middle_Close;

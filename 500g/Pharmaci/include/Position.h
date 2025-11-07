@@ -13,6 +13,9 @@ enum class Position {
     Right_Middle,
     Right,
 
+    Flag_Left,
+    Flag_Right,
+
 
     On_Line_Left,
     On_Line_Right,
