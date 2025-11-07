@@ -112,7 +112,8 @@ void setup() {
       Serial.println("waiting");
     }
     delay(5000);
-    swerve_timer -> set_action_timer(500);
+    swerve_timer -> update_time(millis());
+    swerve_timer -> set_action_timer(300);
 }
 
 void loop() {
