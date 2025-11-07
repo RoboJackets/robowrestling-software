@@ -52,6 +52,7 @@ world_state* world;
 
 timer *draw_timer;
 timer *attack_timer;
+timer *swerve_timer;
 
 //filter
 int print = 0;
@@ -83,6 +84,7 @@ void setup() {
     //initialize timer
     draw_timer = new timer(millis());
     attack_timer = new timer(millis());
+    swerve_timer = new timer(millis());
 
     //initialize world state
     world = new world_state(line_sensors, ir_sensors);
@@ -91,17 +93,19 @@ void setup() {
     robot = new robot_actions(motors);    
 
     //initialize strategy
-    algorithm = new algorithms(robot, world, draw_timer, attack_timer);
+    algorithm = new algorithms(robot, world, draw_timer, attack_timer, swerve_timer);
 
-    // Serial.begin(9600);
-    // Serial.print("we are running\n");
+    Serial.begin(9600);
+    Serial.print("we are running\n");
     draw_timer -> set_action_timer(10);
     attack_timer -> set_action_timer(10);
+    swerve_timer -> set_action_timer(10);
     // wait for start signal
-    while (!digitalRead(StartMod)) {
-      Serial.print(digitalRead(StartMod));
-      Serial.println(" Waiting for start signal");
-    }
+    // while (!digitalRead(StartMod)) {
+    //   Serial.print(digitalRead(StartMod));
+    //   Serial.println(" Waiting for start signal");
+    // }
+    // delay(5000);
 }
 
 void loop() {
@@ -145,6 +149,7 @@ void pollSensors() {
 
   draw_timer -> update_time(millis());
   attack_timer -> update_time(millis());
+  swerve_timer -> update_time(millis());
 }
 
 void updateState() {

@@ -14,6 +14,7 @@ class algorithms {
         world_state* world;
         timer* draw_timer;
         timer* attack_timer;
+        timer* swerve_timer;
         line_states selfPosition;
         enemy_states enemyPosition;
         bool timer_set;
@@ -26,10 +27,11 @@ class algorithms {
         } states;
 
     public:
-        algorithms(robot_actions* robo_actions, world_state* world, timer* draw_timer, timer *attack_timer);
+        algorithms(robot_actions* robo_actions, world_state* world, timer* draw_timer, timer *attack_timer, timer *swerve_timer);
         void match_strategy();
         int slammy_whammy();
         void draw_seek();
+        void seek_drive();
         void seek();
         int draw_circle();
         int attack_forward();

@@ -7,11 +7,12 @@ int fast_forward = 512;
 int max_speed = 512;
 
 
-algorithms :: algorithms(robot_actions *robot, world_state *world, timer* draw_timer, timer *attack_timer) {
+algorithms :: algorithms(robot_actions *robot, world_state *world, timer* draw_timer, timer *attack_timer, timer *swerve_timer) {
     this -> robot = robot;
     this -> world = world;
     this -> draw_timer = draw_timer;
     this -> attack_timer = attack_timer;
+    this -> swerve_timer = swerve_timer;
     selfPosition = OFF;
     enemyPosition = UNKNOWN;
     states.circle = D_GO_STRAIGHT;
@@ -90,16 +91,23 @@ int left_speed = base;
 int right_speed = base;
 
 void algorithms :: seek_drive() {
-    robot -> drive_custom(left_speed, right_speed, true, true);
-    if (millis() % 10 == 0) {
-        if (abs(left_speed-base) >= tolerance) {
-            left_inc *= -1;
+    if (swerve_timer -> check_action_time()) {
+        robot -> drive_custom(left_speed, right_speed, true, true);
+        if (millis() % 10 == 0) {
+            if (abs(left_speed-base) >= tolerance) {
+                left_inc *= -1;
+            }
+            if (abs(right_speed-base) >= tolerance) {
+                right_inc *= -1;
+            }
+            left_speed += left_inc;
+            right_speed += right_inc;
+            if (left_speed == right_speed) {
+                swerve_timer -> set_action_timer(500);
+            }
         }
-        if (abs(right_speed-base) >= tolerance) {
-            right_inc *= -1;
-        }
-        left_speed += left_inc;
-        right_speed += right_inc;
+    } else {
+        robot -> drive_forward(base);
     }
 }
 
