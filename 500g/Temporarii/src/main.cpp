@@ -17,25 +17,21 @@
 /**
  * Pinouts
  */
-const int fr_pwm = 9;
 const int fr_move_forward = 7;
-const int fr_move_backward = 6;
-const int fl_pwm = 10;
-const int fl_move_forward = 16;
-const int fl_move_backward = 15;
-const int br_pwm = 11;
-const int br_move_forward = 13;
+const int fr_move_backward = 8;
+const int fl_move_forward = 9;
+const int fl_move_backward = 10;
+const int br_move_forward = 11;
 const int br_move_backward = 12;
-const int bl_pwm = 8;
-const int bl_move_forward = 5;
-const int bl_move_backward = 14;
+const int bl_move_forward = 24;
+const int bl_move_backward = 25;
 
-const int left_ir = 26;
+const int left_ir = 30;
 const int mid_ir = 24;
-const int right_ir = 25;
+const int right_ir = 2;
 
 const int left_line = 22;
-const int right_line = 23;
+const int fr_line = 15;
 
 // Start mod
 // const int start_mod = 21;
@@ -84,16 +80,12 @@ void calculateState();
  */
 void setup() {
   // pinmode definitions
-  pinMode(fr_pwm, OUTPUT);
   pinMode(fr_move_forward, OUTPUT);
   pinMode(fr_move_backward, OUTPUT);
-  pinMode(fl_pwm, OUTPUT);
   pinMode(fl_move_forward, OUTPUT);
   pinMode(fl_move_backward, OUTPUT);
-  pinMode(br_pwm, OUTPUT);
   pinMode(br_move_forward, OUTPUT);
   pinMode(br_move_backward, OUTPUT);
-  pinMode(bl_pwm, OUTPUT);
   pinMode(bl_move_forward, OUTPUT);
   pinMode(bl_move_backward, OUTPUT);
 
@@ -101,14 +93,8 @@ void setup() {
   pinMode(mid_ir, INPUT);
   pinMode(right_ir, INPUT);
 
-  pinMode(left_line, INPUT);
-  pinMode(right_line, INPUT);
-
-  pinMode(19, OUTPUT);
-  pinMode(20, OUTPUT);
-  digitalWrite(19, HIGH);
-  digitalWrite(20, HIGH);
-
+  // pinMode(left_line, INPUT);
+  // pinMode(right_line, INPUT);
   // pinMode(start_mod, INPUT);
 
   leftIR = new IrSensor();
@@ -148,7 +134,6 @@ void setup() {
 
   Serial.println("Starting Setup");
   Serial.begin(9600);
-  delay(5000);
 }
 
 /**
@@ -157,8 +142,8 @@ void setup() {
 void loop() {
   // 5 Seconds before start for comp
   pollSensors();
-  calculateState();
-  writeMotors();
+  // calculateState();
+  // writeMotors();
   // debug_counter++;
   // if (debug_counter >= 20) {
   //   debug();
@@ -174,8 +159,13 @@ void pollSensors() {
   midIR->setValue(digitalRead(mid_ir));
   rightIR->setValue(digitalRead(right_ir));
 
-  leftLine->setValue(analogRead(left_line));
-  rightLine->setValue(analogRead(right_line));
+  // leftLine->setValue(analogRead(left_line));
+  rightLine->setValue(analogRead(fr_line));
+
+  Serial.print("FR Line: ");
+  Serial.println(analogRead(fr_line));
+  // Serial.print("Right IR: ");
+  // Serial.println(rightIR->getValue());
 
   timer->updateTime();
 }
@@ -192,18 +182,17 @@ void calculateState() {
  */
 void writeMotors() {
   // 0: forward, 1: backward
-  analogWrite(fr_pwm, frMotor->getSpeed());
-  digitalWrite(fr_move_forward, frMotor->getDirection() == 0 ? HIGH : LOW);
-  digitalWrite(fr_move_backward, frMotor->getDirection() == 1 ? HIGH : LOW);
-  analogWrite(fl_pwm, flMotor->getSpeed());
-  digitalWrite(fl_move_forward, flMotor->getDirection() == 0 ? HIGH : LOW);
-  digitalWrite(fl_move_backward, flMotor->getDirection() == 1 ? HIGH : LOW);
-  analogWrite(br_pwm, brMotor->getSpeed());
-  digitalWrite(br_move_forward, brMotor->getDirection() == 0 ? HIGH : LOW);
-  digitalWrite(br_move_backward, brMotor->getDirection() == 1 ? HIGH : LOW);
-  analogWrite(bl_pwm, blMotor->getSpeed());
-  digitalWrite(bl_move_forward, blMotor->getDirection() == 0 ? HIGH : LOW);
-  digitalWrite(bl_move_backward, blMotor->getDirection() == 1 ? HIGH : LOW);
+  brMotor->setSpeed(100);
+  brMotor->setDirection(0);
+
+  analogWrite(br_move_forward, 255);
+  analogWrite(br_move_backward, 0);
+  // analogWrite(fl_move_forward, flMotor->getDirection() == 0 ? flMotor->getSpeed() : 0);
+  // analogWrite(fl_move_backward, flMotor->getDirection() == 1 ? flMotor->getSpeed() : 0);
+  // analogWrite(br_move_forward, brMotor->getDirection() == 0 ? brMotor->getSpeed() : 0);
+  // analogWrite(br_move_backward, brMotor->getDirection() == 1 ? brMotor->getSpeed() : 0);
+  // analogWrite(bl_move_forward, blMotor->getDirection() == 0 ? blMotor->getSpeed() : 0);
+  // analogWrite(bl_move_backward, blMotor->getDirection() == 1 ? blMotor->getSpeed() : 0);
 }
 
 /**
