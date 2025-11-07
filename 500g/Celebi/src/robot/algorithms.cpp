@@ -2,8 +2,6 @@
 #include "enums/world_enums.hpp"
 #include <Arduino.h>
 int multiplier = 1;
-int fast_turn = 512;
-int fast_forward = 512;
 int max_speed = 512;
 
 
@@ -16,8 +14,6 @@ algorithms :: algorithms(robot_actions *robot, world_state *world, timer* draw_t
     selfPosition = OFF;
     enemyPosition = UNKNOWN;
     states.circle = D_GO_STRAIGHT;
-    states.swerve = S_UNKNOWN;
-    states.attack = A_BLIND;
     turn_direction = 0;
 }
 bool match_start = true;
@@ -61,7 +57,6 @@ int algorithms :: draw_circle() {
         // finished backing off, start turning
         states.circle = D_TURN;
         robot -> brake();
-        states.attack = A_BLIND;
         draw_timer -> set_action_timer(100);
         return 0;
     } else if (states.circle == D_TURN && draw_timer -> check_action_time()) {
@@ -77,7 +72,6 @@ int algorithms :: draw_circle() {
             seek_drive();
         //there is a line, set an action to go backwards
         } else {
-            states.attack = A_BLIND;
             robot -> brake();
             draw_timer -> set_action_timer(200);
             states.circle = D_GO_BACKWARDS;
@@ -130,61 +124,6 @@ int algorithms :: dodge() {
     return 0;
 }
 
-// return 0 if we should go forward, return -1 if we don't see the robot
-// UNUSED
-int algorithms :: swerve() {
-    if (states.swerve == S_GO_STRAIGHT && draw_timer -> check_action_time() == 0) {
-        robot -> drive_forward(100);
-        return 1;
-    }
-    if (states.swerve == S_ATTACK) {
-        return 0;
-    } else if (states.swerve == S_UNKNOWN) {
-        if (enemyPosition == FRONT || enemyPosition == FRONT_LEFT || enemyPosition == FRONT_RIGHT) {
-            states.swerve = S_TURN_AWAY;
-            draw_timer -> set_action_timer(400);
-            robot -> brake();
-            return 1;
-        }
-        robot -> brake();
-        return -1;
-    } else if (draw_timer -> check_action_time()) {
-        if (enemyPosition != UNKNOWN) {
-            states.swerve = S_ATTACK;
-            return 0;
-        } else {
-            states.swerve = S_UNKNOWN;
-            return -1;
-        }
-    } else if (states.swerve == S_TURN_AWAY) {
-        if (enemyPosition == RIGHT) {
-            states.swerve = S_GO_STRAIGHT;
-            robot -> brake();
-            draw_timer -> set_action_timer(40);
-            return 1;
-        }
-        robot -> turn_left(80);
-        return 1;
-    } else if (states.swerve == S_GO_STRAIGHT) {
-        if (enemyPosition == UNKNOWN) {
-            robot -> brake();
-            draw_timer -> set_action_timer(400);
-            states.swerve = S_TURN_BACK;
-            return 1;
-        }
-        robot -> drive_forward(100);
-        return 1;
-    } else if (states.swerve == S_TURN_BACK) {
-        if (enemyPosition == FRONT || enemyPosition == CLOSE_MID_LEFT
-            || enemyPosition == CLOSE_MID_RIGHT || enemyPosition == CLOSE_MID) {
-            states.swerve = S_ATTACK;
-            return 0;
-        }
-        robot -> turn_right(80);
-        return 1;
-    }
-    return 0;
-}
 
 //drive forward if we see someone in front of us
 // assume that we have already been confirmed to see
@@ -213,7 +152,6 @@ int algorithms :: attack_forward_no_delay() {
         } else {
             multiplier = 1;
             robot -> brake();
-            states.swerve = S_UNKNOWN;
             return 0;
         }
 }
@@ -224,22 +162,22 @@ int algorithms :: turn_towards_no_delay() {
     enemy_states enemy = enemyPosition;
     if(enemy == FRONT_LEFT) {
         //turn left a little slower
-        robot -> turn_left(fast_turn * .7);
+        robot -> turn_left(max_speed * .7);
         turn_direction = 0;
         return 1;
     } else if (enemy == LEFT) {
         //turn left
-        robot -> turn_left(fast_turn * .8);
+        robot -> turn_left(max_speed * .8);
         turn_direction = 0;
         return 1;
     } else if (enemy == FRONT_RIGHT) {
         //turn right a little slower
-        robot -> turn_right(fast_turn * .7);
+        robot -> turn_right(max_speed * .7);
         turn_direction = 1;
         return 1;
     } else if (enemy == RIGHT) {
         //turn right
-        robot -> turn_right(fast_turn * .8);
+        robot -> turn_right(max_speed * .8);
         turn_direction = 1;
         return 1;
     } else {
