@@ -99,7 +99,7 @@ void setup() {
     // Serial.print("we are running\n");
     draw_timer -> set_action_timer(10);
     attack_timer -> set_action_timer(10);
-    swerve_timer -> set_action_timer(10);
+    //swerve_timer -> set_action_timer(10);
     // wait for start signal
     // while (!digitalRead(StartMod)) {
     //   Serial.print(digitalRead(StartMod));
@@ -113,9 +113,9 @@ void loop() {
     pollSensors();
     updateState();
     updateMotors();
-    
+
     // listen for stop signal
-    // if (!digitalRead(StartMod)) {
+    // if (!digitalRead(StrtMod)) {
     //   while(true) {
     //     brake();
     //     Serial.println("braking");

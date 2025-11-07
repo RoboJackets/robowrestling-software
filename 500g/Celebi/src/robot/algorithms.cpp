@@ -25,6 +25,7 @@ void algorithms :: match_strategy() {
     selfPosition = world -> line_check();
     enemyPosition = world -> enemy_pos();
     if (match_start) {
+        Serial.println("match start");
         if (swerve_timer -> check_action_time()) {
             match_start = false;
         } else {
