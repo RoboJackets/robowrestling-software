@@ -25,11 +25,14 @@
 #define LMIDdist 8
 #define Ldist 28
 #define StartMod 29
+#define StartButton 23
 
 #define RmotorPos 4
 #define RmotorNeg 3
 #define LmotorPos 33
 #define LmotorNeg 13
+
+
 
 int i = 0;
 
@@ -80,6 +83,7 @@ void setup() {
     pinMode(RMIDdist, INPUT);
     pinMode(Rdist, INPUT);
     pinMode(StartMod, INPUT);
+    pinMode(StartButton, INPUT);
 
     //initialize timer
     draw_timer = new timer(millis());
@@ -99,12 +103,14 @@ void setup() {
     // Serial.print("we are running\n");
     draw_timer -> set_action_timer(10);
     attack_timer -> set_action_timer(10);
-    //swerve_timer -> set_action_timer(10);
     // wait for start signal
     // while (!digitalRead(StartMod)) {
     //   Serial.print(digitalRead(StartMod));
     //   Serial.println(" Waiting for start signal");
     // }
+    while (!digitalRead(StartButton)) {
+      Serial.println("waiting");
+    }
     delay(5000);
     swerve_timer -> set_action_timer(500);
 }
