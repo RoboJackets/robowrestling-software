@@ -13,6 +13,7 @@ class algorithms {
     EnemyPosition lastEnemyPos = NONE;
     EnemyPosition currentEnemyPos = NONE; 
     Behavior behavior = NO;
+    bool started = false;
     timer* last_state_changed;
   public:
   

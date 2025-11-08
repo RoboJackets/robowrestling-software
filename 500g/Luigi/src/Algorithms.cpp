@@ -29,13 +29,15 @@ void algorithms::followBehavior() {
   else {
     switch (behavior) {
       case TURN_AROUND:
-        if (behavior_timer->elapsedMilliseconds() < 250) {
-          motors->driveBackward(200);
+        if (behavior_timer->elapsedMilliseconds() < 125) {
+          motors->driveBackward(250);
         }
         else {
-          motors->spinRight(100);
+          motors->spinRight(250);
         }
         break;
+      case CHARGE:
+        motors->driveForward(200);
       default:
         break;
     }
@@ -43,7 +45,14 @@ void algorithms::followBehavior() {
 }
 
 void algorithms::chooseAction(EnemyPosition currentPosition, LinePosition linePosition) {
-  if (behavior != NO) {
+  if (started == false) {
+    behavior = CHARGE;
+    behavior_timer->reset();
+    behavior_timer->start();
+    behavior_timer->setTarget(100);
+    started = true;
+  }
+  else if (behavior != NO) {
     followBehavior();
   }
   else {
@@ -51,13 +60,21 @@ void algorithms::chooseAction(EnemyPosition currentPosition, LinePosition linePo
         behavior = TURN_AROUND;
         behavior_timer->reset();
         behavior_timer->start();
-        behavior_timer->setTarget(500);
+        behavior_timer->setTarget(250);
       }
     else if (linePosition == RIGHT_LINE) {
       motors->spinRight(100);
+        // behavior = TURN_AROUND;
+        // behavior_timer->reset();
+        // behavior_timer->start();
+        // behavior_timer->setTarget(250);
     }
     else if (linePosition == LEFT_LINE) {
       motors->spinLeft(100);
+        // behavior = TURN_AROUND;
+        // behavior_timer->reset();
+        // behavior_timer->start();
+        // behavior_timer->setTarget(250);
     }
     else {
       liveDrive(currentPosition, linePosition);
@@ -73,149 +90,152 @@ void algorithms::chooseAction(EnemyPosition currentPosition, LinePosition linePo
 void algorithms::liveDrive(EnemyPosition currentPosition, LinePosition linePosition) {
   switch(currentPosition) {
     case LEFT:
-      if(last_state_changed->elapsedMilliseconds() < 500) {
-        switch(lastEnemyPos) {
-          case FARFRONT:
-            motors->customDrive(120, 80);
-            break;
-          case FRONT:
-            motors->customDrive(120, 60);
-            break;
-          case MIDLEFT:
-            motors->customDrive(120, 40);
-            break;
-          default:
-            motors->spinLeft(100);
-            break;
-        }
-      } else {
-      motors->customDrive(120, 60);
-      }
+      motors->spinLeft(250);
+      // if(last_state_changed->elapsedMilliseconds() < 500) {
+      //   switch(lastEnemyPos) {
+      //     case FARFRONT:
+      //       motors->customDrive(120, 80);
+      //       break;
+      //     case FRONT:
+      //       motors->customDrive(120, 60);
+      //       break;
+      //     case MIDLEFT:
+      //       motors->customDrive(120, 40);
+      //       break;
+      //     default:
+      //       motors->spinLeft(100);
+      //       break;
+      //   }
+      // } else {
+      // motors->customDrive(120, 60);
+      // }
       break;
     case RIGHT:
-      if(last_state_changed->elapsedMilliseconds() < 500) {
-        switch(lastEnemyPos) {
-          case FARFRONT:
-            motors->customDrive(80, 120);
-            break;
-          case FRONT:
-            motors->customDrive(60, 120);
-            break;
-          case MIDRIGHT:
-            motors->customDrive(40, 120);
-            break;
-          default:
-            motors->spinRight(100);
-            break;
-        }
-      } else {
-      motors->customDrive(60, 120);
-      }
+      motors->spinRight(200);
+      // if(last_state_changed->elapsedMilliseconds() < 500) {
+      //   switch(lastEnemyPos) {
+      //     case FARFRONT:
+      //       motors->customDrive(80, 120);
+      //       break;
+      //     case FRONT:
+      //       motors->customDrive(60, 120);
+      //       break;
+      //     case MIDRIGHT:
+      //       motors->customDrive(40, 120);
+      //       break;
+      //     default:
+      //       motors->spinRight(100);
+      //       break;
+      //   }
+      // } else {
+      // motors->customDrive(60, 120);
+      // }
       break;
     case FRONT:
       if(last_state_changed->elapsedMilliseconds() < 500) {
         switch (lastEnemyPos) {
           case FARFRONT:
-            motors->driveForward(250);
+            motors->driveForward(382);
             break;
           case MIDLEFT:
-            motors->customDrive(250, 225);
+            motors->customDrive(382, 330);
             break;
           case MIDRIGHT:
-            motors->customDrive(225, 250);
+            motors->customDrive(330, 382);
             break;  
           default:
-            motors->driveForward(250);
+            motors->driveForward(382);
             break;
       }
       } else {
-        motors->driveForward(250);
+        motors->driveForward(382);
       }
       break;
     case MIDLEFT:
       if(last_state_changed->elapsedMilliseconds() < 500) {
         switch (lastEnemyPos) {
           case LEFT:
-            motors->customDrive(130, 90);
+            motors->customDrive(140, 60);
             break;
           case FARFRONT:
             motors->customDrive(100, 120);
             break;  
           default:
-            motors->customDrive(120, 90);
+            motors->customDrive(140, 20);
             break;
         }
       } else {
-        motors->customDrive(120, 90);
+        motors->customDrive(140, 20);
       }
       break;
     case MIDRIGHT:
       if(last_state_changed->elapsedMilliseconds() < 500) {
         switch (lastEnemyPos) {
           case RIGHT:
-            motors->customDrive(90, 130);
+            motors->customDrive(60, 140);
             break;
           case FARFRONT:
             motors->customDrive(120, 100);
             break;  
           default:
-            motors->customDrive(90, 120);
+            motors->customDrive(20, 140);
             break;
       }
       } else {
-        motors->customDrive(90, 120);
+        motors->customDrive(20, 140);
       }
       break;
     case FARFRONT:
-      if(last_state_changed->elapsedMilliseconds() < 500) {
-        switch (lastEnemyPos) {
-          case LEFT:
-            motors->customDrive(100, 120);
-            break;
-          case MIDLEFT:
-            motors->customDrive(100, 120);
-            break;
-          case RIGHT:
-            motors->customDrive(120, 100);
-            break;  
-          case MIDRIGHT:
-            motors->customDrive(120, 100);
-            break;  
-          case FRONT:
-            motors->driveForward(200);
-            break;
-          default:
-            motors->driveForward(120);
-            break;
-        }
-      } else {
-        motors->driveForward(150);
-      }
+      motors->driveForward(382);
+      // if(last_state_changed->elapsedMilliseconds() < 500) {
+      //   switch (lastEnemyPos) {
+      //     case LEFT:
+      //       motors->customDrive(100, 120);
+      //       break;
+      //     case MIDLEFT:
+      //       motors->customDrive(100, 120);
+      //       break;
+      //     case RIGHT:
+      //       motors->customDrive(120, 100);
+      //       break;  
+      //     case MIDRIGHT:
+      //       motors->customDrive(120, 100);
+      //       break;  
+      //     case FRONT:
+      //       motors->driveForward(200);
+      //       break;
+      //     default:
+      //       motors->driveForward(150);
+      //       break;
+      //   }
+      // } else {
+      //   motors->driveForward(150);
+      // }
       break;
     case NONE:
       if(last_state_changed->elapsedMilliseconds() < 500) {
       switch (lastEnemyPos) {
           case LEFT:
-            motors->customDrive(80, 50);
+            motors->customDrive(75, 30);
             break;
           case RIGHT:
-            motors->customDrive(50, 80);
+            motors->customDrive(30, 75);
             break;
           case FARFRONT:
-            motors->driveForward(80);
+            motors->driveForward(75);
             break;
           case MIDLEFT:
-            motors->customDrive(80, 60);
+            motors->customDrive(75, 60);
             break;
           case MIDRIGHT:
-            motors->customDrive(60, 80);
+            motors->customDrive(60, 75);
             break;  
           default:
-            motors->driveForward(80);
+            motors->driveForward(75);
             break;
         }
       } else {
-        motors->driveForward(80);
+        motors->driveForward(75);
       }
       break;
   }

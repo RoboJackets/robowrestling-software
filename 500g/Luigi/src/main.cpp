@@ -72,7 +72,7 @@ void setup() {
     if (printCounter%100 == 0)
       Serial.println("Waiting to start");
   }
-  // delay(5000);
+  delay(5000);
   Serial.println("Started");
 }
 
@@ -82,7 +82,8 @@ void loop() {
   pullSensors(); 
   avgs = ws->get_sensors_avg();
   algo->selectMode();  
-  writeMotors();
+  // writeMotors();
+  debug();
 }
 
 void pullSensors() {
@@ -100,15 +101,16 @@ void debug() {
   printCounter++;
   if (printCounter % 100 == 0) {
     debugLine();
-    debugLineLP(ws->line_check());
-    debugEnemy(ws->enemy_pos());
+    debugAverages();
+    // debugLineLP(ws->line_check());
+    // debugEnemy(ws->enemy_pos());
     Serial.println();
   }
 }
 
 void writeMotors() {
-  motors[0] = motors[0]/1.75;
-  motors[1] = motors[1]/1.75;
+  motors[0] = motors[0]/1.65;
+  motors[1] = motors[1]/1.65;
   if (motors[0] > 0) {
     analogWrite(leftF, abs(motors[0]));
     analogWrite(leftB, 0);
