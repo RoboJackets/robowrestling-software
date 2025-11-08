@@ -15,13 +15,13 @@ void RobotActions::Attack(EnemyPositions pos) {
     // Future Note: Pins set the direction and speed of the robot
     // Make sure to ramp values for speed to avoid jump
     if (this->prev_action == ForwardAction && pos == EnemyFront) {
-        this->speed += 2;
-        if (this->speed > 120) {
-            this->speed = 120;
+        this->speed += 5;
+        if (this->speed > 200) {
+            this->speed = 200;
         }
     } else {
         // Decelerate
-        this->speed -= 10;
+        this->speed -= 20;
         if (this->speed < 10) {
             this->speed = 10;
         }

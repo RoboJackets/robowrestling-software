@@ -18,8 +18,10 @@ private:
 public:
     Algorithm(RobotActions *action, Timer *timer);
     void RunItDown(EnemyPositions pos);
+    void TurnToEnemy(EnemyPositions pos);
     void search();
     void backTrack(OnLine line_state, AlgoLogs algo);
+    void fryThem();
     bool getTimer();
 };
 

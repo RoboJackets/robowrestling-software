@@ -5,7 +5,9 @@ enum AlgoLogs {
     BTForward,
     BTBackward,
     RunItDown,
+    Turn,
     Search,
+    StirFry,
     NoneAlgo
 };
 

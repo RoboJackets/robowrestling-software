@@ -1,31 +1,35 @@
 #include "Sensors/Timer.hpp"
 
+Timer::Timer() {
+    start_time = 0;
+    duration_ms = 0;
+    runningProcess = false;
+}
+
 Timer::Timer(unsigned long initial_time) {
     start_time = initial_time;
-    duration = 0;
-    global_time = initial_time;
+    duration_ms = 0;
     runningProcess = false;
 }
 
 void Timer::begin() {
-    start_time = 0;
-    global_time = 0;
     runningProcess = false;
+    start_time = 0;
+    duration_ms = 0;
 }
 
-void Timer::startTimer(unsigned long duration){
-    this->duration = duration;
-    start_time = global_time;
+void Timer::startTimer(unsigned long duration_ms) {
+    this->duration_ms = duration_ms;
+    start_time = millis();
     runningProcess = true;
 }
 
 void Timer::updateTime() {
-    global_time = global_time + 1;
-    if (duration > 0) {
-        duration = duration - 1;
-    }
-    if (runningProcess && duration == 0) {
-        runningProcess = false;
+    if (!runningProcess) return;
+
+    unsigned long elapsed = millis() - start_time;
+    if (elapsed >= duration_ms) {
+        runningProcess = false; // Timer expired
     }
 }
 
@@ -33,6 +37,11 @@ bool Timer::getRunningProcess() {
     return runningProcess;
 }
 
-int Timer::getDuration() {
-    return duration;
+unsigned long Timer::getDuration() {
+    if (!runningProcess) return 0;
+
+    unsigned long elapsed = millis() - start_time;
+    if (elapsed >= duration_ms) return 0;
+
+    return duration_ms - elapsed; // Remaining ms
 }

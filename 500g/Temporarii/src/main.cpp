@@ -19,38 +19,42 @@
  */
 const int fr_move_forward = 7;
 const int fr_move_backward = 8;
-const int fl_move_forward = 9;
-const int fl_move_backward = 10;
-const int br_move_forward = 11;
-const int br_move_backward = 12;
-const int bl_move_forward = 24;
-const int bl_move_backward = 25;
+const int fl_move_forward = 10;
+const int fl_move_backward = 9;
+const int br_move_forward = 12;
+const int br_move_backward = 11;
+const int bl_move_forward = 25;
+const int bl_move_backward = 24;
 
-const int left_ir = 30;
-const int mid_ir = 24;
-const int right_ir = 2;
+const int left_ir = 32;
+const int fl_ir = 30;
+const int mid_ir = 6;
+const int fr_ir = 2;
+const int right_ir = 1;
 
-const int left_line = 22;
-const int fr_line = 15;
+const int fl_line = 15;
+const int fr_line = 14;
+const int bl_line = 16;
+const int br_line = 17;
 
 // Start mod
-// const int start_mod = 21;
+const int start_mod = 33;
+bool started = false;
+bool end = false;
 
 /**
  * Object Definition
  */
 IrSensor *leftIR;
+IrSensor *flIR;
 IrSensor *midIR;
+IrSensor *frIR;
 IrSensor *rightIR;
-// Temp sensors: Replace with actual when we get 5
-IrSensor *tempIRL;
-IrSensor *tempIRR;
 
-LineSensor *leftLine;
-LineSensor *rightLine;
-// Temp line: Replace with actual when we get 4
-LineSensor *tempLineBL;
-LineSensor *tempLineBR;
+LineSensor *flLine;
+LineSensor *frLine;
+LineSensor *blLine;
+LineSensor *brLine;
 
 MotorDriver *flMotor;
 MotorDriver *frMotor;
@@ -90,38 +94,37 @@ void setup() {
   pinMode(bl_move_backward, OUTPUT);
 
   pinMode(left_ir, INPUT);
+  pinMode(fl_ir, INPUT);
   pinMode(mid_ir, INPUT);
+  pinMode(fr_ir, INPUT);
   pinMode(right_ir, INPUT);
 
-  // pinMode(left_line, INPUT);
-  // pinMode(right_line, INPUT);
-  // pinMode(start_mod, INPUT);
+  pinMode(fl_line, INPUT);
+  pinMode(fr_line, INPUT);
+  pinMode(bl_line, INPUT);
+  pinMode(br_line, INPUT);
+  pinMode(start_mod, INPUT);
 
-  leftIR = new IrSensor();
-  rightIR = new IrSensor();
+  flIR = new IrSensor();
+  frIR = new IrSensor();
   midIR = new IrSensor();
   // Replace with actual IR
-  tempIRL = new IrSensor();
-  tempIRR = new IrSensor();
+  leftIR = new IrSensor();
+  rightIR = new IrSensor();
 
 
-  leftLine = new LineSensor();
-  rightLine = new LineSensor();
-  // Replace with actual line
-  tempLineBL = new LineSensor();
-  tempLineBR = new LineSensor();
+  flLine = new LineSensor();
+  frLine = new LineSensor();
+  blLine = new LineSensor();
+  brLine = new LineSensor();
 
   flMotor = new MotorDriver();
   frMotor = new MotorDriver();
   blMotor = new MotorDriver();
   brMotor = new MotorDriver();
 
-  IrSensor *irSensors[5] = {tempIRL, leftIR, midIR, rightIR, tempIRR};
-  LineSensor *lineSensors[4] = {tempLineBL, leftLine, rightLine, tempLineBR};
-
-  // Temp settings
-  tempLineBL->setValue(1000);
-  tempLineBR->setValue(1000);
+  IrSensor *irSensors[5] = {leftIR, flIR, midIR, frIR, rightIR};
+  LineSensor *lineSensors[4] = {blLine, flLine, frLine, brLine};
 
    // Setting up class structure
   action = new RobotActions(blMotor, flMotor, frMotor, brMotor);
@@ -130,10 +133,13 @@ void setup() {
   algo = new Algorithm(action, timer);
   tempi = new RobotState(world, algo);
 
-  timer = new Timer(millis());
-
   Serial.println("Starting Setup");
   Serial.begin(9600);
+
+  // while(digitalRead(start_mod) == 0) {
+  //   Serial.println("Waiting for signal");
+  // }
+  // delay(4800);
 }
 
 /**
@@ -141,14 +147,34 @@ void setup() {
  */
 void loop() {
   // 5 Seconds before start for comp
-  pollSensors();
-  // calculateState();
-  // writeMotors();
-  // debug_counter++;
-  // if (debug_counter >= 20) {
-  //   debug();
-  //   debug_counter = 0;
-  // }
+    // Start Mod
+    // if (end == true) {
+    //   pollSensors();
+    //   calculateState();
+    //   writeMotors();
+    // }
+    
+    // if (digitalRead(start_mod) == 1) {
+    //   end = true;
+    // }
+
+    // Debug
+    // debug_counter++;
+    // if (debug_counter >= 30) {
+    //   debug();
+    //   debug_counter = 0;
+    // }
+
+
+    // No start mod
+    if (started == true || digitalRead(start_mod) == 1) {
+      pollSensors();
+      calculateState();
+      writeMotors();
+    } else {
+      started = true;
+      delay(4000);
+    }
 }
 
 /**
@@ -156,16 +182,19 @@ void loop() {
  */
 void pollSensors() {
   leftIR->setValue(digitalRead(left_ir));
+  flIR->setValue(digitalRead(fl_ir));
   midIR->setValue(digitalRead(mid_ir));
+  frIR->setValue(digitalRead(fr_ir));
   rightIR->setValue(digitalRead(right_ir));
 
-  // leftLine->setValue(analogRead(left_line));
-  rightLine->setValue(analogRead(fr_line));
+  frLine->setValue(analogRead(fr_line));
+  flLine->setValue(analogRead(fl_line));
+  brLine->setValue(analogRead(br_line));
+  blLine->setValue(analogRead(bl_line));
 
-  Serial.print("FR Line: ");
-  Serial.println(analogRead(fr_line));
-  // Serial.print("Right IR: ");
-  // Serial.println(rightIR->getValue());
+  // Serial.print("FR Line: ");
+  // Serial.println(analogRead(fr_line));
+  // delay(100);
 
   timer->updateTime();
 }
@@ -182,45 +211,70 @@ void calculateState() {
  */
 void writeMotors() {
   // 0: forward, 1: backward
-  brMotor->setSpeed(100);
-  brMotor->setDirection(0);
-
-  analogWrite(br_move_forward, 255);
-  analogWrite(br_move_backward, 0);
-  // analogWrite(fl_move_forward, flMotor->getDirection() == 0 ? flMotor->getSpeed() : 0);
-  // analogWrite(fl_move_backward, flMotor->getDirection() == 1 ? flMotor->getSpeed() : 0);
-  // analogWrite(br_move_forward, brMotor->getDirection() == 0 ? brMotor->getSpeed() : 0);
-  // analogWrite(br_move_backward, brMotor->getDirection() == 1 ? brMotor->getSpeed() : 0);
-  // analogWrite(bl_move_forward, blMotor->getDirection() == 0 ? blMotor->getSpeed() : 0);
-  // analogWrite(bl_move_backward, blMotor->getDirection() == 1 ? blMotor->getSpeed() : 0);
+  analogWrite(fr_move_forward, frMotor->getDirection() == 0 ? frMotor->getSpeed() : 0);
+  analogWrite(fr_move_backward, frMotor->getDirection() == 1 ? frMotor->getSpeed() : 0);
+  analogWrite(fl_move_forward, flMotor->getDirection() == 0 ? flMotor->getSpeed() : 0);
+  analogWrite(fl_move_backward, flMotor->getDirection() == 1 ? flMotor->getSpeed() : 0);
+  analogWrite(br_move_forward, brMotor->getDirection() == 0 ? brMotor->getSpeed() : 0);
+  analogWrite(br_move_backward, brMotor->getDirection() == 1 ? brMotor->getSpeed() : 0);
+  analogWrite(bl_move_forward, blMotor->getDirection() == 0 ? blMotor->getSpeed() : 0);
+  analogWrite(bl_move_backward, blMotor->getDirection() == 1 ? blMotor->getSpeed() : 0);
 }
 
+
+
 /**
- * Debuggin'
+ * Debuggin' + Hyperparameters.
+ * 
+ * Turn on/off accordingly. Can also modify frequency of output inside of running loop
  */
+
+bool ir_debug = true;
+bool line_debug = true;
+bool motor_debug = false;
+
 void debug() {
+  Serial.println("=========================");
+
   Serial.println("Debug loop: ");
+
   // IR Sensors
-  Serial.print("Left IR: ");
-  Serial.println(leftIR->getValue());
-  Serial.print("Mid IR: ");
-  Serial.println(midIR->getValue());
-  Serial.print("Right IR: ");
-  Serial.println(rightIR->getValue());
+  if (ir_debug == true) {
+    Serial.print("Left IR: ");
+    Serial.println(leftIR->getValue());
+    Serial.print("Front Left IR: ");
+    Serial.println(flIR->getValue());
+    Serial.print("Mid IR: ");
+    Serial.println(midIR->getValue());
+    Serial.print("Front Right IR: ");
+    Serial.println(frIR->getValue());
+    Serial.print("Right IR: ");
+    Serial.println(rightIR->getValue());
+  }
 
   // Line Sensors
-  Serial.print("Left Line: ");
-  Serial.println(leftLine->getValue());
-  Serial.print("Right Line: ");
-  Serial.println(rightLine->getValue());
+  if (line_debug == true) {
+    Serial.print("Front Left Line: ");
+    Serial.println(flLine->getValue());
+    Serial.print("Front Right Line: ");
+    Serial.println(frLine->getValue());
+    Serial.print("Back Left Line: ");
+    Serial.println(blLine->getValue());
+    Serial.print("Back Right Line: ");
+    Serial.println(brLine->getValue());
+  }
   
   // Motor States
-  Serial.print("FL Motor: ");
-  Serial.print(flMotor->getSpeed());
-  Serial.print("FR Motor: ");
-  Serial.println(frMotor->getSpeed());
-  Serial.print("BL Motor: ");
-  Serial.print(blMotor->getSpeed());
-  Serial.print("BR Motor: ");
-  Serial.println(brMotor->getSpeed());
+  if (motor_debug == true) {
+    Serial.print("FL Motor: ");
+    Serial.print(flMotor->getSpeed());
+    Serial.print("FR Motor: ");
+    Serial.println(frMotor->getSpeed());
+    Serial.print("BL Motor: ");
+    Serial.print(blMotor->getSpeed());
+    Serial.print("BR Motor: ");
+    Serial.println(brMotor->getSpeed());
+  }
+
+  Serial.println("=========================");
 }

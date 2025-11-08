@@ -11,6 +11,7 @@ class RobotState {
         WorldState *world;
         Algorithm *algo;
         AlgoLogs prevAlgo;
+        EnemyPositions enemyPrev;
     public:
         RobotState(WorldState *world, Algorithm *algo);
         void runAlgorithm();
