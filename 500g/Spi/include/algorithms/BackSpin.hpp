@@ -6,8 +6,8 @@
 
 class BackSpin : public Action {
     private:
-        static constexpr int LEFT_SPIN_DURATION = 160; //ms
-        static constexpr int RIGHT_SPIN_DURATION = 100; //ms
+        static constexpr int LEFT_SPIN_DURATION = 140; //ms
+        static constexpr int RIGHT_SPIN_DURATION = 80; //ms
         static constexpr int BACKUP_DURATION = 60;
         static constexpr int ACTION_DURATION = 250;
         bool spinLeft;

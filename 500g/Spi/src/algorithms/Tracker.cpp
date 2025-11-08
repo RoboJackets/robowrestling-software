@@ -21,6 +21,7 @@ Tracker::Tracker(WorldState *_worldState, RobotAction* _robotAction, int _mode) 
     backSpinRight = new BackSpin(robotAction, false);
     _scan = new Scan(robotAction);
     turnAround = new TurnAround(robotAction);
+    turnTimer = new AutoTimer(TURN_TIMER_DURATION);
 }
 
 void Tracker::run() {
@@ -146,11 +147,12 @@ void Tracker::default_action() {
         }
     }
     if (mode == 1) { _scan->run(); }
-    if (mode == 2) { 
-        turnAround->run();
+    if (mode == 2) { // TODO: fix
+        robotAction->spinLeft(MAX_SPEED);
         if (!turnt) {
+            turnTimer->resetTimer();
             turnt = true;
-        } else if (turnAround->getActionCompleted()) {
+        } else if (turnTimer->getReady()) {
             mode = 0;
         } 
     }

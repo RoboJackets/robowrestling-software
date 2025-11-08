@@ -14,10 +14,14 @@ void MotorDriver::setDirection(int directionValue) {
  * sets speed with acceleration implementation
  */
 void MotorDriver::setSpeed(int speedValue) {
+    int safe_speed = 70;
     if (speedValue < speed) {
         speed = speedValue;
     }
     if (speedValue > speed && speedChangeTimer->getReady()) {
+        if (speedValue >= safe_speed && speed < safe_speed) {
+            speed = safe_speed;
+        }
         speedChangeTimer->resetTimer();
         speed++;
     }

@@ -64,8 +64,8 @@ void setup() {
   pinMode(LEFT_IR, INPUT);
   pinMode(MIDDLE_IR, INPUT);
   pinMode(RIGHT_IR, INPUT);
-  pinMode(LEFT_LINE, INPUT);
-  pinMode(RIGHT_LINE, INPUT);
+  pinMode(LEFT_LINE, INPUT_PULLDOWN);
+  pinMode(RIGHT_LINE, INPUT_PULLDOWN);
   pinMode(START_PIN, INPUT);
   
   int mode = (digitalRead(DIP_1) * 2) + (digitalRead(DIP_2));
@@ -85,9 +85,6 @@ void setup() {
   tracker = new Tracker(worldState, robotAction, mode);
   scan = new Scan(robotAction);
   backSpinLeft = new BackSpin(robotAction, true);
-  
-  leftLineSensor->setThreshold(900);
-  rightLineSensor->setThreshold(900);
 
   if (!DEBUGGING) {
     while (!digitalRead(START_PIN)) {
@@ -97,6 +94,20 @@ void setup() {
     }
   }
   robotState->setStartTimer(millis());
+  unsigned long starttime = millis();
+  bool calibrated_flag = false;
+  while ((millis() - starttime) <= 5000) {
+    if (!calibrated_flag) {
+      leftLineSensor->setThreshold(analogRead(LEFT_LINE) - 100);
+      rightLineSensor->setThreshold(analogRead(RIGHT_LINE) - 100);
+    }
+    Serial.print("Starting in: ");
+    Serial.print(5000 - (millis() - starttime));
+    Serial.print(" | Thresholds set to: ");
+    Serial.print(leftLineSensor->getThreshold());
+    Serial.print(" ");
+    Serial.println(rightLineSensor->getThreshold());
+  }
 }
 
 void loop() {
