@@ -44,6 +44,10 @@ void algorithms::followBehavior() {
   }
 }
 
+void algorithms::spin() {
+  motors->customDrive(150, 100);
+}
+
 void algorithms::chooseAction(EnemyPosition currentPosition, LinePosition linePosition) {
   if (started == false) {
     behavior = CHARGE;

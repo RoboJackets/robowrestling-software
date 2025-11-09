@@ -20,6 +20,7 @@ class algorithms {
     algorithms(motor_actions* motors, world_state* world, timer* behavior_timer, timer* last_state_changed);
 
     void selectMode();
+    void spin();
     void followBehavior();
     void chooseAction(EnemyPosition currentPosition, LinePosition l);  // do something based on enemy_pos
     void liveDrive(EnemyPosition currentPosition, LinePosition l);

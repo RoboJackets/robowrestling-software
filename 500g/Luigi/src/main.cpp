@@ -28,8 +28,9 @@ int printCounter = 0;
 
 float* avgs;
 int motors[2] = {0};
+int dips[2] = {0};
 int line_sensors[2] = {0};
- int ir_sensors[5] = {0};
+int ir_sensors[5] = {0};
 
 timer* last_enemy_changed = new timer(&currentMillis);
 timer* behavior_timer = new timer(&currentMillis);
@@ -81,9 +82,16 @@ void loop() {
   // ws->clean_sensors();
   pullSensors(); 
   avgs = ws->get_sensors_avg();
-  algo->selectMode();  
+  if (dips[0] == 0) {
+    algo->selectMode();  
+    // Serial.println("Normal");
+  }
+  else {
+    algo->spin();
+    // Serial.println("Spinnn");
+  }
   writeMotors();
-  debug();
+  // debug();
 }
 
 void pullSensors() {
@@ -95,6 +103,8 @@ void pullSensors() {
   currentMillis = millis();
   line_sensors[0] = analogRead(leftLineSensor);
   line_sensors[1] = analogRead(rightLIneSensor);
+  dips[0] = digitalRead(dip1);
+  dips[1] = digitalRead(dip2);
 }
 
 void debug() {
@@ -111,8 +121,6 @@ void debug() {
 void writeMotors() {
   motors[0] = motors[0]/1.65;
   motors[1] = motors[1]/1.65;
-  motors[0] = 100;
-  motors[1] = 100;
   if (motors[0] > 0) {
     analogWrite(leftF, abs(motors[0]));
     analogWrite(leftB, 0);
