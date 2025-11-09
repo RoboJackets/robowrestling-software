@@ -10,8 +10,8 @@ const int middleSensor = 7;
 const int rightSensor = 4;
 const int rightSideSensor = 2;
 
-const int rightB = 10;
-const int rightF = 9;
+const int rightB = 9;
+const int rightF = 10;
 const int leftB = 3; 
 const int leftF = 5;
 
@@ -29,7 +29,7 @@ int printCounter = 0;
 float* avgs;
 int motors[2] = {0};
 int line_sensors[2] = {0};
-int ir_sensors[5] = {0};
+ int ir_sensors[5] = {0};
 
 timer* last_enemy_changed = new timer(&currentMillis);
 timer* behavior_timer = new timer(&currentMillis);
@@ -82,7 +82,7 @@ void loop() {
   pullSensors(); 
   avgs = ws->get_sensors_avg();
   algo->selectMode();  
-  // writeMotors();
+  writeMotors();
   debug();
 }
 
@@ -111,6 +111,8 @@ void debug() {
 void writeMotors() {
   motors[0] = motors[0]/1.65;
   motors[1] = motors[1]/1.65;
+  motors[0] = 100;
+  motors[1] = 100;
   if (motors[0] > 0) {
     analogWrite(leftF, abs(motors[0]));
     analogWrite(leftB, 0);

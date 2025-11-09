@@ -29,7 +29,7 @@ void algorithms::followBehavior() {
   else {
     switch (behavior) {
       case TURN_AROUND:
-        if (behavior_timer->elapsedMilliseconds() < 125) {
+        if (behavior_timer->elapsedMilliseconds() < 225) {
           motors->driveBackward(250);
         }
         else {
@@ -60,21 +60,21 @@ void algorithms::chooseAction(EnemyPosition currentPosition, LinePosition linePo
         behavior = TURN_AROUND;
         behavior_timer->reset();
         behavior_timer->start();
-        behavior_timer->setTarget(250);
+        behavior_timer->setTarget(325);
       }
     else if (linePosition == RIGHT_LINE) {
-      motors->spinRight(100);
-        // behavior = TURN_AROUND;
-        // behavior_timer->reset();
-        // behavior_timer->start();
-        // behavior_timer->setTarget(250);
+      // motors->spinRight(100);
+        behavior = TURN_AROUND;
+        behavior_timer->reset();
+        behavior_timer->start();
+        behavior_timer->setTarget(325);
     }
     else if (linePosition == LEFT_LINE) {
-      motors->spinLeft(100);
-        // behavior = TURN_AROUND;
-        // behavior_timer->reset();
-        // behavior_timer->start();
-        // behavior_timer->setTarget(250);
+      // motors->spinLeft(100);
+        behavior = TURN_AROUND;
+        behavior_timer->reset();
+        behavior_timer->start();
+        behavior_timer->setTarget(325);
     }
     else {
       liveDrive(currentPosition, linePosition);
@@ -90,7 +90,7 @@ void algorithms::chooseAction(EnemyPosition currentPosition, LinePosition linePo
 void algorithms::liveDrive(EnemyPosition currentPosition, LinePosition linePosition) {
   switch(currentPosition) {
     case LEFT:
-      motors->spinLeft(250);
+      motors->spinLeft(350);
       // if(last_state_changed->elapsedMilliseconds() < 500) {
       //   switch(lastEnemyPos) {
       //     case FARFRONT:
@@ -111,7 +111,7 @@ void algorithms::liveDrive(EnemyPosition currentPosition, LinePosition linePosit
       // }
       break;
     case RIGHT:
-      motors->spinRight(200);
+      motors->spinRight(350);
       // if(last_state_changed->elapsedMilliseconds() < 500) {
       //   switch(lastEnemyPos) {
       //     case FARFRONT:
@@ -155,34 +155,34 @@ void algorithms::liveDrive(EnemyPosition currentPosition, LinePosition linePosit
       if(last_state_changed->elapsedMilliseconds() < 500) {
         switch (lastEnemyPos) {
           case LEFT:
-            motors->customDrive(140, 60);
+            motors->customDrive(200, 80);
             break;
           case FARFRONT:
-            motors->customDrive(100, 120);
+            motors->customDrive(180, 220);
             break;  
           default:
-            motors->customDrive(140, 20);
+            motors->customDrive(200, 80);
             break;
         }
       } else {
-        motors->customDrive(140, 20);
+        motors->customDrive(200, 80);
       }
       break;
     case MIDRIGHT:
       if(last_state_changed->elapsedMilliseconds() < 500) {
         switch (lastEnemyPos) {
           case RIGHT:
-            motors->customDrive(60, 140);
+            motors->customDrive(80, 200);
             break;
           case FARFRONT:
-            motors->customDrive(120, 100);
+            motors->customDrive(220, 180);
             break;  
           default:
-            motors->customDrive(20, 140);
+            motors->customDrive(80, 200);
             break;
       }
       } else {
-        motors->customDrive(20, 140);
+        motors->customDrive(80, 200);
       }
       break;
     case FARFRONT:
