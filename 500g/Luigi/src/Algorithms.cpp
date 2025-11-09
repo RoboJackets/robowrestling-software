@@ -37,7 +37,7 @@ void algorithms::followBehavior() {
         }
         break;
       case CHARGE:
-        motors->driveForward(200);
+        motors->driveForward(275);
       default:
         break;
     }
@@ -45,7 +45,7 @@ void algorithms::followBehavior() {
 }
 
 void algorithms::spin() {
-  motors->customDrive(150, 100);
+  motors->customDrive(180, 90);//r, l
 }
 
 void algorithms::chooseAction(EnemyPosition currentPosition, LinePosition linePosition) {

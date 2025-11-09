@@ -24,7 +24,7 @@ class algorithms {
     void followBehavior();
     void chooseAction(EnemyPosition currentPosition, LinePosition l);  // do something based on enemy_pos
     void liveDrive(EnemyPosition currentPosition, LinePosition l);
-    // void respondToLine(LinePosition l);   // do something based on line_pos
+    void respondToLine(LinePosition l);   // do something based on line_pos
     // void drive_avgs(float* avgs);
 };
 
