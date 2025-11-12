@@ -7,6 +7,8 @@ enum EnemyPositions {
     EnemyRight,
     EnemyFL,
     EnemyFR,
+    EnemyTrickFL,
+    EnemyTrickFR,
     EnemyNone
 };
 

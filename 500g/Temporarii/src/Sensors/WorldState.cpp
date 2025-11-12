@@ -21,6 +21,14 @@ WorldState::WorldState() {
 // Get Enemy Position
 EnemyPositions WorldState::getEnemyPosition() {
     // IrSensor Array = {Left, MidLeft, Mid, MidRight, Right}
+    // Use for flag robots - "trick" represents double positions of enemy, common for flag robots
+    // if (irStates[2]->getValue() == 1 && irStates[1]->getValue() == 1) {
+    //     currPosition = EnemyTrickFL;
+    //     return EnemyTrickFL;
+    // } else if (irStates[2]->getValue() == 1 && irStates[3]->getValue() == 1) {
+    //     currPosition = EnemyTrickFR;
+    //     return EnemyTrickFR;
+    // }
     if (irStates[2]->getValue() == 1) {
         currPosition = EnemyFront;
         return EnemyFront;

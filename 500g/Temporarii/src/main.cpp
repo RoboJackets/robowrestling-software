@@ -147,26 +147,25 @@ void setup() {
  */
 void loop() {
   // 5 Seconds before start for comp
-    // Start Mod
+    // Start Mod -- Turn this on if you have a start module
     // if (end == true) {
     //   pollSensors();
     //   calculateState();
     //   writeMotors();
     // }
-    
     // if (digitalRead(start_mod) == 1) {
     //   end = true;
     // }
 
     // Debug
-    // debug_counter++;
-    // if (debug_counter >= 30) {
-    //   debug();
-    //   debug_counter = 0;
-    // }
+    debug_counter++;
+    if (debug_counter >= 30) {
+      debug();
+      debug_counter = 0;
+    }
 
 
-    // No start mod
+    // No start mod -- Turn this on if you don't have a start module
     if (started == true || digitalRead(start_mod) == 1) {
       pollSensors();
       calculateState();
@@ -191,10 +190,6 @@ void pollSensors() {
   flLine->setValue(analogRead(fl_line));
   brLine->setValue(analogRead(br_line));
   blLine->setValue(analogRead(bl_line));
-
-  // Serial.print("FR Line: ");
-  // Serial.println(analogRead(fr_line));
-  // delay(100);
 
   timer->updateTime();
 }
