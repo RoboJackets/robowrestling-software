@@ -69,18 +69,18 @@ void Algorithm::backTrack(OnLine line_state, AlgoLogs algo) {
 void Algorithm::fryThem() {
     if (timer->getRunningProcess() == true) {
         if (timer->getDuration() > 1800) {
-            action->Left(90);
+            action->Left(120);
         } else if (timer->getDuration() > 1400) {
-            action->Right(90);
+            action->Right(120);
         } else if (timer->getDuration() > 1200) {
-            action->Left(90);
+            action->Left(120);
         } else {
             action->Forward(70);
         }
         return;
     }
     timer->startTimer(2000);
-    action->Left(90);
+    action->Left(120);
 }
 
 void Algorithm::SideStrike(EnemyPositions pos) {
