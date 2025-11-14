@@ -4,12 +4,12 @@
 
 #include <Arduino.h>
 
-#include "Robot/World_State.hpp"
+#include "World/World_State.hpp"
 #include "Robot/Robot_Actions.hpp"
-#include "Robot/Algorithms.hpp"
-#include "Robot/Timer.hpp"
+#include "World/Timer.hpp"
 #include "Enums/line_states.hpp"
 #include "Enums/enemy_states.hpp"
+#include "Robot/Algorithms.hpp"
 
 // Pins definitions
 #define start_mod 10

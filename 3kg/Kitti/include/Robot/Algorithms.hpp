@@ -1,6 +1,6 @@
 #include "Robot/Robot_Actions.hpp"
-#include "Robot/World_State.hpp"
-#include "Robot/Timer.hpp"
+#include "World/World_State.hpp"
+#include "world/Timer.hpp"
 #include "Enums/enemy_states.hpp"
 #include "Enums/line_states.hpp"
 #include "Enums/algos.hpp"
