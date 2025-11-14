@@ -2,13 +2,14 @@
 #define ENEMYPOSITIONS_HPP
 
 enum EnemyPositions {
-    Mid,
-    MidL,
-    MidR,
-    Left,
-    Right,
-    SEND,
-    NoOp
+    EnemyFront,
+    EnemyLeft,
+    EnemyRight,
+    EnemyFL,
+    EnemyFR,
+    EnemyTrickFL,
+    EnemyTrickFR,
+    EnemyNone
 };
 
 #endif

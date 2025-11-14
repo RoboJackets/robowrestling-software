@@ -2,8 +2,11 @@
 #define ONLINE_HPP
 
 enum OnLine {
-    on_line,
-    not_on_line
+    LineFL,
+    LineFR,
+    LineBL,
+    LineBR,
+    LineNone
 };
 
 #endif

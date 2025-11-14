@@ -4,12 +4,12 @@
 class LINEsensor {
 private:
     /*represensents sensor value*/
-    bool value;
+    int value;
 public:
     LINEsensor();
-    LINEsensor(bool sensorValue);
-    bool getValue();
-    void setValue(bool sensorValue);
+    LINEsensor(int sensorValue);
+    int getValue();
+    void setValue(int sensorValue);
 };
 
 #endif

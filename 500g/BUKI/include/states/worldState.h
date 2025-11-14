@@ -11,6 +11,7 @@ enum Edge {
     SLIGHT_RIGHT,
     FRONT,
     BACK,
+    CLOSE_FRONT,
     SAFE
 };
 
