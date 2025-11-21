@@ -1,5 +1,8 @@
 #include "Strategies/Strategy.hpp"
+#include "Strategies/Defense.hpp"
+#include "Strategies/Matador.hpp"
 #include "Strategies/SlammyWhammyImproved.hpp"
+#include "Strategies/Track.hpp"
 #include "Skibidi.hpp"
 
 #define DIP_HI 26
@@ -9,6 +12,9 @@
 Skibidi *skibidi;
 State state;
 Strategy *strategy;
+Strategy *strategies[8];
+
+unsigned short selected_strategy = 0;
 
 Adafruit_SSD1306 disp(128, 64, &Wire2, -1);
 void display_debug_info(State* state, bool running);
@@ -37,7 +43,11 @@ void setup(void) {
             {IrDirection::LEFT,         false},
         },
     };
-    strategy = new SlammyWhammy(50, 30);
+    strategies[0] = new SlammyWhammy(50, 30);
+    strategies[1] = new Matador(50, 30);
+    strategies[2] = new Defense();
+    strategies[3] = new Track(50, 30);
+    //strategy = new SlammyWhammy(50, 30);
 
     // Sensor initialization
     skibidi->initialize_sensors();
@@ -68,6 +78,9 @@ void loop(void) {
     display_debug_info(&state, start_module->is_started());
 
     if (!start_module->is_started()) {
+        selected_strategy = (digitalRead(DIP_HI) << 2) | (digitalRead(DIP_MID) << 1) | digitalRead(DIP_LO);
+        strategy = strategies[selected_strategy > 3 ? 3 : selected_strategy];
+
         state.driving_state = DrivingState::MBRAKE;
         state.motor_speed = 0;
         state.tank_drive = false;
@@ -95,16 +108,13 @@ void loop(void) {
 }
 
 void display_debug_info(State* state, bool started) {
-    unsigned short strat = 0;
-    strat = (digitalRead(DIP_HI) << 2) | (digitalRead(DIP_MID) << 1) | digitalRead(DIP_LO);
-
     disp.clearDisplay();
     disp.setTextSize(1);
     disp.setTextColor(WHITE);
     disp.setCursor(0, 0);
 
     disp.println("------ SKIBIDI ------");
-    disp.printf("%s         STRAT: %hu\n", started ? "STRT" : "HALT", strat);
+    disp.printf("%s         STRAT: %hu\n", started ? "STRT" : "HALT", selected_strategy);
     disp.printf("  L %d %d %d %d %d %d %d R\n",
         state->active_ir_sensors[IrDirection::LEFT],
         state->active_ir_sensors[IrDirection::MID_LEFT],
