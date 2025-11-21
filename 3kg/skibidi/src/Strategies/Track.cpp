@@ -18,16 +18,16 @@ int map_range(int old_min, int old_max, int new_min, int new_max, int val) {
 }
 
 void Track::make_decision(State* state) {
-    int left_bias = 0, right_bias = 0;
-    left_bias += (int)state->active_ir_sensors[IrDirection::CENTER_LEFT]*15
-        + (int)state->active_ir_sensors[IrDirection::MID_LEFT]*35
-        + (int)state->active_ir_sensors[IrDirection::LEFT]*50;
-    right_bias += (int)state->active_ir_sensors[IrDirection::CENTER_RIGHT]*15
-        + (int)state->active_ir_sensors[IrDirection::MID_RIGHT]*35
-        + (int)state->active_ir_sensors[IrDirection::RIGHT]*50;
+    int left_bias = 20, right_bias = 20;
+    left_bias += (int)state->active_ir_sensors[IrDirection::CENTER_LEFT]*10
+        + (int)state->active_ir_sensors[IrDirection::MID_LEFT]*30
+        + (int)state->active_ir_sensors[IrDirection::LEFT]*40;
+    right_bias += (int)state->active_ir_sensors[IrDirection::CENTER_RIGHT]*10
+        + (int)state->active_ir_sensors[IrDirection::MID_RIGHT]*30
+        + (int)state->active_ir_sensors[IrDirection::RIGHT]*40;
 
     int left_spd_adj, right_spd_adj;
-    if (left_bias == 0 && right_bias == 0 && !state->active_ir_sensors[IrDirection::CENTER]) {
+    if (left_bias == 20 && right_bias == 20 && !state->active_ir_sensors[IrDirection::CENTER]) {
         left_spd_adj = map_range(0, 100, 0, this->turn_speed, 100);
         right_spd_adj = 0;
     } else {
