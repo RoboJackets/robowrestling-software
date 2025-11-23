@@ -41,7 +41,10 @@ unsigned long Timer::getDuration() {
     if (!runningProcess) return 0;
 
     unsigned long elapsed = millis() - start_time;
-    if (elapsed >= duration_ms) return 0;
+    if (elapsed >= duration_ms) {
+        runningProcess = false;
+        return 0;
+    }
 
     return duration_ms - elapsed; // Remaining ms
 }

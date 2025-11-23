@@ -20,35 +20,43 @@ void RobotState::runAlgorithm() {
         prevAlgo = NoneAlgo;
     }
 
+    algo->fryThem();
+    prevAlgo = StirFry;
+    return;
+
     // OVERRIDE: ALWAYS ATTACK IF ENEMY IS SEEN MID
-    if (world->getEnemyPosition() == EnemyFront) {
-        algo->RunItDown(world->getEnemyPosition());
-        prevAlgo = RunItDown;
-        return;
-    }
+    // if (world->getEnemyPosition() == EnemyFront) {
+    //     algo->RunItDown(world->getEnemyPosition());
+    //     prevAlgo = RunItDown;
+    //     return;
+    // }
 
-    // Enemy is in sights
-    if (world->getEnemyPosition() == EnemyFL || 
-        world->getEnemyPosition() == EnemyFR || 
-        world->getEnemyPosition() == EnemyLeft ||
-        world->getEnemyPosition() == EnemyRight) {
+    // // Enemy is in sights
+    // if (world->getEnemyPosition() == EnemyFL || 
+    //     world->getEnemyPosition() == EnemyFR || 
+    //     world->getEnemyPosition() == EnemyLeft ||
+    //     world->getEnemyPosition() == EnemyRight) {
 
-        algo->TurnToEnemy(world->getEnemyPosition());
-        enemyPrev = world->getEnemyPosition();
-        prevAlgo = Turn;
-        return;
-    }
+    //     algo->TurnToEnemy(world->getEnemyPosition());
+    //     enemyPrev = world->getEnemyPosition();
+    //     prevAlgo = Turn;
+    //     return;
+    // }
 
     // Run remaining queued of Turn
-    if (prevAlgo == Turn) {
-        algo->TurnToEnemy(enemyPrev);
-        return;
-    }
+    // if (prevAlgo == Turn) {
+    //     algo->TurnToEnemy(enemyPrev);
+    //     return;
+    // }
 
     // Line Check First
-    if (line_state == LineFL || line_state == LineFR) {
+    if (line_state == LineFL) {
         algo->backTrack(line_state, prevAlgo);
-        prevAlgo = BTForward;
+        prevAlgo = BTFL;
+        return;
+    } else if (line_state == LineFR) {
+        algo->backTrack(line_state, prevAlgo);
+        prevAlgo = BTFR;
         return;
     } else if (line_state == LineBL || line_state == LineBR) {
         algo->backTrack(line_state, prevAlgo);
@@ -57,9 +65,13 @@ void RobotState::runAlgorithm() {
     }
 
     // Run queued algo
-    if (prevAlgo == BTForward) {
+    if (prevAlgo == BTFR) {
         algo->backTrack(line_state, prevAlgo);
-        prevAlgo = BTForward;
+        prevAlgo = BTFR;
+        return;
+    } else if (prevAlgo == BTFL) {
+        algo->backTrack(line_state, prevAlgo);
+        prevAlgo = BTFL;
         return;
     } else if (prevAlgo == BTBackward) {
         algo->backTrack(line_state, prevAlgo);

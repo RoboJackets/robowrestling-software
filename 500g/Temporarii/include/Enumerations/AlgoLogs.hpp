@@ -2,7 +2,8 @@
 #define Algo_Logs_hpp
 
 enum AlgoLogs {
-    BTForward,
+    BTFR,
+    BTFL,
     BTBackward,
     RunItDown,
     Turn,

@@ -5,6 +5,21 @@ Algorithm::Algorithm(RobotActions *action, Timer *timer) {
     this->timer = timer;
 }
 
+void Algorithm::Test() {
+    if (timer->getRunningProcess() == true) {
+        if (timer->getDuration() > 4000) {
+            action->Forward(60);
+        } else if (timer->getDuration() > 2000) {
+            action->Left(60);
+        } else {
+            action->Right(60);
+        }
+        return;
+    }
+    timer->startTimer(4500);
+    action->Forward(60);
+}
+
 void Algorithm::RunItDown(EnemyPositions pos) {
     // EnemyPosition only EnemyFront, EnemyFL, EnemyFR
     if (timer->getRunningProcess() == true) {
@@ -19,7 +34,11 @@ void Algorithm::RunItDown(EnemyPositions pos) {
 
 void Algorithm::TurnToEnemy(EnemyPositions pos) {
     if (timer->getRunningProcess() == true) {
-        if (pos == EnemyLeft || pos == EnemyFL) {
+        if (pos == EnemyLeft) {
+            action->Right(200);
+        } else if (pos == EnemyRight) {
+            action->Left(200);
+        } else if (pos == EnemyFL) {
             action->Right(150);
         } else {
             action->Left(150);
@@ -42,45 +61,63 @@ void Algorithm::search() {
 void Algorithm::backTrack(OnLine line_state, AlgoLogs algo) {
     if (timer->getRunningProcess() == true) {
         if (algo == BTBackward) {
+            // This part doesn't work
+            // if (timer->getDuration() > 200) {
+            //     action->Forward(200);
+            // } else {
+            //     action->Left(100);
+            // }
+        } else if (algo == BTFL || algo == BTFR) {
             if (timer->getDuration() > 200) {
-                action->Forward(200);
-            } else {
-                action->Left(150);
-            }
-        } else if (algo == BTForward) {
-            if (timer->getDuration() > 500) {
                 action->Backwards(200);
             } else {
-                action->Left(150);
+                if (algo == BTFL) {
+                    action->Right(130);
+                } else {
+                    action->Left(130);
+                }
             }
         }
         return;
     }
 
     // Else start process for line movement
-    timer->startTimer(300);
+    timer->startTimer(400);
     if (algo == BTBackward) {
         action->Forward(200);
-    } else if (algo == BTForward) {
+    } else if (algo == BTFR || algo == BTFL) {
         action->Backwards(200);
     }
 }
 
 void Algorithm::fryThem() {
     if (timer->getRunningProcess() == true) {
-        if (timer->getDuration() > 1800) {
-            action->Left(120);
-        } else if (timer->getDuration() > 1400) {
-            action->Right(120);
-        } else if (timer->getDuration() > 1200) {
-            action->Left(120);
+        // 170 Right
+        if (timer->getDuration() > 680) {
+            action->Right(70);
+        } else if (timer->getDuration() > 630) {
+            // 50 Wait
+            action->Right(0);
+        }  else if (timer->getDuration() > 350) {
+            // 280 Left
+            action->Left(70);
+        } else if (timer->getDuration() > 300) {
+            // 50 Wait
+            action->Left(0);
+        } else if (timer->getDuration() > 150) {
+            // 150 Right
+            action->Right(70);
+        } else if (timer->getDuration() > 100) {
+            // 50 Wait
+            action->Right(0);
         } else {
+            // 100 Forward
             action->Forward(70);
         }
         return;
     }
-    timer->startTimer(2000);
-    action->Left(120);
+    timer->startTimer(850);
+    action->Right(70);
 }
 
 void Algorithm::SideStrike(EnemyPositions pos) {

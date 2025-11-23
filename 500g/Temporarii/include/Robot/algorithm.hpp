@@ -17,6 +17,7 @@ private:
 
 public:
     Algorithm(RobotActions *action, Timer *timer);
+    void Test();
     void RunItDown(EnemyPositions pos);
     void TurnToEnemy(EnemyPositions pos);
     void SideStrike(EnemyPositions pos);

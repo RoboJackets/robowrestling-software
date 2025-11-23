@@ -166,14 +166,19 @@ void loop() {
 
 
     // No start mod -- Turn this on if you don't have a start module
-    if (started == true || digitalRead(start_mod) == 1) {
-      pollSensors();
-      calculateState();
-      writeMotors();
-    } else {
-      started = true;
-      delay(4000);
-    }
+    // if (started == true || digitalRead(start_mod) == 1) {
+    //   pollSensors();
+    //   calculateState();
+    //   writeMotors();
+    // } else {
+    //   started = true;
+    //   delay(4000);
+    // }
+
+    
+    pollSensors();
+    calculateState();
+    writeMotors();
 }
 
 /**
