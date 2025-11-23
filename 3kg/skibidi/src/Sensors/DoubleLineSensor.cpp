@@ -6,7 +6,8 @@ DoubleLineSensor::DoubleLineSensor(int pin_number) {
 }
 
 bool DoubleLineSensor::is_sensing() {
-    return abs(analogRead(this->pin_number) - this->floor_value) > LINE_THRESHOLD;
+    //return abs(analogRead(this->pin_number) - this->floor_value) > LINE_THRESHOLD;
+    return analogRead(this->pin_number) < 100;
 }
 
 void DoubleLineSensor::calibrate() {

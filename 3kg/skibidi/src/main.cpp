@@ -43,7 +43,7 @@ void setup(void) {
             {IrDirection::LEFT,         false},
         },
     };
-    strategies[0] = new SlammyWhammy(50, 30);
+    strategies[0] = new SlammyWhammy(35, 25);
     strategies[1] = new Matador(50, 30);
     strategies[2] = new Defense();
     strategies[3] = new Track(50, 30);
@@ -96,10 +96,10 @@ void loop(void) {
         state.emergency_mvmt = true;
         state.emerg_started_millis = millis();
         state.driving_state = DrivingState::MBACKWARD;
-        state.motor_speed = 10;
-        Serial.println("Emergency back");
+        state.motor_speed = 25;
     } else {
         // Make decision
+        state.emergency_mvmt = false;
         strategy->make_decision(&state);
     }
 
@@ -108,6 +108,27 @@ void loop(void) {
 }
 
 void display_debug_info(State* state, bool started) {
+    char* motorDir;
+    switch (state->driving_state) {
+        case MFORWARD:
+            motorDir = "FWD\0";
+            break;
+        case MBACKWARD:
+            motorDir = "BWD\0";
+            break;
+        case MTURN_LEFT:
+            motorDir = "TUL\0";
+            break;
+        case MTURN_RIGHT:
+            motorDir = "TUR\0";
+            break;
+        case MBRAKE:
+            motorDir = "BRK\0";
+            break;
+        case MCOAST:
+            motorDir = "CST\0";
+            break;
+    }
     disp.clearDisplay();
     disp.setTextSize(1);
     disp.setTextColor(WHITE);
@@ -124,8 +145,8 @@ void display_debug_info(State* state, bool started) {
         state->active_ir_sensors[IrDirection::MID_RIGHT],
         state->active_ir_sensors[IrDirection::RIGHT]
     );
-    disp.println("4");
-    disp.println("5");
+    disp.printf("EBK:%s  LL:%s  LR:%s\n", state->emergency_mvmt ? "T" : "F", state->active_line_sensors[Position::FRONT_LEFT] ? "1" : "0", state->active_line_sensors[Position::FRONT_RIGHT] ? "1" : "0");
+    disp.printf("DST: %s\n", motorDir);
     disp.println("6");
     disp.println("7");
     disp.println("8");

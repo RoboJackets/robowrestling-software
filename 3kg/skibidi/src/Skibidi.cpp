@@ -2,7 +2,7 @@
 
 Skibidi::Skibidi(void) {
     this->line_sensors = {
-        {Position::FRONT_LEFT,  new DoubleLineSensor(17)},
+        {Position::FRONT_LEFT,  new DoubleLineSensor(14)},
         {Position::FRONT_RIGHT, new DoubleLineSensor(15)},
         //{Position::BACK_LEFT,   new DoubleLineSensor(1)},
         //{Position::BACK_RIGHT,  new DoubleLineSensor(1)},
@@ -18,9 +18,9 @@ Skibidi::Skibidi(void) {
         {IrDirection::RIGHT,         new IrSensor(10)},
     };
     //this->motor_driver = new MotorDriver(std::make_pair(1, 2), std::make_pair(1, 2));
-    this->motor_driver = new MotorDriver(11, 12, 36, 39, 38, 37);
+    this->motor_driver = new MotorDriver(11, 12, 36, 38, 39, 37);
 
-    this->start_module = new StartModule(13);
+    this->start_module = new StartModule(20);
 }
 
 StartModule* Skibidi::get_start_module() {
