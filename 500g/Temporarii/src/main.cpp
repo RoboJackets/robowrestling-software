@@ -17,14 +17,14 @@
 /**
  * Pinouts
  */
-const int fr_move_forward = 7;
-const int fr_move_backward = 8;
-const int fl_move_forward = 10;
-const int fl_move_backward = 9;
-const int br_move_forward = 12;
-const int br_move_backward = 11;
-const int bl_move_forward = 25;
-const int bl_move_backward = 24;
+const int fr_move_forward = 8;
+const int fr_move_backward = 7;
+const int fl_move_forward = 9;
+const int fl_move_backward = 10;
+const int br_move_forward = 11;
+const int br_move_backward = 12;
+const int bl_move_forward = 24;
+const int bl_move_backward = 25;
 
 const int left_ir = 32;
 const int fl_ir = 30;
@@ -213,10 +213,13 @@ void writeMotors() {
   // 0: forward, 1: backward
   analogWrite(fr_move_forward, frMotor->getDirection() == 0 ? frMotor->getSpeed() : 0);
   analogWrite(fr_move_backward, frMotor->getDirection() == 1 ? frMotor->getSpeed() : 0);
+
   analogWrite(fl_move_forward, flMotor->getDirection() == 0 ? flMotor->getSpeed() : 0);
   analogWrite(fl_move_backward, flMotor->getDirection() == 1 ? flMotor->getSpeed() : 0);
+
   analogWrite(br_move_forward, brMotor->getDirection() == 0 ? brMotor->getSpeed() : 0);
   analogWrite(br_move_backward, brMotor->getDirection() == 1 ? brMotor->getSpeed() : 0);
+
   analogWrite(bl_move_forward, blMotor->getDirection() == 0 ? blMotor->getSpeed() : 0);
   analogWrite(bl_move_backward, blMotor->getDirection() == 1 ? blMotor->getSpeed() : 0);
 }

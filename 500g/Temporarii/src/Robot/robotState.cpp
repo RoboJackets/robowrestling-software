@@ -20,8 +20,8 @@ void RobotState::runAlgorithm() {
         prevAlgo = NoneAlgo;
     }
 
-    algo->fryThem();
-    prevAlgo = StirFry;
+    algo->search();
+    prevAlgo = Search;
     return;
 
     // OVERRIDE: ALWAYS ATTACK IF ENEMY IS SEEN MID

@@ -55,7 +55,17 @@ void Algorithm::TurnToEnemy(EnemyPositions pos) {
 }
 
 void Algorithm::search() {
-    action->Circle();
+    if (timer->getRunningProcess() == true) {
+        if (timer->getDuration() > 853) {
+            action->Left(70);
+        } else if (timer->getDuration() > 300) {
+            action->Right(70);
+        } else {
+            action->Left(70);
+        }
+        return;
+    }
+    timer->startTimer(1153);
 }
 
 void Algorithm::backTrack(OnLine line_state, AlgoLogs algo) {
@@ -82,7 +92,7 @@ void Algorithm::backTrack(OnLine line_state, AlgoLogs algo) {
     }
 
     // Else start process for line movement
-    timer->startTimer(400);
+    timer->startTimer(300);
     if (algo == BTBackward) {
         action->Forward(200);
     } else if (algo == BTFR || algo == BTFL) {
@@ -92,21 +102,21 @@ void Algorithm::backTrack(OnLine line_state, AlgoLogs algo) {
 
 void Algorithm::fryThem() {
     if (timer->getRunningProcess() == true) {
-        // 170 Right
-        if (timer->getDuration() > 680) {
-            action->Right(70);
-        } else if (timer->getDuration() > 630) {
+        // 161 Right
+        if (timer->getDuration() > 689) {
+            action->Right(100);
+        } else if (timer->getDuration() > 639) {
             // 50 Wait
             action->Right(0);
         }  else if (timer->getDuration() > 350) {
-            // 280 Left
-            action->Left(70);
+            // 289 Left
+            action->Left(100);
         } else if (timer->getDuration() > 300) {
             // 50 Wait
             action->Left(0);
         } else if (timer->getDuration() > 150) {
             // 150 Right
-            action->Right(70);
+            action->Right(100);
         } else if (timer->getDuration() > 100) {
             // 50 Wait
             action->Right(0);
@@ -117,7 +127,7 @@ void Algorithm::fryThem() {
         return;
     }
     timer->startTimer(850);
-    action->Right(70);
+    action->Right(100);
 }
 
 void Algorithm::SideStrike(EnemyPositions pos) {
