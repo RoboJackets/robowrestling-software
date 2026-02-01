@@ -1,6 +1,10 @@
-/**
- * Updating Kitti's main.cpp to fit Joe's robot
- */
+/*
+    🍓🍓🍓
+         ╱|、
+         (˚ˎ 。7  
+          |、˜〵          
+         じしˍ,)ノ
+*/
 
 #include <Arduino.h>
 
@@ -12,39 +16,51 @@
 #include "Enums/enemy_states.hpp"
 
 // Pins definitions
-#define start_mod 10
+#define start_mod 13
 
-#define LPos 6
-#define LNeg A5
-#define RPos 13
-#define RNeg 11
-#define left_speed 5
-#define right_speed 3
+#define left_pwm 37
+#define left_dir_forward 0
+#define left_dir_backward 0
+#define right_pwm 33
+#define right_dir_forward 0
+#define right_dir_backward 0
 
-#define line_left A0
-#define line_right A1
+#define line_fl 10
+#define line_fr 11
+#define line_bl 12
+#define line_br 26
 
-#define ir_side_left 12
-#define ir_front_left 8
+#define ir_back 7
+#define ir_left 6
+#define ir_left45 2
+#define ir_front_left 3
+#define ir_analog_transmit 20
+#define ir_analog_receive 21
 #define ir_front_right 4
-#define ir_side_right 2
+#define ir_right45 5
+#define ir_right 1
+
+#define algo_pin1 38
+#define algo_pin2 39
+#define algo_pin3 40
 
 // Arrays
 /**
  * Motors: [Left, Right]
- * Line Sensors: [Left, Righ]
- * IR Sensors: [SideLeft, FrontLeft, FrontRight, SideRight]
+ * Line Sensors: [Front Left, Front Right, Back Right, Back Left]
+ * IR Sensors: [Back, Left 90, Left 45, Front Left, Front Right, Right 45, Right 90]
+ * IR Analog: Front Analog
  */
 int motors[2] = {0, 0};
-int line_sensors[2] = {0, 0};
-int ir_sensors[4] = {0, 0, 0, 0};
+int line_sensors[4] = {0, 0, 0, 0};
+int ir_sensors[7] = {0, 0, 0, 0, 0, 0, 0};
+int ir_middle = 0;
 
 // Class instances
 WorldState* world;
 RobotActions* action;
 Algorithms* algo;
 Timer* timer;
-
 
 // Function declarations
 void pollSensors();
@@ -55,23 +71,32 @@ void updateState();
  * Set up structure of the code.
  */
 void setup() {
-  // put your setup code here, to run once
-  pinMode(RPos, OUTPUT);
-  pinMode(RNeg, OUTPUT);
-  pinMode(LPos, OUTPUT);
-  pinMode(LNeg, OUTPUT);
-  pinMode(left_speed, OUTPUT);
-  pinMode(right_speed, OUTPUT);
+  // Setup code for initialization of program
+  pinMode(INPUT, start_mod);
 
-  pinMode(line_left, INPUT);
-  pinMode(line_right, INPUT);
+  pinMode(INPUT, line_fl);
+  pinMode(INPUT, line_fr);
+  pinMode(INPUT, line_bl);
+  pinMode(INPUT, line_br);
 
-  pinMode(ir_side_left, INPUT);
-  pinMode(ir_front_left, INPUT);
-  pinMode(ir_front_right, INPUT);
-  pinMode(ir_side_right, INPUT);
+  pinMode(INPUT, ir_back);
+  pinMode(INPUT, ir_left);
+  pinMode(INPUT, ir_left45);
+  pinMode(INPUT, ir_front_left);
+  pinMode(INPUT, ir_front_right);
+  pinMode(INPUT, ir_right45);
+  pinMode(INPUT, ir_right);
 
-  // Allocate objects (was dereferencing uninitialized pointers which caused UB)
+  pinMode(INPUT, ir_analog_receive);
+  pinMode(OUTPUT, ir_analog_transmit);
+
+  pinMode(OUTPUT, left_pwm);
+  pinMode(OUTPUT, left_dir_forward);
+  pinMode(OUTPUT, left_dir_backward);
+  pinMode(OUTPUT, right_pwm);
+  pinMode(OUTPUT, right_dir_forward);
+  pinMode(OUTPUT, right_dir_backward);
+
   world = new WorldState(line_sensors, ir_sensors);
   action = new RobotActions();
   timer = new Timer(millis());
@@ -83,11 +108,9 @@ void setup() {
  * Main loop
  */
 void loop() {
-  //if (digitalRead(start_mod) == HIGH) {
-    pollSensors();
-    updateState();
-    updateMotors();
-  //}
+  pollSensors();
+  updateState();
+  updateMotors();
 }
 
 /**
@@ -97,51 +120,43 @@ void loop() {
 // Updating Sensor Arrays
 void pollSensors() {
   // Poll line sensors
-  line_sensors[0] = analogRead(line_left);
-  line_sensors[1] = analogRead(line_right);
+  line_sensors[0] = analogRead(line_fl);
+  line_sensors[1] = analogRead(line_fr);
+  line_sensors[2] = analogRead(line_br);
+  line_sensors[3] = analogRead(line_bl);
 
   // Poll IR sensors
-  ir_sensors[0] = digitalRead(ir_side_left);
-  ir_sensors[1] = digitalRead(ir_front_left);
-  ir_sensors[2] = digitalRead(ir_front_right);
-  ir_sensors[3] = digitalRead(ir_side_right);
+  ir_sensors[0] = digitalRead(ir_back);
+  ir_sensors[1] = digitalRead(ir_left);
+  ir_sensors[2] = digitalRead(ir_left45);
+  ir_sensors[3] = digitalRead(ir_front_left);
+  ir_sensors[4] = digitalRead(ir_front_right);
+  ir_sensors[5] = digitalRead(ir_right45);
+  ir_sensors[6] = digitalRead(ir_right);
+
+  // Poll Analog sensor
+  ir_middle = analogRead(ir_analog_receive);
 
   // Update World State Sensor Values and Update Timer
   world->update_sensors(line_sensors, ir_sensors);
   timer->updateTime();
-
-
-  // Serial.print("Left IR: ");
-  // Serial.println(digitalRead(ir_side_left));
-  // Serial.print("Right IR: ");
-  // Serial.println(ir_sensors[2]);
-  Serial.println("Left Line: ");
-  Serial.print(line_sensors[0]);
-  Serial.print("Right Line: ");
-  Serial.println(line_sensors[1]);
 }
 
 // Push to Motors
 void updateMotors() {
-  // Updating motors from robot actions
-  // Serial.println("Left Motor: ");
-  // Serial.print(motors[0]);
-  // Serial.println("Right Motor: ");
-  // Serial.println(motors[1]);
-
   // Ensure PWM is within 0-255
-  int left_pwm = min(255, max(0, abs(motors[0])));
-  int right_pwm = min(255, max(0, abs(motors[1])));
+  int left_speed = min(255, max(0, abs(motors[0])));
+  int right_speed = min(255, max(0, abs(motors[1])));
 
   // Left motor drive
-  digitalWrite(LPos, motors[0] > 0 ? HIGH : LOW);
-  digitalWrite(LNeg, motors[0] > 0 ? LOW : HIGH);
-  analogWrite(left_speed, left_pwm);
+  digitalWrite(left_dir_forward, motors[0] > 0 ? HIGH : LOW);
+  digitalWrite(left_dir_backward, motors[0] > 0 ? LOW : HIGH);
+  analogWrite(left_pwm, left_speed);
 
   // Right motor drive
-  digitalWrite(RPos, motors[1] > 0 ? HIGH : LOW);
-  digitalWrite(RNeg, motors[1] > 0 ? LOW : HIGH);
-  analogWrite(right_speed, right_pwm);
+  digitalWrite(right_dir_forward, motors[1] > 0 ? HIGH : LOW);
+  digitalWrite(right_dir_backward, motors[1] > 0 ? LOW : HIGH);
+  analogWrite(left_pwm, right_speed);
 }
 
 // Update Robot World State
