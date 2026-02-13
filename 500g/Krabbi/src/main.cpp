@@ -4,31 +4,44 @@
 #include "timer.hpp"
 #include "Algorithms.hpp"
 
-const int leftSideSensor = 17;
-const int leftSensor = 8;
-const int middleSensor = 7;
-const int rightSensor = 4;
-const int rightSideSensor = 2;
+const int leftSideSensor = PA2;
+const int leftSensor = PA3;
+const int middleSensor = PA4;
+const int rightSensor = PA5;
+const int rightSideSensor = PA6;
 
-const int rightB = 9;
-const int rightF = 10;
-const int leftB = 3; 
-const int leftF = 5;
+const int rightB = PB6; // Don't know which is forward and backward
+const int rightF = PB7;
+const int leftB = PA8; // Don't know which is forward and backward 
+const int leftF = PA9;
 
-const int startPin = 6;
-const int leftLineSensor = 16;
-const int rightLIneSensor = 21;
+const int screenSCL = PB8;
+const int screenSDA = PB9; 
+
+const int startPin = PB10;
+const int leftLineSensor = PA7;
+const int rightLineSensor = PB0;
+
+const int imuSCL = PB8;
+const int imuSDA = PB9;
+
+const int servoPin = PA1;
+
+const int led1Pin = PB5;
+const int led2Pin = PB1;
 
 const int dip1 = PB12;
-const int dip2 = 15;
-const int pushButton = 20;
+const int dip2 = PB13;
+const int dip3 = PB14;
+
+const int pushButton = PB4;
 
 long currentMillis = 0;
 int printCounter = 0;
 
 float* avgs;
 int motors[2] = {0};
-int dips[2] = {0};
+int dips[3] = {0};
 int line_sensors[2] = {0};
 int ir_sensors[5] = {0};
 
@@ -61,7 +74,7 @@ void setup() {
   pinMode(leftB, OUTPUT);
 
   pinMode(leftLineSensor, INPUT);
-  pinMode(rightLIneSensor, INPUT);
+  pinMode(rightLineSensor, INPUT);
   pinMode(dip1, INPUT_PULLUP);
   pinMode(dip2, INPUT_PULLUP);
   pinMode(pushButton, INPUT);
@@ -102,7 +115,7 @@ void pullSensors() {
   ir_sensors[4] = digitalRead(rightSideSensor);
   currentMillis = millis();
   line_sensors[0] = analogRead(leftLineSensor);
-  line_sensors[1] = analogRead(rightLIneSensor);
+  line_sensors[1] = analogRead(rightLineSensor);
   dips[0] = digitalRead(dip1);
   dips[1] = digitalRead(dip2);
   Serial.println(dips[0]);
@@ -148,6 +161,34 @@ void writeMotors() {
   }
 }
 
+double writeServo(int pin, double deg) {
+
+  double p = 2.038;
+
+  if (deg > 179) {
+
+    deg = 179;
+
+  } 
+
+  if (deg < 30.355) {
+
+    deg = 30.355;
+
+  }
+
+  double ht = deg * p / 180;
+
+  double dc = ht / p;
+
+  double invertedDc = 1 - dc;
+
+  analogWrite(pin, invertedDc * 255);
+
+  return dc;
+
+}
+
 void debugEnemy(EnemyPosition ep){
   switch(ep) {
     case NONE:     Serial.print("NONE"); break;
@@ -191,7 +232,7 @@ void debugDIP(){
   Serial.print(" ");
 }
 
-void debugAverages(){
+void debugAverages() {
   for(int i = 0; i < 5; i++){
     Serial.print(avgs[i]);
     Serial.print(" ");
