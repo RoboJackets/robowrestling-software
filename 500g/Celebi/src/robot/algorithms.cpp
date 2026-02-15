@@ -17,9 +17,9 @@ algorithms :: algorithms(robot_actions *robot, world_state *world, timer* draw_t
 
 void algorithms :: match_strategy() {
     selfPosition = world -> line_check();
-    enemyPosition = world -> enemy_pos(); 
-
-    slammy_whammy();
+    enemyPosition = world -> enemy_pos();
+    // slammy_whammy();
+    draw_circle();
 }
 
 void algorithms :: slammy_whammy() {
@@ -31,7 +31,7 @@ void algorithms :: slammy_whammy() {
         }
         attack_timer -> set_action_timer(50);
     } else if (attack_timer -> check_action_time()){
-        robot -> turn_left(180);
+        robot -> turn_left(120);
     }
 }
 
@@ -84,9 +84,9 @@ int algorithms :: draw_circle() {
         }
     //if the current state is go backwards
     } else if (states.circle == D_GO_BACKWARDS) {
-        robot -> drive_backward(180);
+        robot -> drive_backward(150);
     } else {
-        robot -> turn_left(130);
+        robot -> turn_left(100);
     }
     return 0;
 }
@@ -280,19 +280,19 @@ int algorithms :: turn_towards_no_delay() {
     enemy_states enemy = enemyPosition;
     if(enemy == FRONT_LEFT) {
         //turn left a little slower
-        robot -> turn_left(120);
+        robot -> turn_left(140);
         return 1;
     } else if (enemy == LEFT) {
         //turn left
-        robot -> turn_left(150);
+        robot -> turn_left(170);
         return 1;
     } else if (enemy == FRONT_RIGHT) {
         //turn right a little slower
-        robot -> turn_right(120);
+        robot -> turn_right(140);
         return 1;
     } else if (enemy == RIGHT) {
         //turn right
-        robot -> turn_right(150);
+        robot -> turn_right(170);
         return 1;
     } else {
         return 0;

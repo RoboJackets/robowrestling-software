@@ -4,6 +4,7 @@
 class robot_actions {
     private:
         int* motors;
+        int acceleration;
 
     public:
         robot_actions(int* motors);
@@ -13,6 +14,5 @@ class robot_actions {
         void turn_left(int speed);
         void turn_right(int speed);
         void drive_custom(int LSpeed, int RSpeed, bool LDir, bool RDir);
-
 };
 #endif

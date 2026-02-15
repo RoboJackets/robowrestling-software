@@ -100,26 +100,26 @@ void setup() {
     draw_timer -> set_action_timer(10);
     attack_timer -> set_action_timer(10);
     // wait for start signal
-    while (!digitalRead(StartMod)) {
-      Serial.print(digitalRead(StartMod));
-      Serial.println(" Waiting for start signal");
-    }
+    // while (!digitalRead(StartMod)) {
+    //   Serial.print(digitalRead(StartMod));
+    //   Serial.println(" Waiting for start signal");
+    // }
 }
 
 void loop() {
     pollSensors();
+
     updateState();
     updateMotors();
-
-    //listen for stop signal
-    if (!digitalRead(StartMod)) {
-      while(true) {
-        brake();
-        Serial.println("braking");
-      }
-    }
-    debug();
     
+    //listen for stop signal
+    // if (!digitalRead(StartMod)) {
+    //   while(true) {
+    //     brake();
+    //     Serial.println("braking");
+    //   }
+    // }
+    debug();
 }
 
 void pollSensors() {
@@ -183,13 +183,12 @@ void brake() {
 }
 
 void debug() {
-  i++;
-  if (i < 1000) {
-    return;
-  } else {
-    i = 0;
-  }
   //delay(50);
+  i++;
+  if (i != 500) {
+    return;
+  }
+  i = 0;
   Serial.println("\n\n*****************");
   
   //Timer debugging
