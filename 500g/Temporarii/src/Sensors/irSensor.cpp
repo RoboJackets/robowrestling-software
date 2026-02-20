@@ -1,4 +1,4 @@
-#include "Sensors/irSensor.h"
+#include "Sensors/IrSensor.hpp"
 
 // type | Class Name | function name
 IrSensor::IrSensor() {
