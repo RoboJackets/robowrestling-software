@@ -2,6 +2,10 @@
 #include "world_state.hpp"
 #include "motor_actions.hpp"
 #include "timer.hpp"
+#include <Adafruit_MPU6050.h> // Include the Adafruit MPU6050 library
+#include <Adafruit_Sensor.h>  // Include the Adafruit Unified Sensor library
+#include <Adafruit_SSD1306.h>
+#include <Wire.h>
 #include "Algorithms.hpp"
 
 const int leftSideSensor = PA2;
@@ -10,10 +14,10 @@ const int middleSensor = PA4;
 const int rightSensor = PA5;
 const int rightSideSensor = PA6;
 
-const int rightB = PB6; // Don't know which is forward and backward
+const int rightB = PB6;
 const int rightF = PB7;
-const int leftB = PA8; // Don't know which is forward and backward 
-const int leftF = PA9;
+const int leftF = PA8;
+const int leftB = PA9;
 
 const int screenSCL = PB8;
 const int screenSDA = PB9; 
@@ -51,6 +55,10 @@ world_state* ws = new world_state(line_sensors, ir_sensors);
 motor_actions* ma = new motor_actions(motors);
 algorithms* algo = new algorithms(ma, ws, last_enemy_changed, behavior_timer);
 
+// Declare MPU6050 object
+Adafruit_MPU6050 mpu;
+
+sensors_event_t accel, gyro, temp;
 void pullSensors();
 void writeMotors();
 void debug();
@@ -80,7 +88,27 @@ void setup() {
   pinMode(pushButton, INPUT);
   pinMode(0, OUTPUT);
 
-  Serial.begin(115200);
+  Serial.begin(9600);
+  Serial.println("Initializing...");
+
+  // Initialize MPU6050
+  Wire.setSCL(imuSCL);
+  Wire.setSDA(imuSDA);
+  Wire.begin(imuSDA, imuSCL); // Initialize I2C for MPU6050
+  Serial.println("Adafruit MPU6050 test!");
+
+  // Try to initialize MPU6050!
+  if (!mpu.begin()) {
+    Serial.println("Failed to find MPU6050 chip");
+    while (1) {
+      delay(10);
+    }
+  }
+  Serial.println("MPU6050 Found!");
+
+  mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
+  mpu.setGyroRange(MPU6050_RANGE_500_DEG);
+  mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
   // while (analogRead(startPin) <= 900) {
   //   printCounter++;
   //   if (printCounter%100 == 0)
@@ -91,20 +119,16 @@ void setup() {
 }
 
 void loop() {
-  // pullSensors();
-  // ws->clean_sensors();
   pullSensors(); 
   avgs = ws->get_sensors_avg();
   if (dips[0] == 0) {
-    algo->selectMode();  
-    // Serial.println("Normal");
+    // algo->selectMode();  
   }
   else {
     algo->spin();
-    // Serial.println("Spinnn");
   }
   writeMotors();
-  // debug();
+  debug();
 }
 
 void pullSensors() {
@@ -118,12 +142,18 @@ void pullSensors() {
   line_sensors[1] = analogRead(rightLineSensor);
   dips[0] = digitalRead(dip1);
   dips[1] = digitalRead(dip2);
-  Serial.println(dips[0]);
+  mpu.getEvent(&accel, &gyro, &temp);
 }
 
 void debug() {
   printCounter++;
-  if (printCounter % 100 == 0) {
+  if (printCounter % 25 == 0) {
+    Serial.print("Accel X: ");
+    Serial.print(accel.acceleration.x);
+    Serial.print(" Y: ");
+    Serial.print(accel.acceleration.y);
+    Serial.print(" Z: ");
+    Serial.println(accel.acceleration.z);
     debugLine();
     debugAverages();
     // debugLineLP(ws->line_check());
@@ -135,6 +165,8 @@ void debug() {
 void writeMotors() {
   motors[0] = motors[0]/1.65;
   motors[1] = motors[1]/1.65;
+  motors[0] = 0;
+  motors[1] = 0;
   if (motors[0] > 0) {
     analogWrite(leftF, abs(motors[0]));
     analogWrite(leftB, 0);
