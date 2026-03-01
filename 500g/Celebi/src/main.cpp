@@ -25,11 +25,14 @@
 #define LMIDdist 8
 #define Ldist 28
 #define StartMod 29
+#define StartButton 23
 
-#define RmotorPos 3
-#define RmotorNeg 4
+#define RmotorPos 4
+#define RmotorNeg 3
 #define LmotorPos 33
 #define LmotorNeg 13
+
+
 
 int i = 0;
 
@@ -52,6 +55,7 @@ world_state* world;
 
 timer *draw_timer;
 timer *attack_timer;
+timer *swerve_timer;
 
 //filter
 int print = 0;
@@ -79,10 +83,12 @@ void setup() {
     pinMode(RMIDdist, INPUT);
     pinMode(Rdist, INPUT);
     pinMode(StartMod, INPUT);
+    pinMode(StartButton, INPUT);
 
     //initialize timer
     draw_timer = new timer(millis());
     attack_timer = new timer(millis());
+    swerve_timer = new timer(millis());
 
     //initialize world state
     world = new world_state(line_sensors, ir_sensors);
@@ -91,12 +97,10 @@ void setup() {
     robot = new robot_actions(motors);    
 
     //initialize strategy
-    algorithm = new algorithms(robot, world, draw_timer, attack_timer);
+    algorithm = new algorithms(robot, world, draw_timer, attack_timer, swerve_timer);
 
-
-
-    Serial.begin(9600);
-    Serial.print("we are running\n");
+    // Serial.begin(9600);
+    // Serial.print("we are running\n");
     draw_timer -> set_action_timer(10);
     attack_timer -> set_action_timer(10);
     // wait for start signal
@@ -104,22 +108,27 @@ void setup() {
     //   Serial.print(digitalRead(StartMod));
     //   Serial.println(" Waiting for start signal");
     // }
+    while (!digitalRead(StartButton)) {
+      Serial.println("waiting");
+    }
+    delay(5000);
+    swerve_timer -> update_time(millis());
+    swerve_timer -> set_action_timer(300);
 }
 
 void loop() {
     pollSensors();
-
     updateState();
     updateMotors();
-    
-    //listen for stop signal
-    // if (!digitalRead(StartMod)) {
+
+    // listen for stop signal
+    // if (!digitalRead(StrtMod)) {
     //   while(true) {
     //     brake();
     //     Serial.println("braking");
     //   }
     // }
-    debug();
+    // debug();
 }
 
 void pollSensors() {
@@ -148,6 +157,7 @@ void pollSensors() {
 
   draw_timer -> update_time(millis());
   attack_timer -> update_time(millis());
+  swerve_timer -> update_time(millis());
 }
 
 void updateState() {
@@ -159,6 +169,7 @@ void updateState() {
  * simple motordriver with speed and direction.  
  */ 
 void updateMotors() {
+    motors[0] = motors[0];
     if (motors[0] > 0) {  // if direction is forward
         analogWrite(LmotorPos, motors[0]);
         analogWrite(LmotorNeg, 0);
@@ -183,12 +194,9 @@ void brake() {
 }
 
 void debug() {
-  //delay(50);
-  i++;
-  if (i != 500) {
+  if (millis() % 100 != 0) {
     return;
   }
-  i = 0;
   Serial.println("\n\n*****************");
   
   //Timer debugging
@@ -200,62 +208,54 @@ void debug() {
   // Serial.print("millies: ");
   // Serial.println(millis());
   // Serial.print("action timer started at: ");
-  // Serial.println(thymer -> get_action_start());
+  // Serial.println(attack_timer -> get_action_start());
   // Serial.print("current time from timer: ");
-  // Serial.println(thymer -> get_current_time());
+  // Serial.println(attack_timer -> get_current_time());
   // Serial.print("timer status: ");
-  // Serial.println(thymer -> get_timer_state());
+  // Serial.println(attack_timer -> get_timer_state());
   
   
   //line sensors
   
-  Serial.println("sensors:");
-  Serial.print("line left: ");
-  Serial.println(line_sensors[0]);
-  Serial.println(line_sensors[1]);
+  // Serial.println(line_sensors[0]);
+  // Serial.println(line_sensors[1]);
 
-  Serial.print("line right: ");
-  Serial.println(line_sensors[2]);
-  Serial.println(line_sensors[3]);
+
+  // Serial.println(line_sensors[2]);
+  // Serial.println(line_sensors[3]);
 
 
   //distance sensors
 
-  Serial.print("distance left: ");
-  Serial.println(ir_sensors[0]);
+  // Serial.print("distance left: ");
+  // Serial.println(ir_sensors[0]);
 
-  Serial.print("distance mid left: ");
-  Serial.println(ir_sensors[1]);
+  // Serial.print("distance mid left: ");
+  // Serial.println(ir_sensors[1]);
 
-  Serial.print("distance mid: ");
-  Serial.println(ir_sensors[2]);
+  // Serial.print("distance mid: ");
+  // Serial.println(ir_sensors[2]);
 
-  Serial.print("distance mid right: ");
-  Serial.println(ir_sensors[3]);
+  // Serial.print("distance mid right: ");
+  // Serial.println(ir_sensors[3]);
 
-  Serial.print("distance right: ");
-  Serial.println(ir_sensors[4]);
+  // Serial.print("distance right: ");
+  // Serial.println(ir_sensors[4]);
 
 
   // motors
 
   // Serial.println("motors:");
 
-  // Serial.print("left motor direction: ");
-  // Serial.println(leftMotorDriver -> get_direction());
+  Serial.print("left motor: ");
+  Serial.println(motors[0]);
 
-  // Serial.print("right motor directtion: ");
-  // Serial.println(rightMotorDriver -> get_direction());
-
-  // Serial.print("left motor speed: ");
-  // Serial.println(leftMotorDriver -> get_speed());
-
-  // Serial.print("right motor speed: ");
-  // Serial.println(rightMotorDriver -> get_speed());
+  Serial.print("right motor: ");
+  Serial.println(motors[1]);
 
 
   //state
-  //Serial.println(world ->enemy_pos());
+  // Serial.println(world ->enemy_pos());
   
   
   Serial.println("*****************");
