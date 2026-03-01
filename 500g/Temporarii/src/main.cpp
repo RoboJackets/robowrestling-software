@@ -43,8 +43,21 @@ bool started = false;
 bool end = false;
 
 // Strategy Pin
-const int strat_first = 38;
-const int strat_second = 39;
+const int strat_first = 39;
+const int strat_second = 38;
+int strategy_value = 0;
+
+// LED Pins
+const int fr_ir_led = 28;
+const int fl_ir_led = 29;
+const int left_ir_led = 31;
+const int right_ir_led = 2;
+const int mid_ir_led = 4;
+
+const int fl_line_led = 41;
+const int fr_line_led = 0;
+const int bl_line_led = 35;
+const int br_line_led = 17;
 
 /**
  * Object Definition
@@ -203,6 +216,8 @@ void pollSensors() {
   brLine->setValue(analogRead(br_line));
   blLine->setValue(analogRead(bl_line));
 
+  strategy_value = 2 * digitalRead(strat_first) + digitalRead(strat_second);
+
   timer->updateTime();
 }
 
@@ -210,7 +225,7 @@ void pollSensors() {
  * Calc State using algorithm
  */
 void calculateState() {
-  tempi->runAlgorithm();
+  tempi->runAlgorithm(strategy_value);
 }
 
 /**

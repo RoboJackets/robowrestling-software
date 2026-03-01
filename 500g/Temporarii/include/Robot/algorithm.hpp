@@ -14,6 +14,7 @@ class Algorithm
 private:
     RobotActions *action;
     Timer *timer;
+    
 
 public:
     Algorithm(RobotActions *action, Timer *timer);
