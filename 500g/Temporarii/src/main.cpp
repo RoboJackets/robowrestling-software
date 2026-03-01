@@ -42,6 +42,10 @@ const int start_mod = 33;
 bool started = false;
 bool end = false;
 
+// Strategy Pin
+const int strat_first = 38;
+const int strat_second = 39;
+
 /**
  * Object Definition
  */
@@ -103,7 +107,10 @@ void setup() {
   pinMode(fr_line, INPUT);
   pinMode(bl_line, INPUT);
   pinMode(br_line, INPUT);
+
   pinMode(start_mod, INPUT);
+  pinMode(strat_first, INPUT);
+  pinMode(strat_second, INPUT);
 
   flIR = new IrSensor();
   frIR = new IrSensor();
