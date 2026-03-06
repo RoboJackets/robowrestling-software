@@ -26,7 +26,7 @@ void Algorithms::match_strategy() {
     }
 
     // Always attack first. Overrides the queue for algorithms
-    if (enemy_position == Front) {
+    if (enemy_position == Front_IR) {
         if (timer->getRunningProcess() == false) {
             timer->startTimer(5);
         }
@@ -58,12 +58,22 @@ void Algorithms::match_strategy() {
     }
 
     // Line Check
-    if (self_position == TopLeft) {
+    if (self_position == FL_Line) {
         curr_algo = LineLeftAlgo;
         timer->startTimer(30);
         actions->drive_right(50);
         return;
-    } else if (self_position == TopRight) {
+    } else if (self_position == FR_Line) {
+        curr_algo = LineRightAlgo;
+        timer->startTimer(30);
+        actions->drive_left(50);
+        return;
+    } else if (self_position == BR_Line) {
+        curr_algo = LineLeftAlgo;
+        timer->startTimer(30);
+        actions->drive_left(50);
+        return;
+    } else if (self_position == BL_Line) {
         curr_algo = LineRightAlgo;
         timer->startTimer(30);
         actions->drive_left(50);

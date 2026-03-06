@@ -11,9 +11,23 @@ RobotState::RobotState(WorldState *world, Algorithm *algo) {
 }
 
 // Selecting Algo 🌀🔄
-void RobotState::runAlgorithm() {
+void RobotState::runAlgorithm(int strat_num) {
     // Grab line_state for ease of use
     OnLine line_state = world->getIsOnLine();
+
+    // Decode strat (MODIFY for actual strategy name)
+    Strategy strat = DefaultStrat;
+    if (strat_num == 0) {
+        strat = Strat1;
+    } else if (strat_num == 1) {
+        strat = Strat2;
+    } else if (strat_num == 2) {
+        strat = Strat3;
+    } else if (strat_num == 3) {
+        strat = Strat4;
+    } else {
+        strat = DefaultStrat;
+    }
 
     // Check expiration
     if (algo->getTimer() == false) {

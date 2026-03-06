@@ -19,11 +19,11 @@
 #define start_mod 13
 
 #define left_pwm 37
-#define left_dir_forward 0
-#define left_dir_backward 0
+#define left_dir_forward 14
+#define left_dir_backward 15
 #define right_pwm 33
-#define right_dir_forward 0
-#define right_dir_backward 0
+#define right_dir_forward 18
+#define right_dir_backward 19
 
 #define line_fl 10
 #define line_fr 11

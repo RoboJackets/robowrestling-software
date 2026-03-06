@@ -2,6 +2,7 @@
 #include "Robot/algorithm.hpp"
 #include "Enumerations/OnLine.hpp"
 #include "Enumerations/AlgoLogs.hpp"
+#include "Enumerations/Strategies.hpp"
 
 #ifndef ROBOTSTATE_HPP
 #define ROBOTSTATE_HPP 
@@ -12,9 +13,10 @@ class RobotState {
         Algorithm *algo;
         AlgoLogs prevAlgo;
         EnemyPositions enemyPrev;
+
     public:
         RobotState(WorldState *world, Algorithm *algo);
-        void runAlgorithm();
+        void runAlgorithm(int strat);
 };
 
 #endif
