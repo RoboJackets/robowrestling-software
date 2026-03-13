@@ -28,4 +28,10 @@ enum enemy_states {
     UNKNOWN
 };
 
+enum match_start {
+    START_TURN,
+    START_FORWARD,
+    START_FINISHED
+};
+
 #endif

@@ -113,7 +113,7 @@ void setup() {
     }
     delay(5000);
     swerve_timer -> update_time(millis());
-    swerve_timer -> set_action_timer(300);
+    swerve_timer -> set_action_timer(100);
 }
 
 void loop() {
@@ -169,11 +169,10 @@ void updateState() {
  * simple motordriver with speed and direction.  
  */ 
 void updateMotors() {
-    motors[0] = motors[0];
     if (motors[0] > 0) {  // if direction is forward
         analogWrite(LmotorPos, motors[0]);
         analogWrite(LmotorNeg, 0);
-    } else {   // if direction is forward
+    } else {   // if direction is backward
         analogWrite(LmotorPos, 0);
         analogWrite(LmotorNeg, abs(motors[0]));
     }

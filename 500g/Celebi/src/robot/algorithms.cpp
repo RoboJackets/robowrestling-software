@@ -12,11 +12,11 @@ algorithms :: algorithms(robot_actions *robot, world_state *world, timer* draw_t
     this -> swerve_timer = swerve_timer;
     selfPosition = OFF;
     enemyPosition = UNKNOWN;
+    match_start = START_TURN;
     states.circle = D_GO_STRAIGHT;
+    states.attack = A_BLIND;
     turn_direction = 0;
 }
-
-bool match_start = true;
 
 // main strategy function
 // step 1:
@@ -35,19 +35,25 @@ void algorithms :: match_strategy() {
     enemyPosition = world -> enemy_pos();
 
     // at beginning of round, drive forward for a bit
-    if (match_start) {
-        Serial.println("match start");
-
+    if (match_start != START_FINISHED) {
         if (swerve_timer -> check_action_time()) {
-            match_start = false;
-        } else {
+            if (match_start == START_TURN) {
+                match_start = START_FORWARD;
+                swerve_timer -> set_action_timer(300);
+            } else if (match_start == START_FORWARD) {
+                match_start = START_FINISHED;
+            }
+        } 
+        if (match_start == START_TURN) {
+            robot -> turn_left(max_speed);
+        } else if (match_start == START_FORWARD) {
             robot -> drive_forward(max_speed);
-            return;
         }
+        return;
     }
 
     // if enemy is unseen, 
-    if (slammy_whammy() == 0) {
+    if (doge() == 0) {
         draw_circle();
     }
 }
@@ -67,7 +73,6 @@ int algorithms :: slammy_whammy() {
         // reset multiplier if no enemy
         multiplier = 1;
     }
-    attack_timer -> set_action_timer(100);
     return 1;
 }
 
@@ -205,5 +210,26 @@ int algorithms :: turn_towards_no_delay() {
         return 1;
     } else {
         return 0;
+    }
+}
+
+int algorithms :: doge() {
+    if (enemyPosition == UNKNOWN) {
+        return 0;
+    }
+    if (attack_timer -> check_action_time()) {
+        if (states.attack == A_DOGE) {
+            states.attack = A_SEE;
+        }
+    }
+    if (states.attack == A_BLIND) {
+        attack_timer -> set_action_timer(50);
+        states.attack = A_DOGE;
+        return 1;
+    } else if (states.attack == A_DOGE) {
+        robot -> drive_custom(-1 * max_speed, -.75 * max_speed, false, false);
+        return 1;
+    } else {
+        return slammy_whammy();
     }
 }

@@ -17,6 +17,7 @@ class algorithms {
         timer* swerve_timer;
         line_states selfPosition;
         enemy_states enemyPosition;
+        match_start match_start;
         bool timer_set;
         int forward_speed;
         int turn_direction;
@@ -30,16 +31,11 @@ class algorithms {
         algorithms(robot_actions* robo_actions, world_state* world, timer* draw_timer, timer *attack_timer, timer *swerve_timer);
         void match_strategy();
         int slammy_whammy();
-        void draw_seek();
         void seek_drive();
-        void seek();
         int draw_circle();
-        int attack_forward();
-        int turn_towards();
         int attack_forward_no_delay();
         int turn_towards_no_delay();
-        int dodge();
-        int swerve();
         void test();
+        int doge();
 };
 #endif
