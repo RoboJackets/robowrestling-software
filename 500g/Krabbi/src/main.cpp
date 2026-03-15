@@ -106,7 +106,8 @@ void setup() {
   pinMode(dip2, INPUT_PULLUP);
   pinMode(dip3, INPUT_PULLUP);
   pinMode(pushButton, INPUT);
-  pinMode(0, OUTPUT);
+  pinMode(led1Pin, OUTPUT);
+  pinMode(led2Pin, OUTPUT);
 
   Serial.begin(9600);
   aliFuncln("Initializing...");
@@ -144,6 +145,7 @@ void setup() {
 void loop() {
   pullSensors(); 
   setLED();
+  avgs = ws->get_sensors_avg();
   
   // if((currentMillis - servo_start_time) < 10000){
   //   writeServo(servoPin, 90);
