@@ -7,7 +7,10 @@
 #include <Adafruit_SSD1306.h>
 #include <Wire.h>
 #include "Algorithms.hpp"
+#include <Servo.h>
 
+
+Servo robotServo;
 const int leftSideSensor = PA2;
 const int leftSensor = PA3;
 const int middleSensor = PA4;
@@ -29,7 +32,7 @@ const int rightLineSensor = PB0;
 const int imuSCL = PB8;
 const int imuSDA = PB9;
 
-const int servoPin = PA1;
+const int servoPin = PA0;
 
 const int led1Pin = PB5;
 const int led2Pin = PB1;
@@ -54,6 +57,7 @@ timer* behavior_timer = new timer(&currentMillis);
 world_state* ws = new world_state(line_sensors, ir_sensors);
 motor_actions* ma = new motor_actions(motors);
 algorithms* algo = new algorithms(ma, ws, last_enemy_changed, behavior_timer);
+static unsigned long servo_start_time = 0;
 
 // Declare MPU6050 object
 Adafruit_MPU6050 mpu;
@@ -66,7 +70,22 @@ void debugLine();
 void debugLineLP(LinePosition lp);
 void debugIR();
 void debugAverages();
+void writeServo(int pin, double deg);
 void debugEnemy(EnemyPosition ep);
+void setLED();
+template <typename T>
+
+void aliFunc(const T& value) {
+  if (dips[2] == LOW) {
+    Serial.print(value);
+  }
+}
+template <typename T>
+void aliFuncln(const T& value) {
+  if (dips[2] == LOW) {
+    Serial.println(value);
+  }
+}
 
 void setup() {
   pinMode(leftSensor, INPUT);
@@ -85,26 +104,29 @@ void setup() {
   pinMode(rightLineSensor, INPUT);
   pinMode(dip1, INPUT_PULLUP);
   pinMode(dip2, INPUT_PULLUP);
+  pinMode(dip3, INPUT_PULLUP);
   pinMode(pushButton, INPUT);
   pinMode(0, OUTPUT);
 
   Serial.begin(9600);
-  Serial.println("Initializing...");
+  aliFuncln("Initializing...");
 
   // Initialize MPU6050
   Wire.setSCL(imuSCL);
   Wire.setSDA(imuSDA);
   Wire.begin(imuSDA, imuSCL); // Initialize I2C for MPU6050
-  Serial.println("Adafruit MPU6050 test!");
+  aliFuncln("Adafruit MPU6050 test!");
 
   // Try to initialize MPU6050!
   if (!mpu.begin()) {
-    Serial.println("Failed to find MPU6050 chip");
+    aliFuncln("Failed to find MPU6050 chip");
     while (1) {
       delay(10);
     }
   }
-  Serial.println("MPU6050 Found!");
+  aliFuncln("MPU6050 Found!");
+
+  robotServo.attach(servoPin);
 
   mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
   mpu.setGyroRange(MPU6050_RANGE_500_DEG);
@@ -112,17 +134,25 @@ void setup() {
   // while (analogRead(startPin) <= 900) {
   //   printCounter++;
   //   if (printCounter%100 == 0)
-  //     Serial.println("Waiting to start");
+  //     aliFuncln("Waiting to start");
   // }
   // delay(5000);
-  Serial.println("Started");
+  servo_start_time = millis(); // Record the start time for the servo action
+  aliFuncln("Started");
 }
 
 void loop() {
   pullSensors(); 
-  avgs = ws->get_sensors_avg();
+  setLED();
+  
+  // if((currentMillis - servo_start_time) < 10000){
+  //   writeServo(servoPin, 90);
+  // }
+
+  writeServo(servoPin, 90);
+  
   if (dips[0] == 0) {
-    // algo->selectMode();  
+    algo->selectMode();  
   }
   else {
     algo->spin();
@@ -142,31 +172,33 @@ void pullSensors() {
   line_sensors[1] = analogRead(rightLineSensor);
   dips[0] = digitalRead(dip1);
   dips[1] = digitalRead(dip2);
+  dips[2] = digitalRead(dip3);
   mpu.getEvent(&accel, &gyro, &temp);
 }
-
+void setLED(){
+  digitalWrite(led1Pin, line_sensors[0] < 200); // change these later when needed
+  digitalWrite(led2Pin, line_sensors[1] < 200);
+}
 void debug() {
   printCounter++;
   if (printCounter % 25 == 0) {
-    Serial.print("Accel X: ");
-    Serial.print(accel.acceleration.x);
-    Serial.print(" Y: ");
-    Serial.print(accel.acceleration.y);
-    Serial.print(" Z: ");
-    Serial.println(accel.acceleration.z);
+    aliFunc("Accel X: ");
+    aliFunc(accel.acceleration.x);
+    aliFunc(" Y: ");
+    aliFunc(accel.acceleration.y);
+    aliFunc(" Z: ");
+    aliFuncln(accel.acceleration.z);
     debugLine();
     debugAverages();
     // debugLineLP(ws->line_check());
     // debugEnemy(ws->enemy_pos());
-    Serial.println();
+    aliFuncln("");
   }
 }
 
 void writeMotors() {
   motors[0] = motors[0]/1.65;
   motors[1] = motors[1]/1.65;
-  motors[0] = 0;
-  motors[1] = 0;
   if (motors[0] > 0) {
     analogWrite(leftF, abs(motors[0]));
     analogWrite(leftB, 0);
@@ -193,80 +225,71 @@ void writeMotors() {
   }
 }
 
-double writeServo(int pin, double deg) {
-
-  double p = 2.038;
-
-  if (deg > 179) {
-
-    deg = 179;
-
-  } 
-
-  if (deg < 30.355) {
-
-    deg = 30.355;
-
+void writeServo(int pin, double deg) {
+  // Constrain the degree to a valid range (0-180 for standard servos)
+  if (deg < 0) {
+    deg = 0;
+  }
+  if (deg > 180) {
+    deg = 180;
   }
 
-  double ht = deg * p / 180;
+  // Map the degree to a pulse width in microseconds
+  // Standard servo pulse widths: 1000us for 0 deg, 1500us for 90 deg, 2000us for 180 deg
+  long pulse_width_us = map(deg, 0, 180, 1000, 2000);
 
-  double dc = ht / p;
+  // Handle signal inversion: To get a pulse of 'pulse_width_us' after an external inverter,
+  // we must output HIGH for the remainder of the 20ms (20000us) period.
 
-  double invertedDc = 1 - dc;
-
-  analogWrite(pin, invertedDc * 255);
-
-  return dc;
-
+  robotServo.writeMicroseconds(pulse_width_us);
 }
 
 void debugEnemy(EnemyPosition ep){
   switch(ep) {
-    case NONE:     Serial.print("NONE"); break;
-    case LEFT:     Serial.print("LEFT"); break;
-    case FRONT:    Serial.print("FRONT"); break;
-    case RIGHT:    Serial.print("RIGHT"); break;
-    case MIDLEFT:  Serial.print("MIDLEFT"); break;
-    case MIDRIGHT: Serial.print("MIDRIGHT"); break;
-    case FARFRONT: Serial.print("FARFRONT"); break;
+    case NONE:     aliFunc("NONE"); break;
+    case LEFT:     aliFunc("LEFT"); break;
+    case FRONT:    aliFunc("FRONT"); break;
+    case RIGHT:    aliFunc("RIGHT"); break;
+    case MIDLEFT:  aliFunc("MIDLEFT"); break;
+    case MIDRIGHT: aliFunc("MIDRIGHT"); break;
+    case FARFRONT: aliFunc("FARFRONT"); break;
   }
-  Serial.println();
+  aliFuncln("");
 }
 
 void debugLineLP(LinePosition lp) {
   switch(lp) {
-    case OFF_LINE: Serial.println("OFF LINE "); break;
-    case LEFT_LINE: Serial.println("LEFT LINE "); break;
-    case RIGHT_LINE: Serial.println("RIGHT LINE "); break;
-    case CENTER_LINE: Serial.println("CENTER LINE "); break;
+    case OFF_LINE: aliFuncln("OFF LINE "); break;
+    case LEFT_LINE: aliFuncln("LEFT LINE "); break;
+    case RIGHT_LINE: aliFuncln("RIGHT LINE "); break;
+    case CENTER_LINE: aliFuncln("CENTER LINE "); break;
   }
 }
 
 void debugLine(){
   for(int i = 0; i < 2; i++){
-    Serial.print(line_sensors[i]);
-    Serial.print(" ");
+    aliFunc(line_sensors[i]);
+    aliFunc(" ");
   }
 }
 
 void debugIR(){
   for(int i = 0; i < 5; i++){
-    Serial.print(ir_sensors[i]);
-    Serial.print(" ");
+    aliFunc(ir_sensors[i]);
+    aliFunc(" ");
   }
 }
 
 void debugDIP(){
-  Serial.print(digitalRead(dip1));
-  Serial.print(" ");
-  Serial.print(digitalRead(dip2));
-  Serial.print(" ");
+  aliFunc(digitalRead(dip1));
+  aliFunc(" ");
+  aliFunc(digitalRead(dip2));
+  aliFunc(" ");
 }
 
 void debugAverages() {
   for(int i = 0; i < 5; i++){
-    Serial.print(avgs[i]);
-    Serial.print(" ");
+    aliFunc(avgs[i]);
+    aliFunc(" ");
   }
 }
