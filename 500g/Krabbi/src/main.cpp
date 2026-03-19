@@ -48,6 +48,9 @@ int printCounter = 0;
 int zCounter = 0;
 bool playing = true;
 
+float zRotRad = 0.0f;
+unsigned long lastGyroMicros = micros();
+
 float* avgs;
 int motors[2] = {0};
 int dips[3] = {0};
@@ -76,6 +79,8 @@ void writeServo(int pin, double deg);
 void debugEnemy(EnemyPosition ep);
 void setLED();
 void debugDIP();
+void debugIMU();
+void trackZRotation();
 void checkAccel();
 template <typename T>
 
@@ -148,14 +153,10 @@ void setup() {
 
 void loop() {
   pullSensors(); 
+  trackZRotation();
   setLED();
   avgs = ws->get_sensors_avg();
-  
-  // if((currentMillis - servo_start_time) < 10000){
-  //   writeServo(servoPin, 90);
-  // }
 
-  
   if (dips[0] == LOW) {
     algo->selectMode();  
   }
@@ -189,22 +190,30 @@ void pullSensors() {
   dips[2] = digitalRead(dip3);
   mpu.getEvent(&accel, &gyro, &temp);
 }
+
+void trackZRotation() {
+  unsigned long nowMicros = micros();
+  float dt = (nowMicros - lastGyroMicros) / 1000000.0f;
+  lastGyroMicros = nowMicros;
+  if (std::abs(gyro.gyro.z) > 0.1) {
+    zRotRad += gyro.gyro.z * dt;
+  }
+}
+
 void setLED(){
   digitalWrite(led1Pin, line_sensors[0] < 200); // change these later when needed
   digitalWrite(led2Pin, line_sensors[1] < 200);
 }
+
 void debug() {
   printCounter++;
   if (printCounter % 25 == 0) {
-    aliFunc("Accel X: ");
-    aliFunc(accel.acceleration.x);
-    aliFunc(" Y: ");
-    aliFunc(accel.acceleration.y);
-    aliFunc(" Z: ");
-    aliFuncln(accel.acceleration.z);
+    aliFuncln("Current Rotation: " + String(zRotRad));
+    debugIMU();
     debugLine();
     debugAverages();
     debugDIP();
+    debugIMU();
     // debugLineLP(ws->line_check());
     // debugEnemy(ws->enemy_pos());
     aliFuncln("");
@@ -310,6 +319,23 @@ void debugAverages() {
     aliFunc(avgs[i]);
     aliFunc(" ");
   }
+}
+
+void debugIMU() {
+  aliFunc("Temperature: ");
+  aliFuncln(temp.temperature);
+  aliFunc("Accel X: ");
+  aliFunc(accel.acceleration.x);
+  aliFunc(" Y: ");
+  aliFunc(accel.acceleration.y);
+  aliFunc(" Z: ");
+  aliFuncln(accel.acceleration.z);
+  aliFunc("Gyro X: ");
+  aliFunc(gyro.gyro.x);
+  aliFunc(" Y: ");
+  aliFunc(gyro.gyro.y);
+  aliFunc(" Z: ");
+  aliFuncln(gyro.gyro.z);
 }
 
 void checkAccel() {
