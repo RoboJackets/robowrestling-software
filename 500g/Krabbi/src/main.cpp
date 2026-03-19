@@ -7,6 +7,7 @@
 #include <Adafruit_SSD1306.h>
 #include <Wire.h>
 #include "Algorithms.hpp"
+#include <MadgwickAHRS.h>
 #include <Servo.h>
 
 
@@ -42,14 +43,40 @@ const int dip2 = PB13;
 const int dip3 = PB14;
 
 const int pushButton = PB4;
+const unsigned long startupDelayMs = 5000;
 
 long currentMillis = 0;
 int printCounter = 0;
 int zCounter = 0;
 bool playing = true;
 
-float zRotRad = 0.0f;
-unsigned long lastGyroMicros = micros();
+unsigned long lastGyroMicros = 0;
+float rollDeg = 0.0f;
+float pitchDeg = 0.0f;
+float yawDeg = 0.0f;
+float yawScaleFactor = 360.0f / 365.0f;
+float yawOffsetDeg = 0.0f;
+float correctedYawDeg = 0.0f;
+bool yawOffsetInitialized = false;
+float linearAccelX = 0.0f;
+float linearAccelY = 0.0f;
+float linearAccelZ = 0.0f;
+float robotAccelX = 0.0f;
+float robotAccelY = 0.0f;
+float robotAccelZ = 0.0f;
+float robotGyroX = 0.0f;
+float robotGyroY = 0.0f;
+float robotGyroZ = 0.0f;
+float gyroBiasX = 0.0f;
+float gyroBiasY = 0.0f;
+float gyroBiasZ = 0.0f;
+float calibratedGravityMagnitude = SENSORS_GRAVITY_STANDARD;
+float imuMountYawDeg = 0.0f;
+float imuToRobot[3][3] = {
+  {1.0f, 0.0f, 0.0f},
+  {0.0f, 1.0f, 0.0f},
+  {0.0f, 0.0f, 1.0f}
+};
 
 float* avgs;
 int motors[2] = {0};
@@ -66,22 +93,28 @@ static unsigned long servo_start_time = 0;
 
 // Declare MPU6050 object
 Adafruit_MPU6050 mpu;
+Madgwick filter;
 
 sensors_event_t accel, gyro, temp;
+void calibrateImuMounting();
+void buildImuToRobotTransform(float gravityX, float gravityY, float gravityZ);
+float normalizeAngleDeg(float angleDeg);
+void rotateIntoRobotFrame(float inputX, float inputY, float inputZ, float& outputX, float& outputY, float& outputZ);
 void pullSensors();
+void updateOrientation();
+void writeServo(int pin, double deg);
+void setLED();
 void writeMotors();
 void debug();
 void debugLine();
 void debugLineLP(LinePosition lp);
 void debugIR();
 void debugAverages();
-void writeServo(int pin, double deg);
 void debugEnemy(EnemyPosition ep);
-void setLED();
 void debugDIP();
 void debugIMU();
-void trackZRotation();
-void checkAccel();
+void debugFusedValues();
+
 template <typename T>
 
 void aliFunc(const T& value) {
@@ -141,19 +174,22 @@ void setup() {
   mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
   mpu.setGyroRange(MPU6050_RANGE_500_DEG);
   mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
-  // while (analogRead(startPin) <= 900) {
-  //   printCounter++;
-  //   if (printCounter%100 == 0)
-  //     aliFuncln("Waiting to start");
-  // }
-  // delay(5000);
+  unsigned long startupDelayStart = millis();
+  aliFuncln("Hold robot still during startup delay");
+  calibrateImuMounting();
+  filter.begin(375.0f);
+  unsigned long startupElapsed = millis() - startupDelayStart;
+  if (startupElapsed < startupDelayMs) {
+    delay(startupDelayMs - startupElapsed);
+  }
   servo_start_time = millis(); // Record the start time for the servo action
+  lastGyroMicros = micros();
   aliFuncln("Started");
 }
 
 void loop() {
   pullSensors(); 
-  trackZRotation();
+  updateOrientation();
   setLED();
   avgs = ws->get_sensors_avg();
 
@@ -163,7 +199,6 @@ void loop() {
   else {
     algo->spin();
   }
-  checkAccel();
   if (!playing) {
     motors[0] = 0;
     motors[1] = 0;
@@ -189,15 +224,192 @@ void pullSensors() {
   dips[1] = digitalRead(dip2);
   dips[2] = digitalRead(dip3);
   mpu.getEvent(&accel, &gyro, &temp);
+
+  rotateIntoRobotFrame(
+    accel.acceleration.x,
+    accel.acceleration.y,
+    accel.acceleration.z,
+    robotAccelX,
+    robotAccelY,
+    robotAccelZ
+  );
+
+  rotateIntoRobotFrame(
+    gyro.gyro.x - gyroBiasX,
+    gyro.gyro.y - gyroBiasY,
+    gyro.gyro.z - gyroBiasZ,
+    robotGyroX,
+    robotGyroY,
+    robotGyroZ
+  );
 }
 
-void trackZRotation() {
+void updateOrientation() {
   unsigned long nowMicros = micros();
   float dt = (nowMicros - lastGyroMicros) / 1000000.0f;
   lastGyroMicros = nowMicros;
-  if (std::abs(gyro.gyro.z) > 0.1) {
-    zRotRad += gyro.gyro.z * dt;
+
+  if (dt <= 0.0f) {
+    return;
   }
+
+  filter.begin(1.0f / dt);
+  filter.updateIMU(
+    robotGyroX * RAD_TO_DEG,
+    robotGyroY * RAD_TO_DEG,
+    robotGyroZ * RAD_TO_DEG,
+    robotAccelX / calibratedGravityMagnitude,
+    robotAccelY / calibratedGravityMagnitude,
+    robotAccelZ / calibratedGravityMagnitude
+  );
+
+  rollDeg = filter.getRoll();
+  pitchDeg = filter.getPitch();
+  yawDeg = filter.getYaw();
+  if (!yawOffsetInitialized) {
+    yawOffsetDeg = yawDeg;
+    yawOffsetInitialized = true;
+  }
+  correctedYawDeg = normalizeAngleDeg((yawDeg - yawOffsetDeg) * yawScaleFactor);
+
+  float rollRad = rollDeg * DEG_TO_RAD;
+  float pitchRad = pitchDeg * DEG_TO_RAD;
+  float gravityX = -calibratedGravityMagnitude * sinf(pitchRad);
+  float gravityY = calibratedGravityMagnitude * sinf(rollRad) * cosf(pitchRad);
+  float gravityZ = calibratedGravityMagnitude * cosf(rollRad) * cosf(pitchRad);
+
+  linearAccelX = robotAccelX - gravityX;
+  linearAccelY = robotAccelY - gravityY;
+  linearAccelZ = robotAccelZ - gravityZ;
+}
+
+void calibrateImuMounting() {
+  const int calibrationSamples = 300;
+  float accelSumX = 0.0f;
+  float accelSumY = 0.0f;
+  float accelSumZ = 0.0f;
+  float gyroSumX = 0.0f;
+  float gyroSumY = 0.0f;
+  float gyroSumZ = 0.0f;
+
+  aliFuncln("Calibrating IMU...");
+
+  for (int i = 0; i < calibrationSamples; i++) {
+    mpu.getEvent(&accel, &gyro, &temp);
+    accelSumX += accel.acceleration.x;
+    accelSumY += accel.acceleration.y;
+    accelSumZ += accel.acceleration.z;
+    gyroSumX += gyro.gyro.x;
+    gyroSumY += gyro.gyro.y;
+    gyroSumZ += gyro.gyro.z;
+    delay(5);
+  }
+
+  gyroBiasX = gyroSumX / calibrationSamples;
+  gyroBiasY = gyroSumY / calibrationSamples;
+  gyroBiasZ = gyroSumZ / calibrationSamples;
+  calibratedGravityMagnitude = sqrtf(
+    sq(accelSumX / calibrationSamples) +
+    sq(accelSumY / calibrationSamples) +
+    sq(accelSumZ / calibrationSamples)
+  );
+
+  buildImuToRobotTransform(
+    accelSumX / calibrationSamples,
+    accelSumY / calibrationSamples,
+    accelSumZ / calibrationSamples
+  );
+}
+
+void buildImuToRobotTransform(float gravityX, float gravityY, float gravityZ) {
+  float gravityMag = sqrtf((gravityX * gravityX) + (gravityY * gravityY) + (gravityZ * gravityZ));
+  if (gravityMag <= 0.0f) {
+    return;
+  }
+
+  float sourceX = gravityX / gravityMag;
+  float sourceY = gravityY / gravityMag;
+  float sourceZ = gravityZ / gravityMag;
+  float targetX = 0.0f;
+  float targetY = 0.0f;
+  float targetZ = 1.0f;
+
+  float crossX = (sourceY * targetZ) - (sourceZ * targetY);
+  float crossY = (sourceZ * targetX) - (sourceX * targetZ);
+  float crossZ = (sourceX * targetY) - (sourceY * targetX);
+  float crossMag = sqrtf((crossX * crossX) + (crossY * crossY) + (crossZ * crossZ));
+  float dot = (sourceX * targetX) + (sourceY * targetY) + (sourceZ * targetZ);
+
+  float alignment[3][3] = {
+    {1.0f, 0.0f, 0.0f},
+    {0.0f, 1.0f, 0.0f},
+    {0.0f, 0.0f, 1.0f}
+  };
+
+  if (crossMag > 1e-6f) {
+    float axisX = crossX / crossMag;
+    float axisY = crossY / crossMag;
+    float axisZ = crossZ / crossMag;
+    float angle = acosf(constrain(dot, -1.0f, 1.0f));
+    float c = cosf(angle);
+    float s = sinf(angle);
+    float oneMinusC = 1.0f - c;
+
+    alignment[0][0] = c + (axisX * axisX * oneMinusC);
+    alignment[0][1] = (axisX * axisY * oneMinusC) - (axisZ * s);
+    alignment[0][2] = (axisX * axisZ * oneMinusC) + (axisY * s);
+    alignment[1][0] = (axisY * axisX * oneMinusC) + (axisZ * s);
+    alignment[1][1] = c + (axisY * axisY * oneMinusC);
+    alignment[1][2] = (axisY * axisZ * oneMinusC) - (axisX * s);
+    alignment[2][0] = (axisZ * axisX * oneMinusC) - (axisY * s);
+    alignment[2][1] = (axisZ * axisY * oneMinusC) + (axisX * s);
+    alignment[2][2] = c + (axisZ * axisZ * oneMinusC);
+  }
+  else if (dot < 0.0f) {
+    alignment[1][1] = -1.0f;
+    alignment[2][2] = -1.0f;
+  }
+
+  float yawRad = imuMountYawDeg * DEG_TO_RAD;
+  float yawRotation[3][3] = {
+    {cosf(yawRad), -sinf(yawRad), 0.0f},
+    {sinf(yawRad),  cosf(yawRad), 0.0f},
+    {0.0f,          0.0f,         1.0f}
+  };
+
+  for (int row = 0; row < 3; row++) {
+    for (int col = 0; col < 3; col++) {
+      imuToRobot[row][col] =
+        (yawRotation[row][0] * alignment[0][col]) +
+        (yawRotation[row][1] * alignment[1][col]) +
+        (yawRotation[row][2] * alignment[2][col]);
+    }
+  }
+}
+
+float normalizeAngleDeg(float angleDeg) {
+  while (angleDeg > 180.0f) {
+    angleDeg -= 360.0f;
+  }
+  while (angleDeg <= -180.0f) {
+    angleDeg += 360.0f;
+  }
+  return angleDeg;
+}
+
+void rotateIntoRobotFrame(float inputX, float inputY, float inputZ, float& outputX, float& outputY, float& outputZ) {
+  outputX =
+    (imuToRobot[0][0] * inputX) +
+    (imuToRobot[0][1] * inputY) +
+    (imuToRobot[0][2] * inputZ);
+  outputY =
+    (imuToRobot[1][0] * inputX) +
+    (imuToRobot[1][1] * inputY) +
+    (imuToRobot[1][2] * inputZ);
+  outputZ =
+    (imuToRobot[2][0] * inputX) +
+    (imuToRobot[2][1] * inputY) +
+    (imuToRobot[2][2] * inputZ);
 }
 
 void setLED(){
@@ -208,14 +420,9 @@ void setLED(){
 void debug() {
   printCounter++;
   if (printCounter % 25 == 0) {
-    aliFuncln("Current Rotation: " + String(zRotRad));
-    debugIMU();
-    debugLine();
     debugAverages();
     debugDIP();
-    debugIMU();
-    // debugLineLP(ws->line_check());
-    // debugEnemy(ws->enemy_pos());
+    debugFusedValues();
     aliFuncln("");
   }
 }
@@ -322,30 +529,21 @@ void debugAverages() {
 }
 
 void debugIMU() {
-  aliFunc("Temperature: ");
-  aliFuncln(temp.temperature);
-  aliFunc("Accel X: ");
-  aliFunc(accel.acceleration.x);
+  aliFunc("Robot Accel X: ");
+  aliFunc(robotAccelX);
   aliFunc(" Y: ");
-  aliFunc(accel.acceleration.y);
+  aliFunc(robotAccelY);
   aliFunc(" Z: ");
-  aliFuncln(accel.acceleration.z);
-  aliFunc("Gyro X: ");
-  aliFunc(gyro.gyro.x);
+  aliFuncln(robotAccelZ);
+  aliFunc("Robot Gyro X: ");
+  aliFunc(robotGyroX);
   aliFunc(" Y: ");
-  aliFunc(gyro.gyro.y);
+  aliFunc(robotGyroY);
   aliFunc(" Z: ");
-  aliFuncln(gyro.gyro.z);
+  aliFuncln(robotGyroZ);
 }
 
-void checkAccel() {
-  if (accel.acceleration.z < 7.0) {
-    zCounter++;
-    if (zCounter >= 10) {
-      playing = false;
-    }
-  }
-  else {
-    zCounter = 0;
-  }
+void debugFusedValues() {
+    aliFuncln("Roll/Pitch/Yaw: " + String(rollDeg) + " " + String(pitchDeg) + " " + String(correctedYawDeg));
+    aliFuncln("Linear Accel XYZ: " + String(linearAccelX) + " " + String(linearAccelY) + " " + String(linearAccelZ));
 }
