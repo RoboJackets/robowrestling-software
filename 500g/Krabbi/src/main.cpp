@@ -45,6 +45,8 @@ const int pushButton = PB4;
 
 long currentMillis = 0;
 int printCounter = 0;
+int zCounter = 0;
+bool playing = true;
 
 float* avgs;
 int motors[2] = {0};
@@ -73,6 +75,8 @@ void debugAverages();
 void writeServo(int pin, double deg);
 void debugEnemy(EnemyPosition ep);
 void setLED();
+void debugDIP();
+void checkAccel();
 template <typename T>
 
 void aliFunc(const T& value) {
@@ -151,13 +155,21 @@ void loop() {
   //   writeServo(servoPin, 90);
   // }
 
-  writeServo(servoPin, 90);
   
-  if (dips[0] == 0) {
+  if (dips[0] == LOW) {
     algo->selectMode();  
   }
   else {
     algo->spin();
+  }
+  checkAccel();
+  if (!playing) {
+    motors[0] = 0;
+    motors[1] = 0;
+    writeServo(servoPin, 0);
+  }
+  else {
+    writeServo(servoPin, 90);
   }
   writeMotors();
   debug();
@@ -192,6 +204,7 @@ void debug() {
     aliFuncln(accel.acceleration.z);
     debugLine();
     debugAverages();
+    debugDIP();
     // debugLineLP(ws->line_check());
     // debugEnemy(ws->enemy_pos());
     aliFuncln("");
@@ -282,16 +295,31 @@ void debugIR(){
   }
 }
 
-void debugDIP(){
+void debugDIP() {
+  aliFuncln(" ");
   aliFunc(digitalRead(dip1));
   aliFunc(" ");
   aliFunc(digitalRead(dip2));
   aliFunc(" ");
+  aliFunc(digitalRead(dip3));
+  aliFuncln(" ");
 }
 
 void debugAverages() {
   for(int i = 0; i < 5; i++){
     aliFunc(avgs[i]);
     aliFunc(" ");
+  }
+}
+
+void checkAccel() {
+  if (accel.acceleration.z < 7.0) {
+    zCounter++;
+    if (zCounter >= 10) {
+      playing = false;
+    }
+  }
+  else {
+    zCounter = 0;
   }
 }
