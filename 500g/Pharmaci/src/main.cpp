@@ -27,17 +27,17 @@ RobotState *robotState;
  const int RIGHT_IR_45 = 6;
  const int MIDDLE_IR = 5;
  const int START_MODULE = 2;
- const int R_POS = 0;
- const int R_NEG = 1;
- const int L_POS = 29;
- const int L_NEG = 28;
+const int R_POS = 29;
+const int R_NEG = 28;
+const int L_POS = 0;
+const int L_NEG = 1;
 
 
  const int LEFT_LINE = A7;
  const int RIGHT_LINE = A6;
 
 void setup() {
-  // Serial.begin(9600);
+  Serial.begin(9600);
     pinMode(R_POS, OUTPUT);
      pinMode(R_NEG, OUTPUT);
      pinMode(L_POS, OUTPUT);
@@ -141,9 +141,9 @@ void debug() {
   Serial.println(rightIRSensor->getValue());
   Serial.println(positionToString(worldState->getEnemyPosition()));  // prints: LEFT
 
-  // Serial.println(leftLineSensor->getValue());
-  // Serial.println(rightLineSensor->getValue());
-  // Serial.println(positionToString(worldState->getSelfPosition()));  // prints: LEFT
+  Serial.println(leftLineSensor->getValue());
+  Serial.println(rightLineSensor->getValue());
+  Serial.println(positionToString(worldState->getSelfPosition()));  // prints: LEFT
   // Serial.println(leftMotorDriver->getVelocity());
   // Serial.println(rightMotorDriver->getVelocity());
   delay(10);
@@ -154,6 +154,8 @@ void loop() {
   pollSensors();
   calculateState(millis());
   updateMotors();
+
+  // robotActions -> drive(200, 0);
   
   // if (digitalRead(START_MODULE)) {
   //     pollSensors();

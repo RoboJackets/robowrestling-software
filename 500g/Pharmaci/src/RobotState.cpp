@@ -378,10 +378,10 @@ void RobotState::calculateState(uint32_t time) {
     const int BACKUP_SPEED   = 200;
     const int ROTATE_SPEED   = 200;
 
-    const int BACKUP_MS_SIDE = 150; 
-    const int BACKUP_MS_BOTH = 200;
-    const int ROTATE_MS_SIDE = 120;
-    const int ROTATE_MS_BOTH = 120;
+    const int BACKUP_MS_SIDE = 200; 
+    const int BACKUP_MS_BOTH = 250;
+    const int ROTATE_MS_SIDE = 80;
+    const int ROTATE_MS_BOTH = 80;
 
     const int BOTH_WINDOW_MS = 20;
 
@@ -389,7 +389,7 @@ void RobotState::calculateState(uint32_t time) {
     const int MIDDLE_CONFIRM_MS = 20;     // see middle this long to break latch early
 
     const int MIN_BACKUP_DWELL_MS = 60;   // must back up at least this long
-    const int MIN_ROTATE_DWELL_MS = 120;  // must rotate at least this long
+    const int MIN_ROTATE_DWELL_MS = 80;  // must rotate at least this long
 
     static bool     pendingLine = false;       // we saw a side hit and are waiting
     static TurnDir  pendingDir  = TurnDir::None;
