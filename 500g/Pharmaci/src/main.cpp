@@ -5,6 +5,8 @@
 #include <RobotActions.h>
 #include <WorldState.h>
 #include <RobotState.h>
+#include <Servo.h>
+
 
 IRSensor *leftIRSensor;
 IRSensor *leftMiddleIRSensor;
@@ -20,24 +22,29 @@ RobotActions *robotActions;
 WorldState *worldState;
 RobotState *robotState;
 
+Servo servo;
+
 // Shorti Pins
- const int LEFT_IR_90 = 3;
- const int LEFT_IR_45 = 4;
+ const int LEFT_IR_90 = 2;
+ const int LEFT_IR_45 = 3;
  const int RIGHT_IR_90 = 8;
- const int RIGHT_IR_45 = 6;
- const int MIDDLE_IR = 5;
- const int START_MODULE = 2;
+ const int RIGHT_IR_45 = 5;
+ const int MIDDLE_IR = 4;
+
+ const int START_MODULE = 6;
 const int R_POS = 29;
 const int R_NEG = 28;
 const int L_POS = 0;
 const int L_NEG = 1;
 
-
  const int LEFT_LINE = A7;
  const int RIGHT_LINE = A6;
 
 void setup() {
-  Serial.begin(9600);
+  servo.attach(34);
+  servo.write(0);
+
+  // Serial.begin(9600);
     pinMode(R_POS, OUTPUT);
      pinMode(R_NEG, OUTPUT);
      pinMode(L_POS, OUTPUT);
@@ -150,6 +157,8 @@ void debug() {
 }
 
 void loop() {
+  servo.write(90);   // drop flag immediately when loop starts
+
   // debug();
   pollSensors();
   calculateState(millis());
