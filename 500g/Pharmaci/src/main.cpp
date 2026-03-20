@@ -37,7 +37,6 @@ const int L_NEG = 1;
  const int RIGHT_LINE = A6;
 
 void setup() {
-  Serial.begin(9600);
     pinMode(R_POS, OUTPUT);
      pinMode(R_NEG, OUTPUT);
      pinMode(L_POS, OUTPUT);
