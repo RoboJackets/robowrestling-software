@@ -130,6 +130,7 @@ void aliFuncln(const T& value) {
 }
 
 void setup() {
+  unsigned long startupDelayStart = millis();
   pinMode(leftSensor, INPUT);
   pinMode(middleSensor, INPUT);
   pinMode(rightSensor, INPUT);
@@ -152,32 +153,27 @@ void setup() {
   pinMode(led2Pin, OUTPUT);
 
   Serial.begin(9600);
-  aliFuncln("Initializing...");
 
   // Initialize MPU6050
   Wire.setSCL(imuSCL);
   Wire.setSDA(imuSDA);
   Wire.begin(imuSDA, imuSCL); // Initialize I2C for MPU6050
-  aliFuncln("Adafruit MPU6050 test!");
 
   // Try to initialize MPU6050!
   if (!mpu.begin()) {
-    aliFuncln("Failed to find MPU6050 chip");
     while (1) {
       delay(10);
     }
   }
-  aliFuncln("MPU6050 Found!");
 
   robotServo.attach(servoPin);
 
   mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
   mpu.setGyroRange(MPU6050_RANGE_500_DEG);
   mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
-  unsigned long startupDelayStart = millis();
-  aliFuncln("Hold robot still during startup delay");
   calibrateImuMounting();
   filter.begin(375.0f);
+
   unsigned long startupElapsed = millis() - startupDelayStart;
   if (startupElapsed < startupDelayMs) {
     delay(startupDelayMs - startupElapsed);
@@ -188,6 +184,8 @@ void setup() {
 }
 
 void loop() {
+  while(digitalRead(startPin) == 0){
+  }
   pullSensors(); 
   updateOrientation();
   setLED();
@@ -428,8 +426,8 @@ void debug() {
 }
 
 void writeMotors() {
-  motors[0] = motors[0]/1.65;
-  motors[1] = motors[1]/1.65;
+  motors[0] = motors[0]/1;
+  motors[1] = motors[1]/1;
   if (motors[0] > 0) {
     analogWrite(leftF, abs(motors[0]));
     analogWrite(leftB, 0);

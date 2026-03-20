@@ -18,14 +18,14 @@ void motor_actions::driveBackward(int speed) {
 }
 
 void motor_actions::spinLeft(int speed) {
-    motors[0] = speed; 
-    motors[1] = -speed; 
+    motors[1] = speed; 
+    motors[0] = -speed; 
     return;
 }
 
 void motor_actions::spinRight(int speed) {
-    motors[0] = -speed; 
-    motors[1] = speed; 
+    motors[1] = -speed; 
+    motors[0] = speed; 
     return;
 }
 
@@ -35,8 +35,8 @@ void motor_actions::stop() {
     return;
 }
 void motor_actions::customDrive(int rightSpeed, int leftSpeed) {
-    motors[0] = rightSpeed; 
-    motors[1] = leftSpeed; 
+    motors[1] = rightSpeed; 
+    motors[0] = leftSpeed; 
     return;
 }
 

@@ -51,8 +51,8 @@ EnemyPosition world_state::enemy_pos() {
 }
 
 LinePosition world_state::line_check() {
-    bool left = lineSensors[0] < 200;
-    bool right = lineSensors[1] < 200;
+    bool left = lineSensors[0] < 125;
+    bool right = lineSensors[1] < 125;
 
     if (left && right) return CENTER_LINE;
     if (left && !right) return LEFT_LINE;
