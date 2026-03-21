@@ -103,7 +103,7 @@ void calcState() {
   // enemyPos: LEFT, RIGHT, FRONT, NONE
   // onLine: FRONTLINE, BACKLINE, LEFTLINE, RIGHTLINE, NONELINE
   // algo->someAlgo(enemyPos, onLine);
-  // algo->lineMovement(enemyPos, onLine);
+  algo->selectAlgo(enemyPos, onLine);
 }
 
 void writeMotors() {

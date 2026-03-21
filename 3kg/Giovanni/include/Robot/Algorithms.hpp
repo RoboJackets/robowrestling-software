@@ -9,10 +9,12 @@
 class Algorithms {
     private:
         RobotActions *action;
+        bool onStart;
     
     public:
         Algorithms(RobotActions *);
         // Add more algorithms below
+        void selectAlgo(EnemyPos enemyPos, OnLine onLine);
         void slam(EnemyPos enemyPos, OnLine onLine);
         void lineMovement(EnemyPos enemyPos, OnLine onLine);
 }; 
