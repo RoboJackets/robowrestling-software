@@ -27,24 +27,26 @@ Servo servo;
 // Shorti Pins
 
 
-  const int LEFT_IR_90 = 5;
- const int LEFT_IR_45 = 8;
- const int RIGHT_IR_90 = 4;
- const int RIGHT_IR_45 = 3;
- const int MIDDLE_IR = 2;
+
+
+   const int LEFT_IR_90 = 2;
+ const int LEFT_IR_45 = 3;
+ const int RIGHT_IR_90 = 5;
+ const int RIGHT_IR_45 = 8;
+ const int MIDDLE_IR = 4;
 
  const int START_MODULE = 6;
-const int L_NEG = 28;
-const int L_POS = 29;
-const int R_POS = 1;
-const int R_NEG = 0;
+const int L_NEG = 1;
+const int L_POS = 0;
+const int R_POS = 28;
+const int R_NEG = 29;
 
- const int LEFT_LINE = A7;
- const int RIGHT_LINE = A6;
+ const int LEFT_LINE = A6;
+ const int RIGHT_LINE = A7;
 
 void setup() {
   servo.attach(34);
-  servo.write(0);
+  servo.write(90);
 
   // Serial.begin(9600);
     pinMode(R_POS, OUTPUT);
@@ -77,6 +79,7 @@ void setup() {
   robotState = new RobotState(worldState, robotActions, leftMotorDriver, rightMotorDriver);
 
   delay(4800); // wait for 5 seconds before starting the robot
+  servo.write(0);
 }
 
 
@@ -158,15 +161,16 @@ void debug() {
   delay(1000);
 }
 
+
+
 void loop() {
-  // servo.write(90);   // drop flag immediately when loop starts
 
   // debug();
   pollSensors();
   calculateState(millis());
   updateMotors();
 
-  // robotActions -> drive(80, 80);
+  // robotActions -> drive(0, 90);
   
   // if (digitalRead(START_MODULE)) {
   //     pollSensors();
