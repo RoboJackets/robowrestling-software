@@ -27,10 +27,10 @@ RobotState *robotState;
  const int RIGHT_IR_45 = 6;
  const int MIDDLE_IR = 5;
  const int START_MODULE = 2;
-const int R_POS = 29;
-const int R_NEG = 28;
-const int L_POS = 0;
-const int L_NEG = 1;
+const int R_POS = 0;
+const int R_NEG = 1;
+const int L_POS = 29;
+const int L_NEG = 28;
 
 
  const int LEFT_LINE = A7;
@@ -154,7 +154,7 @@ void loop() {
   calculateState(millis());
   updateMotors();
 
-  // robotActions -> drive(200, 0);
+  // robotActions -> drive(0, 80);
   
   // if (digitalRead(START_MODULE)) {
   //     pollSensors();
