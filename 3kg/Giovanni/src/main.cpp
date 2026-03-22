@@ -90,17 +90,17 @@ void pollSensors() {
   irArray[7] = digitalRead(right60IR);
   irArray[8] = digitalRead(right90IR);
 
-  Serial.println("============================");
-  Serial.println(irArray[0]);
-  Serial.println(irArray[1]);
-  Serial.println(irArray[2]);
-  Serial.println(irArray[3]);
-  Serial.println(irArray[4]);
-  Serial.println(irArray[5]);
-  Serial.println(irArray[6]);
-  Serial.println(irArray[7]);
-  Serial.println(irArray[8]);
-  Serial.println("============================");
+  // Serial.println("============================");
+  // Serial.println(irArray[0]);
+  // Serial.println(irArray[1]);
+  // Serial.println(irArray[2]);
+  // Serial.println(irArray[3]);
+  // Serial.println(irArray[4]);
+  // Serial.println(irArray[5]);
+  // Serial.println(irArray[6]);
+  // Serial.println(irArray[7]);
+  // Serial.println(irArray[8]);
+  // Serial.println("============================");
 
   // Line Sensor Update
   lineArray[0] = digitalRead(flLine);
@@ -176,6 +176,7 @@ OnLine isOnLine() {
  */
 void loop() {
   pollSensors();
+  delay(500);
   // calcState();
   // writeMotors();
 }

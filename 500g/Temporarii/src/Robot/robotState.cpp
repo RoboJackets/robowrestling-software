@@ -17,6 +17,7 @@ void RobotState::runAlgorithm(int strat_num) {
 
     // Decode strat (MODIFY for actual strategy name)
     Strategy strat = DefaultStrat;
+
     if (strat_num == 0) {
         strat = Strat1;
     } else if (strat_num == 1) {
@@ -28,40 +29,46 @@ void RobotState::runAlgorithm(int strat_num) {
     } else {
         strat = DefaultStrat;
     }
+    
+    // if (strat == Strat2) {
+    //     bool midDetected = (world->getEnemyPosition() == EnemyFront);
+    //     algo->Strat2Sweep(midDetected);
+    //     return;
+    // }
 
     // Check expiration
     if (algo->getTimer() == false) {
         prevAlgo = NoneAlgo;
     }
 
-    algo->search();
-    prevAlgo = Search;
-    return;
+    // algo->fryThem();
+    // prevAlgo = StirFry;
+    // return;
 
     // OVERRIDE: ALWAYS ATTACK IF ENEMY IS SEEN MID
-    // if (world->getEnemyPosition() == EnemyFront) {
-    //     algo->RunItDown(world->getEnemyPosition());
-    //     prevAlgo = RunItDown;
-    //     return;
-    // }
+    if (world->getEnemyPosition() == EnemyFront) {
+        algo->RunItDown(world->getEnemyPosition(), prevAlgo);
+        prevAlgo = RunItDownAlgo;
+        return;
+    }
 
-    // // Enemy is in sights
-    // if (world->getEnemyPosition() == EnemyFL || 
-    //     world->getEnemyPosition() == EnemyFR || 
-    //     world->getEnemyPosition() == EnemyLeft ||
-    //     world->getEnemyPosition() == EnemyRight) {
+    // Enemy is in sights
+    if (world->getEnemyPosition() == EnemyFL || 
+        world->getEnemyPosition() == EnemyFR || 
+        world->getEnemyPosition() == EnemyLeft ||
+        world->getEnemyPosition() == EnemyRight) {
 
-    //     algo->TurnToEnemy(world->getEnemyPosition());
-    //     enemyPrev = world->getEnemyPosition();
-    //     prevAlgo = Turn;
-    //     return;
-    // }
+        algo->TurnToEnemy(world->getEnemyPosition());
+        enemyPrev = world->getEnemyPosition();
+        prevAlgo = Turn;
+        return;
+    }
 
     // Run remaining queued of Turn
-    // if (prevAlgo == Turn) {
-    //     algo->TurnToEnemy(enemyPrev);
-    //     return;
-    // }
+    if (prevAlgo == Turn) {
+        algo->TurnToEnemy(enemyPrev);
+        return;
+    }
 
     // Line Check First
     if (line_state == LineFL) {

@@ -7,6 +7,7 @@ RobotActions::RobotActions(MotorDriver *blDriver, MotorDriver *flDriver, MotorDr
     this->brDriver = brDriver;
 
     this->prev_action = NoneAction;
+    this->curr_spd = 1;
     this->speed = 0;
 }
 
@@ -88,7 +89,7 @@ void RobotActions::Backwards(int spd) {
     this->prev_action = BackAction;
 }
 
-void RobotActions::Left(int spd) {
+void RobotActions::Right(int spd) {
     flDriver->setDirection(0);
     flDriver->setSpeed(spd);
 
@@ -100,10 +101,10 @@ void RobotActions::Left(int spd) {
 
     brDriver->setDirection(1);
     brDriver->setSpeed(spd);
-    this->prev_action = LeftAction;
+    this->prev_action = RightAction;
 }
 
-void RobotActions::Right(int spd) {
+void RobotActions::Left(int spd) {
     flDriver->setDirection(1);
     flDriver->setSpeed(spd);
 
@@ -115,8 +116,57 @@ void RobotActions::Right(int spd) {
 
     brDriver->setDirection(0);
     brDriver->setSpeed(spd);
+    this->prev_action = LeftAction;
+}
+
+void RobotActions::RampRight(int max_spd) {
+    flDriver->setDirection(0);
+    blDriver->setDirection(0);
+    frDriver->setDirection(1);
+    brDriver->setDirection(1);
+
+    if (this->prev_action != RightAction) {
+        curr_spd = 1;
+    } else {
+        curr_spd += 1;
+    }
+
+    if (curr_spd > max_spd) {
+        curr_spd = max_spd;
+    }
+
+    flDriver->setSpeed(curr_spd);
+    blDriver->setSpeed(curr_spd);
+    frDriver->setSpeed(curr_spd);
+    brDriver->setSpeed(curr_spd);
+
     this->prev_action = RightAction;
 }
+
+void RobotActions::RampLeft(int max_spd) {
+    flDriver->setDirection(1);
+    blDriver->setDirection(1);
+    frDriver->setDirection(0);
+    brDriver->setDirection(0);
+
+    if (this->prev_action != LeftAction) {
+        curr_spd = 1;
+    } else {
+        curr_spd += 1;
+    }
+
+    if (curr_spd > max_spd) {
+        curr_spd = max_spd;
+    }
+
+    flDriver->setSpeed(curr_spd);
+    blDriver->setSpeed(curr_spd);
+    frDriver->setSpeed(curr_spd);
+    brDriver->setSpeed(curr_spd);
+
+    this->prev_action = LeftAction;
+}
+
 void RobotActions::Circle() {
     flDriver->setDirection(0);
     flDriver->setSpeed(40);

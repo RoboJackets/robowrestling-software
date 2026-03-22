@@ -12,6 +12,7 @@ class RobotActions {
         MotorDriver *blDriver;
         MotorDriver *brDriver;
         int speed;
+        int curr_spd;
         
         PrevAction prev_action;
     public:
@@ -21,6 +22,8 @@ class RobotActions {
         void Backwards(int spd);
         void Left(int spd);
         void Right(int spd);
+        void RampLeft(int max_spd);
+        void RampRight(int max_spd);
         void Circle();
 };
 

@@ -2,6 +2,8 @@
  * Temporarii Main File - Da Four-Wheel Drive
  */
 #include <Arduino.h>
+#include <Wire.h>
+#include <SparkFun_BMI270_Arduino_Library.h>
 
 /**
  * Imports
@@ -17,30 +19,40 @@
 /**
  * Pinouts
  */
-const int fr_move_forward = 8;
-const int fr_move_backward = 7;
-const int fl_move_forward = 9;
-const int fl_move_backward = 10;
+const int fr_move_forward = 7;
+const int fr_move_backward = 8;
+const int fl_move_forward = 10;
+const int fl_move_backward = 9;
 const int br_move_forward = 11;
 const int br_move_backward = 12;
-const int bl_move_forward = 24;
-const int bl_move_backward = 25;
+const int bl_move_forward = 25;
+const int bl_move_backward = 24;
 
 const int left_ir = 32;
 const int fl_ir = 30;
 const int mid_ir = 6;
-const int fr_ir = 2;
+const int fr_ir = 3;
 const int right_ir = 1;
 
-const int fl_line = 15;
-const int fr_line = 14;
-const int bl_line = 16;
-const int br_line = 17;
+const int fl_line = 26;
+const int fr_line = 27;
+const int bl_line = 40;
+const int br_line = 16;
 
 // Start mod
-const int start_mod = 33;
+const int start_mod = 23;
 bool started = false;
 bool end = false;
+
+// IMU
+const int imu_pin1 = 33;
+const int imu_pin2 = 34;
+const int imu_scl = 19;
+const int imu_sda = 18;
+
+BMI270 imu;
+float yaw = 0.0;
+unsigned long lastIMUTime = 0;
 
 // Strategy Pin
 const int strat_first = 39;
@@ -95,11 +107,17 @@ void debug();
 void writeMotors();
 void pollSensors();
 void calculateState();
+void ledDisplay();
+void stopMotors();
+void updateIMU();
 
 /**
  * Setup Pin Definitions
  */
 void setup() {
+  Serial.begin(9600);
+  // delay(2000);
+
   // pinmode definitions
   pinMode(fr_move_forward, OUTPUT);
   pinMode(fr_move_backward, OUTPUT);
@@ -121,14 +139,64 @@ void setup() {
   pinMode(bl_line, INPUT);
   pinMode(br_line, INPUT);
 
-  pinMode(start_mod, INPUT);
   pinMode(strat_first, INPUT);
   pinMode(strat_second, INPUT);
+
+  pinMode(start_mod, INPUT);
+  pinMode(strat_first, INPUT_PULLUP);
+  pinMode(strat_second, INPUT_PULLUP);
+
+  pinMode(left_ir_led, OUTPUT);
+  pinMode(fl_ir_led, OUTPUT);
+  pinMode(mid_ir_led, OUTPUT);
+  pinMode(fr_ir_led, OUTPUT);
+  pinMode(right_ir_led, OUTPUT);
+
+  pinMode(fl_line_led, OUTPUT);
+  pinMode(fr_line_led, OUTPUT);
+  pinMode(bl_line_led, OUTPUT);
+  pinMode(br_line_led, OUTPUT);
+
+  // pinMode(imu_pin1, OUTPUT);
+  // pinMode(imu_pin2, OUTPUT);
+  // pinMode(imu_scl, INPUT);
+  // pinMode(imu_sda, OUTPUT);
+
+  // Setting up IMU
+
+  // Wire.begin();
+  // Wire.setClock(100000);
+
+  // Serial.println("Scanning I2C...");
+
+  // for (uint8_t addr = 1; addr < 127; addr++) {
+  //     Wire.beginTransmission(addr);
+  //     if (Wire.endTransmission() == 0) {
+  //         Serial.print("Found device at: 0x");
+  //         Serial.println(addr, HEX);
+  //     }
+  // }
+
+  // Serial.println("Initializing IMU...");
+
+  // PASS WIRE OBJECT
+  // int status = imu.beginI2C(0x68);
+
+  // Serial.print("IMU status: ");
+  // Serial.println(status);
+
+  // if (status != BMI2_OK) {
+  //     Serial.println("BMI270 initialization failed");
+  // }
+
+  // delay(200); // IMPORTANT
+
+  // lastIMUTime = millis();
+  // yaw = 0;
 
   flIR = new IrSensor();
   frIR = new IrSensor();
   midIR = new IrSensor();
-  // Replace with actual IR
   leftIR = new IrSensor();
   rightIR = new IrSensor();
 
@@ -150,16 +218,10 @@ void setup() {
   action = new RobotActions(blMotor, flMotor, frMotor, brMotor);
   world = new WorldState(irSensors, lineSensors);
   timer = new Timer(millis());
-  algo = new Algorithm(action, timer);
+  algo = new Algorithm(action, timer, &yaw);
   tempi = new RobotState(world, algo);
 
   Serial.println("Starting Setup");
-  Serial.begin(9600);
-
-  // while(digitalRead(start_mod) == 0) {
-  //   Serial.println("Waiting for signal");
-  // }
-  // delay(4800);
 }
 
 /**
@@ -168,22 +230,25 @@ void setup() {
 void loop() {
   // 5 Seconds before start for comp
     // Start Mod -- Turn this on if you have a start module
-    // if (end == true) {
-    //   pollSensors();
-    //   calculateState();
-    //   writeMotors();
-    // }
-    // if (digitalRead(start_mod) == 1) {
-    //   end = true;
-    // }
+    if (digitalRead(start_mod) == 1) {
+      if (started) {
+        pollSensors();
+        calculateState();
+        writeMotors();
+      } else {
+        started = true;
+        delay(4000);
+      }
+    } else {
+      stopMotors();
+    }
 
-    // Debug
+   // Debug
     debug_counter++;
-    if (debug_counter >= 30) {
+    if (debug_counter >= 200) {
       debug();
       debug_counter = 0;
     }
-
 
     // No start mod -- Turn this on if you don't have a start module
     // if (started == true || digitalRead(start_mod) == 1) {
@@ -195,10 +260,12 @@ void loop() {
     //   delay(4000);
     // }
 
-    
-    pollSensors();
-    calculateState();
-    writeMotors();
+
+    // pollSensors();
+    // calculateState();
+    // writeMotors();
+    // Serial.println(yaw);
+    // delay(500);
 }
 
 /**
@@ -216,8 +283,14 @@ void pollSensors() {
   brLine->setValue(analogRead(br_line));
   blLine->setValue(analogRead(bl_line));
 
-  strategy_value = 2 * digitalRead(strat_first) + digitalRead(strat_second);
+  int val1 = (digitalRead(strat_first) == HIGH) ? 0 : 1;
+  int val2 = (digitalRead(strat_second) == HIGH) ? 0 : 1;
 
+  strategy_value = 2 * val1 + val2;
+
+  // Show LED Displays for which ones are on
+  ledDisplay();
+  // updateIMU();
   timer->updateTime();
 }
 
@@ -246,6 +319,105 @@ void writeMotors() {
   analogWrite(bl_move_backward, blMotor->getDirection() == 1 ? blMotor->getSpeed() : 0);
 }
 
+void ledDisplay() {
+  // IR Sensor LED
+  if (leftIR->getValue() == 1) {
+    digitalWrite(left_ir_led, 1);
+  } else {
+    digitalWrite(left_ir_led, 0);
+  }
+
+  if (flIR->getValue() == 1) {
+    digitalWrite(fl_ir_led, 1);
+  } else {
+    digitalWrite(fl_ir_led, 0);
+  }
+
+  if (midIR->getValue() == 1) {
+    digitalWrite(mid_ir_led, 1);
+  } else {
+    digitalWrite(mid_ir_led, 0);
+  }
+
+  if (frIR->getValue() == 1) {
+    digitalWrite(fr_ir_led, 1);
+  } else {
+    digitalWrite(fr_ir_led, 0);
+  }
+
+  if (rightIR->getValue() == 1) {
+    digitalWrite(right_ir_led, 1);
+  } else {
+    digitalWrite(right_ir_led, 0);
+  }
+
+
+  // Line Sensor LED
+  if (flLine->getValue() <= 500) {
+    digitalWrite(fl_line_led, 1);
+  } else {
+    digitalWrite(fl_line_led, 0);
+  }
+  if (frLine->getValue() <= 500) {
+    digitalWrite(fr_line_led, 1);
+  } else {
+    digitalWrite(fr_line_led, 0);
+  }
+  if (blLine->getValue() <= 500) {
+    digitalWrite(bl_line_led, 1);
+  } else {
+    digitalWrite(bl_line_led, 0);
+  }
+  if (brLine->getValue() <= 500) {
+    digitalWrite(br_line_led, 1);
+  } else {
+    digitalWrite(br_line_led, 0);
+  }
+}
+
+void stopMotors() {
+  analogWrite(fr_move_forward, 0);
+  analogWrite(fr_move_backward, 0);
+
+  analogWrite(fl_move_forward, 0);
+  analogWrite(fl_move_backward, 0);
+
+  analogWrite(br_move_forward, 0);
+  analogWrite(br_move_backward, 0);
+
+  analogWrite(bl_move_forward, 0);
+  analogWrite(bl_move_backward, 0);
+}
+
+void updateIMU() {
+    static unsigned long lastRead = 0;
+    if (millis() - lastRead < 20) return;
+    lastRead = millis();
+
+    int8_t status = imu.getSensorData();
+
+    if (status != BMI2_OK) {
+        Serial.print("IMU read error: ");
+        Serial.println(status);
+        return;
+    }
+
+    float gyroZ = imu.data.gyroZ;
+
+    unsigned long now = millis();
+    float dt = (now - lastIMUTime) / 1000.0;
+    lastIMUTime = now;
+
+    yaw += gyroZ * dt;
+
+    Serial.print("gyroZ: ");
+    Serial.print(gyroZ);
+    Serial.print(" yaw: ");
+    Serial.println(yaw);
+}
+
+
+
 
 
 /**
@@ -254,14 +426,21 @@ void writeMotors() {
  * Turn on/off accordingly. Can also modify frequency of output inside of running loop
  */
 
+bool strat_debug = true;
 bool ir_debug = true;
-bool line_debug = true;
+bool line_debug = false;
 bool motor_debug = false;
 
 void debug() {
   Serial.println("=========================");
 
   Serial.println("Debug loop: ");
+
+  // Strategy
+  if (strat_debug == true) {
+    Serial.print("Strategy: ");
+    Serial.println(strategy_value);
+  }
 
   // IR Sensors
   if (ir_debug == true) {

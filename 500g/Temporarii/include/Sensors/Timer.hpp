@@ -18,6 +18,7 @@ public:
     void updateTime();            // Update state (call once per loop)
     bool getRunningProcess();     // Check if timer is active
     unsigned long getDuration(); // Remaining time in milliseconds
+    unsigned long getElapsed();
 };
 
 #endif // TIMER_HPP

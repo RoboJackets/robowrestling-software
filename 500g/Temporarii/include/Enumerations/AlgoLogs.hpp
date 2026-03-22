@@ -5,7 +5,7 @@ enum AlgoLogs {
     BTFR,
     BTFL,
     BTBackward,
-    RunItDown,
+    RunItDownAlgo,
     Turn,
     Search,
     StirFry,

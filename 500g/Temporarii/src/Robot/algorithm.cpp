@@ -1,8 +1,10 @@
 #include "Robot/algorithm.hpp"
 
-Algorithm::Algorithm(RobotActions *action, Timer *timer) {
+Algorithm::Algorithm(RobotActions *action, Timer *timer, float *yaw_ptr) {
     this->action = action;
     this->timer = timer;
+    this->line = false;
+    this->yaw = yaw_ptr;
 }
 
 void Algorithm::Test() {
@@ -20,9 +22,9 @@ void Algorithm::Test() {
     action->Forward(60);
 }
 
-void Algorithm::RunItDown(EnemyPositions pos) {
+void Algorithm::RunItDown(EnemyPositions pos, AlgoLogs algo) {
     // EnemyPosition only EnemyFront, EnemyFL, EnemyFR
-    if (timer->getRunningProcess() == true) {
+    if (timer->getRunningProcess() == true && algo == RunItDownAlgo) {
         action->Forward(250);
         return;
     }
@@ -69,7 +71,8 @@ void Algorithm::search() {
 }
 
 void Algorithm::backTrack(OnLine line_state, AlgoLogs algo) {
-    if (timer->getRunningProcess() == true) {
+    if (timer->getRunningProcess() == true && 
+        (algo == BTBackward || algo == BTFL || algo == BTFR)) {
         if (algo == BTBackward) {
             // This part doesn't work
             // if (timer->getDuration() > 200) {
@@ -101,33 +104,81 @@ void Algorithm::backTrack(OnLine line_state, AlgoLogs algo) {
 }
 
 void Algorithm::fryThem() {
-    if (timer->getRunningProcess() == true) {
-        // 161 Right
-        if (timer->getDuration() > 689) {
-            action->Right(100);
-        } else if (timer->getDuration() > 639) {
-            // 50 Wait
-            action->Right(0);
-        }  else if (timer->getDuration() > 350) {
-            // 289 Left
-            action->Left(100);
-        } else if (timer->getDuration() > 300) {
-            // 50 Wait
-            action->Left(0);
-        } else if (timer->getDuration() > 150) {
-            // 150 Right
-            action->Right(100);
-        } else if (timer->getDuration() > 100) {
-            // 50 Wait
-            action->Right(0);
-        } else {
-            // 100 Forward
-            action->Forward(70);
-        }
+    if (!timer->getRunningProcess()) {
+        timer->startTimer(900);
+        action->Right(100);
         return;
     }
-    timer->startTimer(850);
-    action->Right(100);
+
+    unsigned long t = timer->getElapsed();
+
+    if (t < 400) {
+        action->Right(100);
+    } else if (t < 800) {
+        action->Left(100);
+    } else {
+        action->Forward(100);
+    }
+}
+
+void Algorithm::Strat2Sweep(bool midDetected) {
+    float currentYaw = *yaw;
+
+    switch (sweepState) {
+
+        case SweepInit:
+            action->Right(70);
+            sweepState = SweepWaitEnter;
+            break;
+
+        case SweepWaitEnter:
+            action->Right(70);
+
+            if (midDetected) {
+                theta_entry = currentYaw;
+                sweepState = SweepMeasure;
+            }
+            break;
+
+        case SweepMeasure:
+            action->Right(70);
+
+            if (!midDetected) {
+                theta_exit = currentYaw;
+
+                // midpoint angle
+                theta_target = (theta_entry + theta_exit) / 2.0;
+
+                sweepState = SweepReturn;
+            }
+            break;
+
+        case SweepReturn: {
+            float error = theta_target - currentYaw;
+
+            // normalize to [-180, 180]
+            while (error > 180) error -= 360;
+            while (error < -180) error += 360;
+
+            if (abs(error) < 3) {
+                sweepState = SweepAttack;
+                break;
+            }
+
+            int turnSpeed = constrain(2.0 * error, -100, 100);
+
+            if (turnSpeed > 0) {
+                action->Right(turnSpeed);
+            } else {
+                action->Left(-turnSpeed);
+            }
+            break;
+        }
+
+        case SweepAttack:
+            action->Forward(200);
+            break;
+    }
 }
 
 void Algorithm::SideStrike(EnemyPositions pos) {
