@@ -10,16 +10,14 @@ void Algorithms :: slam(EnemyPos enemyPos, OnLine onLine) {
     //Want to figure out which sensors to prioritize
     //If all 4 are on the line, 
     if (enemyPos == LEFT) {
-        action->turnLeft(200);
+        action->turnLeft(100);
     } else if (enemyPos == RIGHT) {
-        action->turnRight(200);
+        action->turnRight(100);
     } else if (enemyPos == FRONT) {
-        action->forward(200);
+        action->forward(100);
     } else {
-        action->turnLeft(200);
-
+        action->turnLeft(100);
     }
-
 }
 
 void Algorithms :: lineMovement(EnemyPos enemyPos, OnLine onLine) {

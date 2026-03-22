@@ -7,9 +7,9 @@
 #include "Enumerations/OnLine.hpp"
 
 // Output Pins
-const int leftPWM = 33;
+const int leftPWM = 28;
 const int leftDir = 32;
-const int rightPWM = 31;
+const int rightPWM = 29;
 const int rightDir = 30;
 
 // Input Pins
@@ -24,14 +24,16 @@ const int right30IR = 17;
 const int centerIR = 16;
 
 const int frLine = 37;
-const int flLine = 38;
-const int brLine = 36;
+const int brLine = 38;
+const int flLine = 36;
 const int blLine = 35;
+
+const int startMod = 43;
 
 // Array Info Storage
 /**
   * IRSensor: [left90, left60, left45, left30, center, right30, right45, right60, right90]
-  * LineSensor: [Front Left, Front Right, Back Right, Back Left]
+  * LineSensor: [Back Left, Front Left, Front Right, Back Right]
   * MotorDriver: [Left, Right]
 */
 int irArray[9]; // [0, 1]
@@ -103,7 +105,7 @@ void calcState() {
   // enemyPos: LEFT, RIGHT, FRONT, NONE
   // onLine: FRONTLINE, BACKLINE, LEFTLINE, RIGHTLINE, NONELINE
   // algo->someAlgo(enemyPos, onLine);
-  // algo->lineMovement(enemyPos, onLine);
+  algo->slam(enemyPos, onLine);
 }
 
 void writeMotors() {
