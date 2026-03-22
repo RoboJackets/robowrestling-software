@@ -1,34 +1,6 @@
-/*
-Possible states:
-
-if (frontLineSensor) {
-    turn around
-}
-
-if (noRobotDetected) {
-    move in a small circle (not rotate in place). 
-    This way, we are not a sitting duck 
-    and can force another robot to recalculate while also looking for them
-}
-
-if (robotDetected on left/right) {
-    turn until robot is in middle
-}
-
-if (robot detected in middle) {
-    wait a second
-    if (they get closer to us) {
-        run broken curve algorithm (turn right a bit drive in a slight circle to get around the team)
-    }
-    if (they don't get closer to us (assume they're spinning in place)) {
-        go towards them full speed
-    }
-}
-*/
-
 #include <RobotState.h>
+#include <Arduino.h>
 
-// RobotState ctor (fix intervals)
 RobotState::RobotState(WorldState* worldStatePtr, RobotActions* robotActionsPtr,
                        MotorDriver* leftMotorDriverPointer, MotorDriver* rightMotorDriverPointer) {
     worldState = worldStatePtr;
@@ -36,870 +8,179 @@ RobotState::RobotState(WorldState* worldStatePtr, RobotActions* robotActionsPtr,
     leftMotorDriver = leftMotorDriverPointer;
     rightMotorDriver = rightMotorDriverPointer;
 
-    turnTimer  = new Timer();  turnTimer->setTimeInterval(300);  // rotate phase
-    backupTimer = new Timer(); backupTimer->setTimeInterval(300); // back-up phase
+    turnTimer = new Timer();
+    turnTimer->setTimeInterval(300);
 
-
+    backupTimer = new Timer();
+    backupTimer->setTimeInterval(300);
 
     isTurning = false;
     phase = Phase::Idle;
     turnDir = TurnDir::None;
 }
 
-
-// void RobotState::calculateState() {
-//     Position selfPosition = worldState->getSelfPosition();
-//     Position enemyPosition = worldState->getEnemyPosition();
-//     double speed = 150.0;
-//     double rotSpeed = 150.0;
-
-//     if (enemyPosition == Position::Middle_Close) {
-//         robotActions->drive(speed, speed);
-//     } else if (enemyPosition == Position::Middle_Far) {
-//         robotActions->drive(speed, speed);
-//     } else if (enemyPosition == Position::Left) {
-//         robotActions->drive(-rotSpeed, rotSpeed);
-//     } else if (enemyPosition == Position::Right) {
-//         robotActions->drive(rotSpeed, -rotSpeed);
-//     } else if (enemyPosition == Position::None) {
-//         if (selfPosition == Position::On_Line) {
-//             robotActions->drive(-speed, -speed);
-//         } else if (selfPosition == Position::On_Line_Left) {
-//             robotActions->drive(-rotSpeed, 0);
-//         } else if (selfPosition == Position::On_Line_Right) {
-//             robotActions->drive(0, -rotSpeed);
-//         } else {
-//             if (worldState->getLastEnemyPosition() == Position::Left) {
-//                 robotActions->drive(-rotSpeed, rotSpeed);
-//             } else if (worldState->getLastEnemyPosition() == Position::Right) {
-//                 robotActions->drive(rotSpeed, -rotSpeed);
-//             } else {
-//                 robotActions->drive(rotSpeed, -rotSpeed);
-//             }
-//         }
-//     }
-// }
-
-
-
-// This algorithm is a turret essentially, it always tries to look towards the robot
-// It continues turning based on its last state if it doesn't detect anything
-
-// void RobotState::calculateState() {
-//     Position selfPosition = worldState->getSelfPosition();
-//     Position enemyPosition = worldState->getEnemyPosition();
-//     double speed = 100.0;
-//     double rotSpeed = 150.0;
-//     double slowRotSpeed = 100.0;
-
-//     if (enemyPosition == Position::Middle_Close || enemyPosition == Position::Middle_Far) {
-//         robotActions->drive(0.0, 0.0);
-
-//     } else if (enemyPosition == Position::Right_Middle_Close) {
-//         robotActions->drive(slowRotSpeed, -slowRotSpeed);
-//     } else if (enemyPosition == Position::Left_Middle_Close) {
-//         robotActions->drive(-slowRotSpeed, slowRotSpeed);
-//     } else if (enemyPosition == Position::Right_Middle) {
-//         robotActions->drive(slowRotSpeed, -slowRotSpeed);
-//     } else if (enemyPosition == Position::Left_Middle) {
-//         robotActions->drive(-slowRotSpeed, slowRotSpeed);
-//     } else if (enemyPosition == Position::Right) {
-//         robotActions->drive(rotSpeed, -rotSpeed);
-//     } else if (enemyPosition == Position::Left) {
-//         robotActions->drive(-rotSpeed, rotSpeed);
-//     } else if (enemyPosition == Position::None) {
-//     }
-// }
-
-// Timer based state
-
-// void RobotState::calculateState(uint32_t time) {
-//     const int BACKUP_SPEED   = 200;
-//     const int ROTATE_SPEED   = 200;
-
-//     const int BACKUP_MS_SIDE = 150; 
-//     const int BACKUP_MS_BOTH = 200;
-//     const int ROTATE_MS_SIDE = 120;
-//     const int ROTATE_MS_BOTH = 120;
-
-//     // debounce window to decide "both" vs "side-only"
-//     const int BOTH_WINDOW_MS = 20;
-
-//     // --- latch tunables (turn-hold after Left/Right detection)
-//     const int LATCH_MS = 40;              // hold hard turn briefly
-//     const int MIDDLE_CONFIRM_MS = 20;     // see middle this long to break latch early
-
-//     // --- NEW: anti-race minimum dwells to survive slow/jittery loops
-//     const int MIN_BACKUP_DWELL_MS = 60;   // must back up at least this long
-//     const int MIN_ROTATE_DWELL_MS = 120;  // must rotate at least this long
-
-//     // Debounce state (static locals: no header changes)
-//     static bool     pendingLine = false;       // we saw a side hit and are waiting
-//     static TurnDir  pendingDir  = TurnDir::None;
-//     static int      pendingT0   = 0;
-
-//     // Latch state
-//     static bool     latchActive  = false;
-//     static TurnDir  latchDir     = TurnDir::None;
-//     static int      latchT0      = 0;
-//     static int      middleSeenT0 = -1;
-
-//     // --- NEW: phase dwell (anti-race) timestamps
-//     static uint32_t backupEarliestDone = 0;
-//     static uint32_t rotateEarliestDone = 0;
-
-//     Position selfPos  = worldState->getSelfPosition();
-//     Position enemyPos = worldState->getEnemyPosition();  // sector detection
-
-//     // keep timers current
-//     turnTimer->setCurrentTime(time);
-//     backupTimer->setCurrentTime(time);
-
-//     // helper to know if we're touching the edge this tick
-//     auto onLineNow = [&](Position p){
-//         return p == Position::On_Line || p == Position::On_Line_Left || p == Position::On_Line_Right;
-//     };
-
-//     // === Maneuver in progress ===
-//     if (isTurning) {
-//         // Only allow enemy to cancel when safe (not on the line this tick)
-//         const bool enemyInterrupt = (enemyPos != Position::None) && !onLineNow(selfPos);
-
-//         if (!enemyInterrupt) {
-//             // if we are in a line-save maneuver, cancel any aim latch
-//             latchActive = false;
-
-//             if (phase == Phase::BackingUp) {
-//                 // --- NEW: enforce minimum dwell to avoid finishing in one coarse tick
-//                 bool dwellSatisfied = (int32_t)(time - backupEarliestDone) >= 0;
-//                 if (!backupTimer->getReady() || !dwellSatisfied) {
-//                     robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
-//                     return;
-//                 }
-//                 phase = Phase::Rotating;
-//                 turnTimer->setPreviousTime(time);
-//                 rotateEarliestDone = time + MIN_ROTATE_DWELL_MS;   // start rotate dwell
-//             }
-
-//             if (phase == Phase::Rotating) {
-//                 // --- NEW: enforce minimum dwell to avoid rotate “instant finish”
-//                 bool dwellSatisfied = (int32_t)(time - rotateEarliestDone) >= 0;
-//                 if (!turnTimer->getReady() || !dwellSatisfied) {
-//                     if (turnDir == TurnDir::Left)  robotActions->drive(-ROTATE_SPEED, ROTATE_SPEED);
-//                     else                            robotActions->drive( ROTATE_SPEED, -ROTATE_SPEED);
-//                     return;
-//                 }
-//                 // finish
-//                 isTurning = false;
-//                 phase = Phase::Idle;
-//                 turnDir = TurnDir::None;
-//             }
-//         } else {
-//             // Enemy visible & we're safely off the line: abort maneuver and attack
-//             isTurning = false;
-//             phase = Phase::Idle;
-//             turnDir = TurnDir::None;
-//             // fall through to enemy logic below
-//         }
-//     }
-
-//     // === Debounce window handling (only when not turning) ===
-//     if (!isTurning && pendingLine) {
-//         // Allow enemy to break the hold only when safe (not on line now)
-//         const bool enemyInterrupt = (enemyPos != Position::None) && !onLineNow(selfPos);
-
-//         if (!enemyInterrupt) {
-//             // if both sensors detected during window -> commit as BOTH
-//             if (selfPos == Position::On_Line) {
-//                 // choose durations (BOTH) and direction default
-//                 backupTimer->setTimeInterval(BACKUP_MS_BOTH);
-//                 turnTimer->setTimeInterval(ROTATE_MS_BOTH);
-//                 turnDir = TurnDir::Right; // consistent default for "both"
-//                 // start maneuver
-//                 isTurning = true;
-//                 phase = Phase::BackingUp;
-//                 backupTimer->setPreviousTime(time);
-//                 backupEarliestDone = time + MIN_BACKUP_DWELL_MS;   // start backup dwell
-//                 pendingLine = false;
-//                 latchActive = false; // edge safety cancels aim latch
-//                 robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
-//                 return;
-//             }
-//             // if window expired -> commit as SIDE
-//             if (time - pendingT0 >= BOTH_WINDOW_MS) {
-//                 backupTimer->setTimeInterval(BACKUP_MS_SIDE);
-//                 turnTimer->setTimeInterval(ROTATE_MS_SIDE);
-//                 turnDir = pendingDir; // the side we latched
-//                 isTurning = true;
-//                 phase = Phase::BackingUp;
-//                 backupTimer->setPreviousTime(time);
-//                 backupEarliestDone = time + MIN_BACKUP_DWELL_MS;   // start backup dwell
-//                 pendingLine = false;
-//                 latchActive = false; // edge safety cancels aim latch
-//                 robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
-//                 return;
-//             }
-//             // still waiting inside window
-//             robotActions->drive(0, 0);
-//             return;
-//         } else {
-//             // Enemy visible & safely off the line: drop the hold and attack
-//             pendingLine = false;
-//             // fall through to enemy logic
-//         }
-//     }
-
-//     // === New detection (no maneuver active and no pending) ===
-//     if (!isTurning && !pendingLine) {
-//         if (selfPos == Position::On_Line) {
-//             // both at once -> commit immediately to BOTH
-//             backupTimer->setTimeInterval(BACKUP_MS_BOTH);
-//             turnTimer->setTimeInterval(ROTATE_MS_BOTH);
-//             turnDir = TurnDir::Right; // default on both
-//             isTurning = true;
-//             phase = Phase::BackingUp;
-//             backupTimer->setPreviousTime(time);
-//             backupEarliestDone = time + MIN_BACKUP_DWELL_MS;       // start backup dwell
-//             pendingLine = false;
-//             latchActive = false; // edge safety cancels aim latch
-//             robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
-//             return;
-//         }
-//         if (selfPos == Position::On_Line_Left) {
-//             // start debounce window for possible BOTH
-//             pendingLine = true;
-//             pendingDir  = TurnDir::Right; // turn away from left
-//             pendingT0   = time;
-//             robotActions->drive(0, 0);    // kill momentum while waiting
-//             return;
-//         }
-//         if (selfPos == Position::On_Line_Right) {
-//             pendingLine = true;
-//             pendingDir  = TurnDir::Left;  // turn away from right
-//             pendingT0   = time;
-//             robotActions->drive(0, 0);
-//             return;
-//         }
-//     }
-
-//     // ====== ENEMY DETECTION (your exact speeds) ======
-//     double rotSpeed     = 255.0;
-
-//     // create/maintain latch when we see Left/Right near the boundary
-//     if (!latchActive && (enemyPos == Position::Left || enemyPos == Position::Right)) {
-//         latchActive = true;
-//         latchDir    = (enemyPos == Position::Left) ? TurnDir::Left : TurnDir::Right;
-//         latchT0     = time;
-//         middleSeenT0 = -1;
-//     }
-
-//     // latched behavior (turn hard for a short dwell; break early if centered)
-//     if (latchActive) {
-//         // if any middle sector is seen, start/confirm early exit
-//         bool middleNow =
-//             (enemyPos == Position::Left_Middle) || (enemyPos == Position::Left_Middle_Close) ||
-//             (enemyPos == Position::Right_Middle) || (enemyPos == Position::Right_Middle_Close) ||
-//             (enemyPos == Position::Middle_Far)   || (enemyPos == Position::Middle_Close);
-
-//         if (middleNow) {
-//             if (middleSeenT0 < 0) middleSeenT0 = time;
-//             if (time - middleSeenT0 >= MIDDLE_CONFIRM_MS) {
-//                 latchActive = false; // hand back to normal logic
-//             }
-//         } else {
-//             middleSeenT0 = -1; // reset confirmation timer
-//         }
-
-//         // timeout to avoid over-committing if we never see middle
-//         if (time - latchT0 >= LATCH_MS) {
-//             latchActive = false;
-//         }
-
-//         // while still latched, keep turning hard toward the side and return
-//         if (latchActive) {
-//             if (latchDir == TurnDir::Left)  robotActions->drive(-rotSpeed,  rotSpeed);
-//             else                             robotActions->drive( rotSpeed, -rotSpeed);
-//             return;
-//         }
-//         // if latch just ended, fall through to your normal enemy logic below
-//     }
-
-//     // === Your original enemy reaction logic ===
-//     if (enemyPos == Position::Middle_Close) {
-//         robotActions->drive(255.0, 255.0);
-//     } else if (enemyPos == Position::Middle_Far) {
-//         robotActions->drive(150.0, 150.0);
-//     } else if (enemyPos == Position::Right_Middle_Close) {
-//         robotActions->drive(255.0, 200.0);
-
-//     } else if (enemyPos == Position::Left_Middle_Close) {
-//         robotActions->drive(200.0, 255.0);
-
-//     } else if (enemyPos == Position::Right_Middle) {
-//         robotActions->drive(255.0, 200.0);
-
-//     } else if (enemyPos == Position::Left_Middle) {
-//         robotActions->drive(200.0, 255.0);
-
-//     } else if (enemyPos == Position::Right) {
-//         robotActions->drive(255.0, -255.0);
-
-//     } else if (enemyPos == Position::Left) {
-//         robotActions->drive(-255.0, 255.0);
-
-//     } else if (enemyPos == Position::None) {
-
-//         const int ZIGZAG_MS = 250;
-
-//         static bool zigLeft = false;
-//         static int ZIGZAG_INITIAL_MS = 0;
-
-//         if (ZIGZAG_INITIAL_MS == 0) ZIGZAG_INITIAL_MS = time; 
-//         if (time - ZIGZAG_INITIAL_MS >= ZIGZAG_MS) { 
-//             zigLeft = !zigLeft;
-//             ZIGZAG_INITIAL_MS = time;
-//         }
-
-//         if (zigLeft) {
-//             robotActions->drive(-100.0, 200.0);
-//         } else {
-//             robotActions->drive(200.0, -100.0);
-//         }
-
-//         return;
-//     }
-
-//     // === Default: cruise ===
-// }
-
-
-
 void RobotState::calculateState(uint32_t time) {
-    const int BACKUP_SPEED   = 200;
-    const int ROTATE_SPEED   = 200;
+    const int BACKUP_SPEED = 150;
+    const int TURN_SPEED   = 150;
 
-    const int BACKUP_MS_SIDE = 200; 
-    const int BACKUP_MS_BOTH = 250;
-    const int ROTATE_MS_SIDE = 80;
-    const int ROTATE_MS_BOTH = 80;
+    const int BACKUP_MS    = 250;
+    const int TURN_MS      = 100;
+    const int BOTH_TURN_MS = 60;
 
-    const int BOTH_WINDOW_MS = 20;
+    const int ZIGZAG_MS = 300;
 
-    const int LATCH_MS = 30;              // hold hard turn briefly
-    const int MIDDLE_CONFIRM_MS = 20;     // see middle this long to break latch early
+    // enemy speeds
+    const double ATTACK_SPEED    = 255.0;
+    const double ROT_SPEED       = 150.0;
+    const double SLOW_ROT_SPEED  = 100.0;
 
-    const int MIN_BACKUP_DWELL_MS = 60;   // must back up at least this long
-    const int MIN_ROTATE_DWELL_MS = 80;  // must rotate at least this long
-
-    static bool     pendingLine = false;       // we saw a side hit and are waiting
-    static TurnDir  pendingDir  = TurnDir::None;
-    static int      pendingT0   = 0;
-
-    // Latch state
-    static bool     latchActive  = false;
-    static TurnDir  latchDir     = TurnDir::None;
-    static int      latchT0      = 0;
-    static int      middleSeenT0 = -1;
-
-    static uint32_t backupEarliestDone = 0;
-    static uint32_t rotateEarliestDone = 0;
+    static bool zigLeft = false;
+    static int ZIGZAG_INITIAL_MS = 0;
 
     Position selfPos  = worldState->getSelfPosition();
-    Position enemyPos = worldState->getEnemyPosition();  // sector detection
+    Position enemyPos = worldState->getEnemyPosition();
 
-    // keep timers current
-    turnTimer->setCurrentTime(time);
     backupTimer->setCurrentTime(time);
+    turnTimer->setCurrentTime(time);
 
-    // helper to know if we're touching the edge this tick
-    auto onLineNow = [&](Position p){
-        return p == Position::On_Line || p == Position::On_Line_Left || p == Position::On_Line_Right;
-    };
-
+    // =========================
+    // 1. Line-escape maneuver
+    // =========================
     if (isTurning) {
-        // Only allow enemy to cancel when safe (not on the line this tick)
-        const bool enemyInterrupt = (enemyPos != Position::None) && !onLineNow(selfPos);
-
-        if (!enemyInterrupt) {
-            // if we are in a line-save maneuver, cancel any aim latch
-            latchActive = false;
-
-            if (phase == Phase::BackingUp) {
-                bool dwellSatisfied = (int32_t)(time - backupEarliestDone) >= 0;
-                if (!backupTimer->getReady() || !dwellSatisfied) {
+        if (phase == Phase::BackingUp) {
+            if (!backupTimer->getReady()) {
+                if (turnDir == TurnDir::Right) {
+                    // curved backup away from left edge
+                    robotActions->drive(-80, -120);
+                } else if (turnDir == TurnDir::Left) {
+                    // curved backup away from right edge
+                    robotActions->drive(-120, -80);
+                } else {
+                    // straight backup if both sensors hit
                     robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
-                    return;
                 }
-                phase = Phase::Rotating;
-                turnTimer->setPreviousTime(time);
-                rotateEarliestDone = time + MIN_ROTATE_DWELL_MS;   // start rotate dwell
+                return;
             }
 
-            if (phase == Phase::Rotating) {
-                bool dwellSatisfied = (int32_t)(time - rotateEarliestDone) >= 0;
-                if (!turnTimer->getReady() || !dwellSatisfied) {
-                    if (turnDir == TurnDir::Left)  robotActions->drive(-ROTATE_SPEED, ROTATE_SPEED);
-                    else                            robotActions->drive( ROTATE_SPEED, -ROTATE_SPEED);
-                    return;
+            phase = Phase::Rotating;
+            turnTimer->setPreviousTime(time);
+        }
+
+        if (phase == Phase::Rotating) {
+            if (!turnTimer->getReady()) {
+                if (turnDir == TurnDir::Left) {
+                    robotActions->drive(-TURN_SPEED, TURN_SPEED);
+                } else {
+                    robotActions->drive(TURN_SPEED, -TURN_SPEED);
                 }
-                // finish
-                isTurning = false;
-                phase = Phase::Idle;
-                turnDir = TurnDir::None;
+                return;
             }
-        } else {
-            // Enemy visible & we're safely off the line: abort maneuver and attack
+
             isTurning = false;
             phase = Phase::Idle;
             turnDir = TurnDir::None;
-            // fall through to enemy logic below
+
+            // restart zigzag cleanly after escape
+            ZIGZAG_INITIAL_MS = time;
         }
     }
 
-    if (!isTurning && pendingLine) {
-        // Allow enemy to break the hold only when safe (not on line now)
-        const bool enemyInterrupt = (enemyPos != Position::None) && !onLineNow(selfPos);
+    // =========================
+    // 2. Start line-escape if line seen
+    // =========================
+    if (selfPos == Position::On_Line_Left) {
+        isTurning = true;
+        phase = Phase::BackingUp;
+        turnDir = TurnDir::Right;
+        backupTimer->setTimeInterval(BACKUP_MS);
+        turnTimer->setTimeInterval(TURN_MS);
+        backupTimer->setPreviousTime(time);
 
-        if (!enemyInterrupt) {
-            // if both sensors detected during window -> commit as BOTH
-            if (selfPos == Position::On_Line) {
-                // choose durations (BOTH) and direction default
-                backupTimer->setTimeInterval(BACKUP_MS_BOTH);
-                turnTimer->setTimeInterval(ROTATE_MS_BOTH);
-                turnDir = TurnDir::Right; // consistent default for "both"
-                // start maneuver
-                isTurning = true;
-                phase = Phase::BackingUp;
-                backupTimer->setPreviousTime(time);
-                backupEarliestDone = time + MIN_BACKUP_DWELL_MS;   // start backup dwell
-                pendingLine = false;
-                latchActive = false; // edge safety cancels aim latch
-                robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
-                return;
-            }
-
-            if (time - pendingT0 >= BOTH_WINDOW_MS) {
-                backupTimer->setTimeInterval(BACKUP_MS_SIDE);
-                turnTimer->setTimeInterval(ROTATE_MS_SIDE);
-                turnDir = pendingDir; // the side we latched
-                isTurning = true;
-                phase = Phase::BackingUp;
-                backupTimer->setPreviousTime(time);
-                backupEarliestDone = time + MIN_BACKUP_DWELL_MS;   // start backup dwell
-                pendingLine = false;
-                latchActive = false; // edge safety cancels aim latch
-                robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
-                return;
-            }
-            // still waiting inside window
-            robotActions->drive(0, 0);
-            return;
-        } else {
-            // Enemy visible & safely off the line: drop the hold and attack
-            pendingLine = false;
-            // fall through to enemy logic
-        }
+        robotActions->drive(-80, -120);
+        return;
     }
 
-    if (!isTurning && !pendingLine) {
-        if (selfPos == Position::On_Line) {
-            backupTimer->setTimeInterval(BACKUP_MS_BOTH);
-            turnTimer->setTimeInterval(ROTATE_MS_BOTH);
-            turnDir = TurnDir::Right; // default on both
-            isTurning = true;
-            phase = Phase::BackingUp;
-            backupTimer->setPreviousTime(time);
-            backupEarliestDone = time + MIN_BACKUP_DWELL_MS;       // start backup dwell
-            pendingLine = false;
-            latchActive = false; // edge safety cancels aim latch
-            robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
-            return;
-        }
-        if (selfPos == Position::On_Line_Left) {
-            // start debounce window for possible BOTH
-            pendingLine = true;
-            pendingDir  = TurnDir::Right; // turn away from left
-            pendingT0   = time;
-            robotActions->drive(0, 0);    // kill momentum while waiting
-            return;
-        }
-        if (selfPos == Position::On_Line_Right) {
-            pendingLine = true;
-            pendingDir  = TurnDir::Left;  // turn away from right
-            pendingT0   = time;
-            robotActions->drive(0, 0);
-            return;
-        }
+    if (selfPos == Position::On_Line_Right) {
+        isTurning = true;
+        phase = Phase::BackingUp;
+        turnDir = TurnDir::Left;
+        backupTimer->setTimeInterval(BACKUP_MS);
+        turnTimer->setTimeInterval(TURN_MS);
+        backupTimer->setPreviousTime(time);
+
+        robotActions->drive(-120, -80);
+        return;
     }
 
-    double rotSpeed     = 255.0;
+    if (selfPos == Position::On_Line) {
+        isTurning = true;
+        phase = Phase::BackingUp;
+        turnDir = TurnDir::Right; // default
+        backupTimer->setTimeInterval(BACKUP_MS);
+        turnTimer->setTimeInterval(BOTH_TURN_MS);
+        backupTimer->setPreviousTime(time);
 
-    // create/maintain latch when we see Left/Right near the boundary
-    if (!latchActive && (enemyPos == Position::Left || enemyPos == Position::Right)) {
-        latchActive = true;
-        latchDir    = (enemyPos == Position::Left) ? TurnDir::Left : TurnDir::Right;
-        latchT0     = time;
-        middleSeenT0 = -1;
+        robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
+        return;
     }
 
-    // latched behavior (turn hard for a short dwell; break early if centered)
-    if (latchActive) {
-        // if any middle sector is seen, start/confirm early exit
-        bool middleNow =
-            (enemyPos == Position::Left_Middle) || (enemyPos == Position::Left_Middle_Close) ||
-            (enemyPos == Position::Right_Middle) || (enemyPos == Position::Right_Middle_Close) ||
-            (enemyPos == Position::Middle_Far)   || (enemyPos == Position::Middle_Close);
-
-        if (middleNow) {
-            if (middleSeenT0 < 0) middleSeenT0 = time;
-            if (time - middleSeenT0 >= MIDDLE_CONFIRM_MS) {
-                latchActive = false; // hand back to normal logic
-            }
-        } else {
-            middleSeenT0 = -1; // reset confirmation timer
-        }
-
-        // timeout to avoid over-committing if we never see middle
-        if (time - latchT0 >= LATCH_MS) {
-            latchActive = false;
-        }
-
-        // while still latched, keep turning hard toward the side and return
-        if (latchActive) {
-            if (latchDir == TurnDir::Left)  robotActions->drive(-rotSpeed,  rotSpeed);
-            else                             robotActions->drive( rotSpeed, -rotSpeed);
-            return;
-        }
-        // if latch just ended, fall through to your normal enemy logic below
-    }
-
+    // =========================
+    // 3. Enemy logic
+    // =========================
     if (enemyPos == Position::Flag_Left) {
         robotActions->drive(-255.0, 255.0);
     } else if (enemyPos == Position::Flag_Right) {
         robotActions->drive(255.0, -255.0);
-    } else if (enemyPos == Position::Middle_Close) {
-        robotActions->drive(255.0, 255.0);
-    } else if (enemyPos == Position::Middle_Far) {
-        robotActions->drive(255.0, 255.0);
-    } else if (enemyPos == Position::Right_Middle_Close) {
-        robotActions->drive(255.0, 200.0);
+    }
+    else if (enemyPos == Position::Middle_Close || enemyPos == Position::Middle_Far) {
+        robotActions->drive(255, 255);
+        return;
+
+    } 
+
+    else if (enemyPos == Position::Middle_Far) {
+        robotActions->drive(100, 100);
+        return;
+    }
+    
+    else if (enemyPos == Position::Right_Middle_Close) {
+        robotActions->drive(255, 200);
+        return;
 
     } else if (enemyPos == Position::Left_Middle_Close) {
-        robotActions->drive(200.0, 255.0);
+        robotActions->drive(200, 255);
+        return;
 
     } else if (enemyPos == Position::Right_Middle) {
-        robotActions->drive(255.0, 200.0);
+        robotActions->drive(255, 150);
+        return;
 
     } else if (enemyPos == Position::Left_Middle) {
-        robotActions->drive(200.0, 255.0);
+        robotActions->drive(150, 255);
+        return;
 
     } else if (enemyPos == Position::Right) {
-        robotActions->drive(255.0, -255.0);
+        robotActions->drive(150, -150);
+        return;
 
     } else if (enemyPos == Position::Left) {
-        robotActions->drive(-255.0, 255.0);
-
-    } else if (enemyPos == Position::None) {
-
-        const int ZIGZAG_MS = 250;
-
-        static bool zigLeft = false;
-        static int ZIGZAG_INITIAL_MS = 0;
-
-        if (ZIGZAG_INITIAL_MS == 0) ZIGZAG_INITIAL_MS = time; 
-        if (time - ZIGZAG_INITIAL_MS >= ZIGZAG_MS) { 
-            zigLeft = !zigLeft;
-            ZIGZAG_INITIAL_MS = time;
-        }
-
-        if (zigLeft) {
-            robotActions->drive(-100.0, 200.0);
-        } else {
-            robotActions->drive(200.0, -100.0);
-        }
-
+        robotActions->drive(-150, 150);
         return;
     }
 
+    // =========================
+    // 4. No enemy -> zigzag wander
+    // =========================
+    if (ZIGZAG_INITIAL_MS == 0) ZIGZAG_INITIAL_MS = time;
+
+    if (time - ZIGZAG_INITIAL_MS >= ZIGZAG_MS) {
+        zigLeft = !zigLeft;
+        ZIGZAG_INITIAL_MS = time;
+    }
+
+    if (zigLeft) {
+        robotActions->drive(-60.0, 100.0);
+    } else {
+        robotActions->drive(100.0, -60.0);
+    }
 }
-
-
-// new proper zig/zag
-
-// void RobotState::calculateState(uint32_t time) {
-//     const int BACKUP_SPEED   = 200;
-//     const int ROTATE_SPEED   = 200;
-
-//     const int BACKUP_MS_SIDE = 200; 
-//     const int BACKUP_MS_BOTH = 250;
-//     const int ROTATE_MS_SIDE = 60;
-//     const int ROTATE_MS_BOTH = 120;
-
-//     // debounce window to decide "both" vs "side-only"
-//     const int BOTH_WINDOW_MS = 20;
-
-//     // --- latch tunables (turn-hold after Left/Right detection)
-//     const int LATCH_MS = 30;              // hold hard turn briefly
-//     const int MIDDLE_CONFIRM_MS = 20;     // see middle this long to break latch early
-
-//     // --- NEW: anti-race minimum dwells to survive slow/jittery loops
-
-
-//     // Debounce state (static locals: no header changes)
-//     static bool     pendingLine = false;       // we saw a side hit and are waiting
-//     static TurnDir  pendingDir  = TurnDir::None;
-//     static int      pendingT0   = 0;
-
-//     // Latch state
-//     static bool     latchActive  = false;
-//     static TurnDir  latchDir     = TurnDir::None;
-//     static int      latchT0      = 0;
-//     static int      middleSeenT0 = -1;
-
-//     // --- NEW: phase dwell (anti-race) timestamps
-//     static uint32_t backupEarliestDone = 0;
-//     static uint32_t rotateEarliestDone = 0;
-
-//     // ===== NEW: zig + rotate-finish linkage (no header changes) =====
-//     static bool     zigLeft            = false;                // starts false
-//     static bool     zigOverridePending = false;                // one-shot override after rotate
-//     static TurnDir  lastRotateDir      = TurnDir::None;        // direction of last completed rotate
-//     static int      ZIGZAG_INITIAL_MS  = 0;                    // moved out of None block
-
-//     Position selfPos  = worldState->getSelfPosition();
-//     Position enemyPos = worldState->getEnemyPosition();  // sector detection
-
-//     // keep timers current
-//     turnTimer->setCurrentTime(time);
-//     backupTimer->setCurrentTime(time);
-
-//     // helper to know if we're touching the edge this tick
-//     auto onLineNow = [&](Position p){
-//         return p == Position::On_Line || p == Position::On_Line_Left || p == Position::On_Line_Right;
-//     };
-
-//     // === Maneuver in progress ===
-//     if (isTurning) {
-//         // Only allow enemy to cancel when safe (not on the line this tick)
-//         const bool enemyInterrupt = (enemyPos != Position::None) && !onLineNow(selfPos);
-
-//         if (!enemyInterrupt) {
-//             // if we are in a line-save maneuver, cancel any aim latch
-//             latchActive = false;
-
-//             if (phase == Phase::BackingUp) {
-//                 // --- NEW: enforce minimum dwell to avoid finishing in one coarse tick
-//                 bool dwellSatisfied = (int32_t)(time - backupEarliestDone) >= 0;
-//                 if (!backupTimer->getReady() || !dwellSatisfied) {
-//                     robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
-//                     return;
-//                 }
-//                 phase = Phase::Rotating;
-//                 turnTimer->setPreviousTime(time);
-//                 rotateEarliestDone = time;   // start rotate dwell
-//             }
-
-//             if (phase == Phase::Rotating) {
-//                 // --- NEW: enforce minimum dwell to avoid rotate “instant finish”
-//                 bool dwellSatisfied = (int32_t)(time - rotateEarliestDone) >= 0;
-//                 if (!turnTimer->getReady() || !dwellSatisfied) {
-//                     if (turnDir == TurnDir::Left)  robotActions->drive(-ROTATE_SPEED, ROTATE_SPEED);
-//                     else                            robotActions->drive( ROTATE_SPEED, -ROTATE_SPEED);
-//                     return;
-//                 }
-//                 // ===== finish =====
-//                 lastRotateDir = turnDir;                     // remember actual rotate direction
-//                 isTurning = false;
-//                 phase = Phase::Idle;
-//                 turnDir = TurnDir::None;
-
-//                 // Prime next wander direction once, based on rotate
-//                 zigOverridePending = (lastRotateDir == TurnDir::Left) || (lastRotateDir == TurnDir::Right);
-//             }
-//         } else {
-//             // Enemy visible & we're safely off the line: abort maneuver and attack
-//             isTurning = false;
-//             phase = Phase::Idle;
-//             turnDir = TurnDir::None;
-//             // no zig priming on abort
-//             // fall through to enemy logic below
-//         }
-//     }
-
-//     // === Debounce window handling (only when not turning) ===
-//     if (!isTurning && pendingLine) {
-//         // Allow enemy to break the hold only when safe (not on line now)
-//         const bool enemyInterrupt = (enemyPos != Position::None) && !onLineNow(selfPos);
-
-//         if (!enemyInterrupt) {
-//             // if both sensors detected during window -> commit as BOTH
-//             if (selfPos == Position::On_Line) {
-//                 // choose durations (BOTH) and direction default
-//                 backupTimer->setTimeInterval(BACKUP_MS_BOTH);
-//                 turnTimer->setTimeInterval(ROTATE_MS_BOTH);
-//                 turnDir = TurnDir::Right; // consistent default for "both"
-//                 // start maneuver
-//                 isTurning = true;
-//                 phase = Phase::BackingUp;
-//                 backupTimer->setPreviousTime(time);
-//                 backupEarliestDone = time;   // start backup dwell
-//                 pendingLine = false;
-//                 latchActive = false; // edge safety cancels aim latch
-//                 robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
-//                 return;
-//             }
-//             // if window expired -> commit as SIDE
-//             if (time - pendingT0 >= BOTH_WINDOW_MS) {
-//                 backupTimer->setTimeInterval(BACKUP_MS_SIDE);
-//                 turnTimer->setTimeInterval(ROTATE_MS_SIDE);
-//                 turnDir = pendingDir; // the side we latched
-//                 isTurning = true;
-//                 phase = Phase::BackingUp;
-//                 backupTimer->setPreviousTime(time);
-//                 backupEarliestDone = time;   // start backup dwell
-//                 pendingLine = false;
-//                 latchActive = false; // edge safety cancels aim latch
-//                 robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
-//                 return;
-//             }
-//             // still waiting inside window
-//             robotActions->drive(0, 0);
-//             return;
-//         } else {
-//             // Enemy visible & safely off the line: drop the hold and attack
-//             pendingLine = false;
-//             // fall through to enemy logic
-//         }
-//     }
-
-//     // === New detection (no maneuver active and no pending) ===
-//     if (!isTurning && !pendingLine) {
-//         if (selfPos == Position::On_Line) {
-//             // both at once -> commit immediately to BOTH
-//             backupTimer->setTimeInterval(BACKUP_MS_BOTH);
-//             turnTimer->setTimeInterval(ROTATE_MS_BOTH);
-//             turnDir = TurnDir::Right; // default on both
-//             isTurning = true;
-//             phase = Phase::BackingUp;
-//             backupTimer->setPreviousTime(time);
-//             backupEarliestDone = time;       // start backup dwell
-//             pendingLine = false;
-//             latchActive = false; // edge safety cancels aim latch
-//             robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
-//             return;
-//         }
-//         if (selfPos == Position::On_Line_Left) {
-//             // start debounce window for possible BOTH
-//             pendingLine = true;
-//             pendingDir  = TurnDir::Right; // turn away from left
-//             pendingT0   = time;
-//             robotActions->drive(0, 0);    // kill momentum while waiting
-//             return;
-//         }
-//         if (selfPos == Position::On_Line_Right) {
-//             pendingLine = true;
-//             pendingDir  = TurnDir::Left;  // turn away from right
-//             pendingT0   = time;
-//             robotActions->drive(0, 0);
-//             return;
-//         }
-//     }
-
-//     // ====== ENEMY DETECTION (your exact speeds) ======
-//     double rotSpeed     = 255.0;
-
-//     // create/maintain latch when we see Left/Right near the boundary
-//     if (!latchActive && (enemyPos == Position::Left || enemyPos == Position::Right)) {
-//         latchActive = true;
-//         latchDir    = (enemyPos == Position::Left) ? TurnDir::Left : TurnDir::Right;
-//         latchT0     = time;
-//         middleSeenT0 = -1;
-//     }
-
-//     // latched behavior (turn hard for a short dwell; break early if centered)
-//     if (latchActive) {
-//         // if any middle sector is seen, start/confirm early exit
-//         bool middleNow =
-//             (enemyPos == Position::Left_Middle) || (enemyPos == Position::Left_Middle_Close) ||
-//             (enemyPos == Position::Right_Middle) || (enemyPos == Position::Right_Middle_Close) ||
-//             (enemyPos == Position::Middle_Far)   || (enemyPos == Position::Middle_Close);
-
-//         if (middleNow) {
-//             if (middleSeenT0 < 0) middleSeenT0 = time;
-//             if (time - middleSeenT0 >= MIDDLE_CONFIRM_MS) {
-//                 latchActive = false; // hand back to normal logic
-//             }
-//         } else {
-//             middleSeenT0 = -1; // reset confirmation timer
-//         }
-
-//         // timeout to avoid over-committing if we never see middle
-//         if (time - latchT0 >= LATCH_MS) {
-//             latchActive = false;
-//         }
-
-//         // while still latched, keep turning hard toward the side and return
-//         if (latchActive) {
-//             if (latchDir == TurnDir::Left)  robotActions->drive(-rotSpeed,  rotSpeed);
-//             else                             robotActions->drive( rotSpeed, -rotSpeed);
-//             return;
-//         }
-//         // if latch just ended, fall through to your normal enemy logic below
-//     }
-
-//     // === Your original enemy reaction logic ===
-//     if (enemyPos == Position::Flag_Left) {
-//         robotActions->drive(-255.0, 255.0);
-//     } else if (enemyPos == Position::Flag_Right) {
-//         robotActions->drive(255.0, -255.0);
-//     } else if (enemyPos == Position::Middle_Close) {
-//         robotActions->drive(255.0, 255.0);
-//     } else if (enemyPos == Position::Middle_Far) {
-//         robotActions->drive(150.0, 150.0);
-//     } else if (enemyPos == Position::Right_Middle_Close) {
-//         robotActions->drive(255.0, 200.0);
-
-//     } else if (enemyPos == Position::Left_Middle_Close) {
-//         robotActions->drive(200.0, 255.0);
-
-//     } else if (enemyPos == Position::Right_Middle) {
-//         robotActions->drive(255.0, 200.0);
-
-//     } else if (enemyPos == Position::Left_Middle) {
-//         robotActions->drive(200.0, 255.0);
-
-//     } else if (enemyPos == Position::Right) {
-//         robotActions->drive(255.0, -255.0);
-
-//     } else if (enemyPos == Position::Left) {
-//         robotActions->drive(-255.0, 255.0);
-
-//     } else if (enemyPos == Position::None) {
-
-//         const int ZIGZAG_MS = 250;
-
-//         // Apply one-shot preference set by the last completed rotate.
-//         if (zigOverridePending) {
-//             zigLeft = (lastRotateDir == TurnDir::Left);  // Left rotate -> zig left first
-//             zigOverridePending = false;
-//             // Hold this chosen side for a full interval
-//             ZIGZAG_INITIAL_MS = time;
-//         }
-
-//         if (ZIGZAG_INITIAL_MS == 0) ZIGZAG_INITIAL_MS = time; 
-//         if (time - ZIGZAG_INITIAL_MS >= ZIGZAG_MS) { 
-//             zigLeft = !zigLeft;
-//             ZIGZAG_INITIAL_MS = time;
-//         }
-
-//         if (zigLeft) {
-//             robotActions->drive(-100.0, 200.0);
-//         } else {
-//             robotActions->drive(200.0, -100.0);
-//         }
-
-//         return;
-//     }
-
-//     // === Default: cruise ===
-// }

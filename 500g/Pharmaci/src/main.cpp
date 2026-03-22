@@ -25,17 +25,19 @@ RobotState *robotState;
 Servo servo;
 
 // Shorti Pins
- const int LEFT_IR_90 = 2;
- const int LEFT_IR_45 = 3;
- const int RIGHT_IR_90 = 8;
- const int RIGHT_IR_45 = 5;
- const int MIDDLE_IR = 4;
+
+
+  const int LEFT_IR_90 = 5;
+ const int LEFT_IR_45 = 8;
+ const int RIGHT_IR_90 = 4;
+ const int RIGHT_IR_45 = 3;
+ const int MIDDLE_IR = 2;
 
  const int START_MODULE = 6;
-const int R_POS = 29;
-const int R_NEG = 28;
-const int L_POS = 0;
-const int L_NEG = 1;
+const int L_NEG = 28;
+const int L_POS = 29;
+const int R_POS = 1;
+const int R_NEG = 0;
 
  const int LEFT_LINE = A7;
  const int RIGHT_LINE = A6;
@@ -153,18 +155,18 @@ void debug() {
   Serial.println(positionToString(worldState->getSelfPosition()));  // prints: LEFT
   // Serial.println(leftMotorDriver->getVelocity());
   // Serial.println(rightMotorDriver->getVelocity());
-  delay(10);
+  delay(1000);
 }
 
 void loop() {
-  servo.write(90);   // drop flag immediately when loop starts
+  // servo.write(90);   // drop flag immediately when loop starts
 
   // debug();
   pollSensors();
   calculateState(millis());
   updateMotors();
 
-  // robotActions -> drive(200, 0);
+  // robotActions -> drive(80, 80);
   
   // if (digitalRead(START_MODULE)) {
   //     pollSensors();
