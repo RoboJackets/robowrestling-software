@@ -15,17 +15,20 @@
 #include "sensors/LineSensor.h"
 #include "RobotState.h"
 
+
+const int START_PIN = 0;
+const int KILL_SW = 1;
+
 // pinouts
 const int RIGHT_PWM = 6;
 const int RIGHT_DIR = 5;
 const int LEFT_PWM = 8;
 const int LEFT_DIR = 7;
-const int LEFT_IR = 2;
-const int MIDDLE_IR = 3;
-const int RIGHT_IR = 4;
-const int LEFT_LINE = A8;
-const int RIGHT_LINE = A9;
-const int START_PIN = 34;
+
+
+const int LEFT_LINE = 23;
+const int RIGHT_LINE = 22;
+const int START_PIN = 0;
 
 // object definitions
 IRSensor *leftIRSensor;

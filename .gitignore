@@ -58,3 +58,5 @@ cmake-build-debug
 # ignore vscode files
 .vscode/
 *.code-workspace
+
+.pio/

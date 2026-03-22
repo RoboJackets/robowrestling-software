@@ -1,60 +1,53 @@
 #include "Skibidi.hpp"
 
-Skibidi::Skibidi(bool analog_line_sensors) {
-    if (analog_line_sensors) {
-        this->line_sensors.insert(std::make_pair(Position::FRONT_LEFT, new DoubleLineSensor(1, 2)));
-        this->line_sensors.insert(std::make_pair(Position::FRONT_RIGHT, new DoubleLineSensor(1, 2)));
-        this->line_sensors.insert(std::make_pair(Position::BACK_RIGHT, new DoubleLineSensor(1, 2)));
-        this->line_sensors.insert(std::make_pair(Position::BACK_RIGHT, new DoubleLineSensor(1, 2)));
-    } else {
-        this->line_sensors.insert(std::make_pair(Position::FRONT_LEFT, new DoubleLineSensor(1)));
-        this->line_sensors.insert(std::make_pair(Position::FRONT_RIGHT, new DoubleLineSensor(1)));
-        this->line_sensors.insert(std::make_pair(Position::BACK_RIGHT, new DoubleLineSensor(1)));
-        this->line_sensors.insert(std::make_pair(Position::BACK_RIGHT, new DoubleLineSensor(1)));
-    }
-
-    this->ir_sensors = std::make_pair(new IrSensor(1), new IrSensor(1));
-
-    this->start_module = new StartModule(1);
-    this->state = {
-        .active_line_sensors = {
-            {Position::FRONT_LEFT, false},
-            {Position::FRONT_RIGHT, false},
-            {Position::BACK_LEFT, false},
-            {Position::BACK_RIGHT, false},
-        },
-        .active_ir_sensors = std::make_pair(false, false),
+Skibidi::Skibidi(void) {
+    this->line_sensors = {
+        {Position::FRONT_LEFT,  new DoubleLineSensor(17)},
+        {Position::FRONT_RIGHT, new DoubleLineSensor(15)},
+        //{Position::BACK_LEFT,   new DoubleLineSensor(1)},
+        //{Position::BACK_RIGHT,  new DoubleLineSensor(1)},
     };
+
+    this->ir_sensors = {
+        {IrDirection::RIGHT,        new IrSensor(2)},
+        {IrDirection::MID_RIGHT,    new IrSensor(3)},
+        {IrDirection::CENTER_RIGHT, new IrSensor(4)},
+        {IrDirection::CENTER,       new IrSensor(5)},
+        {IrDirection::CENTER_LEFT,  new IrSensor(6)},
+        {IrDirection::MID_LEFT,     new IrSensor(9)},
+        {IrDirection::LEFT,         new IrSensor(10)},
+    };
+    //this->motor_driver = new MotorDriver(std::make_pair(1, 2), std::make_pair(1, 2));
+    this->motor_driver = new MotorDriver(11, 12, 25, 36, 37, 24);
+
+    this->start_module = new StartModule(13);
 }
 
 StartModule* Skibidi::get_start_module() {
     return this->start_module;
 }
 
-struct State* Skibidi::get_state() {
-    return &state;
-}
-
-void Skibidi::check_line_sensors() {
+void Skibidi::check_line_sensors(State* state) {
     for (auto it = this->line_sensors.begin(); it != this->line_sensors.end(); ++it) {
-        this->state.active_line_sensors[it->first] = it->second->is_sensing();
+        state->active_line_sensors[it->first] = it->second->is_sensing();
     }
 }
 
-void Skibidi::initialize_sensors(bool analog_line_sensors) {
-    if (analog_line_sensors) {
-        // This SHOULD be fine because this will occur
-        // after the bot is sat on the dohyo and started
-        // but BEFORE the match begins
-        std::map<Position, DoubleLineSensor*> line_sensors = this->line_sensors;
-        for (auto it = line_sensors.begin(); it != line_sensors.end(); ++it) {
-            it->second->calibrate_analog();
-        }
+void Skibidi::initialize_sensors() {
+    std::map<Position, DoubleLineSensor*> line_sensors = this->line_sensors;
+    for (auto it = line_sensors.begin(); it != line_sensors.end(); ++it) {
+        it->second->calibrate();
     }
 }
 
-void Skibidi::update_state() {
-    this->check_line_sensors();
-    this->state.active_ir_sensors.first = this->ir_sensors.first->is_sensing();
-    this->state.active_ir_sensors.second = this->ir_sensors.second->is_sensing();
+void Skibidi::update_state(State* state) {
+    this->check_line_sensors(state);
+    for (auto it = ir_sensors.begin(); it != ir_sensors.end(); ++it) {
+        state->active_ir_sensors[it->first] = it->second->is_sensing();
+    }
+}
+
+void Skibidi::execute_action(State* state) {
+    this->motor_driver->change_state(state->driving_state);
+    this->motor_driver->drive(state->motor_speed);
 }

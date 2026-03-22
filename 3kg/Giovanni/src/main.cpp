@@ -105,7 +105,7 @@ void calcState() {
   // enemyPos: LEFT, RIGHT, FRONT, NONE
   // onLine: FRONTLINE, BACKLINE, LEFTLINE, RIGHTLINE, NONELINE
   // algo->someAlgo(enemyPos, onLine);
-  algo->slam(enemyPos, onLine);
+  algo->selectAlgo(enemyPos, onLine);
 }
 
 void writeMotors() {
