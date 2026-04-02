@@ -7,6 +7,8 @@
 #include "WorldState.hpp"
 #include "Brazil.hpp"
 #include "Strat.hpp"
+#include "Testing.hpp"
+#include "Defence.hpp"
 
 // Line Sensors
 const int LN_RB2 = 22;
@@ -63,6 +65,8 @@ RobotActions* robotActions;
 
 Brazil* brazil;
 Strat* strat;
+Testing* testing;
+Defence* defence;
 
 const int THRESHOLD = 700;
 
@@ -117,12 +121,16 @@ void setup() {
 
   brazil = new Brazil(worldState, robotActions);
   strat = new Strat(worldState, robotActions);
+  testing = new Testing(worldState, robotActions);
+  defence = new Defence(worldState, robotActions);
 
   roboclaw.begin(38400);
-    while (!digitalRead(S_MOD)) {
-      Serial.print(digitalRead(S_MOD));
-      Serial.println(" Waiting for start signal");
-    }
+  while (!digitalRead(S_MOD)) {
+    Serial.print(millis());
+    Serial.print(": ");
+    Serial.print(digitalRead(S_MOD));
+    Serial.println(" Waiting for start signal");
+  }
 }
 
 void loop() {
@@ -134,13 +142,15 @@ void loop() {
     while(true) {
       roboclaw.ForwardM1(address, 0);
       roboclaw.ForwardM2(address, 0);
-      Serial.println("braking");
+      Serial.print(millis());
+      Serial.println(": braking");
     }
   }
 }
 
 void calculateState() {
-  strat->run();
+  // strat->run();
+  defence->run();
 }
 
 void pollSensors() {
@@ -165,20 +175,22 @@ void pollSensors() {
 // BACKWARDS IS FORWARDS
 void writeMotors() {
   if (motorDriver->getLeftDirection() == FORWARD) {
-    roboclaw.BackwardM2(address, motorDriver->getLeftSpeed());
-  }
-  if (motorDriver->getLeftDirection() == BACKWARD) {
-    roboclaw.ForwardM2(address, motorDriver->getLeftSpeed());
-  }
-  if (motorDriver->getRightDirection() == FORWARD) {
     roboclaw.BackwardM1(address, motorDriver->getLeftSpeed());
   }
-  if (motorDriver->getRightDirection() == BACKWARD) {
+  if (motorDriver->getLeftDirection() == BACKWARD) {
     roboclaw.ForwardM1(address, motorDriver->getLeftSpeed());
+  }
+  if (motorDriver->getRightDirection() == FORWARD) {
+    roboclaw.BackwardM2(address, motorDriver->getRightSpeed());
+  }
+  if (motorDriver->getRightDirection() == BACKWARD) {
+    roboclaw.ForwardM2(address, motorDriver->getRightSpeed());
   }
 }
 
 void debug() {
+  Serial.print(millis());
+  Serial.print(": ");
   if (false) { //debug line sensors
     Serial.print(analogRead(LN_LF2));
     Serial.print(" ");
@@ -217,9 +229,11 @@ void debug() {
   }
   if (true) {
     Serial.print(motorDriver->getLeftDirection());
+    Serial.print(" ");
     Serial.print(motorDriver->getLeftSpeed());
     Serial.print(" ");
     Serial.print(motorDriver->getRightDirection());
+    Serial.print(" ");
     Serial.print(motorDriver->getRightSpeed());
   }
   Serial.println();

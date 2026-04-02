@@ -36,5 +36,5 @@ void RobotActions::spinRight(int speed) {
 
 void RobotActions::brake() {
     motorDriver->setSpeed(0, 0);
-    motorDriver->setSpeed(FORWARD, FORWARD);
+    motorDriver->setDirection(FORWARD, FORWARD);
 }

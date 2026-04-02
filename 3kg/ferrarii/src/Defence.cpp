@@ -1,6 +1,6 @@
-#include "Strat.hpp"
+#include "Defence.hpp"
 
-Strat::Strat(WorldState* _worldState, RobotActions* _robotActions) {
+Defence::Defence(WorldState* _worldState, RobotActions* _robotActions) {
     worldState = _worldState;
     robotActions = _robotActions;
     notSeenTimer = new Timer(NOT_SEEN_TIMER_DURATION);
@@ -10,9 +10,10 @@ Strat::Strat(WorldState* _worldState, RobotActions* _robotActions) {
     stopTimer = new Timer(STOP_TIMER_DURATION);
     dashTimer = new Timer(DASH_TIMER_DURATION);
     has_dashed = false;
+    lastState = NONE;
 }
 
-void Strat::run() {
+void Defence::run() {
     SelfPositionEnum selfPosition = worldState->getOnLineStatus();
     if (selfPosition != NOT_ON_LINE) {
         onLine();
@@ -25,7 +26,7 @@ void Strat::run() {
     }
 }
 
-void Strat::opponentInSight() {
+void Defence::opponentInSight() {
     OpponentPositionEnum enemyPosition = worldState->getOpponentPosition();
     if (enemyPosition == NOT_SEEN) {
         opponentLastKnownLocation();
@@ -42,32 +43,32 @@ void Strat::opponentInSight() {
         robotActions->turnForward(MAX_SPEED, REALLY_FAST_SPEED);
     }
     else if (enemyPosition == FRONT_FAR) {
-        robotActions->forward(FAST_SPEED);
+        opponentLocationUnknown();
     }
     else if (enemyPosition == CLOSE_LEFT) {
-        robotActions->turnForward(SLOW_SPEED, SAFE_SPEED);
+        robotActions->spinLeft(VERY_SLOW_SPEED);
     }
     else if (enemyPosition == CLOSE_RIGHT) {
-        robotActions->turnForward(SAFE_SPEED, SLOW_SPEED);
+        robotActions->spinRight(VERY_SLOW_SPEED);
     }
     else if (enemyPosition == MID_LEFT) {
-        robotActions->turnForward(SLOW_SPEED, SAFE_SPEED);            
+        robotActions->spinLeft(KINDA_SLOW_SPEED);
     }
     else if (enemyPosition == MID_RIGHT) {
-        robotActions->turnForward(SAFE_SPEED, SLOW_SPEED);            
+        robotActions->spinRight(KINDA_SLOW_SPEED);
     }
     else if (enemyPosition == FAR_LEFT) {
-        robotActions->spinLeft(SAFE_SPEED);
+        robotActions->spinLeft(SLOW_SPEED);
     }
     else if (enemyPosition == FAR_RIGHT) {
-        robotActions->spinRight(SAFE_SPEED);
+        robotActions->spinRight(SLOW_SPEED);
     }
     else if (enemyPosition == BEHIND) {
-        robotActions->spinLeft(MODERATE_SPEED);
+        robotActions->spinLeft(SLOW_SPEED);
     }
 }
 
-void Strat::opponentLastKnownLocation() {
+void Defence::opponentLastKnownLocation() {
     OpponentPositionEnum lastEnemyPosition = worldState->getLastOpponentPosition();
     if (notSeenTimer->isReady()) {
         worldState->clearOpponentPosition();
@@ -75,61 +76,20 @@ void Strat::opponentLastKnownLocation() {
     if (lastEnemyPosition == NOT_SEEN) {
         opponentLocationUnknown();
     }
-    // else if (lastEnemyPosition == FRONT_CLOSE) {
-    //     robotActions->forward(SAFE_SPEED);
-    // }
-    // else if (lastEnemyPosition == FRONT_FAR) {
-    //     robotActions->forward(SAFE_SPEED);
-    // }
-    // else if (lastEnemyPosition == REALLY_CLOSE_LEFT) {
-    //     robotActions->turnForward(SLOW_SPEED, SAFE_SPEED);
-    // }
-    // else if (lastEnemyPosition == REALLY_CLOSE_RIGHT) {
-    //     robotActions->turnForward(SAFE_SPEED, SLOW_SPEED);
-    // }
-    // else if (lastEnemyPosition == CLOSE_LEFT) {
-    //     robotActions->turnForward(VERY_SLOW_SPEED, SAFE_SPEED);
-    // }
-    // else if (lastEnemyPosition == CLOSE_RIGHT) {
-    //     robotActions->turnForward(SAFE_SPEED, VERY_SLOW_SPEED);
-    // }
-    // else if (lastEnemyPosition == MID_LEFT) {
-    //     robotActions->turnForward(VERY_SLOW_SPEED, SAFE_SPEED);            
-    // }
-    // else if (lastEnemyPosition == MID_RIGHT) {
-    //     robotActions->turnForward(SAFE_SPEED, VERY_SLOW_SPEED);            
-    // }
-    // else if (lastEnemyPosition == FAR_LEFT) {
-    //     robotActions->spinLeft(SAFE_SPEED);
-    // }
-    // else if (lastEnemyPosition == FAR_RIGHT) {
-    //     robotActions->spinRight(SAFE_SPEED);
-    // }
-    // else if (lastEnemyPosition == BEHIND) {
-    //     robotActions->spinLeft(SAFE_SPEED);
-    // }
 }
 
-void Strat::opponentLocationUnknown() {
-    // if (!has_dashed) {
-    //     dashTimer->resetTimer();
-    //     has_dashed = true;
-    // }
-    // if (!dashTimer->isReady()) {
-    //     robotActions->forward(MAX_SPEED);
-    // } else {
+void Defence::opponentLocationUnknown() {
     if (!inchTimer->isReady()) {
-        robotActions->forward(MODERATE_SPEED);
+        robotActions->forward(SAFE_SPEED);
     } else if (!stopTimer->isReady()) {
         robotActions->brake();
     } else {
         inchTimer->resetTimer();
         stopTimer->resetTimer();
     }
-    // }
 }
 
-void Strat::onLine() {
+void Defence::onLine() {
     SelfPositionEnum selfPosition = worldState->getOnLineStatus();
     if (selfPosition == ON_LINE_BOTTOM_LEFT) {
         robotActions->forward(FAST_SPEED);

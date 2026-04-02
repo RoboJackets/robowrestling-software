@@ -33,9 +33,17 @@ SelfPositionEnum WorldState::getOnLineStatus() {
 }
 
 OpponentPositionEnum WorldState::getOpponentPosition() {
-    if (IR_F->getValue() == 1 &&  IR_30L->getValue() == 1 && IR_30L->getValue() == 1) {
+    if (IR_F->getValue() == 1 &&  IR_30L->getValue() == 1 && IR_30R->getValue() == 1) {
         lastPosition = FRONT_CLOSE;
         return FRONT_CLOSE;
+    }
+    if (IR_F->getValue() == 1 &&  IR_30L->getValue() == 1) {
+        lastPosition = REALLY_CLOSE_LEFT;
+        return REALLY_CLOSE_LEFT;
+    }
+    if (IR_F->getValue() == 1 &&  IR_30R->getValue() == 1) {
+        lastPosition = REALLY_CLOSE_RIGHT;
+        return REALLY_CLOSE_RIGHT;
     }
     if (IR_F->getValue() == 1) {
         lastPosition = FRONT_FAR;
@@ -73,7 +81,6 @@ OpponentPositionEnum WorldState::getOpponentPosition() {
 }
 
 OpponentPositionEnum WorldState::getLastOpponentPosition() {
-    getOpponentPosition();
     return lastPosition;
 }
 
