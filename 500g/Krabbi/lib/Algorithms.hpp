@@ -7,17 +7,20 @@
 
 class algorithms {
   private:
-    motor_actions* motors;
-    world_state* world;
-    timer* behavior_timer;
+    motor_actions& motors;
+    world_state& world;
+    timer& behavior_timer;
     EnemyPosition lastEnemyPos = NONE;
     EnemyPosition currentEnemyPos = NONE; 
-    Behavior behavior = NO;
+    Behavior behavior = HUNTING;
     bool started = false;
-    timer* last_state_changed;
+    timer& last_state_changed;
+    unsigned long lastLineEscapeDuration = 220;
+    unsigned long currentEscapeDuration = 220;
+    bool wasInLineEscape = false;
   public:
   
-    algorithms(motor_actions* motors, world_state* world, timer* behavior_timer, timer* last_state_changed);
+    algorithms(motor_actions& motors, world_state& world, timer& behavior_timer, timer& last_state_changed);
 
     void selectMode();
     void spin();
@@ -26,6 +29,11 @@ class algorithms {
     void liveDrive(EnemyPosition currentPosition, LinePosition l);
     void respondToLine(LinePosition l);   // do something based on line_pos
     // void drive_avgs(float* avgs);
+
+    // Update these three declarations in your header file
+    void selectMode(bool stealth = false);
+    void chooseAction(EnemyPosition currentPosition, LinePosition linePosition, bool stealth);
+    void liveDrive(EnemyPosition currentPosition, LinePosition linePosition, bool stealth);
 };
 
 #endif

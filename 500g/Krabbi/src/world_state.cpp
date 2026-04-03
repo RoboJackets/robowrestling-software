@@ -35,6 +35,9 @@ float* world_state::get_sensors_avg() {
 }
 
 EnemyPosition world_state::enemy_pos() {
+    if (avgs[2] >= 0.9 && avgs[0] >= 0.9) return FLAG_LEFT;  
+    if (avgs[2] >= 0.9 && avgs[4] >= 0.9) return FLAG_RIGHT;
+
     // simple mapping to your enum values
     // adjust depending on how your IR sensors are arranged
     if (avgs[2] >= 0.9){
@@ -51,8 +54,10 @@ EnemyPosition world_state::enemy_pos() {
 }
 
 LinePosition world_state::line_check() {
-    bool left = lineSensors[0] < 125;
-    bool right = lineSensors[1] < 125;
+    // UPDATED FOR DIGITAL SENSORS
+    // LOW (0) means it sees the white line.
+    bool left = (lineSensors[0] == LOW);
+    bool right = (lineSensors[1] == LOW);
 
     if (left && right) return CENTER_LINE;
     if (left && !right) return LEFT_LINE;

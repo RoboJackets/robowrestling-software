@@ -27,8 +27,9 @@ const int screenSCL = PB8;
 const int screenSDA = PB9; 
 
 const int startPin = PB10;
-const int leftLineSensor = PA7;
-const int rightLineSensor = PB0;
+// --- UPDATED DIGITAL LINE SENSOR PINS ---
+const int leftLineSensor = PA10;
+const int rightLineSensor = PB15;
 
 const int imuSCL = PB8;
 const int imuSDA = PB9;
@@ -49,6 +50,7 @@ long currentMillis = 0;
 int printCounter = 0;
 int zCounter = 0;
 bool playing = true;
+bool startupDelayComplete = false;
 
 unsigned long lastGyroMicros = 0;
 float rollDeg = 0.0f;
@@ -83,13 +85,18 @@ int motors[2] = {0};
 int dips[3] = {0};
 int line_sensors[2] = {0};
 int ir_sensors[5] = {0};
+unsigned long loopCount = 0;
+unsigned long lastCountTime = 0;
+int imuCounter = 0;
+const int IMU_UPDATE_INTERVAL = 25;  // Update IMU every 25 loops (~10kHz / 25 = 400Hz)
 
-timer* last_enemy_changed = new timer(&currentMillis);
-timer* behavior_timer = new timer(&currentMillis);
-world_state* ws = new world_state(line_sensors, ir_sensors);
-motor_actions* ma = new motor_actions(motors);
-algorithms* algo = new algorithms(ma, ws, last_enemy_changed, behavior_timer);
-static unsigned long servo_start_time = 0;
+timer last_enemy_changed(&currentMillis);
+timer behavior_timer(&currentMillis);
+timer startup_delay_timer(&currentMillis);
+world_state ws(line_sensors, ir_sensors);
+motor_actions ma(motors);
+algorithms algo(ma, ws, behavior_timer, last_enemy_changed);
+static unsigned long servo_start_time = 5000;
 
 // Declare MPU6050 object
 Adafruit_MPU6050 mpu;
@@ -101,6 +108,7 @@ void buildImuToRobotTransform(float gravityX, float gravityY, float gravityZ);
 float normalizeAngleDeg(float angleDeg);
 void rotateIntoRobotFrame(float inputX, float inputY, float inputZ, float& outputX, float& outputY, float& outputZ);
 void pullSensors();
+void updateIMU();
 void updateOrientation();
 void writeServo(int pin, double deg);
 void setLED();
@@ -130,7 +138,12 @@ void aliFuncln(const T& value) {
 }
 
 void setup() {
-  unsigned long startupDelayStart = millis();
+  // 1. START THE 5-SECOND TIMER THE EXACT MILLISECOND POWER HITS THE BOARD
+  currentMillis = millis();
+  startup_delay_timer.reset();
+  startup_delay_timer.start();
+  startup_delay_timer.setTarget(startupDelayMs); // 5000ms
+
   pinMode(leftSensor, INPUT);
   pinMode(middleSensor, INPUT);
   pinMode(rightSensor, INPUT);
@@ -143,8 +156,8 @@ void setup() {
   pinMode(leftF, OUTPUT);
   pinMode(leftB, OUTPUT);
 
-  pinMode(leftLineSensor, INPUT);
-  pinMode(rightLineSensor, INPUT);
+  pinMode(leftLineSensor, INPUT_PULLUP);
+  pinMode(rightLineSensor, INPUT_PULLUP);
   pinMode(dip1, INPUT_PULLUP);
   pinMode(dip2, INPUT_PULLUP);
   pinMode(dip3, INPUT_PULLUP);
@@ -152,62 +165,83 @@ void setup() {
   pinMode(led1Pin, OUTPUT);
   pinMode(led2Pin, OUTPUT);
 
-  Serial.begin(9600);
-
   // Initialize MPU6050
   Wire.setSCL(imuSCL);
   Wire.setSDA(imuSDA);
-  Wire.begin(imuSDA, imuSCL); // Initialize I2C for MPU6050
+  Wire.begin(imuSDA, imuSCL); 
 
-  // Try to initialize MPU6050!
   if (!mpu.begin()) {
     while (1) {
       delay(10);
     }
   }
 
+  // 2. FIX THE SERVO GLITCH: Pre-load the UP position (1000us) BEFORE attaching
+  robotServo.writeMicroseconds(1000); 
   robotServo.attach(servoPin);
+  writeServo(servoPin, 0);  // Reinforce the UP position
 
   mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
   mpu.setGyroRange(MPU6050_RANGE_500_DEG);
   mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
+  
+  // 3. This IMU calibration takes ~1.5 seconds, but because our timer 
+  // is already running, it perfectly absorbs this time into the 5s wait!
   calibrateImuMounting();
-  filter.begin(375.0f);
+  filter.begin(400.0f);  
 
-  unsigned long startupElapsed = millis() - startupDelayStart;
-  if (startupElapsed < startupDelayMs) {
-    delay(startupDelayMs - startupElapsed);
-  }
-  servo_start_time = millis(); // Record the start time for the servo action
+  servo_start_time = millis(); 
   lastGyroMicros = micros();
   aliFuncln("Started");
 }
 
 void loop() {
-  while(digitalRead(startPin) == 0){
-  }
+  // while(digitalRead(startPin) == 0){
+  // }
   pullSensors(); 
-  updateOrientation();
+  
+  // Track startup delay in loop (5 seconds)
+  if (!startup_delay_timer.isFinished()) {
+    motors[0] = 0;
+    motors[1] = 0;
+    writeServo(servoPin, 0);  // Keep servo UP during startup delay
+    return;  // Skip all game logic during startup
+  }
+  
+  // Startup delay is complete, mark it and proceed with normal operation
+  if (!startupDelayComplete) {
+    startupDelayComplete = true;
+  }
+  
+  // Update IMU only every 25 iterations (~400Hz when main loop is ~10kHz)
+  imuCounter++;
+  if (imuCounter >= IMU_UPDATE_INTERVAL) {
+    updateIMU();
+    updateOrientation();
+    imuCounter = 0;
+  }
   setLED();
-  avgs = ws->get_sensors_avg();
+  avgs = ws.get_sensors_avg();
 
-  if (dips[0] == LOW) {
-    algo->selectMode();  
+  // Assuming DIP Switch 2 (dips[1]) is used for Stealth Mode
+  if (dips[1] == LOW) {
+      algo.selectMode(true);  
+  } else {
+      algo.selectMode(false); 
   }
-  else {
-    algo->spin();
-  }
+
   if (!playing) {
     motors[0] = 0;
     motors[1] = 0;
     writeServo(servoPin, 0);
   }
   else {
-    writeServo(servoPin, 90);
+    writeServo(servoPin, 250);
   }
   writeMotors();
   debug();
 }
+
 
 void pullSensors() {
   ir_sensors[0] = digitalRead(leftSideSensor);
@@ -216,11 +250,22 @@ void pullSensors() {
   ir_sensors[3] = digitalRead(rightSensor);
   ir_sensors[4] = digitalRead(rightSideSensor);
   currentMillis = millis();
-  line_sensors[0] = analogRead(leftLineSensor);
-  line_sensors[1] = analogRead(rightLineSensor);
+  
+  // --- UPDATED DIGITAL READ LOGIC WITH DEBOUNCING ---
+  // 3-read majority voting to filter EMI glitches
+  int leftReads = digitalRead(leftLineSensor) + digitalRead(leftLineSensor) + digitalRead(leftLineSensor);
+  int rightReads = digitalRead(rightLineSensor) + digitalRead(rightLineSensor) + digitalRead(rightLineSensor);
+  
+  // If 2+ reads are LOW (0), sensor sees line; otherwise off line
+  line_sensors[0] = (leftReads <= 1) ? LOW : HIGH;
+  line_sensors[1] = (rightReads <= 1) ? LOW : HIGH;
+  
   dips[0] = digitalRead(dip1);
   dips[1] = digitalRead(dip2);
   dips[2] = digitalRead(dip3);
+}
+
+void updateIMU() {
   mpu.getEvent(&accel, &gyro, &temp);
 
   rotateIntoRobotFrame(
@@ -251,7 +296,6 @@ void updateOrientation() {
     return;
   }
 
-  filter.begin(1.0f / dt);
   filter.updateIMU(
     robotGyroX * RAD_TO_DEG,
     robotGyroY * RAD_TO_DEG,
@@ -411,8 +455,9 @@ void rotateIntoRobotFrame(float inputX, float inputY, float inputZ, float& outpu
 }
 
 void setLED(){
-  digitalWrite(led1Pin, line_sensors[0] < 200); // change these later when needed
-  digitalWrite(led2Pin, line_sensors[1] < 200);
+  // --- UPDATED TO DIGITAL THRESHOLDS ---
+  digitalWrite(led1Pin, line_sensors[0] == LOW); 
+  digitalWrite(led2Pin, line_sensors[1] == LOW);
 }
 
 void debug() {
@@ -422,6 +467,7 @@ void debug() {
     debugDIP();
     debugFusedValues();
     aliFuncln("");
+    debugLine();
   }
 }
 
@@ -500,6 +546,7 @@ void debugLine(){
     aliFunc(line_sensors[i]);
     aliFunc(" ");
   }
+  aliFuncln(""); // --- Added newline to fix terminal printing overlap ---
 }
 
 void debugIR(){
