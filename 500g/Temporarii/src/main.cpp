@@ -2,8 +2,8 @@
  * Temporarii Main File - Da Four-Wheel Drive
  */
 #include <Arduino.h>
-#include <Wire.h>
-#include <SparkFun_BMI270_Arduino_Library.h>
+// #include <Wire.h>
+// #include <SparkFun_BMI270_Arduino_Library.h>
 
 /**
  * Imports
@@ -50,9 +50,9 @@ const int imu_pin2 = 34;
 const int imu_scl = 19;
 const int imu_sda = 18;
 
-BMI270 imu;
+// BMI270 imu;
 float yaw = 0.0;
-unsigned long lastIMUTime = 0;
+// unsigned long lastIMUTime = 0;
 
 // Strategy Pin
 const int strat_first = 39;
@@ -237,18 +237,18 @@ void loop() {
         writeMotors();
       } else {
         started = true;
-        delay(4000);
+        delay(5000);
       }
     } else {
       stopMotors();
     }
 
    // Debug
-    debug_counter++;
-    if (debug_counter >= 200) {
-      debug();
-      debug_counter = 0;
-    }
+    // debug_counter++;
+    // if (debug_counter >= 200) {
+    //   debug();
+    //   debug_counter = 0;
+    // }
 
     // No start mod -- Turn this on if you don't have a start module
     // if (started == true || digitalRead(start_mod) == 1) {
@@ -389,32 +389,32 @@ void stopMotors() {
   analogWrite(bl_move_backward, 0);
 }
 
-void updateIMU() {
-    static unsigned long lastRead = 0;
-    if (millis() - lastRead < 20) return;
-    lastRead = millis();
+// void updateIMU() {
+//     static unsigned long lastRead = 0;
+//     if (millis() - lastRead < 20) return;
+//     lastRead = millis();
 
-    int8_t status = imu.getSensorData();
+//     int8_t status = imu.getSensorData();
 
-    if (status != BMI2_OK) {
-        Serial.print("IMU read error: ");
-        Serial.println(status);
-        return;
-    }
+//     if (status != BMI2_OK) {
+//         Serial.print("IMU read error: ");
+//         Serial.println(status);
+//         return;
+//     }
 
-    float gyroZ = imu.data.gyroZ;
+//     float gyroZ = imu.data.gyroZ;
 
-    unsigned long now = millis();
-    float dt = (now - lastIMUTime) / 1000.0;
-    lastIMUTime = now;
+//     unsigned long now = millis();
+//     float dt = (now - lastIMUTime) / 1000.0;
+//     lastIMUTime = now;
 
-    yaw += gyroZ * dt;
+//     yaw += gyroZ * dt;
 
-    Serial.print("gyroZ: ");
-    Serial.print(gyroZ);
-    Serial.print(" yaw: ");
-    Serial.println(yaw);
-}
+//     Serial.print("gyroZ: ");
+//     Serial.print(gyroZ);
+//     Serial.print(" yaw: ");
+//     Serial.println(yaw);
+// }
 
 
 

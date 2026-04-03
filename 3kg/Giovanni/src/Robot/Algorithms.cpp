@@ -30,13 +30,13 @@ void Algorithms :: selectAlgo(EnemyPos enemyPos, OnLine onLine) {
 void Algorithms :: slam(EnemyPos enemyPos, OnLine onLine) {
     // Turn towards enemy and move forward
     if (enemyPos == LEFT) {
-        action->turnLeft(200, 0, 2);
+        action->turnLeft(100, 0, 2);
     } else if (enemyPos == RIGHT) {
-        action->turnRight(200, 0, 2);
+        action->turnRight(100, 0, 2);
     } else if (enemyPos == FRONT) {
-        action->forward(200, 0, 2);
+        action->forward(100, 0, 2);
     } else {
-        action->turnLeft(200, 0, 1);
+        action->turnLeft(100, 0, 1);
     }
 }
 

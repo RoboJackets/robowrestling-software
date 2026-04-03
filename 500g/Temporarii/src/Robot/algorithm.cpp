@@ -30,7 +30,7 @@ void Algorithm::RunItDown(EnemyPositions pos, AlgoLogs algo) {
     }
 
     // Residual finish out attack
-    timer->startTimer(50);
+    timer->startTimer(100);
     action->Forward(250);
 }
 
@@ -58,16 +58,16 @@ void Algorithm::TurnToEnemy(EnemyPositions pos) {
 
 void Algorithm::search() {
     if (timer->getRunningProcess() == true) {
-        if (timer->getDuration() > 853) {
-            action->Left(70);
+        if (timer->getDuration() > 600) {
+            action->Left(150);
         } else if (timer->getDuration() > 300) {
-            action->Right(70);
+            action->Right(150);
         } else {
-            action->Left(70);
+            action->Left(150);
         }
         return;
     }
-    timer->startTimer(1153);
+    timer->startTimer(900);
 }
 
 void Algorithm::backTrack(OnLine line_state, AlgoLogs algo) {
@@ -81,7 +81,7 @@ void Algorithm::backTrack(OnLine line_state, AlgoLogs algo) {
             //     action->Left(100);
             // }
         } else if (algo == BTFL || algo == BTFR) {
-            if (timer->getDuration() > 200) {
+            if (timer->getDuration() > 250) {
                 action->Backwards(200);
             } else {
                 if (algo == BTFL) {
@@ -105,17 +105,19 @@ void Algorithm::backTrack(OnLine line_state, AlgoLogs algo) {
 
 void Algorithm::fryThem() {
     if (!timer->getRunningProcess()) {
-        timer->startTimer(900);
+        timer->startTimer(1100);
         action->Right(100);
         return;
     }
 
     unsigned long t = timer->getElapsed();
 
-    if (t < 400) {
+    if (t < 300) {
         action->Right(100);
-    } else if (t < 800) {
+    } else if (t < 600) {
         action->Left(100);
+    } else if (t < 900) {
+        action->Right(100);
     } else {
         action->Forward(100);
     }

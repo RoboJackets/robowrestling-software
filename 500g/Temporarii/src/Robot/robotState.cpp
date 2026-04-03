@@ -35,78 +35,152 @@ void RobotState::runAlgorithm(int strat_num) {
     //     algo->Strat2Sweep(midDetected);
     //     return;
     // }
+    if (strat == Strat1) {
+        // Check expiration
+        if (algo->getTimer() == false) {
+            prevAlgo = NoneAlgo;
+        }
 
-    // Check expiration
-    if (algo->getTimer() == false) {
-        prevAlgo = NoneAlgo;
-    }
+        // algo->fryThem();
+        // prevAlgo = StirFry;
+        // return;
 
-    // algo->fryThem();
-    // prevAlgo = StirFry;
-    // return;
+        // OVERRIDE: ALWAYS ATTACK IF ENEMY IS SEEN MID
+        if (world->getEnemyPosition() == EnemyFront) {
+            algo->RunItDown(world->getEnemyPosition(), prevAlgo);
+            prevAlgo = RunItDownAlgo;
+            return;
+        }
 
-    // OVERRIDE: ALWAYS ATTACK IF ENEMY IS SEEN MID
-    if (world->getEnemyPosition() == EnemyFront) {
-        algo->RunItDown(world->getEnemyPosition(), prevAlgo);
-        prevAlgo = RunItDownAlgo;
-        return;
-    }
+        // Enemy is in sights
+        if (world->getEnemyPosition() == EnemyFL || 
+            world->getEnemyPosition() == EnemyFR || 
+            world->getEnemyPosition() == EnemyLeft ||
+            world->getEnemyPosition() == EnemyRight) {
 
-    // Enemy is in sights
-    if (world->getEnemyPosition() == EnemyFL || 
-        world->getEnemyPosition() == EnemyFR || 
-        world->getEnemyPosition() == EnemyLeft ||
-        world->getEnemyPosition() == EnemyRight) {
+            algo->TurnToEnemy(world->getEnemyPosition());
+            enemyPrev = world->getEnemyPosition();
+            prevAlgo = Turn;
+            return;
+        }
 
-        algo->TurnToEnemy(world->getEnemyPosition());
-        enemyPrev = world->getEnemyPosition();
-        prevAlgo = Turn;
-        return;
-    }
+        // Run remaining queued of Turn
+        if (prevAlgo == Turn) {
+            algo->TurnToEnemy(enemyPrev);
+            return;
+        }
 
-    // Run remaining queued of Turn
-    if (prevAlgo == Turn) {
-        algo->TurnToEnemy(enemyPrev);
-        return;
-    }
+        // Line Check First
+        if (line_state == LineFL) {
+            algo->backTrack(line_state, prevAlgo);
+            prevAlgo = BTFL;
+            return;
+        } else if (line_state == LineFR) {
+            algo->backTrack(line_state, prevAlgo);
+            prevAlgo = BTFR;
+            return;
+        } else if (line_state == LineBL || line_state == LineBR) {
+            algo->backTrack(line_state, prevAlgo);
+            prevAlgo = BTBackward;
+            return;
+        }
 
-    // Line Check First
-    if (line_state == LineFL) {
-        algo->backTrack(line_state, prevAlgo);
-        prevAlgo = BTFL;
-        return;
-    } else if (line_state == LineFR) {
-        algo->backTrack(line_state, prevAlgo);
-        prevAlgo = BTFR;
-        return;
-    } else if (line_state == LineBL || line_state == LineBR) {
-        algo->backTrack(line_state, prevAlgo);
-        prevAlgo = BTBackward;
-        return;
-    }
-
-    // Run queued algo
-    if (prevAlgo == BTFR) {
-        algo->backTrack(line_state, prevAlgo);
-        prevAlgo = BTFR;
-        return;
-    } else if (prevAlgo == BTFL) {
-        algo->backTrack(line_state, prevAlgo);
-        prevAlgo = BTFL;
-        return;
-    } else if (prevAlgo == BTBackward) {
-        algo->backTrack(line_state, prevAlgo);
-        prevAlgo = BTBackward;
-        return;
-    } else if (prevAlgo == StirFry) {
-        algo->fryThem();
-        prevAlgo = StirFry;
-        return;
+        // Run queued algo
+        if (prevAlgo == BTFR) {
+            algo->backTrack(line_state, prevAlgo);
+            prevAlgo = BTFR;
+            return;
+        } else if (prevAlgo == BTFL) {
+            algo->backTrack(line_state, prevAlgo);
+            prevAlgo = BTFL;
+            return;
+        } else if (prevAlgo == BTBackward) {
+            algo->backTrack(line_state, prevAlgo);
+            prevAlgo = BTBackward;
+            return;
+        } else if (prevAlgo == StirFry) {
+            algo->fryThem();
+            prevAlgo = StirFry;
+            return;
+        } else {
+            // algo->search();
+            // prevAlgo = Search;
+            algo->fryThem();
+            prevAlgo = StirFry;
+            return;
+        }
     } else {
-        // algo->search();
-        // prevAlgo = Search;
-        algo->fryThem();
-        prevAlgo = StirFry;
-        return;
+        if (algo->getTimer() == false) {
+            prevAlgo = NoneAlgo;
+        }
+
+        // algo->fryThem();
+        // prevAlgo = StirFry;
+        // return;
+
+        // Line Check First
+        if (line_state == LineFL) {
+            algo->backTrack(line_state, prevAlgo);
+            prevAlgo = BTFL;
+            return;
+        } else if (line_state == LineFR) {
+            algo->backTrack(line_state, prevAlgo);
+            prevAlgo = BTFR;
+            return;
+        } else if (line_state == LineBL || line_state == LineBR) {
+            algo->backTrack(line_state, prevAlgo);
+            prevAlgo = BTBackward;
+            return;
+        }
+
+        // OVERRIDE: ALWAYS ATTACK IF ENEMY IS SEEN MID
+        if (world->getEnemyPosition() == EnemyFront) {
+            algo->RunItDown(world->getEnemyPosition(), prevAlgo);
+            prevAlgo = RunItDownAlgo;
+            return;
+        }
+
+        // Enemy is in sights
+        if (world->getEnemyPosition() == EnemyFL || 
+            world->getEnemyPosition() == EnemyFR || 
+            world->getEnemyPosition() == EnemyLeft ||
+            world->getEnemyPosition() == EnemyRight) {
+
+            algo->TurnToEnemy(world->getEnemyPosition());
+            enemyPrev = world->getEnemyPosition();
+            prevAlgo = Turn;
+            return;
+        }
+
+        // Run remaining queued of Turn
+        if (prevAlgo == Turn) {
+            algo->TurnToEnemy(enemyPrev);
+            return;
+        }
+
+        // Run queued algo
+        if (prevAlgo == BTFR) {
+            algo->backTrack(line_state, prevAlgo);
+            prevAlgo = BTFR;
+            return;
+        } else if (prevAlgo == BTFL) {
+            algo->backTrack(line_state, prevAlgo);
+            prevAlgo = BTFL;
+            return;
+        } else if (prevAlgo == BTBackward) {
+            algo->backTrack(line_state, prevAlgo);
+            prevAlgo = BTBackward;
+            return;
+        } else if (prevAlgo == StirFry) {
+            algo->fryThem();
+            prevAlgo = StirFry;
+            return;
+        } else {
+            // algo->search();
+            // prevAlgo = Search;
+            algo->fryThem();
+            prevAlgo = StirFry;
+            return;
+        }
     }
 }

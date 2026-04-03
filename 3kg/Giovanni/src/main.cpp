@@ -1,18 +1,17 @@
 #include <Arduino.h>
 
-// Imports
-#include "Robot/Algorithms.hpp"
-#include "Robot/RobotActions.hpp"
-#include "Enumerations/EnemyPos.hpp"
-#include "Enumerations/OnLine.hpp"
+// ===== PWM CONFIG (FROM WORKING CODE) =====
+const int pwmResolutionBits = 8;
+const int pwmMax = 255;
+const uint32_t pwmHz = 20000; // 20 kHz
 
-// Output Pins
-const int leftPWM = 28;
-const int leftDir = 32;
-const int rightPWM = 29;
-const int rightDir = 30;
+// ===== Output Pins (UPDATED TO MATCH WORKING SETUP) =====
+const int leftPWM = 37;
+const int leftDir = 38;
+const int rightPWM = 36;
+const int rightDir = 40;
 
-// Input Pins
+// ===== Input Pins (UNCHANGED) =====
 const int left90IR = 11;
 const int right90IR = 20;
 const int left60IR = 12;
@@ -23,42 +22,52 @@ const int left30IR = 14;
 const int right30IR = 17;
 const int centerIR = 16;
 
-const int frLine = 37;
-const int brLine = 38;
-const int flLine = 36;
-const int blLine = 35;
+const int frLine = 33;
+const int flLine = 32;
+const int brLine = 31;
+const int blLine = 30;
 
 const int startMod = 43;
+bool started = false;
 
-// Array Info Storage
-/**
-  * IRSensor: [left90, left60, left45, left30, center, right30, right45, right60, right90]
-  * LineSensor: [Back Left, Front Left, Front Right, Back Right]
-  * MotorDriver: [Left, Right]
-*/
-int irArray[9]; // [0, 1]
-int lineArray[4]; // [0, 1]
+// ===== Arrays =====
+int irArray[9];
+int lineArray[4];
 int driver[2]; // [-255, 255]
 
-// Classes
+// ===== Dummy Classes (keep yours) =====
+#include "Robot/Algorithms.hpp"
+#include "Robot/RobotActions.hpp"
+#include "Enumerations/EnemyPos.hpp"
+#include "Enumerations/OnLine.hpp"
+
 Algorithms *algo;
 RobotActions *action;
 
-// Declaration
+// ===== Function Declarations =====
 EnemyPos getEnemyPosition();
 OnLine isOnLine();
 
-/**
- * Initializing
- */
+// ===================== SETUP =====================
 void setup() {
-  // Pin Outs
+  // Motor Pins
   pinMode(leftPWM, OUTPUT);
   pinMode(leftDir, OUTPUT);
   pinMode(rightPWM, OUTPUT);
   pinMode(rightDir, OUTPUT);
 
-  // Pin Inputs
+  // PWM CONFIG (CRITICAL)
+  analogWriteResolution(pwmResolutionBits);
+  analogWriteFrequency(leftPWM, pwmHz);
+  analogWriteFrequency(rightPWM, pwmHz);
+
+  // Ensure motors OFF
+  analogWrite(leftPWM, 0);
+  analogWrite(rightPWM, 0);
+  digitalWrite(leftDir, LOW);
+  digitalWrite(rightDir, LOW);
+
+  // Sensor Pins
   pinMode(left90IR, INPUT);
   pinMode(right90IR, INPUT);
   pinMode(left60IR, INPUT);
@@ -74,12 +83,15 @@ void setup() {
   pinMode(brLine, INPUT);
   pinMode(blLine, INPUT);
 
+  pinMode(startMod, INPUT);
+
+  // Classes
   action = new RobotActions(driver, driver + 1);
   algo = new Algorithms(action);
 }
 
+// ===================== SENSOR POLLING =====================
 void pollSensors() {
-  // IR Sensor Update
   irArray[0] = digitalRead(left90IR);
   irArray[1] = digitalRead(left60IR);
   irArray[2] = digitalRead(left45IR);
@@ -90,93 +102,85 @@ void pollSensors() {
   irArray[7] = digitalRead(right60IR);
   irArray[8] = digitalRead(right90IR);
 
-  // Serial.println("============================");
-  // Serial.println(irArray[0]);
-  // Serial.println(irArray[1]);
-  // Serial.println(irArray[2]);
-  // Serial.println(irArray[3]);
-  // Serial.println(irArray[4]);
-  // Serial.println(irArray[5]);
-  // Serial.println(irArray[6]);
-  // Serial.println(irArray[7]);
-  // Serial.println(irArray[8]);
-  // Serial.println("============================");
-
-  // Line Sensor Update
-  lineArray[0] = digitalRead(flLine);
-  lineArray[1] = digitalRead(frLine);
-  lineArray[2] = digitalRead(brLine);
-  lineArray[3] = digitalRead(blLine);
-  Serial.println("============================");
-  Serial.println(lineArray[0]);
-  Serial.println(lineArray[1]);
-  Serial.println(lineArray[2]);
-  Serial.println(lineArray[3]);
-  Serial.println("============================");
+  lineArray[0] = analogRead(flLine);
+  lineArray[1] = analogRead(frLine);
+  lineArray[2] = analogRead(brLine);
+  lineArray[3] = analogRead(blLine);
 }
 
+// ===================== LOGIC =====================
 void calcState() {
-  // Update States + Run Algorithm
-  // get enemy position, get action, update driver array
   EnemyPos enemyPos = getEnemyPosition();
   OnLine onLine = isOnLine();
-  // enemyPos: LEFT, RIGHT, FRONT, NONE
-  // onLine: FRONTLINE, BACKLINE, LEFTLINE, RIGHTLINE, NONELINE
-  // algo->someAlgo(enemyPos, onLine);
   algo->selectAlgo(enemyPos, onLine);
 }
 
+// ===================== MOTOR OUTPUT =====================
 void writeMotors() {
-  // Future: Implement PID to avoid motor burnout
-  analogWrite(leftPWM, abs(driver[0]));
-  digitalWrite(leftDir, driver[0] > 0 ? 0 : 1);
-  analogWrite(rightPWM, abs(driver[1]));
-  digitalWrite(rightDir, driver[1] > 0 ? 0 : 1);
+  int left = constrain(driver[0], -pwmMax, pwmMax);
+  int right = constrain(driver[1], -pwmMax, pwmMax);
+
+  // LEFT MOTOR
+  digitalWrite(leftDir, left >= 0 ? HIGH : LOW);
+  analogWrite(leftPWM, abs(100));
+
+  // RIGHT MOTOR
+  digitalWrite(rightDir, right >= 0 ? HIGH : LOW);
+  analogWrite(rightPWM, abs(100));
 }
 
-/**
- * World State Functions
- */
+void stopMotors() {
+    int left = constrain(driver[0], -pwmMax, pwmMax);
+    int right = constrain(driver[1], -pwmMax, pwmMax);
+
+    // LEFT MOTOR
+    digitalWrite(leftDir, left >= 0 ? HIGH : LOW);
+    analogWrite(leftPWM, 0);
+
+    // RIGHT MOTOR
+    digitalWrite(rightDir, right >= 0 ? HIGH : LOW);
+    analogWrite(rightPWM, 0);
+}
+
+// ===================== STATE HELPERS =====================
 EnemyPos getEnemyPosition() {
-  // Based on irArray
-  if (irArray[4] == 1) {
-    return FRONT;
-  } else if (irArray[3] == 1 || irArray[2] == 1 || irArray[1] == 1 || irArray[0] == 1) {
-    return LEFT;
-  } else {
-    return RIGHT;
-  }
+  if (irArray[4] == 1) return FRONT;
+  else if (irArray[0] || irArray[1] || irArray[2] || irArray[3]) return LEFT;
+  else if (irArray[5] || irArray[6] || irArray[7] || irArray[8]) return RIGHT;
   return NONE;
 }
 
 OnLine isOnLine() {
-  // What if we returned T/F array of size 4 instead? We can mark which sensors are on the line
-  // and then pass that through to lineMovement() algorithm. Then we can micro detect
-  // FL, FR, BR, BL in order to have better line movement around the doyho
-
-  // Assuming < 800 is OnLine and >= 800 is not on line (on the doyho)
-  if ((lineArray[0] < 800 || lineArray[1] < 800) && (lineArray[2] >= 800 && lineArray[3] >= 800)) {
-    // One of the front ones are on the line and back ones don't detect a line
+  if ((lineArray[0] < 800 || lineArray[1] < 800) &&
+      (lineArray[2] >= 800 && lineArray[3] >= 800)) {
     return FRONTLINE;
-  } else if ((lineArray[2] < 800 || lineArray[3] < 800) && (lineArray[1] >= 800 && lineArray[0] >= 800)) {
-    // One of the back ones are on the line and the front ones don't detect a line
+  } 
+  else if ((lineArray[2] < 800 || lineArray[3] < 800) &&
+           (lineArray[0] >= 800 && lineArray[1] >= 800)) {
     return BACKLINE;
-  } else if (lineArray[0] < 800 && lineArray[3] < 800) {
+  } 
+  else if (lineArray[0] < 800 && lineArray[3] < 800) {
     return LEFTLINE;
-  } else if (lineArray[1] < 800 && lineArray[2] < 800) {
+  } 
+  else if (lineArray[1] < 800 && lineArray[2] < 800) {
     return RIGHTLINE;
   }
 
-  // Otherwise, all lines are in bounds
   return NONELINE;
 }
 
-/**
- * Repeated method calling: Read, Update States, Write Output
- */
+// ===================== LOOP =====================
 void loop() {
-  pollSensors();
-  delay(500);
-  // calcState();
-  // writeMotors();
+    if (digitalRead(startMod) == 1) {
+        if (started == true) {
+            pollSensors();
+            calcState();
+            writeMotors();
+        } else {
+            started = true;
+            delay(5000);
+        }
+    } else {
+        stopMotors();
+    }
 }
