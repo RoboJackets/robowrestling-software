@@ -22,7 +22,6 @@ class algorithms {
   
     algorithms(motor_actions& motors, world_state& world, timer& behavior_timer, timer& last_state_changed);
 
-    void selectMode();
     void spin();
     void followBehavior();
     void chooseAction(EnemyPosition currentPosition, LinePosition l);  // do something based on enemy_pos
@@ -31,7 +30,7 @@ class algorithms {
     // void drive_avgs(float* avgs);
 
     // Update these three declarations in your header file
-    void selectMode(bool stealth = false);
+    void selectMode(bool stealth = false, bool charge = false); 
     void chooseAction(EnemyPosition currentPosition, LinePosition linePosition, bool stealth);
     void liveDrive(EnemyPosition currentPosition, LinePosition linePosition, bool stealth);
 };

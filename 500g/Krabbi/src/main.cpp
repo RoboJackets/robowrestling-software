@@ -72,6 +72,8 @@ float robotGyroZ = 0.0f;
 float gyroBiasX = 0.0f;
 float gyroBiasY = 0.0f;
 float gyroBiasZ = 0.0f;
+float filteredForwardAccel = 0.0f;
+float accelCorrection = 0.0f;
 float calibratedGravityMagnitude = SENSORS_GRAVITY_STANDARD;
 float imuMountYawDeg = 0.0f;
 float imuToRobot[3][3] = {
@@ -122,6 +124,9 @@ void debugEnemy(EnemyPosition ep);
 void debugDIP();
 void debugIMU();
 void debugFusedValues();
+int clampMotor(int value);
+float smoothIMU(float input, float prev, float alpha);
+void antiTipCorrection(int &leftCmd, int &rightCmd);
 
 template <typename T>
 
@@ -224,10 +229,12 @@ void loop() {
   avgs = ws.get_sensors_avg();
 
   // Assuming DIP Switch 2 (dips[1]) is used for Stealth Mode
-  if (dips[1] == LOW) {
-      algo.selectMode(true);  
+  if (dips[0] == LOW) {
+      algo.selectMode(false, true);
+  } else if (dips[1] == LOW) {
+      algo.selectMode(true, false);  
   } else {
-      algo.selectMode(false); 
+      algo.selectMode(false, false); 
   }
 
   if (!playing) {
@@ -462,18 +469,20 @@ void setLED(){
 
 void debug() {
   printCounter++;
-  if (printCounter % 25 == 0) {
+  if (printCounter % 250 == 0) {
     debugAverages();
     debugDIP();
     debugFusedValues();
     aliFuncln("");
     debugLine();
+    aliFuncln("Accel correction: " + String(accelCorrection));
   }
 }
 
 void writeMotors() {
   motors[0] = motors[0]/1;
   motors[1] = motors[1]/1;
+  antiTipCorrection(motors[0], motors[1]);
   if (motors[0] > 0) {
     analogWrite(leftF, abs(motors[0]));
     analogWrite(leftB, 0);
@@ -517,6 +526,40 @@ void writeServo(int pin, double deg) {
   // we must output HIGH for the remainder of the 20ms (20000us) period.
 
   robotServo.writeMicroseconds(pulse_width_us);
+}
+
+void antiTipCorrection(int &leftCmd, int &rightCmd) {
+  const float accelLimit = 1.75f;          // m/s^2, start conservative
+  const float accelGain = 35.0f;          // motor units per (m/s^2 over limit)
+  const float filterAlpha = 0.25f;        // 0-1, higher = less smoothing
+  const int maxCorrection = 100;          // don't over-correct too hard
+
+  filteredForwardAccel = smoothIMU(linearAccelX, filteredForwardAccel, filterAlpha);
+
+  int avgCmd = (leftCmd + rightCmd) / 2;
+  if (avgCmd <= 0) {
+    return;
+  }
+
+  accelCorrection = 0.0f;
+
+  // Acceleration to high correction
+  if (filteredForwardAccel > accelLimit) {
+    accelCorrection += accelGain * (filteredForwardAccel - accelLimit);
+  }
+
+  // Clamp correction
+  if (accelCorrection > maxCorrection) {
+    accelCorrection = maxCorrection;
+  }
+
+  int correctionInt = (int)accelCorrection;
+
+  leftCmd -= correctionInt;
+  rightCmd -= correctionInt;
+
+  leftCmd = clampMotor(leftCmd);
+  rightCmd = clampMotor(rightCmd);
 }
 
 void debugEnemy(EnemyPosition ep){
@@ -580,7 +623,7 @@ void debugIMU() {
   aliFunc(robotAccelY);
   aliFunc(" Z: ");
   aliFuncln(robotAccelZ);
-  aliFunc("Robot Gyro X: ");
+  aliFunc("Robot Gyro Pos X: ");
   aliFunc(robotGyroX);
   aliFunc(" Y: ");
   aliFunc(robotGyroY);
@@ -590,5 +633,16 @@ void debugIMU() {
 
 void debugFusedValues() {
     aliFuncln("Roll/Pitch/Yaw: " + String(rollDeg) + " " + String(pitchDeg) + " " + String(correctedYawDeg));
+    aliFuncln("Gyro X/Y/Z: " + String(robotGyroX) + " " + String(robotGyroY) + " " + String(robotGyroZ));
     aliFuncln("Linear Accel XYZ: " + String(linearAccelX) + " " + String(linearAccelY) + " " + String(linearAccelZ));
+}
+
+int clampMotor(int value) {
+  if (value > 255) return 255;
+  if (value < -255) return -255;
+  return value;
+}
+
+float smoothIMU(float input, float prev, float alpha) {
+  return alpha * input + (1.0f - alpha) * prev;
 }

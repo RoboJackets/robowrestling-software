@@ -6,7 +6,21 @@ algorithms::algorithms(motor_actions& motors, world_state& world, timer& behavio
   : motors(motors), world(world), behavior_timer(behavior_timer), last_state_changed(last_state_changed) {
 }
 
-void algorithms::selectMode(bool stealth) {
+void algorithms::selectMode(bool stealth, bool charge) {
+  if (charge) {
+    if (started == false) {
+      behavior_timer.reset();
+      behavior_timer.start();
+      behavior_timer.setTarget(500); 
+      started = true;
+    }
+    if (!behavior_timer.isFinished()) {
+      motors.driveForward(150);
+    } else {
+      motors.driveForward(255);
+    }
+    return;
+  }
   EnemyPosition e = world.enemy_pos();
   if(currentEnemyPos != e && currentEnemyPos != NONE) {
     lastEnemyPos = currentEnemyPos;
@@ -42,11 +56,11 @@ void algorithms::followBehavior() {
       }
       break;
     case CHARGE:
-      if (behavior_timer.elapsedMilliseconds() < 40) {
-        motors.driveForward(255); 
+      if (behavior_timer.elapsedMilliseconds() < 200) {
+        motors.driveForward(150); 
       }
       else {
-        motors.driveForward(100); 
+        motors.driveForward(255); 
       }
       break;
     case STEALTH_CHARGE:
