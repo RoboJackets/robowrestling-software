@@ -45,12 +45,14 @@ const int dip3 = PB14;
 
 const int pushButton = PB4;
 const unsigned long startupDelayMs = 5000;
+const int START_MODULE_ACTIVE_STATE = HIGH;
 
 long currentMillis = 0;
 int printCounter = 0;
 int zCounter = 0;
 bool playing = true;
 bool startupDelayComplete = false;
+bool startSignalReceived = false;
 
 unsigned long lastGyroMicros = 0;
 float rollDeg = 0.0f;
@@ -143,11 +145,9 @@ void aliFuncln(const T& value) {
 }
 
 void setup() {
-  // 1. START THE 5-SECOND TIMER THE EXACT MILLISECOND POWER HITS THE BOARD
   currentMillis = millis();
   startup_delay_timer.reset();
-  startup_delay_timer.start();
-  startup_delay_timer.setTarget(startupDelayMs); // 5000ms
+  startup_delay_timer.setTarget(startupDelayMs);
 
   pinMode(leftSensor, INPUT);
   pinMode(middleSensor, INPUT);
@@ -201,16 +201,43 @@ void setup() {
 }
 
 void loop() {
-  // while(digitalRead(startPin) == 0){
-  // }
   pullSensors(); 
-  
-  // Track startup delay in loop (5 seconds)
+
+  bool startModuleActive = (digitalRead(startPin) == START_MODULE_ACTIVE_STATE);
+
+  if (!startModuleActive) {
+    startSignalReceived = false;
+    startupDelayComplete = false;
+    startup_delay_timer.reset();
+    motors[0] = 0;
+    motors[1] = 0;
+    writeServo(servoPin, 0);
+    writeMotors();
+    return;
+  }
+
+  if (!startSignalReceived) {
+    if (startModuleActive) {
+      startSignalReceived = true;
+      startup_delay_timer.reset();
+      startup_delay_timer.start();
+      startup_delay_timer.setTarget(startupDelayMs);
+    }
+
+    motors[0] = 0;
+    motors[1] = 0;
+    writeServo(servoPin, 0);
+    writeMotors();
+    return;
+  }
+
+  // Once the start module fires, wait the configured startup delay before moving.
   if (!startup_delay_timer.isFinished()) {
     motors[0] = 0;
     motors[1] = 0;
-    writeServo(servoPin, 0);  // Keep servo UP during startup delay
-    return;  // Skip all game logic during startup
+    writeServo(servoPin, 0);
+    writeMotors();
+    return;
   }
   
   // Startup delay is complete, mark it and proceed with normal operation
@@ -482,7 +509,7 @@ void debug() {
 void writeMotors() {
   motors[0] = motors[0]/1;
   motors[1] = motors[1]/1;
-  antiTipCorrection(motors[0], motors[1]);
+  // antiTipCorrection(motors[0], motors[1]);
   if (motors[0] > 0) {
     analogWrite(leftF, abs(motors[0]));
     analogWrite(leftB, 0);

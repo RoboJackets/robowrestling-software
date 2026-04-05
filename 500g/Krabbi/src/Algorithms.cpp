@@ -2,24 +2,35 @@
 #include "enums.hpp"
 #include <Arduino.h>
 
+namespace {
+constexpr unsigned long OPEN_ENDED_BEHAVIOR_MS = 2147483647UL;
+}
+
 algorithms::algorithms(motor_actions& motors, world_state& world, timer& behavior_timer, timer& last_state_changed)
   : motors(motors), world(world), behavior_timer(behavior_timer), last_state_changed(last_state_changed) {
+}
+
+int algorithms::rampSpeed(unsigned long elapsed, int startSpeed, int endSpeed, unsigned long rampMs) {
+  if (rampMs == 0 || elapsed >= rampMs) {
+    return endSpeed;
+  }
+
+  return startSpeed + ((elapsed * (endSpeed - startSpeed)) / rampMs);
+}
+
+void algorithms::startBehavior(Behavior nextBehavior, unsigned long targetMs) {
+  behavior = nextBehavior;
+  behavior_timer.reset();
+  behavior_timer.start();
+  behavior_timer.setTarget(targetMs == 0 ? OPEN_ENDED_BEHAVIOR_MS : targetMs);
 }
 
 void algorithms::selectMode(bool stealth, bool charge) {
   if (charge) {
     if (started == false) {
-      behavior_timer.reset();
-      behavior_timer.start();
-      behavior_timer.setTarget(500); 
+      startBehavior(CHARGE, 500);
       started = true;
     }
-    if (!behavior_timer.isFinished()) {
-      motors.driveForward(150);
-    } else {
-      motors.driveForward(255);
-    }
-    return;
   }
   EnemyPosition e = world.enemy_pos();
   if(currentEnemyPos != e && currentEnemyPos != NONE) {
@@ -56,38 +67,32 @@ void algorithms::followBehavior() {
       }
       break;
     case CHARGE:
-      if (behavior_timer.elapsedMilliseconds() < 200) {
-        motors.driveForward(150); 
-      }
-      else {
-        motors.driveForward(255); 
-      }
+      motors.driveForward(150);
       break;
     case STEALTH_CHARGE:
       {
         unsigned long elapsed = behavior_timer.elapsedMilliseconds();
-        int speed;
-        if (elapsed < 100) {
-          // Ramp from 100 to 255 over first 100ms
-          speed = 100 + ((elapsed * 155) / 100);
-        } else {
-          // Hold at 255 for remaining time
-          speed = 255;
-        }
+        int speed = rampSpeed(elapsed, 100, 180, 180);
         
         // Charge in the direction of the enemy
         switch(currentEnemyPos) {
           case MIDLEFT:
-            motors.customDrive(200 * speed / 255, 255 * speed / 255); // Turn left while charging
+            motors.customDrive(200 * speed / 255, 255 * speed / 255);
             break;
           case MIDRIGHT:
-            motors.customDrive(255 * speed / 255, 200 * speed / 255); // Turn right while charging
+            motors.customDrive(255 * speed / 255, 200 * speed / 255);
             break;
           default:
-            // FRONT, FARFRONT, etc - go straight
             motors.driveForward(speed);
             break;
         }
+      }
+      break;
+    case FRONT_APPROACH:
+      {
+        unsigned long elapsed = behavior_timer.elapsedMilliseconds();
+        int speed = rampSpeed(elapsed, 110, 255, 1000);
+        motors.driveForward(speed);
       }
       break;
     case FLAG_ATTACK_L:
@@ -118,24 +123,11 @@ void algorithms::spin() {
 void algorithms::chooseAction(EnemyPosition currentPosition, LinePosition linePosition, bool stealth) {
   if (started == false) {
     if (stealth) {
-        // STEALTH MODE: Only charge if enemy is detected in front or mid-sides
-        if (currentPosition == FRONT || currentPosition == FARFRONT || currentPosition == MIDLEFT || currentPosition == MIDRIGHT) {
-            behavior = STEALTH_CHARGE;
-            behavior_timer.reset();
-            behavior_timer.start();
-            // No time limit - keep charging while enemy is visible
-        } else {
-            // No enemy in front, go straight to hunting
-            behavior = HUNTING;
-        }
+        startBehavior(STEALTH_CHARGE);
         started = true;
         return;
     } else {
-        // NORMAL MODE: Standard aggressive opening charge
-        behavior = CHARGE;
-        behavior_timer.reset();
-        behavior_timer.start();
-        behavior_timer.setTarget(300); 
+        startBehavior(CHARGE, 300);
         started = true;
         return;
     }
@@ -167,14 +159,28 @@ void algorithms::chooseAction(EnemyPosition currentPosition, LinePosition linePo
       return;
   }
 
+  // In stealth mode, a confirmed front lock overrides the opening stealth charge.
+  // FRONT means the three front-facing sensors agree on the target.
+  if (stealth && currentPosition == FRONT) {
+      if (!frontApproachActive || behavior != FRONT_APPROACH) {
+          startBehavior(FRONT_APPROACH);
+          frontApproachActive = true;
+      }
+      followBehavior();
+      return;
+  }
+
+  if (behavior == FRONT_APPROACH && currentPosition != FRONT) {
+      behavior = HUNTING;
+      frontApproachActive = false;
+  } else if (currentPosition != FRONT) {
+      frontApproachActive = false;
+  }
+
   // === PRIORITY 2: FLAG COUNTER ===
   // Trigger the sequence if we see a flag while hunting or during opening charge
   if ((currentPosition == FLAG_LEFT || currentPosition == FLAG_RIGHT) && (behavior == HUNTING || behavior == CHARGE)) {
-      behavior = (currentPosition == FLAG_LEFT) ? FLAG_ATTACK_L : FLAG_ATTACK_R;
-      behavior_timer.reset();
-      behavior_timer.start();
-      // Total maneuver time: 150ms (50ms spin + 100ms forward burst)
-      behavior_timer.setTarget(150); 
+      startBehavior((currentPosition == FLAG_LEFT) ? FLAG_ATTACK_L : FLAG_ATTACK_R, 150);
       return; 
   }
 
@@ -212,7 +218,11 @@ void algorithms::liveDrive(EnemyPosition currentPosition, LinePosition linePosit
       motors.spinRight(220);
       break;
     case FRONT:
-      motors.driveForward(255); 
+      if (!frontApproachActive) {
+        startBehavior(FRONT_APPROACH);
+        frontApproachActive = true;
+      }
+      followBehavior();
       break;
     case MIDLEFT:
       if (stealth) {

@@ -18,6 +18,10 @@ class algorithms {
     unsigned long lastLineEscapeDuration = 220;
     unsigned long currentEscapeDuration = 220;
     bool wasInLineEscape = false;
+    bool frontApproachActive = false;
+
+    int rampSpeed(unsigned long elapsed, int startSpeed, int endSpeed, unsigned long rampMs);
+    void startBehavior(Behavior nextBehavior, unsigned long targetMs = 0);
   public:
   
     algorithms(motor_actions& motors, world_state& world, timer& behavior_timer, timer& last_state_changed);
