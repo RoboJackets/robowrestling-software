@@ -18,25 +18,23 @@ class algorithms {
     unsigned long lastLineEscapeDuration = 220;
     unsigned long currentEscapeDuration = 220;
     bool wasInLineEscape = false;
-    bool frontApproachActive = false;
+    bool ChargeActive = false;
+    float forwardAccel = 0.0f;
+    int consecutiveChargeDetections = 0;
 
     int rampSpeed(unsigned long elapsed, int startSpeed, int endSpeed, unsigned long rampMs);
     void startBehavior(Behavior nextBehavior, unsigned long targetMs = 0);
+    bool shouldCharge() const;
   public:
   
     algorithms(motor_actions& motors, world_state& world, timer& behavior_timer, timer& last_state_changed);
 
     void spin();
     void followBehavior();
-    void chooseAction(EnemyPosition currentPosition, LinePosition l);  // do something based on enemy_pos
-    void liveDrive(EnemyPosition currentPosition, LinePosition l);
     void respondToLine(LinePosition l);   // do something based on line_pos
-    // void drive_avgs(float* avgs);
-
-    // Update these three declarations in your header file
-    void selectMode(bool stealth = false, bool charge = false); 
-    void chooseAction(EnemyPosition currentPosition, LinePosition linePosition, bool stealth);
-    void liveDrive(EnemyPosition currentPosition, LinePosition linePosition, bool stealth);
+    void selectMode(float imuForwardAccel = 0.0f);
+    void chooseAction(EnemyPosition currentPosition, LinePosition linePosition);
+    void liveDrive(EnemyPosition currentPosition, LinePosition linePosition);
 };
 
 #endif

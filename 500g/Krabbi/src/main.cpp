@@ -203,9 +203,13 @@ void setup() {
 void loop() {
   pullSensors(); 
 
+  bool testMode = (dips[2] == LOW);
   bool startModuleActive = (digitalRead(startPin) == START_MODULE_ACTIVE_STATE);
 
-  if (!startModuleActive) {
+  if (testMode) {
+    startSignalReceived = true;
+    startupDelayComplete = true;
+  } else if (!startModuleActive) {
     startSignalReceived = false;
     startupDelayComplete = false;
     startup_delay_timer.reset();
@@ -216,7 +220,7 @@ void loop() {
     return;
   }
 
-  if (!startSignalReceived) {
+  if (!testMode && !startSignalReceived) {
     if (startModuleActive) {
       startSignalReceived = true;
       startup_delay_timer.reset();
@@ -232,7 +236,7 @@ void loop() {
   }
 
   // Once the start module fires, wait the configured startup delay before moving.
-  if (!startup_delay_timer.isFinished()) {
+  if (!testMode && !startup_delay_timer.isFinished()) {
     motors[0] = 0;
     motors[1] = 0;
     writeServo(servoPin, 0);
@@ -255,14 +259,7 @@ void loop() {
   setLED();
   avgs = ws.get_sensors_avg();
 
-  // Assuming DIP Switch 2 (dips[1]) is used for Stealth Mode
-  if (dips[0] == LOW) {
-      algo.selectMode(false, true);
-  } else if (dips[1] == LOW) {
-      algo.selectMode(true, false);  
-  } else {
-      algo.selectMode(false, false); 
-  }
+  algo.selectMode(linearAccelX);
 
   if (!playing) {
     motors[0] = 0;

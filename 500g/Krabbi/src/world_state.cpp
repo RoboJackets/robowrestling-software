@@ -41,10 +41,11 @@ EnemyPosition world_state::enemy_pos() {
     // simple mapping to your enum values
     // adjust depending on how your IR sensors are arranged
     if (avgs[2] >= 0.9){
-        if(avgs[1] >= 0.9 && avgs[3] >= 0.9) return FRONT;
-        if (avgs[1] >= 0.9) return MIDLEFT;
-        if (avgs[3] >= 0.9) return MIDRIGHT;
-        return FARFRONT;
+        // if(avgs[1] >= 0.9 && avgs[3] >= 0.9) return FRONT;
+        // if (avgs[1] >= 0.9) return MIDLEFT;
+        // if (avgs[3] >= 0.9) return MIDRIGHT;
+        // return FARFRONT;
+        return FRONT;
     }
     if (avgs[1] >= 0.9) return MIDLEFT;
     if (avgs[3] >= 0.9) return MIDRIGHT;
