@@ -6,6 +6,10 @@ enum OnLine {
     BACKLINE,
     LEFTLINE,
     RIGHTLINE,
+    FRLINE,
+    FLLINE,
+    BLLINE,
+    BRLINE,
     NONELINE
 };
 

@@ -37,13 +37,13 @@ void Algorithm::RunItDown(EnemyPositions pos, AlgoLogs algo) {
 void Algorithm::TurnToEnemy(EnemyPositions pos) {
     if (timer->getRunningProcess() == true) {
         if (pos == EnemyLeft) {
-            action->Right(200);
-        } else if (pos == EnemyRight) {
             action->Left(200);
+        } else if (pos == EnemyRight) {
+            action->Right(200);
         } else if (pos == EnemyFL) {
-            action->Right(150);
-        } else {
             action->Left(150);
+        } else {
+            action->Right(150);
         }
         return;
     }
@@ -57,17 +57,19 @@ void Algorithm::TurnToEnemy(EnemyPositions pos) {
 }
 
 void Algorithm::search() {
-    if (timer->getRunningProcess() == true) {
-        if (timer->getDuration() > 600) {
-            action->Left(150);
-        } else if (timer->getDuration() > 300) {
-            action->Right(150);
-        } else {
-            action->Left(150);
-        }
-        return;
-    }
-    timer->startTimer(900);
+    // if (timer->getRunningProcess() == true) {
+    //     if (timer->getDuration() > 600) {
+    //         action->Left(150);
+    //     } else if (timer->getDuration() > 300) {
+    //         action->Right(150);
+    //     } else {
+    //         action->Left(150);
+    //     }
+    //     return;
+    // }
+    // timer->startTimer(900);
+    
+    
 }
 
 void Algorithm::backTrack(OnLine line_state, AlgoLogs algo) {
@@ -122,6 +124,7 @@ void Algorithm::fryThem() {
         action->Forward(100);
     }
 }
+
 
 void Algorithm::Strat2Sweep(bool midDetected) {
     float currentYaw = *yaw;

@@ -14,35 +14,38 @@
 #include "Robot/Timer.hpp"
 #include "Enums/line_states.hpp"
 #include "Enums/enemy_states.hpp"
+#include "Robot/Timer.cpp"
 
 // Pins definitions
-#define start_mod 13
+#define start_mod 10
 
-#define left_pwm 37
-#define left_dir_forward 14
-#define left_dir_backward 15
-#define right_pwm 33
-#define right_dir_forward 18
-#define right_dir_backward 19
+#define left_pwm 5
+#define left_dir_forward 11
+#define left_dir_backward 12
+#define right_pwm 28
+#define right_dir_forward 36
+#define right_dir_backward 37
 
-#define line_fl 10
-#define line_fr 11
-#define line_bl 12
-#define line_br 26
+#define line_fl 1
+#define line_fr 2
+#define line_bl 26
+#define line_br 8
 
-#define ir_back 7
-#define ir_left 6
-#define ir_left45 2
+#define ir_back 23
+#define ir_left 22
+#define ir_left45 0
 #define ir_front_left 3
-#define ir_analog_transmit 20
-#define ir_analog_receive 21
-#define ir_front_right 4
-#define ir_right45 5
-#define ir_right 1
+#define ir_analog_transmit 24
+#define ir_analog_receive 25
+#define ir_front_right 33
+#define ir_right45 34
+#define ir_right 32
 
 #define algo_pin1 38
 #define algo_pin2 39
 #define algo_pin3 40
+
+bool started = false;
 
 // Arrays
 /**
@@ -66,6 +69,7 @@ Timer* timer;
 void pollSensors();
 void updateMotors();
 void updateState();
+void startMotors();
 
 /**
  * Set up structure of the code.
@@ -104,13 +108,30 @@ void setup() {
   Serial.begin(9600);
 }
 
+Timer* runTime = new Timer(millis());
+
 /**
  * Main loop
  */
 void loop() {
-  pollSensors();
-  updateState();
-  updateMotors();
+  // Start Mod -- Turn this on if you have a start module
+  if (digitalRead(start_mod) == 1) {
+    if (started) {
+      if (runTime->getDuration() <= 0) {
+        pollSensors();
+        updateState();
+        updateMotors();
+      } else {
+        stopMotors();
+      }
+    } else {
+      started = true;
+      runTime->startTimer(10000);
+      delay(5000);
+    }
+  } else {
+    stopMotors();
+  }
 }
 
 /**
@@ -156,7 +177,23 @@ void updateMotors() {
   // Right motor drive
   digitalWrite(right_dir_forward, motors[1] > 0 ? HIGH : LOW);
   digitalWrite(right_dir_backward, motors[1] > 0 ? LOW : HIGH);
-  analogWrite(left_pwm, right_speed);
+  analogWrite(right_pwm, right_speed);
+}
+
+// Stopping Motors
+void stopMotors() {
+  int left_speed = min(255, max(0, abs(motors[0])));
+  int right_speed = min(255, max(0, abs(motors[1])));
+
+  // Left motor drive
+  digitalWrite(left_dir_forward, LOW);
+  digitalWrite(left_dir_backward, LOW);
+  analogWrite(left_pwm, 0);
+
+  // Right motor drive
+  digitalWrite(right_dir_forward, LOW);
+  digitalWrite(right_dir_backward, LOW);
+  analogWrite(right_pwm, 0);
 }
 
 // Update Robot World State

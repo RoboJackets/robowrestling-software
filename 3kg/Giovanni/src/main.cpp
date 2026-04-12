@@ -12,22 +12,22 @@ const int rightPWM = 36;
 const int rightDir = 40;
 
 // ===== Input Pins (UNCHANGED) =====
-const int left90IR = 11;
-const int right90IR = 20;
-const int left60IR = 12;
-const int right60IR = 19;
-const int left45IR = 13;
-const int right45IR = 18;
-const int left30IR = 14;
-const int right30IR = 17;
-const int centerIR = 16;
+const int left90IR = 9;
+const int right90IR = 28;
+const int left60IR = 10;
+const int right60IR = 27;
+const int left45IR = 11;
+const int right45IR = 26;
+const int left30IR = 12;
+const int right30IR = 25;
+const int centerIR = 24;
 
-const int frLine = 33;
-const int flLine = 32;
-const int brLine = 31;
-const int blLine = 30;
+const int frLine = 14;
+const int flLine = 13;
+const int brLine = 16;
+const int blLine = 15;
 
-const int startMod = 43;
+const int startMod = 21;
 bool started = false;
 
 // ===== Arrays =====
@@ -133,13 +133,21 @@ void stopMotors() {
     int left = constrain(driver[0], -pwmMax, pwmMax);
     int right = constrain(driver[1], -pwmMax, pwmMax);
 
+    int spd = 70;
+
+    if (isOnLine() != NONELINE) {
+      spd = 0;
+    }
+
     // LEFT MOTOR
     digitalWrite(leftDir, left >= 0 ? HIGH : LOW);
-    analogWrite(leftPWM, 0);
+    analogWrite(leftPWM, spd);
+    // analogWrite(leftPWM, abs(left));
 
     // RIGHT MOTOR
     digitalWrite(rightDir, right >= 0 ? HIGH : LOW);
-    analogWrite(rightPWM, 0);
+    analogWrite(rightPWM, spd);
+    // analogWrite(rightPWM, abs(right));
 }
 
 // ===================== STATE HELPERS =====================
@@ -151,19 +159,17 @@ EnemyPos getEnemyPosition() {
 }
 
 OnLine isOnLine() {
-  if ((lineArray[0] < 800 || lineArray[1] < 800) &&
-      (lineArray[2] >= 800 && lineArray[3] >= 800)) {
-    return FRONTLINE;
+  if (lineArray[1] == 1) {
+    return FRLINE;
   } 
-  else if ((lineArray[2] < 800 || lineArray[3] < 800) &&
-           (lineArray[0] >= 800 && lineArray[1] >= 800)) {
-    return BACKLINE;
+  else if (lineArray[2] == 1) {
+    return FRLINE;
   } 
-  else if (lineArray[0] < 800 && lineArray[3] < 800) {
-    return LEFTLINE;
+  else if (lineArray[0] == 1) {
+    return BLLINE;
   } 
-  else if (lineArray[1] < 800 && lineArray[2] < 800) {
-    return RIGHTLINE;
+  else if (lineArray[3] == 1) {
+    return BRLINE;
   }
 
   return NONELINE;
@@ -174,8 +180,9 @@ void loop() {
     if (digitalRead(startMod) == 1) {
         if (started == true) {
             pollSensors();
-            calcState();
+            // calcState();
             writeMotors();
+
         } else {
             started = true;
             delay(5000);

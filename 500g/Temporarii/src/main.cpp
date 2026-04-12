@@ -2,8 +2,8 @@
  * Temporarii Main File - Da Four-Wheel Drive
  */
 #include <Arduino.h>
-// #include <Wire.h>
-// #include <SparkFun_BMI270_Arduino_Library.h>
+#include <Wire.h>
+#include <SparkFun_BMI270_Arduino_Library.h>
 
 /**
  * Imports
@@ -50,7 +50,7 @@ const int imu_pin2 = 34;
 const int imu_scl = 19;
 const int imu_sda = 18;
 
-// BMI270 imu;
+BMI270 imu;
 float yaw = 0.0;
 // unsigned long lastIMUTime = 0;
 
@@ -163,8 +163,16 @@ void setup() {
   // pinMode(imu_sda, OUTPUT);
 
   // Setting up IMU
+  uint8_t i2cAddress = BMI2_I2C_PRIM_ADDR;
+  Wire.begin();
 
-  // Wire.begin();
+  while(imu.beginI2C(i2cAddress) != BMI2_OK) {
+    Serial.println("Error: BMI270 not connected, check wiring and I2C address");
+
+    delay(1000);
+
+  }
+  Serial.println("BMI270");
   // Wire.setClock(100000);
 
   // Serial.println("Scanning I2C...");
@@ -230,18 +238,18 @@ void setup() {
 void loop() {
   // 5 Seconds before start for comp
     // Start Mod -- Turn this on if you have a start module
-    if (digitalRead(start_mod) == 1) {
-      if (started) {
-        pollSensors();
-        calculateState();
-        writeMotors();
-      } else {
-        started = true;
-        delay(5000);
-      }
-    } else {
-      stopMotors();
-    }
+    // if (digitalRead(start_mod) == 1) {
+    //   if (started) {
+    //     pollSensors();
+    //     calculateState();
+    //     writeMotors();
+    //   } else {
+    //     started = true;
+    //     delay(5000);
+    //   }
+    // } else {
+    //   stopMotors();
+    // }
 
    // Debug
     // debug_counter++;
@@ -266,6 +274,10 @@ void loop() {
     // writeMotors();
     // Serial.println(yaw);
     // delay(500);
+    imu.getSensorData();
+    Serial.print("Rotation: ");
+    Serial.print(imu.data.gyroX, 3);
+    delay(500);
 }
 
 /**
