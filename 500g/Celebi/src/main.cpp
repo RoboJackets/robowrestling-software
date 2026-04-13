@@ -52,7 +52,7 @@ robot_actions* robot;
 world_state* world;
 
 timer *draw_timer;
-timer *attack_timer;
+timer *match_start_timer;
 timer *swerve_timer;
 
 //filter
@@ -83,7 +83,7 @@ void setup() {
 
     //initialize timer
     draw_timer = new timer(millis());
-    attack_timer = new timer(millis());
+    match_start_timer = new timer(millis());
     swerve_timer = new timer(millis());
 
     //initialize world state
@@ -93,24 +93,25 @@ void setup() {
     robot = new robot_actions(motors);    
 
     //initialize strategy
-    algorithm = new algorithms(robot, world, draw_timer, attack_timer, swerve_timer);
+    algorithm = new algorithms(robot, world, draw_timer, match_start_timer, swerve_timer);
 
     // Serial.begin(9600);
     // Serial.print("we are running\n");
     draw_timer->set_action_timer(10);
-    attack_timer->set_action_timer(10);
+    swerve_timer->set_action_timer(10);
+    
     // wait for start signal
-    while (!digitalRead(StartMod)) {
-      ;
-    }
+    // while (!digitalRead(StartMod)) {
+    //   ;
+    // }
 
 
     // while (!digitalRead(StartButton)) {
     //   Serial.println("waiting");
     // }
     // delay(5000);
-    swerve_timer->update_time(millis());
-    swerve_timer->set_action_timer(100);
+    match_start_timer->update_time(millis());
+    match_start_timer->set_action_timer(150);
 }
 
 void loop() {
@@ -119,12 +120,12 @@ void loop() {
     updateMotors();
 
     // listen for stop signal
-    if (!digitalRead(StartMod)) {
-      while(true) {
-        brake();
-      }
-    }
-    // debug();
+    // if (!digitalRead(StartMod)) {
+    //   while(true) {
+    //     brake();
+    //   }
+    // }
+    debug();
 }
 
 void pollSensors() {
@@ -149,7 +150,7 @@ void pollSensors() {
   ir_sensors[4] = digitalRead(Rdist);
 
   draw_timer->update_time(millis());
-  attack_timer->update_time(millis());
+  match_start_timer->update_time(millis());
   swerve_timer->update_time(millis());
 }
 
@@ -161,6 +162,7 @@ void updateState() {
 /**
  * Implemented for Shorti's motordrivers to conform to the
  * simple motordriver with speed and direction.  
+ * Max speed is 255
  */ 
 void updateMotors() {
   if (motors[0] > 0) {  // if direction is forward
@@ -206,9 +208,8 @@ void debug() {
   // Serial.print("action timer started at: ");
   // Serial.println(attack_timer->get_action_start());
   // Serial.print("current time from timer: ");
-  // Serial.println(attack_timer->get_current_time());
   // Serial.print("timer status: ");
-  // Serial.println(attack_timer->get_timer_state());
+  // Serial.println(match_start_timer->get_timer_state());
   
   
   // line sensors

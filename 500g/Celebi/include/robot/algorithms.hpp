@@ -12,7 +12,7 @@ class algorithms {
         robot_actions* robot;
         world_state* world;
         timer* draw_timer;
-        timer* attack_timer;
+        timer* match_start_timer;
         timer* swerve_timer;
         line_states selfPosition;
         enemy_states enemyPosition;
@@ -26,6 +26,10 @@ class algorithms {
             match_start match;
         } states;
 
+        struct start_info {
+            int powers[3];
+            int lengths[3];
+        } start_data;
     public:
         algorithms(robot_actions* robo_actions, world_state* world, timer* draw_timer, timer *attack_timer, timer *swerve_timer);
         void match_strategy();
@@ -36,5 +40,7 @@ class algorithms {
         int turn_towards();
         void test();
         int doge();
+        int match_start();
+        int draw_circle_edge();
 };
 #endif

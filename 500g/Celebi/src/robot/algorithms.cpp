@@ -3,20 +3,22 @@
 #include <Arduino.h>
 
 int multiplier = 1;
-int max_speed = 512;
+int max_speed = 255;
 
-algorithms :: algorithms(robot_actions *robot, world_state *world, timer* draw_timer, timer *attack_timer, timer *swerve_timer) {
+algorithms :: algorithms(robot_actions *robot, world_state *world, timer* draw_timer, timer *match_start_timer, timer *swerve_timer) {
     this -> robot = robot;
     this -> world = world;
     this -> draw_timer = draw_timer;
-    this -> attack_timer = attack_timer;
+    this -> match_start_timer = match_start_timer;
     this -> swerve_timer = swerve_timer;
     selfPosition = OFF;
     enemyPosition = UNKNOWN;
-    states.match = START_TURN;
+    states.match = SET_TIMER;
     states.circle = D_GO_STRAIGHT;
     states.attack = A_BLIND;
     turn_direction = 0;
+    //powers first, then time
+    start_data = {{70, 100, 120}, {100, 250, 360}};
 }
 
 // main strategy function
@@ -36,27 +38,31 @@ void algorithms :: match_strategy() {
     enemyPosition = world -> enemy_pos();
 
     // at beginning of round, drive forward for a bit
-    if (states.match != START_FINISHED) {
-        if (swerve_timer -> check_action_time()) {
-            if (states.match == START_TURN) {
-                states.match = START_FORWARD;
-                swerve_timer -> set_action_timer(300);
-            } else if (states.match == START_FORWARD) {
-                states.match = START_FINISHED;
-            }
-        } 
-        if (states.match == START_TURN) {
-            robot -> turn_left(max_speed);
-        } else if (states.match == START_FORWARD) {
-            robot -> drive_forward(max_speed);
-        }
+    if (match_start() == 1) {
         return;
+    } else {
+        robot -> brake();
     }
 
-    // if enemy is unseen, 
     if (attack_pattern() == 0) {
         draw_circle();
     }
+
+}
+
+int algorithms :: match_start() {
+    if (states.match == SET_TIMER) {
+        match_start_timer->set_action_timer(start_data.lengths[0]);
+        states.match = START;
+    }
+    if (match_start_timer -> check_action_time()) {
+        states.match = START_FINISHED;
+    }
+    if (states.match != START_FINISHED) {
+        robot -> drive_custom(start_data.powers[0], max_speed, 1, 1);
+        return 1;
+    }
+    return 0;
 }
 
 // returns 0 if no enemy detected, otherwise 1
@@ -103,11 +109,50 @@ int algorithms :: draw_circle() {
     if (states.circle == D_GO_STRAIGHT) {
         //continue forward if no line detected
         if (selfPosition == OFF) {
-            robot -> drive_forward(80);
+            robot -> drive_forward(60);
         //there is a line, set an action to go backwards
         } else {
             robot -> brake();
-            draw_timer -> set_action_timer(200);
+            draw_timer -> set_action_timer(100);
+            states.circle = D_GO_BACKWARDS;
+        }
+    // if the current state is go backwards
+    } else if (states.circle == D_GO_BACKWARDS) {
+        robot -> drive_backward(max_speed);
+    // if the current state is neither, turn to find enemy
+    // this should never be reached
+    } else {
+        robot -> turn_left(max_speed);
+    }
+    return 0;
+}
+
+int algorithms :: draw_circle_edge() {
+    // state transition for backng off and turning away from line
+    // check if the bot is currently backing off or turning after hitting a line
+    if (states.circle == D_GO_BACKWARDS && draw_timer -> check_action_time()) {
+        // finished backing off, start turning
+        states.circle = D_TURN;
+        robot -> brake();
+        draw_timer -> set_action_timer(100);
+        return 0;
+    } else if (states.circle == D_TURN && draw_timer -> check_action_time()) {
+        // finished turning, start going forwards again
+        states.circle = D_GO_STRAIGHT;
+        robot -> brake();
+        return 0;
+    }
+
+    // action during each state
+    // if the current state is going straight
+    if (states.circle == D_GO_STRAIGHT) {
+        //continue forward if no line detected
+        if (selfPosition == OFF) {
+            robot -> drive_forward(60);
+        //there is a line, set an action to go backwards
+        } else {
+            robot -> brake();
+            draw_timer -> set_action_timer(50);
             states.circle = D_GO_BACKWARDS;
         }
     // if the current state is go backwards
@@ -207,26 +252,5 @@ int algorithms :: turn_towards() {
         return 1;
     } else {
         return 0;
-    }
-}
-
-int algorithms :: doge() {
-    if (enemyPosition == UNKNOWN) {
-        return 0;
-    }
-    if (attack_timer -> check_action_time()) {
-        if (states.attack == A_DOGE) {
-            states.attack = A_SEE;
-        }
-    }
-    if (states.attack == A_BLIND) {
-        attack_timer -> set_action_timer(50);
-        states.attack = A_DOGE;
-        return 1;
-    } else if (states.attack == A_DOGE) {
-        robot -> drive_custom(-1 * max_speed, -.75 * max_speed, false, false);
-        return 1;
-    } else {
-        return attack_pattern();
     }
 }

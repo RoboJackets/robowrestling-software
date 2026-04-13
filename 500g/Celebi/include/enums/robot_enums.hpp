@@ -22,4 +22,10 @@ enum attack_state {
     A_BLIND,
     A_DOGE
 };
+
+enum match_start {
+    SET_TIMER,
+    START,
+    START_FINISHED
+};
 #endif
