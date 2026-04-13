@@ -6,7 +6,6 @@
 #include "enums/world_enums.hpp"
 #include "enums/robot_enums.hpp"
 #include "world/timer.hpp"
-#include <algorithm>
 
 class algorithms {
     private:
@@ -17,7 +16,6 @@ class algorithms {
         timer* swerve_timer;
         line_states selfPosition;
         enemy_states enemyPosition;
-        match_start match_start;
         bool timer_set;
         int forward_speed;
         int turn_direction;
@@ -25,16 +23,17 @@ class algorithms {
             draw_state circle;
             swerve_state swerve;
             attack_state attack;
+            match_start match;
         } states;
 
     public:
         algorithms(robot_actions* robo_actions, world_state* world, timer* draw_timer, timer *attack_timer, timer *swerve_timer);
         void match_strategy();
-        int slammy_whammy();
+        int attack_pattern();
         void seek_drive();
         int draw_circle();
-        int attack_forward_no_delay();
-        int turn_towards_no_delay();
+        int attack_forward();
+        int turn_towards();
         void test();
         int doge();
 };
