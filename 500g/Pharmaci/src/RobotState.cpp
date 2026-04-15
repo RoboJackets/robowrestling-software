@@ -19,7 +19,12 @@ RobotState::RobotState(WorldState* worldStatePtr, RobotActions* robotActionsPtr,
     turnDir = TurnDir::None;
 }
 
+// void RobotState::calculateState(u_int32_t time) {
+//     robotActions->drive(0, 100);
+// }
+
 void RobotState::calculateState(uint32_t time) {
+
     const int BACKUP_SPEED = 150;
     const int TURN_SPEED   = 150;
 
@@ -28,11 +33,6 @@ void RobotState::calculateState(uint32_t time) {
     const int BOTH_TURN_MS = 60;
 
     const int ZIGZAG_MS = 300;
-
-    // enemy speeds
-    const double ATTACK_SPEED    = 255.0;
-    const double ROT_SPEED       = 150.0;
-    const double SLOW_ROT_SPEED  = 100.0;
 
     static bool zigLeft = false;
     static int ZIGZAG_INITIAL_MS = 0;
