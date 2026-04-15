@@ -36,54 +36,59 @@ RobotState *robotState;
 //  const int LEFT_LINE = A7;
 //  const int RIGHT_LINE = A6;
 
-  const int LEFT_IR_90 = 2;
- const int LEFT_IR_45 = 3;
- const int RIGHT_IR_90 = 8;
- const int RIGHT_IR_45 = 5;
- const int MIDDLE_IR = 4;
- const int START_MODULE = 6;
+const int LEFT_IR_90 = 2;
+const int LEFT_IR_45 = 3;
+const int RIGHT_IR_90 = 8;
+const int RIGHT_IR_45 = 5;
+const int MIDDLE_IR = 4;
+const int START_MODULE = 6;
 const int R_POS = 29;
 const int R_NEG = 28;
 const int L_POS = 1;
 const int L_NEG = 0;
 
+const int DIP1 = 37;
+const int DIP2 = 36;
 
- const int LEFT_LINE = A7;
- const int RIGHT_LINE = A6;
+const int LEFT_LINE = A7;
+const int RIGHT_LINE = A6;
+
+int getDipMode() {
+  int dip1 = !digitalRead(DIP1);
+  int dip2 = !digitalRead(DIP2);
+  return (dip2 << 1) | dip1;
+}
 
 void setup() {
     pinMode(R_POS, OUTPUT);
-     pinMode(R_NEG, OUTPUT);
-     pinMode(L_POS, OUTPUT);
-     pinMode(L_NEG, OUTPUT);
-     pinMode(LEFT_IR_90, INPUT);
-     pinMode(LEFT_IR_45, INPUT);
-     pinMode(MIDDLE_IR, INPUT);
-     pinMode(RIGHT_IR_45, INPUT);
-     pinMode(RIGHT_IR_90, INPUT);
-     pinMode(LEFT_LINE, INPUT);
-     pinMode(RIGHT_LINE, INPUT);
-     pinMode(START_MODULE, INPUT);
+    pinMode(R_NEG, OUTPUT);
+    pinMode(L_POS, OUTPUT);
+    pinMode(L_NEG, OUTPUT);
+    pinMode(LEFT_IR_90, INPUT);
+    pinMode(LEFT_IR_45, INPUT);
+    pinMode(MIDDLE_IR, INPUT);
+    pinMode(RIGHT_IR_45, INPUT);
+    pinMode(RIGHT_IR_90, INPUT);
+    pinMode(LEFT_LINE, INPUT);
+    pinMode(RIGHT_LINE, INPUT);
+    pinMode(START_MODULE, INPUT);
+    pinMode(DIP1, INPUT_PULLUP);
+    pinMode(DIP2, INPUT_PULLUP);
 
+    leftMotorDriver = new MotorDriver();
+    rightMotorDriver = new MotorDriver();
+    robotActions = new RobotActions(leftMotorDriver, rightMotorDriver);
+    leftIRSensor = new IRSensor();
+    leftMiddleIRSensor = new IRSensor();
+    middleIRSensor = new IRSensor();
+    rightMiddleIRSensor = new IRSensor();
+    rightIRSensor = new IRSensor();
+    leftLineSensor = new LineSensor();
+    rightLineSensor = new LineSensor();
 
-  leftMotorDriver = new MotorDriver();
-  rightMotorDriver = new MotorDriver();
-  robotActions = new RobotActions(leftMotorDriver, rightMotorDriver);
-  leftIRSensor = new IRSensor();
-  leftMiddleIRSensor = new IRSensor();
-  middleIRSensor = new IRSensor();
-  rightMiddleIRSensor = new IRSensor();
-  rightIRSensor = new IRSensor();
-  leftLineSensor = new LineSensor();
-  rightLineSensor = new LineSensor();
-  
-
-  worldState = new WorldState(leftLineSensor, rightLineSensor, leftIRSensor, leftMiddleIRSensor, middleIRSensor, rightMiddleIRSensor, rightIRSensor);
-  robotState = new RobotState(worldState, robotActions, leftMotorDriver, rightMotorDriver);
-
-  delay(4800); // wait for 5 seconds before starting the robot
+    worldState = new WorldState(leftLineSensor, rightLineSensor, leftIRSensor, leftMiddleIRSensor, middleIRSensor, rightMiddleIRSensor, rightIRSensor);
+    robotState = new RobotState(worldState, robotActions, leftMotorDriver, rightMotorDriver);
 }
-
 
 void updateMotors() {
      bool leftDirection = leftMotorDriver->getDirection();
@@ -107,8 +112,7 @@ void updateMotors() {
         analogWrite(R_POS, 0);
         analogWrite(R_NEG, rightSpeed);
      }
-
- }
+}
 
 void pollSensors() {
   //implement proper velocity measurement D:
@@ -119,13 +123,30 @@ void pollSensors() {
   rightMiddleIRSensor->setValue(digitalRead(RIGHT_IR_45));
   leftLineSensor->setValue(analogRead(LEFT_LINE));
   rightLineSensor->setValue(analogRead(RIGHT_LINE));
-  
-
 }
 
 void calculateState(int time) {
   robotState->calculateState(time);
 }
+
+void turretState() {
+  robotState->turretState();
+}
+
+void memeRight(int time) {
+  robotState->memeRight(time);
+}
+
+void memeLeft(int time) {
+  robotState->memeLeft(time);
+}
+
+
+
+bool isMemeDone() {
+  return robotState->isMemeDone();
+}
+
 
 const char* positionToString(Position pos) {
     switch (pos) {
@@ -147,6 +168,7 @@ const char* positionToString(Position pos) {
         default: return "Unknown";
     }
 }
+
 void debug() {
   Serial.println(leftIRSensor->getValue());
   Serial.println(leftMiddleIRSensor->getValue());
@@ -164,21 +186,42 @@ void debug() {
 }
 
 void loop() {
-  // debug();
-  pollSensors();
-  calculateState(millis());
+  int dipMode = getDipMode();
+
+  if (digitalRead(START_MODULE)) {
+      pollSensors();
+
+      switch (dipMode) {
+          case 0:
+              //both switches at ON
+              calculateState(millis());
+              break;
+          case 1:
+              //switch1 at 1, switch2 at ON
+              if (!isMemeDone()) {
+                  memeRight(millis());
+              } else {
+                  calculateState(millis());
+              }
+              break;
+          case 2:
+              //switch1 at ON, switch2 at 2
+              if (!isMemeDone()) {
+                  memeLeft(millis());
+              } else {
+                  calculateState(millis());
+              }
+              break;
+          case 3:
+              //both switches at 12
+              turretState();
+              break;
+      }
+  } else {
+      robotActions->drive(0, 0);
+        robotState->resetMatch();
+
+  }
+
   updateMotors();
-
-  // robotActions -> drive(0, 80);
-  
-  // if (digitalRead(START_MODULE)) {
-  //     pollSensors();
-  //     calculateState(millis());
-  //     updateMotors();
-  // } else {
-  //     robotActions->drive(0, 0);
-  // }
 }
-
-
- 
