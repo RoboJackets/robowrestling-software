@@ -28,4 +28,11 @@ enum match_start {
     START,
     START_FINISHED
 };
+
+enum strategy {
+    BASE,
+    CLOSE,
+    MEDIUM,
+    FAR
+};
 #endif

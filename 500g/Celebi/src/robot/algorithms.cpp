@@ -4,13 +4,15 @@
 
 int multiplier = 1;
 int max_speed = 255;
+int index = 0;
 
-algorithms :: algorithms(robot_actions *robot, world_state *world, timer* draw_timer, timer *match_start_timer, timer *swerve_timer) {
+algorithms :: algorithms(robot_actions *robot, world_state *world, int* strategy, timer* draw_timer, timer *match_start_timer, timer *swerve_timer) {
     this -> robot = robot;
     this -> world = world;
     this -> draw_timer = draw_timer;
     this -> match_start_timer = match_start_timer;
     this -> swerve_timer = swerve_timer;
+    this -> strategy = strategy;
     selfPosition = OFF;
     enemyPosition = UNKNOWN;
     states.match = SET_TIMER;
@@ -18,7 +20,8 @@ algorithms :: algorithms(robot_actions *robot, world_state *world, timer* draw_t
     states.attack = A_BLIND;
     turn_direction = 0;
     //powers first, then time
-    start_data = {{70, 100, 120}, {100, 250, 360}};
+    start_data = {{70, 100, 120, max_speed}, {100, 250, 360, 360}};
+    index = *strategy - 1;
 }
 
 // main strategy function
@@ -38,10 +41,10 @@ void algorithms :: match_strategy() {
     enemyPosition = world -> enemy_pos();
 
     // at beginning of round, drive forward for a bit
-    if (match_start() == 1) {
-        return;
-    } else {
-        robot -> brake();
+    if (strategy != 0) {
+        if (match_start() == 1) {
+            return;
+        }
     }
 
     if (attack_pattern() == 0) {
@@ -51,15 +54,20 @@ void algorithms :: match_strategy() {
 }
 
 int algorithms :: match_start() {
+
     if (states.match == SET_TIMER) {
-        match_start_timer->set_action_timer(start_data.lengths[0]);
+        match_start_timer->set_action_timer(start_data.lengths[index]);
         states.match = START;
     }
     if (match_start_timer -> check_action_time()) {
         states.match = START_FINISHED;
     }
     if (states.match != START_FINISHED) {
-        robot -> drive_custom(start_data.powers[0], max_speed, 1, 1);
+        if (*strategy <= 3) {
+            robot -> drive_custom(start_data.powers[index], max_speed, 1, 1);
+        } else {
+            robot -> drive_forward(start_data.powers[index]);
+        }
         return 1;
     }
     return 0;

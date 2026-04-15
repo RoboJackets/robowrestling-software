@@ -14,6 +14,7 @@ class algorithms {
         timer* draw_timer;
         timer* match_start_timer;
         timer* swerve_timer;
+        int* strategy;
         line_states selfPosition;
         enemy_states enemyPosition;
         bool timer_set;
@@ -27,11 +28,11 @@ class algorithms {
         } states;
 
         struct start_info {
-            int powers[3];
-            int lengths[3];
+            int powers[4];
+            int lengths[4];
         } start_data;
     public:
-        algorithms(robot_actions* robo_actions, world_state* world, timer* draw_timer, timer *attack_timer, timer *swerve_timer);
+        algorithms(robot_actions* robo_actions, world_state* world, int* strategy_in, timer* draw_timer, timer *attack_timer, timer *swerve_timer);
         void match_strategy();
         int attack_pattern();
         void seek_drive();

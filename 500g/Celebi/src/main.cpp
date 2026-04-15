@@ -16,6 +16,9 @@
 // pinouts
 #define Leftline A0
 #define Rightline A4
+#define Switch0 A1
+#define Switch1 A2
+#define Switch2 A3
 
 #define Rdist 1
 #define RMIDdist 2
@@ -40,6 +43,7 @@ int motors[2] = {0,0};
 // define sensor arrays
 int line_sensors[2] = {0,0};
 int ir_sensors[5] = {0,0,0,0,0};
+int strategy = 0;
 
 
 // set up algorithms class
@@ -56,7 +60,10 @@ timer *match_start_timer;
 timer *swerve_timer;
 
 //filter
-int print = 0;
+
+// #define USE_DEBUG
+
+#define USE_STARTMOD
 
 // define functions
 void updateMotors();
@@ -71,6 +78,9 @@ void setup() {
     pinMode(LmotorPos, OUTPUT);
     pinMode(RmotorNeg, OUTPUT);
     pinMode(RmotorPos, OUTPUT);
+    pinMode(Switch0, INPUT_PULLUP);
+    pinMode(Switch1, INPUT_PULLUP);
+    pinMode(Switch2, INPUT_PULLUP);
     pinMode(Leftline, INPUT);
     pinMode(Rightline, INPUT);
     pinMode(Ldist, INPUT);
@@ -80,6 +90,8 @@ void setup() {
     pinMode(Rdist, INPUT);
     pinMode(StartMod, INPUT);
     pinMode(StartButton, INPUT);
+
+    strategy = (!digitalRead(Switch2)) + (!digitalRead(Switch1) << 1) + (!digitalRead(Switch0) << 2);
 
     //initialize timer
     draw_timer = new timer(millis());
@@ -93,23 +105,27 @@ void setup() {
     robot = new robot_actions(motors);    
 
     //initialize strategy
-    algorithm = new algorithms(robot, world, draw_timer, match_start_timer, swerve_timer);
+    algorithm = new algorithms(robot, world, &strategy, draw_timer, match_start_timer, swerve_timer);
 
-    // Serial.begin(9600);
-    // Serial.print("we are running\n");
+#ifdef USE_DEBUG
+    Serial.begin(9600);
+    Serial.print("we are running\n");
+#endif
+    
     draw_timer->set_action_timer(10);
     swerve_timer->set_action_timer(10);
     
     // wait for start signal
-    // while (!digitalRead(StartMod)) {
-    //   ;
-    // }
-
+#ifdef USE_STARTMOD
+    while (!digitalRead(StartMod)) {
+      ;
+    }
+#endif
 
     // while (!digitalRead(StartButton)) {
-    //   Serial.println("waiting");
+    //    ;
     // }
-    // delay(5000);
+
     match_start_timer->update_time(millis());
     match_start_timer->set_action_timer(150);
 }
@@ -120,12 +136,16 @@ void loop() {
     updateMotors();
 
     // listen for stop signal
-    // if (!digitalRead(StartMod)) {
-    //   while(true) {
-    //     brake();
-    //   }
-    // }
+#ifdef USE_STARTMOD
+    if (!digitalRead(StartMod)) {
+      while(true) {
+        brake();
+      }
+    }
+#endif
+#ifdef USE_DEBUG
     debug();
+#endif
 }
 
 void pollSensors() {
@@ -152,6 +172,8 @@ void pollSensors() {
   draw_timer->update_time(millis());
   match_start_timer->update_time(millis());
   swerve_timer->update_time(millis());
+
+  strategy = (!digitalRead(Switch2)) + (!digitalRead(Switch1) << 1) + (!digitalRead(Switch0) << 2);
 }
 
 void updateState() {
@@ -187,11 +209,13 @@ void brake() {
   updateMotors();
 }
 
+#ifdef USE_DEBUG
 void debug() {
   if (millis() % 100 != 0) {
     return;
   }
   // Serial.println("\n\n*****************");
+  Serial.println(strategy);
   
   // Start Modules
   // Serial.print("start mod: ");
@@ -253,3 +277,4 @@ void debug() {
   
   // Serial.println("*****************");
 }
+#endif
