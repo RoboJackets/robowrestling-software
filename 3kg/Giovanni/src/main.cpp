@@ -102,10 +102,10 @@ void pollSensors() {
   irArray[7] = digitalRead(right60IR);
   irArray[8] = digitalRead(right90IR);
 
-  lineArray[0] = analogRead(flLine);
-  lineArray[1] = analogRead(frLine);
-  lineArray[2] = analogRead(brLine);
-  lineArray[3] = analogRead(blLine);
+  lineArray[0] = digitalRead(flLine);
+  lineArray[1] = digitalRead(frLine);
+  lineArray[2] = digitalRead(brLine);
+  lineArray[3] = digitalRead(blLine);
 }
 
 // ===================== LOGIC =====================
@@ -122,31 +122,22 @@ void writeMotors() {
 
   // LEFT MOTOR
   digitalWrite(leftDir, left >= 0 ? HIGH : LOW);
-  analogWrite(leftPWM, abs(100));
+  analogWrite(leftPWM, abs(left));
 
   // RIGHT MOTOR
-  digitalWrite(rightDir, right >= 0 ? HIGH : LOW);
-  analogWrite(rightPWM, abs(100));
+  digitalWrite(rightDir, right >= 0 ? LOW : HIGH);
+  analogWrite(rightPWM, abs(right));
 }
 
 void stopMotors() {
-    int left = constrain(driver[0], -pwmMax, pwmMax);
-    int right = constrain(driver[1], -pwmMax, pwmMax);
-
-    int spd = 70;
-
-    if (isOnLine() != NONELINE) {
-      spd = 0;
-    }
-
     // LEFT MOTOR
-    digitalWrite(leftDir, left >= 0 ? HIGH : LOW);
-    analogWrite(leftPWM, spd);
+    digitalWrite(leftDir, 0);
+    analogWrite(leftPWM, 0);
     // analogWrite(leftPWM, abs(left));
 
     // RIGHT MOTOR
-    digitalWrite(rightDir, right >= 0 ? HIGH : LOW);
-    analogWrite(rightPWM, spd);
+    digitalWrite(rightDir, 0);
+    analogWrite(rightPWM, 0);
     // analogWrite(rightPWM, abs(right));
 }
 
@@ -159,16 +150,13 @@ EnemyPos getEnemyPosition() {
 }
 
 OnLine isOnLine() {
-  if (lineArray[1] == 1) {
+  if (lineArray[0] == 1) {
+    return FLLINE;
+  } else if (lineArray[1] == 1) {
     return FRLINE;
-  } 
-  else if (lineArray[2] == 1) {
-    return FRLINE;
-  } 
-  else if (lineArray[0] == 1) {
+  } else if (lineArray[2] == 1) {
     return BLLINE;
-  } 
-  else if (lineArray[3] == 1) {
+  } else if (lineArray[3] == 1) {
     return BRLINE;
   }
 
@@ -180,9 +168,8 @@ void loop() {
     if (digitalRead(startMod) == 1) {
         if (started == true) {
             pollSensors();
-            // calcState();
+            calcState();
             writeMotors();
-
         } else {
             started = true;
             delay(5000);

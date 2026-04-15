@@ -6,11 +6,13 @@ RobotActions :: RobotActions(int *left, int *right) {
     driver[1] = right;
     // End time is in milliseconds, pass in time in ms
     endTime = 0;
-    // Priority 1: Search, line turning
-    // Priority 2: Attacking, moving off line
-    // Priority 3: Starting action, other tba
+    // Priority 1-3: Search, line turning
+    // Priority 4-6: Attacking, moving off line
+    // Priority 7+: Starting action, other tba
     // Priority in same category is overridden by most recent action
     priority = 0;
+    // Use for sequences of actions to know previous action
+    state = 0;
 }
 
 int RobotActions :: getLeft() {
@@ -76,4 +78,14 @@ void RobotActions :: turnRight(int spd, int time, int priority) {
 // For manually checking action completion
 bool RobotActions :: actionOver() {
     return millis() >= endTime;
+}
+
+// Check current state for sequence of actions
+int RobotActions :: getState() {
+    return state;
+}
+
+// Set state
+void RobotActions :: setState(int state) {
+    this->state = state;
 }

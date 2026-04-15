@@ -69,7 +69,7 @@ Timer* timer;
 void pollSensors();
 void updateMotors();
 void updateState();
-void startMotors();
+void stopMotors();
 
 /**
  * Set up structure of the code.
@@ -108,7 +108,6 @@ void setup() {
   Serial.begin(9600);
 }
 
-Timer* runTime = new Timer(millis());
 
 /**
  * Main loop
@@ -117,17 +116,12 @@ void loop() {
   // Start Mod -- Turn this on if you have a start module
   if (digitalRead(start_mod) == 1) {
     if (started) {
-      if (runTime->getDuration() <= 0) {
-        pollSensors();
-        updateState();
-        updateMotors();
-      } else {
-        stopMotors();
-      }
+      pollSensors();
+      updateState();
+      updateMotors();
     } else {
       started = true;
-      runTime->startTimer(10000);
-      delay(5000);
+      // delay(5000);
     }
   } else {
     stopMotors();
@@ -168,6 +162,9 @@ void updateMotors() {
   // Ensure PWM is within 0-255
   int left_speed = min(255, max(0, abs(motors[0])));
   int right_speed = min(255, max(0, abs(motors[1])));
+
+  left_speed = 70;
+  right_speed = 70;
 
   // Left motor drive
   digitalWrite(left_dir_forward, motors[0] > 0 ? HIGH : LOW);

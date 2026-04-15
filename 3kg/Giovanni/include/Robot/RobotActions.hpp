@@ -7,7 +7,7 @@ class RobotActions {
         int *driver[2];
         unsigned long endTime;
         int priority;
-    
+        int state;
     public:
         RobotActions(int *left, int *right);
         int getLeft();
@@ -19,6 +19,8 @@ class RobotActions {
         void turnLeft(int spd, int time = 0, int priority = 0);
         void turnRight(int spd, int time = 0, int priority = 0);
         bool actionOver();
+        int getState();
+        void setState(int state);
 };
 
 #endif
