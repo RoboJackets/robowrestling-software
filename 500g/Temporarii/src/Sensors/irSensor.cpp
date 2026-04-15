@@ -1,13 +1,16 @@
 #include "Sensors/IrSensor.hpp"
 
 // type | Class Name | function name
-IrSensor::IrSensor() {
+IrSensor::IrSensor()
+{
     value = 0;
 }
-bool IrSensor::getValue() {
+bool IrSensor::getValue()
+{
     return value;
 }
 
-void IrSensor::setValue(bool sensorValue) {
+void IrSensor::setValue(bool sensorValue)
+{
     value = sensorValue;
 }

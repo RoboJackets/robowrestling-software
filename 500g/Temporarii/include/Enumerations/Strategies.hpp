@@ -1,11 +1,12 @@
 #ifndef STRATEGIES_HPP
 #define STRATEGIES_HPP
 
-enum Strategy {
+enum Strategy
+{
+    Strat0,
     Strat1,
     Strat2,
     Strat3,
-    Strat4,
     DefaultStrat
 };
 

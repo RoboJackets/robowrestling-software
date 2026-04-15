@@ -2,19 +2,19 @@
  * Temporarii Main File - Da Four-Wheel Drive
  */
 #include <Arduino.h>
-#include <Wire.h>
 #include <SparkFun_BMI270_Arduino_Library.h>
+#include <Wire.h>
 
 /**
  * Imports
  */
-#include "Robot/robotActions.hpp"
 #include "Robot/motorDriver.hpp"
-#include "Sensors/WorldState.hpp"
-#include "Sensors/IrSensor.hpp"
-#include "Sensors/lineSensor.hpp"
+#include "Robot/robotActions.hpp"
 #include "Robot/robotState.hpp"
+#include "Sensors/IrSensor.hpp"
 #include "Sensors/Timer.hpp"
+#include "Sensors/WorldState.hpp"
+#include "Sensors/lineSensor.hpp"
 
 /**
  * Pinouts
@@ -74,30 +74,30 @@ const int br_line_led = 17;
 /**
  * Object Definition
  */
-IrSensor *leftIR;
-IrSensor *flIR;
-IrSensor *midIR;
-IrSensor *frIR;
-IrSensor *rightIR;
+IrSensor* leftIR;
+IrSensor* flIR;
+IrSensor* midIR;
+IrSensor* frIR;
+IrSensor* rightIR;
 
-LineSensor *flLine;
-LineSensor *frLine;
-LineSensor *blLine;
-LineSensor *brLine;
+LineSensor* flLine;
+LineSensor* frLine;
+LineSensor* blLine;
+LineSensor* brLine;
 
-MotorDriver *flMotor;
-MotorDriver *frMotor;
-MotorDriver *blMotor;
-MotorDriver *brMotor;
+MotorDriver* flMotor;
+MotorDriver* frMotor;
+MotorDriver* blMotor;
+MotorDriver* brMotor;
 
-RobotActions *action;
-WorldState *world;
-Algorithm *algo;
+RobotActions* action;
+WorldState* world;
+Algorithm* algo;
 
 // Tempi 😃
-RobotState *tempi;
+RobotState* tempi;
 
-Timer *timer;
+Timer* timer;
 
 // Prints debugging every few times to avoid spam
 int debug_counter = 0;
@@ -163,16 +163,17 @@ void setup() {
   // pinMode(imu_sda, OUTPUT);
 
   // Setting up IMU
-  uint8_t i2cAddress = BMI2_I2C_PRIM_ADDR;
-  Wire.begin();
+  // uint8_t i2cAddress = BMI2_I2C_PRIM_ADDR;
+  // Wire.begin();
 
-  while(imu.beginI2C(i2cAddress) != BMI2_OK) {
-    Serial.println("Error: BMI270 not connected, check wiring and I2C address");
+  // while (imu.beginI2C(i2cAddress) != BMI2_OK)
+  // {
+  //   Serial.println("Error: BMI270 not connected, check wiring and I2C
+  //   address");
 
-    delay(1000);
-
-  }
-  Serial.println("BMI270");
+  //   delay(1000);
+  // }
+  // Serial.println("BMI270");
   // Wire.setClock(100000);
 
   // Serial.println("Scanning I2C...");
@@ -208,7 +209,6 @@ void setup() {
   leftIR = new IrSensor();
   rightIR = new IrSensor();
 
-
   flLine = new LineSensor();
   frLine = new LineSensor();
   blLine = new LineSensor();
@@ -219,10 +219,10 @@ void setup() {
   blMotor = new MotorDriver();
   brMotor = new MotorDriver();
 
-  IrSensor *irSensors[5] = {leftIR, flIR, midIR, frIR, rightIR};
-  LineSensor *lineSensors[4] = {blLine, flLine, frLine, brLine};
+  IrSensor* irSensors[5] = {leftIR, flIR, midIR, frIR, rightIR};
+  LineSensor* lineSensors[4] = {blLine, flLine, frLine, brLine};
 
-   // Setting up class structure
+  // Setting up class structure
   action = new RobotActions(blMotor, flMotor, frMotor, brMotor);
   world = new WorldState(irSensors, lineSensors);
   timer = new Timer(millis());
@@ -237,47 +237,48 @@ void setup() {
  */
 void loop() {
   // 5 Seconds before start for comp
-    // Start Mod -- Turn this on if you have a start module
-    // if (digitalRead(start_mod) == 1) {
-    //   if (started) {
-    //     pollSensors();
-    //     calculateState();
-    //     writeMotors();
-    //   } else {
-    //     started = true;
-    //     delay(5000);
-    //   }
-    // } else {
-    //   stopMotors();
-    // }
+  // Start Mod -- Turn this on if you have a start module
+  if (digitalRead(start_mod) == 1) {
+    if (started) {
+      pollSensors();
+      calculateState();
+      writeMotors();
+    } else {
+      started = true;
+      // delay(5000);
+    }
+  } else {
+    stopMotors();
+  }
 
-   // Debug
-    // debug_counter++;
-    // if (debug_counter >= 200) {
-    //   debug();
-    //   debug_counter = 0;
-    // }
+  // Debug
+  // debug_counter++;
+  // if (debug_counter >= 200)
+  // {
+  //   debug();
+  //   debug_counter = 0;
+  // }
 
-    // No start mod -- Turn this on if you don't have a start module
-    // if (started == true || digitalRead(start_mod) == 1) {
-    //   pollSensors();
-    //   calculateState();
-    //   writeMotors();
-    // } else {
-    //   started = true;
-    //   delay(4000);
-    // }
+  // No start mod -- Turn this on if you don't have a start module
+  // if (started == true) {
+  //   pollSensors();
+  //   calculateState();
+  //   writeMotors();
+  // } else {
+  //   started = true;
+  //   delay(4000);
+  // }
 
+  // pollSensors();
+  // calculateState();
+  // writeMotors();
 
-    // pollSensors();
-    // calculateState();
-    // writeMotors();
-    // Serial.println(yaw);
-    // delay(500);
-    imu.getSensorData();
-    Serial.print("Rotation: ");
-    Serial.print(imu.data.gyroX, 3);
-    delay(500);
+  // Serial.println(yaw);
+  // delay(500);
+  // imu.getSensorData();
+  // Serial.print("Rotation: ");
+  // Serial.print(imu.data.gyroX, 3);
+  // delay(500);
 }
 
 /**
@@ -297,8 +298,10 @@ void pollSensors() {
 
   int val1 = (digitalRead(strat_first) == HIGH) ? 0 : 1;
   int val2 = (digitalRead(strat_second) == HIGH) ? 0 : 1;
+  Serial.println(val1);
+  Serial.println(val2);
 
-  strategy_value = 2 * val1 + val2;
+  strategy_value = 2 * val2 + val1;
 
   // Show LED Displays for which ones are on
   ledDisplay();
@@ -309,26 +312,32 @@ void pollSensors() {
 /**
  * Calc State using algorithm
  */
-void calculateState() {
-  tempi->runAlgorithm(strategy_value);
-}
+void calculateState() { tempi->runAlgorithm(strategy_value); }
 
 /**
  * Write to motors
  */
 void writeMotors() {
   // 0: forward, 1: backward
-  analogWrite(fr_move_forward, frMotor->getDirection() == 0 ? frMotor->getSpeed() : 0);
-  analogWrite(fr_move_backward, frMotor->getDirection() == 1 ? frMotor->getSpeed() : 0);
+  analogWrite(fr_move_forward,
+              frMotor->getDirection() == 0 ? frMotor->getSpeed() : 0);
+  analogWrite(fr_move_backward,
+              frMotor->getDirection() == 1 ? frMotor->getSpeed() : 0);
 
-  analogWrite(fl_move_forward, flMotor->getDirection() == 0 ? flMotor->getSpeed() : 0);
-  analogWrite(fl_move_backward, flMotor->getDirection() == 1 ? flMotor->getSpeed() : 0);
+  analogWrite(fl_move_forward,
+              flMotor->getDirection() == 0 ? flMotor->getSpeed() : 0);
+  analogWrite(fl_move_backward,
+              flMotor->getDirection() == 1 ? flMotor->getSpeed() : 0);
 
-  analogWrite(br_move_forward, brMotor->getDirection() == 0 ? brMotor->getSpeed() : 0);
-  analogWrite(br_move_backward, brMotor->getDirection() == 1 ? brMotor->getSpeed() : 0);
+  analogWrite(br_move_forward,
+              brMotor->getDirection() == 0 ? brMotor->getSpeed() : 0);
+  analogWrite(br_move_backward,
+              brMotor->getDirection() == 1 ? brMotor->getSpeed() : 0);
 
-  analogWrite(bl_move_forward, blMotor->getDirection() == 0 ? blMotor->getSpeed() : 0);
-  analogWrite(bl_move_backward, blMotor->getDirection() == 1 ? blMotor->getSpeed() : 0);
+  analogWrite(bl_move_forward,
+              blMotor->getDirection() == 0 ? blMotor->getSpeed() : 0);
+  analogWrite(bl_move_backward,
+              blMotor->getDirection() == 1 ? blMotor->getSpeed() : 0);
 }
 
 void ledDisplay() {
@@ -362,7 +371,6 @@ void ledDisplay() {
   } else {
     digitalWrite(right_ir_led, 0);
   }
-
 
   // Line Sensor LED
   if (flLine->getValue() <= 500) {
@@ -428,14 +436,11 @@ void stopMotors() {
 //     Serial.println(yaw);
 // }
 
-
-
-
-
 /**
  * Debuggin' + Hyperparameters.
- * 
- * Turn on/off accordingly. Can also modify frequency of output inside of running loop
+ *
+ * Turn on/off accordingly. Can also modify frequency of output inside of
+ * running loop
  */
 
 bool strat_debug = true;
@@ -479,7 +484,7 @@ void debug() {
     Serial.print("Back Right Line: ");
     Serial.println(brLine->getValue());
   }
-  
+
   // Motor States
   if (motor_debug == true) {
     Serial.print("FL Motor: ");
@@ -493,4 +498,5 @@ void debug() {
   }
 
   Serial.println("=========================");
+  delay(100);
 }

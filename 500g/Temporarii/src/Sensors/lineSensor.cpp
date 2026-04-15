@@ -1,12 +1,15 @@
 #include "Sensors/lineSensor.hpp"
 
-LineSensor::LineSensor() {
+LineSensor::LineSensor()
+{
     value = 0;
 }
-int LineSensor::getValue() {
+int LineSensor::getValue()
+{
     return value;
 }
 
-void LineSensor::setValue(int sensorValue) {
+void LineSensor::setValue(int sensorValue)
+{
     value = sensorValue;
 }

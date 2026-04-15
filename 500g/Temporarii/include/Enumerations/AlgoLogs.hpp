@@ -2,14 +2,19 @@
 #define Algo_Logs_hpp
 
 enum AlgoLogs {
-    BTFR,
-    BTFL,
-    BTBackward,
-    RunItDownAlgo,
-    Turn,
-    Search,
-    StirFry,
-    NoneAlgo
+  BTFR,
+  BTFL,
+  BTBackward,
+  RunItDownAlgo,
+  Turn,
+  Search,
+  StirFry,
+  Evade,
+  NoneAlgo,
+  pingPongL,
+  pingPongR,
+  pingPongF,
+  BNSAlgo
 };
 
-#endif // Algo_Logs_hpp
+#endif  // Algo_Logs_hpp
