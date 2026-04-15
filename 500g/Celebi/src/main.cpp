@@ -182,8 +182,8 @@ void updateState() {
 }
 
 /**
- * Implemented for Shorti's motordrivers to conform to the
- * simple motordriver with speed and direction.  
+ * Implemented for Celebi's motordrivers
+ * motordriver takes positive and negative power
  * Max speed is 255
  */ 
 void updateMotors() {
@@ -198,7 +198,7 @@ void updateMotors() {
   if (motors[1] > 0) {  // if direction is forward
       analogWrite(RmotorPos, motors[1]);
       analogWrite(RmotorNeg, 0);
-  } else {                    // if direction is back
+  } else {              // if direction is back
       analogWrite(RmotorPos, 0);
       analogWrite(RmotorNeg, abs(motors[1]));
   }
