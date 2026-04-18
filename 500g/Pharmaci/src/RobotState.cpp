@@ -1004,6 +1004,319 @@ void RobotState::antiPassive(uint32_t time) {
 
 }
 
+void RobotState::slowTrackState(uint32_t time) {
+    const int BACKUP_SPEED   = 200;
+    const int ROTATE_SPEED   = 200;
+
+    const int BACKUP_MS_SIDE = 200;
+    const int BACKUP_MS_BOTH = 250;
+    const int ROTATE_MS_SIDE = 80;
+    const int ROTATE_MS_BOTH = 80;
+
+    const int BOTH_WINDOW_MS = 20;
+    const int MIN_BACKUP_DWELL_MS = 60;
+    const int MIN_ROTATE_DWELL_MS = 80;
+
+    // slow-track behavior timings
+    const int INCH_PAUSE_MS   = 1000;
+    const int INCH_FORWARD_MS = 500;
+
+    static bool     pendingLine = false;
+    static TurnDir  pendingDir  = TurnDir::None;
+    static int      pendingT0   = 0;
+
+    static uint32_t backupEarliestDone = 0;
+    static uint32_t rotateEarliestDone = 0;
+
+    // slow-track state
+    enum class SlowTrackPhase {
+        Pause,
+        Forward
+    };
+
+    static SlowTrackPhase slowPhase = SlowTrackPhase::Pause;
+    static uint32_t slowPhaseStart = 0;
+
+    static int slowScanStep = 0;       // 0=L200, 1=R400, 2=L400, 3+=alternate 400
+    static bool slowScanLeft = false;  // used after initial 3 scan steps
+    static uint32_t slowScanStart = 0;
+
+    static Position lastSlowEnemyPos = Position::None;
+
+    Position selfPos  = worldState->getSelfPosition();
+    Position enemyPos = worldState->getEnemyPosition();
+
+    turnTimer->setCurrentTime(time);
+    backupTimer->setCurrentTime(time);
+
+    auto onLineNow = [&](Position p) {
+        return p == Position::On_Line ||
+               p == Position::On_Line_Left ||
+               p == Position::On_Line_Right;
+    };
+
+    auto resetSlowTrackPattern = [&]() {
+        slowPhase = SlowTrackPhase::Pause;
+        slowPhaseStart = time;
+        slowScanStep = 0;
+        slowScanLeft = false;
+        slowScanStart = time;
+        lastSlowEnemyPos = Position::None;
+    };
+
+    // =========================================================
+    // 1. LINE SAFETY / EDGE RECOVERY
+    // =========================================================
+
+    if (isTurning) {
+        const bool enemyInterrupt = (enemyPos != Position::None) && !onLineNow(selfPos);
+
+        if (!enemyInterrupt) {
+            if (phase == Phase::BackingUp) {
+                bool dwellSatisfied = (int32_t)(time - backupEarliestDone) >= 0;
+                if (!backupTimer->getReady() || !dwellSatisfied) {
+                    robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
+                    return;
+                }
+
+                phase = Phase::Rotating;
+                turnTimer->setPreviousTime(time);
+                rotateEarliestDone = time + MIN_ROTATE_DWELL_MS;
+            }
+
+            if (phase == Phase::Rotating) {
+                bool dwellSatisfied = (int32_t)(time - rotateEarliestDone) >= 0;
+                if (!turnTimer->getReady() || !dwellSatisfied) {
+                    if (turnDir == TurnDir::Left) {
+                        robotActions->drive(-ROTATE_SPEED, ROTATE_SPEED);
+                    } else {
+                        robotActions->drive(ROTATE_SPEED, -ROTATE_SPEED);
+                    }
+                    return;
+                }
+
+                isTurning = false;
+                phase = Phase::Idle;
+                turnDir = TurnDir::None;
+
+                resetSlowTrackPattern();
+            }
+        } else {
+            isTurning = false;
+            phase = Phase::Idle;
+            turnDir = TurnDir::None;
+        }
+    }
+
+    if (!isTurning && pendingLine) {
+        const bool enemyInterrupt = (enemyPos != Position::None) && !onLineNow(selfPos);
+
+        if (!enemyInterrupt) {
+            if (selfPos == Position::On_Line) {
+                backupTimer->setTimeInterval(BACKUP_MS_BOTH);
+                turnTimer->setTimeInterval(ROTATE_MS_BOTH);
+                turnDir = TurnDir::Right;
+
+                isTurning = true;
+                phase = Phase::BackingUp;
+                backupTimer->setPreviousTime(time);
+                backupEarliestDone = time + MIN_BACKUP_DWELL_MS;
+                pendingLine = false;
+
+                robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
+                return;
+            }
+
+            if (time - pendingT0 >= BOTH_WINDOW_MS) {
+                backupTimer->setTimeInterval(BACKUP_MS_SIDE);
+                turnTimer->setTimeInterval(ROTATE_MS_SIDE);
+                turnDir = pendingDir;
+
+                isTurning = true;
+                phase = Phase::BackingUp;
+                backupTimer->setPreviousTime(time);
+                backupEarliestDone = time + MIN_BACKUP_DWELL_MS;
+                pendingLine = false;
+
+                robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
+                return;
+            }
+
+            robotActions->drive(0, 0);
+            return;
+        } else {
+            pendingLine = false;
+        }
+    }
+
+    if (!isTurning && !pendingLine) {
+        if (selfPos == Position::On_Line) {
+            backupTimer->setTimeInterval(BACKUP_MS_BOTH);
+            turnTimer->setTimeInterval(ROTATE_MS_BOTH);
+            turnDir = TurnDir::Right;
+
+            isTurning = true;
+            phase = Phase::BackingUp;
+            backupTimer->setPreviousTime(time);
+            backupEarliestDone = time + MIN_BACKUP_DWELL_MS;
+
+            resetSlowTrackPattern();
+
+            robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
+            return;
+        }
+
+        if (selfPos == Position::On_Line_Left) {
+            pendingLine = true;
+            pendingDir = TurnDir::Right;   // turn away from left edge
+            pendingT0 = time;
+
+            resetSlowTrackPattern();
+
+            robotActions->drive(0, 0);
+            return;
+        }
+
+        if (selfPos == Position::On_Line_Right) {
+            pendingLine = true;
+            pendingDir = TurnDir::Left;    // turn away from right edge
+            pendingT0 = time;
+
+            resetSlowTrackPattern();
+
+            robotActions->drive(0, 0);
+            return;
+        }
+    }
+
+    // =========================================================
+    // 2. SLOW-TRACK ENEMY HANDLING
+    // =========================================================
+
+    bool enemySeen = (enemyPos != Position::None);
+
+    // Reset inch/scan patterns whenever enemy classification changes
+    if (enemySeen && enemyPos != lastSlowEnemyPos) {
+        slowPhase = SlowTrackPhase::Pause;
+        slowPhaseStart = time;
+        slowScanStep = 0;
+        slowScanLeft = false;
+        slowScanStart = time;
+    }
+
+    lastSlowEnemyPos = enemyPos;
+
+    if (enemySeen) {
+        // Very close -> full charge
+        if (enemyPos == Position::Middle_Close) {
+            robotActions->drive(255, 255);
+            return;
+        }
+
+        // Side sectors -> rotate toward enemy
+        if (enemyPos == Position::Right ||
+            enemyPos == Position::Flag_Right) {
+            robotActions->drive(150, -150);
+            return;
+        }
+
+        if (enemyPos == Position::Left ||
+            enemyPos == Position::Flag_Left) {
+            robotActions->drive(-150, 150);
+            return;
+        }
+
+        if (enemyPos == Position::Right_Middle_Close) {
+            robotActions->drive(150, -150);
+            return;
+        }
+
+        if (enemyPos == Position::Left_Middle_Close) {
+            robotActions->drive(-150, 150);
+            return;
+        }
+
+        // Middle-ish -> inch forward slowly
+        if (enemyPos == Position::Middle_Far ||
+            enemyPos == Position::Right_Middle ||
+            enemyPos == Position::Left_Middle) {
+
+            if (slowPhase == SlowTrackPhase::Pause) {
+                robotActions->drive(0, 0);
+
+                if (time - slowPhaseStart >= INCH_PAUSE_MS) {
+                    slowPhase = SlowTrackPhase::Forward;
+                    slowPhaseStart = time;
+                }
+            } else {
+                // slight steering bias if off-center
+                if (enemyPos == Position::Left_Middle) {
+                    robotActions->drive(60, 90);
+                } else if (enemyPos == Position::Right_Middle) {
+                    robotActions->drive(90, 60);
+                } else {
+                    robotActions->drive(80, 80);
+                }
+
+                if (time - slowPhaseStart >= INCH_FORWARD_MS) {
+                    slowPhase = SlowTrackPhase::Pause;
+                    slowPhaseStart = time;
+                }
+            }
+
+            return;
+        }
+
+        // fallback if you add more positions later
+        robotActions->drive(0, 0);
+        return;
+    }
+
+    // =========================================================
+    // 3. NO ENEMY -> SCAN BACK AND FORTH
+    // =========================================================
+
+    if (slowScanStep == 0) {
+        robotActions->drive(-150, 150);   // left 200
+        if (time - slowScanStart >= 200) {
+            slowScanStep = 1;
+            slowScanStart = time;
+        }
+        return;
+    }
+
+    if (slowScanStep == 1) {
+        robotActions->drive(150, -150);   // right 400
+        if (time - slowScanStart >= 400) {
+            slowScanStep = 2;
+            slowScanStart = time;
+        }
+        return;
+    }
+
+    if (slowScanStep == 2) {
+        robotActions->drive(-150, 150);   // left 400
+        if (time - slowScanStart >= 400) {
+            slowScanStep = 3;
+            slowScanLeft = false;         // next alternating step starts right
+            slowScanStart = time;
+        }
+        return;
+    }
+
+    // alternate every 400 ms afterward
+    if (slowScanLeft) {
+        robotActions->drive(-150, 150);
+    } else {
+        robotActions->drive(150, -150);
+    }
+
+    if (time - slowScanStart >= 400) {
+        slowScanLeft = !slowScanLeft;
+        slowScanStart = time;
+    }
+}
+
 
 // new proper zig/zag
 

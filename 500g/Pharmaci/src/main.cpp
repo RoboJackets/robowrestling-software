@@ -141,6 +141,9 @@ void memeLeft(int time) {
   robotState->memeLeft(time);
 }
 
+void slowTrackState(int time) {
+  robotState->slowTrackState(time);
+}
 
 
 bool isMemeDone() {
@@ -214,7 +217,7 @@ void loop() {
               break;
           case 3:
               //both switches at 12
-              turretState();
+              slowTrackState(millis());
               break;
       }
   } else {

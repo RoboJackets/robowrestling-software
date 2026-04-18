@@ -30,6 +30,8 @@ class RobotState {
                MotorDriver* rightMotorDriverPtr);
 
     void calculateState();
+
+    void slowTrackState(uint32_t time);
     void calculateState(uint32_t time);
     void turretState();
     void antiPassive(uint32_t time);
