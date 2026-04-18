@@ -249,7 +249,6 @@ void loop() {
               }
               break;
 
-        servo.write(robotState->servo);
 
       }
   } else {

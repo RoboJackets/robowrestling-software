@@ -36,7 +36,7 @@ class RobotState {
     void antiPassive(uint32_t time);
     void memeRight(uint32_t time);
     void memeLeft(uint32_t time);
-    void optimalStrategy(u_int32_t time);
+    void optimalStrategy(uint32_t time);
 
     void resetMatch();
 
