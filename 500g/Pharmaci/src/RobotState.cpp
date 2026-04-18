@@ -654,7 +654,7 @@ void RobotState::memeRight(uint32_t time) {
     switch (memeStep) {
         case 0: // initialize first move
             memeTimer->setPreviousTime(time);
-            memeTimer->setTimeInterval(50);
+            memeTimer->setTimeInterval(0);
             memeStep = 1;
             return;
 
@@ -714,7 +714,7 @@ void RobotState::memeLeft(uint32_t time) {
     switch (memeStep) {
         case 0: // initialize first move
             memeTimer->setPreviousTime(time);
-            memeTimer->setTimeInterval(50);
+            memeTimer->setTimeInterval(0);
             memeStep = 1;
             return;
 
