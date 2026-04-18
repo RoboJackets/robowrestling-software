@@ -2,8 +2,8 @@
  * Temporarii Main File - Da Four-Wheel Drive
  */
 #include <Arduino.h>
-#include <SparkFun_BMI270_Arduino_Library.h>
-#include <Wire.h>
+// #include <SparkFun_BMI270_Arduino_Library.h>
+// #include <Wire.h>
 
 /**
  * Imports
@@ -50,8 +50,8 @@ const int imu_pin2 = 34;
 const int imu_scl = 19;
 const int imu_sda = 18;
 
-BMI270 imu;
-float yaw = 0.0;
+// BMI270 imu;
+// float yaw = 0.0;
 // unsigned long lastIMUTime = 0;
 
 // Strategy Pin
@@ -226,7 +226,7 @@ void setup() {
   action = new RobotActions(blMotor, flMotor, frMotor, brMotor);
   world = new WorldState(irSensors, lineSensors);
   timer = new Timer(millis());
-  algo = new Algorithm(action, timer, &yaw);
+  algo = new Algorithm(action, timer);
   tempi = new RobotState(world, algo);
 
   Serial.println("Starting Setup");

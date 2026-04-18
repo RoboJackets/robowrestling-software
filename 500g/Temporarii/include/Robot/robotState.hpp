@@ -1,6 +1,7 @@
 #include "Enumerations/AlgoLogs.hpp"
 #include "Enumerations/OnLine.hpp"
 #include "Enumerations/Strategies.hpp"
+#include "Enumerations/EnemyPositions.hpp"
 #include "Robot/algorithm.hpp"
 #include "Sensors/WorldState.hpp"
 #include "Sensors/Timer.hpp"

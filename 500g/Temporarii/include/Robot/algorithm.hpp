@@ -15,7 +15,6 @@ class Algorithm {
   RobotActions* action;
   Timer* timer;
   bool line;
-  float* yaw;
 
   SweepState sweepState;
   float theta_entry;
@@ -23,19 +22,20 @@ class Algorithm {
   float theta_target;
 
  public:
-  Algorithm(RobotActions* action, Timer* timer, float* yaw_ptr);
+  Algorithm(RobotActions* action, Timer* timer);
   void Test();
   // Search Algos
   void search();
   void fryThem();
   void pingPong(OnLine line_state, AlgoLogs algo);
+  void pingPongMove(AlgoLogs algo);
 
   void RunItDown(EnemyPositions pos, AlgoLogs algo);
   void TurnToEnemy(EnemyPositions pos);
-  void SideStrike(EnemyPositions pos);
+  void SideStrike(EnemyPositions pos, AlgoLogs algo);
   void backTrack(OnLine line_state, AlgoLogs algo);
-  void Strat2Sweep(bool midDetected);
-  void evade();
+  // void Strat2Sweep(bool midDetected);
+  void evade(EnemyPositions pos);
   bool getTimer();
 };
 

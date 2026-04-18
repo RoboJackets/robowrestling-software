@@ -1,10 +1,9 @@
 #include "Robot/algorithm.hpp"
 
-Algorithm::Algorithm(RobotActions* action, Timer* timer, float* yaw_ptr) {
+Algorithm::Algorithm(RobotActions* action, Timer* timer) {
   this->action = action;
   this->timer = timer;
   this->line = false;
-  this->yaw = yaw_ptr;
 }
 
 void Algorithm::Test() {
@@ -84,23 +83,44 @@ void Algorithm::search() {
 }
 
 void Algorithm::pingPong(OnLine line_state, AlgoLogs algo) {
-  if (timer->getRunningProcess() == true &&
-      (algo == AlgoLogs::pingPongL || algo == AlgoLogs::pingPongR ||
-       algo == AlgoLogs::pingPongF)) {
-    if (algo == pingPongR) {
-      action->Right(80);
-    } else if (algo == pingPongL) {
-      action->Left(80);
+  if (timer->getRunningProcess() == true) { 
+    if (timer->getDuration() > 200) {
+        action->Backwards(150);
     } else {
-      action->Forward(60);
+      if (algo == pingPongR) {
+        action->Right(120);
+      } else if (algo == pingPongL) {
+        action->Left(120);
+      }
     }
     return;
   }
+
   timer->startTimer(300);
-  action->Right(80);
+
+  if (algo == pingPongR) {
+    action->Right(120);
+  } else if (algo == pingPongL) {
+    action->Left(120);
+  }
+}
+
+void Algorithm::pingPongMove(AlgoLogs algo) {
+  if (timer->getRunningProcess() == true && 
+      algo == pingPongF) {
+      action->Forward(65);
+      return;
+  }
+  timer->startTimer(1);
+  action->Forward(65);
 }
 
 void Algorithm::backTrack(OnLine line_state, AlgoLogs algo) {
+  // The override to other searching algorithms
+  // if ((algo != BTBackward || algo != BTFL || algo != BTFR) && timer->getRunningProcess() == true) {
+  //   timer->startTimer(300);
+  // }
+
   if (timer->getRunningProcess() == true &&
       (algo == BTBackward || algo == BTFL || algo == BTFR)) {
     if (algo == BTBackward) {
@@ -110,9 +130,9 @@ void Algorithm::backTrack(OnLine line_state, AlgoLogs algo) {
       // } else {
       //     action->Left(100);
       // }
-      action->Forward(200);
+      // action->Forward(200);
     } else if (algo == BTFL || algo == BTFR) {
-      if (timer->getDuration() > 250) {
+      if (timer->getDuration() > 200) {
         action->Backwards(200);
       } else {
         if (algo == BTFL) {
@@ -136,132 +156,142 @@ void Algorithm::backTrack(OnLine line_state, AlgoLogs algo) {
 
 void Algorithm::fryThem() {
   if (!timer->getRunningProcess()) {
-    timer->startTimer(1350);
-    action->Right(100);
+    timer->startTimer(750);
+    action->Right(150);
     return;
   }
 
   unsigned long t = timer->getElapsed();
 
-  if (t < 300) {
-    action->Right(125);
-  } else if (t < 900) {
-    action->Left(125);
-  } else if (t < 1200) {
-    action->Right(125);
+  if (t < 150) {
+    action->Right(150);
+  } else if (t < 450) {
+    action->Left(150);
+  } else if (t < 600) {
+    action->Right(150);
   } else {
     action->Forward(100);
   }
 }
 
-void Algorithm::Strat2Sweep(bool midDetected) {
-  float currentYaw = *yaw;
+// void Algorithm::Strat2Sweep(bool midDetected) {
+//   float currentYaw = *yaw;
 
-  switch (sweepState) {
-    case SweepInit:
-      action->Right(70);
-      sweepState = SweepWaitEnter;
-      break;
+//   switch (sweepState) {
+//     case SweepInit:
+//       action->Right(70);
+//       sweepState = SweepWaitEnter;
+//       break;
 
-    case SweepWaitEnter:
-      action->Right(70);
+//     case SweepWaitEnter:
+//       action->Right(70);
 
-      if (midDetected) {
-        theta_entry = currentYaw;
-        sweepState = SweepMeasure;
-      }
-      break;
+//       if (midDetected) {
+//         theta_entry = currentYaw;
+//         sweepState = SweepMeasure;
+//       }
+//       break;
 
-    case SweepMeasure:
-      action->Right(70);
+//     case SweepMeasure:
+//       action->Right(70);
 
-      if (!midDetected) {
-        theta_exit = currentYaw;
+//       if (!midDetected) {
+//         theta_exit = currentYaw;
 
-        // midpoint angle
-        theta_target = (theta_entry + theta_exit) / 2.0;
+//         // midpoint angle
+//         theta_target = (theta_entry + theta_exit) / 2.0;
 
-        sweepState = SweepReturn;
-      }
-      break;
+//         sweepState = SweepReturn;
+//       }
+//       break;
 
-    case SweepReturn: {
-      float error = theta_target - currentYaw;
+//     case SweepReturn: {
+//       float error = theta_target - currentYaw;
 
-      // normalize to [-180, 180]
-      while (error > 180) error -= 360;
-      while (error < -180) error += 360;
+//       // normalize to [-180, 180]
+//       while (error > 180) error -= 360;
+//       while (error < -180) error += 360;
 
-      if (abs(error) < 3) {
-        sweepState = SweepAttack;
-        break;
-      }
+//       if (abs(error) < 3) {
+//         sweepState = SweepAttack;
+//         break;
+//       }
 
-      int turnSpeed = constrain(2.0 * error, -100, 100);
+//       int turnSpeed = constrain(2.0 * error, -100, 100);
 
-      if (turnSpeed > 0) {
-        action->Right(turnSpeed);
-      } else {
-        action->Left(-turnSpeed);
-      }
-      break;
-    }
+//       if (turnSpeed > 0) {
+//         action->Right(turnSpeed);
+//       } else {
+//         action->Left(-turnSpeed);
+//       }
+//       break;
+//     }
 
-    case SweepAttack:
-      action->Forward(200);
-      break;
-  }
-}
+//     case SweepAttack:
+//       action->Forward(200);
+//       break;
+//   }
+// }
 
-void Algorithm::SideStrike(EnemyPositions pos) {
+void Algorithm::SideStrike(EnemyPositions pos, AlgoLogs algo) {
   // TODO: Test this
   // If we are queueing this algo, it will override lines if it does see an
   // enemy but subsequent runs will have to follow line to not fall off
   if (timer->getRunningProcess() == true) {
-    if (pos == EnemyFL) {
-      if (timer->getDuration() > 1500) {
-        action->Forward(200);
-      } else if (timer->getDuration() > 1400) {
-        action->Left(200);
+    if (algo == SideStrikeFL) {
+      if (timer->getDuration() > 300) {
+        action->Forward(150);
+      } else if (timer->getDuration() > 250) {
+        action->Left(140);
       } else {
-        action->Forward(200);
+        action->Forward(250);
       }
-    } else if (pos == EnemyFR) {
-      if (timer->getDuration() > 1500) {
-        action->Forward(200);
-      } else if (timer->getDuration() > 1400) {
-        action->Right(200);
+    } else if (algo == SideStrikeFR) {
+      if (timer->getDuration() > 300) {
+        action->Forward(150);
+      } else if (timer->getDuration() > 250) {
+        action->Right(140);
       } else {
-        action->Forward(200);
+        action->Forward(250);
       }
-    } else if (pos == EnemyLeft) {
+    } else if (algo == SideStrikeL) {
       // EnemyLeft + EnemyRight are going to follow turn to robot before
       // EnemyFL/EnemyFR
-      action->Left(150);
-    } else if (pos == EnemyRight) {
-      action->Right(150);
+      action->Left(160);
+    } else if (algo == SideStrikeR) {
+      action->Right(160);
+    } else {
+      action->Forward(70);
     }
+
     return;
   }
-  timer->startTimer(2000);
-  if (pos == EnemyFL) {
-    action->Forward(200);
-  } else if (pos == EnemyFR) {
-    action->Forward(200);
-  } else if (pos == EnemyLeft) {
-    action->Left(150);
-  } else if (pos == EnemyRight) {
-    action->Right(150);
+  timer->startTimer(350);
+  if (algo == SideStrikeFL) {
+    action->Forward(170);
+  } else if (algo == SideStrikeFR) {
+    action->Forward(170);
+  } else if (algo == SideStrikeL) {
+    action->Left(140);
+  } else if (algo == SideStrikeR) {
+    action->Right(140);
+  } else {
+    action->Forward(70);
   }
 }
 
-void Algorithm::evade() {
-  int v = random(0, 2);
-  if (v == 0) {
-    action->ArcLeft(200);
-  } else {
-    action->ArcRight(200);
+void Algorithm::evade(EnemyPositions pos) {
+  if (timer->getRunningProcess() == true) {
+    if (pos == EnemyFL || pos == EnemyLeft) {
+      action->ArcRight(150);
+    } else if (pos == EnemyFR || pos == EnemyRight) {
+      action->ArcLeft(150);
+    } else if (pos == EnemyFront) {
+      action->Forward(150);
+    }
   }
+
+  timer->startTimer(500);
 }
 
 bool Algorithm::getTimer() { return timer->getRunningProcess(); }

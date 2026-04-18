@@ -18,6 +18,7 @@ RobotState::RobotState(WorldState* world, Algorithm* algo) {
 void RobotState::runAlgorithm(int strat_num) {
   // Grab line_state for ease of use
   OnLine line_state = world->getIsOnLine();
+  EnemyPositions curr_pos = world->getEnemyPosition();
 
   // Decode strat (MODIFY for actual strategy name)
   Strategy strat = DefaultStrat;
@@ -117,19 +118,37 @@ void RobotState::runAlgorithm(int strat_num) {
 
       // One Time Evasion Strat
     case (Strat1):  // Switch 1 High, Switch 2 LOW
-      // Mark evade as done once
-      if (prevAlgo == Evade && !world->getAllFrontActive()) {
-        hasEvaded = true;
-      }
-
       if (algo->getTimer() == false) {
         prevAlgo = NoneAlgo;
       }
 
       // Evade if all 3 front sensors fire
-      if (!hasEvaded && world->getAllFrontActive()) {
-        algo->evade();
-        prevAlgo = Evade;
+      if (!hasEvaded) {
+        algo->SideStrike(curr_pos, prevAlgo);
+        if (curr_pos == EnemyFL) {
+          prevAlgo = SideStrikeFL;
+        } else if (curr_pos == EnemyFR) {
+          prevAlgo = SideStrikeFR;
+        } else if (curr_pos == EnemyRight) {
+          prevAlgo = SideStrikeR;
+        } else if (curr_pos == EnemyLeft) {
+          prevAlgo = SideStrikeL;
+        } else {
+          prevAlgo = SideStrikeOther;
+        }
+        hasEvaded = true;
+        return;
+      }
+
+      if (prevAlgo == SideStrikeFL || prevAlgo == SideStrikeFR ||
+          prevAlgo == SideStrikeR || prevAlgo == SideStrikeL ||
+          prevAlgo == SideStrikeOther) {
+        if (curr_pos == EnemyFL) {
+          prevAlgo = SideStrikeFL;
+        } else if (curr_pos == EnemyFR) {
+          prevAlgo = SideStrikeFR;
+        }
+        algo->SideStrike(curr_pos, prevAlgo);
         return;
       }
 
@@ -160,8 +179,19 @@ void RobotState::runAlgorithm(int strat_num) {
         return;
       }
 
-      algo->search();
-      prevAlgo = Search;
+      // Line Check First
+      if (prevAlgo == pingPongR || line_state == LineFL) {
+        algo->pingPong(line_state, prevAlgo);
+        prevAlgo = pingPongR;
+        return;
+      } else if (prevAlgo == pingPongL || line_state == LineFR) {
+        algo->pingPong(line_state, prevAlgo);
+        prevAlgo = pingPongL;
+        return;
+      } else {
+        algo->pingPongMove(prevAlgo);
+        prevAlgo = pingPongF;
+      }
 
       break;
 
@@ -203,13 +233,14 @@ void RobotState::runAlgorithm(int strat_num) {
         prevAlgo = pingPongL;
         return;
       } else {
-        algo->pingPong(line_state, prevAlgo);
+        algo->pingPongMove(prevAlgo);
         prevAlgo = pingPongF;
       }
       break;
 
     case (Strat3):  // Switch 1 HIGH, Switch 2 HIGH
       if (hasWaited == 0) { 
+        // Hyperparamter for flag delay
         bnsTimer->startTimer(1500);
         hasWaited = 1;
       }

@@ -14,7 +14,12 @@ enum AlgoLogs {
   pingPongL,
   pingPongR,
   pingPongF,
-  BNSAlgo
+  BNSAlgo,
+  SideStrikeFR,
+  SideStrikeFL,
+  SideStrikeL,
+  SideStrikeR,
+  SideStrikeOther
 };
 
 #endif  // Algo_Logs_hpp
