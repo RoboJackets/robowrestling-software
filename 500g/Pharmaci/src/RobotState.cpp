@@ -11,7 +11,7 @@ RobotState::RobotState(WorldState* worldStatePtr, RobotActions* robotActionsPtr,
     turnTimer  = new Timer();  turnTimer->setTimeInterval(300);  // rotate phase
     backupTimer = new Timer(); backupTimer->setTimeInterval(300); // back-up phase
 
-    memeTimer = new Timer()
+    memeTimer = new Timer();
 
     isTurning = false;
     phase = Phase::Idle;
