@@ -24,6 +24,8 @@ RobotState *robotState;
 
 Servo servo;
 
+int lastDipMode = -1; 
+
 // Shorti Pins
 
 
@@ -85,7 +87,7 @@ int getDipMode() {
 
 void setup() {
   servo.attach(34);
-  servo.write(0);
+  servo.write(90);
 
   // Serial.begin(9600);
     pinMode(R_POS, OUTPUT);
@@ -100,6 +102,8 @@ void setup() {
      pinMode(LEFT_LINE, INPUT);
      pinMode(RIGHT_LINE, INPUT);
      pinMode(START_MODULE, INPUT);
+     pinMode(DIP1, INPUT);
+      pinMode(DIP2, INPUT);
 
 
   leftMotorDriver = new MotorDriver();
@@ -157,7 +161,7 @@ void pollSensors() {
 
 }
 
-void calculateState(int time) {
+void calculateState(uint32_t time) {
   robotState->calculateState(time);
 }
 
@@ -216,8 +220,16 @@ bool isMemeDone() {
 void loop() {
   int dipMode = getDipMode();
 
+
   if (digitalRead(START_MODULE)) {
       pollSensors();
+
+      if (dipMode != lastDipMode) {
+        if (dipMode == 0) {
+          servo.write(0);
+        }
+        lastDipMode = dipMode;
+      }
 
       switch (dipMode) {
           case 0:
@@ -251,12 +263,15 @@ void loop() {
 
 
       }
+
   } else {
       robotActions->drive(0, 0);
         robotState->resetMatch();
-      servo.write(90);
+      robotState->servo = 90;
+      lastDipMode = -1;
 
   }
+  servo.write(robotState->servo);
 
   updateMotors();
 }

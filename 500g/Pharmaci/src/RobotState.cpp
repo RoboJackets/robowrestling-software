@@ -310,7 +310,6 @@ void RobotState::memeLeft(uint32_t time) {
 // }
 
 void RobotState::calculateState(uint32_t time) {
-    servo = 0;
     const int BACKUP_SPEED = 150;
     const int TURN_SPEED   = 150;
 
