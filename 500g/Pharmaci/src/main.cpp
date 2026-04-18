@@ -44,11 +44,26 @@ Servo servo;
 //  const int LEFT_LINE = A6;
 //  const int RIGHT_LINE = A7;
 
-    const int LEFT_IR_90 = 8;
- const int LEFT_IR_45 = 5;
- const int RIGHT_IR_90 = 2;
- const int RIGHT_IR_45 = 3;
- const int MIDDLE_IR = 4;
+//     const int LEFT_IR_90 = 8;
+//  const int LEFT_IR_45 = 5;
+//  const int RIGHT_IR_90 = 2;
+//  const int RIGHT_IR_45 = 3;
+//  const int MIDDLE_IR = 4;
+
+//  const int START_MODULE = 6;
+// const int L_NEG = 1;
+// const int L_POS = 0;
+// const int R_POS = 28;
+// const int R_NEG = 29;
+
+//  const int LEFT_LINE = A6;
+//  const int RIGHT_LINE = A7;
+
+     const int LEFT_IR_90 = 5;
+ const int LEFT_IR_45 = 3;
+ const int RIGHT_IR_90 = 8;
+ const int RIGHT_IR_45 = 4;
+ const int MIDDLE_IR = 2;
 
  const int START_MODULE = 6;
 const int L_NEG = 1;
@@ -56,8 +71,17 @@ const int L_POS = 0;
 const int R_POS = 28;
 const int R_NEG = 29;
 
- const int LEFT_LINE = A6;
+ const int LEFT_LINE = A4;
  const int RIGHT_LINE = A7;
+
+ const int DIP1 = 36;
+const int DIP2 = 37;
+
+int getDipMode() {
+  int dip1 = !digitalRead(DIP1);
+  int dip2 = !digitalRead(DIP2);
+  return (dip2 << 1) | dip1;
+}
 
 void setup() {
   servo.attach(34);
@@ -92,9 +116,6 @@ void setup() {
 
   worldState = new WorldState(leftLineSensor, rightLineSensor, leftIRSensor, leftMiddleIRSensor, middleIRSensor, rightMiddleIRSensor, rightIRSensor);
   robotState = new RobotState(worldState, robotActions, leftMotorDriver, rightMotorDriver);
-
-  delay(4800); // wait for 5 seconds before starting the robot
-  servo.write(0);
 }
 
 
@@ -176,25 +197,65 @@ void debug() {
   delay(100);
 }
 
-
-
-void loop() {
-
-  // debug();
-  pollSensors();
-  calculateState(millis());
-  updateMotors();
-
-  // robotActions -> drive(0, 90);
-  
-  // if (digitalRead(START_MODULE)) {
-  //     pollSensors();
-  //     calculateState(millis());
-  //     updateMotors();
-  // } else {
-  //     robotActions->drive(0, 0);
-  // }
+void memeRight(int time) {
+  robotState->memeRight(time);
 }
 
+void memeLeft(int time) {
+  robotState->memeLeft(time);
+}
+
+void turretState() {
+  robotState->turretState();
+}
+
+bool isMemeDone() {
+  return robotState->isMemeDone();
+}
+
+void loop() {
+  int dipMode = getDipMode();
+
+  if (digitalRead(START_MODULE)) {
+      pollSensors();
+
+      switch (dipMode) {
+          case 0:
+              //both switches at ON
+              servo.write(0);
+              calculateState(millis());
+              break;
+          case 1:
+              servo.write(180);
+              if (!isMemeDone()) {
+                  memeRight(millis());
+              } else {
+                  calculateState(millis());
+              }
+              break;
+          case 2:
+              //switch1 at ON, switch2 at 2
+              servo.write(0);
+              if (!isMemeDone()) {
+                  memeLeft(millis());
+              } else {
+                  calculateState(millis());
+              }
+              break;
+          case 3:
+              //both switches at 12
+              servo.write(90);
+              turretState();
+              break;
+      }
+  } else {
+      robotActions->drive(0, 0);
+        robotState->resetMatch();
+      servo.write(90);
+
+  }
+
+  updateMotors();
+}
 
  

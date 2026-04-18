@@ -17,6 +17,163 @@ RobotState::RobotState(WorldState* worldStatePtr, RobotActions* robotActionsPtr,
     isTurning = false;
     phase = Phase::Idle;
     turnDir = TurnDir::None;
+
+        memeTimer = new Timer();
+
+}
+
+void RobotState::turretState() {
+    Position selfPosition = worldState->getSelfPosition();
+    Position enemyPosition = worldState->getEnemyPosition();
+    double speed = 100.0;
+    double rotSpeed = 150.0;
+    double slowRotSpeed = 100.0;
+
+    if (enemyPosition == Position::Middle_Close || enemyPosition == Position::Middle_Far) {
+        robotActions->drive(0.0, 0.0);
+
+    } else if (enemyPosition == Position::Right_Middle_Close) {
+        robotActions->drive(slowRotSpeed, -slowRotSpeed);
+    } else if (enemyPosition == Position::Left_Middle_Close) {
+        robotActions->drive(-slowRotSpeed, slowRotSpeed);
+    } else if (enemyPosition == Position::Right_Middle) {
+        robotActions->drive(slowRotSpeed, -slowRotSpeed);
+    } else if (enemyPosition == Position::Left_Middle) {
+        robotActions->drive(-slowRotSpeed, slowRotSpeed);
+    } else if (enemyPosition == Position::Right) {
+        robotActions->drive(rotSpeed, -rotSpeed);
+    } else if (enemyPosition == Position::Left) {
+        robotActions->drive(-rotSpeed, rotSpeed);
+    } else if (enemyPosition == Position::None) {
+    }
+}
+
+
+bool RobotState::isMemeDone() const {
+    return memeDone;
+}
+
+void RobotState::resetMatch() {
+    memeDone = false;
+    memeStep = 0;
+}
+
+void RobotState::memeRight(uint32_t time) {
+    Position selfPos = worldState->getSelfPosition();
+
+    if (selfPos == Position::On_Line ||
+        selfPos == Position::On_Line_Left ||
+        selfPos == Position::On_Line_Right) {
+        memeDone = true;
+        memeStarted = false;
+        memeStep = 0;
+        return;
+    }
+
+    memeTimer->setCurrentTime(time);
+
+    switch (memeStep) {
+        case 0: // initialize first move
+            memeTimer->setPreviousTime(time);
+            memeTimer->setTimeInterval(50);
+            memeStep = 1;
+            return;
+
+        case 1: // turn right for 200 ms
+            robotActions->drive(255, -255);
+            if (memeTimer->getReady()) {
+                memeTimer->setPreviousTime(time);
+                memeTimer->setTimeInterval(170);
+                memeStep = 2;
+            }
+            return;
+
+        case 2: // forward for 200 ms
+            robotActions->drive(255, 255);
+            if (memeTimer->getReady()) {
+                memeTimer->setPreviousTime(time);
+                memeTimer->setTimeInterval(120);
+                memeStep = 3;
+            }
+            return;
+
+        case 3: // turn left for 300 ms
+            robotActions->drive(-255, 255);
+            if (memeTimer->getReady()) {
+                memeTimer->setPreviousTime(time);
+                memeTimer->setTimeInterval(170);
+                memeStep = 4;
+            }
+            return;
+
+        case 4: // forward for 300 ms
+            robotActions->drive(255, 255);
+            if (memeTimer->getReady()) {
+                memeDone = true;
+                memeStep = 0;
+            }
+            return;
+    }
+}
+
+
+
+void RobotState::memeLeft(uint32_t time) {
+    Position selfPos = worldState->getSelfPosition();
+
+    if (selfPos == Position::On_Line ||
+        selfPos == Position::On_Line_Left ||
+        selfPos == Position::On_Line_Right) {
+        memeDone = true;
+        memeStarted = false;
+        memeStep = 0;
+        return;
+    }
+
+    memeTimer->setCurrentTime(time);
+
+    switch (memeStep) {
+        case 0: // initialize first move
+            memeTimer->setPreviousTime(time);
+            memeTimer->setTimeInterval(50);
+            memeStep = 1;
+            return;
+
+        case 1: // turn right for 200 ms
+            robotActions->drive(-255, 255);
+            if (memeTimer->getReady()) {
+                memeTimer->setPreviousTime(time);
+                memeTimer->setTimeInterval(170);
+                memeStep = 2;
+            }
+            return;
+
+        case 2: // forward for 200 ms
+            robotActions->drive(255, 255);
+            if (memeTimer->getReady()) {
+                memeTimer->setPreviousTime(time);
+                memeTimer->setTimeInterval(120);
+                memeStep = 3;
+            }
+            return;
+
+        case 3: // turn left for 300 ms
+            robotActions->drive(255, -255);
+            if (memeTimer->getReady()) {
+                memeTimer->setPreviousTime(time);
+                memeTimer->setTimeInterval(170);
+                memeStep = 4;
+            }
+            return;
+
+        case 4: // forward for 300 ms
+            robotActions->drive(255, 255);
+            if (memeTimer->getReady()) {
+                memeDone = true;
+                memeStep = 0;
+            }
+            return;
+    }
 }
 
 // void RobotState::calculateState(u_int32_t time) {
