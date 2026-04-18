@@ -18,14 +18,17 @@ RobotState::RobotState(WorldState* worldStatePtr, RobotActions* robotActionsPtr,
     phase = Phase::Idle;
     turnDir = TurnDir::None;
 
-        memeTimer = new Timer();
+    memeTimer = new Timer();
+
+
+    servo = 90;
+    
+    
 
 }
 
 void RobotState::turretState() {
-    Position selfPosition = worldState->getSelfPosition();
     Position enemyPosition = worldState->getEnemyPosition();
-    double speed = 100.0;
     double rotSpeed = 150.0;
     double slowRotSpeed = 100.0;
 
@@ -58,7 +61,132 @@ void RobotState::resetMatch() {
     memeStep = 0;
 }
 
+void RobotState::optimalStrategy(u_int32_t time) {
+    servo = 0;
+    Position selfPos = worldState->getSelfPosition();
+    Position enemyPos = worldState->getEnemyPosition();
+
+    if (enemyPos == Position::Middle_Close ||
+        enemyPos == Position::Left ||
+        enemyPos == Position::Flag_Left ||
+        enemyPos == Position::Left_Middle_Close ||
+        enemyPos == Position::Left_Middle ||
+        enemyPos == Position::Middle_Far ||
+        enemyPos == Position::Flag_Right || 
+        enemyPos == Position::Right_Middle ||
+        enemyPos == Position::Right_Middle_Close
+        
+    ) {
+        memeDone = true;
+        memeStarted = false;
+        memeStep = 0;
+        return;
+    }
+
+    memeTimer->setCurrentTime(time);
+    int rotSpeed = 80;
+    int timeInterval = 200;
+    switch (memeStep) {
+        case 0:
+            memeTimer->setPreviousTime(time);
+            memeTimer->setTimeInterval(timeInterval);
+            memeStep = 1;
+            return;
+
+        case 1:
+            robotActions->drive(-rotSpeed, rotSpeed);
+            if (memeTimer->getReady()) {
+                memeTimer->setPreviousTime(time);
+                memeTimer->setTimeInterval(timeInterval);
+                memeStep = 2;
+            }
+            return;
+
+        case 2:
+            robotActions->drive(rotSpeed, -rotSpeed);
+            if (memeTimer->getReady()) {
+                memeTimer->setPreviousTime(time);
+                memeTimer->setTimeInterval(timeInterval);
+                memeStep = 3;
+            }
+            return;
+
+        case 3:
+            robotActions->drive(-rotSpeed, rotSpeed);
+            if (memeTimer->getReady()) {
+                memeTimer->setPreviousTime(time);
+                memeTimer->setTimeInterval(timeInterval);
+                memeStep = 4;
+            }
+            return;
+
+        case 4:
+            robotActions->drive(rotSpeed, -rotSpeed);
+            if (memeTimer->getReady()) {
+                memeTimer->setPreviousTime(time);
+                memeTimer->setTimeInterval(timeInterval);
+                memeStep = 5;
+            }
+            return;
+
+        case 5:
+            robotActions->drive(-rotSpeed, rotSpeed);
+            if (memeTimer->getReady()) {
+                memeTimer->setPreviousTime(time);
+                memeTimer->setTimeInterval(timeInterval);
+                memeStep = 6;
+            }
+            return;
+            
+        case 6:
+            robotActions->drive(rotSpeed, -rotSpeed);
+            if (memeTimer->getReady()) {
+                memeTimer->setPreviousTime(time);
+                memeTimer->setTimeInterval(timeInterval);
+                memeStep = 7;
+            }
+            return;
+
+        case 7:
+            robotActions->drive(-rotSpeed, rotSpeed);
+            if (memeTimer->getReady()) {
+                memeTimer->setPreviousTime(time);
+                memeTimer->setTimeInterval(timeInterval);
+                memeStep = 8;
+            }
+            return;
+
+        case 8:
+            robotActions->drive(rotSpeed, -rotSpeed);
+            if (memeTimer->getReady()) {
+                memeTimer->setPreviousTime(time);
+                memeTimer->setTimeInterval(timeInterval);
+                memeStep = 9;
+            }
+            return;
+
+        case 9:
+            robotActions->drive(-rotSpeed, rotSpeed);
+            if (memeTimer->getReady()) {
+                memeTimer->setPreviousTime(time);
+                memeTimer->setTimeInterval(timeInterval);
+                memeStep = 10;
+            }
+            return;
+        
+        case 10:
+            robotActions->drive(rotSpeed, -rotSpeed);
+            if (memeTimer->getReady()) {
+                memeDone = true;
+                memeStep = 0;
+            }
+            return;
+
+    }
+}
+
 void RobotState::memeRight(uint32_t time) {
+    servo = 180;
     Position selfPos = worldState->getSelfPosition();
 
     if (selfPos == Position::On_Line ||
@@ -119,6 +247,7 @@ void RobotState::memeRight(uint32_t time) {
 
 
 void RobotState::memeLeft(uint32_t time) {
+    servo = 0;
     Position selfPos = worldState->getSelfPosition();
 
     if (selfPos == Position::On_Line ||
@@ -181,7 +310,7 @@ void RobotState::memeLeft(uint32_t time) {
 // }
 
 void RobotState::calculateState(uint32_t time) {
-
+    servo = 0;
     const int BACKUP_SPEED = 150;
     const int TURN_SPEED   = 150;
 
@@ -246,6 +375,7 @@ void RobotState::calculateState(uint32_t time) {
     // 2. Start line-escape if line seen
     // =========================
     if (selfPos == Position::On_Line_Left) {
+
         isTurning = true;
         phase = Phase::BackingUp;
         turnDir = TurnDir::Right;
@@ -285,11 +415,15 @@ void RobotState::calculateState(uint32_t time) {
     // 3. Enemy logic
     // =========================
     if (enemyPos == Position::Flag_Left) {
+        servo = 180;
         robotActions->drive(-255.0, 255.0);
+        return;
     } else if (enemyPos == Position::Flag_Right) {
+        servo = 0;
         robotActions->drive(255.0, -255.0);
+        return;
     }
-    else if (enemyPos == Position::Middle_Close || enemyPos == Position::Middle_Far) {
+    else if (enemyPos == Position::Middle_Close) {
         robotActions->drive(255, 255);
         return;
 
@@ -301,26 +435,32 @@ void RobotState::calculateState(uint32_t time) {
     }
     
     else if (enemyPos == Position::Right_Middle_Close) {
+        servo = 0;
         robotActions->drive(255, 200);
         return;
 
     } else if (enemyPos == Position::Left_Middle_Close) {
+        servo = 180;
         robotActions->drive(200, 255);
         return;
 
     } else if (enemyPos == Position::Right_Middle) {
+        servo = 0;
         robotActions->drive(255, 150);
         return;
 
     } else if (enemyPos == Position::Left_Middle) {
+        servo = 180;
         robotActions->drive(150, 255);
         return;
 
     } else if (enemyPos == Position::Right) {
+        servo = 0;
         robotActions->drive(150, -150);
         return;
 
     } else if (enemyPos == Position::Left) {
+        servo = 180;
         robotActions->drive(-150, 150);
         return;
     }

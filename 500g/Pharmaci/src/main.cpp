@@ -85,7 +85,7 @@ int getDipMode() {
 
 void setup() {
   servo.attach(34);
-  servo.write(90);
+  servo.write(0);
 
   // Serial.begin(9600);
     pinMode(R_POS, OUTPUT);
@@ -197,16 +197,16 @@ void debug() {
   delay(100);
 }
 
-void memeRight(int time) {
+void memeRight(uint32_t time) {
   robotState->memeRight(time);
 }
 
-void memeLeft(int time) {
+void memeLeft(uint32_t time) {
   robotState->memeLeft(time);
 }
 
-void turretState() {
-  robotState->turretState();
+void optimalStrategy(uint32_t time) {
+  robotState->optimalStrategy(time);
 }
 
 bool isMemeDone() {
@@ -222,11 +222,10 @@ void loop() {
       switch (dipMode) {
           case 0:
               //both switches at ON
-              servo.write(0);
+              
               calculateState(millis());
               break;
           case 1:
-              servo.write(180);
               if (!isMemeDone()) {
                   memeRight(millis());
               } else {
@@ -235,7 +234,6 @@ void loop() {
               break;
           case 2:
               //switch1 at ON, switch2 at 2
-              servo.write(0);
               if (!isMemeDone()) {
                   memeLeft(millis());
               } else {
@@ -244,9 +242,15 @@ void loop() {
               break;
           case 3:
               //both switches at 12
-              servo.write(90);
-              turretState();
+              if (!isMemeDone()) {
+                  optimalStrategy(millis());
+              } else {
+                  calculateState(millis());
+              }
               break;
+
+        servo.write(robotState->servo);
+
       }
   } else {
       robotActions->drive(0, 0);

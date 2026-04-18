@@ -18,6 +18,7 @@ class RobotState {
     Timer* turnTimer;
     Timer* backupTimer;
     Timer* memeTimer;
+    
 
     bool    isTurning = false;
     Phase   phase     = Phase::Idle;
@@ -35,15 +36,20 @@ class RobotState {
     void antiPassive(uint32_t time);
     void memeRight(uint32_t time);
     void memeLeft(uint32_t time);
+    void optimalStrategy(u_int32_t time);
 
     void resetMatch();
 
     bool isMemeDone() const;
 
+    int servo = 90;
+
 private:
     bool memeDone = false;
     bool memeStarted = false;
     int memeStep = 0;
+
+
 };
 
 #endif
