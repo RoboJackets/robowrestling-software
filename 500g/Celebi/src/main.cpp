@@ -33,7 +33,14 @@
 #define LmotorPos 10
 #define LmotorNeg 9
 
+// #define USE_DEBUG
+#define PROFILING
+#define USE_STARTMOD
 
+struct start_info {
+  int powers[4];
+  int lengths[4];
+};
 
 int i = 0;
 
@@ -45,6 +52,8 @@ int line_sensors[2] = {0,0};
 int ir_sensors[5] = {0,0,0,0,0};
 int strategy = 0;
 
+bool cycle_one = true;
+start_info start_data = {{70, 100, 120, 255}, {100, 250, 360, 360}};
 
 // set up algorithms class
 algorithms* algorithm;
@@ -58,12 +67,11 @@ world_state* world;
 timer *draw_timer;
 timer *match_start_timer;
 timer *swerve_timer;
-
-//filter
-
-// #define USE_DEBUG
-
-#define USE_STARTMOD
+#ifdef PROFILING
+timer *profiling_timer;
+int start_time;
+int end_time;
+#endif
 
 // define functions
 void updateMotors();
@@ -93,6 +101,7 @@ void setup() {
 
     strategy = (!digitalRead(Switch2)) + (!digitalRead(Switch1) << 1) + (!digitalRead(Switch0) << 2);
 
+    
     //initialize timer
     draw_timer = new timer(millis());
     match_start_timer = new timer(millis());
@@ -111,13 +120,25 @@ void setup() {
     Serial.begin(9600);
     Serial.print("we are running\n");
 #endif
+#ifdef PROFILING
+    Serial.begin(9600);
+#endif
     
     draw_timer->set_action_timer(10);
     swerve_timer->set_action_timer(10);
+    if (strategy == 0 || strategy >= 4) {
+      	motors[0] = 255;
+    } else {
+      	motors[0] = start_data.powers[strategy + 1];
+    }
+    motors[1] = 255;
     
     // wait for start signal
 #ifdef USE_STARTMOD
     while (!digitalRead(StartMod)) {
+#ifdef PROFILING
+      start_time = micros();
+#endif
       ;
     }
 #endif
@@ -125,9 +146,25 @@ void setup() {
     // while (!digitalRead(StartButton)) {
     //    ;
     // }
+  if (strategy != 0) {
+      analogWrite(LmotorPos, motors[0]);
+      analogWrite(RmotorPos, motors[1]);
+      analogWrite(LmotorNeg, 0);
+      analogWrite(RmotorNeg, 0);
+#ifdef PROFILING
+      end_time = micros();
+      delay(100);
+      Serial.print("start to update time: ");
+      Serial.println((end_time - start_time));
+      cycle_one = false;
+      while(1) {
+        ;
+      }
+#endif
+  }
 
-    match_start_timer->update_time(millis());
-    match_start_timer->set_action_timer(150);
+  match_start_timer->update_time(millis());
+  match_start_timer->set_action_timer(150);
 }
 
 void loop() {
@@ -203,6 +240,7 @@ void updateMotors() {
       analogWrite(RmotorNeg, abs(motors[1]));
   }
 }
+
 
 void brake() {
   robot->brake();

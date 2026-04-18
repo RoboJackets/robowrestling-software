@@ -1,6 +1,12 @@
 notes
 - robots can be as close as 10cm or as far as 70cm
 
+strategy
+0: normal
+1: close swerve
+2: medium swerve
+3: long swerve
+4: straight line
 placement guide for swerve init
 - medium length: place back right corner in area, 45 degrees
 Monday 4/13
@@ -94,3 +100,57 @@ test long
 - turn slightly more
 (120, 360)
 - good 
+
+
+start time tests
+base code
+472
+316
+472
+320
+472
+312
+320
+324
+320
+324
+first cycle override
+60
+212
+60
+60
+60
+60
+60
+60
+212 - fast
+60
+60
+60
+move motor writing to start
+56
+52
+212
+56
+56
+56
+56
+56
+212
+52
+56
+56
+move out of loop
+52
+60
+208
+52
+60
+56
+52
+52
+52
+60
+56
+56
+52
