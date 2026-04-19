@@ -21,11 +21,14 @@ class Tracker {
         static constexpr int GO_TIMER = 200;
         static constexpr int STOP_TIMER = 30;
         static constexpr int TURN_TIMER_DURATION = 200;
+        static constexpr int DASH_TIMER_DURATION = 250;
+        static constexpr int SLIGHT_TURN_TIMER_DURATION = 70;
         int acceleration;
         int leftAcceleration;
         int rightAcceleration;
         bool stuck;
         bool turnt;
+        bool dashed;
         int mode;
         Position previousPosition;
         AutoTimer *stuckTimer;
@@ -34,7 +37,9 @@ class Tracker {
         AutoTimer *backupTimer; // for getting unstuck
         AutoTimer *stopTimer;
         AutoTimer *goTimer;
+        AutoTimer *dashTimer;
         AutoTimer *turnTimer;
+        AutoTimer *slightTurnTimer;
         BackSpin *backSpinLeft;
         BackSpin *backSpinRight;
         Scan *_scan;

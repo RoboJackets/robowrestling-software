@@ -11,6 +11,7 @@ Tracker::Tracker(WorldState *_worldState, RobotAction* _robotAction, int _mode) 
     mode = _mode;
     stuck = false;
     turnt = false;
+    dashed = false;
     accelerationTimer = new AutoTimer(ACCELERATION_TIMER_DURATION);
     backupTimer = new AutoTimer(BACKUP_TIMER_DURATION);
     brakeTimer = new AutoTimer(BRAKE_TIMER_DURATION);
@@ -22,6 +23,8 @@ Tracker::Tracker(WorldState *_worldState, RobotAction* _robotAction, int _mode) 
     _scan = new Scan(robotAction);
     turnAround = new TurnAround(robotAction);
     turnTimer = new AutoTimer(TURN_TIMER_DURATION);
+    dashTimer = new AutoTimer(DASH_TIMER_DURATION);
+    slightTurnTimer = new AutoTimer(SLIGHT_TURN_TIMER_DURATION);
 }
 
 void Tracker::run() {
@@ -146,14 +149,29 @@ void Tracker::default_action() {
             stopTimer->resetTimer();
         }
     }
-    if (mode == 1) { _scan->run(); }
-    if (mode == 2) { // TODO: fix
+    if (mode == 1) { 
+            robotAction->forward(MAX_SPEED);
+        if (!dashed) {
+            dashed = true;
+            dashTimer->resetTimer();
+        } else if (dashTimer->getReady()) {
+            mode = 0;
+        }
+     }
+    if (mode == 2) {
         robotAction->spinLeft(MAX_SPEED);
         if (!turnt) {
             turnTimer->resetTimer();
             turnt = true;
-        } else if (turnTimer->getReady()) {
+        }  
+    }
+    if (mode == 3) {
+        robotAction->forward(MAX_SPEED);
+        if (!dashed) {
+            dashed = true;
+            dashTimer->resetTimer();
+        } else if (dashTimer->getReady()) {
             mode = 0;
-        } 
+        }
     }
 }

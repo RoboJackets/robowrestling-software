@@ -89,25 +89,15 @@ void setup() {
   if (!DEBUGGING) {
     while (!digitalRead(START_PIN)) {
       Serial.print(digitalRead(START_PIN));
+      Serial.print(" ");
+      Serial.print(mode);
       Serial.println(" Waiting for start signal");
       // calibrateLineSensors();
     }
   }
   robotState->setStartTimer(millis());
-  unsigned long starttime = millis();
-  bool calibrated_flag = false;
-  while ((millis() - starttime) <= 5000) {
-    if (!calibrated_flag) {
-      leftLineSensor->setThreshold(analogRead(LEFT_LINE) - 100);
-      rightLineSensor->setThreshold(analogRead(RIGHT_LINE) - 100);
-    }
-    Serial.print("Starting in: ");
-    Serial.print(5000 - (millis() - starttime));
-    Serial.print(" | Thresholds set to: ");
-    Serial.print(leftLineSensor->getThreshold());
-    Serial.print(" ");
-    Serial.println(rightLineSensor->getThreshold());
-  }
+  leftLineSensor->setThreshold(analogRead(LEFT_LINE) - 100);
+  rightLineSensor->setThreshold(analogRead(RIGHT_LINE) - 100);
 }
 
 void loop() {
