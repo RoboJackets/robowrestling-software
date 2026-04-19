@@ -211,7 +211,7 @@ void RobotState::memeRight(uint32_t time) {
             robotActions->drive(255, -255);
             if (memeTimer->getReady()) {
                 memeTimer->setPreviousTime(time);
-                memeTimer->setTimeInterval(170);
+                memeTimer->setTimeInterval(120);
                 memeStep = 2;
             }
             return;
@@ -229,7 +229,7 @@ void RobotState::memeRight(uint32_t time) {
             robotActions->drive(-255, 255);
             if (memeTimer->getReady()) {
                 memeTimer->setPreviousTime(time);
-                memeTimer->setTimeInterval(170);
+                memeTimer->setTimeInterval(100);
                 memeStep = 4;
             }
             return;
@@ -272,7 +272,7 @@ void RobotState::memeLeft(uint32_t time) {
             robotActions->drive(-255, 255);
             if (memeTimer->getReady()) {
                 memeTimer->setPreviousTime(time);
-                memeTimer->setTimeInterval(170);
+                memeTimer->setTimeInterval(120);
                 memeStep = 2;
             }
             return;
@@ -290,7 +290,7 @@ void RobotState::memeLeft(uint32_t time) {
             robotActions->drive(255, -255);
             if (memeTimer->getReady()) {
                 memeTimer->setPreviousTime(time);
-                memeTimer->setTimeInterval(170);
+                memeTimer->setTimeInterval(100);
                 memeStep = 4;
             }
             return;
@@ -445,12 +445,12 @@ void RobotState::calculateState(uint32_t time) {
 
     } else if (enemyPos == Position::Right_Middle) {
         servo = 0;
-        robotActions->drive(255, 150);
+        robotActions->drive(255, -150);
         return;
 
     } else if (enemyPos == Position::Left_Middle) {
         servo = 180;
-        robotActions->drive(150, 255);
+        robotActions->drive(-150, 255);
         return;
 
     } else if (enemyPos == Position::Right) {
