@@ -313,7 +313,7 @@ void RobotState::calculateState(uint32_t time) {
     const int BACKUP_SPEED = 150;
     const int TURN_SPEED   = 150;
 
-    const int BACKUP_MS    = 250;
+    const int BACKUP_MS    = 300;
     const int TURN_MS      = 100;
     const int BOTH_TURN_MS = 60;
 
@@ -429,7 +429,7 @@ void RobotState::calculateState(uint32_t time) {
     } 
 
     else if (enemyPos == Position::Middle_Far) {
-        robotActions->drive(150, 150);
+        robotActions->drive(100, 100);
         return;
     }
     
