@@ -1,10 +1,10 @@
 #include "world/timer.hpp"
 
 timer :: timer(unsigned long initial_time) {
-    this -> action_start = initial_time;
-    this -> current_time = initial_time;
-    this -> timer_state = false;
-    this -> action_length = 0;
+    this->action_start = initial_time;
+    this->current_time = initial_time;
+    this->timer_state = false;
+    this->action_length = 0;
 }
 
 

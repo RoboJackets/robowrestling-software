@@ -1,12 +1,19 @@
 notes
 - robots can be as close as 10cm or as far as 70cm
 
+todo:
+- think about memory access speeds
+
 strategy
-0: normal
-1: close swerve
-2: medium swerve
-3: long swerve
-4: straight line
+0 (000): normal
+1 (001): close swerve left
+2 (010): medium swerve left
+3 (011): long swerve left
+4 (100): straight line
+5 (101): close swerve right
+6 (110): medium swerve right
+7 (111): long swerve right
+
 placement guide for swerve init
 - medium length: place back right corner in area, 45 degrees
 Monday 4/13
@@ -154,3 +161,130 @@ move out of loop
 56
 56
 52
+
+adding profiling to code segments
+
+shared start module pin:
+- serial monitor will read junk if things are not actually printed.
+- fixed with String() wrapping prints
+
+
+remove unused code
+
+10,000 cycles:
+
+Total program time: 3293836
+Start to first motor write: 48
+Time spent in poll sensors: 2489
+Time spent in state update: 2448323
+Time spent in motor update: 17367
+3293836, 48, 2489, 2448323, 17367
+
+adding types and const hpp
+Total program time: 3291816
+Start to first motor write: 52
+Time spent in poll sensors: 2520
+Time spent in state update: 324563
+Time spent in motor update: 3801
+3291816, 52, 2520, 324563, 3801
+
+optimizing algorithms
+
+
+figure out why default is charing
+
+add right side to start tuning, generally turns more so can increase speed
+
+
+
+Total program time: 3526856
+Start to first motor write: 48
+Time spent in poll sensors: 2520
+Time spent in state update: 3611429
+        Time spent in attack pattern (almost all) 121440
+        Time spent in draw circle: 0
+        Time spend in attack forward: 0
+        Time spent in turn towards: 41500
+        Time spent updating world: 80024
+Time spent in motor update: 14155
+3526856, 48, 2520, 3611429, 14155
+
+
+right first
+
+
+Total program time: 3516288
+Start to first motor write: 56
+Time spent in poll sensors: 2511
+Time spent in state update: 561283
+        Time spent in attack pattern (almost all) 120220
+        Time spent in draw circle: 0
+        Time spend in attack forward: 0
+        Time spent in turn towards: 60980
+        Time spent updating world: 80448
+Time spent in motor update: 4390
+3516288, 56, 2511, 561283, 4390
+
+change datatypes to shorts whereever possible
+
+Total program time: 3448572
+Start to first motor write: 52
+Time spent in poll sensors: 2483
+Time spent in state update: 3249860
+        Time spent in attack pattern (almost all) 122300
+        Time spent in draw circle: 0
+        Time spend in attack forward: 0
+        Time spent in turn towards: 40328
+        Time spent updating world: 41640
+Time spent in motor update: 23527
+3448572, 52, 2483, 3249860, 23527
+
+Total program time: 3374976
+Start to first motor write: 52
+Time spent in poll sensors: 2489
+Time spent in state update: 1714823
+        Time spent in attack pattern (almost all) 0
+        Time spent in draw circle: 0
+        Time spend in attack forward: 0
+        Time spent in turn towards: 0
+        Time spent updating world: 43652
+Time spent in motor update: 4849
+3374976, 52, 2489, 1714823, 4849
+
+Total program time: 3448568
+Start to first motor write: 52
+Time spent in poll sensors: 2482
+Time spent in state update: 2742502
+        Time spent in attack pattern (almost all) 122136
+        Time spent in draw circle: 0
+        Time spend in attack forward: 0
+        Time spent in turn towards: 40908
+        Time spent updating world: 41636
+Time spent in motor update: 4980
+3448568, 52, 2482, 2742502, 4980
+
+Total program time: 3442456
+Start to first motor write: 52
+Time spent in poll sensors: 2508
+Time spent in state update: 3132012
+        Time spent in attack pattern (almost all) 32100
+        Time spent in draw circle: 0
+        Time spend in attack forward: 0
+        Time spent in turn towards: 10500
+        Time spent updating world: 42512
+Time spent in motor update: 5046
+3442456, 52, 2508, 3132012, 5046
+
+Total program time: 3448564
+Start to first motor write: 52
+Time spent in poll sensors: 2483
+Time spent in state update: 461762
+        Time spent in attack pattern (almost all) 122300
+        Time spent in draw circle: 0
+        Time spend in attack forward: 0
+        Time spent in turn towards: 40336
+        Time spent updating world: 41636
+Time spent in motor update: 5636
+3448564, 52, 2483, 461762, 5636 
+
+right wheel lags

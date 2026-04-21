@@ -5,12 +5,12 @@
 
 class world_state {
     private:
-        int* line_sensors;
-        int* ir_sensors;
+        bool* line_sensors;
+        bool* ir_sensors;
         line_states line_arr[4] = {OFF, RIGHT_ON, LEFT_ON, BOTH_ON};
             
     public:
-        world_state(int line_sensors[], int ir_sensors[]);
+        world_state(bool line_sensors[], bool ir_sensors[]);
         
         line_states line_check();
 

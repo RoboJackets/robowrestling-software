@@ -1,18 +1,18 @@
 #ifndef ROBOT_ACTIONS_H
 #define ROBOT_ACTIONS_H
+#include <stdint.h>
 
 class robot_actions {
     private:
-        int* motors;
-        int acceleration;
+        int16_t* motors;
 
     public:
-        robot_actions(int* motors);
+        robot_actions(int16_t* motors);
         void brake();
-        void drive_forward(int speed);
-        void drive_backward(int speed);
-        void turn_left(int speed);
-        void turn_right(int speed);
-        void drive_custom(int LSpeed, int RSpeed, bool LDir, bool RDir);
+        void drive_forward(uint8_t speed);
+        void drive_backward(uint8_t speed);
+        void turn_left(uint8_t speed);
+        void turn_right(uint8_t speed);
+        void drive_custom(uint8_t LSpeed, uint8_t RSpeed, bool LDir, bool RDir);
 };
 #endif
