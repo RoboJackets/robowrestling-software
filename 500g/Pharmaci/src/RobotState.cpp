@@ -251,7 +251,7 @@ void RobotState::calculateState(uint32_t time) {
     } else if (enemyPos == Position::Middle_Close) {
         robotActions->drive(255.0, 255.0);
     } else if (enemyPos == Position::Middle_Far) {
-        robotActions->drive(150.0, 150.0);
+        robotActions->drive(100.0, 100.0);
     } else if (enemyPos == Position::Right_Middle_Close) {
         robotActions->drive(255.0, 200.0);
 
