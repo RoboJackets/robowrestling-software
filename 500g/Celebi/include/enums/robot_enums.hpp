@@ -2,14 +2,6 @@
 #define ROBOT_ENUM_H
 
 
-enum movement_states {
-    DRIVE_FORWARD,
-    DRIVE_BACKWARD,
-    TURN_LEFT,
-    TURN_RIGHT,
-    BRAKE
-};
-
 enum draw_state {
     D_TURN,
     D_GO_STRAIGHT,
@@ -27,6 +19,20 @@ enum swerve_state {
 enum attack_state {
     A_SEE,
     A_LOOKING,
-    A_BLIND
+    A_BLIND,
+    A_DOGE
+};
+
+enum match_start {
+    SET_TIMER,
+    START,
+    START_FINISHED
+};
+
+enum strategy {
+    BASE,
+    CLOSE,
+    MEDIUM,
+    FAR
 };
 #endif

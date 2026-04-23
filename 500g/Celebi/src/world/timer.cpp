@@ -24,6 +24,7 @@ bool timer :: check_action_time() {
     return checkup;
 }
 
+// start an action timer of specified length
 void timer :: set_action_timer(unsigned long length) {
     timer_state = true;
     action_length = length;

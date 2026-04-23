@@ -10,8 +10,7 @@ world_state :: world_state(int* line_sensors, int* ir_sensors) {
 line_states world_state :: line_check() {
 
     //bit shift the left value and combine with the right value to index into the array
-    int bin = ((line_sensors[0] && line_sensors[1]) << 1)
-        + (line_sensors[2]&& line_sensors[3]);
+    int bin = (line_sensors[0] << 1) + (line_sensors[1]);
 
     return line_arr[bin];
 }
