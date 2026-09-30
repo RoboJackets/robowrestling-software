@@ -1,0 +1,154 @@
+const int LEFT_IR_90 = 2;
+const int LEFT_IR_45 = 3;
+const int RIGHT_IR_90 = 8;
+const int RIGHT_IR_45 = 5;
+const int MIDDLE_IR = 4;
+const int START_MODULE = 6;
+const int R_POS = 29;
+const int R_NEG = 28;
+const int L_POS = 1;
+const int L_NEG = 0;
+
+const int DIP1 = 37;
+const int DIP2 = 36;
+
+const int LEFT_LINE = A7;
+const int RIGHT_LINE = A6;
+
+// Pick 1, 2, or 3 to choose the robot's opening move.
+const int STRATEGY = 1;
+
+// Change to LOW if your IR modules output LOW when they see an opponent.
+const int IR_DETECTED = HIGH;
+
+bool openingMoveDone = false;
+
+void setup() {
+	pinMode(R_POS, OUTPUT);
+	pinMode(R_NEG, OUTPUT);
+	pinMode(L_POS, OUTPUT);
+	pinMode(L_NEG, OUTPUT);
+	pinMode(LEFT_IR_90, INPUT);
+	pinMode(LEFT_IR_45, INPUT);
+	pinMode(MIDDLE_IR, INPUT);
+	pinMode(RIGHT_IR_45, INPUT);
+	pinMode(RIGHT_IR_90, INPUT);
+	pinMode(LEFT_LINE, INPUT);
+	pinMode(RIGHT_LINE, INPUT);
+	pinMode(START_MODULE, INPUT);
+	pinMode(DIP1, INPUT_PULLUP);
+	pinMode(DIP2, INPUT_PULLUP);
+}
+
+void loop() {
+	if (!openingMoveDone) {
+		runOpeningMove();
+		openingMoveDone = true;
+	}
+
+	attackUsingIR();
+}
+
+void runOpeningMove() {
+	switch (STRATEGY) {
+		case 1:
+			strategyGoRightFirst();
+			break;
+		case 2:
+			strategyGoLeftFirst();
+			break;
+		case 3:
+			strategyGoStraightFirst();
+			break;
+		default:
+			StopMotors();
+			break;
+	}
+}
+
+// STRATEGY 1: Start by turning right, then let the IR attack routine take over.
+void strategyGoRightFirst() {
+	/*
+		Spin the robot clockwise for 250 milliseconds to face toward the right.
+		The motors stop after the turn; the next loop iteration begins IR tracking.
+	*/
+	TurnRight(180, 250);
+}
+
+// STRATEGY 2: Start by turning left, then let the IR attack routine take over.
+void strategyGoLeftFirst() {
+	/*
+		Spin the robot counterclockwise for 250 milliseconds to face toward the left.
+		The motors stop after the turn; the next loop iteration begins IR tracking.
+	*/
+	TurnLeft(180, 250);
+}
+
+// STRATEGY 3: Start by moving forward, then let the IR attack routine take over.
+void strategyGoStraightFirst() {
+	/*
+		Drive both motors forward for 300 milliseconds to make a short opening charge.
+		The motors stop after the move; the next loop iteration begins IR tracking.
+	*/
+	Move(220, 300);
+}
+
+void attackUsingIR() {
+	/*
+		Check the angled sensors before the middle sensor so the robot can turn
+		toward an opponent seen off-center. When no sensor sees an opponent, turn
+		slowly to keep searching instead of driving blindly forward.
+	*/
+	if (digitalRead(LEFT_IR_90) == IR_DETECTED ||
+			digitalRead(LEFT_IR_45) == IR_DETECTED) {
+		TurnLeft(190, 80);
+	} else if (digitalRead(RIGHT_IR_90) == IR_DETECTED ||
+						 digitalRead(RIGHT_IR_45) == IR_DETECTED) {
+		TurnRight(190, 80);
+	} else if (digitalRead(MIDDLE_IR) == IR_DETECTED) {
+		Move(255, 80);
+	} else {
+		TurnRight(100, 40);
+	}
+}
+
+// Positive speed drives a motor forward; negative speed reverses it.
+void SetMotors(int leftSpeed, int rightSpeed) {
+	if (leftSpeed >= 0) {
+		analogWrite(L_POS, leftSpeed);
+		analogWrite(L_NEG, 0);
+	} else {
+		analogWrite(L_POS, 0);
+		analogWrite(L_NEG, -leftSpeed);
+	}
+
+	if (rightSpeed >= 0) {
+		analogWrite(R_POS, rightSpeed);
+		analogWrite(R_NEG, 0);
+	} else {
+		analogWrite(R_POS, 0);
+		analogWrite(R_NEG, -rightSpeed);
+	}
+}
+
+void Move(int power, int duration) {
+	SetMotors(power, power);
+	delay(duration);
+	StopMotors();
+}
+
+void TurnLeft(int power, int duration) {
+	SetMotors(-power, power);
+	delay(duration);
+	StopMotors();
+}
+
+void TurnRight(int power, int duration) {
+	SetMotors(power, -power);
+	delay(duration);
+	StopMotors();
+}
+
+void StopMotors() {
+	SetMotors(0, 0);
+}

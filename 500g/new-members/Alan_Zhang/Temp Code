@@ -1,0 +1,48 @@
+
+
+const int LEFT_IR_90 = 2;
+const int LEFT_IR_45 = 3;
+const int RIGHT_IR_90 = 8;
+const int RIGHT_IR_45 = 5;
+const int MIDDLE_IR = 4;
+const int START_MODULE = 6;
+const int R_POS = 29;
+const int R_NEG = 28;
+const int L_POS = 1;
+const int L_NEG = 0;
+
+const int DIP1 = 37;
+const int DIP2 = 36;
+
+const int LEFT_LINE = A7;
+const int RIGHT_LINE = A6;
+
+void setup() {
+  // put your setup code here, to run once:
+  pinMode(R_POS, OUTPUT);
+  pinMode(R_NEG, OUTPUT);
+  pinMode(L_POS, OUTPUT);
+  pinMode(L_NEG, OUTPUT);
+  pinMode(LEFT_IR_90, INPUT);
+  pinMode(LEFT_IR_45, INPUT);
+  pinMode(MIDDLE_IR, INPUT);
+  pinMode(RIGHT_IR_45, INPUT);
+  pinMode(RIGHT_IR_90, INPUT);
+  pinMode(LEFT_LINE, INPUT);
+  pinMode(RIGHT_LINE, INPUT);
+  pinMode(START_MODULE, INPUT);
+  pinMode(DIP1, INPUT_PULLUP);
+  pinMode(DIP2, INPUT_PULLUP);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  Move(255,10);
+}
+
+void Move(int power, int duration){
+    analogWrite(R_POS,power);
+    analogWrite(R_NEG,0);
+    analogWrite(L_POS,0);
+    analogWrite(L_NEG,0);
+}
