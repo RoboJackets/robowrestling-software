@@ -16,17 +16,13 @@ void MotorDriver::setSpeed(int _leftSpeed, int _rightSpeed) {
 }
 
 void MotorDriver::setDirection(Direction _leftDirection, Direction _rightDirection) {
-    if (leftDirection != _leftDirection) {
-        if (left_direction_timer->isReady()) {
-            leftDirection = _leftDirection;
-            left_direction_timer->resetTimer();
-        }
+    if (leftDirection != _leftDirection && left_direction_timer->isReady()) {
+        leftDirection = _leftDirection;
+        left_direction_timer->resetTimer();
     }
-    if (rightDirection != _rightDirection) {
-        if (right_direction_timer->isReady()) {
-            rightDirection = _rightDirection; 
-            right_direction_timer->resetTimer();
-        }
+    if (rightDirection != _rightDirection && right_direction_timer->isReady()) {
+        rightDirection = _rightDirection; 
+        right_direction_timer->resetTimer();
     }
 }
 
