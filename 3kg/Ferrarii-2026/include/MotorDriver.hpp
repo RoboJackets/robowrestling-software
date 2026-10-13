@@ -2,6 +2,7 @@
 #define MOTORDRIVER_H
 
 #include "Timer.hpp"
+#include <Arduino.h>
 
 enum Direction{BACKWARD, FORWARD};
 
@@ -15,6 +16,8 @@ class MotorDriver {
         Timer *right_direction_timer;
         bool isBraking;
         const int DIRECTION_TIMER_DURATION = 50;
+        bool isSwitching10();
+        int times_switched[10];
     public:
         MotorDriver();
         void setSpeed(int _leftSpeed, int _rightSpeed);
