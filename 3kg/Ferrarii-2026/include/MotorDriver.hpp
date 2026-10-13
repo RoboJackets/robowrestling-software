@@ -1,6 +1,8 @@
 #ifndef MOTORDRIVER_H
 #define MOTORDRIVER_H
 
+#include "Timer.hpp"
+
 enum Direction{BACKWARD, FORWARD};
 
 class MotorDriver {
@@ -9,7 +11,10 @@ class MotorDriver {
         int rightSpeed;
         Direction leftDirection;
         Direction rightDirection;
+        Timer *left_direction_timer;
+        Timer *right_direction_timer;
         bool isBraking;
+        const int DIRECTION_TIMER_DURATION = 50;
     public:
         MotorDriver();
         void setSpeed(int _leftSpeed, int _rightSpeed);

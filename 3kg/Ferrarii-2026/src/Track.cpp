@@ -38,7 +38,7 @@ bool Track::run() {
         robotActions->turnForward(MAX_SPEED, FAST);
     }
     else if (enemyPosition == FRONT_FAR) {
-        robotActions->forward(SPEED);
+        robotActions->forward(MAX_SPEED);
     }
     else if (enemyPosition == CLOSE_LEFT) {
         robotActions->turnForward(MOD, MAX_SPEED);
@@ -47,16 +47,16 @@ bool Track::run() {
         robotActions->turnForward(MAX_SPEED, MOD);
     }
     else if (enemyPosition == MID_LEFT) {
-        robotActions->turnForward(SLOW, MAX_SPEED);            
+        robotActions->spinLeft(MAX_SPEED);         
     }
     else if (enemyPosition == MID_RIGHT) {
-        robotActions->turnForward(MAX_SPEED, SLOW);            
+        robotActions->spinRight(MAX_SPEED);           
     }
     else if (enemyPosition == FAR_LEFT) {
-        robotActions->spinLeft(SPEED);
+        robotActions->spinLeft(MAX_SPEED);
     }
     else if (enemyPosition == FAR_RIGHT) {
-        robotActions->spinRight(SPEED);
+        robotActions->spinRight(MAX_SPEED);
     }
     else if (enemyPosition == BEHIND) {
         robotActions->spinLeft(MAX_SPEED);
