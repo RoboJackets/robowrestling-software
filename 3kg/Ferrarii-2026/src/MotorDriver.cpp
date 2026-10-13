@@ -19,14 +19,14 @@ void MotorDriver::setDirection(Direction _leftDirection, Direction _rightDirecti
     if (leftDirection != _leftDirection) {
         if (left_direction_timer->isReady()) {
             leftDirection = _leftDirection;
+            left_direction_timer->resetTimer();
         }
-        left_direction_timer->resetTimer();
     }
     if (rightDirection != _rightDirection) {
         if (right_direction_timer->isReady()) {
-           rightDirection = _rightDirection; 
+            rightDirection = _rightDirection; 
+            right_direction_timer->resetTimer();
         }
-        right_direction_timer->resetTimer();
     }
 }
 
