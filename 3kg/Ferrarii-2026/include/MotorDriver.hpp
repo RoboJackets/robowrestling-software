@@ -17,7 +17,8 @@ class MotorDriver {
         bool isBraking;
         const int DIRECTION_TIMER_DURATION = 50;
         bool isSwitching10();
-        int times_switched[10];
+        double time_switched;
+        int switched_count;
     public:
         MotorDriver();
         void setSpeed(int _leftSpeed, int _rightSpeed);
