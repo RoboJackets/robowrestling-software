@@ -2,10 +2,18 @@
 
 LineSensor::LineSensor() {
     value = 0;
+    concurrentReadings = 0;
+    threshold = 500;
+    calibrationCount = 0;
+    calibrationCount = 0; 
 }
 
 LineSensor::LineSensor(int sensorValue) {
     value = sensorValue;
+    concurrentReadings = 0;
+    threshold = 500;
+    calibrationCount = 0;
+    calibrationCount = 0;
 }
 
 int LineSensor::getValue() {
@@ -27,4 +35,12 @@ int LineSensor::getThreshold() {
 
 void LineSensor::setThreshold(int sensorValue) {
     threshold = sensorValue;
+}
+
+void LineSensor::calibrate(int sensorValue) {
+    if (calibrationCount < 10000) {
+        calibrationCount++;
+        calibrationSum += sensorValue;
+        threshold = (calibrationSum / calibrationCount) - 250; 
+    }
 }

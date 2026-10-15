@@ -7,6 +7,8 @@ private:
     int value;
     int concurrentReadings;
     int threshold;
+    int calibrationSum;
+    int calibrationCount;
 public:
     LineSensor();
     LineSensor(int sensorValue);
@@ -14,6 +16,7 @@ public:
     void setValue(int sensorValue);
     int getThreshold();
     void setThreshold(int sensorValue);
+    void calibrate(int sensorValue);
 };
 
 #endif
