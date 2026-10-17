@@ -9,6 +9,8 @@
 #include "WorldState.hpp"
 #include "Track.hpp"
 #include "Brazil.hpp"
+#include "Left.hpp"
+#include "Right.hpp"
 
 #define START_MOD 5
 #define L_IN1 7
@@ -53,6 +55,8 @@ RobotAction *robotAction;
 WorldState *worldState;
 Track *track;
 Brazil *brazil;
+Left *left;
+Right *right;
 
 Servo servo;
 
@@ -122,6 +126,8 @@ void setup() {
 
   track = new Track(worldState, robotAction);
   brazil = new Brazil(worldState, robotAction);
+  left = new Left(worldState, robotAction);
+  right = new Right(worldState, robotAction);
 
   servo.write(90);
   /* START MODULE WAIT */
@@ -146,8 +152,8 @@ void loop() {
   debug();
   pollSensors();
 
-  if (!track->run()) {
-    brazil->run();
+  if (right->run()) {
+    robotAction->brake();
   }
 
   writeMotors();

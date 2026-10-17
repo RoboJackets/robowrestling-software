@@ -15,7 +15,7 @@ void MotorDriver::setDirection(int directionValue) {
  * sets speed with acceleration implementation
  */
 void MotorDriver::setSpeed(int speedValue) {
-    int safe_speed = 70;
+    int safe_speed = 100;
     if (speedValue < speed) {
         speed = speedValue;
     }
