@@ -7,7 +7,7 @@
 
 class Brazil {
     private:
-        const int SPEED = 80;
+        const int SPEED = 100;
         const int MAX_SPEED = 255;
         const int BACKUP_DURATION = 100;
         const int SPIN_DURATION = 120 + BACKUP_DURATION;

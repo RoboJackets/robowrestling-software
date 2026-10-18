@@ -1,6 +1,9 @@
 #include <Arduino.h>
 #include <Bounce2.h>
 #include <Servo.h>
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 
 #include "IRSensor.hpp"
 #include "LineSensor.hpp"
@@ -11,6 +14,10 @@
 #include "Brazil.hpp"
 #include "Left.hpp"
 #include "Right.hpp"
+#include "Dash.hpp"
+#include "Inch.hpp"
+#include "LockOn.hpp"
+#include "DashLeft.hpp"
 
 #define START_MOD 5
 #define L_IN1 7
@@ -57,13 +64,23 @@ Track *track;
 Brazil *brazil;
 Left *left;
 Right *right;
+Dash *dash;
+Inch *inch;
+LockOn *lockOn;
+DashLeft *dashLeft;
 
 Servo servo;
+
+Adafruit_SSD1306 display(128, 64, &Wire, -1);
+
+Bounce button1 = Bounce();
+Bounce button2 = Bounce();
 
 bool led1 = LOW;
 bool led2 = LOW;
 int mode = 0;
 
+const int MAX_MODE = 6;
 const int THRESH_FACTOR = 150; // difference between black and white / 2
 
 void writeMotors();
@@ -92,6 +109,11 @@ void setup() {
 
   pinMode(BUTTON_1, INPUT);
   pinMode(BUTTON_2, INPUT);
+
+  button1.attach(BUTTON_1);
+  button1.interval(25);
+  button2.attach(BUTTON_2);
+  button2.interval(25);
 
   pinMode(LED1, OUTPUT);
   pinMode(LED2, OUTPUT);
@@ -128,10 +150,33 @@ void setup() {
   brazil = new Brazil(worldState, robotAction);
   left = new Left(worldState, robotAction);
   right = new Right(worldState, robotAction);
+  dash = new Dash(worldState, robotAction);
+  inch = new Inch(worldState, robotAction);
+  lockOn = new LockOn(worldState, robotAction);
+  dashLeft = new DashLeft(worldState, robotAction);
 
   servo.write(90);
+
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C);
+
   /* START MODULE WAIT */
   while (!digitalRead(START_MOD)) {
+    button1.update();
+    button2.update();
+    if (button1.rose()) mode = min(MAX_MODE, mode + 1);
+    if (button2.rose()) mode = max(0, mode - 1);
+
+    display.clearDisplay();
+    display.setTextSize(4);
+    display.setTextColor(SSD1306_WHITE);
+    String modeStr = String(mode);
+    int16_t x1, y1;
+    uint16_t w, h;
+    display.getTextBounds(modeStr, 0, 0, &x1, &y1, &w, &h);
+    display.setCursor((128 - w) / 2, (64 - h) / 2);
+    display.print(modeStr);
+    display.display();
+
     Serial.print(millis());
     Serial.print(": ");
     Serial.print(mode);
@@ -140,11 +185,11 @@ void setup() {
     Serial.println(" Waiting for start signal");
   }
   /* Set line sensors threshold */
-
   _LN_LF->setThreshold(analogRead(LN_LF) - THRESH_FACTOR);
   _LN_RF->setThreshold(analogRead(LN_RF) - THRESH_FACTOR);
   _LN_B->setThreshold(analogRead(LN_B) - THRESH_FACTOR);
   servo.write(5);
+  Wire.end();
 }
 
 
@@ -152,8 +197,62 @@ void loop() {
   debug();
   pollSensors();
 
-  if (right->run()) {
-    robotAction->brake();
+  if (mode == 0) {
+    if (left->run()) {
+      if (!track->run()) {
+        brazil->run();
+      }
+    }
+  }
+  if (mode == 1) {
+    if (right->run()) {
+      if (!track->run()) {
+        brazil->run();
+      }
+    }
+  }
+  if (mode == 2) {
+    if (dash->run()) {
+      if (!track->run()) {
+        brazil->run();
+      }
+    }
+  }
+  if (mode == 3) {
+    if (inch->run()) {
+      if (!track->run()) {
+        brazil->run();
+      }
+    }
+  }
+  if (mode == 4) {
+    if (inch->run()) {
+      if (lockOn->run()) {
+        if (dashLeft->run()) {
+          if (!track->run()) {
+            brazil->run();
+          }
+        }
+      }
+    }
+  }
+  if (mode == 5) {
+    if (inch->run()) {
+      if (lockOn->run()) {
+        if (dash->run()) {
+          if (!track->run()) {
+            brazil->run();
+          }
+        }
+      }
+    }
+  }
+  if (mode == 6) {
+    if (inch->run()) {
+      if (!track->run()) {
+        brazil->run();
+      }
+    }
   }
 
   writeMotors();

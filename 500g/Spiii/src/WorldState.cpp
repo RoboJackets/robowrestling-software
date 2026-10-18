@@ -50,14 +50,14 @@ OpponentPositionEnum WorldState::getEnemyPosition() {
         enemyPosition = OpponentPositionEnum::MID_RIGHT;
         return OpponentPositionEnum::MID_RIGHT;
     }
-    // if (l_90) {
-    //     enemyPosition = OpponentPositionEnum::FAR_LEFT;
-    //     return OpponentPositionEnum::FAR_LEFT;
-    // }
-    // if (r_90) {
-    //     enemyPosition = OpponentPositionEnum::FAR_RIGHT;
-    //     return OpponentPositionEnum::FAR_RIGHT;
-    // }
+    if (l_90) {
+        enemyPosition = OpponentPositionEnum::FAR_LEFT;
+        return OpponentPositionEnum::FAR_LEFT;
+    }
+    if (r_90) {
+        enemyPosition = OpponentPositionEnum::FAR_RIGHT;
+        return OpponentPositionEnum::FAR_RIGHT;
+    }
     return OpponentPositionEnum::NOT_SEEN;
 }
 

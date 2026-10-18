@@ -12,7 +12,7 @@ class Right {
         const int MOD = 150;
         const int LEFT_TURN_TIMER_DURATION = 90;
         const int RIGHT_TURN_TIMER_DURATION = 320 + LEFT_TURN_TIMER_DURATION;
-        const int FINAL_SPIN_TIMER_DURATION = 130 + RIGHT_TURN_TIMER_DURATION;
+        const int FINAL_SPIN_TIMER_DURATION = 70 + RIGHT_TURN_TIMER_DURATION;
         bool start_flag;
         Timer *left_turn_timer;
         Timer *right_turn_timer;

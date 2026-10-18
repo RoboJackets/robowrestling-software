@@ -46,12 +46,12 @@ bool Track::run() {
     else if (enemyPosition == MID_RIGHT) {
         robotActions->turn(MAX_SPEED, MOD);           
     }
-    // else if (enemyPosition == FAR_LEFT) {
-    //     robotActions->spinLeft(MAX_SPEED);
-    // }
-    // else if (enemyPosition == FAR_RIGHT) {
-    //     robotActions->spinRight(MAX_SPEED);
-    // }
+    else if (enemyPosition == FAR_LEFT) {
+        robotActions->spinLeft(MAX_SPEED);
+    }
+    else if (enemyPosition == FAR_RIGHT) {
+        robotActions->spinRight(MAX_SPEED);
+    }
     return true;
 }
 
