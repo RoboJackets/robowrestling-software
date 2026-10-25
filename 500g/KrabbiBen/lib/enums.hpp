@@ -1,0 +1,24 @@
+#ifndef ENUMS_HPP
+#define ENUMS_HPP
+
+// Put all shared enums here:
+
+enum LinePosition { OFF_LINE, LEFT_LINE, RIGHT_LINE, CENTER_LINE };
+enum EnemyPosition {
+    NONE,
+    LEFT,
+    RIGHT,
+    FRONT,
+    MIDLEFT,
+    MIDRIGHT,
+    FARFRONT,
+    FLAG_LEFT,
+    FLAG_RIGHT,
+    FRONT_LEFT,  // <-- ADD THIS
+    FRONT_RIGHT  // <-- ADD THIS
+};
+enum RobotMode { AVOID_LEFT, AVOID_RIGHT, ATTACK };
+enum Behavior { HUNTING, TURN_AROUND_R, TURN_AROUND_L, TURN_LEFT, TURN_RIGHT, CHARGE, STEALTH_CHARGE, FRONT_APPROACH, FLAG_ATTACK_L, FLAG_ATTACK_R, FULL_CHARGE, SWERVE_TURN_1, SWERVE_FORWARD, SWERVE_TURN_2};
+// (later) enum RobotState { IDLE, FOLLOW_LINE, AVOID_OBSTACLE, PATROL, ATTACK };
+
+#endif
