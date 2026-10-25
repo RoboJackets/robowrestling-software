@@ -5,8 +5,11 @@
 namespace {
 constexpr unsigned long OPEN_ENDED_BEHAVIOR_MS = 2147483647UL;
 constexpr float CHARGE_ACCEL_THRESHOLD = -4.0f;
-constexpr int FULL_CHARGE_SPEED = 255;
+constexpr int FULL_CHARGE_SPEED = 180;
 constexpr unsigned long FULL_CHARGE_MAX_MS = 150;
+constexpr unsigned long LINE_BACKUP_MS = 175; // test
+constexpr int LINE_BACKUP_SPEED = 140;
+constexpr unsigned long LINE_TURN_MS = 100;
 constexpr int REGULAR_ENGAGE_SPEED = 87;
 constexpr int REGULAR_ENGAGE_BIAS = 20;
 constexpr unsigned long SWERVE_TURN_MS = 100; 
@@ -98,9 +101,7 @@ void algorithms::resetState() {
   previousDrivePosition = NONE;
   currentEnemyPos = NONE;
   lastEnemyPos = NONE;
-  wasInLineEscape = false;
-  lastLineEscapeDuration = DEFAULT_LINE_ESCAPE_MS;
-  currentEscapeDuration = DEFAULT_LINE_ESCAPE_MS;
+  lineEscapeTurning = false;
 
   sentryModeEnabled = false;
   sentryTargetTimer = 0;
@@ -112,15 +113,13 @@ void algorithms::resetState() {
 
 // Executes the active behavior state (Line Escape, Charge, etc.)
 void algorithms::followBehavior() {
-  unsigned long backupPhaseThreshold = currentEscapeDuration > 40 ? currentEscapeDuration - 40 : 0;
-
   switch (behavior) {
     case TURN_AROUND_R:
-      if (behavior_timer.elapsedMilliseconds() < backupPhaseThreshold) motors.driveBackward(180); 
+      if (!lineEscapeTurning) motors.driveBackward(LINE_BACKUP_SPEED);
       else motors.spinRight(210);
       break;
     case TURN_AROUND_L:
-      if (behavior_timer.elapsedMilliseconds() < backupPhaseThreshold) motors.driveBackward(180);
+      if (!lineEscapeTurning) motors.driveBackward(LINE_BACKUP_SPEED);
       else motors.spinLeft(210);
       break;
     case CHARGE:
@@ -130,11 +129,11 @@ void algorithms::followBehavior() {
       break;
     case FLAG_ATTACK_L:
       if (behavior_timer.elapsedMilliseconds() < 30) motors.spinLeft(200);   
-      else motors.driveForward(255);
+      else motors.driveForward(FULL_CHARGE_SPEED);
       break;
     case FLAG_ATTACK_R:
       if (behavior_timer.elapsedMilliseconds() < 30) motors.spinRight(200);  
-      else motors.driveForward(255);
+      else motors.driveForward(FULL_CHARGE_SPEED);
       break;
     case FULL_CHARGE:
       motors.driveForward(FULL_CHARGE_SPEED);
@@ -155,34 +154,57 @@ void algorithms::followBehavior() {
   }
 }
 
-void algorithms::chooseAction(EnemyPosition currentPosition, LinePosition linePosition, float correctedYaw) {
-  // Finish the entire escape even after the digital line inputs clear.
+bool algorithms::respondToLine(LinePosition linePosition) {
   bool escapingLine = (behavior == TURN_AROUND_L || behavior == TURN_AROUND_R);
-  if (escapingLine && !behavior_timer.isFinished()) {
-    followBehavior();
-    return;
+  if (!escapingLine && linePosition == OFF_LINE) return false;
+
+  // Every forward behavior yields to the border, including timed openings.
+  forceFullCharge = false;
+  counterSpinActive = false;
+  if (!escapingLine) {
+    lineEscapeTurning = false;
+    // Latch the turn direction from the first detection for this entire escape.
+    // Left sensor -> right turn; right sensor -> left turn. If both are first
+    // detected in the same poll, retain the existing left-turn fallback.
+    startBehavior((linePosition == LEFT_LINE) ? TURN_AROUND_R : TURN_AROUND_L, LINE_BACKUP_MS);
   }
 
-  if (linePosition != OFF_LINE) {
-    forceFullCharge = false;
-    counterSpinActive = false;
-    unsigned long escapeDuration = DEFAULT_LINE_ESCAPE_MS;
-    if (wasInLineEscape) {
-      escapeDuration = (unsigned long)(lastLineEscapeDuration * 0.66f);
-      if (escapeDuration < 100) escapeDuration = 100;
+  if (lineEscapeTurning && linePosition != OFF_LINE) {
+    // Do not chain reverse bursts when the border reappears during a turn.
+    motors.stop();
+    behavior_timer.reset();
+    return true;
+  }
+
+  if (!lineEscapeTurning) {
+    if (!behavior_timer.isFinished()) {
+      motors.driveBackward(LINE_BACKUP_SPEED);
+      return true;
     }
-    lastLineEscapeDuration = escapeDuration;
-    currentEscapeDuration = escapeDuration;
-    wasInLineEscape = true;
-    startBehavior((linePosition == LEFT_LINE) ? TURN_AROUND_R : TURN_AROUND_L, escapeDuration);
-    followBehavior();
-    return;
+    if (linePosition != OFF_LINE) {
+      // Reverse has a hard time limit even if a digital sensor stays LOW.
+      motors.stop();
+      return true;
+    }
+    // Start a full turn only after backing up AND clearing both sensors.
+    lineEscapeTurning = true;
+    startBehavior(behavior, LINE_TURN_MS);
   }
 
-  if (escapingLine) {
-    behavior = HUNTING;
-    wasInLineEscape = false;
+  if (!behavior_timer.isRunning()) startBehavior(behavior, LINE_TURN_MS);
+
+  if (!behavior_timer.isFinished()) {
+    followBehavior();
+    return true;
   }
+
+  behavior = HUNTING;
+  lineEscapeTurning = false;
+  return false;
+}
+
+void algorithms::chooseAction(EnemyPosition currentPosition, LinePosition linePosition, float correctedYaw) {
+  if (respondToLine(linePosition)) return;
 
   // 3. IMU Collision / Full Charge Logic
   if (forceFullCharge) {
@@ -212,7 +234,6 @@ void algorithms::chooseAction(EnemyPosition currentPosition, LinePosition linePo
               startBehavior(SWERVE_FORWARD, SWERVE_FWD_MS);
           } else {
               behavior = HUNTING;
-              wasInLineEscape = false;  
           }
       } else {
           followBehavior();

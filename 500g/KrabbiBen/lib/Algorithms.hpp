@@ -15,10 +15,7 @@ class algorithms {
     Behavior behavior = HUNTING;
     bool started = false;
     timer& last_state_changed;
-    static constexpr unsigned long DEFAULT_LINE_ESCAPE_MS = 160;
-    unsigned long lastLineEscapeDuration = DEFAULT_LINE_ESCAPE_MS;
-    unsigned long currentEscapeDuration = DEFAULT_LINE_ESCAPE_MS;
-    bool wasInLineEscape = false;
+    bool lineEscapeTurning = false;
     bool ChargeActive = false;
     bool forceFullCharge = false;
     unsigned long fullChargeLostStartMs = 0;
@@ -41,7 +38,7 @@ class algorithms {
 
     void spin();
     void followBehavior();
-    void respondToLine(LinePosition l);   // do something based on line_pos
+    bool respondToLine(LinePosition linePosition);
     int swerveDirection = 0; // -1 for left, 1 for right
     void selectMode(float imuForwardAccel, int dip0, int dip1, float correctedYaw);
     void chooseAction(EnemyPosition currentPosition, LinePosition linePosition, float correctedYaw);

@@ -46,6 +46,8 @@ long currentMillis = 0;
 bool startupDelayComplete = false;
 bool startSignalReceived = false;
 bool imuCalibrationDone = false;
+unsigned long loopCounter = 0;
+unsigned long lastImuReadMicros = 0;
 
 // IMU Tracking 
 static unsigned long lastImuMicros = 0;
@@ -93,9 +95,11 @@ void calibrateImuMounting();
 void buildImuToRobotTransform(float gravityX, float gravityY, float gravityZ);
 void rotateIntoRobotFrame(float inputX, float inputY, float inputZ, float& outputX, float& outputY, float& outputZ);
 void pullSensors();
+void pullLineSensors();
 void updateIMU();
 void updateOrientation();
 void writeMotors();
+void stopDrive();
 void writeServo(int pin, double deg); 
 void setLED();
 bool detectImuImpact();
@@ -109,14 +113,27 @@ void debugDIP();
 void debugFusedValues();
 void debugEnemy(EnemyPosition ep);
 
+// Build each telemetry snapshot in RAM so USB backpressure cannot block driving.
+class DebugFrame : public Print {
+public:
+  uint8_t data[512];
+  size_t length = 0;
+  size_t write(uint8_t value) override {
+    if (length == sizeof(data)) return 0;
+    data[length++] = value;
+    return 1;
+  }
+};
+Print* telemetryOutput = &Serial;
+
 // DIP 3 enables serial telemetry independently of the start signal.
 template <typename T>
 void aliFunc(const T& value) {
-  if (dips[2] == LOW) Serial.print(value);
+  if (dips[2] == LOW) telemetryOutput->print(value);
 }
 template <typename T>
 void aliFuncln(const T& value) {
-  if (dips[2] == LOW) Serial.println(value);
+  if (dips[2] == LOW) telemetryOutput->println(value);
 }
 
 // Smooths noisy accelerometer data to detect genuine hard impacts
@@ -164,7 +181,7 @@ void setup() {
 
   Wire.setSCL(imuSCL);
   Wire.setSDA(imuSDA);
-  Wire.begin(imuSDA, imuSCL); 
+  Wire.begin();
 
   bool imuAvailable = mpu.begin();
 
@@ -188,22 +205,37 @@ void setup() {
 }
 
 void loop() {
+  ++loopCounter;
   pullSensors(); 
   currentMillis = millis();
   ws.get_sensors_avg();
+
+  bool testMode = (dips[2] == LOW);
+  bool startModuleActive = (digitalRead(startPin) == START_MODULE_ACTIVE_STATE);
+  // Stop motor PWM before any peripheral operation can delay this loop.
+  if (!startModuleActive || !imuCalibrationDone) stopDrive();
+  // Apply edge escape motor output before I2C polling or serial telemetry.
+  if (startModuleActive && imuCalibrationDone && startupDelayComplete &&
+      algo.respondToLine(ws.line_check())) {
+    impactOccurred = false;
+    writeMotors();
+    setLED();
+  }
 
   // Keep IMU telemetry live even when the start module is inactive.
   bool imuSampleUpdated = false;
   if (imuCalibrationDone && micros() - lastImuMicros >= IMU_INTERVAL_MICROS) {
     lastImuMicros = micros();
+    unsigned long readStartMicros = micros();
     updateIMU();
+    lastImuReadMicros = micros() - readStartMicros;
     updateOrientation();
     imuSampleUpdated = true;
   }
 
-  bool testMode = (dips[2] == LOW);
-  bool startModuleActive = (digitalRead(startPin) == START_MODULE_ACTIVE_STATE);
 
+  // The start signal may have changed while the blocking IMU read ran.
+  startModuleActive = (digitalRead(startPin) == START_MODULE_ACTIVE_STATE);
   // Driving requires an active start module and a working, calibrated IMU.
   if (startModuleActive && imuCalibrationDone) {
       // Pre-match / Startup Logic
@@ -262,6 +294,9 @@ void loop() {
     }
 
     // Execute Core Driving Behaviors
+    // Catch a border reached during the blocking IMU transaction too.
+    pullLineSensors();
+    currentMillis = millis();
     algo.selectMode(linearAccelX, dips[0], dips[1], 0.0f);
     
     writeServo(servoPin, 250); 
@@ -270,22 +305,7 @@ void loop() {
     // RESTORED: Fire debug prints
     debug();
   } else {
-    startSignalReceived = false;
-    startupDelayComplete = false;
-    startup_delay_timer.reset();
-    impactOccurred = false;
-    imuImpactLatched = false;
-    kalmanForwardAccelEstimate = 0.0f;
-    kalmanForwardAccelCovariance = 1.0f;
-    lastAccelMagnitude = 0.0f;
-    algo.resetState();
-    algo.setFullChargeMode(false);
-    digitalWrite(led1Pin, LOW);
-    digitalWrite(led2Pin, LOW);
-    motors[0] = 0;
-    motors[1] = 0;
-    writeServo(servoPin, 0); 
-    writeMotors();
+    stopDrive();
     debug();
     return;
   }
@@ -298,13 +318,17 @@ void pullSensors() {
   ir_sensors[3] = digitalRead(rightSensor);
   ir_sensors[4] = digitalRead(rightSideSensor);
   
-  // Digital, active-LOW line outputs; input pull-ups are configured in setup().
-  line_sensors[0] = digitalRead(leftLineSensor);
-  line_sensors[1] = digitalRead(rightLineSensor);
+  pullLineSensors();
   
   dips[0] = digitalRead(dip1);
   dips[1] = digitalRead(dip2);
   dips[2] = digitalRead(dip3);
+}
+
+void pullLineSensors() {
+  // Digital, active-LOW line outputs; input pull-ups are configured in setup().
+  line_sensors[0] = digitalRead(leftLineSensor);
+  line_sensors[1] = digitalRead(rightLineSensor);
 }
 
 void updateIMU() {
@@ -420,8 +444,11 @@ void setLED(){
 }
 
 void writeMotors() {
-  const int leftSpeed = motorsEnabled ? motors[0] : 0;
-  const int rightSpeed = motorsEnabled ? motors[1] : 0;
+  // Recheck at the actual output write, not just at the beginning of loop().
+  const bool driveAllowed = motorsEnabled && imuCalibrationDone &&
+    digitalRead(startPin) == START_MODULE_ACTIVE_STATE;
+  const int leftSpeed = driveAllowed ? motors[0] : 0;
+  const int rightSpeed = driveAllowed ? motors[1] : 0;
   // 'static' means it remembers these values between loops
   static int lastLeftSpeed = -999;
   static int lastRightSpeed = -999;
@@ -455,6 +482,22 @@ void writeMotors() {
   setMotor(rightF, rightB, rightSpeed);
 }
 
+void stopDrive() {
+  startSignalReceived = false;
+  startupDelayComplete = false;
+  startup_delay_timer.reset();
+  impactOccurred = false;
+  imuImpactLatched = false;
+  kalmanForwardAccelEstimate = 0.0f;
+  kalmanForwardAccelCovariance = 1.0f;
+  lastAccelMagnitude = 0.0f;
+  algo.resetState();
+  writeMotors();
+  writeServo(servoPin, 0);
+  digitalWrite(led1Pin, LOW);
+  digitalWrite(led2Pin, LOW);
+}
+
 void writeServo(int pin, double deg) {
   if (deg < 0) deg = 0;
   if (deg > 180) deg = 180;
@@ -464,29 +507,47 @@ void writeServo(int pin, double deg) {
 
 // DIP 3 enables 10 Hz telemetry even when the start module is inactive.
 void debug() {
-  if (dips[2] != LOW || !Serial.dtr()) return;
+  static DebugFrame frame;
+  static size_t sent = 0;
+  if (dips[2] != LOW || !Serial.dtr()) {
+    frame.length = sent = 0;
+    return;
+  }
   static unsigned long lastDebugMillis = 0;
   unsigned long nowMs = millis();
-  if (nowMs - lastDebugMillis < 100) return;
-  lastDebugMillis = nowMs;
+  if (sent == frame.length && nowMs - lastDebugMillis >= 100) {
+    frame.length = sent = 0;
+    lastDebugMillis = nowMs;
+    telemetryOutput = &frame;
 
-  aliFunc("START: "); aliFunc(digitalRead(startPin));
-  aliFunc("  DIP 1/2/3: "); debugDIP();
-  aliFunc("IR raw [left-side left center right right-side]: ");
-  debugIR(); aliFuncln("");
-  aliFunc("IR averages: "); debugAverages(); aliFuncln("");
-  aliFunc("Line digital [left right], 0=border: "); debugLine();
-  aliFunc("Motor command [left right]: ");
-  aliFunc(motorsEnabled ? motors[0] : 0); aliFunc(" ");
-  aliFuncln(motorsEnabled ? motors[1] : 0);
-  aliFunc("Full charge: "); aliFunc(algo.isFullChargeMode());
-  aliFunc("  Filtered forward accel: "); aliFuncln(lastAccelMagnitude);
-  if (imuCalibrationDone) {
-    debugFusedValues();
-  } else {
-    aliFuncln("IMU unavailable; driving disabled");
+    aliFunc("Loop: "); aliFunc(loopCounter);
+    aliFunc("  t_ms: "); aliFunc(nowMs);
+    aliFunc("  IMU read_us: "); aliFuncln(lastImuReadMicros);
+    aliFunc("START: "); aliFunc(digitalRead(startPin));
+    aliFunc("  DIP 1/2/3: "); debugDIP();
+    aliFunc("IR raw [left-side left center right right-side]: ");
+    debugIR(); aliFuncln("");
+    aliFunc("IR averages: "); debugAverages(); aliFuncln("");
+    aliFunc("Line digital [left right], 0=border: "); debugLine();
+    aliFunc("Motor command [left right]: ");
+    aliFunc(motorsEnabled ? motors[0] : 0); aliFunc(" ");
+    aliFuncln(motorsEnabled ? motors[1] : 0);
+    aliFunc("Full charge: "); aliFunc(algo.isFullChargeMode());
+    aliFunc("  Filtered forward accel: "); aliFuncln(lastAccelMagnitude);
+    if (imuCalibrationDone) {
+      debugFusedValues();
+    } else {
+      aliFuncln("IMU unavailable; driving disabled");
+    }
+    aliFuncln("");
+    telemetryOutput = &Serial;
   }
-  aliFuncln("");
+
+  int available = Serial.availableForWrite();
+  if (available <= 0) return;
+  size_t remaining = frame.length - sent;
+  size_t count = remaining < (size_t)available ? remaining : (size_t)available;
+  if (count > 0) sent += Serial.write(frame.data + sent, count);
 }
 
 void debugLine(){
@@ -521,14 +582,14 @@ void debugAverages() {
 }
 
 void debugFusedValues() {
-  Serial.print("Roll/Pitch: ");
-  Serial.print(rollDeg); Serial.print(" ");
-  Serial.println(pitchDeg);
+  aliFunc("Roll/Pitch: ");
+  aliFunc(rollDeg); aliFunc(" ");
+  aliFuncln(pitchDeg);
 
-  Serial.print("Linear Accel XYZ: ");
-  Serial.print(linearAccelX); Serial.print(" ");
-  Serial.print(linearAccelY); Serial.print(" ");
-  Serial.println(linearAccelZ);
+  aliFunc("Linear Accel XYZ: ");
+  aliFunc(linearAccelX); aliFunc(" ");
+  aliFunc(linearAccelY); aliFunc(" ");
+  aliFuncln(linearAccelZ);
 }
 
 void debugEnemy(EnemyPosition ep){
