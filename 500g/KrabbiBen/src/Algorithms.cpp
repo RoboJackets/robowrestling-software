@@ -6,6 +6,7 @@ namespace {
 constexpr unsigned long OPEN_ENDED_BEHAVIOR_MS = 2147483647UL;
 constexpr float CHARGE_ACCEL_THRESHOLD = -4.0f;
 constexpr int FULL_CHARGE_SPEED = 255;
+constexpr unsigned long FULL_CHARGE_MAX_MS = 150;
 constexpr int REGULAR_ENGAGE_SPEED = 87;
 constexpr int REGULAR_ENGAGE_BIAS = 20;
 constexpr unsigned long SWERVE_TURN_MS = 100; 
@@ -69,10 +70,16 @@ void algorithms::selectMode(float imuForwardAccel, int dip0, int dip1, float cor
 
 // Triggers an aggressive push when the IMU detects an impact
 void algorithms::setFullChargeMode(bool enabled) {
+  // An impact must not replace an unfinished edge escape or reset its timer.
+  if (behavior == TURN_AROUND_L || behavior == TURN_AROUND_R) {
+    forceFullCharge = false;
+    return;
+  }
+  if (enabled && forceFullCharge) return;
   forceFullCharge = enabled;
   if (enabled) {
     sentryModeEnabled = false; // Permanently wake Sentry if rammed
-    startBehavior(FULL_CHARGE, OPEN_ENDED_BEHAVIOR_MS);
+    startBehavior(FULL_CHARGE, FULL_CHARGE_MAX_MS);
   } else {
     behavior = HUNTING;
   }
@@ -91,6 +98,9 @@ void algorithms::resetState() {
   previousDrivePosition = NONE;
   currentEnemyPos = NONE;
   lastEnemyPos = NONE;
+  wasInLineEscape = false;
+  lastLineEscapeDuration = DEFAULT_LINE_ESCAPE_MS;
+  currentEscapeDuration = DEFAULT_LINE_ESCAPE_MS;
 
   sentryModeEnabled = false;
   sentryTargetTimer = 0;
@@ -146,60 +156,38 @@ void algorithms::followBehavior() {
 }
 
 void algorithms::chooseAction(EnemyPosition currentPosition, LinePosition linePosition, float correctedYaw) {
-// --- 2. STANDARD LINE AVOIDANCE ---
+  // Finish the entire escape even after the digital line inputs clear.
+  bool escapingLine = (behavior == TURN_AROUND_L || behavior == TURN_AROUND_R);
+  if (escapingLine && !behavior_timer.isFinished()) {
+    followBehavior();
+    return;
+  }
+
   if (linePosition != OFF_LINE) {
-      // FIX: Lock in the escape behavior until the timer finishes.
-      // This prevents bouncing right-sensor readings from resetting the timer to 0!
-      if (behavior != TURN_AROUND_L && behavior != TURN_AROUND_R) {
-        behavior = (linePosition == LEFT_LINE) ? TURN_AROUND_R : TURN_AROUND_L;
-        behavior_timer.reset();
-        behavior_timer.start();
-
-        unsigned long escapeDuration = 160;
-        if (wasInLineEscape) {
-          escapeDuration = (unsigned long)(lastLineEscapeDuration * 0.66f);
-          if (escapeDuration < 100) escapeDuration = 100;
-        }
-        lastLineEscapeDuration = escapeDuration;
-        currentEscapeDuration = escapeDuration;
-        behavior_timer.setTarget(escapeDuration);
-        wasInLineEscape = true;
-      }
-
-      if (!behavior_timer.isFinished()) {
-        followBehavior();
-      } else {
-        behavior = HUNTING;
-      }
-      return;
+    forceFullCharge = false;
+    counterSpinActive = false;
+    unsigned long escapeDuration = DEFAULT_LINE_ESCAPE_MS;
+    if (wasInLineEscape) {
+      escapeDuration = (unsigned long)(lastLineEscapeDuration * 0.66f);
+      if (escapeDuration < 100) escapeDuration = 100;
     }
+    lastLineEscapeDuration = escapeDuration;
+    currentEscapeDuration = escapeDuration;
+    wasInLineEscape = true;
+    startBehavior((linePosition == LEFT_LINE) ? TURN_AROUND_R : TURN_AROUND_L, escapeDuration);
+    followBehavior();
+    return;
+  }
 
-// 2. High-Priority Line Avoidance
-  if (linePosition != OFF_LINE) {
-      Behavior desiredEscape = (linePosition == LEFT_LINE) ? TURN_AROUND_R : TURN_AROUND_L;
-
-      // If we aren't currently escaping, start a fresh, strong escape maneuver
-      if (behavior != desiredEscape) {
-          // Bumping this to 220ms guarantees it clears standard 5cm Sumo borders
-          unsigned long escapeDuration = 180; 
-          startBehavior(desiredEscape, escapeDuration);
-          currentEscapeDuration = escapeDuration;
-      }
-
-      // Execute the backup/turn until the timer is completely finished
-      if (!behavior_timer.isFinished()) {
-          followBehavior();
-      } else {
-          behavior = HUNTING;
-      }
-      
-      return;
+  if (escapingLine) {
+    behavior = HUNTING;
+    wasInLineEscape = false;
   }
 
   // 3. IMU Collision / Full Charge Logic
   if (forceFullCharge) {
       bool enemyInFrontArc = (currentPosition == FRONT || currentPosition == FRONT_LEFT || currentPosition == FRONT_RIGHT || currentPosition == MIDLEFT || currentPosition == MIDRIGHT); 
-      if (enemyInFrontArc) {
+      if (enemyInFrontArc && !behavior_timer.isFinished()) {
           behavior = FULL_CHARGE;
           followBehavior();
           return;

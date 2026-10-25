@@ -15,8 +15,9 @@ class algorithms {
     Behavior behavior = HUNTING;
     bool started = false;
     timer& last_state_changed;
-    unsigned long lastLineEscapeDuration = 220;
-    unsigned long currentEscapeDuration = 220;
+    static constexpr unsigned long DEFAULT_LINE_ESCAPE_MS = 160;
+    unsigned long lastLineEscapeDuration = DEFAULT_LINE_ESCAPE_MS;
+    unsigned long currentEscapeDuration = DEFAULT_LINE_ESCAPE_MS;
     bool wasInLineEscape = false;
     bool ChargeActive = false;
     bool forceFullCharge = false;

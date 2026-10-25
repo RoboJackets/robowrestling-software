@@ -30,16 +30,21 @@ float* world_state::get_sensors_avg() {
 }
 
 EnemyPosition world_state::enemy_pos() {
+    // A center detection takes priority over side flags. Symmetric inner
+    // detections indicate a centered target rather than an arbitrary left turn.
+    if (avgs[2] >= 0.9) {
+        bool left = (avgs[1] >= 0.9);
+        bool right = (avgs[3] >= 0.9);
+        if (left && !right) return FRONT_LEFT;
+        if (right && !left) return FRONT_RIGHT;
+        return FRONT;
+    }
+
     // Extreme outside flags
     if (avgs[1] >= 0.9 && avgs[0] >= 0.9) return FLAG_LEFT;  
     if (avgs[3] >= 0.9 && avgs[4] >= 0.9) return FLAG_RIGHT;
 
-    // In-between micro-adjustment zones
-    if (avgs[2] >= 0.9 && avgs[1] >= 0.9) return FRONT_LEFT;
-    if (avgs[2] >= 0.9 && avgs[3] >= 0.9) return FRONT_RIGHT;
-
     // Standard zones
-    if (avgs[2] >= 0.9) return FRONT;
     if (avgs[1] >= 0.9) return MIDLEFT;
     if (avgs[3] >= 0.9) return MIDRIGHT;
     if (avgs[0] >= 0.9) return LEFT;

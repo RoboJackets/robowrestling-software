@@ -16,6 +16,7 @@ class world_state {
         world_state(int* line_sensors, int* ir_sensors);
         void clean_sensors();
         float* get_sensors_avg();
+        const float* sensors_avg() const { return avgs; }
         EnemyPosition enemy_pos();
         LinePosition line_check();
 };
