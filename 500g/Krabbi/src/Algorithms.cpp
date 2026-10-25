@@ -1,10 +1,38 @@
 #include "Algorithms.hpp"
 #include "enums.hpp"
 #include <Arduino.h>
+#include <math.h>
 
 namespace {
 constexpr unsigned long OPEN_ENDED_BEHAVIOR_MS = 2147483647UL;
-constexpr float CHARGE_ACCEL_THRESHOLD = -5.0f;
+constexpr unsigned long CHARGE_DURATION_MS = 140UL;
+constexpr unsigned long CHARGE_COOLDOWN_MS = 220UL;
+constexpr int SEARCH_FAST_SPEED = 90;
+constexpr int SEARCH_SLOW_SPEED = 25;
+constexpr int SIDE_SPIN_SPEED = 190;
+constexpr int APPROACH_MIN_SPEED = 105;
+constexpr int APPROACH_MAX_SPEED = 175;
+constexpr int FAR_APPROACH_SPEED = 120;
+constexpr int TRACK_OUTSIDE_SPEED = 175;
+constexpr int TRACK_INSIDE_SPEED = 95;
+constexpr int CHARGE_START_SPEED = 175;
+constexpr int CHARGE_MAX_SPEED = 215;
+constexpr float TIP_ABORT_ANGLE_DEG = 11.0f;
+constexpr float MAX_SETTLED_FORWARD_ACCEL = 2.4f;
+constexpr float CHARGE_ABORT_ACCEL = 3.4f;
+constexpr int CHARGE_STABLE_DETECTIONS = 4;
+
+bool isFrontArc(EnemyPosition position) {
+  return position == FRONT || position == FARFRONT;
+}
+
+bool isLeftArc(EnemyPosition position) {
+  return position == LEFT || position == MIDLEFT || position == FLAG_LEFT;
+}
+
+bool isRightArc(EnemyPosition position) {
+  return position == RIGHT || position == MIDRIGHT || position == FLAG_RIGHT;
+}
 }
 
 algorithms::algorithms(motor_actions& motors, world_state& world, timer& behavior_timer, timer& last_state_changed)
@@ -27,19 +55,43 @@ void algorithms::startBehavior(Behavior nextBehavior, unsigned long targetMs) {
 }
 
 bool algorithms::shouldCharge() const {
-  return forwardAccel <= CHARGE_ACCEL_THRESHOLD;
+  const bool frontLocked = consecutiveChargeDetections >= CHARGE_STABLE_DETECTIONS;
+  const bool chargeReady = millis() >= chargeCooldownUntil;
+  const bool upright = fabsf(pitchAngleDeg) <= TIP_ABORT_ANGLE_DEG;
+  const bool settled = forwardAccel <= MAX_SETTLED_FORWARD_ACCEL;
+  return frontLocked && chargeReady && upright && settled;
 }
 
-void algorithms::selectMode(float imuForwardAccel) {
-  forwardAccel = -imuForwardAccel;
+bool algorithms::shouldAbortCharge() const {
+  return fabsf(pitchAngleDeg) > TIP_ABORT_ANGLE_DEG || forwardAccel > CHARGE_ABORT_ACCEL;
+}
+
+void algorithms::selectMode(float imuForwardAccel, float imuPitchDeg) {
+  forwardAccel = imuForwardAccel;
+  pitchAngleDeg = imuPitchDeg;
 
   EnemyPosition e = world.enemy_pos();
-  if(currentEnemyPos != e && currentEnemyPos != NONE) {
-    lastEnemyPos = currentEnemyPos;
+  if (currentEnemyPos != e) {
+    if (currentEnemyPos != NONE) {
+      lastEnemyPos = currentEnemyPos;
+    }
     last_state_changed.reset();
     last_state_changed.start();
   }
   currentEnemyPos = e;
+
+  if (!last_state_changed.isRunning()) {
+    last_state_changed.start();
+  }
+
+  if (isFrontArc(currentEnemyPos)) {
+    if (consecutiveChargeDetections < CHARGE_STABLE_DETECTIONS + 2) {
+      consecutiveChargeDetections++;
+    }
+  } else if (consecutiveChargeDetections > 0) {
+    consecutiveChargeDetections--;
+  }
+
   LinePosition linePos = world.line_check();
 
   chooseAction(currentEnemyPos, linePos);
@@ -49,10 +101,6 @@ void algorithms::followBehavior() {
   // Fixed spin time: 70ms, rest is backup
   unsigned long spinTime = 70;
   unsigned long backupPhaseThreshold = currentEscapeDuration > spinTime ? currentEscapeDuration - spinTime : 0;
-
-  if (shouldCharge()) {
-    ChargeActive = true;
-  }
   
   switch (behavior) {
     case TURN_AROUND_R:
@@ -72,7 +120,11 @@ void algorithms::followBehavior() {
       }
       break;
     case CHARGE:
-      motors.driveForward(255);
+      {
+        unsigned long elapsed = behavior_timer.elapsedMilliseconds();
+        int speed = rampSpeed(elapsed, CHARGE_START_SPEED, CHARGE_MAX_SPEED, CHARGE_DURATION_MS);
+        motors.driveForward(speed);
+      }
       break;
     case STEALTH_CHARGE:
       {
@@ -130,11 +182,14 @@ void algorithms::chooseAction(EnemyPosition currentPosition, LinePosition linePo
   if (started == false) {
     behavior = HUNTING;
     started = true;
+    last_state_changed.start();
     return;
   }
 
   // === PRIORITY 1: LINE ESCAPE ===
   if (linePosition != OFF_LINE) {
+      ChargeActive = false;
+      consecutiveChargeDetections = 0;
       if (linePosition == LEFT_LINE) {
           behavior = TURN_AROUND_R;
       } else if (linePosition == RIGHT_LINE) { 
@@ -167,11 +222,20 @@ void algorithms::chooseAction(EnemyPosition currentPosition, LinePosition linePo
 
   // === PRIORITY 3: TIMED BEHAVIORS (CHARGES, ESCAPES, FLAG ATTACKS) ===
   if (behavior != HUNTING) {
+      if (behavior == CHARGE && (shouldAbortCharge() || (!isFrontArc(currentPosition) && currentPosition != MIDLEFT && currentPosition != MIDRIGHT))) {
+          behavior = HUNTING;
+          ChargeActive = false;
+          chargeCooldownUntil = millis() + CHARGE_COOLDOWN_MS;
+      }
       // Exit STEALTH_CHARGE early if enemy no longer in charge-able position
       if (behavior == STEALTH_CHARGE && currentPosition != FRONT && currentPosition != FARFRONT && currentPosition != MIDLEFT && currentPosition != MIDRIGHT) {
           behavior = HUNTING;
       }
-      else if (behavior_timer.isFinished()) {
+      else if (behavior != HUNTING && behavior_timer.isFinished()) {
+          if (behavior == CHARGE) {
+            ChargeActive = false;
+            chargeCooldownUntil = millis() + CHARGE_COOLDOWN_MS;
+          }
           behavior = HUNTING;
           wasInLineEscape = false;  
       } else {
@@ -195,57 +259,52 @@ void algorithms::liveDrive(EnemyPosition currentPosition, LinePosition linePosit
 
   switch(currentPosition) {
     case LEFT:
-      motors.spinLeft(220);
+      ChargeActive = false;
+      motors.spinLeft(SIDE_SPIN_SPEED);
+      break;
+    case MIDLEFT:
+      ChargeActive = false;
+      motors.customDrive(TRACK_OUTSIDE_SPEED, TRACK_INSIDE_SPEED);
       break;
     case RIGHT:
-      motors.spinRight(220);
+      ChargeActive = false;
+      motors.spinRight(SIDE_SPIN_SPEED);
+      break;
+    case MIDRIGHT:
+      ChargeActive = false;
+      motors.customDrive(TRACK_INSIDE_SPEED, TRACK_OUTSIDE_SPEED);
       break;
     case FRONT:
-      // if (shouldCharge()) {
-      //   if (!ChargeActive) {
-      //     startBehavior(CHARGE);
-      //     ChargeActive = true;
-      //   }
-      //   followBehavior();
-      // } else {
-      if (ChargeActive) {
-        motors.driveForward(255);
+      if (shouldCharge()) {
+        ChargeActive = true;
+        startBehavior(CHARGE, CHARGE_DURATION_MS);
+        followBehavior();
       } else {
-        motors.driveForward(100);
+        ChargeActive = false;
+        unsigned long elapsed = last_state_changed.elapsedMilliseconds();
+        int speed = rampSpeed(elapsed, APPROACH_MIN_SPEED, APPROACH_MAX_SPEED, 180);
+        motors.driveForward(speed);
       }
-      // }
       break;
-    // case MIDLEFT:
-    //   {
-    //     unsigned long elapsed = last_state_changed.elapsedMilliseconds();
-    //     int speed;
-    //     if (elapsed < 100) {
-    //       speed = 80 + ((elapsed * 70) / 100);
-    //     } else {
-    //       speed = 150;
-    //     }
-    //     motors.customDrive(speed, speed * 0.8);
-    //   }
-    //   break;
-    // case MIDRIGHT:
-    //   {
-    //     unsigned long elapsed = last_state_changed.elapsedMilliseconds();
-    //     int speed;
-    //     if (elapsed < 100) {
-    //       speed = 80 + ((elapsed * 70) / 100);
-    //     } else {
-    //       speed = 150;
-    //     }
-    //     motors.customDrive(speed, speed * 0.8);
-    //   }
-    //   break;
+    case FARFRONT:
+      ChargeActive = false;
+      motors.driveForward(FAR_APPROACH_SPEED);
+      break;
     case NONE:
-      // Use a basic millis() alternating timer so it sweeps without blocking.
-      if ((millis() / 300) % 2 == 0) {
-          motors.customDrive(50, 10);
+      ChargeActive = false;
+      if (isLeftArc(lastEnemyPos)) {
+          motors.customDrive(SEARCH_FAST_SPEED, SEARCH_SLOW_SPEED);
+      } else if (isRightArc(lastEnemyPos)) {
+          motors.customDrive(SEARCH_SLOW_SPEED, SEARCH_FAST_SPEED);
+      } else if ((millis() / 300) % 2 == 0) {
+          motors.customDrive(SEARCH_FAST_SPEED, SEARCH_SLOW_SPEED);
       } else {
-          motors.customDrive(8, 50);
+          motors.customDrive(SEARCH_SLOW_SPEED, SEARCH_FAST_SPEED);
       }
+      break;
+    default:
+      ChargeActive = false;
+      motors.stop();
       break;
   }
 }

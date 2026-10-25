@@ -259,7 +259,7 @@ void loop() {
   setLED();
   avgs = ws.get_sensors_avg();
 
-  algo.selectMode(linearAccelX);
+  algo.selectMode(linearAccelX, pitchDeg);
 
   if (!playing) {
     motors[0] = 0;
@@ -506,7 +506,7 @@ void debug() {
 void writeMotors() {
   motors[0] = motors[0]/1;
   motors[1] = motors[1]/1;
-  // antiTipCorrection(motors[0], motors[1]);
+  antiTipCorrection(motors[0], motors[1]);
   if (motors[0] > 0) {
     analogWrite(leftF, abs(motors[0]));
     analogWrite(leftB, 0);
@@ -553,15 +553,16 @@ void writeServo(int pin, double deg) {
 }
 
 void antiTipCorrection(int &leftCmd, int &rightCmd) {
-  const float accelLimit = 1.75f;          // m/s^2, start conservative
-  const float accelGain = 35.0f;          // motor units per (m/s^2 over limit)
-  const float filterAlpha = 0.25f;        // 0-1, higher = less smoothing
-  const int maxCorrection = 100;          // don't over-correct too hard
+  const float accelLimit = 2.30f;         // only trim clearly aggressive forward surges
+  const float accelGain = 28.0f;          // motor units per (m/s^2 over limit)
+  const float filterAlpha = 0.18f;        // smooth enough to ignore sensor spikes
+  const int maxCorrection = 80;           // keep enough push while avoiding wheelies
 
   filteredForwardAccel = smoothIMU(linearAccelX, filteredForwardAccel, filterAlpha);
 
   int avgCmd = (leftCmd + rightCmd) / 2;
-  if (avgCmd <= 0) {
+  if (avgCmd < 150 || abs(leftCmd - rightCmd) > 70) {
+    accelCorrection = 0.0f;
     return;
   }
 

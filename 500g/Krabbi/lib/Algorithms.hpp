@@ -20,11 +20,14 @@ class algorithms {
     bool wasInLineEscape = false;
     bool ChargeActive = false;
     float forwardAccel = 0.0f;
+    float pitchAngleDeg = 0.0f;
     int consecutiveChargeDetections = 0;
+    unsigned long chargeCooldownUntil = 0;
 
     int rampSpeed(unsigned long elapsed, int startSpeed, int endSpeed, unsigned long rampMs);
     void startBehavior(Behavior nextBehavior, unsigned long targetMs = 0);
     bool shouldCharge() const;
+    bool shouldAbortCharge() const;
   public:
   
     algorithms(motor_actions& motors, world_state& world, timer& behavior_timer, timer& last_state_changed);
@@ -32,7 +35,7 @@ class algorithms {
     void spin();
     void followBehavior();
     void respondToLine(LinePosition l);   // do something based on line_pos
-    void selectMode(float imuForwardAccel = 0.0f);
+    void selectMode(float imuForwardAccel = 0.0f, float imuPitchDeg = 0.0f);
     void chooseAction(EnemyPosition currentPosition, LinePosition linePosition);
     void liveDrive(EnemyPosition currentPosition, LinePosition linePosition);
 };
