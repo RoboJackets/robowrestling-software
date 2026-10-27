@@ -40,6 +40,7 @@ const int dip3 = PB14;
 
 // State Variables
 bool motorsEnabled = true; // Set false to disable drive motors for sensor testing.
+bool rightLineSensorEnabled = false; // Right line sensor is broken; reads as "no border" while false.
 const unsigned long startupDelayMs = 0;
 const int START_MODULE_ACTIVE_STATE = HIGH;
 long currentMillis = 0;
@@ -126,14 +127,18 @@ public:
 };
 Print* telemetryOutput = &Serial;
 
-// DIP 3 enables serial telemetry independently of the start signal.
+// Debug mode (serial telemetry + test mode) only when DIP 3 is on and DIPs 1 and 2 are off.
+bool debugMode() {
+  return dips[0] == HIGH && dips[1] == HIGH && dips[2] == LOW;
+}
+
 template <typename T>
 void aliFunc(const T& value) {
-  if (dips[2] == LOW) telemetryOutput->print(value);
+  if (debugMode()) telemetryOutput->print(value);
 }
 template <typename T>
 void aliFuncln(const T& value) {
-  if (dips[2] == LOW) telemetryOutput->println(value);
+  if (debugMode()) telemetryOutput->println(value);
 }
 
 // Smooths noisy accelerometer data to detect genuine hard impacts
@@ -175,6 +180,8 @@ void setup() {
   pinMode(dip1, INPUT_PULLUP);
   pinMode(dip2, INPUT_PULLUP);
   pinMode(dip3, INPUT_PULLUP);
+  dips[0] = digitalRead(dip1);
+  dips[1] = digitalRead(dip2);
   dips[2] = digitalRead(dip3);
   pinMode(led1Pin, OUTPUT);
   pinMode(led2Pin, OUTPUT);
@@ -210,7 +217,7 @@ void loop() {
   currentMillis = millis();
   ws.get_sensors_avg();
 
-  bool testMode = (dips[2] == LOW);
+  bool testMode = debugMode();
   bool startModuleActive = (digitalRead(startPin) == START_MODULE_ACTIVE_STATE);
   // Stop motor PWM before any peripheral operation can delay this loop.
   if (!startModuleActive || !imuCalibrationDone) stopDrive();
@@ -299,7 +306,9 @@ void loop() {
     currentMillis = millis();
     algo.selectMode(linearAccelX, dips[0], dips[1], 0.0f);
     
-    writeServo(servoPin, 250); 
+    // DIP 3 on: keep the flags up for the whole match.
+    bool flagsStayUp = (dips[2] == LOW);
+    writeServo(servoPin, flagsStayUp ? 0 : 250); 
     writeMotors();
     
     // RESTORED: Fire debug prints
@@ -328,7 +337,7 @@ void pullSensors() {
 void pullLineSensors() {
   // Digital, active-LOW line outputs; input pull-ups are configured in setup().
   line_sensors[0] = digitalRead(leftLineSensor);
-  line_sensors[1] = digitalRead(rightLineSensor);
+  line_sensors[1] = rightLineSensorEnabled ? digitalRead(rightLineSensor) : HIGH;
 }
 
 void updateIMU() {
@@ -505,11 +514,11 @@ void writeServo(int pin, double deg) {
   robotServo.writeMicroseconds(pulse_width_us);
 }
 
-// DIP 3 enables 10 Hz telemetry even when the start module is inactive.
+// Debug mode enables 10 Hz telemetry even when the start module is inactive.
 void debug() {
   static DebugFrame frame;
   static size_t sent = 0;
-  if (dips[2] != LOW || !Serial.dtr()) {
+  if (!debugMode() || !Serial.dtr()) {
     frame.length = sent = 0;
     return;
   }

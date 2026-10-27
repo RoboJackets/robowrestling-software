@@ -16,6 +16,7 @@ class algorithms {
     bool started = false;
     timer& last_state_changed;
     bool lineEscapeTurning = false;
+    bool lineEscapePaused = false;
     bool ChargeActive = false;
     bool forceFullCharge = false;
     unsigned long fullChargeLostStartMs = 0;

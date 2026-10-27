@@ -6,8 +6,8 @@ namespace {
 constexpr unsigned long OPEN_ENDED_BEHAVIOR_MS = 2147483647UL;
 constexpr float CHARGE_ACCEL_THRESHOLD = -4.0f;
 constexpr int FULL_CHARGE_SPEED = 180;
-constexpr unsigned long FULL_CHARGE_MAX_MS = 150;
-constexpr unsigned long LINE_BACKUP_MS = 175; // test
+constexpr unsigned long LINE_BACKUP_MAX_MS = 500;
+constexpr unsigned long LINE_STUCK_PAUSE_MS = 1000;
 constexpr int LINE_BACKUP_SPEED = 140;
 constexpr unsigned long LINE_TURN_MS = 100;
 constexpr int REGULAR_ENGAGE_SPEED = 87;
@@ -15,6 +15,8 @@ constexpr int REGULAR_ENGAGE_BIAS = 20;
 constexpr unsigned long SWERVE_TURN_MS = 100; 
 constexpr unsigned long SWERVE_FWD_MS = 230;  
 constexpr unsigned int SWERVE_TURN_SPEED = 80;
+constexpr unsigned long SWERVE_CORRECT_MS = 100;
+constexpr unsigned int SWERVE_CORRECT_SPEED = 80;
 constexpr unsigned long PREV_STATE_WINDOW_MS = 150;
 constexpr unsigned long COUNTER_SPIN_MS = 20;
 constexpr int COUNTER_SPIN_SPEED = 130;
@@ -50,18 +52,19 @@ void algorithms::selectMode(float imuForwardAccel, int dip0, int dip1, float cor
 
   if (!started) {
     started = true;
+    // DIP 1+2 on: sentry. DIP 1 only: swerve left. DIP 2 only: swerve right.
     if (dip0 == LOW && dip1 == LOW) {
-        sentryModeEnabled = true; 
-        behavior = HUNTING; 
+        sentryModeEnabled = true;
+        behavior = HUNTING;
     }
-    else if (dip0 == LOW && dip1 == HIGH) {
-        swerveDirection = -1; // Left
+    else if (dip0 == LOW) {
+        swerveDirection = -1;
         startBehavior(SWERVE_TURN_1, SWERVE_TURN_MS);
-    } 
-    else if (dip1 == LOW && dip0 == HIGH) {
-        swerveDirection = 1;  // Right
+    }
+    else if (dip1 == LOW) {
+        swerveDirection = 1;
         startBehavior(SWERVE_TURN_1, SWERVE_TURN_MS);
-    } 
+    }
     else {
         behavior = HUNTING;  
     }
@@ -82,7 +85,7 @@ void algorithms::setFullChargeMode(bool enabled) {
   forceFullCharge = enabled;
   if (enabled) {
     sentryModeEnabled = false; // Permanently wake Sentry if rammed
-    startBehavior(FULL_CHARGE, FULL_CHARGE_MAX_MS);
+    startBehavior(FULL_CHARGE, 0);
   } else {
     behavior = HUNTING;
   }
@@ -102,6 +105,7 @@ void algorithms::resetState() {
   currentEnemyPos = NONE;
   lastEnemyPos = NONE;
   lineEscapeTurning = false;
+  lineEscapePaused = false;
 
   sentryModeEnabled = false;
   sentryTargetTimer = 0;
@@ -145,8 +149,15 @@ void algorithms::followBehavior() {
           motors.spinLeft(SWERVE_TURN_SPEED);
       }
       break;
-    case SWERVE_FORWARD: // Ensure 'SWERVE_FWD' matches whatever enum name you have in enums.hpp
+    case SWERVE_FORWARD:
       motors.driveForward(FULL_CHARGE_SPEED);
+      break;
+    case SWERVE_TURN_2:
+      if (swerveDirection == 1) {
+          motors.spinLeft(SWERVE_CORRECT_SPEED);
+      } else {
+          motors.spinRight(SWERVE_CORRECT_SPEED);
+      }
       break;
 
     default:
@@ -163,10 +174,23 @@ bool algorithms::respondToLine(LinePosition linePosition) {
   counterSpinActive = false;
   if (!escapingLine) {
     lineEscapeTurning = false;
+    lineEscapePaused = false;
     // Latch the turn direction from the first detection for this entire escape.
     // Left sensor -> right turn; right sensor -> left turn. If both are first
     // detected in the same poll, retain the existing left-turn fallback.
-    startBehavior((linePosition == LEFT_LINE) ? TURN_AROUND_R : TURN_AROUND_L, LINE_BACKUP_MS);
+    startBehavior((linePosition == LEFT_LINE) ? TURN_AROUND_R : TURN_AROUND_L, LINE_BACKUP_MAX_MS);
+  }
+
+  if (lineEscapePaused) {
+    if (!behavior_timer.isFinished()) {
+      motors.stop();
+      return true;
+    }
+    behavior = HUNTING;
+    lineEscapePaused = false;
+    lineEscapeTurning = false;
+    // A sensor still on the border after the pause starts a fresh escape.
+    return respondToLine(linePosition);
   }
 
   if (lineEscapeTurning && linePosition != OFF_LINE) {
@@ -177,16 +201,17 @@ bool algorithms::respondToLine(LinePosition linePosition) {
   }
 
   if (!lineEscapeTurning) {
-    if (!behavior_timer.isFinished()) {
-      motors.driveBackward(LINE_BACKUP_SPEED);
-      return true;
-    }
     if (linePosition != OFF_LINE) {
-      // Reverse has a hard time limit even if a digital sensor stays LOW.
+      if (!behavior_timer.isFinished()) {
+        motors.driveBackward(LINE_BACKUP_SPEED);
+        return true;
+      }
+      // Reversing never cleared the border: cut the motors before retrying.
+      lineEscapePaused = true;
+      startBehavior(behavior, LINE_STUCK_PAUSE_MS);
       motors.stop();
       return true;
     }
-    // Start a full turn only after backing up AND clearing both sensors.
     lineEscapeTurning = true;
     startBehavior(behavior, LINE_TURN_MS);
   }
@@ -208,8 +233,9 @@ void algorithms::chooseAction(EnemyPosition currentPosition, LinePosition linePo
 
   // 3. IMU Collision / Full Charge Logic
   if (forceFullCharge) {
-      bool enemyInFrontArc = (currentPosition == FRONT || currentPosition == FRONT_LEFT || currentPosition == FRONT_RIGHT || currentPosition == MIDLEFT || currentPosition == MIDRIGHT); 
-      if (enemyInFrontArc && !behavior_timer.isFinished()) {
+      const float* avgs = world.sensors_avg();
+      bool allFrontSensorsOn = (avgs[1] >= 0.9 && avgs[2] >= 0.9 && avgs[3] >= 0.9);
+      if (allFrontSensorsOn) {
           behavior = FULL_CHARGE;
           followBehavior();
           return;
@@ -232,6 +258,8 @@ void algorithms::chooseAction(EnemyPosition currentPosition, LinePosition linePo
       } else if (behavior_timer.isFinished()) {
         if (behavior == SWERVE_TURN_1) {
               startBehavior(SWERVE_FORWARD, SWERVE_FWD_MS);
+          } else if (behavior == SWERVE_FORWARD) {
+              startBehavior(SWERVE_TURN_2, SWERVE_CORRECT_MS);
           } else {
               behavior = HUNTING;
           }
