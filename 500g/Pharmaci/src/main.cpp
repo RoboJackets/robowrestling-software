@@ -217,6 +217,12 @@ bool isMemeDone() {
   return robotState->isMemeDone();
 }
 
+// void loop() {
+//   pollSensors();
+
+//   debug();
+// }
+
 void loop() {
   int dipMode = getDipMode();
 
