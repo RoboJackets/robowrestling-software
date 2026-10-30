@@ -7,6 +7,7 @@
 
 enum class TurnDir { Left, Right, None };
 enum class Phase   { Idle, BackingUp, Rotating };
+enum class DefensivePhase { Idle, Confirming, Ramping };
 
 class RobotState {
   private:
@@ -23,6 +24,11 @@ class RobotState {
     Phase   phase     = Phase::Idle;
     TurnDir turnDir   = TurnDir::None;
 
+    DefensivePhase defensivePhase = DefensivePhase::Idle;
+    uint32_t defensivePhaseStartTime = 0;
+
+    void resetDefensiveApproach();
+
   public:
     RobotState(WorldState* worldStatePtr,
                RobotActions* robotActionsPtr,
@@ -33,6 +39,7 @@ class RobotState {
 
     void slowTrackState(uint32_t time);
     void calculateState(uint32_t time);
+    void defensiveState(uint32_t time);
     void turretState();
     void antiPassive(uint32_t time);
     void memeRight(uint32_t time);

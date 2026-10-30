@@ -129,6 +129,11 @@ void calculateState(int time) {
   robotState->calculateState(time);
 }
 
+void defensiveState(int time) {
+  robotState->defensiveState(time);
+}
+
+
 void turretState() {
   robotState->turretState();
 }
@@ -217,7 +222,7 @@ void loop() {
               break;
           case 3:
               //both switches at 12
-              slowTrackState(millis());
+              defensiveState(millis());
               break;
       }
   } else {

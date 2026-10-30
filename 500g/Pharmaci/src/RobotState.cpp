@@ -294,6 +294,262 @@ void RobotState::calculateState(uint32_t time) {
 
 }
 
+void RobotState::defensiveState(uint32_t time) {
+    const int BACKUP_SPEED   = 200;
+    const int ROTATE_SPEED   = 200;
+
+    const int BACKUP_MS_SIDE = 200;
+    const int BACKUP_MS_BOTH = 250;
+    const int ROTATE_MS_SIDE = 80;
+    const int ROTATE_MS_BOTH = 80;
+
+    const int BOTH_WINDOW_MS = 20;
+
+    const int LATCH_MS = 30;
+    const int MIDDLE_CONFIRM_MS = 20;
+
+    const int MIN_BACKUP_DWELL_MS = 60;
+    const int MIN_ROTATE_DWELL_MS = 80;
+
+    const uint32_t DEFENSIVE_CONFIRM_MS = 500;
+    const uint32_t DEFENSIVE_RAMP_MS = 2000;
+
+    static bool     pendingLine = false;
+    static TurnDir  pendingDir  = TurnDir::None;
+    static int      pendingT0   = 0;
+
+    static bool     latchActive  = false;
+    static TurnDir  latchDir     = TurnDir::None;
+    static int      latchT0      = 0;
+    static int      middleSeenT0 = -1;
+
+    static uint32_t backupEarliestDone = 0;
+    static uint32_t rotateEarliestDone = 0;
+
+    Position selfPos  = worldState->getSelfPosition();
+    Position enemyPos = worldState->getEnemyPosition();
+
+    turnTimer->setCurrentTime(time);
+    backupTimer->setCurrentTime(time);
+
+    auto onLineNow = [&](Position p){
+        return p == Position::On_Line || p == Position::On_Line_Left || p == Position::On_Line_Right;
+    };
+
+    const bool defensiveTargetVisible =
+        enemyPos == Position::Middle_Close ||
+        enemyPos == Position::Middle_Far ||
+        enemyPos == Position::Right_Middle_Close ||
+        enemyPos == Position::Left_Middle_Close;
+
+    // Confirmation/ramp-up must be continuous. Edge recovery and every enemy
+    // classification outside the four-position group cancel it immediately.
+    if (isTurning || onLineNow(selfPos) || !defensiveTargetVisible) {
+        resetDefensiveApproach();
+    }
+
+    if (isTurning) {
+        const bool enemyInterrupt = (enemyPos != Position::None) && !onLineNow(selfPos);
+
+        if (!enemyInterrupt) {
+            latchActive = false;
+
+            if (phase == Phase::BackingUp) {
+                bool dwellSatisfied = (int32_t)(time - backupEarliestDone) >= 0;
+                if (!backupTimer->getReady() || !dwellSatisfied) {
+                    robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
+                    return;
+                }
+                phase = Phase::Rotating;
+                turnTimer->setPreviousTime(time);
+                rotateEarliestDone = time + MIN_ROTATE_DWELL_MS;
+            }
+
+            if (phase == Phase::Rotating) {
+                bool dwellSatisfied = (int32_t)(time - rotateEarliestDone) >= 0;
+                if (!turnTimer->getReady() || !dwellSatisfied) {
+                    if (turnDir == TurnDir::Left)  robotActions->drive(-ROTATE_SPEED, ROTATE_SPEED);
+                    else                            robotActions->drive( ROTATE_SPEED, -ROTATE_SPEED);
+                    return;
+                }
+                isTurning = false;
+                phase = Phase::Idle;
+                turnDir = TurnDir::None;
+            }
+        } else {
+            isTurning = false;
+            phase = Phase::Idle;
+            turnDir = TurnDir::None;
+        }
+    }
+
+    if (!isTurning && pendingLine) {
+        const bool enemyInterrupt = (enemyPos != Position::None) && !onLineNow(selfPos);
+
+        if (!enemyInterrupt) {
+            if (selfPos == Position::On_Line) {
+                backupTimer->setTimeInterval(BACKUP_MS_BOTH);
+                turnTimer->setTimeInterval(ROTATE_MS_BOTH);
+                turnDir = TurnDir::Right;
+                isTurning = true;
+                phase = Phase::BackingUp;
+                backupTimer->setPreviousTime(time);
+                backupEarliestDone = time + MIN_BACKUP_DWELL_MS;
+                pendingLine = false;
+                latchActive = false;
+                robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
+                return;
+            }
+
+            if (time - pendingT0 >= BOTH_WINDOW_MS) {
+                backupTimer->setTimeInterval(BACKUP_MS_SIDE);
+                turnTimer->setTimeInterval(ROTATE_MS_SIDE);
+                turnDir = pendingDir;
+                isTurning = true;
+                phase = Phase::BackingUp;
+                backupTimer->setPreviousTime(time);
+                backupEarliestDone = time + MIN_BACKUP_DWELL_MS;
+                pendingLine = false;
+                latchActive = false;
+                robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
+                return;
+            }
+            robotActions->drive(0, 0);
+            return;
+        } else {
+            pendingLine = false;
+        }
+    }
+
+    if (!isTurning && !pendingLine) {
+        if (selfPos == Position::On_Line) {
+            backupTimer->setTimeInterval(BACKUP_MS_BOTH);
+            turnTimer->setTimeInterval(ROTATE_MS_BOTH);
+            turnDir = TurnDir::Right;
+            isTurning = true;
+            phase = Phase::BackingUp;
+            backupTimer->setPreviousTime(time);
+            backupEarliestDone = time + MIN_BACKUP_DWELL_MS;
+            pendingLine = false;
+            latchActive = false;
+            robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
+            return;
+        }
+        if (selfPos == Position::On_Line_Left) {
+            pendingLine = true;
+            pendingDir  = TurnDir::Right;
+            pendingT0   = time;
+            robotActions->drive(0, 0);
+            return;
+        }
+        if (selfPos == Position::On_Line_Right) {
+            pendingLine = true;
+            pendingDir  = TurnDir::Left;
+            pendingT0   = time;
+            robotActions->drive(0, 0);
+            return;
+        }
+    }
+
+    double rotSpeed = 255.0;
+
+    if (!latchActive && (enemyPos == Position::Left || enemyPos == Position::Right)) {
+        latchActive = true;
+        latchDir = (enemyPos == Position::Left) ? TurnDir::Left : TurnDir::Right;
+        latchT0 = time;
+        middleSeenT0 = -1;
+    }
+
+    if (latchActive) {
+        bool middleNow =
+            (enemyPos == Position::Left_Middle) || (enemyPos == Position::Left_Middle_Close) ||
+            (enemyPos == Position::Right_Middle) || (enemyPos == Position::Right_Middle_Close) ||
+            (enemyPos == Position::Middle_Far)   || (enemyPos == Position::Middle_Close);
+
+        if (middleNow) {
+            if (middleSeenT0 < 0) middleSeenT0 = time;
+            if (time - middleSeenT0 >= MIDDLE_CONFIRM_MS) {
+                latchActive = false;
+            }
+        } else {
+            middleSeenT0 = -1;
+        }
+
+        if (time - latchT0 >= LATCH_MS) {
+            latchActive = false;
+        }
+
+        if (latchActive) {
+            if (latchDir == TurnDir::Left)  robotActions->drive(-rotSpeed, rotSpeed);
+            if (latchDir == TurnDir::Left)  robotActions->drive(-rotSpeed, rotSpeed);
+            else                             robotActions->drive( rotSpeed, -rotSpeed);
+            return;
+        }
+    }
+
+    if (enemyPos == Position::Flag_Left) {
+        robotActions->drive(-255.0, 255.0);
+    } else if (enemyPos == Position::Flag_Right) {
+        robotActions->drive(255.0, -255.0);
+    } else if (defensiveTargetVisible) {
+        if (defensivePhase == DefensivePhase::Idle) {
+            defensivePhase = DefensivePhase::Confirming;
+            defensivePhaseStartTime = time;
+            robotActions->drive(0, 0);
+            return;
+        }
+
+        if (defensivePhase == DefensivePhase::Confirming) {
+            if ((uint32_t)(time - defensivePhaseStartTime) < DEFENSIVE_CONFIRM_MS) {
+                robotActions->drive(0, 0);
+                return;
+            }
+
+            defensivePhase = DefensivePhase::Ramping;
+            defensivePhaseStartTime = time;
+        }
+
+        const uint32_t rampElapsed = (uint32_t)(time - defensivePhaseStartTime);
+        const int rampSpeed = rampElapsed >= DEFENSIVE_RAMP_MS
+            ? 255
+            : (int)((rampElapsed * 255U) / DEFENSIVE_RAMP_MS);
+
+        robotActions->drive(rampSpeed, rampSpeed);
+        return;
+    } else if (enemyPos == Position::Right_Middle) {
+        robotActions->drive(255.0, -150.0);
+
+    } else if (enemyPos == Position::Left_Middle) {
+        robotActions->drive(-150.0, 255.0);
+
+    } else if (enemyPos == Position::Right) {
+        robotActions->drive(255.0, -255.0);
+
+    } else if (enemyPos == Position::Left) {
+        robotActions->drive(-255.0, 255.0);
+
+    } else if (enemyPos == Position::None) {
+        const int ZIGZAG_MS = 250;
+
+        static bool zigLeft = false;
+        static int ZIGZAG_INITIAL_MS = 0;
+
+        if (ZIGZAG_INITIAL_MS == 0) ZIGZAG_INITIAL_MS = time;
+        if (time - ZIGZAG_INITIAL_MS >= ZIGZAG_MS) {
+            zigLeft = !zigLeft;
+            ZIGZAG_INITIAL_MS = time;
+        }
+
+        if (zigLeft) {
+            robotActions->drive(-100.0, 200.0);
+        } else {
+            robotActions->drive(200.0, -100.0);
+        }
+
+        return;
+    }
+}
+
 bool RobotState::isMemeDone() const {
     return memeDone;
 }
@@ -301,6 +557,12 @@ bool RobotState::isMemeDone() const {
 void RobotState::resetMatch() {
     memeDone = false;
     memeStep = 0;
+    resetDefensiveApproach();
+}
+
+void RobotState::resetDefensiveApproach() {
+    defensivePhase = DefensivePhase::Idle;
+    defensivePhaseStartTime = 0;
 }
 
 void RobotState::memeRight(uint32_t time) {
