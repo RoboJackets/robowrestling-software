@@ -59,6 +59,12 @@ bool RobotState::isMemeDone() const {
 void RobotState::resetMatch() {
     memeDone = false;
     memeStep = 0;
+    resetDefensiveApproach();
+}
+
+void RobotState::resetDefensiveApproach() {
+    defensivePhase = DefensivePhase::Idle;
+    defensivePhaseStartTime = 0;
 }
 
 void RobotState::optimalStrategy(u_int32_t time) {
@@ -309,6 +315,8 @@ void RobotState::memeLeft(uint32_t time) {
 //     robotActions->drive(0, 100);
 // }
 
+
+
 void RobotState::calculateState(uint32_t time) {
     const int BACKUP_SPEED = 150;
     const int TURN_SPEED   = 150;
@@ -413,20 +421,12 @@ void RobotState::calculateState(uint32_t time) {
     // =========================
     // 3. Enemy logic
     // =========================
-    if (enemyPos == Position::Flag_Left) {
-        servo = 180;
-        robotActions->drive(-255.0, 255.0);
-        return;
-    } else if (enemyPos == Position::Flag_Right) {
-        servo = 0;
-        robotActions->drive(255.0, -255.0);
-        return;
-    }
-    else if (enemyPos == Position::Middle_Close) {
+    if (enemyPos == Position::Middle_Close ||
+        enemyPos == Position::Flag_Left ||
+        enemyPos == Position::Flag_Right) {
         robotActions->drive(255, 255);
         return;
-
-    } 
+    }
 
     else if (enemyPos == Position::Middle_Far) {
         robotActions->drive(100, 100);
@@ -444,6 +444,214 @@ void RobotState::calculateState(uint32_t time) {
         return;
 
     } else if (enemyPos == Position::Right_Middle) {
+        servo = 0;
+        robotActions->drive(255, -150);
+        return;
+
+    } else if (enemyPos == Position::Left_Middle) {
+        servo = 180;
+        robotActions->drive(-150, 255);
+        return;
+
+    } else if (enemyPos == Position::Right) {
+        servo = 0;
+        robotActions->drive(150, -150);
+        return;
+
+    } else if (enemyPos == Position::Left) {
+        servo = 180;
+        robotActions->drive(-150, 150);
+        return;
+    }
+
+    // =========================
+    // 4. No enemy -> zigzag wander
+    // =========================
+    if (ZIGZAG_INITIAL_MS == 0) ZIGZAG_INITIAL_MS = time;
+
+    if (time - ZIGZAG_INITIAL_MS >= ZIGZAG_MS) {
+        zigLeft = !zigLeft;
+        ZIGZAG_INITIAL_MS = time;
+    }
+
+    if (zigLeft) {
+        robotActions->drive(-60.0, 100.0);
+    } else {
+        robotActions->drive(100.0, -60.0);
+    }
+}
+
+
+
+
+void RobotState::defensiveState(uint32_t time) {
+    const int BACKUP_SPEED = 150;
+    const int TURN_SPEED   = 150;
+
+    const int BACKUP_MS    = 300;
+    const int TURN_MS      = 100;
+    const int BOTH_TURN_MS = 60;
+
+    const int ZIGZAG_MS = 300;
+
+    static bool zigLeft = false;
+    static int ZIGZAG_INITIAL_MS = 0;
+
+    Position selfPos  = worldState->getSelfPosition();
+    Position enemyPos = worldState->getEnemyPosition();
+
+    const bool defensiveTargetVisible =
+        enemyPos == Position::Middle_Close ||
+        enemyPos == Position::Middle_Far ||
+        enemyPos == Position::Right_Middle_Close ||
+        enemyPos == Position::Left_Middle_Close;
+
+    const bool lineDetected =
+        selfPos == Position::On_Line ||
+        selfPos == Position::On_Line_Left ||
+        selfPos == Position::On_Line_Right;
+
+    // An edge escape always cancels target confirmation and acceleration.
+    if (isTurning || lineDetected) {
+        resetDefensiveApproach();
+    }
+
+    backupTimer->setCurrentTime(time);
+    turnTimer->setCurrentTime(time);
+
+    // =========================
+    // 1. Line-escape maneuver
+    // =========================
+    if (isTurning) {
+        if (phase == Phase::BackingUp) {
+            if (!backupTimer->getReady()) {
+                if (turnDir == TurnDir::Right) {
+                    // curved backup away from left edge
+                    robotActions->drive(-80, -120);
+                } else if (turnDir == TurnDir::Left) {
+                    // curved backup away from right edge
+                    robotActions->drive(-120, -80);
+                } else {
+                    // straight backup if both sensors hit
+                    robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
+                }
+                return;
+            }
+
+            phase = Phase::Rotating;
+            turnTimer->setPreviousTime(time);
+        }
+
+        if (phase == Phase::Rotating) {
+            if (!turnTimer->getReady()) {
+                if (turnDir == TurnDir::Left) {
+                    robotActions->drive(-TURN_SPEED, TURN_SPEED);
+                } else {
+                    robotActions->drive(TURN_SPEED, -TURN_SPEED);
+                }
+                return;
+            }
+
+            isTurning = false;
+            phase = Phase::Idle;
+            turnDir = TurnDir::None;
+
+            // restart zigzag cleanly after escape
+            ZIGZAG_INITIAL_MS = time;
+        }
+    }
+
+    // =========================
+    // 2. Start line-escape if line seen
+    // =========================
+    if (selfPos == Position::On_Line_Left) {
+
+        isTurning = true;
+        phase = Phase::BackingUp;
+        turnDir = TurnDir::Right;
+        backupTimer->setTimeInterval(BACKUP_MS);
+        turnTimer->setTimeInterval(TURN_MS);
+        backupTimer->setPreviousTime(time);
+
+        robotActions->drive(-80, -120);
+        return;
+    }
+
+    if (selfPos == Position::On_Line_Right) {
+        isTurning = true;
+        phase = Phase::BackingUp;
+        turnDir = TurnDir::Left;
+        backupTimer->setTimeInterval(BACKUP_MS);
+        turnTimer->setTimeInterval(TURN_MS);
+        backupTimer->setPreviousTime(time);
+
+        robotActions->drive(-120, -80);
+        return;
+    }
+
+    if (selfPos == Position::On_Line) {
+        isTurning = true;
+        phase = Phase::BackingUp;
+        turnDir = TurnDir::Right; // default
+        backupTimer->setTimeInterval(BACKUP_MS);
+        turnTimer->setTimeInterval(BOTH_TURN_MS);
+        backupTimer->setPreviousTime(time);
+
+        robotActions->drive(-BACKUP_SPEED, -BACKUP_SPEED);
+        return;
+    }
+
+    // =========================
+    // 3. Enemy logic
+    // =========================
+
+    // Leaving the four-position group cancels confirmation or ramp-up before
+    // any of the other enemy responses run.
+    if (!defensiveTargetVisible) {
+        resetDefensiveApproach();
+    }
+
+    if (enemyPos == Position::Flag_Left) {
+        servo = 180;
+        robotActions->drive(-255.0, 255.0);
+        return;
+    } else if (enemyPos == Position::Flag_Right) {
+        servo = 0;
+        robotActions->drive(255.0, -255.0);
+        return;
+    }
+    else if (defensiveTargetVisible) {
+        const uint32_t CONFIRM_TARGET_MS = 500;
+        const uint32_t RAMP_UP_MS = 2000;
+
+        if (defensivePhase == DefensivePhase::Idle) {
+            defensivePhase = DefensivePhase::Confirming;
+            defensivePhaseStartTime = time;
+            robotActions->drive(0, 0);
+            return;
+        }
+
+        if (defensivePhase == DefensivePhase::Confirming) {
+            if ((uint32_t)(time - defensivePhaseStartTime) < CONFIRM_TARGET_MS) {
+                robotActions->drive(0, 0);
+                return;
+            }
+
+            defensivePhase = DefensivePhase::Ramping;
+            defensivePhaseStartTime = time;
+        }
+
+        const uint32_t rampElapsed =
+            (uint32_t)(time - defensivePhaseStartTime);
+        const int rampSpeed = rampElapsed >= RAMP_UP_MS
+            ? 255
+            : (int)((rampElapsed * 255U) / RAMP_UP_MS);
+
+        robotActions->drive(rampSpeed, rampSpeed);
+        return;
+    }
+
+    if (enemyPos == Position::Right_Middle) {
         servo = 0;
         robotActions->drive(255, -150);
         return;

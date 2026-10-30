@@ -165,6 +165,10 @@ void calculateState(uint32_t time) {
   robotState->calculateState(time);
 }
 
+void defensiveState(uint32_t time) {
+  robotState->defensiveState(time);
+}
+
 const char* positionToString(Position pos) {
     switch (pos) {
         case Position::None: return "None";
@@ -260,11 +264,8 @@ void loop() {
               break;
           case 3:
               //both switches at 12
-              if (!isMemeDone()) {
-                  optimalStrategy(millis());
-              } else {
-                  calculateState(millis());
-              }
+              defensiveState(millis());
+              
               break;
 
 
