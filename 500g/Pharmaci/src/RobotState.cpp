@@ -621,16 +621,16 @@ void RobotState::defensiveState(uint32_t time) {
         cancelDefensiveApproach();
     }
 
-    if (enemyPos == Position::Flag_Left) {
-        servo = 180;
-        robotActions->drive(-255.0, 255.0);
-        return;
-    } else if (enemyPos == Position::Flag_Right) {
-        servo = 0;
-        robotActions->drive(255.0, -255.0);
-        return;
-    }
-    else if (defensiveTargetVisible && !defensiveApproachConsumed) {
+    // if (enemyPos == Position::Flag_Left) {
+    //     servo = 180;
+    //     robotActions->drive(-255.0, 255.0);
+    //     return;
+    // } else if (enemyPos == Position::Flag_Right) {
+    //     servo = 0;
+    //     robotActions->drive(255.0, -255.0);
+    //     return;
+    // }
+    if (defensiveTargetVisible && !defensiveApproachConsumed) {
         const uint32_t CONFIRM_TARGET_MS = 500;
         const uint32_t RAMP_UP_MS = 1500;
 
