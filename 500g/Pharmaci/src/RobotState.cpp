@@ -621,8 +621,8 @@ void RobotState::defensiveState(uint32_t time) {
         return;
     }
     else if (defensiveTargetVisible) {
-        const uint32_t CONFIRM_TARGET_MS = 500;
-        const uint32_t RAMP_UP_MS = 2000;
+        const uint32_t CONFIRM_TARGET_MS = 100;
+        const uint32_t RAMP_UP_MS = 1000;
 
         if (defensivePhase == DefensivePhase::Idle) {
             defensivePhase = DefensivePhase::Confirming;
