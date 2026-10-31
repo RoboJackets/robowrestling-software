@@ -25,11 +25,16 @@ const int leftB = PA9;
 
 const int startPin = PB10;
 const int leftLineSensor = PA7; 
-const int rightLineSensor = PB15;
+const int rightLineSensor = PB0; // Analog output; PB15 has no ADC.
+const int RIGHT_LINE_BORDER_THRESHOLD = 75; // analogRead (0-1023) below this = white border.
 
 const int imuSCL = PB8;
 const int imuSDA = PB9;
 const int servoPin = PA0; 
+// Servo pulse widths. Lower FLAGS_UP_US holds the flags further from the drop side;
+// going past the servo's mechanical end stop makes it buzz and heat up.
+const int FLAGS_UP_US = 900;
+const int FLAGS_DOWN_US = 2000;
 
 const int led1Pin = PB5;
 const int led2Pin = PB1;
@@ -40,7 +45,8 @@ const int dip3 = PB14;
 
 // State Variables
 bool motorsEnabled = true; // Set false to disable drive motors for sensor testing.
-bool rightLineSensorEnabled = false; // Right line sensor is broken; reads as "no border" while false.
+const unsigned long FORWARD_RAMP_MS = 60; // Straight charge ramp rate: time to go from 0 to 255.
+bool rightLineSensorEnabled = true; // Set false if the right line sensor fails; it then reads as "no border".
 const unsigned long startupDelayMs = 0;
 const int START_MODULE_ACTIVE_STATE = HIGH;
 long currentMillis = 0;
@@ -78,6 +84,7 @@ const float kalmanMeasurementNoise = 0.9f;
 int motors[2] = {0};
 int dips[3] = {0};
 int line_sensors[2] = {0};
+int raw_line_sensors[2] = {0}; // Actual pin readings, even for a disabled sensor.
 int ir_sensors[5] = {0};
 
 timer last_enemy_changed(&currentMillis);
@@ -176,7 +183,7 @@ void setup() {
   pinMode(leftB, OUTPUT);
 
   pinMode(leftLineSensor, INPUT_PULLUP);
-  pinMode(rightLineSensor, INPUT_PULLUP);
+  pinMode(rightLineSensor, INPUT_ANALOG);
   pinMode(dip1, INPUT_PULLUP);
   pinMode(dip2, INPUT_PULLUP);
   pinMode(dip3, INPUT_PULLUP);
@@ -193,8 +200,8 @@ void setup() {
   bool imuAvailable = mpu.begin();
 
   // Initialize Servo
-  robotServo.writeMicroseconds(1000); 
-  robotServo.attach(servoPin);
+  // attach() otherwise starts at 1500 us (mid-travel), dipping the flags at power-on.
+  robotServo.attach(servoPin, FLAGS_UP_US);
   writeServo(servoPin, 0); 
 
   if (imuAvailable) {
@@ -336,8 +343,11 @@ void pullSensors() {
 
 void pullLineSensors() {
   // Digital, active-LOW line outputs; input pull-ups are configured in setup().
-  line_sensors[0] = digitalRead(leftLineSensor);
-  line_sensors[1] = rightLineSensorEnabled ? digitalRead(rightLineSensor) : HIGH;
+  raw_line_sensors[0] = digitalRead(leftLineSensor);
+  raw_line_sensors[1] = analogRead(rightLineSensor);
+  int rightLineDigital = (raw_line_sensors[1] < RIGHT_LINE_BORDER_THRESHOLD) ? LOW : HIGH;
+  line_sensors[0] = raw_line_sensors[0];
+  line_sensors[1] = rightLineSensorEnabled ? rightLineDigital : HIGH;
 }
 
 void updateIMU() {
@@ -456,11 +466,30 @@ void writeMotors() {
   // Recheck at the actual output write, not just at the beginning of loop().
   const bool driveAllowed = motorsEnabled && imuCalibrationDone &&
     digitalRead(startPin) == START_MODULE_ACTIVE_STATE;
-  const int leftSpeed = driveAllowed ? motors[0] : 0;
-  const int rightSpeed = driveAllowed ? motors[1] : 0;
+  int leftSpeed = driveAllowed ? motors[0] : 0;
+  int rightSpeed = driveAllowed ? motors[1] : 0;
   // 'static' means it remembers these values between loops
   static int lastLeftSpeed = -999;
   static int lastRightSpeed = -999;
+
+  // Ramp up forward speed only in straight charge mode (DIP 1+2); slowing,
+  // reversing and every other mode apply instantly.
+  static unsigned long lastRampMicros = micros();
+  unsigned long nowMicros = micros();
+  unsigned long elapsedMicros = nowMicros - lastRampMicros;
+  lastRampMicros = nowMicros;
+  // A long gap between calls (idle, before the start signal) must not skip the ramp.
+  if (elapsedMicros > 5000UL) elapsedMicros = 5000UL;
+  if (algo.isStraightChargeMode() && leftSpeed > 0 && rightSpeed > 0) {
+    int maxStep = (int)((elapsedMicros * 255UL) / (FORWARD_RAMP_MS * 1000UL));
+    if (maxStep < 1) maxStep = 1;
+    auto ramp = [maxStep](int target, int applied) {
+      int from = applied > 0 ? applied : 0;
+      return (target > from + maxStep) ? from + maxStep : target;
+    };
+    leftSpeed = ramp(leftSpeed, lastLeftSpeed);
+    rightSpeed = ramp(rightSpeed, lastRightSpeed);
+  }
 
   // If the speed hasn't changed, do nothing! Let the hardware PWM keep running smoothly.
   if (leftSpeed == lastLeftSpeed && rightSpeed == lastRightSpeed) {
@@ -510,7 +539,7 @@ void stopDrive() {
 void writeServo(int pin, double deg) {
   if (deg < 0) deg = 0;
   if (deg > 180) deg = 180;
-  long pulse_width_us = map(deg, 0, 180, 1000, 2000);
+  long pulse_width_us = map(deg, 0, 180, FLAGS_UP_US, FLAGS_DOWN_US);
   robotServo.writeMicroseconds(pulse_width_us);
 }
 
@@ -537,7 +566,7 @@ void debug() {
     aliFunc("IR raw [left-side left center right right-side]: ");
     debugIR(); aliFuncln("");
     aliFunc("IR averages: "); debugAverages(); aliFuncln("");
-    aliFunc("Line digital [left right], 0=border: "); debugLine();
+    aliFunc("Line: "); debugLine();
     aliFunc("Motor command [left right]: ");
     aliFunc(motorsEnabled ? motors[0] : 0); aliFunc(" ");
     aliFuncln(motorsEnabled ? motors[1] : 0);
@@ -560,11 +589,12 @@ void debug() {
 }
 
 void debugLine(){
-  for(int i = 0; i < 2; i++){
-    aliFunc(line_sensors[i]);
-    aliFunc(" ");
-  }
-  aliFuncln(""); 
+  bool leftBorder = (raw_line_sensors[0] == LOW);
+  bool rightBorder = (raw_line_sensors[1] < RIGHT_LINE_BORDER_THRESHOLD);
+  aliFunc("L "); aliFunc(leftBorder ? "border" : "no border");
+  aliFunc(" | R "); aliFunc(raw_line_sensors[1]); aliFunc(" ");
+  aliFunc(rightBorder ? "border" : "no border");
+  aliFuncln(rightLineSensorEnabled ? "" : " (ignored)"); 
 }
 
 void debugIR(){

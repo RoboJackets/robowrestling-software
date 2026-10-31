@@ -21,9 +21,7 @@ constexpr unsigned long PREV_STATE_WINDOW_MS = 150;
 constexpr unsigned long COUNTER_SPIN_MS = 20;
 constexpr int COUNTER_SPIN_SPEED = 130;
 
-constexpr unsigned long SENTRY_CHARGE_DELAY_MS = 500; 
-static bool sentryModeEnabled = false;
-static unsigned long sentryTargetTimer = 0;
+static bool straightChargeMode = false;
 }
 
 algorithms::algorithms(motor_actions& motors, world_state& world, timer& behavior_timer, timer& last_state_changed)
@@ -52,9 +50,9 @@ void algorithms::selectMode(float imuForwardAccel, int dip0, int dip1, float cor
 
   if (!started) {
     started = true;
-    // DIP 1+2 on: sentry. DIP 1 only: swerve left. DIP 2 only: swerve right.
+    // DIP 1+2 on: straight charge. DIP 1 only: swerve left. DIP 2 only: swerve right.
     if (dip0 == LOW && dip1 == LOW) {
-        sentryModeEnabled = true;
+        straightChargeMode = true;
         behavior = HUNTING;
     }
     else if (dip0 == LOW) {
@@ -84,7 +82,6 @@ void algorithms::setFullChargeMode(bool enabled) {
   if (enabled && forceFullCharge) return;
   forceFullCharge = enabled;
   if (enabled) {
-    sentryModeEnabled = false; // Permanently wake Sentry if rammed
     startBehavior(FULL_CHARGE, 0);
   } else {
     behavior = HUNTING;
@@ -93,6 +90,10 @@ void algorithms::setFullChargeMode(bool enabled) {
 
 bool algorithms::isFullChargeMode() const {
   return forceFullCharge;
+}
+
+bool algorithms::isStraightChargeMode() const {
+  return straightChargeMode;
 }
 
 void algorithms::resetState() {
@@ -107,8 +108,7 @@ void algorithms::resetState() {
   lineEscapeTurning = false;
   lineEscapePaused = false;
 
-  sentryModeEnabled = false;
-  sentryTargetTimer = 0;
+  straightChargeMode = false;
 
   behavior_timer.reset();
   last_state_changed.reset();
@@ -231,6 +231,14 @@ bool algorithms::respondToLine(LinePosition linePosition) {
 void algorithms::chooseAction(EnemyPosition currentPosition, LinePosition linePosition, float correctedYaw) {
   if (respondToLine(linePosition)) return;
 
+  // Straight charge mode ignores the opponent sensors; only the line sensors steer.
+  if (straightChargeMode) {
+      forceFullCharge = false;
+      behavior = HUNTING;
+      motors.driveForward(FULL_CHARGE_SPEED);
+      return;
+  }
+
   // 3. IMU Collision / Full Charge Logic
   if (forceFullCharge) {
       const float* avgs = world.sensors_avg();
@@ -314,36 +322,6 @@ if (currentPosition != previousDrivePosition) {
     // If we get here, either the spin time is up, OR we instantly found the enemy!
     counterSpinActive = false;
     counterSpinDirection = 0;
-  }
-
-  // --- SENTRY MODE OVERRIDE ---
-  if (sentryModeEnabled) {
-      bool inFrontArc = (currentPosition == FRONT || currentPosition == FRONT_LEFT || currentPosition == FRONT_RIGHT || currentPosition == MIDLEFT || currentPosition == MIDRIGHT || currentPosition == FARFRONT);
-
-      if (inFrontArc) {
-          if (sentryTargetTimer == 0) sentryTargetTimer = millis(); 
-
-          if (millis() - sentryTargetTimer >= SENTRY_CHARGE_DELAY_MS) {
-              sentryModeEnabled = false; // Time's up, attack normally
-          } else {
-              switch(currentPosition) {
-                  case FRONT:
-                  case FARFRONT:    motors.stop(); break; // Stare down
-                  case FRONT_LEFT:  motors.spinLeft(45); break; 
-                  case FRONT_RIGHT: motors.spinRight(45); break;
-                  case MIDLEFT:     motors.spinLeft(90); break; 
-                  case MIDRIGHT:    motors.spinRight(90); break;
-                  default:          break;
-              }
-              return; 
-          }
-      } else {
-          sentryTargetTimer = 0; 
-          if (currentPosition == NONE) {
-              motors.stop(); 
-              return;
-          }
-      }
   }
 
 // --- NORMAL DRIVING LOGIC ---

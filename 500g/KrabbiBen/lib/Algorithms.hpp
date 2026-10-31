@@ -46,6 +46,7 @@ class algorithms {
     void liveDrive(EnemyPosition currentPosition, LinePosition linePosition);
     void setFullChargeMode(bool enabled);
     bool isFullChargeMode() const;
+    bool isStraightChargeMode() const;
     void resetState();
 };
 
