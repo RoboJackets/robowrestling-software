@@ -65,6 +65,16 @@ void RobotState::resetMatch() {
 void RobotState::resetDefensiveApproach() {
     defensivePhase = DefensivePhase::Idle;
     defensivePhaseStartTime = 0;
+    defensiveApproachConsumed = false;
+}
+
+void RobotState::cancelDefensiveApproach() {
+    if (defensivePhase != DefensivePhase::Idle) {
+        defensiveApproachConsumed = true;
+    }
+
+    defensivePhase = DefensivePhase::Idle;
+    defensivePhaseStartTime = 0;
 }
 
 void RobotState::optimalStrategy(u_int32_t time) {
@@ -513,7 +523,7 @@ void RobotState::defensiveState(uint32_t time) {
 
     // An edge escape always cancels target confirmation and acceleration.
     if (isTurning || lineDetected) {
-        resetDefensiveApproach();
+        cancelDefensiveApproach();
     }
 
     backupTimer->setCurrentTime(time);
@@ -608,7 +618,7 @@ void RobotState::defensiveState(uint32_t time) {
     // Leaving the four-position group cancels confirmation or ramp-up before
     // any of the other enemy responses run.
     if (!defensiveTargetVisible) {
-        resetDefensiveApproach();
+        cancelDefensiveApproach();
     }
 
     if (enemyPos == Position::Flag_Left) {
@@ -620,9 +630,9 @@ void RobotState::defensiveState(uint32_t time) {
         robotActions->drive(255.0, -255.0);
         return;
     }
-    else if (defensiveTargetVisible) {
-        const uint32_t CONFIRM_TARGET_MS = 100;
-        const uint32_t RAMP_UP_MS = 1000;
+    else if (defensiveTargetVisible && !defensiveApproachConsumed) {
+        const uint32_t CONFIRM_TARGET_MS = 500;
+        const uint32_t RAMP_UP_MS = 1500;
 
         if (defensivePhase == DefensivePhase::Idle) {
             defensivePhase = DefensivePhase::Confirming;
@@ -648,6 +658,20 @@ void RobotState::defensiveState(uint32_t time) {
             : (int)((rampElapsed * 255U) / RAMP_UP_MS);
 
         robotActions->drive(rampSpeed, rampSpeed);
+        return;
+    }
+
+    if (enemyPos == Position::Middle_Close) {
+        robotActions->drive(255.0, 255.0);
+        return;
+    } else if (enemyPos == Position::Middle_Far) {
+        robotActions->drive(100.0, 100.0);
+        return;
+    } else if (enemyPos == Position::Right_Middle_Close) {
+        robotActions->drive(255.0, 200.0);
+        return;
+    } else if (enemyPos == Position::Left_Middle_Close) {
+        robotActions->drive(200.0, 255.0);
         return;
     }
 
