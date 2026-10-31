@@ -312,7 +312,7 @@ void RobotState::defensiveState(uint32_t time) {
     const int MIN_ROTATE_DWELL_MS = 80;
 
     const uint32_t DEFENSIVE_CONFIRM_MS = 500;
-    const uint32_t DEFENSIVE_RAMP_MS = 2000;
+    const uint32_t DEFENSIVE_RAMP_MS = 1500;
 
     static bool     pendingLine = false;
     static TurnDir  pendingDir  = TurnDir::None;
