@@ -311,7 +311,7 @@ void RobotState::defensiveState(uint32_t time) {
     const int MIN_BACKUP_DWELL_MS = 60;
     const int MIN_ROTATE_DWELL_MS = 80;
 
-    const uint32_t DEFENSIVE_CONFIRM_MS = 500;
+    const uint32_t DEFENSIVE_CONFIRM_MS = 300;
     const uint32_t DEFENSIVE_RAMP_MS = 1500;
 
     static bool     pendingLine = false;
@@ -345,7 +345,7 @@ void RobotState::defensiveState(uint32_t time) {
     // Confirmation/ramp-up must be continuous. Edge recovery and every enemy
     // classification outside the four-position group cancel it immediately.
     if (isTurning || onLineNow(selfPos) || !defensiveTargetVisible) {
-        resetDefensiveApproach();
+        cancelDefensiveApproach();
     }
 
     if (isTurning) {
@@ -491,7 +491,7 @@ void RobotState::defensiveState(uint32_t time) {
         robotActions->drive(-255.0, 255.0);
     } else if (enemyPos == Position::Flag_Right) {
         robotActions->drive(255.0, -255.0);
-    } else if (defensiveTargetVisible) {
+    } else if (defensiveTargetVisible && !defensiveApproachConsumed) {
         if (defensivePhase == DefensivePhase::Idle) {
             defensivePhase = DefensivePhase::Confirming;
             defensivePhaseStartTime = time;
@@ -516,6 +516,18 @@ void RobotState::defensiveState(uint32_t time) {
 
         robotActions->drive(rampSpeed, rampSpeed);
         return;
+    } else if (enemyPos == Position::Middle_Close) {
+        robotActions->drive(255.0, 255.0);
+
+    } else if (enemyPos == Position::Middle_Far) {
+        robotActions->drive(150.0, 150.0);
+
+    } else if (enemyPos == Position::Right_Middle_Close) {
+        robotActions->drive(255.0, 200.0);
+
+    } else if (enemyPos == Position::Left_Middle_Close) {
+        robotActions->drive(200.0, 255.0);
+
     } else if (enemyPos == Position::Right_Middle) {
         robotActions->drive(255.0, -150.0);
 
@@ -561,6 +573,16 @@ void RobotState::resetMatch() {
 }
 
 void RobotState::resetDefensiveApproach() {
+    defensivePhase = DefensivePhase::Idle;
+    defensivePhaseStartTime = 0;
+    defensiveApproachConsumed = false;
+}
+
+void RobotState::cancelDefensiveApproach() {
+    if (defensivePhase != DefensivePhase::Idle) {
+        defensiveApproachConsumed = true;
+    }
+
     defensivePhase = DefensivePhase::Idle;
     defensivePhaseStartTime = 0;
 }

@@ -26,8 +26,10 @@ class RobotState {
 
     DefensivePhase defensivePhase = DefensivePhase::Idle;
     uint32_t defensivePhaseStartTime = 0;
+    bool defensiveApproachConsumed = false;
 
     void resetDefensiveApproach();
+    void cancelDefensiveApproach();
 
   public:
     RobotState(WorldState* worldStatePtr,
